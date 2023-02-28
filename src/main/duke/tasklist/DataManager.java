@@ -13,19 +13,19 @@ import java.time.LocalDate;
 import java.util.LinkedHashSet;
 
 /**
- * Manages all functions of the chatbot.
+ * Manages all functions of the application.
  * Calls the function concerned depending on user input.
- * Calls the functions to modify all the data in the chatbot.
- * Contains all the data for the chatbot.
+ * Calls the functions to modify all the data in the application.
+ * Contains all the data for the application.
  */
 public class DataManager {
 
-    private final DateData dates;
-    private final FindData find;
+    private DateData dates;
+    private final DukeMessages ui;
+    private FindData find;
     private final Parser parser;
     protected String path;
-    private final DukeMessages ui;
-    private final TaskData tasks;
+    private TaskData tasks;
 
     /**
      * Initializes all the data in the application.
@@ -41,6 +41,17 @@ public class DataManager {
         this.path = path;
         this.ui = ui;
         this.tasks = new TaskData(ui, parser, path);
+    }
+
+    /**
+     * Deletes all the tasks recorded in this application and clears all entries in the datafile
+     */
+    public void clearAll() {
+        this.dates = new DateData();
+        this.find = new FindData();
+        this.tasks = new TaskData(ui, parser, path);
+        tasks.rewriteFile(path);
+        ui.printClear();
     }
 
     /**
@@ -84,13 +95,19 @@ public class DataManager {
                 find.handleDelete(parser.getNum());
                 break;
             case "date":
-                LocalDate date = parser.processDate(next);
+                LocalDate date = parser.processDate(next.trim());
                 LinkedHashSet<Integer> list = dates.findDate(date);
                 tasks.printFromList(list);
                 break;
             case "find":
                 list = find.findKeyword(next);
                 tasks.printFromList(list);
+                break;
+            case "clear":
+                clearAll();
+                break;
+            default:
+                ui.printError();
                 break;
             }
         } catch (DukeException e) {
@@ -100,22 +117,20 @@ public class DataManager {
 
     /**
      * Reads the local datafile and writes to all the data types involved.
-     *
-     * @throws DukeException Exception thrown if unable to find datafile or file corrupted or unreadable.
      */
-    public void initialize() throws DukeException{
+    public void initialize() {
         try {
             FileManager.readFile(path);
         } catch (FileNotFoundException e) {
             ui.printFileNotFoundError();
             FileManager.createFile(path);
-            throw new DukeException();
         }
         try {
             FileManager.handleFile(this.tasks, this.dates, this.find);
         } catch (DukeException e) {
+            ui.printDiv();
             ui.printReadFileError();
-            throw new DukeException();
+            clearAll();
         }
     }
 

@@ -31,7 +31,7 @@ public class Task {
     /**
      * Returns a string representation of marked/unmarked for a task object.
      *
-     * @returns <code>[ ]</code> if unmarked and <code>[X]</code> if marked.
+     * @return <code>[ ]</code> if unmarked and <code>[X]</code> if marked.
      */
     public String checkDone() {
         if (isDone) {
@@ -43,7 +43,7 @@ public class Task {
     /**
      * Returns a string representation of type for a task object.
      *
-     * @returns <code>[ "type" ]</code>
+     * @return <code>[ "type" ]</code>
      */
     public String checkType() {
         if (type != null) {
