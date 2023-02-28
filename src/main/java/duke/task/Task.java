@@ -1,5 +1,9 @@
 package duke.task;
 
+/**
+ * Represents a general task. All task objects have their specific types , status
+ * and their task descriptions
+ */
 public abstract class Task {
     public String description;
 
@@ -21,12 +25,18 @@ public abstract class Task {
         isDone = false;
     }
 
+    /**
+     * Getter function of the status icon
+     *
+     * @return "[X]" if it is done and "[]" if it is not done
+     */
     public String getStatusIcon() {
-        return (isDone ? "X" : " "); // mark done task with X
+        return (isDone ? "[X]" : "[]");
     }
 
     public String toString() {
-        return "[" + getStatusIcon() + "] " + description;
+        return getStatusIcon() + " " + description;
+
     }
 
     public String textToSave() {

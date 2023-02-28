@@ -5,9 +5,11 @@ import duke.task.Task;
 import duke.ui.UI;
 
 import java.util.ArrayList;
-
+/**
+ * Array List that keep tracks of all the tasks
+ */
 public class TaskList {
-    public ArrayList<Task> tasksList;
+    private ArrayList<Task> tasksList;
 
     public TaskList(ArrayList<Task> tasksList) {
         this.tasksList = tasksList;
@@ -50,7 +52,7 @@ public class TaskList {
         if (tasksList.isEmpty()) {
             throw new EmptyListError();
         }
-        UI.printMessage("Here are the tasks in your list:");
+        System.out.println("Here are the tasks in your list:");
         UI.printList(returnTasks());
     }
 

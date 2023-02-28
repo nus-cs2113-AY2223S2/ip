@@ -1,4 +1,4 @@
-package duke.data;
+package duke.constants;
 
 public class textImage {
     public static final String WELCOME_TEXT_IMAGE = "        ___\n" +

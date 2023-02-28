@@ -11,18 +11,26 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 
+/**
+ * Main class to manage all operations
+ */
 public class Duke {
 
     private static TaskList tasks;
 
+    /**
+     * Loads the text file and executes the program
+     * @throws FileNotFoundException if error occurs during the checking of file access
+     * @throws IOException if error occurs during the file load
+     */
     public Duke(){
         try {
             Storage.checkFileAccess();
             tasks = new TaskList(Storage.load());
         } catch (FileNotFoundException err) {
-            UI.printMessage("File not Found");
+            System.out.println("File not Found");
         } catch (IOException err) {
-            UI.printMessage("Something went wrong: " + err.getMessage());
+            System.out.println("Something went wrong: " + err.getMessage());
         }
         String input;
         Scanner in = new Scanner(System.in);
@@ -39,6 +47,9 @@ public class Duke {
         Command command = Parser.parse(input);
         command.execute(tasks);
     }
+    /**
+     * Command to start the program
+     */
     public static void main(String[] args) {
         new Duke();
     }

@@ -14,11 +14,33 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Format of tasks in txt file:
+ * For todo task:
+ * T | (status) | task-description
+ * For deadline task:
+ * D | (status) | task-description | by
+ * For event task:
+ * E | (status) | task-description | start | end
+ *
+ * where status can be marked or unmarked (1 / 0 )
+ */
+
+/**
+ * Storage that handles the data from text file
+ */
 public class Storage {
 
     private static final String dirPath = "data";
     private static final String filePath = "data/duke.txt";
 
+
+    /**
+     * Updates tasklist with data from existing save file if it exists
+     *
+     * @return the task list saved on the file
+     * @throws FileNotFoundException if unable to access the text file
+     */
     public static ArrayList<Task> load() throws FileNotFoundException {
         ArrayList<Task> taskList = new ArrayList<>();
         File file = new File(filePath); // create a File for the given file path
@@ -60,7 +82,7 @@ public class Storage {
                 taskList.add(event);
                 break;
             default:
-                UI.printMessage("finish converting");
+                System.out.println("finish converting");
             }
         }
         return taskList;
@@ -78,6 +100,11 @@ public class Storage {
         fw.close();
     }
 
+    /**
+     * Creates a new directory and text file if it does not exist
+     *
+     * @throws IOException if error during file creation/access checking
+     */
     public static void checkFileAccess() throws IOException {
         File dir = new File(dirPath);
         if (!dir.exists()) {
@@ -89,6 +116,13 @@ public class Storage {
         }
     }
 
+
+    /**
+     * Updates the text file with data from the tasklist
+     *
+     * @param tasks the task-list that contains all the tasks
+     * @throws IOException if error during the writing/appending of the file
+     */
     public static void updateFile(TaskList tasks) {
         ArrayList<Task> tasksList = tasks.returnTasks();
         try {
@@ -97,7 +131,7 @@ public class Storage {
                 appendToFile(task.textToSave() + System.lineSeparator());
             }
         } catch (IOException err) {
-            UI.printMessage("Something went wrong: " + err.getMessage());
+            System.out.println("Something went wrong: " + err.getMessage());
         }
     }
 }

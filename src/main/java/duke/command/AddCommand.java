@@ -10,6 +10,9 @@ import duke.task.Todo;
 
 import java.util.List;
 
+/**
+ * Command when adding a new task to tasklist
+ */
 public class AddCommand extends Command {
 
     protected String taskField;
@@ -19,28 +22,30 @@ public class AddCommand extends Command {
         this.taskField = taskField;
     }
 
+    /**
+     * Adds a new task into the tasklist according to command type
+     *
+     * @param tasks tasklist which contains all the tasks
+     */
     @Override
     public void execute(TaskList tasks) {
         switch (commandType) {
             case "todo":
-                UI.printTodo(taskField);
                 Todo todo = new Todo(taskField, "T");
                 tasks.addToList(todo);
-                UI.printTaskListLength(tasks.sizeOfList());
+                UI.printAddedTask(todo, tasks);
                 break;
             case "deadline":
                 List<String> parsedDeadline = Parser.parseDeadline(taskField);
-                UI.printDeadline(parsedDeadline.get(0), parsedDeadline.get(1));
                 Deadline deadline = new Deadline(parsedDeadline.get(0), "D", parsedDeadline.get(1));
                 tasks.addToList(deadline);
-                UI.printTaskListLength(tasks.sizeOfList());
+                UI.printAddedTask(deadline, tasks);
                 break;
             case "event":
                 List<String> parsedEvent = Parser.parseEvent(taskField);
-                UI.printEvent(parsedEvent.get(0), parsedEvent.get(1), parsedEvent.get(2));
                 Event event = new Event(parsedEvent.get(0), "E", parsedEvent.get(1), parsedEvent.get(2));
                 tasks.addToList(event);
-                UI.printTaskListLength(tasks.sizeOfList());
+                UI.printAddedTask(event, tasks);
                 break;
         }
         Storage.updateFile(tasks);
