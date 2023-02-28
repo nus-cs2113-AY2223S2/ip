@@ -1,30 +1,40 @@
 package duke.tasks;
-import java.time.format.DateTimeParseException;
 
-import duke.exception.InvalidDateTimeFormatException;
-import duke.parser.DateTimeParser;
-
+/**
+ * Represents deadline object that it a type of task
+ */
 public class Deadline extends Task {
-    private String by;
+    protected String by;
 
-    public Deadline(String description, String by) throws InvalidDateTimeFormatException{
-        super(description, TaskType.DEADLINE);
-        try{
-            this.by = new DateTimeParser().parse(by);
-        }catch (DateTimeParseException exception){
-            throw new InvalidDateTimeFormatException();
-        }
-
+    /**
+     * Constructor of deadline task object, with specified type "D"
+     *
+     * @param description the description of the current deadline
+     * @param by          the deadline of the current deadline object
+     */
+    public Deadline(String description, String by) {
+        super(description);
+        this.type = "[D]";
+        this.by = by;
     }
 
+    /**
+     * Gets the by deadline of the current deadline object
+     *
+     * @return the deadline of the deadline object
+     */
+    public String getBy() {
+        return by;
+    }
+
+    /**
+     * Prints the deadline object elements
+     *
+     * @return the type, status, description and by deadline of current deadline object
+     */
     @Override
     public String toString() {
-        return String.format("%s (by: %s)", super.toString(), by);
-    }
-
-    @Override
-    public String saveText() {
-        return super.saveText() + " | " + this.by;
+        return super.toString() + getType() + getStatusIcon() + getDescription() + " (by: " + getBy() + ")";
     }
 }
 

@@ -1,21 +1,42 @@
 package duke.commands;
+
 import duke.tasks.Todo;
 import duke.outputs.Messages;
+import duke.file.TaskList;
+import duke.ui.*;
 
-public class TodoCommand extends TaskCommand{
-    private String taskDescription;
+/**
+ * Command when adding a new todo task to tasklist
+ */
+public class TodoCommand extends Command {
+    private Todo todo;
 
-    public TodoCommand(String taskDescription) {
-        super("todo");
-        this.taskDescription = taskDescription;
+    /**
+     * creates a new todo task
+     *
+     * @param input details of the user command
+     */
+    public void setToDo(String input) {
+        String[] deconstructedDetails = input.split(" ", 2);
+        String description = deconstructedDetails[1];
+        this.todo = new Todo(description);
     }
-    public CommandResult execute() {
 
-        Todo task = new Todo(taskDescription);
-        tasklist.addTask(task);
-        return new CommandResult(Messages.MESSAGE_TASK_ADDED,
-                String.format("\n\t\t%s \n", task),
-                String.format(Messages.MESSAGE_TASK_LIST_SIZE, tasklist.getNumberOfTasks()));
-
+    /**
+     * Adds a new todo task into the tasklist
+     *
+     * @param input details of the user command
+     * @param tasks tasklist which contains all the tasks
+     * @param ui    UI to show task addition message
+     */
+    @Override
+    public void execute(String input, TaskList tasks, UI ui) {
+        try {
+            setToDo(input);
+            tasks.addNewTask(todo);
+            ui.printTaskAddedMessage(tasks, todo);
+        } catch (ArrayIndexOutOfBoundsException exception) {
+            Messages.emptyTodoErrorMessage();
+        }
     }
 }

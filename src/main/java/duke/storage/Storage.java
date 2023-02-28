@@ -1,218 +1,125 @@
 package duke.storage;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Objects;
-import java.util.Scanner;
 
-import duke.exception.TaskLoadErrorException;
-import duke.exception.InvalidDateTimeFormatException;
-import duke.tasks.Tasklist;
 import duke.tasks.Task;
 import duke.tasks.Deadline;
 import duke.tasks.Event;
 import duke.tasks.Todo;
+import duke.file.TaskList;
+import duke.outputs.Messages;
 
-
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.io.BufferedReader;
 
 /*
 Format of tasks in txt file:
 For todo task:
-(taskType) | (Marked/Unmarked) | taskDescription
+T | (status) | taskDescription
 For deadline task:
-(taskType) | (Marked/Unmarked) | taskDescription | by
+D | (status) | taskDescription | by
 For event task:
-(taskType) | (Marked/Unmarked) | taskDescription | startTime | endTime
+E | (status) | taskDescription | startTime | endTime
+
+where status can be marked or unmarked (1 / 0 )
 */
 
+/**
+ * Storage that handles the conversion of data from text file to jar file , and vice versa
+ */
 public class Storage {
-    private final Path filePath ;
+    private String filePath;
 
-    public Storage(String filePath){
-        this.filePath = Paths.get(filePath);
+    /**
+     * Constructor for Storage class
+     *
+     * @param filePath the path of the stored text file
+     */
+    public Storage(String filePath) {
+        this.filePath = filePath;
     }
 
-    public Tasklist textFileToProgram() throws TaskLoadErrorException {
-        ArrayList<Task> listOfTasks = new ArrayList<>();
-        try{
-            Files.createDirectories(filePath.getParent());
-            File taskFile = filePath.toFile();
-            if(!taskFile.createNewFile()) {
-                Scanner sc = new Scanner(new FileReader(taskFile));
-                while (sc.hasNextLine()) {
-                    String textFileLine = sc.nextLine();
-                    String[] textFileLines = textFileLine.trim().split("\\s+\\|\\s+");
-                    String taskType = textFileLines[0];
-                    String status = textFileLines[1];
-                    String description = textFileLines[2];
-                    Task task = null;
-                    if (Objects.equals(taskType, "T")) {
-                        task = new Todo(description);
-                    } else if (Objects.equals(taskType, "D")) {
-                        task = new Deadline(description, textFileLines[3]);
-                    } else if (Objects.equals(taskType, "E")) {
-                        task = new Event(description, textFileLines[3], textFileLines[4]);
-                    }
-
-                    if (Objects.equals(status, "1")) {
-                        assert task != null;
-                        task.markAsDone();
-                    }
-
-                    listOfTasks.add(task);
-                }
-
-            }
-
-
-//                    switch(textFileLines[0]){
-//                    case "T": // identify as a to-do task
-//                        String taskDescription = textFileLine.substring(8);
-//                        Todo todoTask = new Todo(taskDescription, "T");
-//                        //Determine if task is pre-marked
-//                        if (textFileLines[2].equals("1")){
-//                            todoTask.markAsDone();
-//                        }
-//                        listOfTasks.add(todoTask);
-//                        break;
-//
-//                    case "D": // identify as a deadline task
-//                        textFileLine = textFileLine.substring(8);   // read line from task description onwards
-//                        int separatorIdx = textFileLine.indexOf("|");
-//                        taskDescription = textFileLine.substring(0 , separatorIdx-1);
-//                        String by = textFileLine.substring(separatorIdx + 2);
-//                        Deadline deadlineTask = new Deadline(taskDescription, "D" , by);
-//                        //Determine if task is pre-marked
-//                        if (textFileLines[2].equals("1")){
-//                            deadlineTask.markAsDone();
-//                        }
-//                        listOfTasks.add(deadlineTask);
-//                        break;
-//                    case "E":
-//                        textFileLine = textFileLine.substring(8);
-//                        separatorIdx = textFileLine.indexOf("|");
-//                        int lastSeparatorIdx = textFileLine.lastIndexOf("|");
-//                        taskDescription = textFileLine.substring(0, separatorIdx - 1);
-//                        String from = textFileLine.substring(separatorIdx + 2, lastSeparatorIdx - 1);
-//                        String to = textFileLine.substring(lastSeparatorIdx + 2);
-//                        Event event = new Event(taskDescription, "E", from, to);
-//                        if (textFileLines[2].equals("1")) {
-//                            event.markAsDone();
-//                        }
-//                        listOfTasks.add(event);
-//                        break;
-
-
-
-        } catch (IOException exception){
-        throw new TaskLoadErrorException();
-        } catch(InvalidDateTimeFormatException exception){
-
+    /**
+     * Creates a new text file if it does not exist
+     *
+     * @throws IOException if error during file creation
+     */
+    public void createTextFile() throws IOException {
+        File file = new File(filePath);
+        if (!file.exists()) {
+            file.createNewFile();
+            file.mkdirs();
         }
-        return new Tasklist(listOfTasks);
     }
-    // Save changes from program to txt file
-    public void updateFile(Tasklist tasklist) {
+
+    /**
+     * Updates tasklist with data from existing save file if it exists
+     *
+     * @param tasks the tasklist to be updated
+     */
+    public void loadTextFile(TaskList tasks) {
         try {
-            FileWriter taskFileWriter = new FileWriter(filePath.toFile());
-            for (int i = 0; i < tasklist.getNumberOfTasks(); i++) {
-                taskFileWriter.write(tasklist.getTask(i).saveText());
-                taskFileWriter.write(System.lineSeparator());
+            BufferedReader reader = new BufferedReader(new FileReader(filePath));
+            String textFileLine;
+            while ((textFileLine = reader.readLine()) != null) {
+                String[] textLinesArray = textFileLine.split("\\|", -1);
+                if (textFileLine.startsWith("T")) {
+                    Todo todo = new Todo(textLinesArray[2]);
+                    if (textLinesArray[2].equals("1")) {
+                        todo.markAsDone();
+                    }
+                    tasks.addNewTask(todo);
+                } else if (textFileLine.startsWith("D")) {
+                    Deadline deadline = new Deadline(textLinesArray[2], textLinesArray[3]);
+                    if (textLinesArray[2].equals("1")) {
+                        deadline.markAsDone();
+                    }
+                    tasks.addNewTask(deadline);
+                } else {
+                    Event event = new Event(textLinesArray[2], textLinesArray[3], textLinesArray[4]);
+                    if (textLinesArray[2].equals("1")) {
+                        event.markAsDone();
+                    }
+                    tasks.addNewTask(event);
+                }
             }
-            taskFileWriter.close();
-        } catch (IOException e) {
-
+        } catch (IOException exception) {
+            Messages.IOErrorMessage();
+        } catch (Exception exception) {
+            Messages.taskLoadErrorMessage();
         }
     }
 
-
-
-
-
-
-
-
-
-//        File txtf = new File(filePath);
-//        Scanner scan = new Scanner(txtf);
-//        // Load data from file
-//        while (scan.hasNext()) {
-//            String textFileLine = scan.nextLine();
-//            String[] textFileLines = textFileLine.split(" ");
-//            //Categorise and filter based on taskType
-//            switch(textFileLines[0]){
-//            case "T": // identify as a to-do task
-//                String taskDescription = textFileLine.substring(8);
-//                Todo todoTask = new Todo(taskDescription, "T");
-//                //Determine if task is pre-marked
-//                if (textFileLines[2].equals("1")){
-//                    todoTask.markAsDone();
-//                }
-//                listOfTasks.add(todoTask);
-//                break;
-//
-//            case "D": // identify as a deadline task
-//                textFileLine = textFileLine.substring(8);   // read line from task description onwards
-//                int separatorIdx = textFileLine.indexOf("|");
-//                taskDescription = textFileLine.substring(0 , separatorIdx-1);
-//                String by = textFileLine.substring(separatorIdx + 2);
-//                Deadline deadlineTask = new Deadline(taskDescription, "D" , by);
-//                //Determine if task is pre-marked
-//                if (textFileLines[2].equals("1")){
-//                    deadlineTask.markAsDone();
-//                }
-//                listOfTasks.add(deadlineTask);
-//                break;
-//            case "E":
-//                textFileLine = textFileLine.substring(8);
-//                separatorIdx = textFileLine.indexOf("|");
-//                int lastSeparatorIdx = textFileLine.lastIndexOf("|");
-//                taskDescription = textFileLine.substring(0, separatorIdx - 1);
-//                String from = textFileLine.substring(separatorIdx + 2, lastSeparatorIdx - 1);
-//                String to = textFileLine.substring(lastSeparatorIdx + 2);
-//                Event event = new Event(taskDescription, "E", from, to);
-//                if (textFileLines[2].equals("1")) {
-//                    event.markAsDone();
-//                }
-//                listOfTasks.add(event);
-//                break;
-//
-//            default:
-//                System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-//                System.out.println("File conversion is complete!");
-//                System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
-//
-//            }
-//        }
-//        return listOfTasks;
-//    }
-
-//    public static void writeToFile(String newText) throws IOException{
-//        FileWriter fw = new FileWriter(filePath);
-//        fw.write(newText);
-//        fw.close();
-//    }
-//    public static void appendTextToFile(String newText) throws IOException {
-//        FileWriter fw = new FileWriter(filePath, true); // create a FileWriter in append mode
-//        fw.write(newText);
-//        fw.close();
-//    }
-
-
-
-//    public static void checkFileAccess() throws IOException {
-//        File dir = new File(directoryPath);
-//        if (!dir.exists()) {
-//            dir.mkdir();
-//        }
-//        File f = new File(filePath);
-//        if (!f.exists()) {
-//            f.createNewFile();
-//        }
-//    }
+    /**
+     * Updates the text file with data from the tasklist
+     *
+     * @param tasks tasks within the tasklist to be converted and updated to the text file
+     * @throws IOException if error during the update
+     */
+    public void updateTextFile(TaskList tasks) throws IOException {
+        FileWriter fw = new FileWriter(filePath);
+        for (int i = 0; i < tasks.sizeOfTasksArray(); i++) {
+            Task task = tasks.getTask(i);
+            String type;
+            String description = task.getDescription();
+            String done = task.isDone() ? "1" : "0";
+            if (task instanceof Todo) {
+                type = "T";
+                fw.write(type + "|" + done + "|" + description + "\n");
+            } else if (task instanceof Deadline) {
+                type = "D";
+                String by = ((Deadline) task).getBy();
+                fw.write(type + "|" + done + "|" + description + "|" + by + "\n");
+            } else {
+                type = "E";
+                String startTime = ((Event) task).getStartTime();
+                String endTime = ((Event) task).getEndTime();
+                fw.write(type + "|" + done + "|" + description + "|" + startTime + "|" + endTime + "\n");
+            }
+        }
+        fw.close();
+    }
 }

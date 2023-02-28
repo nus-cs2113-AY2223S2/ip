@@ -1,16 +1,22 @@
 package duke.commands;
-import java.util.ArrayList;
-import java.util.List;
-import duke.outputs.Messages;
 
-public class ListCommand extends TaskCommand{
-    public ListCommand(){
-        super("list");
-    }
-    public CommandResult execute() {
-        ArrayList<String> messages = new ArrayList<>();
-        messages.add(String.format(Messages.MESSAGE_TASK_LIST_SIZE, tasklist.getNumberOfTasks()));
-        messages.addAll(List.of(tasklist.listOfTasks()));
-        return new CommandResult(messages.toArray(new String[0]));
+import duke.outputs.Messages;
+import duke.file.TaskList;
+import duke.ui.*;
+
+/**
+ * Command to output all stored tasks in the tasklist
+ */
+public class ListCommand extends Command {
+    /**
+     * outputs tasklist and its stored tasks
+     *
+     * @param input details of the user command
+     * @param tasks tasklist which contains all the tasks
+     * @param ui    UI to output all stored tasks within the tasklist
+     */
+    @Override
+    public void execute(String input, TaskList tasks, UI ui) {
+        ui.printTasksArray(tasks);
     }
 }

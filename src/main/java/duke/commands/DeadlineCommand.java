@@ -1,26 +1,43 @@
 package duke.commands;
+
 import duke.tasks.Deadline;
 import duke.outputs.Messages;
-import duke.exception.InvalidDateTimeFormatException;
+import duke.file.TaskList;
+import duke.ui.*;
 
-public class DeadlineCommand extends TaskCommand{
-    private String taskDescription;
-    private String by;
+/**
+ * Command to execute when adding new deadline object to task list
+ */
+public class DeadlineCommand extends Command {
+    private Deadline deadline;
 
-    public DeadlineCommand(String taskDescription, String by) {
-        super("deadline");
-        this.taskDescription = taskDescription;
-        this.by = by;
+    /**
+     * creates a new deadline object
+     *
+     * @param input data of given command and description
+     */
+    public void setDeadline(String input) {
+        String[] temp = input.split("deadline | /by "); //separates deadline description and time
+        String description = temp[1];
+        String by = temp[2];
+        this.deadline = new Deadline(description, by);
     }
-    public CommandResult execute() {
+
+    /**
+     * Adds a new deadline object into the task list
+     *
+     * @param input data of given command and description
+     * @param tasks task list containing all current tasks
+     * @param ui    UI object to print task successfully added statement
+     */
+    @Override
+    public void execute(String input, TaskList tasks, UI ui) {
         try {
-            Deadline task = new Deadline(taskDescription, by);
-            tasklist.addTask(task);
-            return new CommandResult(Messages.MESSAGE_TASK_ADDED,
-                    String.format("\n\t\t%s \n", task),
-                    String.format(Messages.MESSAGE_TASK_LIST_SIZE, tasklist.getNumberOfTasks()));
-        } catch(InvalidDateTimeFormatException exception){
-            return new CommandResult(exception.getDukeMessages());
+            setDeadline(input);
+            tasks.addNewTask(deadline);
+            ui.printTaskAddedMessage(tasks, deadline);
+        } catch (ArrayIndexOutOfBoundsException exception) {
+            Messages.emptyDeadlineErrorMessage();
         }
     }
 }

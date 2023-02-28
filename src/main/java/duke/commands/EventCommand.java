@@ -1,28 +1,46 @@
 package duke.commands;
+
 import duke.tasks.Event;
-import duke.exception.InvalidDateTimeFormatException;
 import duke.outputs.Messages;
+import duke.file.TaskList;
+import duke.ui.*;
 
-public class EventCommand extends TaskCommand{
-    private String taskDescription;
-    private String startTime;
-    private String endTime;
+/**
+ * Command when adding a new event task to tasklist
+ */
+public class EventCommand extends Command {
+    private Event event;
 
-    public EventCommand(String taskDescription, String startTime, String endTime) {
-        super("event");
-        this.taskDescription = taskDescription;
-        this.startTime = startTime;
-        this.endTime = endTime;
+    /**
+     * creates a new event task
+     *
+     * @param input details of the user command
+     */
+
+    public void setEvent(String input) {
+        //separates event description and times
+        String[] deconstructedDetails = input.split(("event | /from | /to "));
+        String description = deconstructedDetails[1];
+        String startTime = deconstructedDetails[2];
+        String endTime = deconstructedDetails[3];
+        this.event = new Event(description, startTime, endTime);
     }
-    public CommandResult execute() {
+
+    /**
+     * Adds a new event task into the tasklist
+     *
+     * @param input details of the user command
+     * @param tasks tasklist which contains all the tasks
+     * @param ui    UI to show task addition message
+     */
+    @Override
+    public void execute(String input, TaskList tasks, UI ui) {
         try {
-            Event task = new Event(taskDescription, startTime, endTime);
-            tasklist.addTask(task);
-            return new CommandResult(Messages.MESSAGE_TASK_ADDED,
-                    String.format("\n\t\t%s \n", task),
-                    String.format(Messages.MESSAGE_TASK_LIST_SIZE, tasklist.getNumberOfTasks()));
-        } catch (InvalidDateTimeFormatException exception){
-            return new CommandResult(exception.getDukeMessages());
+            setEvent(input);
+            tasks.addNewTask(event);
+            ui.printTaskAddedMessage(tasks, event);
+        } catch (ArrayIndexOutOfBoundsException exception) {
+            Messages.emptyEventErrorMessage();
         }
     }
 }

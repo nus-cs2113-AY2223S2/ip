@@ -1,132 +1,63 @@
 package duke;
+
+import duke.outputs.Messages;
 import duke.parser.Parser;
 import duke.storage.Storage;
-import duke.tasks.Tasklist;
 import duke.ui.UI;
-import duke.commands.Command;
-import duke.commands.CommandResult;
-import duke.commands.TaskCommand;
-import duke.exception.DukeException;
-import duke.exception.TaskLoadErrorException;
-import duke.outputs.Messages;
+import duke.file.TaskList;
 
+import java.io.IOException;
+
+/**
+ * Main class to manage all operations
+ */
 public class Duke {
-    private final Storage storage;
-    private final Tasklist taskList;
-    private final UI ui;
-    private final Parser parser;
 
+    private Storage storage;
+    private TaskList tasks;
+    private UI ui;
+    public boolean isExit = false;
 
-//    public Duke(String filePath) {
-//        TaskList taskList1;
-//        this.ui = new UI();
-//        this.parser = new Parser();
-//        this.storage = new Storage(filePath);
-//        try {
-//            taskList1 = storage.loadTaskList();
-//        } catch (ErrorLoadingTaskException exception) {
-//            ui.speakToUser(exception.getBlobMessages());
-//            taskList1 = new TaskList();
-//        }
-//        this.taskList = taskList1;
-//    }
+    /**
+     * Constructor to create new UI, storage and tasklist objects
+     * @param filepath filepath of the existing text file
+     */
+    public Duke(String filepath) {
+        ui = new UI();
+        storage = new Storage(filepath);
+        tasks = new TaskList();
+    }
 
-//    public void run() {
-//        ui.showWelcomeMessage();
-//        boolean isExit = false;
-//        while (!isExit) {
-//            try {
-//                String fullCommand = ui.readCommand();
-//                ui.showLine(); // show the divider line ("_______")
-//                Command c = Parser.parse(fullCommand);
-//                c.execute(tasks, ui, storage);
-//                isExit = c.isExit();
-//            } catch (DukeException e) {
-//                ui.showError(e.getMessage());
-//            } finally {
-//                ui.showLine();
-//            }
-//        }
-//    }
-
-    Duke(String filePath) {
-        Tasklist taskList1;
-        this.ui = new UI();
-        this.parser = new Parser();
-        this.storage = new Storage(filePath);
+    /**
+     * Loads the text file and executes the program
+     * @throws IOException if error occurs during the file load
+     */
+    public void run() throws IOException {
         try {
-            taskList1 = storage.textFileToProgram();
-        } catch (TaskLoadErrorException exception) {
-            System.out.println(Messages.ERROR_MESSAGE_LOADING_TASK_ERROR);
-            taskList1 = new Tasklist();
+            storage.createTextFile();
+        } catch (IOException exception) {
+            Messages.taskLoadErrorMessage();
         }
-        this.taskList = taskList1;
-    }
-
-
-
-    // Run program here:
-    public static void main(String[] args) {
-        new Duke("data/duke.txt");
-    }
-    public void end() {
-        storage.updateFile(taskList);
-        ui.endProgram();
-        System.exit(0);
-    }
-
-    public String[] getResponse(String input) {
-        try {
-            Command command = parser.parseInput(input);
-            CommandResult result;
-
-            if (command.isByeCommand()) {
-                end();
-            }
-
-            if (command.isTaskCommand()) {
-                TaskCommand taskCommand = (TaskCommand) command;
-                taskCommand.createList(taskList);
-                result = taskCommand.execute();
-                storage.updateFile(taskList);
-            } else {
-                result = command.execute();
-            }
-            return result.getResultMessages();
-        } catch (DukeException exception) {
-            return exception.getDukeMessages();
+        storage.loadTextFile(tasks);
+        UI.showWelcomeMessage();
+        while (!isExit) {
+            String input = ui.getUserInput();
+            Parser parser = new Parser(input);
+            parser.runCommand(tasks, ui);
+            storage.updateTextFile(tasks);
+            isExit = parser.isByeCommand;
         }
     }
+
+    /**
+     * Command to start the program
+     * @throws IOException if error occurs during the file load
+     */
+    public static void main(String[] args) throws IOException {
+        new Duke("./duke.txt").run();
+    }
+
 }
-
-
-
-
-//    public void run(){
-//        try {
-//            Storage.checkFileAccess();
-//            List<Task> tasksList = Storage.textFileToProgram();
-//            tasksArray.addAll(tasksList);
-//
-//        } catch (FileNotFoundException e) {
-//            System.out.println("File not found");
-//        } catch (IOException e) {
-//            System.out.println("Something went wrong: " + e.getMessage());
-//        }
-//        String userInput;
-//        Scanner in = new Scanner(System.in);
-//        UI.welcomeMessage();
-//        do {
-//            userInput = in.nextLine();
-//            enterCommand(userInput);
-//        } while (!userInput.equals("bye"));
-//    }
-
-
-
-
-
-
 
 
 

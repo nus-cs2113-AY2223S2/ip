@@ -1,24 +1,18 @@
 package duke.commands;
 
+import duke.file.TaskList;
+import duke.ui.*;
+
+/**
+ * Abstract class to manage all commands
+ */
 public abstract class Command {
-
-    /** The word used to invoke the command */
-    public final String commandWord;
-
-    protected Command(String commandWord) {
-        this.commandWord = commandWord;
-    }
-
-
-    public abstract CommandResult execute();
-
-
-    public boolean isByeCommand() {
-        return this instanceof ByeCommand;
-    }
-
-
-    public boolean isTaskCommand() {
-        return this instanceof TaskCommand;
-    }
+    /**
+     * Abstract method to execute all commands
+     *
+     * @param input
+     * @param tasks
+     * @param ui
+     */
+    public abstract void execute(String input, TaskList tasks, UI ui);
 }

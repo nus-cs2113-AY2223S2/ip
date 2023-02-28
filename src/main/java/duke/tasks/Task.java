@@ -1,38 +1,70 @@
 package duke.tasks;
 
+/**
+ * Represents a general task. All task objects have their specific types , status(done or not)
+ * and their task descriptions
+ */
+
 public class Task {
     protected String description;
     protected boolean isDone;
-    protected TaskType type;
+    protected String type;
 
 
-    public Task(String description, TaskType type) {
+    /**
+     * Constructor for a general task
+     *
+     * @param description the task description
+     */
+    public Task(String description) {
         this.description = description;
         this.isDone = false;
-        this.type = type;
     }
+
+    /**
+     * Getter functions for the specified task types , task descriptions and statuses
+     *
+     * @return the type of the task , description of the task and
+     * status of task(True if it is marked as done, else False)
+     */
+    public String getType() {
+        return type;
+    }
+
+    public String toString() {
+        return "";
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+
+    public boolean isDone() {
+        return isDone;
+    }
+
+    /**
+     * Update the icon of the task according to its status
+     *
+     * @return "X" if it is done and " " if it is not done
+     */
+    public String getStatusIcon() {
+        return (isDone ? "[X]" : "[ ] ");
+    }
+
+    /**
+     * Marks the current task as done
+     */
     public void markAsDone() {
         isDone = true;
     }
 
+    /**
+     * Unmark the current task as done
+     */
     public void markAsUndone() {
         isDone = false;
-    }
-    // mark done task with X on 2nd []
-    public String getStatusIcon() {
-        return (isDone ? "X" : " ");
-    }
-
-    public String toString(){
-
-        return String.format("[%s][%s] %s", this.type.getAbbreviation(),
-                this.getStatusIcon(), this.description);
-    }
-
-
-    public String saveText() {
-        return String.format("%s | %d | %s", this.type.getAbbreviation(),
-                this.isDone ? 1 : 0, this.description);
     }
 
 }
