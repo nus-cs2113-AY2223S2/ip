@@ -26,6 +26,8 @@ public class Ui {
     //prints exit statement
     public static void printExit(){
         String exit = "Bye. Hope to see you again soon! \n";
+        printBorder();
         System.out.println(exit);
+        printBorder();
     }
 }

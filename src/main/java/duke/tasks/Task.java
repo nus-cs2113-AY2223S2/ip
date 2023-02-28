@@ -1,22 +1,30 @@
 package duke.tasks;
-
+/**
+ * Represents a task in Duke, from which different task types such as
+ * Todo, Event and Deadline are derived.
+ */
 public class Task {
 
     public String name;
-    public Boolean status;
+    public Boolean isCompleted;
 
-
-    public Task(String name, Boolean status){
+    /**
+     * Task constructor
+     *
+     * @param name        Name of task
+     * @param isCompleted Completion status of task
+     */
+    public Task(String name, Boolean isCompleted){
         this.name = name;
-        this.status = status;
+        this.isCompleted = isCompleted;
     }
 
 
     public void setStatus(String action){
         if (action.equals("mark")){
-            this.status = true;
+            this.isCompleted = true;
         } else if (action.equals("unmark")) {
-            this.status = false;
+            this.isCompleted = false;
         }
     }
 
@@ -24,7 +32,7 @@ public class Task {
     public String toString(){
         String checkbox = "[ ]";
         String typeIndicator = null;
-        if(status){
+        if(isCompleted){
             checkbox = "[X]";
         }
 
@@ -32,6 +40,6 @@ public class Task {
     }
 
     public String toTextFileFormat(){
-        return name + status;
+        return name + isCompleted;
     }
 }
