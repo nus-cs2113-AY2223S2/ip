@@ -1,3 +1,4 @@
+import commands.Command;
 import io.DukeNUSPrinter;
 import io.TasksDataRead;
 import io.TasksDataWrite;
@@ -13,76 +14,12 @@ import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Scanner;
-import java.util.stream.Collectors;
 
 import static java.lang.Integer.parseInt;
-import static java.util.stream.Collectors.toCollection;
 
 public class DukeNUS {
     private static final String FILEPATH = "data/dukeNUS.txt";
     private static ArrayList<Task> tasks = new ArrayList<Task>();
-
-    /**
-     * @param tasks The master ArrayList of all tasks.
-     * @param searchPrompt The string to be searched within the description of each task. This is case-sensitive.
-     * @return A filtered ArrayList of tasks with the searchPrompt as a substring in its description.
-     */
-    public static ArrayList<Task> getFoundTasks(ArrayList<Task> tasks, String searchPrompt) {
-        return tasks.stream()
-                .filter(task -> task.getDescription().contains(searchPrompt))
-                .collect(toCollection(ArrayList::new));
-    }
-
-    /**
-     * @param todo A newly constructed todo object as a child of Task that has a user-defined description.
-     */
-    public static void addTodo(Todo todo) {
-        tasks.add(todo);
-        DukeNUSPrinter.printAddedTask(todo.getTaskString(), tasks.size());
-    }
-
-    /**
-     * @param deadline A newly constructed deadline object as a child of Task that has a user-defined description
-     *                 and due date.
-     */
-    public static void addDeadline(Deadline deadline) {
-        tasks.add(deadline);
-        DukeNUSPrinter.printAddedTask(deadline.getTaskString(), tasks.size());
-    }
-
-    /**
-     * @param event A newly constructed event object as a child of Task that has a user-defined description,
-     *              from date, and to date.
-     */
-    public static void addEvent(Event event) {
-        tasks.add(event);
-        DukeNUSPrinter.printAddedTask(event.getTaskString(), tasks.size());
-    }
-
-    /**
-     * @param taskIndex The 1-based index of the task the user is referring to. Will remove the task from the array.
-     */
-    private static void deleteTask(int taskIndex) {
-        DukeNUSPrinter.printDeletedTask(tasks.get(taskIndex - 1).getTaskString());
-        tasks.remove(taskIndex - 1);
-    }
-    /**
-     * @param taskIndex The 1-based index of the task the user is referring to. Will cause the isDone property of the
-     *                  task to be true.
-     */
-    public static void markTask(int taskIndex) {
-        tasks.get(taskIndex - 1).setDone(true);
-        DukeNUSPrinter.printMarkedTask(tasks.get(taskIndex - 1).getTaskString());
-    }
-
-    /**
-     * @param taskIndex The 1-based index of the task the user is referring to. Will cause the isDone property of the
-     *                  task to be false.
-     */
-    public static void unmarkTask(int taskIndex) {
-        tasks.get(taskIndex - 1).setDone(false);
-        DukeNUSPrinter.printUnmarkedTask(tasks.get(taskIndex - 1).getTaskString());
-    }
 
     /**
      * Directs the input to execute the correct command.
@@ -100,7 +37,7 @@ public class DukeNUS {
             }
             break;
         case "find":
-            ArrayList<Task> filteredTasks = getFoundTasks(tasks, userInputWords[1]);
+            ArrayList<Task> filteredTasks = Command.getFoundTasks(tasks, userInputWords[1]);
             if (filteredTasks.isEmpty()) {
                 DukeNUSPrinter.printMessage("Tasks containing the term \"" + userInputWords[1] + "\" were not found.");
             } else {
@@ -109,7 +46,7 @@ public class DukeNUS {
             break;
         case "delete":
             try {
-                deleteTask(parseInt(userInputWords[1]));
+                Command.deleteTask(tasks, parseInt(userInputWords[1]));
             } catch (IndexOutOfBoundsException exception) {
                 DukeNUSPrinter.printMessage("☹ Error: The index of the task is missing or out of bounds.");
             } catch (NumberFormatException exception) {
@@ -120,7 +57,7 @@ public class DukeNUS {
             break;
         case "mark":
             try {
-                markTask(parseInt(userInputWords[1]));
+                Command.markTask(tasks, parseInt(userInputWords[1]));
             } catch (IndexOutOfBoundsException exception) {
                 DukeNUSPrinter.printMessage("☹ Error: The index of the task is missing or out of bounds.");
             } catch (NumberFormatException exception) {
@@ -131,7 +68,7 @@ public class DukeNUS {
             break;
         case "unmark":
             try {
-                unmarkTask(parseInt(userInputWords[1]));
+                Command.unmarkTask(tasks, parseInt(userInputWords[1]));
             } catch (ArrayIndexOutOfBoundsException exception) {
                 DukeNUSPrinter.printMessage("☹ Error: The index of the task is missing or out of bounds.");
             } catch (NumberFormatException exception) {
@@ -142,7 +79,7 @@ public class DukeNUS {
             break;
         case "todo":
             try {
-                addTodo(new Todo(userInputWords[1], false));
+                Command.addTodo(tasks, new Todo(userInputWords[1], false));
             } catch (ArrayIndexOutOfBoundsException exception) {
                 DukeNUSPrinter.printMessage("☹ Error: please specify the description of the todo.");
             }
@@ -150,7 +87,7 @@ public class DukeNUS {
         case "deadline":
             try {
                 String[] deadlineInput = userInputWords[1].split("/by", 2);
-                addDeadline(new Deadline(deadlineInput[0], deadlineInput[1], false));
+                Command.addDeadline(tasks, new Deadline(deadlineInput[0], deadlineInput[1], false));
             } catch (ArrayIndexOutOfBoundsException exception) {
                 DukeNUSPrinter.printMessage("☹ Error: incorrect syntax. Correct usage: " +
                         "`deadline [description] /by [deadline]`.");
@@ -161,7 +98,7 @@ public class DukeNUS {
         case "event":
             try {
                 String[] eventInput = userInputWords[1].split("/from|/to", 3);
-                addEvent(new Event(eventInput[0], eventInput[1], eventInput[2], false));
+                Command.addEvent(tasks, new Event(eventInput[0], eventInput[1], eventInput[2], false));
             } catch (ArrayIndexOutOfBoundsException exception) {
                 DukeNUSPrinter.printMessage("☹ Error: incorrect syntax. Correct usage: " +
                         "`event [description] /from [start_date] /to [end_date]`.");
