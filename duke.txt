@@ -1,7 +1,5 @@
-deadline/adwwc/true/12332
 event/svnsjkc/false/wdfeve/sfnkfjen
 todo/popopop/false
-todo/sleep/true
-todo/test test/false
-todo/2424/true
-deadline/test skfje/false/ 3984
+todo/ /false
+deadline/skdnsed/true/dlwnk
+event/slefiwf/false/dwkjen/wkew

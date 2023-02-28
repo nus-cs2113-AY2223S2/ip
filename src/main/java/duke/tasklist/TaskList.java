@@ -6,6 +6,9 @@ import java.util.ArrayList;
 
 import static duke.ui.Ui.printBorder;
 
+/**
+ * Represents the list which stores task objects in Duke.
+ */
 public class TaskList {
     public ArrayList<Task> tasks;
     public TaskList() {
@@ -44,7 +47,7 @@ public class TaskList {
                 counter++;
             }
         }
-        System.out.println("You have " + tasks.getSize() + " tasks in your list.");
+        System.out.println("\nYou have " + tasks.getSize() + " tasks in your list.");
         printBorder();
     }
 }
