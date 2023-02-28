@@ -14,9 +14,15 @@ public class FindTask extends Command {
         ArrayList<Task> tasksFound = new ArrayList<Task>();
         for (Task task : tasks) {
             taskName = task.getTaskName();
-            if (taskName.equals(taskToFind)) {
-                tasksFound.add(task);
+            String keywords[] = taskName.split(" ");
+            for(String keyword : keywords){
+                if(keyword.equals(taskToFind)) {
+                    tasksFound.add(task);
+                }
             }
+//            if (taskName.equals(taskToFind)) {
+//                tasksFound.add(task);
+//            }
         }
         if (!tasksFound.isEmpty()) {
             printHorizontalLine();
