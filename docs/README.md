@@ -147,6 +147,7 @@ Here are the matching tasks in your list:
  > :bulb: **Tip:** The search is NOT case-sensitive. `cs` will recognise `CS` as shown above.
  
  > :memo: **Note:** The keyword to filter on may contain more than 1 word. For example, `CS 2113` is allowed.
+ 
  <br/><br/>
 ### Marking a task as done: `mark`
 
