@@ -82,6 +82,7 @@ Expected outcome:
 
 Example of usage:
 `deadline <deadline description> by: <when>`
+when must be in `yyyy-mmm-dd` format
 
 Expected outcome:
 ```
@@ -97,6 +98,8 @@ Expected outcome:
 
 Example of usage:
 `event <event description> from: <when> to: <when>`
+
+when must be in `yyyy-mmm-dd` format
 
 Expected outcome:
 ```
