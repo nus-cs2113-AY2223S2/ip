@@ -1,0 +1,2 @@
+deadline kill /by2000-12-12/markedtrue
+event KILLAKILL /from2000-10-11/to2011-11-11/markedfalse
