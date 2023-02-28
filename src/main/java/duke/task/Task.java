@@ -34,6 +34,10 @@ public class Task {
        // return " ";
     }
 
+    public boolean isFound(String keyword) {
+        return (description.contains(keyword));
+    }
+
     public String toString() {
         return "[" + this.getStatusIcon() + "] ";
     }

@@ -56,7 +56,7 @@ public class Storage {
 
     }
 
-    public void loadData(TaskList tasks) throws IOException {
+    public void loadData(TaskList tasks, UI ui) throws IOException {
 
         File directory = new File(folder);
 
@@ -90,7 +90,7 @@ public class Storage {
                     taskToAdd = gson.fromJson(element, Event.class);
                     break;
                 default:
-                    UI.printInvalidFileRead();
+                    ui.printInvalidFileRead();
                 }
                 tasks.addTask(taskToAdd);
             }

@@ -16,13 +16,13 @@ public class MarkTaskCommand extends Command {
         this.taskNumber = taskNumber;
     }
 
-    public void execute(TaskList tasks, Storage storage) {
+    public void execute(TaskList tasks, Storage storage, UI ui) {
 
         try {
             Task task = tasks.getTask(taskNumber);
             task.markAsDone();
-            UI.printMarkDone();
-            UI.printTask(task);
+            ui.printMarkDone();
+            ui.printTask(task);
         } catch (IndexOutOfBoundsException e) {
             System.out.println("The given task number does not exist. ):");
             //throw in here

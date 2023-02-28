@@ -10,9 +10,11 @@ public class TaskList implements Iterable<Task> {
     public Iterator<Task> iterator() {
         return tasks.iterator();
     }
-    public ArrayList<Task> getAllTasks() {
+    /*public ArrayList<Task> getAllTasks() {
         return tasks;
     }
+    */
+
     public void addTask(Task task) {
         tasks.add(task);
     }
@@ -25,6 +27,20 @@ public class TaskList implements Iterable<Task> {
     }
     public int getSize() {
         return tasks.size();
+    }
+
+    public ArrayList<Task> findTasks (String keyword) {
+        ArrayList<Task> foundTasks = new ArrayList<Task>();
+
+        for (Task task : tasks) {
+            if(task.isFound(keyword)) {
+                foundTasks.add(task);
+            }
+
+        }
+
+        return foundTasks;
+
     }
 
 }

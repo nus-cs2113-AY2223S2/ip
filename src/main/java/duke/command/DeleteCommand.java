@@ -15,11 +15,11 @@ public class DeleteCommand extends Command {
         this.taskNumber = taskNumber;
     }
 
-    public void execute(TaskList tasks, Storage storage) {
+    public void execute(TaskList tasks, Storage storage, UI ui) {
         try {
             Task task = tasks.getTask(taskNumber);
-            UI.printDeleteTask();
-            UI.printTask(task);
+            ui.printDeleteTask();
+            ui.printTask(task);
             tasks.removeTask(taskNumber);
 
         } catch (IndexOutOfBoundsException e) {
