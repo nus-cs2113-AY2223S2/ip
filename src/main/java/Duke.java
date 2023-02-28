@@ -7,7 +7,7 @@ import java.io.FileNotFoundException;
 import duke.TaskManager;
 
 public class Duke {
-    
+
     public static void printInstructions() {
         System.out.println("LIST OF ALL COMMANDS:");
         System.out.println("todo + \"task name\" to add a task");
@@ -18,6 +18,7 @@ public class Duke {
         System.out.println("mark + \"task number\" to mark an item");
         System.out.println("unmark + \"task number\" to unmark an item");
         System.out.println("delete + \"task number\" to remove an item");
+        System.out.println("clear to clear all data in the hard drive");
     }
 
     public static void printHorizontalLine() {
@@ -40,7 +41,7 @@ public class Duke {
     public static void executeAddTodo(String s, TaskManager listofItems) {
         try {
             s = s.substring("todo ".length(), s.length());
-            listofItems.addTask(s);
+            listofItems.addTask(s, false);
             System.out.println("Roger. The following todo has been added:");
             System.out.println("[T][ ] " + s);
             System.out.println("You now have " + listofItems.getSize() + " item in the list");
@@ -59,7 +60,7 @@ public class Duke {
                 printInstructions();
                 return;
             }
-            listofItems.addDeadline(cmd[0], cmd[1]);
+            listofItems.addDeadline(cmd[0], cmd[1], false);
             System.out.println("Roger. The following deadline has been added:");
             System.out.println("[D][ ] " + cmd[0] + " (by: " + cmd[1] + ")");
             System.out.println("You now have " + listofItems.getSize() + " item in the list");
@@ -79,7 +80,7 @@ public class Duke {
             String[] cmd = s.split(" /from ");
             String startTime = cmd[1].split(" /to ")[0];
             String endTime = cmd[1].split(" /to ")[1];
-            listofItems.addEvent(cmd[0], startTime, endTime);
+            listofItems.addEvent(cmd[0], startTime, endTime, false);
             System.out.println("Roger. The following event has been added:");
             System.out.println("[E][ ] " + cmd[0] + " (from: " + startTime + " to: " + endTime + ")");
             System.out.println("You now have " + listofItems.getSize() + " item in the list");
@@ -106,10 +107,11 @@ public class Duke {
         printHorizontalLine();
     }
 
-    public static void main(String[] args) throws IOException{
+    public static void main(String[] args) throws IOException {
         printGreeting();
         Scanner scanObj = new Scanner(System.in);
         TaskManager listofItems = new TaskManager();
+        loadFile(listofItems);
         String userCmd = scanObj.nextLine();
         while (!userCmd.equals("bye")) {
             switch (firstWord(userCmd)) {
@@ -151,6 +153,11 @@ public class Duke {
                     printHorizontalLine();
                     listofItems.saveFile();
                     break;
+                case "clear":
+                    listofItems.clearData();
+                    listofItems.saveFile();
+                    printHorizontalLine();
+                    break;
                 default:
                     printfalseInput();
                     printHorizontalLine();
@@ -161,38 +168,55 @@ public class Duke {
         printGoodbye();
     }
 
-    public void loadFile(TaskManager listOfItems) throws FileNotFoundException {
+    public static void loadFile(TaskManager listOfItems) throws FileNotFoundException {
         String filePath = "C:/repos/IP/src/main/java/duke/load.txt";
         File f = new File(filePath);
         Scanner s = new Scanner(f);
         while (s.hasNext()) {
             String l = s.nextLine();
-            switch (l.substring(0,2)) {
-                case "[T]":
+            if (l.startsWith(" [T]")) {
                 loadTodo(listOfItems, l);
-                break;
-                case "[D]":
+            } else if (l.startsWith(" [D]")) {
                 loadDeadline(listOfItems, l);
-                break;
-                case "[E]":
+            } else if (l.startsWith(" [E]")) {
                 loadEvent(listOfItems, l);
-                break;
-                default:
-                break;
             }
         }
         s.close();
     }
 
-    public void loadTodo(TaskManager listOfItems, String l) {
+    public static void loadTodo(TaskManager listOfItems, String l) {
+        String name = l.substring(7).trim();
+        if (l.contains("[ ]")) {
+            listOfItems.addTask(name, false);
+        } else {
+            listOfItems.addTask(name, true);
+        }
     }
 
-    public void loadEvent(TaskManager listOfItems, String l) {
-        
+    public static void loadEvent(TaskManager listOfItems, String l) {
+        int fromIndex = l.indexOf("(from: ");
+        int toIndex = l.indexOf(" to: ", fromIndex);
+        String name = l.substring(8, fromIndex).trim();
+        String startTime = l.substring(fromIndex + 7, toIndex);
+        String finishTime = l.substring(toIndex + 5, l.length() - 1);
+        if (l.contains("[ ]")) {
+            listOfItems.addEvent(name, startTime, finishTime, false);
+        } else {
+            listOfItems.addEvent(name, startTime, finishTime, true);
+        }
     }
 
-    public void loadDeadline(TaskManager listOfItems, String l) {
-        
+    public static void loadDeadline(TaskManager listOfItems, String l) {
+        int byIndex = l.indexOf("(by: ");
+        String name = l.substring(8, byIndex - 1);
+        int endIndex = l.indexOf(")");
+        String deadline = l.substring(byIndex + 5, endIndex);
+        if (l.contains("[ ]")) {
+            listOfItems.addDeadline(name, deadline, false);
+        } else {
+            listOfItems.addDeadline(name, deadline, true);
+        }
     }
 
     private static void printGoodbye() {

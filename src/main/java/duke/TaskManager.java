@@ -2,23 +2,22 @@ package duke;
 
 import java.util.*;
 
-
 import java.io.FileWriter;
 import java.io.IOException;
 
 public class TaskManager {
     private ArrayList<Task> tasks = new ArrayList<>();
 
-    public void addTask(String name) {
-        tasks.add(new Task(name, false));
+    public void addTask(String name, boolean isDone) {
+        tasks.add(new Task(name, isDone));
     }
 
-    public void addDeadline(String name, String deadline) {
-        tasks.add(new Deadline(name, false,deadline));
+    public void addDeadline(String name, String deadline, boolean isDone) {
+        tasks.add(new Deadline(name, isDone, deadline));
     }
 
-    public void addEvent(String eventName, String startTime, String finishTime) {
-        tasks.add(new Event(eventName, false, startTime, finishTime));
+    public void addEvent(String eventName, String startTime, String finishTime, boolean isDone) {
+        tasks.add(new Event(eventName, isDone, startTime, finishTime));
     }
 
     public void markTask(int id) {
@@ -34,7 +33,7 @@ public class TaskManager {
     }
 
     public void listTask() {
-        if(tasks.size() == 0) {
+        if (tasks.size() == 0) {
             System.out.println("The list is currently empty!");
             return;
         }
@@ -67,4 +66,7 @@ public class TaskManager {
         fw.close();
     }
 
+    public void clearData() {
+        tasks.clear();
+    }
 }

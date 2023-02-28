@@ -1,8 +1,5 @@
 package duke;
 
-
-import java.io.FileWriter;
-import java.io.IOException;
 public class Deadline extends Task {
     protected String by;
 
@@ -13,10 +10,9 @@ public class Deadline extends Task {
 
     public String toString() {
         if (this.getIsDone() == true) {
-            return " [D][X]" + this.getName() + " (by: " + this.by + ")";
-        } else {
-            return " [D][ ]" + this.getName() + " (by: " + this.by + ")";
+            return " [D][X] " + this.getName() + " (by: " + this.by + ")";
         }
+        return " [D][ ] " + this.getName() + " (by: " + this.by + ")";
     }
 
     public void print() {
@@ -26,20 +22,4 @@ public class Deadline extends Task {
             System.out.println("." + this.toString());
         }
     }
-
-    private static void writeToFile(String filePath, String textToAdd) throws IOException {
-        FileWriter fw = new FileWriter(filePath);
-        fw.write(textToAdd);
-        fw.close();
-    }
-
-    public void save() {
-        String filePath = "C:/repos/IP/src/main/java/duke/load.txt";
-        try {
-            writeToFile(filePath, "D " + this.toString() + System.lineSeparator());
-        } catch (IOException e) {
-            System.out.println("Something went wrong: " + e.getMessage());
-        }
-    }
-
 }
