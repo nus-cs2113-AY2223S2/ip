@@ -5,6 +5,6 @@ T | 1 | asdsad
 E | 1 | asdsad | te | asd
 T | 1 | ada
 T | 1 | how
-E | 1 | asda | as | sd
-T | 0 | adw
+E | 0 | asda | as | sd
 T | 0 | ad
+E | 0 | asd | s | asd

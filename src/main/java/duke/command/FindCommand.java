@@ -19,7 +19,7 @@ public class FindCommand extends Command {
         try {
             tasks.findInList(keyword);
         } catch (EmptyListError err){
-            UI.printMessage("There is nothing inside the list");
+            System.out.println("There is nothing inside the list");
         }
 
     }

@@ -5,7 +5,17 @@ import duke.command.*;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Parser that handles the user inputs
+ */
 public interface Parser {
+
+    /**
+     * Handles the various command type and parse accordingly
+     *
+     * @param input the information that requires parsing
+     * @return command type that would represent what to execute
+     */
     public static Command parse(String input){
         String[] inputWords = input.split(" ");
         String command = inputWords[0];
@@ -27,6 +37,13 @@ public interface Parser {
         SingleWordCommand singleWordCommand = new SingleWordCommand(command);
         return singleWordCommand;
     }
+
+    /**
+     * Handles the deadline task and parse accordingly
+     *
+     * @param taskField the information that requires parsing
+     * @return list of string that contains the details of the deadline task
+     */
     public static List<String> parseDeadline(String taskField){
         taskField = taskField.replaceFirst("deadline", "").trim();
         int indexOfSlash = taskField.indexOf("/");
@@ -36,6 +53,12 @@ public interface Parser {
         return taskFieldList;
     }
 
+    /**
+     * Handles the event task and parse accordingly
+     *
+     * @param taskField the information that requires parsing
+     * @return list of string that contains the details of the event task
+     */
     public static List<String> parseEvent(String taskField){
         taskField = taskField.replaceFirst("event", "").trim();
         int indexOfSlash = taskField.indexOf("/");

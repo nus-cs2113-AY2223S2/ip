@@ -17,7 +17,7 @@ public class SingleWordCommand extends Command {
                 try {
                     tasks.printList();
                 } catch (EmptyListError err){
-                    UI.printMessage("There is nothing inside the list");
+                    System.out.println("There is nothing inside the list");
                 }
                 break;
             case "bye":
