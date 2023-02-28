@@ -41,6 +41,7 @@ public class FileManager {
         while (s.hasNext()) {
             storedData.add(s.nextLine());
         }
+        s.close();
     }
 
     /**
@@ -93,9 +94,9 @@ public class FileManager {
             Files.createDirectories(dir);
             File newFile = new File(path);
             if (newFile.createNewFile()) {
-                System.out.println("File created.");
+                System.out.println("File created");
             } else {
-                System.out.println("File already exists.");
+                System.out.println("File already exists");
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -107,7 +108,7 @@ public class FileManager {
      * object, <code>dates</code> object, <code>find</code> object such that the previously stored task objects are
      * stored in the current instance of the application.
      *
-     * @param tasks The object containing all the task objects in the appliction.
+     * @param tasks The object containing all the task objects in the application.
      * @param dates The object with the functionality related to <code>LocalDate</code> and <code>date</code>.
      * @param find The object with the functionality related to <code>find</code>.
      * @throws DukeException Throws an exception if the datafile finds an invalid format in the datafile.
@@ -149,6 +150,8 @@ public class FileManager {
                     throw new DukeException();
                 }
                 break;
+            default:
+                throw new DukeException();
             }
         }
     }

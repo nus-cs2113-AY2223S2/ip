@@ -39,13 +39,13 @@ public class FindData {
                 findTable.get(str).add(index);
             }
             extraKeyWord = extraKeyWord.concat(str + " ");
-        }
-        if (findTable.get(extraKeyWord) == null) {
-            LinkedHashSet<Integer> temp = new LinkedHashSet<>();
-            temp.add(index);
-            findTable.put(extraKeyWord, temp);
-        } else {
-            findTable.get(extraKeyWord).add(index);
+            if (findTable.get(extraKeyWord.trim()) == null) {
+                LinkedHashSet<Integer> temp = new LinkedHashSet<>();
+                temp.add(index);
+                findTable.put(extraKeyWord.trim(), temp);
+            } else {
+                findTable.get(extraKeyWord.trim()).add(index);
+            }
         }
     }
 
@@ -62,7 +62,7 @@ public class FindData {
             for (int i : findTable.get(str)) {
                 if (i > deletedIndex) {
                     findTable.get(str).remove(i);
-                    findTable.get(str).add(i + 1);
+                    findTable.get(str).add(i - 1);
                 }
             }
         }

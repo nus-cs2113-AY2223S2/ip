@@ -100,6 +100,8 @@ public class Parser {
     public String check() throws DukeException {
         switch (cmd) {
         case "list":
+        case "clear":
+            ignoreLine();
             break;
         case "mark":
         case "unmark":
