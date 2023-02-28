@@ -1,5 +1,6 @@
 package chronos.tasktype;
 
+import chronos.exceptions.ChronosExceptions;
 import chronos.savehandler.Save;
 
 /**
@@ -16,10 +17,14 @@ public class Deadline extends Task {
      */
     public Deadline(String description, String due) {
         super(description);
-        if (due == null) {
-            throw new IllegalArgumentException("Please provide a due date.");
+        try {
+            if (due == null||description == null) {
+                throw new ChronosExceptions(null);
+            }
+            this.due = due;
+        } catch (ChronosExceptions e) {
+            System.err.println("DESCRIPTION OR DUE DATE IS MISSING. PLEASE VIEW HELP MENU FOR PROPER FORMAT. REMOVE THE INVALID TASK");
         }
-        this.due = due;
     }
 
     /**
@@ -30,10 +35,14 @@ public class Deadline extends Task {
      */
     public Deadline(String description, String due, boolean isDone) {
         super(isDone, description);
-        if (due == null) {
-            throw new IllegalArgumentException("Please provide a due date.");
+        try {
+            if (due == null || description == null) {
+                throw new ChronosExceptions(null);
+            }
+            this.due = due;
+        } catch(ChronosExceptions error){
+            System.err.println("DESCRIPTION OR DUE DATE IS MISSING. PLEASE VIEW HELP MENU FOR PROPER FORMAT. REMOVE THE INVALID TASK");
         }
-        this.due = due;
     }
 
 
@@ -48,6 +57,7 @@ public class Deadline extends Task {
      * @return The string representation of a deadline task
      */
     public String toString() {
+
         return String.format("[D] %s (DUE: %s)", super.toString(), getDue());
     }
 

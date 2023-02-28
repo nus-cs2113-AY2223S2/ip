@@ -1,5 +1,6 @@
 package chronos.tasktype;
 
+import chronos.exceptions.ChronosExceptions;
 import chronos.savehandler.Save;
 
 /**
@@ -21,11 +22,15 @@ public class Event extends Task {
      */
     public Event(String description, String start, String end) {
         super(description);
-        if (start == null || end == null) {
-            throw new IllegalArgumentException("Please provide BOTH start and end times.");
+        try {
+            if (start == null || end == null ||description == null) {
+                throw new ChronosExceptions(null);
+            }
+            this.end = end;
+            this.start = start;
+        } catch(ChronosExceptions error){
+            System.err.println("INVALID FORMAT. PLEASE REMOVE TASK AND ENTER 'help' TO VIEW ALL COMMANDS AND FORMATS");
         }
-        this.end = end;
-        this.start = start;
     }
 
     /**
@@ -39,11 +44,15 @@ public class Event extends Task {
      */
     public Event(String description, String start, String end, boolean isDone) {
         super(isDone, description);
-        if (start == null || end == null) {
-            throw new IllegalArgumentException("Please provide BOTH start and end times.");
+        try {
+            if (start == null || end == null|| description == null) {
+                throw new ChronosExceptions(start);
+            }
+            this.end = end;
+            this.start = start;
+        } catch(ChronosExceptions error){
+            System.err.println("INVALID FORMAT. PLEASE REMOVE TASK AND ENTER 'help' TO VIEW ALL COMMANDS AND FORMATS");
         }
-        this.end = end;
-        this.start = start;
     }
 
     public String getStart() {

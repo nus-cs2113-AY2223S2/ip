@@ -44,9 +44,9 @@ public class TaskManager {
     /**
      * Deletes a task from the task list based on the user input details.
      * @param details the details of the task to be deleted.
-     * @throws ChronosExceptions.InvalidInputException if the input is invalid.
+     * @throws ChronosExceptions if the input is invalid.
      */
-   public void deleteTask(String details) throws ChronosExceptions.InvalidInputException {
+   public void deleteTask(String details) throws ChronosExceptions {
        try {
            int index = Integer.parseInt(details) - 1;
            Task task = stash.getTask(index);
@@ -83,7 +83,7 @@ public class TaskManager {
         Scanner timerCommand = new Scanner(System.in);
         Clock clock = new Clock();
         clock.startWork();
-        System.out.println("Press Enter to start a break, or type 'cancel' to stop the timer: ");
+        System.out.println("Press Enter ONCE to START a break, or type 'cancel' to stop the timer: ");
         while (timerCommand.hasNextLine()) {
             String line = timerCommand.nextLine();
             if (line.equals("cancel")) {
@@ -98,7 +98,7 @@ public class TaskManager {
     /**
      * This method continuously reads input from the user and executes the corresponding action.
      * The method will keep running until the user enters the "done" command.
-     * @throws ChronosExceptions.InvalidInputException if the user enters an invalid input
+     * @throws ChronosExceptions if the user enters an invalid input
      */
     public void inputCommands() {
         while (true) {
@@ -140,10 +140,10 @@ public class TaskManager {
                     continue;
 
                 default:
-                    System.out.println("Sorry, I do not understand the input at this point in time.");
+                    throw new ChronosExceptions(category);
                 }
-            } catch(ChronosExceptions.InvalidInputException exceptions){
-                System.out.println("\"Sorry, I do not understand the input at this point in time.\"");
+            } catch(ChronosExceptions exceptions){
+                System.out.println("Sorry, I do not understand the input at this point in time.");
             }
         }
     }
