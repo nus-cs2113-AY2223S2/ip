@@ -17,28 +17,28 @@ import java.util.ArrayList;
 * */
 
 public class DukeFileWriter {
-    String filePath;
+    static String filePath;
 
     public DukeFileWriter(String filePath){
         this.filePath = filePath;
     }
 
 
-    public void addLineToFile(String line) throws IOException {
+    public static void addLineToFile(String line) throws IOException {
         FileWriter fw = new FileWriter(filePath,true);
         fw.write(line);
         fw.close();
     }
 
     /* called when adding a todo / deadline / event object. Input: new task object */
-    public void addNewObjectToFile(Task newObject) throws IOException {
+    public static void addNewObjectToFile(Task newObject) throws IOException {
         String line = getObjectLineString(newObject);
         addLineToFile(line);
     }
 
 
     /* Receive a Todo / Deadline / Event Object and turn it into a new LineString in the file. */
-    public String getObjectLineString(Task newObject){
+    public static String getObjectLineString(Task newObject){
         String line = null;
         String lineType = newObject.getClass().getTypeName();
         switch (lineType) {
@@ -64,8 +64,9 @@ public class DukeFileWriter {
     }
 
     /* rewrite the whole tasksList in the memory to the disk */
-    public void rewriteAllToFile(ArrayList<Task> tasksList) throws IOException {
-        FileWriter fw = new FileWriter(filePath, false);
+    public void rewriteAllToFile(TaskList tasks) throws IOException {
+        ArrayList<Task> tasksList = tasks.getTasks();
+        FileWriter fw = new FileWriter(filePath, false);fw.close();
         for(Task task : tasksList){
             addNewObjectToFile(task);
         }
