@@ -50,6 +50,24 @@ Shows the list of commands with the command format and short explanation.
 
 Format: `help`
 
+Expected output: 
+
+```
+help
+List of commands:
+list: Lists all tasks.
+todo <name>: Adds a ToDo task.
+deadline <name> /by <by when>: Adds a deadline task with specified deadline.
+event <name> /from <from when> /to <to when>: Adds an event with specified time period.
+mark <task number>: Marks the task specified as done.
+unmark <task number>: Marks the task specified as not done.
+delete <task number>: Deletes the task from the list.
+find <keyword>: Finds and lists the tasks that contains the keyword in the name of the task.
+save: Saves all the tasks to the savefile
+bye: Exits the program.
+____________________________________________________________
+```
+
 
 
 ### Viewing list of tasks : `list`
@@ -97,6 +115,16 @@ Format: `todo <name>`
 
 Example: `todo hi` adds a ToDo task with the name/description **"hi"**.
 
+Expected output: 
+
+```
+todo hi
+Got it. I have added this task:
+[T][ ] hi
+Now you have 1 tasks in the list
+____________________________________________________________
+```
+
 
 
 ### Adding Deadline task : `deadline`
@@ -108,6 +136,16 @@ Format: `deadline <name> /by <by when>`
 Example: `deadline hihi /by today` adds a Deadline task with the name/description **"hihi"** and deadline **"today"**.
 
 
+Expected output:
+```
+deadline hihi /by today
+Got it. I have added this task:
+[D][ ] hihi (by: today)
+Now you have 2 tasks in the list
+____________________________________________________________
+```
+
+
 
 ### Adding Event task : `event`
 
@@ -116,6 +154,15 @@ Adds an Event task into the list of tasks. Event tasks are tasks that have a spe
 Format: `event <name> /from <from when> /to <to when>`
 
 Example: `event hihihi /from 28 Feb 10 am /to 28 Feb 10 pm` adds an Event task with the name/description **"hihihi"**, start time **"28 Feb 10 am"** and end time **"28 Feb 10 pm"**.
+
+Expected output:
+```
+event hihihi /from 28 Feb 10 am /to 28 Feb 10 pm
+Got it. I have added this task:
+[E][ ] hihihi (from: 28 Feb 10 am) (to: 28 Feb 10 pm)
+Now you have 3 tasks in the list
+____________________________________________________________
+```
 
 
 
@@ -126,6 +173,14 @@ Marks a task as done.
 Format: `mark <task number>`
 
 Example: `mark 2` marks task number 2 as done.
+
+Expected output:
+```
+mark 2
+Nice! I have marked this task as done.
+[D][X] hihi (by: today)
+____________________________________________________________
+```
 
 Note: Error messages will be shown if `<task number>` is invalid. E.g. Negative task number, task number bigger than number of existing tasks.
 
@@ -139,6 +194,14 @@ Format: `unmark <task number>`
 
 Example: `unmark 1` marks task number 1 as not done.
 
+Expected output:
+```
+unmark 1
+Ok I have marked this as not done yet.
+[T][ ] hi
+____________________________________________________________
+```
+
 Note: Error messages will be shown if `<task number>` is invalid. E.g. Negative task number, task number bigger than number of existing tasks.
 
 
@@ -150,6 +213,15 @@ Deletes a task.
 Format: `delete <task number>`
 
 Example: `delete 3` deletes task number 3 from the list.
+
+Expected output:
+```
+delete 3
+Noted. I've removed this task:
+[E][ ] hihihi (from: 28 Feb 10 am) (to: 28 Feb 10 pm)
+Now you have 2 tasks in the list
+____________________________________________________________
+```
 
 Note: Error messages will be shown if `<task number>` is invalid. E.g. Negative task number, task number bigger than number of existing tasks.
 
@@ -163,6 +235,15 @@ Format: `find <keyword>`
 
 Example: `find hihi` will find and print out the tasks which have `hihi` in its name.
 
+Expected output:
+```
+find hihi
+These tasks contain the keyword hihi
+2. [D][X] hihi (by: today)
+3. [E][ ] hihihi (from: 28 Feb 10 am) (to: 28 Feb 10 pm)
+____________________________________________________________
+```
+
 
 
 ### Saving data : `save`
@@ -171,6 +252,13 @@ Data is automatically saved when the application is properly exited, but there i
 
 Format: `save`
 
+Expected output:
+```
+save
+Saving tasks to savefile, please do not close the application.
+____________________________________________________________
+```
+
 
 
 ### Exiting the application : `bye`
@@ -178,3 +266,12 @@ Format: `save`
 Exits the application, and also saves the data.
 
 Format: `bye`
+
+Expected output: 
+```
+bye
+____________________________________________________________
+Saving tasks to savefile, please do not close the application.
+Bye. Hope to see you again soon!
+____________________________________________________________
+```
