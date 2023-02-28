@@ -4,7 +4,7 @@ import java.io.IOException;
 public class TaskList {
     private ArrayList<Task> taskArray;
     private int totalTaskNum;
-    private Storage taskStorage = new Storage(this);
+    private Storage taskStorage = new Storage();
 
     public TaskList(){
         taskArray = new ArrayList<>();
@@ -13,7 +13,7 @@ public class TaskList {
             ArrayList<String> existingTasks = Storage.scanData();
             loadData(existingTasks);
         } catch(IOException e){
-            System.out.println("File loading error");
+            UI.printFileLoadingErrorComment();
             System.out.println(e.getMessage());
         }
     }

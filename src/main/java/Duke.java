@@ -9,10 +9,12 @@ public class Duke {
 
     private static TaskList taskList;
     private static UI ui;
+    private static Parser parser;
 
     public static void main(String[] args) {
         taskList = new TaskList();
         ui = new UI();
+        parser = new Parser();
 
         while(true){
             executeCommand(getUserCommand());

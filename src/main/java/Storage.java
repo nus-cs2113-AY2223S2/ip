@@ -6,17 +6,15 @@ import java.io.IOException;
 
 public class Storage {
     public final static String FILEPATH = "./duke.txt";
-    private TaskList taskList;
 
-    public Storage(TaskList taskList){
-        this.taskList = taskList;
+    public Storage(){
         try {
             File file = new File(FILEPATH);
             if (file.createNewFile()) {
-                System.out.println("File created: " + file.getName());
+                UI.printFileCreatedComment(file.getName());
             }
         } catch(IOException e){
-            System.out.println("File cannot be created");
+            UI.printFileNotCreatedComment();
             System.out.println(e.getMessage());
         }
     }
@@ -41,7 +39,7 @@ public class Storage {
             fw.write(textAdded);
             fw.close();
         } catch (IOException e){
-            System.out.println("Not saved correctly.");
+            UI.printSaveErrorComment();
             System.out.println(e.getMessage());
         }
     }

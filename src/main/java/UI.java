@@ -90,5 +90,19 @@ public class UI {
         System.out.println("[Duke] ☹ OOPS!!! The description of a(n) " + taskType + " cannot be empty.");
     }
 
+    public static void printFileCreatedComment(String fileName){
+        System.out.println("[Duke] I created the file [" + fileName + "]");
+    }
 
+    public static void printFileNotCreatedComment(){
+        System.out.println("[Duke] I cannot create File:( Please try again.");
+    }
+
+    public static void printSaveErrorComment(){
+        System.out.println("[Duke] Something went wrong while saving...! Please try again.");
+    }
+
+    public static void printFileLoadingErrorComment(){
+        System.out.println("[Duke] Uh oh! I cannot load file :< Please check again.");
+    }
 }
