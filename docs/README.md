@@ -9,46 +9,51 @@ Moreover, it allows you to filter with specific keywords to easily find the task
 ### View Help: help
 It will print all the commands that the user can use.
 The list of tasks will be shown in sequence.
-In addition, it will be shown in [Type][Done(X)/Not done( )] <description> <time> format.
+In addition, it will be shown in `[Type][X(Done)/ (Not done)]` <description> <time> format.
 
 
-### Add A todo to the task List: todo
-Adds a todo to the list of tasks.
+### Add A Todo: todo
+Add a todo to your task list.
 
-### Add A Deadline to the task list: deadline
-The deadline function allows you to add a deadline to your task list.
+### Add A Deadline: deadline
+Add a deadline to your task list.
 
 
-### Add An Event to the task list: event
-The event function allows you to add an event to your task list.
+### Add An Event: event
+Add an event to your task list.
 
 ### Mark A Task: mark
 Mark a task in the list.
 
 ### Unmark A Task: unmark
-Mark a task in the list.
+Unark a task in the list.
 
 ### Filter the tasks: find
-The find function will display tasks that contain the keyword entered by the user.
+Find and display tasks that contain the keyword entered by the user.
 
 
 ### Delete task: delete
-The delete function will allow you to delete the task in your list.
+Delete a task in your list.
 
 ## Usage
 
-### `help` - It will print all the commands that the user can use.
-The list of tasks will be shown in sequence.
-In addition, it will be shown in [Type][Done(X)/Not done( )] <description> <time> format.
-Format: help
+### `help` - It will print all the commands that the user can use with a brief introduction.
+
+Example of usage:
+`help`
+
+Expected outcome:
 ```
 >> help
 First time using Duke? Below is the quick guide for you to get to know about how to use the app …
 ```
 
 ### `list` - List all tasks will in sequence.
-In addition, it will be shown in [Type][Done(X)/Not done( )] <description> <time> format.
-Format: list
+
+Example of usage:
+`list`
+
+Expected outcome:
 ```
 >> list
 1. [T][ ] return book
@@ -57,7 +62,11 @@ Format: list
 ```
 
 ### `todo` - add a todo to the list of tasks
-Format: todo <todo description>
+
+Example of usage: 
+`todo <todo description>`
+
+Expected outcome:
 ```
 >> list
 [T][ ] read book
@@ -70,7 +79,11 @@ Format: todo <todo description>
 ```
 
 ### `deadline` - add a deadline to the list of tasks
-Format: deadline <deadline description> by: <when>
+
+Example of usage:
+`deadline <deadline description> by: <when>`
+
+Expected outcome:
 ```
 >> list
 [T][ ] read book
@@ -81,7 +94,11 @@ Format: deadline <deadline description> by: <when>
 ```
 
 ### `event` - add an event to the list of tasks.
-Format: event <event description> from: <when> to: <when>
+
+Example of usage:
+`event <event description> from: <when> to: <when>`
+
+Expected outcome:
 ```
 >> list
 [T][ ] read book
@@ -91,7 +108,11 @@ Format: event <event description> from: <when> to: <when>
 [D][ ] Malaysia Trip (from: Mar 04 2023, to: Mar 10 2023)
 ```
 ### `mark` - mark a task in the list.
-Format: mark <Task Index>
+
+Example of usage:
+`mark <Task Index>`
+
+Expected outcome:
 ```
 >> list
 1. [T][ ] read book
@@ -104,7 +125,11 @@ Format: mark <Task Index>
 3. [T][ ] return book
 ```
 ### `unmark` - unmark a task in the list.
-Format: unmark <Task Index>
+
+Example of usage:
+`unmark <Task Index>`
+
+Expected outcome:
 ```
 >> list
 1. [T][X] read book
@@ -118,7 +143,11 @@ Format: unmark <Task Index>
 ```
 
 ### `find` - display tasks that contain the keyword entered by the user.
-Format: find <Keyword>
+
+Example of usage:
+`find <Keyword>`
+
+Expected outcome:
 ```
 >> list
 1. [T][X] read book
@@ -129,7 +158,11 @@ Format: find <Keyword>
 [T][ ] return book
 ```
 ### `delete` - delete the task in your list.
-Format: delete <Task Index>
+
+Example of usage:
+`delete <Task Index>`
+
+Expected outcome: 
 ```
 >> list
 1. [T][X] read book
