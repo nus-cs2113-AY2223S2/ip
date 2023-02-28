@@ -10,6 +10,7 @@ import java.util.Scanner;
 public class FileReading {
     private static final String filePath = "data/Duke.txt";
     private static Task t;
+    private static ArrayList<Task> tasks;
 
     public static void createFile() throws IOException {
         File newFolder = new File("data");
@@ -36,7 +37,7 @@ public class FileReading {
         }
     }
 
-    public static void getFileContents(String filePath, ArrayList<Task> tasksList) throws FileNotFoundException {
+    public static void getFileContents() throws FileNotFoundException {
         File f = new File(filePath);
         if (!f.exists()) {
             throw new FileNotFoundException();
@@ -68,8 +69,8 @@ public class FileReading {
 
     public static void deleteFileContents(String filePath) throws IOException {
         File f = new File(filePath);
-        f.delete();
         try {
+            f.delete();
             createFile();
         } catch (IOException e) {
             System.out.println("An error has occurred :( ");
@@ -77,22 +78,22 @@ public class FileReading {
         }
     }
 
-    public static void writeToFile(String filePath, ArrayList<Task> tasksList) throws IOException {
+    public static void writeToFile() throws IOException {
         FileWriter fw = new FileWriter(filePath);
         //write to file the arraylist?
         deleteFileContents(filePath);
-        for (Task t: tasksList) {
+        for (Task t: tasks) {
             fw.write(t.toString() + "\n");
         }
         fw.close();
     }
 
-    public static void main(ArrayList<Task> Tasks) {
-        try {
-            writeToFile(filePath, Tasks);
-            System.out.println("File edited");
-        } catch (IOException e) {
-            System.out.println("File not found");
-        }
-    }
+//    public static void main(ArrayList<Task> Tasks) {
+//        try {
+//            writeToFile(filePath, Tasks);
+//            System.out.println("File edited");
+//        } catch (IOException e) {
+//            System.out.println("File not found");
+//        }
+//    }
 }

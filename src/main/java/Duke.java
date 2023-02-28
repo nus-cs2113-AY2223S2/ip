@@ -156,17 +156,17 @@ public class Duke {
     }
 
     public static void main(String[] args) throws IOException {
-        try {
-            //f.createFile();
-            f.getFileContents(filePath, inputList);
-        } catch (FileNotFoundException e) {
-            System.out.println("No such file is found. Creating a new one for you :^)");
-            f.createFile();
-        } catch (IOException e) {
-            System.out.println("An error has occurred :^^( ");
-        } catch (NullPointerException e) {
-            System.out.println("null pointer :(");
-        }
+//        try {
+//            //f.createFile();
+//            f.getFileContents();
+//        } catch (FileNotFoundException e) {
+//            System.out.println("No such file is found. Creating a new one for you :^)");
+//            f.createFile();
+//        } catch (IOException e) {
+//            System.out.println("An error has occurred :^^( ");
+//        } catch (NullPointerException e) {
+//            System.out.println("null pointer :(");
+//        }
 
         greet();
         getCommand();
