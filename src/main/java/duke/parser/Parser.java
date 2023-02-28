@@ -4,6 +4,7 @@ import duke.command.AddCommand;
 import duke.command.Command;
 import duke.command.DeleteCommand;
 import duke.command.ExitCommand;
+import duke.command.FindCommand;
 import duke.command.HelpCommand;
 import duke.command.ListCommand;
 import duke.command.MarkCommand;
@@ -32,6 +33,8 @@ public class Parser {
 			return new HelpCommand(fullCommand);
 		} else if (fullCommand.matches("exit")) {
 			return new ExitCommand(fullCommand);
+		}else if (fullCommand.startsWith("find")) {
+			return new FindCommand(fullCommand);
 		} else {
 			throw new CommandFormatException();
 		}

@@ -15,7 +15,7 @@ public class DeleteCommand extends Command {
 	public void execute(TaskList taskList, Ui ui, Storage storage) throws CommandFormatException,
 			TaskOutOfBoundsException, TaskException {
 
-		String[] messages = userInput.trim().split(" ");
+		String[] messages = userInput.split(" ");
 		if (messages.length < 2) {
 			throw new CommandFormatException();
 		} else if (!messages[1].matches("\\d+")) {

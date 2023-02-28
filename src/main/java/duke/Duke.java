@@ -28,13 +28,13 @@ public class Duke {
 			System.out.println("Task loaded...");
 		}
 	}
+
 	/**
-	 * This method startDuke will be looping continuously until shouldExit is false:
-	 * Show welcome messages, read commands from the terminal and parse the command and run the command.
-	 * Write the taskList to storage and prints
-	 * parse the output through the Parser to get the command to run
-	 * and run the command. It then writes new taskList to storage if there are any changes
-	 * Exit the loop if the command is "Exit"
+	 * This part of the code is taken from the module website
+	 * The code is to show welcome message and continuously loop to read in user input, until user input is "exit"
+	 * Read in user command and use Parser to parse the command and create a command object
+	 * Execute the command based on the user command
+	 * Update the task list before exit the programme.
 	 */
 	public void startDuke() {
 		ui.showWelcome();
