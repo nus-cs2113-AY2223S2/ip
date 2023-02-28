@@ -3,10 +3,17 @@ package duke.storage;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+/**
+ * Represents the class that deals with loading tasks from
+ * the file and saving tasks into the file.
+ */
 public class Storage {
     private static FileReading fileReading;
 
-    public void load() {
+    /**
+     * Gets list of tasks from existing txt file.
+     */
+    public static void load() {
         try {
             fileReading.getFileContents();
         } catch (FileNotFoundException e) {
@@ -14,6 +21,9 @@ public class Storage {
         }
     }
 
+    /**
+     * Write list of tasks to existing txt file.
+     */
     public static void write() {
         try {
             fileReading.writeToFile();

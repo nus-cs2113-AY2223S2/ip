@@ -5,13 +5,32 @@ import duke.tasklist.TaskList;
 
 import java.util.ArrayList;
 
+/**
+ * Represents the class that deals with interactions with the user.
+ */
 public class Ui {
     public static final String line = "__________________________________________________________";
 
+    /**
+     * The list of tasks
+     */
     private static TaskList taskList;
+
+    /**
+     * This documents the types of user commands
+     * or possible interactions with the user.
+     */
     public enum CommandType {
         TODO, DEADLINE, EVENT, LIST, MARK, UNMARK, DELETE, INDEXOUT, FIND
     }
+
+    /**
+     * Prints message related to a task, depending on the action done by user.
+     * This includes adding todo, deadline, event, delete task,
+     * mark and unmark task.
+     * @param t The task specified by user.
+     * @param c The type of command.
+     */
     public static void printMessage(Task t, CommandType c) {
         System.out.println(line);
         switch(c) {
@@ -47,6 +66,11 @@ public class Ui {
         System.out.println(line);
     }
 
+    /**
+     * Prints message related to finding a task using keywords.
+     * @param query The keywords that user wants to search.
+     * @param c The type of command.
+     */
     public static void printMessage(String query, CommandType c) {
         System.out.println(line);
         switch(c) {
@@ -58,6 +82,11 @@ public class Ui {
         System.out.println(line);
     }
 
+    /**
+     * Prints message related to other general commands.
+     * This includes list, and IndexOutOfBoundsException.
+     * @param c The type of command.
+     */
     public static void printMessage(CommandType c) {
         System.out.println(line);
         switch(c) {
@@ -75,7 +104,10 @@ public class Ui {
         System.out.println(line);
     }
 
-    public static void greet() {
+    /**
+     * Prints hello message to greet user at the start of the program.
+     */
+    public static void printGreet() {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
                 + "| | | | | | | |/ / _ \\\n"
@@ -87,6 +119,10 @@ public class Ui {
         System.out.println(line);
     }
 
+    /**
+     * Prints the list of task.
+     * @param tasks The list of tasks to be printed.
+     */
     public static void printList(ArrayList<Task> tasks) {
         tasks.trimToSize();
         for (int i = 0; i < tasks.size(); i++) {
@@ -98,6 +134,9 @@ public class Ui {
         }
     }
 
+    /**
+     * Prints bye message to the user.
+     */
     public static void printBye() {
         System.out.println(line);
         System.out.println("Bye. Hope to see you again soon!");

@@ -1,26 +1,31 @@
 package duke;
 
 import duke.parser.Parser;
+import duke.storage.Storage;
 import duke.tasklist.Task;
 import duke.ui.Ui;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * Represents Duke, the personal assistant chatbot
+ * that can help keep track of things.
+ */
 public class Duke {
-    private static final String line = "__________________________________________________________";
-    private static ArrayList<Task> inputList = new ArrayList<>();
-    private static int numTasks = 0;
 
-//    private Storage storage;
-//    private Ui ui;
-//    private Parser parser;
-//    private TaskList taskList;
-    private static final String filePath = "data/duke.txt";
-
-    public static void main(String[] args) throws IOException {
-
-        Ui.greet();
+    /**
+     * The main function for 'Duke' to run.
+     * @param args
+     */
+    public static void main(String[] args) {
+        Ui.printGreet();
+//        try {
+//            Storage.load();
+//        } catch (RuntimeException e) {
+//            System.out.println("Unable to load due to runtime exception :(");
+//        }
+        Storage.load();
         Parser.getCommand();
         Ui.printBye();
     }
