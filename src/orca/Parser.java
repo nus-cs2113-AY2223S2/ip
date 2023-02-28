@@ -18,6 +18,8 @@ public class Parser {
             return CommandType.EVENT;
         } else if (userInput.startsWith("delete")) {
             return CommandType.DELETE;
+        } else if (userInput.startsWith("find")) {
+            return CommandType.FIND;
         } else {
             return CommandType.UNKNOWN;
         }
