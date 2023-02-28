@@ -11,7 +11,7 @@ import java.rmi.UnexpectedException;
  */
 public class Duke {
 
-    public static final String FILE_PATH = "/Users/linshang/Documents/cs2113/ip/save.txt";
+    public static final String FILE_PATH = "../save.txt";
     private static Storage storage;
     private static TaskList tasks;
     private static Ui ui;
