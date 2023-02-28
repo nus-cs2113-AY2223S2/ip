@@ -4,6 +4,8 @@ import duke.data.textImage;
 import duke.task.Task;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class UI {
 
@@ -33,6 +35,27 @@ public class UI {
 
     public static void printMarkMessage(String status, String description) {
         System.out.println("  [" + status + "] " + description);
+    }
+
+    public static void printFindInList(ArrayList<Task> tasks, String keyword){
+        int index = 1;
+        HashMap<Integer, Task> mapList = new HashMap<>();
+        System.out.println(textImage.HORIZONTAL_LINE);
+        for (Task task : tasks) {
+            if (task.description.contains(keyword)) {
+                mapList.put(index, task);
+            }
+            index++;
+        }
+        if (mapList.isEmpty()){
+            printMessage("No matching tasks in your list");
+        } else {
+            printMessage("Here are the matching tasks in your list:");
+            for (Map.Entry<Integer, Task> entry : mapList.entrySet()) {
+                System.out.println(entry.getKey() + "." + entry.getValue());
+            }
+        }
+        System.out.println(textImage.HORIZONTAL_LINE);
     }
 
     public static void printMessage(String message) {
