@@ -10,6 +10,10 @@ import java.util.ArrayList;
 public class Storage {
     static final String FILE_PATH = "./data/orca.txt";
 
+
+    /**
+     * @return ArrayList<String>
+     */
     public ArrayList<String> load() {
         ArrayList<String> data = new ArrayList<>();
         File f = new File(FILE_PATH);
@@ -33,6 +37,10 @@ public class Storage {
         return data;
     }
 
+
+    /**
+     * @param tasks
+     */
     public void write(ArrayList<Task> tasks) {
         try {
             FileWriter writer = new FileWriter(FILE_PATH);

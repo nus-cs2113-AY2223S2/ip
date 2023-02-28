@@ -25,6 +25,11 @@ public class TaskList {
         }
     }
 
+
+    /**
+     * @param taskNo
+     * @throws OrcaException
+     */
     public void markTask(int taskNo) throws OrcaException {
         try {
             tasks.get(taskNo - 1).setDone(true);
@@ -35,6 +40,11 @@ public class TaskList {
         }
     }
 
+
+    /**
+     * @param taskNo
+     * @throws OrcaException
+     */
     public void unmarkTask(int taskNo) throws OrcaException {
         try {
             tasks.get(taskNo - 1).setDone(false);
@@ -45,6 +55,10 @@ public class TaskList {
         }
     }
 
+
+    /**
+     * @return ArrayList<Task>
+     */
     public ArrayList<Task> get() {
         return tasks;
     }
@@ -61,6 +75,12 @@ public class TaskList {
         tasks.add(newTask);
     }
 
+
+    /**
+     * @param taskNo task number to delete
+     * @return Task deleted task
+     * @throws OrcaException
+     */
     public Task deleteTask(int taskNo) throws OrcaException {
         try {
             Task removedTask = tasks.remove(taskNo - 1);
