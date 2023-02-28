@@ -4,6 +4,9 @@ import duke.common.Common;
 import duke.tasktypes.Deadline;
 import duke.tasktypes.Task;
 
+/**
+ * Represents the command to add a new Deadline task to the task list.
+ */
 public class DeadlineCommand {
 
     private static final String ADDING_TASK = "Got it. I've added this task:";
@@ -11,7 +14,12 @@ public class DeadlineCommand {
     private String content;
     private String date;
 
-
+    /**
+     * Constructs a new DeadlineCommand object with the given content and date,
+     * and adds a new Deadline task to the task list.
+     * @param content The content of a Deadline task.
+     * @param date The date of a Deadline task.
+     */
     public DeadlineCommand(String content, String date) {
         this.content = content;
         this.date = date;

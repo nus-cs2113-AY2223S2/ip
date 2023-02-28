@@ -11,6 +11,9 @@ import duke.keycommands.DeadlineCommand;
 import duke.keycommands.EventCommand;
 import duke.keycommands.ByeCommand;
 
+/**
+ * Handles the parsing of user input commands for Duke.
+ */
 public class Parser {
 
     public static final String BYE_COMMAND = "bye";
@@ -33,26 +36,38 @@ public class Parser {
     public static final String REMINDING_MESSAGE_ABOUT_GIVING_THE_BEGINNING_TIME = "Please give me the beginning time";
     public static final String REMINDING_MESSAGE_ABOUT_GIVING_THE_END_TIME = "Please give me the end time";
 
-    private String[] separatedKeyWordAndContent;
+    private String[] separatedKeywordAndDescription;
     private String keyword;
     private int taskNumber;
-    
 
-    public void splitKeywordAndContent(String userInput) {
-        this.separatedKeyWordAndContent = userInput.split(" ", 2);
-        this.keyword = separatedKeyWordAndContent[0];
+    /**
+     * Splits a user input into keyword and description.
+     * @param userInput a string representing the user input to be split.
+     */
+    public void splitKeywordAndDescription(String userInput) {
+        this.separatedKeywordAndDescription = userInput.split(" ", 2);
+        this.keyword = separatedKeywordAndDescription[0];
     }
+
+    /**
+     * Checks if the command with only one word like "bye", "help" is in the correct format.
+     * @return true if the user input with only one word is in the correct format, false otherwise
+     */
     private boolean isOneWordInputInCorrectFormat() {
-        if (separatedKeyWordAndContent.length > 1) {
+        if (separatedKeywordAndDescription.length > 1) {
             System.out.println(NEEDLESS_SENTENCE_AFTER_ONE_WORD_COMMAND);
             return false;
         }
         return true;
     }
 
+    /**
+     * Checks if the "locate task number" commands such as "delete", "mark" are in the correct format and valid.
+     * @return true if the command is in the correct format and valid, false otherwise
+     */
     private boolean isLocateTaskNumberCommandInCorrectFormat() {
         try{
-            taskNumber = Integer.parseInt(separatedKeyWordAndContent[1]);
+            taskNumber = Integer.parseInt(separatedKeywordAndDescription[1]);
             testTaskNumber();
             return true;
         } catch (NumberFormatException error) {
@@ -64,8 +79,12 @@ public class Parser {
         }
         return false;
     }
-    
-    // create a method to throw InvalidTaskNumberException when the task number is bigger than the number of tasks
+
+    /**
+     * Tests if the given task number is within the range of list size.
+     * If the task number is invalid, an InvalidTaskNumberException is thrown.
+     * @throws InvalidTaskNumberException if the task number is greater than the number of tasks or less than or equal to 0.
+     */
     private void testTaskNumber() throws InvalidTaskNumberException {
         if (taskNumber > Common.tasks.size() || taskNumber <= 0) {
             throw new InvalidTaskNumberException();
@@ -113,18 +132,18 @@ public class Parser {
     }
 
     private void executeTodoCommand() {
-        if (isTheDescriptionEmpty(separatedKeyWordAndContent,1, REMINDING_MESSAGE_ABOUT_GIVING_TASK_CONTENT)) {
+        if (isTheDescriptionEmpty(separatedKeywordAndDescription,1, REMINDING_MESSAGE_ABOUT_GIVING_TASK_CONTENT)) {
             return;
         }
-        new TodoCommand(separatedKeyWordAndContent[1]);
+        new TodoCommand(separatedKeywordAndDescription[1]);
     }
 
     private void executeDeadlineCommand() {
-        if (isTheDescriptionEmpty(separatedKeyWordAndContent,1, REMINDING_MESSAGE_ABOUT_GIVING_DESCRIPTION)) {
+        if (isTheDescriptionEmpty(separatedKeywordAndDescription,1, REMINDING_MESSAGE_ABOUT_GIVING_DESCRIPTION)) {
             return;
         }
-        // split separatedKeyWordAndContent[1] into description and date
-        String[] taskContentAndDate = separatedKeyWordAndContent[1].split(" /by ", 2);
+        // split separatedKeywordAndDescription[1] into description and date
+        String[] taskContentAndDate = separatedKeywordAndDescription[1].split(" /by ", 2);
         // check if description is empty
         if (isTheDescriptionEmpty(taskContentAndDate,0, REMINDING_MESSAGE_ABOUT_GIVING_TASK_CONTENT)) {
             return;
@@ -137,11 +156,11 @@ public class Parser {
 
     //create a method executeEventCommand to handle event command in the format: event description /from beginning time /to end time
     private void executeEventCommand() {
-        if (isTheDescriptionEmpty(separatedKeyWordAndContent,1, REMINDING_MESSAGE_ABOUT_GIVING_DESCRIPTION)) {
+        if (isTheDescriptionEmpty(separatedKeywordAndDescription,1, REMINDING_MESSAGE_ABOUT_GIVING_DESCRIPTION)) {
             return;
         }
-        // split separatedKeyWordAndContent[1] into description and date
-        String[] taskContentAndDate = separatedKeyWordAndContent[1].split(" /from ", 2);
+        // split separatedKeywordAndDescription[1] into description and date
+        String[] taskContentAndDate = separatedKeywordAndDescription[1].split(" /from ", 2);
         // check if description is empty
         if (isTheDescriptionEmpty(taskContentAndDate,0,REMINDING_MESSAGE_ABOUT_GIVING_TASK_CONTENT)) {
             return;
@@ -162,7 +181,10 @@ public class Parser {
         new EventCommand(taskContentAndDate[0], beginningTimeAndEndTime[0], beginningTimeAndEndTime[1]);
     }
 
-    public void handleInput() {
+    /**
+     * Execute the user input.
+     */
+    public void executeUserInput() {
         switch (this.keyword) {
         case BYE_COMMAND:
             executeByeCommand();

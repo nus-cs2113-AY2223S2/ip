@@ -4,6 +4,9 @@ import duke.tasktypes.Task;
 
 import java.util.ArrayList;
 
+/**
+ * Represents the common attributes and methods using for the whole application.
+ */
 public class Common {
     public static final String WHITE_SPACE = " ";
     public static final String VERTICAL_BAR = " | ";

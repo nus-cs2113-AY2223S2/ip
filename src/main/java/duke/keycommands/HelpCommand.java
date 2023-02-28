@@ -18,10 +18,16 @@ public class HelpCommand {
     private static final String DELETE_FORMAT = "Format: delete {Number}\n";
     private static final String INTRODUCTION_TO_HELP_COMMAND = "This is the list of our commands\n";
 
+    /**
+     * Represents the command to guide the user on how to use the program.
+     */
     public HelpCommand() {
         doHelpCommand();
     }
 
+    /**
+     * Prints out the instructions for all commands.
+     */
     public void doHelpCommand() {
         System.out.println(INTRODUCTION_TO_HELP_COMMAND);
         System.out.println(HELP_USAGE);

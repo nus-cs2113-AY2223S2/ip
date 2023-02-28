@@ -4,6 +4,9 @@ import duke.common.Common;
 
 import java.io.IOException;
 
+/**
+ * Represents the command to change the status of a task in the task list.
+ */
 public class ChangeTaskStatusCommand {
 
     private static final String FINISH_UNMARKING_MESSAGE = "Ok! I've marked this task as not done yet:";
@@ -13,6 +16,12 @@ public class ChangeTaskStatusCommand {
     private int taskNumber;
     private String keyword;
 
+    /**
+     * Constructs a new ChangeTaskStatusCommand object with the given task number locating the task
+     * and changes the status of this task in the task list.
+     * @param taskNumber The position of the task to be changed.
+     * @param keyword The keyword to determine whether the task is marked or unmarked.
+     */
     public ChangeTaskStatusCommand(int taskNumber, String keyword) {
         this.taskNumber = taskNumber;
         this.keyword = keyword;

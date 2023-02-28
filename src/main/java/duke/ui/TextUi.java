@@ -5,6 +5,10 @@ import duke.parser.Parser;
 
 import java.util.Scanner;
 
+/**
+ * Provides the text-based user interface application.
+ * Accepts user input, passes it to the Parser for processing, and displays output to the console.
+ */
 public class TextUi {
 
     private static final String HELLO_IM_DUKE = "Hello! I'm Duke";
@@ -20,12 +24,16 @@ public class TextUi {
         this.parser = new Parser();
     }
 
+    /**
+     * Receives user input, refines it, and passes it to the Parser for processing.
+     * The loop continues until the user types the "bye" command to exit the application.
+     */
     public void executeInputUntilExit() {
         while (true) {
             getInput();
             String refinedUserInput = userInput.trim().replaceAll("\\s+", " ");
-            parser.splitKeywordAndContent(refinedUserInput);
-            parser.handleInput();
+            parser.splitKeywordAndDescription(refinedUserInput);
+            parser.executeUserInput();
         }
     }
 
@@ -36,6 +44,7 @@ public class TextUi {
         System.out.println(Common.HORIZONTAL_LINE);
     }
 
+    /** Displays the welcome message to the user.  */
     public void showWelcomeMessage() {
         System.out.println(Common.HORIZONTAL_LINE);
         System.out.println(HELLO_IM_DUKE);
