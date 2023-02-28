@@ -4,15 +4,15 @@ public class Duke {
     private Storage storage;
     private TaskList tasks;
     private Ui ui;
+    public static final String filePath = "data/tasks.txt";
 
     /**
      * Attempts to create a TaskList object which contains tasks that are previously
      * saved in the tasks.txt file. If the tasks.txt file cannot be read, create a
      * new TaskList object.
      *
-     * @param filePath File path to tasks.txt which contains saved tasks
      */
-    public Duke(String filePath) {
+    public Duke() {
         ui = new Ui();
         storage = new Storage(filePath);
         try {
@@ -48,6 +48,6 @@ public class Duke {
     }
 
     public static void main(String[] args) {
-        new Duke("data/tasks.txt").run();
+        new Duke().run();
     }
 }

@@ -54,8 +54,7 @@ public class AddCommand extends Command {
      * @throws DukeException If input has missing information
      */
     public static void createTodoTask(TaskList taskList, String input) throws DukeException {
-        if ((input.trim()).length() == 0) {
-            // Task has no description
+        if ((input.trim()).length() == 0) { // Task has no description
             throw new DukeException();
         }
         taskList.addTask(new Todo(input));
@@ -70,21 +69,18 @@ public class AddCommand extends Command {
     public static void createDeadlineTask(TaskList taskList, String input) throws DukeException {
         // Extract description and by parts from input
         int byIndex = input.indexOf("/by");
-        if (byIndex == -1 || byIndex == 0) {
-            // /by does not exist or task does not have description
+        if (byIndex == -1 || byIndex == 0) { // /by does not exist or task does not have description
             throw new DukeException();
         }
         String description = (input.substring(0, byIndex)).trim();
         String restOfInput = input.substring(byIndex);
 
         int startingIndex = (restOfInput).indexOf(" ");
-        if (startingIndex == -1) {
-            // /by has no description
+        if (startingIndex == -1) { // /by has no description
             throw new DukeException();
         }
         String by = (restOfInput.substring(startingIndex)).trim();
-        if (by.length() == 0) {
-            // /by's description only has spaces
+        if (by.length() == 0) { // /by's description only has spaces
             throw new DukeException();
         }
         taskList.addTask(new Deadline(description, by));
@@ -99,8 +95,7 @@ public class AddCommand extends Command {
     public static void createEventTask(TaskList taskList, String input) throws DukeException {
         // Extract description, from and to parts from input
         int descriptionIndex = input.indexOf("/from");
-        if (descriptionIndex == -1 || descriptionIndex == 0) {
-            // /from does not exist or task has no description
+        if (descriptionIndex == -1 || descriptionIndex == 0) { // /from does not exist or task has no description
             throw new DukeException();
         }
         String description = (input.substring(0, descriptionIndex)).trim();
@@ -108,31 +103,26 @@ public class AddCommand extends Command {
 
         int fromIndex = restOfInput.indexOf(" ");
         int toIndex = restOfInput.indexOf("/to");
-        if (toIndex == -1) {
-            // /to does not exist
+        if (toIndex == -1) { // /to does not exist
             throw new DukeException();
         }
         String from;
         try {
             from = (restOfInput.substring(fromIndex, toIndex)).trim();
-        } catch (StringIndexOutOfBoundsException e) {
-            // No space between /from and /to in command
+        } catch (StringIndexOutOfBoundsException e) { // No space between /from and /to in command
             throw new DukeException();
         }
-        if (from.length() == 0) {
-            // /from's description only has spaces
+        if (from.length() == 0) { // /from's description only has spaces
             throw new DukeException();
         }
 
         String toPartOfInput = restOfInput.substring(toIndex);
         int toDescriptionIndex = toPartOfInput.indexOf(" ");
-        if (toDescriptionIndex == -1) {
-            // /to has no description
+        if (toDescriptionIndex == -1) { // /to has no description
             throw new DukeException();
         }
         String to = (toPartOfInput.substring(toDescriptionIndex)).trim();
-        if (to.length() == 0) {
-            // /to's description only has spaces
+        if (to.length() == 0) { // /to's description only has spaces
             throw new DukeException();
         }
         taskList.addTask(new Event(description, from, to));

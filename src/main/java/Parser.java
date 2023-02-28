@@ -14,12 +14,10 @@ public class Parser {
     public Parser(String fullCommand) {
         // Get first word from input
         int indexOfFirstSpace = fullCommand.indexOf(" ");
-        if (indexOfFirstSpace != -1) {
-            // Separate first word from the rest of input
+        if (indexOfFirstSpace != -1) { // Separate first word from the rest of input
             this.firstWord = fullCommand.substring(0, indexOfFirstSpace);
             this.restOfCommand = fullCommand.substring(indexOfFirstSpace + 1);
-        } else {
-            // Only 1 word in input
+        } else { // Only 1 word in input
             this.firstWord = fullCommand;
             this.restOfCommand = "";
         }
