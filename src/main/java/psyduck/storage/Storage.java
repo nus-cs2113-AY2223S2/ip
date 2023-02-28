@@ -1,3 +1,10 @@
+package psyduck.storage;
+
+import psyduck.tasklist.TaskList;
+import psyduck.task.*;
+import psyduck.ui.Ui;
+import psyduck.command.*;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.File;
@@ -5,6 +12,13 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class Storage {
+
+    protected Ui ui;
+    protected String filepath;
+
+    public Storage(String filepath) {
+        this.filepath = filepath;
+    }
 
     public static File createFile(String filepath) {
         try {
@@ -20,7 +34,7 @@ public class Storage {
         return null;
     }
 
-    public static void readFile(String filePath) throws FileNotFoundException {
+    public static void readFile(String filePath, TaskList tasks) throws FileNotFoundException {
         File f = new File(filePath); // create a File for the given file path
         Scanner s = new Scanner(f); // create a Scanner using the File as the source
         while (s.hasNext()) {
@@ -30,19 +44,22 @@ public class Storage {
             String description = fullLine[2];
             switch (taskType) {
             case "T":
-                Psyduck.addToDo(description);
-                Psyduck.getNewestTask().setDone(Boolean.parseBoolean(isTaskDone));
+                ToDo todo = new ToDo(description);
+                tasks.addTask(todo);
+                TaskList.getNewestTask().setDone(Boolean.parseBoolean(isTaskDone));
                 break;
             case "D":
                 String by = fullLine[3];
-                Psyduck.addDeadline(description, by);
-                Psyduck.getNewestTask().setDone(Boolean.parseBoolean(isTaskDone));
+                Deadline deadline = new Deadline(description, by);
+                tasks.addTask(deadline);
+                TaskList.getNewestTask().setDone(Boolean.parseBoolean(isTaskDone));
                 break;
             case "E":
                 String from = fullLine[3];
                 String to = fullLine[4];
-                Psyduck.addEvent(description, from, to);
-                Psyduck.getNewestTask().setDone(Boolean.parseBoolean(isTaskDone));
+                Event event = new Event(description, from, to);
+                tasks.addTask(event);
+                TaskList.getNewestTask().setDone(Boolean.parseBoolean(isTaskDone));
                 break;
             default:
                 //invalid task type/wrong format ignored
@@ -50,23 +67,23 @@ public class Storage {
 
         }
     }
-    public static void writeToFile(String filePath) throws IOException {
+    public static void writeToFile(String filePath, TaskList tasks) throws IOException {
         FileWriter fw = new FileWriter(createFile(filePath));
-        for (int i = 1; i < Psyduck.getTaskCount() + 1; i++) {
-            if (Psyduck.getTask(i).getType().equals("T")) {
-                fw.write( Psyduck.getTask(i).getType() + " / "
-                        + Psyduck.getTask(i).isDone() + " / "
-                        + Psyduck.getTask(i).getDescription() + " / "
+        for (int i = 1; i < TaskList.getTaskCount() + 1; i++) {
+            if (TaskList.getTask(i).getType().equals("T")) {
+                fw.write( TaskList.getTask(i).getType() + " / "
+                        + TaskList.getTask(i).isDone() + " / "
+                        + TaskList.getTask(i).getDescription() + " / "
                         + System.lineSeparator());
-            } else if (Psyduck.getTask(i).getType().equals("D")) {
-                Deadline temp = (Deadline) Psyduck.getTask(i);
+            } else if (TaskList.getTask(i).getType().equals("D")) {
+                Deadline temp = (Deadline) TaskList.getTask(i);
                 fw.write( temp.getType() + " / "
                         + temp.isDone() + " / "
                         + temp.getDescription() + " / "
                         + temp.getBy() + " / "
                         + System.lineSeparator());
-            } else if (Psyduck.getTask(i).getType().equals("E")) {
-                Event temp = (Event) Psyduck.getTask(i);
+            } else if (TaskList.getTask(i).getType().equals("E")) {
+                Event temp = (Event) TaskList.getTask(i);
                 fw.write( temp.getType() + " / "
                         + temp.isDone() + " / "
                         + temp.getDescription() + " / "

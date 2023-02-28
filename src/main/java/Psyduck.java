@@ -1,102 +1,52 @@
 
-import java.util.ArrayList;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import psyduck.command.*;
+import psyduck.ui.*;
+import psyduck.tasklist.TaskList;
+import psyduck.storage.Storage;
+
+
 public class Psyduck {
-    private static Storage storage = new Storage();
-    private static String filepath = "save.txt";
+    private static Storage storage;
+
+    private final String filepath = "save.txt";
+    private final Ui ui;
+    private final TaskList tasks = new TaskList();
     private static boolean shouldExit = false;
 
-    private static ArrayList<Task> tasks = new ArrayList<>();
-
-    private static int taskCount = 0;
-
-    public static int getTaskCount() {
-        return taskCount;
-    }
-
-    public static Task getTask(int taskNum) {
-        return tasks.get(taskNum - 1); //array is 0-indexed, taskNum is 1-indexed
-    }
-
-    public static Task getNewestTask() {
-        return tasks.get(taskCount - 1); //array is 0-indexed, taskNum is 1-indexed
-    }
-
-    public static void setShouldExit(boolean shouldExit) {
+    public void setShouldExit(boolean shouldExit) {
         Psyduck.shouldExit = shouldExit;
     }
 
-    public static void addToDo(String description) {
-        ToDo newTask = new ToDo(description);
-        tasks.add(newTask);
-        taskCount++;
-    }
-
-
-    public static void addDeadline(String description, String by) {
-        Deadline newTask = new Deadline(description, by);
-        tasks.add(newTask);
-        taskCount++;
-    }
-
-    public static void addEvent(String description, String from, String to) {
-        Event newTask = new Event(description, from, to);
-        tasks.add(newTask);
-        taskCount++;
-    }
-
-    public static void removeTask(int taskNum) {
-        tasks.remove(taskNum - 1);
-        taskCount--;
-
-    }
-
-    public static void listTasks() {
-        Command.linePrint();
-        if (taskCount == 0) { //list is empty
-            System.out.println("List is empty.");
-        } else {
-            for (int i = 0; i < taskCount; i++) {
-                System.out.print(Integer.toString(i + 1) + ".");
-                System.out.println(tasks.get(i));
-            }
-        }
-        Command.linePrint();
-    }
-
-    public static void greet() {
-        Command.linePrint();
-        System.out.println("( ´ ▽ ` )ﾉ Hi I am Psyduck! How can I help you?");
-        Command.linePrint();
-    }
-
-
-    public static void sayBye() {
-        System.out.println("Bye see you soon! (⌒ー⌒)ﾉ");
-        Command.linePrint();
-    }
-
-    public static void main(String[] args) {
-        greet();
+    public Psyduck(String filepath) {
+        ui = new Ui();
+        storage = new Storage(filepath);
         try {
-            storage.readFile(filepath);
+            Storage.readFile(filepath, tasks);
         } catch (FileNotFoundException e) {
-            Command.linePrint();
-            System.out.println("No past file record is made, will create a " +
-                    "new save file after terminating the program.");
-            Command.linePrint();
+            ErrorMessage.printFileNotFoundMessage();
         }
+    }
+
+    public void run() {
+        ui.greet();
         do {
-            Command.processCommands();
+            String input = ui.readInput();
+            CommandHandler handler = new CommandHandler();
+            handler.processCommands(input, tasks, ui);
+            shouldExit = handler.canExit;
         } while (!shouldExit);
-        sayBye();
+        ui.sayBye();
         try {
-            storage.writeToFile(filepath);
+            Storage.writeToFile(filepath, tasks);
         } catch (IOException e) {
             System.out.println("Error occurred when saving file. Aborting.");
         }
+    }
+
+    public static void main(String[] args) {
+        new Psyduck("save.txt").run();
     }
 }
