@@ -5,7 +5,9 @@ import duke.task.Task;
 import duke.tasklist.TaskList;
 import duke.ui.UI;
 
-
+/**
+ * Command when dealing with searching using a keyword
+ */
 public class FindCommand extends Command {
 
     protected String keyword;
@@ -14,6 +16,12 @@ public class FindCommand extends Command {
         this.keyword = keyword;
     }
 
+    /**
+     * Executes the find command
+     *
+     * @param tasks tasklist which contains all the tasks
+     * @throws EmptyListError if error occurred due to empty list
+     */
     @Override
     public void execute(TaskList tasks) {
         try {

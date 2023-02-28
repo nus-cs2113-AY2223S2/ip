@@ -49,6 +49,11 @@ public class TaskList {
         return tasksList.get(index).toString();
     }
 
+    /**
+     * Prints the current task-list
+     *
+     * @throws EmptyListError if error occurred due to having an empty list
+     */
     public void printList() throws EmptyListError {
         if (tasksList.isEmpty()) {
             throw new EmptyListError();
@@ -57,6 +62,12 @@ public class TaskList {
         UI.printList(returnTasks());
     }
 
+    /**
+     * Prints the list of tasks based on a keyword
+     *
+     * @param keyword the word that user use to search amongst the tasks
+     * @throws EmptyListError if error occurred due to having an empty list
+     */
     public void findInList(String keyword) throws EmptyListError{
         if (tasksList.isEmpty()) {
             throw new EmptyListError();

@@ -35,6 +35,7 @@ public interface UI {
         for (int i = 0; i < tasks.size(); i++) {
             System.out.println((i + 1) + "." + tasks.get(i).toString());    }
     }
+
     /**
      * Prints the status of task (marked as done or unmarked)
      *
@@ -45,6 +46,12 @@ public interface UI {
         System.out.println("  " + tasks.getStatus(taskNum) + " " + tasks.getDescription(taskNum));
     }
 
+    /**
+     * Prints the list of tasks that has the keyword
+     *
+     * @param tasks the current task-list
+     * @param keyword the word that user use to search amongst the tasks
+     */
     public static void printFindInList(ArrayList<Task> tasks, String keyword){
         int index = 1;
         HashMap<Integer, Task> mapList = new HashMap<>();

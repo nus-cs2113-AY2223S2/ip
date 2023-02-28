@@ -4,12 +4,21 @@ import duke.exception.EmptyListError;
 import duke.tasklist.TaskList;
 import duke.ui.UI;
 
+/**
+ * Command that has only one string input
+ */
 public class SingleWordCommand extends Command {
 
     public SingleWordCommand(String commandType){
         super(commandType);
     }
 
+
+    /**
+     * Executes the command according to command type
+     *
+     * @param tasks tasklist which contains all the tasks
+     */
     @Override
     public void execute(TaskList tasks){
         switch (commandType){

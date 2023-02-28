@@ -5,7 +5,7 @@ import duke.ui.UI;
 import duke.storage.Storage;
 
 /**
- * Command when dealing with tasks that requires numbers
+ * Command when dealing with tasks that requires task index
  */
 public class IndexCommand extends Command {
     protected int taskNum;

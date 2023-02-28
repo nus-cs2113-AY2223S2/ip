@@ -23,7 +23,7 @@ public class AddCommand extends Command {
     }
 
     /**
-     * Adds a new task into the tasklist according to command type
+     * Adds a new task into the tasklist according to task type
      *
      * @param tasks tasklist which contains all the tasks
      */
