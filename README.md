@@ -4,7 +4,7 @@ This is a desktop app to track your tasks. Optimized for used via Command Line I
 
 - [Quick Start](#quick-start)
 - [Commands Format](#commands-format)
-- [Additional Notes](#additional-notes)
+- [Additional Notes regarding Loading and Saving](#additional-notes-regarding-loading-and-saving)
 - [Guide for setting up in IntelliJ](#setting-up-in-intellij)
 
 ## Quick Start
@@ -31,10 +31,12 @@ This is a desktop app to track your tasks. Optimized for used via Command Line I
 8. Load all tasks that are in the file data/duke.txt `load`
 9. End the conversation `bye`
 
-## Additional Notes
+## Additional Notes Regarding Loading and Saving
+- On the first use of the app, it might tell you that there are issues with loading the file. This is normal as the app checks for a save file in the '{ROOT_FOLDER}/data/duke.txt' on every load.
 - Leaving the app does NOT save your current task list. Make sure to save using the `save` command if you would like to keep your tasks. You can find the output file '{ROOT_FOLDER}/data/duke.txt'
 - You may also edit the files directly from the output save file '{ROOT_FOLDER}/data/duke.txt' for quick loads. The `load` function works appends all tasks into the current tasklist. Make sure to check for duplicates
-- The non-autosave function allows more advanced users to edit their tasklists quickly
+- If you would like to clear your tasks before a new session. You may delete the '{ROOT_FOLDER}/data/duke.txt' file or clear its contents
+- The non-autosave & autoload function allows more advanced users to navigate between adding and loading their tasklists quickly
 
 ## Setting up in Intellij
 
