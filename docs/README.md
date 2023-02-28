@@ -5,7 +5,7 @@ _Duke_ is a Personal Assistant Chatbot that helps a person to keep track of vari
 <!-- TOC -->
 * [Duke Project User Guide](#duke-project-user-guide)
   * [Quick Start](#quick-start)
-  * [Notes about command format:](#notes-about-command-format-)
+  * [Notes about command format:](#notes-about-command-format)
   * [Features](#features)
     * [ADD AN ENTRY: ```todo``` ```deadline``` ```event```](#add-an-entry-todo-deadline-event)
       * [3 ways to add an entry depending on the type of your task](#there-are-3-ways-to-add-an-entry-depending-on-the-type-of-your-task)
