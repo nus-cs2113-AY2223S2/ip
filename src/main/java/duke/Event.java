@@ -15,6 +15,7 @@ public class Event extends Task {
 
     /**
      * Creates an Event task.
+     *
      * @param description is the task name
      * @param from is the beginning of the event task
      * @param to is the end of the event task
@@ -41,7 +42,8 @@ public class Event extends Task {
     }
 
     /**
-     * To display the task in a specific way
+     * To display the task in a specific way.
+     *
      * @return the format of how the task is shown
      */
     @Override

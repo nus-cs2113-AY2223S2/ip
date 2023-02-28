@@ -14,7 +14,8 @@ public class ProcessLine {
     protected ArrayList<Task> tasks;
 
     /**
-     * Breaks line down to segment into different types of tasks
+     * Breaks line down to segment into different types of tasks.
+     *
      * @param line is the user's input currently being analysed
      * @param tasks is the arraylist of tasks
      */
@@ -25,7 +26,8 @@ public class ProcessLine {
     }
 
     /**
-     * Finds the keyword among the task list and prints the tasks that match
+     * Finds the keyword among the task list and prints the tasks that match.
+     *
      * @param i is the number of tasks in the task list currently
      * @param word is the keyword
      */
@@ -47,7 +49,8 @@ public class ProcessLine {
     }
 
     /**
-     * Edits the task in the task list depending on command given
+     * Edits the task in the task list depending on command given.
+     *
      * @param index_for_edit the index that is given in the command on which task to edit
      * @param tasks is the arraylist of tasks
      * @param i is the number of tasks in the task list currently
@@ -82,11 +85,12 @@ public class ProcessLine {
 
     /**
      * Creates the task in the task list depending on command given and
-     * adds the new task to the file
+     * adds the new task to the file.
      *
      * @param i is the number of tasks in the task list currently
      * @param line is the current command to follow when adding tasks
      * @return the updated number of tasks in the task list currently
+     *
      */
     public int createTask(int i, String line) {
         Print ui;

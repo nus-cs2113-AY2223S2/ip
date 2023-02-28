@@ -8,21 +8,21 @@ package duke;
 
 public class Task {
 
-        /**
-         * Creates a task.
-         * @param description is the task name
-         * @param isDone defines if a task is done
-         */
         protected String description;
         protected boolean isDone;
 
+        /**
+         * Creates a task.
+         * @param description is the task name
+         */
         public Task(String description) {
             this.description = description;
             this.isDone = false;
         }
 
         /**
-         * To find out if a task is done
+         * To find out if a task is done.
+         *
          * @return if the task is done or not
          */
 
@@ -42,7 +42,8 @@ public class Task {
         }
 
         /**
-         * To display the task in a specific way
+         * To display the task in a specific way.
+         *
          * @return the format of how the task is shown
          */
         public String toString() {

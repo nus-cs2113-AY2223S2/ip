@@ -18,6 +18,7 @@ public class Storage {
 
     /**
      * Appends tasks to the file.
+     *
      * @param filePath is the filepath of the file
      * @param textToAppend is the tasks to append to the file
      * @throws IOException Its thrown when an error occurred during an input-output operation
@@ -30,6 +31,7 @@ public class Storage {
 
     /**
      * Writes tasks to the file when changes are made.
+     *
      * @param filePath is the filepath of the file
      * @param textToAdd is the tasks to overwrite the file when editing the list
      * @throws IOException Its thrown when an error occurred during an input-output operation
@@ -45,7 +47,8 @@ public class Storage {
     }
 
     /**
-     * Loads data from Duke.txt file for the new session
+     * Loads data from Duke.txt file for the new session.
+     *
      * @param tasks is the arraylist of tasks
      * @param i is the number of tasks in the task list currently
      * @return the updated number of tasks in the task list currently
@@ -68,7 +71,8 @@ public class Storage {
     }
 
     /**
-     * Collects data from Duke.txt file for the new session
+     * Collects data from Duke.txt file for the new session.
+     *
      * @param currentLine it is the current string that we are collecting data of
      * @param tasks is the arraylist of tasks
      * @param i is the number of tasks in the task list currently
@@ -109,7 +113,8 @@ public class Storage {
     }
 
     /**
-     * Saves changes of tasks made to the file
+     * Saves changes of tasks made to the file.
+     *
      * @param tasks is the arraylist of tasks
      * @param i is the number of tasks in the task list currently
      */
@@ -134,7 +139,8 @@ public class Storage {
     }
 
     /**
-     * Add tasks to the file
+     * Add tasks to the file.
+     *
      * @param tasks is the arraylist of tasks
      * @param i is the number of tasks in the task list currently
      */
