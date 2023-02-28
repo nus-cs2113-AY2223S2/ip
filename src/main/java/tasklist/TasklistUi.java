@@ -1,14 +1,27 @@
 package tasklist;
 
+/**
+ * Does all the printing for the tasklist. That's really all it does.
+ */
+
 public class TasklistUi {
 
     private TaskList taskList;
+
+    /**
+     * Instantiates a TasklistUi. 
+     * 
+     * @param taskList Similar to SavefileManager but more extreme. I get a feeling 
+     *      that passing tasklist into nearly every function is not a very good idea.
+     */
 
     public TasklistUi(TaskList taskList) {
         this.taskList = taskList;
     }
 
     // Output
+
+    //Printing functions. Enough said. No need for javadocs.
 
     protected void printTaskWithNumber(int taskNo) {
         System.out.println((taskNo + 1) + ". " + taskList.tasks.get(taskNo).toString());

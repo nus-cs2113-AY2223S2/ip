@@ -10,6 +10,10 @@ import tasks.Event;
 import tasks.Task;
 import tasks.ToDo;
 
+/**
+ * The manager of the Tasklist. Contains every single command that has to do with the tasklist.
+ */
+
 public class TaskList {
     protected ArrayList<Task> tasks;
     protected int noOfTasks;
@@ -44,11 +48,22 @@ public class TaskList {
         }
     }
 
+    /**
+     * Instantiates an empty tasklist. Only called if savefile is not detected.
+     */
+
     public TaskList() {
         this.tasks = new ArrayList<>();
         noOfTasks = 0;
         this.ui = new TasklistUi(this);
     }
+
+    /**
+     * Instantiates a tasklist containing data in the savefile. Uses the parseTasks() method
+     * to convert from the savefile to usable tasklist data.
+     * 
+     * @param s scanner containing the lines in the savefile.
+     */
 
     public TaskList(Scanner s) {
         this.tasks = new ArrayList<>();
@@ -90,6 +105,12 @@ public class TaskList {
         return false;
     }
 
+    /**
+     * Adds a ToDo task into the tasklist.
+     * 
+     * @param args the user input excluding the command word
+     */
+
     public void addToDo(String args) {
         noOfTasks++;
         args = args.trim();
@@ -102,6 +123,12 @@ public class TaskList {
         tasks.add(new ToDo(args));
         ui.printAddTaskMessage(noOfTasks);
     }
+
+    /**
+     * Adds a deadline task into the tasklist.
+     * 
+     * @param args the user input excluding the command word
+     */
 
     public void addDeadline(String args) {
         noOfTasks++;
@@ -126,6 +153,12 @@ public class TaskList {
         tasks.add(new Deadline(name, by));
         ui.printAddTaskMessage(noOfTasks);
     }
+
+    /**
+     * Adds an event task into the tasklist.
+     * 
+     * @param args the user input excluding the command word
+     */
 
     public void addEvent(String args) {
         noOfTasks++;
@@ -166,9 +199,19 @@ public class TaskList {
         ui.printAddTaskMessage(noOfTasks);
     }
 
+    /**
+     * Lists the tasks
+     */
+
     public void listTasks() {
         ui.printAllTasks();
     }
+
+    /**
+     * Changes the status of the task to true.
+     * 
+     * @param taskNo the task number with one indexing.
+     */
 
     public void markDone(int taskNo) {
         if (!isValidTaskNo(taskNo)) {
@@ -182,6 +225,12 @@ public class TaskList {
         }
     }
 
+    /**
+     * Changes the status of the task to false.
+     * 
+     * @param taskNo the task number with one indexing
+     */
+
     public void unmarkDone(int taskNo) {
         if (!isValidTaskNo(taskNo)) {
             return;
@@ -194,6 +243,12 @@ public class TaskList {
         }
     }
 
+    /**
+     * Deletes the task from the tasklist.
+     * 
+     * @param taskNo the task number with one indexing
+     */
+
     public void deleteTask(int taskNo) {
         if (!isValidTaskNo(taskNo)) {
             return;
@@ -203,11 +258,26 @@ public class TaskList {
         tasks.remove(taskNo - 1);
     }
 
+    /**
+     * Saves the data in the tasklist into the savefile. Tbh this function should be in the
+     * savefileManager class, but well... Got no time for that.
+     * 
+     * @param fileWriter the filewriter linked to the savefile.
+     * 
+     * @throws IOException if I/O error occured while writing to the savefile.
+     */
+
     public void saveToFile(FileWriter fileWriter) throws IOException {
         for (Task task : tasks) {
             fileWriter.write(task.toSaveString() + System.lineSeparator());
         }
     }
+
+    /**
+     * Finds the task(s) that contains the keyword in the name
+     * 
+     * @param keyword the keyword.
+     */
 
     public void findTask(String keyword) {
         if (keyword.isEmpty()) {

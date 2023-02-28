@@ -6,9 +6,23 @@ public class DukeParser {
 
     private Duke duke;
 
+    /**
+     * Creates an instance of the DukeParser.
+     * 
+     * @param duke the current instance of Duke. This is mostly because I don't really see the point
+     *      in creating a class that calls the commands when I can simply do it in this parser, i.e.
+     *      I am lazy.
+     */
+
     public DukeParser(Duke duke) {
         this.duke = duke;
     }
+
+    /**
+     * Parses the user input and calls the relevant commands based on the input.
+     * 
+     * @param input the unformatted user input from the terminal
+     */
     
     public void parseUserInput(String input) {
         String[] split = input.trim().split("\\s+", 2);

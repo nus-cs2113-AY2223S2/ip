@@ -5,6 +5,10 @@ import java.io.IOException;
 import parser.DukeParser;
 import tasklist.TaskList;
 
+/**
+ * The main program. Controls the ui, tasklist, savefile manager and parser.
+ */
+
 public class Duke {
     public boolean hasEnteredBye;
     private final boolean WITH_SCANNER = true;
@@ -13,6 +17,10 @@ public class Duke {
     public SavefileManager savefileManager;
     public DukeParser parser;
 
+    /**
+     * Intantiates Duke with a new instance of DukeUi, SavefileManager and DukeParser.
+     */
+
     public Duke() {
         hasEnteredBye = false;
         ui = new DukeUi(WITH_SCANNER);
@@ -20,12 +28,17 @@ public class Duke {
         parser = new DukeParser(this);
     }
 
+    /**
+     * Exits the program. Saves the data into the savefile before exiting.
+     */
+
     public void exit() {
         ui.printLine();
         savefileManager.save(taskList);
         ui.closeScanner();
         System.out.println("Bye. Hope to see you again soon!");
     }
+
     public static void main(String[] args) {
         Duke duke = new Duke();
         duke.ui.greetUser();
