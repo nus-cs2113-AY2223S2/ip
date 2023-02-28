@@ -7,7 +7,6 @@ import duke.tasks.Event;
 import duke.tasks.Todo;
 import duke.ui.Ui;
 
-//import static duke.ui.Ui.printBorder;
 
 /**
  * Represents the add feature in Duke. A task object corresponding to the type
@@ -53,7 +52,7 @@ public class AddCommand {
             String deadline = taskInfo[1];
             tasks.addTask(new Deadline(name, deadline, false));
             Ui.printBorder();
-            System.out.println("added: " + name + "\n");
+            System.out.println("added: " + name + " (by: " + deadline + ")" + "\n");
             Ui.printBorder();
         } catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
             Ui.printBorder();
@@ -77,7 +76,7 @@ public class AddCommand {
             String end = taskInfo[2];
             tasks.addTask(new Event(name, start, end, false));
             Ui.printBorder();
-            System.out.println("added: " + name + "\n");
+            System.out.println("added: " + name + " (from: " + start + ", to: " + end + ")" + "\n");
             Ui.printBorder();
         } catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
             Ui.printBorder();

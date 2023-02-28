@@ -25,7 +25,7 @@ public class Deadline extends Task {
         if(isCompleted){
             checkbox = "[X]";
         }
-        return "[D]" + checkbox + " " + name + " (by:" + deadline + ")";
+        return "[D]" + checkbox + " " + name + " (by: " + deadline + ")";
     }
 
     @Override

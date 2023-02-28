@@ -26,7 +26,7 @@ public class Event extends Task {
         if(isCompleted){
             checkbox = "[X]";
         }
-        return "[E]" + checkbox + " " + name + "(from: " + start  + ", to: " + end + ")";
+        return "[E]" + checkbox + " " + name + " (from: " + start  + ", to: " + end + ")";
     }
 
     @Override
