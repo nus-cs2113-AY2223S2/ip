@@ -1,7 +1,15 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.FileWriter;
+
 import java.util.ArrayList;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class Duke {
+
+    private static final String STORAGE_FILE_NAME = "./data/Duke.txt";
 
     private static ArrayList<Tasks> listOfTasks = new ArrayList<Tasks>();
     private static int counter = 0;
@@ -63,8 +71,34 @@ public class Duke {
         System.out.println("You now have " + counter + " tasks in the list.");
     }
 
+    public static void findFile() {
+        try {
+            File file = new File(STORAGE_FILE_NAME);
+            Scanner scan = new Scanner(file);
+            while (scan.hasNext()) {
+                System.out.println(scan.nextLine());
+            }
+            scan.close();
+        } catch (FileNotFoundException | NoSuchElementException e) {
+            System.out.println("Error: File not found. Please try again");
+        }
+    }
+
+    public static void saveFile() {
+        try {
+            FileWriter writer = new FileWriter(STORAGE_FILE_NAME);
+            for (int i = 0; i < listOfTasks.size(); i++) {
+                writer.write(listOfTasks.get(i).toString() + '\n');
+            }
+            writer.close();
+        } catch (IOException e) {
+            System.out.println("Error: Tasks were not saved. Please try again");
+        }
+    }
+
     public static void main(String[] args) {
         greet_user();
+        findFile();
 
         Scanner scan = new Scanner(System.in);
         String input = scan.nextLine();
@@ -101,7 +135,11 @@ public class Duke {
                     }
                     break;
                 case "list":
-                    List();
+                    if (listOfTasks.isEmpty()) {
+                        System.out.println("There are no tasks listed currently");
+                    } else {
+                        List();
+                    }
                     break;
                 case "mark":
                     try {
@@ -139,8 +177,10 @@ public class Duke {
             input = scan.nextLine();
             command = input.split(" ", 2);
         }
+
         System.out.println("Goodbye. Hope to see u again :) \n");
         scan.close();
+        saveFile();
     }
 
 }
