@@ -195,20 +195,7 @@ public class TextUI {
                 DIVIDER);
     }
 
-    public void showWrongDateFormatError() {
-        showMessage(
-                DIVIDER,
-                MESSAGE_ERROR_FORMAT_DATE,
-                DIVIDER);
-    }
-
-    public void showWrongDateTimeFormatError() {
-        showMessage(
-                DIVIDER,
-                MESSAGE_ERROR_FORMAT_DATE_TIME,
-                DIVIDER);
-
-    }
+   
 
     public String scanLine() {
         Scanner sc = new Scanner(in);
