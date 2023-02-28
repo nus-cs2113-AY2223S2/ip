@@ -99,4 +99,17 @@ public class Parser {
         output[0] = Integer.toString(taskNum);
         return output;
     }
+
+    public String[] prepareFind(String input) throws EmptyFindException {
+        input = input.trim();
+        int space = input.indexOf(" ");
+        if (space == NOT_FOUND) {
+            throw new EmptyFindException();
+        }
+        String description = input.substring(space + 1);
+        description = description.trim();
+        String[] output = new String[1];
+        output[0] = description;
+        return output;
+    }
 }

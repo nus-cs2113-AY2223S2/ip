@@ -1,5 +1,6 @@
 package psyduck.command;
 
+import psyduck.exceptions.EmptyFindException;
 import psyduck.exceptions.InvalidDeadlineFormatException;
 import psyduck.exceptions.InvalidEventFormatException;
 import psyduck.exceptions.TaskEmptyException;
@@ -22,6 +23,15 @@ public class CommandHandler {
             //fallthrough
         case "exit":
             canExit = true;
+            break;
+        case "find":
+            try {
+                format = parser.prepareFind(input);
+                commandType = new FindCommand();
+                commandType.executeCommand(format, tasks, ui);
+            } catch (EmptyFindException e) {
+                ErrorMessage.printEmptyFindMessage();
+            }
             break;
         case "list":
             commandType = new ListCommand();
