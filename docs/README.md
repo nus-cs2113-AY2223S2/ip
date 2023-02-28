@@ -29,7 +29,7 @@ _Duke_ is a Personal Assistant Chatbot that helps a person to keep track of vari
 5. Open the command terminal, cd into the home folder of the program and use command ```java -jar ip.jar``` to run the application.
 
 
-## Notes about command format:
+## Notes About Command Format:
 
 1. Words in UPPER_CASE are the parameters to be supplied by the user.
 2. TASK_NUMBER **must be a positive integer** 1,2,3,...
