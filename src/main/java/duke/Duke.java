@@ -1,15 +1,16 @@
 package duke;
 import duke.exceptions.*;
 import java.util.Scanner;
+import java.util.ArrayList;
 public class Duke {
-    private static Task[] tasks = new Task[100];
+    private static ArrayList<Task> tasks = new ArrayList<>();
     private static int numOfTask = 0;
     // Method to list out the tasks stored in the task list
     public static void listTasks(){
         System.out.println("Here are the tasks in your list:");
         for(int i = 1; i <= numOfTask; i+= 1){
-            System.out.println(i + "." +"[" + tasks[i-1].getType() + "]" + "[" + tasks[i-1].getStatusIcon() + "] "+ tasks[i-1].getDescription()
-            + tasks[i-1].getDeadline() + tasks[i-1].getPeriod());
+            System.out.println(i + "." +"[" + tasks.get(i-1).getType() + "]" + "[" + tasks.get(i-1).getStatusIcon() + "] "+ tasks.get(i-1).getDescription()
+            + tasks.get(i-1).getDeadline() + tasks.get(i-1).getPeriod());
         }
     }
 
@@ -32,6 +33,8 @@ public class Duke {
                     return "deadline";
                 case "event":
                     return "event";
+                case "delete":
+                    return "delete";
                 default:
             }
         }
@@ -86,21 +89,21 @@ public class Duke {
                  return false;
              case "mark":
                  int indexMark = Integer.parseInt(taskNumber);
-                 tasks[indexMark-1].markAsDone();
-                 System.out.println("  [" + tasks[indexMark-1].getStatusIcon() + "] " + tasks[indexMark-1].getDescription());
+                 tasks.get(indexMark-1).markAsDone();
+                 System.out.println("  [" + tasks.get(indexMark-1).getStatusIcon() + "] " + tasks.get(indexMark-1).getDescription());
                  return false;
              case "unmark":
                  int indexUnmark = Integer.parseInt(taskNumber);
-                 tasks[indexUnmark-1].markAsUndone();
+                 tasks.get(indexUnmark).markAsUndone();
                  System.out.println("OK, I've marked this task as not done yet:");
-                 System.out.println("  [" + tasks[indexUnmark-1].getStatusIcon() + "] " + tasks[indexUnmark-1].getDescription());
+                 System.out.println("  [" + tasks.get(indexUnmark-1).getStatusIcon() + "] " + tasks.get(indexUnmark-1).getDescription());
                  return false;
              case "todo":
                  try {
                      ToDo toDoTask = new ToDo(filterDescription(args));
                      numOfTask += 1;
-                     tasks[numOfTask-1] = toDoTask;
-                     System.out.println(tasks[numOfTask-1]);
+                     tasks.add(toDoTask);
+                     System.out.println(tasks.get(numOfTask-1));
                      System.out.println("Now you have " + numOfTask + " task in the list.");
                  } catch (ToDoException e) {
                      System.out.println("The description of a todo cannot be empty!");
@@ -111,8 +114,8 @@ public class Duke {
                      String[] deadline = filterDescriptionAndDeadline(args);
                      Deadline deadlineTask = new Deadline(deadline[0], deadline[1]);
                      numOfTask += 1;
-                     tasks[numOfTask - 1] = deadlineTask;
-                     System.out.println(tasks[numOfTask - 1]);
+                     tasks.add(deadlineTask);
+                     System.out.println(tasks.get(numOfTask - 1));
                      System.out.println("Now you have " + numOfTask + " task in the list.");
                  }catch (StringIndexOutOfBoundsException e){
                      System.out.println("The description of deadline and/or date of deadline cannot be empty!");
@@ -123,14 +126,23 @@ public class Duke {
                      String[] event = filterDescriptionAndTimePeriod(args);
                      Event eventTask = new Event(event[0], event[1], event[2]);
                      numOfTask += 1;
-                     tasks[numOfTask - 1] = eventTask;
-                     System.out.println(tasks[numOfTask - 1]);
+                     tasks.add(eventTask);
+                     System.out.println(tasks.get(numOfTask - 1));
                      System.out.println("Now you have " + numOfTask + " task in the list.");
                  }catch(StringIndexOutOfBoundsException e){
                      System.out.println("The description of the event and/or period of it cannot be empty!");
                  }catch(EventException e){
                      System.out.println("To field is empty!");
                  }
+                 return false;
+             case "delete":
+                 int index = Integer.parseInt(taskNumber);
+                 System.out.println("Noted. I've removed this task");
+                 System.out.println(index + "." +"[" + tasks.get(index-1).getType() + "]" + "[" + tasks.get(index-1).getStatusIcon() + "] "+ tasks.get(index-1).getDescription()
+                         + tasks.get(index-1).getDeadline() + tasks.get(index-1).getPeriod());
+                 tasks.remove(index-1);
+                 numOfTask -= 1;
+                 System.out.println("Now you have " + numOfTask + " task in the list.");
                  return false;
              default:
                  throw new DukeException();
