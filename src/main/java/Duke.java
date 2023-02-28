@@ -29,8 +29,11 @@ public class Duke {
     public static void uncheckDoneStatus(String[] stringsList, ArrayList<Task> taskList) {
         try{
             int test = Integer.parseInt(stringsList[1]);
-        } catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
-            System.out.println(StrIntLib.generalError);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println(StrIntLib.missingInputsError);
+            return;
+        } catch (NumberFormatException e) {
+            System.out.println(StrIntLib.wrongFormatError);
             return;
         }
         if (Integer.parseInt(stringsList[1]) > taskList.size()){
@@ -47,8 +50,11 @@ public class Duke {
     public static void checkDoneStatus(String[] stringsList, ArrayList<Task> taskList) {
         try{
             int test = Integer.parseInt(stringsList[1]);
-        } catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
-            System.out.println(StrIntLib.generalError);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println(StrIntLib.missingInputsError);
+            return;
+        } catch (NumberFormatException e) {
+            System.out.println(StrIntLib.wrongFormatError);
             return;
         }
         if (Integer.parseInt(stringsList[1]) > taskList.size()){
@@ -130,7 +136,23 @@ public class Duke {
     private static void invalidCommand() {
         System.out.println(StrIntLib.invalidCmdText);
     }
-
+    private static ArrayList<Task> deleteTask(ArrayList<Task> taskList, String[] parts) {
+        try{
+            int test = Integer.parseInt(parts[1]);
+        } catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
+            System.out.println(StrIntLib.generalError);
+            return taskList;
+        }
+        if (Integer.parseInt(parts[1]) > taskList.size()){
+            System.out.println(StrIntLib.noItemText);
+        } else {
+            System.out.println(StrIntLib.deleteText);
+            Task deletedTask = taskList.remove(Integer.parseInt(parts[1]) - 1);
+            System.out.println(printIconStatus(deletedTask));
+            System.out.println(StrIntLib.taskCount1 + taskList.size() + StrIntLib.taskCount2);
+        }
+        return taskList;
+    }
     public static void main(String[] args) {
         welcomeMessage();
         String input;
@@ -165,6 +187,9 @@ public class Duke {
                 break;
             case StrIntLib.cmdDeadline:
                 taskList = addDeadline(taskList, partsList);
+                break;
+            case StrIntLib.cmdDelete:
+                taskList = deleteTask(taskList, inputs);
                 break;
             default:
                 invalidCommand();

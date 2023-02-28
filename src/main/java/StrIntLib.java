@@ -18,6 +18,8 @@ public class StrIntLib {
     public static final String cmdToDo = "todo";
     public static final String cmdEvent = "event";
     public static final String cmdDeadline = "deadline";
+    public static final String cmdDelete = "delete";
+    public static final String cmdSave = "save";
     public static final String to = "to ";
     public static final String toReplacement = "to: ";
     public static final String from = "from ";
@@ -33,4 +35,5 @@ public class StrIntLib {
     public static final String generalError = "Huh! Something is missing or in the wrong format!\n" +
             "Could you verify that?";
     public static final String emptyList = "You have no tasks on your list!";
+    public static final String deleteText = "Noted. I've removed this task:";
 }
