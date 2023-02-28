@@ -56,7 +56,6 @@ public class UI {
                 "_________________.##########\n" +
                 "________________.####*__*####\n" +
                 "\n";
-
         System.out.println(MARGIN);
         System.out.println(logo);
         System.out.println(Messages.WELCOME_MESSAGE_1);

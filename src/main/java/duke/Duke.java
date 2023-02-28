@@ -54,7 +54,7 @@ public class Duke {
      * @throws IOException if error occurs during the file load
      */
     public static void main(String[] args) throws IOException {
-        new Duke("./duke.txt").run();
+        new Duke("data/duke.txt").run();
     }
 
 }
