@@ -6,7 +6,7 @@ import duke.tasklist.TaskList;
 import java.util.ArrayList;
 
 public class Ui {
-    protected static final String line = "__________________________________________________________";
+    public static final String line = "__________________________________________________________";
 
     private static TaskList taskList;
     public enum CommandType {

@@ -24,6 +24,13 @@ public class Task {
         return ("[" + type + "][" + getStatusIcon() + "] " + description);
     }
 
+    public void addIsDone(String status) {
+        if(status.equals("X")) {
+            this.isDone = true;
+        } else {
+            this.isDone = false;
+        }
+    }
     public void markAsDone(String action) {
         if (action.equals("unmark")) {
             this.isDone = false;

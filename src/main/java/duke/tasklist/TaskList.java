@@ -3,11 +3,12 @@ package duke.tasklist;
 import duke.DukeException;
 import duke.ui.Ui;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class TaskList {
     private static final String line = "__________________________________________________________";
-    //private static Ui ui;
     protected static ArrayList<Task> tasks = new ArrayList<>();
     private static int numTasks = 0;
 
@@ -39,6 +40,33 @@ public class TaskList {
             throw new IndexOutOfBoundsException();
         }
         tasks.get(x-1).markAsDone(userInput[0]);
+    }
+
+    public static void readTask(List<String> taskList) throws IOException {
+        for(String task: taskList) {
+            Task t;
+            String type = task.substring(1,2); //type of task
+            String status = task.substring(4,5); //"X" or " "
+            if (type.equals("T")) {
+                String descriptor = task.substring(7);
+                t = new Todo(descriptor);
+            } else if (type.equals("D")) {
+                String descriptor = task.substring(7, task.indexOf("(by: "));
+                String by = task.substring(task.indexOf("(by: ")+5, task.indexOf(")"));
+                t = new Deadline(descriptor,by);
+            } else if (type.equals("E")) {
+                String descriptor = task.substring(7, task.indexOf("(from: "));
+                String from = task.substring(task.indexOf("(from: ")+7, task.indexOf("to: "));
+                String to = task.substring(task.indexOf("to: ")+4, task.indexOf(")"));
+                t = new Event(descriptor, from, to);
+            } else {
+                throw new IOException();
+            }
+            tasks.add(t);
+            tasks.get(tasks.size()-1).addIsDone(status);
+        }
+        numTasks = tasks.size();
+        Ui.printMessage(Ui.CommandType.LIST);
     }
 
     public static void addTask(String userInput) throws DukeException {
