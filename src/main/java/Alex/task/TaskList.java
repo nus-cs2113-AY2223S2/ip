@@ -1,10 +1,10 @@
-package Alex.manager;
+package Alex.task;
 
 import Alex.task.Task;
 
 import java.util.ArrayList;
 
-public class TaskManager {
+public class TaskList {
     private ArrayList<Task> allTasks = new ArrayList<>();
     private boolean isExit = false;
 
