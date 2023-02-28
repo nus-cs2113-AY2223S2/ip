@@ -28,7 +28,7 @@ public class Storage {
         try {
             saveTasks(taskList.tasks, filePath);
         } catch (IOException e) {
-            System.out.println("Error saving tasks to storage.");
+            ui.println("Error saving tasks to storage.");
         }
     }
 
@@ -42,7 +42,7 @@ public class Storage {
     private void saveTasks(ArrayList<Task> tasks, String filePath) throws IOException {
         FileWriter fw = new FileWriter(filePath);
 
-        for(int i = 0; i<tasks.size(); i++) {
+        for (int i = 0; i<tasks.size(); i++) {
             fw.write(tasks.get(i).getTypeOfTask() + " | " + (tasks.get(i).isDone? "1" : "0") + " | " + tasks.get(i).getDetailsToSave() + System.lineSeparator());
         }
         fw.close();
@@ -54,11 +54,11 @@ public class Storage {
      * @throws DukeException If file is cannot be created or found.
      * @return TaskList Class containing the list of tasks.
      */
-    public TaskList load() throws DukeException {
+    public TaskList load(Ui ui) throws DukeException {
         TaskList taskList = new TaskList();
         taskList.isSilent = true;
         try {
-            taskList = loadTasks(taskList, filePath);
+            taskList = loadTasks(taskList, filePath, ui);
         } catch (FileNotFoundException e) {
             taskList.isSilent = false;
             try {
@@ -85,7 +85,7 @@ public class Storage {
      * @throws FileNotFoundException If file is not found.
      * @return TaskList Class containing the list of tasks.
      */
-    private TaskList loadTasks(TaskList taskList , String filePath) throws FileNotFoundException {
+    private TaskList loadTasks(TaskList taskList , String filePath, Ui ui) throws FileNotFoundException {
         File f = new File(filePath);
         Scanner s = new Scanner(f); // create a Scanner using the File as the source
         while (s.hasNext()) {
@@ -95,9 +95,9 @@ public class Storage {
             switch (args[0]) {
             case "T":
                 try {
-                    taskList.addTodo(args[2]);
+                    taskList.addTodo(args[2], ui);
                     if(args[1].equals("1")) {
-                        taskList.markTask(taskList.tasks.size());
+                        taskList.markTask(taskList.tasks.size(), ui);
                     }
                 } catch (DukeException e) {
                     // will not fail
@@ -105,9 +105,9 @@ public class Storage {
                 break;
             case "D":
                 try {
-                    taskList.addDeadline(args[2]);
+                    taskList.addDeadline(args[2], ui);
                     if(args[1].equals("1")) {
-                        taskList.markTask(taskList.tasks.size());
+                        taskList.markTask(taskList.tasks.size(), ui);
                     }
                 } catch (DukeException e) {
                     // will not fail
@@ -115,9 +115,9 @@ public class Storage {
                 break;
             case "E":
                 try {
-                   taskList.addEvent(args[2]);
+                   taskList.addEvent(args[2], ui);
                     if(args[1].equals("1")) {
-                        taskList.markTask(taskList.tasks.size());
+                        taskList.markTask(taskList.tasks.size(), ui);
                     }
                 } catch (DukeException e) {
                     // will not fail

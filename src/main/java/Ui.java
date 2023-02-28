@@ -4,18 +4,13 @@ import java.util.Scanner;
  * Represents ui interaction with user for IO operations.
  */
 public class Ui {
-
-    private final String LOGO = "    ____________________________________________________________\n" +
+    private final String LINE = "    ____________________________________________________________\n";
+    private final String LOGO = LINE +
             "     Hello! I'm Duke\n" +
             "     What can I do for you?\n" +
-            "    ____________________________________________________________\n";
-
-
-
-    private final String LINE = "    ____________________________________________________________\n";
-
-    private final String SMALL_SPACE = "     ";
-    private final String BIG_SPACE = "       ";
+            LINE;
+    protected final String SMALL_SPACE = "     ";
+    protected final String BIG_SPACE = "       ";
 
     private Scanner in;
 
@@ -37,40 +32,40 @@ public class Ui {
      * Prints Duke logo on start up.
      */
     public void printLogo() {
-        System.out.println(LOGO);
+        this.println(LOGO);
     }
 
     /**
      * Prints line to separate user input and outputs.
      */
     public void printLine() {
-        System.out.println(LINE);
+        this.println(LINE);
     }
 
     /**
      * Prints error message when loading from memory fails.
      */
     public void showLoadingError() {
-        System.out.println("Error loading from memory. Please restart the program.");
+        this.println("Error loading from memory. Please restart the program.");
     }
 
     /**
      * Prints success message when loading from memory is successful.
      */
     public void showLoadingSuccess() {
-        System.out.println(LINE);
-        System.out.print(SMALL_SPACE);
-        System.out.println("All Tasks loaded from memory successfully.");
-        System.out.println(LINE);
+        this.println(LINE);
+        this.print(SMALL_SPACE);
+        this.println("All Tasks loaded from memory successfully.");
+        this.println(LINE);
     }
 
     /**
      * Prints goodbye when user stops the program.
      */
     public void showGoodbye() {
-        System.out.println(LINE);
-        System.out.println("     " + "Bye. Hope to see you again soon!");
-        System.out.println(LINE);
+        this.println(LINE);
+        this.println("     " + "Bye. Hope to see you again soon!");
+        this.println(LINE);
     }
 
     /**
@@ -88,10 +83,17 @@ public class Ui {
     }
 
     /**
-     * Prints string to user.
+     * Prints string to user and moves the cursor to a new line.
      */
-    public void print(String string) {
+    public void println(Object string) {
         System.out.println(string);
+    }
+
+    /**
+     * Prints string to user without moving the cursor to a new line.
+     */
+    public void print(Object string) {
+        System.out.print(string);
     }
 
 }

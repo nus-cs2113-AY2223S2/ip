@@ -5,13 +5,13 @@ public class Command {
 
     private String typeOfCommand;
     private String args;
-    boolean hasDescription = false;
+    boolean noDescription = false;
 
     public Command(String[] inputs) {
-        this.hasDescription = (inputs.length > 1);
+        this.noDescription = (inputs.length <= 1);
         this.typeOfCommand = inputs[0];
 
-        if(this.hasDescription) {
+        if (!this.noDescription) {
             args = inputs[1];
         }
     }
@@ -26,93 +26,122 @@ public class Command {
     public void execute(TaskList taskList, Ui ui, Storage storage) {
         switch (typeOfCommand) {
         case "list":
-            taskList.listTask();
+            taskList.listTask(ui);
             break;
         case "mark":
-            if (hasDescription) {
-                try {
-                    taskList.markTask(args);
-                    storage.save(taskList, ui);
-                } catch (DukeException e) {
-                    System.out.println("       " + e.getMessage());
-                }
-            } else {
-                System.out.println("       ☹ OOPS!!! The task number cannot be empty.");
+            if (noDescription) {
+                ui.printBigSpace();
+                ui.println("☹ OOPS!!! The description of a mark cannot be empty.");
+                break;
             }
+
+            try {
+                taskList.markTask(args, ui);
+                storage.save(taskList, ui);
+            } catch (DukeException e) {
+                ui.printBigSpace();
+                ui.println(e.getMessage());
+            }
+
             break;
         case "unmark":
-            if (hasDescription) {
-                try {
-                    taskList.unmarkTask(args);
-                    storage.save(taskList, ui);
-                } catch (DukeException e) {
-                    System.out.println("       " + e.getMessage());
-                }
-            } else {
-                System.out.println("       ☹ OOPS!!! The task number cannot be empty.");
+            if (noDescription) {
+                ui.printBigSpace();
+                ui.println("☹ OOPS!!! The description of an unmark cannot be empty.");
+                break;
             }
+
+            try {
+                taskList.unmarkTask(args, ui);
+                storage.save(taskList, ui);
+            } catch (DukeException e) {
+                ui.printBigSpace();
+                ui.println(e.getMessage());
+            }
+
             break;
         case "todo":
-            if (hasDescription) {
-                try {
-                    taskList.addTodo(args);
-                    storage.save(taskList, ui);
-                } catch (DukeException e) {
-                    System.out.println("       " + e.getMessage());
-                }
-            } else {
-                System.out.println("       ☹ OOPS!!! The description of a todo cannot be empty.");
+            if (noDescription) {
+                ui.printBigSpace();
+                ui.println("☹ OOPS!!! The description of a todo cannot be empty.");
+                break;
             }
+
+            try {
+                taskList.addTodo(args, ui);
+                storage.save(taskList, ui);
+            } catch (DukeException e) {
+                ui.printBigSpace();
+                ui.println(e.getMessage());
+            }
+
             break;
         case "deadline":
-            if (hasDescription) {
-                try {
-                    taskList.addDeadline(args);
-                    storage.save(taskList, ui);
-                } catch (DukeException e) {
-                    System.out.println("       " + e.getMessage());
-                }
-            } else {
-                System.out.println("       ☹ OOPS!!! The description of a deadline cannot be empty.");
+            if (noDescription) {
+                ui.printBigSpace();
+                ui.println("☹ OOPS!!! The description of a deadline cannot be empty.");
+                break;
             }
+
+            try {
+                taskList.addDeadline(args, ui);
+                storage.save(taskList, ui);
+            } catch (DukeException e) {
+                ui.printBigSpace();
+                ui.println(e.getMessage());
+            }
+
             break;
         case "event":
-            if (hasDescription) {
-                try {
-                    taskList.addEvent(args);
-                    storage.save(taskList, ui);
-                } catch (DukeException e) {
-                    System.out.println("       " + e.getMessage());
-                }
-            } else {
-                System.out.println("       ☹ OOPS!!! The description of an event cannot be empty.");
+            if (noDescription) {
+                ui.printBigSpace();
+                ui.println("☹ OOPS!!! The description of an event cannot be empty.");
+                break;
             }
+
+            try {
+                taskList.addEvent(args, ui);
+                storage.save(taskList, ui);
+            } catch (DukeException e) {
+                ui.printBigSpace();
+                ui.println(e.getMessage());
+            }
+
             break;
         case "delete":
-            if(hasDescription) {
-                try {
-                    taskList.deleteTask(args);
-                    storage.save(taskList, ui);
-                } catch (DukeException e) {
-                    System.out.println("       " + e.getMessage());
-                }
-            } else {
-                System.out.println("       ☹ OOPS!!! The description of an delete cannot be empty.");
+            if(noDescription) {
+                ui.printBigSpace();
+                ui.println("☹ OOPS!!! The description of an delete cannot be empty.");
+                break;
             }
+
+            try {
+                taskList.deleteTask(args, ui);
+                storage.save(taskList, ui);
+            } catch (DukeException e) {
+                ui.printBigSpace();
+                ui.println(e.getMessage());
+            }
+
             break;
         case "find":
-            if(hasDescription) {
-                try {
-                    taskList.find(args, ui);
-                } catch (DukeException e) {
-                    System.out.println("       " + e.getMessage());
-                }
-            } else {
-                System.out.println("       ☹ OOPS!!! The description of a find cannot be empty.");
+            if(noDescription) {
+                ui.printBigSpace();
+                ui.println("☹ OOPS!!! The description of a find cannot be empty.");
+                break;
             }
+
+            try {
+                taskList.find(args, ui);
+            } catch (DukeException e) {
+                ui.printBigSpace();
+                ui.println(e.getMessage());
+            }
+
             break;
         default:
-            System.out.println("       ☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
+            ui.printBigSpace();
+            ui.println("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
             break;
         }
     }
