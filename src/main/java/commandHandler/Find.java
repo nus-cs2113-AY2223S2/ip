@@ -10,6 +10,10 @@ import data.tasksList;
 import duke.Task;
 import ui.Display;
 
+/**
+ * Represents the Find feature in the Duke program. Users may specify the
+ * keyword(s) to be searched. e.g., <code>/find lunch</code>/
+ */
 public class Find {
     private final Set<String> keywords;
 
@@ -32,6 +36,11 @@ public class Find {
 
     }
 
+    /**
+     * Displays the list of matching tasks to users.
+     * 
+     * @param list List containing matching tasks to be printed.
+     */
     public void listMatchingTasks(ArrayList<Task> list) {
         if (list.size() == 0) {
             Display.warnUser("No matching tasks found!");

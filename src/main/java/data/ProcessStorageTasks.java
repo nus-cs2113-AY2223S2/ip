@@ -25,10 +25,10 @@ public class ProcessStorageTasks {
      */
     public static void processFile() {
         File directory = new File(DIRECTORY.toString());
-            if (!directory.exists()) {
-                Display.notifyUser("Creating required directories...");
-                directory.mkdirs();
-            }
+        if (!directory.exists()) {
+            Display.notifyUser("Creating required directories...");
+            directory.mkdirs();
+        }
 
         try {
             File f = new File(FILE_PATH);
