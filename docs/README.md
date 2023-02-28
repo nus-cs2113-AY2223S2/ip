@@ -217,6 +217,7 @@ ____________________________________________________________
 ```
 
 <h2 id="exiting-the-program-bye"> Exiting the program: <code class="language-plaintext highlighter-rouge">bye</code></h2>
+
 Exit the program.
 **Format**: `bye`
 **Example**: 
