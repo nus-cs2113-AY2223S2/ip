@@ -85,4 +85,22 @@ public class TaskList {
             System.out.println(tasks.get(idx).toString());
         }
     }
+
+    public static void findTasks(String keyword) {
+        int match_count = 0;
+
+        for (Task task : tasks) {
+            if (task.getDescription().contains(keyword)) {
+                match_count++;
+                if (match_count == 1) {
+                    System.out.println("Here are the matching tasks in your list:");
+                }
+                System.out.println(match_count + "." + task.toString());
+            }
+        }
+
+        if (match_count == 0) {
+            System.out.println("Here are no matching tasks in your list!");
+        }
+    }
 }
