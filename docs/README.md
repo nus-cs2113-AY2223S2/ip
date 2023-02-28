@@ -17,17 +17,14 @@
 ## What is Duke?
 
 #### Duke is a chatbot that users can use to keep track of their tasks and can be used with a Command Line Interface (CLI).
-<br/><br/>
 ## Setting up Duke for use
 
 1. Ensure you have Java 11 or above installed on your computer.
 2. Download the latest JAR file.
 3. Copy the file to the folder you want to use as the home folder for Duke.
 4. Open a command terminal, cd into the folder you put the jar file in, and use the java -jar ip.jar command to run the application.
-<br/><br/>
    
 ## Features 
-<br/><br/>
 ### Add a new Todo: `todo`
 
 Adds a task of 'Todo' type to the current task list.
