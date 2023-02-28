@@ -1,5 +1,8 @@
 package duke;
 
+import duke.tasks.Task;
+
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Ui {
@@ -15,11 +18,10 @@ public class Ui {
 
     public static String[] getInput() {
         Scanner input = new Scanner(System.in);
-        String text = input.nextLine(); // input the whole sentence into text
-        return text.split(" ", 2);
+        return Parser.parse(input);
     }
 
-    public static void printError(String error) {
-        System.out.println(error);
+    public static void printNumberOfTasks(ArrayList<Task> tasks) {
+        System.out.println("You currently have " + tasks.size() + " tasks in your list.");
     }
 }
