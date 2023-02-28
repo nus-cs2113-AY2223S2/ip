@@ -4,6 +4,7 @@ import commands.AddEventCommand;
 import commands.AddTodoCommand;
 import commands.Handler;
 import commands.DeleteCommand;
+import commands.FindCommand;
 import commands.GoodbyeCommand;
 import commands.ListCommand;
 import commands.MarkCommand;
@@ -51,6 +52,9 @@ public class Parser {
 
         case UnmarkCommand.COMMAND_WORD:
             return (Handler) new UnmarkCommand(arguments);
+        
+        case FindCommand.COMMAND_WORD:
+            return (Handler) new FindCommand(arguments);
 
         default:
             return (Handler) new IncorrectCommand();
