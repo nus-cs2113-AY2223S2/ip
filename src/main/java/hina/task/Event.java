@@ -15,10 +15,17 @@ public class Event extends Task {
         String mark;
         if (super.isDone()) {
             mark = "X";
-        }
-        else {
+        } else {
             mark = " ";
         }
         return String.format("[D][%s] %s(from: %s to: %s)", mark, super.getDescription(), from, to);
+    }
+
+    public String getFrom() {
+        return from;
+    }
+
+    public String getTo() {
+        return to;
     }
 }

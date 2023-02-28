@@ -1,8 +1,8 @@
 package hina.task;
 
 public class Task {
-    private String description;
-    private boolean isDone;
+    protected String description;
+    protected boolean isDone;
     public boolean isDone() {
         return isDone;
     }
@@ -28,8 +28,7 @@ public class Task {
         String mark;
         if (isDone) {
             mark = "X";
-        }
-        else {
+        } else {
             mark = " ";
         }
         return String.format("[T][%s] %s", mark, description);
