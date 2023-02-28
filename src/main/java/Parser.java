@@ -2,6 +2,7 @@ import java.util.ArrayList;
 
 public class Parser {
 
+    /** Parses user command and calls relevant functions */
     public static void parseCommand(String taskInfo, ArrayList<Task> tasks) {
         if (taskInfo.equals("list")) {
             getList(tasks);
@@ -53,12 +54,14 @@ public class Parser {
         }
     }
 
+    /** Prints list of all tasks */
     public static void getList(ArrayList<Task> tasks) {
         for (int i = 0; i < tasks.size(); i++) {
             System.out.println((i + 1) + "." + Ui.printTask(tasks.get(i)));
         }
     }
 
+    /** Finds tasks based on a specific keyword */
     public static void findTask(ArrayList<Task> tasks, String taskDescription) {
         int taskNo = 0;
         for (Task task: tasks) {

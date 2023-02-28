@@ -2,6 +2,7 @@ import java.util.Scanner;
 
 public class Ui {
 
+    /** Display message when loading previously saved tasks */
     static void loadDataMessage() {
         System.out.println(("Loading previous save data..."));
     }
@@ -15,11 +16,13 @@ public class Ui {
         System.out.println("Bye! :D");
     }
 
+    /** Reads the next user command */
     static String readCommand() {
         Scanner reader = new Scanner(System.in);
         return reader.nextLine();
     }
 
+    /** Format printing of task by task type */
     static String printTask(Task task) {
         String taskType = task.getType();
         String formattedTask;

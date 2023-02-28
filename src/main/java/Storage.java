@@ -10,6 +10,7 @@ import java.util.Scanner;
 public class Storage {
     private static final String FILEPATH = "data/duke.txt";
 
+    /** Writes tasks to file after user exits */
     static void writeToFile(ArrayList<Task> tasks) throws IOException {
         Files.createDirectories(Paths.get("./data"));
         try {
@@ -48,6 +49,7 @@ public class Storage {
 
     }
 
+    /** Loads tasks from previous save files when starting Duke */
     static ArrayList<Task> loadFromFile() {
         ArrayList<Task> tasks = new ArrayList<Task>();
 
