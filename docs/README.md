@@ -24,21 +24,24 @@ User can mark a task to indicate it is finished/completed by entering: mark <tas
 
 ### Unmark Tasks
 
-User can undo their mark of finished tasks if the task is not done
+User can undo their mark of finished tasks if the task is not done by entering: unmark <task number>
 
 ### Delete Tasks
 
-User can delete tasks
+User can delete tasks by entering: delete <task number> OR delete all  
 
 ### Find task
 
-User can find task regarding the descriptions of tasks
+User can find task regarding the descriptions of tasks by entering: find <task description>
 
 ### Storage
 
 The tasks will be stored and read every time when the user start and end Duke
 
-## Usage
+## Usage 
+```
+Note that all commands are case-sensitive
+```
 
 ### `list` - list down all the tasks
 
@@ -174,6 +177,7 @@ Example of usage:
 Expected outcome:
 
 program ended and show farewell message
+
 tasks are stored in .txt file
 
 ```
