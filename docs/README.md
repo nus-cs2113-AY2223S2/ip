@@ -34,7 +34,7 @@ An Event task takes place from a date to another date.
 
 ## Usage
 
-1. To start the chatbot, run the program from the command line.
+1. To start the chatbot, run the program from the command line or using the .jar file.
 2. Enter one of the commands listed above to perform the desired action.
 3. Follow the prompts and enter the required information.
 4. The chatbot will respond with an appropriate message.
