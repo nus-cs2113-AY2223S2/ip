@@ -20,16 +20,38 @@ public class DukeUI {
                                     "| |_| | |_| | |_| | |_| | |_) || | | |___|_|\n" +
                                     " \\____|\\___/ \\___/|____/|____/ |_| |_____(_)\n";
     public Scanner in;
+
+    /**
+     * Constructor for DukeUI
+     */
     public DukeUI() {
         in = new Scanner(System.in);
     }
+
+    /**
+     * Returns the line that reads from the command line.
+     * @return String of the next line of input.
+     */
     public String readCommand() {
         return in.nextLine();
     }
+
+    /**
+     * Prints the Duke logo.
+     */
     public void printDukeLogo() { System.out.println("Hello from\n" + DukeLogo);}
+
+    /**
+     * Prints the Editor logo.
+     */
     public void printEditorLogo(){
         System.out.println(EditorLogo);
     }
+
+    /**
+     * Prints all the greetings to the user.
+     * Includes the Duke logo, editor logo, and the greeting message.
+     */
     public void printGreeting(){
         printDukeLogo();
         printEditorLogo();
@@ -37,15 +59,28 @@ public class DukeUI {
         System.out.println("What can I do for you?");
         printLine();
     }
+
+    /**
+     * Prints the Goodbye logo.
+     */
     public void printGoodbyeLogo(){
         System.out.println(GoodbyeLogo);
     }
     public void printString(String s){
         System.out.println(s);
     }
+
+    /**
+     * Prints the message when an error occurs.
+     * @param s String to be printed.
+     */
     public void printError(String s){
         System.out.println("[>Error] " + s);
     }
+
+    /**
+     * Prints the dividing line.
+     */
     public void printLine(){
         System.out.println(LINE);
     }

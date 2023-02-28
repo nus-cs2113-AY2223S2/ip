@@ -22,6 +22,12 @@ public class DukeStorage {
     private static final String TASK_TYPE_EVENT = "E";
     private static final String TASK_TYPE_TODO = "T";
     private static final String TASK_STATUS_DONE = "1";
+
+    /**
+     * Saves the task list to the file.
+     * @param tasks the task list to be saved.
+     * @throws DukeException if the file cannot be saved.
+     */
     public void saveTask(DukeList tasks) throws DukeException {
         File file = new File(FILE_PATH);
         try {
@@ -36,6 +42,12 @@ public class DukeStorage {
             throw new DukeException(e.getMessage());
         }
     }
+
+    /**
+     * Loads the task list from the file.
+     * @param tasks the task list to be loaded.
+     * @throws DukeException if the file cannot be loaded or there is no such file.
+     */
     public void loadTask(DukeList tasks) throws DukeException {
         File file = new File(FILE_PATH);
         try {

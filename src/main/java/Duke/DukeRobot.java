@@ -12,6 +12,14 @@ public class DukeRobot {
     private DukeList tasks;
     private DukeParser parser;
     private DukeStorage storage;
+
+    /**
+     * Constructor for DukeRobot.
+     * Prepares the DukeRobot for use:
+     * initialises the ui, tasks, parser and storage.
+     * loads the existing tasks from the storage.
+     * prints all the greetings.
+     */
     public DukeRobot() {
         this.ui = new DukeUI();
         this.tasks = new DukeList();
@@ -27,6 +35,9 @@ public class DukeRobot {
         ui.printLine();
     }
 
+    /**
+     * Runs the program until termination (user types "bye").
+     */
     public void run() {
         boolean isExit = false;
         while(!isExit) {

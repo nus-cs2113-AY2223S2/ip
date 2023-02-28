@@ -5,6 +5,11 @@ import Duke.DukeTask.DukeEvent;
 import Duke.DukeTask.DukeTask;
 
 public class DukeParser {
+    /**
+     * Parses the input from the user and returns a DukeCommandLineInput object.
+     * @param commandLine the command line input by the user.
+     * @return type of the command and the message of the command in a DukeCommandLineInput object.
+     */
     public DukeCommandLineInput parse(String commandLine) {
         commandLine = commandLine.trim();
         if(!commandLine.contains(" ")) {
@@ -15,12 +20,26 @@ public class DukeParser {
         lineRemaining = lineRemaining.trim();
         return new DukeCommandLineInput(command[0], lineRemaining);
     }
+
+    /**
+     * Parses the input from the user and returns a DukeTask object.
+     * @param inputTask the message of the command to be processed.
+     * @return a DukeTask object if the input is invalid, else throws a DukeException.
+     * @throws DukeException if the input is invalid (the String is empty).
+     */
     public DukeTask processTask(String inputTask) throws DukeException {
         if(inputTask.equals("")) {
             throw new DukeException("☹ OOPS!!! The description of a task cannot be empty.");
         }
         return new DukeTask(inputTask);
     }
+
+    /**
+     * Parses the input from the user and returns a DukeDeadline object.
+     * @param inputTask the message of the command to be processed.
+     * @return a DukeDeadline object if the format of the input is invalid, else throws a DukeException.
+     * @throws DukeException if the format of the input is invalid (the String does not contain "/by").
+     */
     public DukeDeadline processDeadline(String inputTask) throws DukeException {
         try {
             String deadlineName = inputTask.substring(0, inputTask.indexOf("/by"));
@@ -33,6 +52,14 @@ public class DukeParser {
                     "deadline <task name> /by <deadline time>");
         }
     }
+
+    /**
+     * Parses the input from the user and returns a DukeEvent object.
+     * @param inputTask the message of the command to be processed.
+     * @return a DukeEvent object if the format of the input is invalid, else throws a DukeException.
+     * @throws DukeException if the format of the input is invalid
+     * (the String does not contain "/from" and "/to").
+     */
     public DukeEvent processEvent(String inputTask) throws DukeException {
         try {
             String eventName = inputTask.substring(0, inputTask.indexOf("/from")-1);

@@ -6,4 +6,4 @@ T | 0 | swimming
 D | 0 | running | 2019-10-15
 D | 0 | jumping | not decided yet
 D | 0 | homework | 2019-12-02-1800
-E | 0 | greeting | 2019-10-14 | 2019-10-16
+E | 1 | greeting | 2019-10-14 | 2019-10-16
