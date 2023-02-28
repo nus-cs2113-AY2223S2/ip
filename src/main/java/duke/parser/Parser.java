@@ -2,11 +2,11 @@ package duke.parser;
 
 import duke.outputs.Messages;
 import duke.exception.UnknownCommandException;
-import duke.commands.ByeCommand;
 import duke.commands.Command;
 import duke.commands.DeadlineCommand;
 import duke.commands.DeleteCommand;
 import duke.commands.EventCommand;
+import duke.commands.FindCommand;
 import duke.commands.UnknownCommand;
 import duke.commands.ListCommand;
 import duke.commands.MarkCommand;
@@ -39,6 +39,9 @@ public class Parser {
 
         case LIST:
             return new ListCommand();
+
+        case FIND:
+            return parserFind(inputArray);
 
         case DELETE:
             return parserDelete(inputArray);
@@ -141,6 +144,14 @@ public class Parser {
             } catch (NumberFormatException exception) {
                 return new UnknownCommand(Messages.ERROR_MESSAGE_TASK_NOT_FOUND);
             }
+        }
+        private Command parserFind (String[] inputArray){
+            if (inputArray.length == 1) {
+                return new UnknownCommand(Messages.ERROR_MESSAGE_KEYWORD_UNSPECIFIED);
+            }
+
+            return new FindCommand(inputArray[1]);
+
         }
 
 }

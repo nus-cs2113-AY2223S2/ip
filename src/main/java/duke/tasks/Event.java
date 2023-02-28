@@ -1,14 +1,22 @@
 package duke.tasks;
+import java.time.format.DateTimeParseException;
+import duke.exception.InvalidDateTimeFormatException;
+import duke.parser.DateTimeParser;
+
 
 public class Event extends Task {
     protected String startTime;
     protected String endTime;
 
 
-    public Event(String description, String startTime , String endTime){
+    public Event(String description, String startTime , String endTime) throws InvalidDateTimeFormatException{
         super(description,TaskType.EVENT);
-        this.startTime = startTime;
-        this.endTime = endTime;
+        try {
+            this.startTime = new DateTimeParser().parse(startTime);
+            this.endTime = new DateTimeParser().parse(endTime);
+        } catch(DateTimeParseException exception){
+            throw new InvalidDateTimeFormatException();
+        }
     }
 
     @Override

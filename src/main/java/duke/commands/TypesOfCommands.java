@@ -6,6 +6,7 @@ public enum TypesOfCommands {
     EVENT,
     LIST,
     DELETE,
+    FIND,
     MARK,
     UNMARK,
     BYE;

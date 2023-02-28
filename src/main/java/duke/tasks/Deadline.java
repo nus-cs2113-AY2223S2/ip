@@ -1,11 +1,20 @@
 package duke.tasks;
+import java.time.format.DateTimeParseException;
+
+import duke.exception.InvalidDateTimeFormatException;
+import duke.parser.DateTimeParser;
 
 public class Deadline extends Task {
-    protected String by;
+    private String by;
 
-    public Deadline(String description, String by) {
+    public Deadline(String description, String by) throws InvalidDateTimeFormatException{
         super(description, TaskType.DEADLINE);
-        this.by = by;
+        try{
+            this.by = new DateTimeParser().parse(by);
+        }catch (DateTimeParseException exception){
+            throw new InvalidDateTimeFormatException();
+        }
+
     }
 
     @Override

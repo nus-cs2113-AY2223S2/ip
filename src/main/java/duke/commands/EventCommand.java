@@ -1,5 +1,6 @@
 package duke.commands;
 import duke.tasks.Event;
+import duke.exception.InvalidDateTimeFormatException;
 import duke.outputs.Messages;
 
 public class EventCommand extends TaskCommand{
@@ -14,12 +15,14 @@ public class EventCommand extends TaskCommand{
         this.endTime = endTime;
     }
     public CommandResult execute() {
-
-        Event task = new Event(taskDescription, startTime, endTime);
-        tasklist.addTask(task);
-        return new CommandResult(Messages.MESSAGE_TASK_ADDED,
-                String.format("\n\t\t%s \n", task),
-                String.format(Messages.MESSAGE_TASK_LIST_SIZE, tasklist.getNumberOfTasks()));
-
+        try {
+            Event task = new Event(taskDescription, startTime, endTime);
+            tasklist.addTask(task);
+            return new CommandResult(Messages.MESSAGE_TASK_ADDED,
+                    String.format("\n\t\t%s \n", task),
+                    String.format(Messages.MESSAGE_TASK_LIST_SIZE, tasklist.getNumberOfTasks()));
+        } catch (InvalidDateTimeFormatException exception){
+            return new CommandResult(exception.getDukeMessages());
+        }
     }
 }

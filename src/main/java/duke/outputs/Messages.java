@@ -16,5 +16,9 @@ public class Messages {
     public static final String ERROR_MESSAGE_TASK_NOT_FOUND = "This task does not exist!";
     public static final String ERROR_MESSAGE_MISSING_TASK_DESCRIPTION = "Please key in a valid description of the task!";
     public static final String ERROR_MESSAGE_LOADING_TASK_ERROR = "Oops! Task loading error!";
+    public static final String ERROR_MESSAGE_INVALID_DATETIME = "Oops! I do not understand the format of the date and time inputted.";
+    public static final String MESSAGE_KEYWORD_FOUND = "Here are the matching tasks in your list:";
+    public static final String ERROR_MESSAGE_KEYWORD_NOT_FOUND = "Oops! I could not find any task matching that keyword.";
+    public static final String ERROR_MESSAGE_KEYWORD_UNSPECIFIED = "Please enter a keyword to for me to search.";
 
 }
