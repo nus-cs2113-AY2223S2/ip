@@ -79,11 +79,12 @@ public class Duke {
         } else if (command.equals("load")) {
             storage.load(tasklist);
             Ui.printResponse(OperationsMessages.LOADED_MSG);
+        } else if (command.equals("bye")) {
+            Ui.printResponse(OperationsMessages.BYE_MSG);
+            System.exit(0);
         } else if (numWords <= 1) {
             // dont move on if less than 2 parts
             throw new EmptyInputException();
-        } else if (command.equals("bye")) {
-            Ui.printResponse(OperationsMessages.BYE_MSG);
         } else if (command.equals("find")) {
             line = line.substring(command.length() + 1);
             findItem(line);
@@ -91,7 +92,7 @@ public class Duke {
             line = line.substring(command.length() + 1);
             createTodo(line);
         } else if (command.equals("delete") || command.equals("remove")) {
-            line = line.substring(command.length() + 1);
+            // line = line.substring(command.length() + 1);
             removeItem(Parser.getInputIndex(line));
         } else if (command.equals("deadline")) {
             line = line.substring(command.length() + 1);
@@ -131,7 +132,7 @@ public class Duke {
      * @param line The line submitted by the user excluding the command
      */
     private static void createDeadline(String line) { 
-          
+
         Deadline item = Parser.initDeadline(line);
         tasklist.addItem(item);
         Ui.printResponse(String.format(OperationsMessages.ADDED_MSG, item.toString(), tasklist.size()));
@@ -147,6 +148,7 @@ public class Duke {
         
         Event item = Parser.initEvent(line);
         tasklist.addItem(item);
+        Ui.printResponse(String.format(OperationsMessages.ADDED_MSG, item.toString(), tasklist.size()));
     }
 
     /**
