@@ -4,11 +4,11 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class DataAccess {
+public class Storage {
     String filePath;
 
 
-    public DataAccess(String filePath) {
+    public Storage(String filePath) {
         this.filePath = filePath;
     }
 
