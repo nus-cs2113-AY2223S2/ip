@@ -1,6 +1,8 @@
-import java.lang.reflect.Array;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.io.File;
 
 public class Duke {
     static final int COMMAND_INDEX = 0;
@@ -9,15 +11,36 @@ public class Duke {
     static final int STARTDATE_INDEX = 0;
     static final int ENDDATE_INDEX = 1;
     static final String DEADLINE_MARKER = "/by";
-
     static final String TASK_NO_EXIST = "Task does not exist!";
     static final String DELETE_TASK_MESSAGE = "Okay! I've deleted task: ";
+    public static final String TASKLIST_EXPORT_PATH = "TaskList.txt";
+    public static final String SUCCESS_EXPORT = "Successfully exported TaskList!";
+    public static final String EXPORT_ERROR_PREFIX = "Error occurred while writing to ";
+    public static final String STARTDATE_USERINPUT_PREFIX = "/from";
+    public static final String ENDDATE_USERINPUT_PREFIX = "/to";
+    public static final String DEADLINE_USERINPUT_PREFIX = "/by";
 
     public static void exitMessage() {
         System.out.println("Go away Anna");
         System.out.println("O-kay bye......");
     }
 
+    public static void writeToTaskList() {
+        File exportTaskList = new File (TASKLIST_EXPORT_PATH);
+        try {
+            FileWriter writeTaskList = new FileWriter(TASKLIST_EXPORT_PATH);
+            int numTasks = TaskList.getNumItems();
+            for (int i = 0; i < numTasks; ++i) {
+                writeTaskList.write(TaskList.getItem(i).getTask());
+                writeTaskList.write(System.lineSeparator());
+            }
+            writeTaskList.close();
+            System.out.println(SUCCESS_EXPORT);
+            System.out.println("Written to: " + TASKLIST_EXPORT_PATH);
+        } catch (IOException e) {
+            System.out.println(EXPORT_ERROR_PREFIX + exportTaskList.getAbsolutePath());
+        }
+    }
     public static String getItemDescription(String userInput) {
         Scanner in = new Scanner(System.in);
         String description;
@@ -33,8 +56,8 @@ public class Duke {
     public static String getDueDate(String userInput) {
         Scanner in = new Scanner(System.in);
         String dueDate;
-        if (userInput.contains("/by")) {
-            dueDate = userInput.substring(userInput.indexOf("/by"));
+        if (userInput.contains(DEADLINE_USERINPUT_PREFIX)) {
+            dueDate = userInput.substring(userInput.indexOf(DEADLINE_USERINPUT_PREFIX));
         } else {
             System.out.println("When is this due by?");
             dueDate = in.nextLine().trim();
@@ -46,15 +69,15 @@ public class Duke {
         Scanner in = new Scanner(System.in);
         String[] StartEndDates = new String[2];
 
-        if (userInput.contains("/from")) {
-            StartEndDates[STARTDATE_INDEX] = userInput.substring(userInput.indexOf("/from"),userInput.indexOf("/to")).trim();
+        if (userInput.contains(STARTDATE_USERINPUT_PREFIX)) {
+            StartEndDates[STARTDATE_INDEX] = userInput.substring(userInput.indexOf(STARTDATE_USERINPUT_PREFIX),userInput.indexOf(ENDDATE_USERINPUT_PREFIX)).trim();
         } else {
             System.out.println("When does this event start?");
             StartEndDates[STARTDATE_INDEX] = in.nextLine().trim();
         }
 
-        if (userInput.contains("/to")) {
-            StartEndDates[ENDDATE_INDEX] = userInput.substring(userInput.indexOf("/to")).trim();
+        if (userInput.contains(ENDDATE_USERINPUT_PREFIX)) {
+            StartEndDates[ENDDATE_INDEX] = userInput.substring(userInput.indexOf(ENDDATE_USERINPUT_PREFIX)).trim();
         } else {
             System.out.println("When does this event end?");
             StartEndDates[ENDDATE_INDEX] = in.nextLine().trim();
@@ -72,6 +95,8 @@ public class Duke {
             String inputCommand = input.get(COMMAND_INDEX);
 
             switch (inputCommand) {
+
+            case "exit":
             case "bye":
                 exitMessage();
                 return;
@@ -113,12 +138,17 @@ public class Duke {
             case "delete": {
                 String itemNum = getItemDescription(userInput);
                 int itemIndex = Integer.parseInt(itemNum) - 1;
-                if (itemIndex <= TaskList.getNumItems()-1) {
+                if (itemIndex <= TaskList.getNumItems() - 1) {
                     TaskList.deleteTask(itemIndex);
                     System.out.println(DELETE_TASK_MESSAGE + itemNum);
                 } else {
                     System.out.println(TASK_NO_EXIST);
                 }
+                break;
+            }
+
+            case "save": {
+                writeToTaskList();
                 break;
             }
 
