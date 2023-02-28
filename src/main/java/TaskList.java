@@ -1,12 +1,35 @@
 import java.util.ArrayList;
 import java.io.File;
 import java.io.FileWriter;
+import java.util.Scanner;
 import java.io.IOException;
 
 public class TaskList {
-    public final static String FILEPATH = "duke.txt";
+    public final static String FILEPATH = "./duke.txt";
     private ArrayList<Task> taskArray = new ArrayList<>();
     private int totalTaskNum = 0;
+
+    public TaskList(){
+        try {
+            File file = new File(FILEPATH);
+            if (file.createNewFile()) {
+                System.out.println("I created the file " + file.getName());
+                System.out.println("From now on, I will record your tasks here.");
+            } else{
+                Scanner scanner = new Scanner(file);
+                ArrayList<String[]> existingTasks = new ArrayList<>();
+                while(scanner.hasNext()){
+                    String task = scanner.nextLine().substring(8);
+                    String[] taskInfo = task.split("/");
+                    existingTasks.add(taskInfo);
+                }
+                loadData(existingTasks);
+            }
+        } catch(IOException e){
+            System.out.println("☹ OOPS!!! I cannot create new file.");
+            System.out.println(e.getMessage());
+        }
+    }
 
     public boolean addTask(String userInput){
         String[] userInputSplited = userInput.split("/");
@@ -40,7 +63,7 @@ public class TaskList {
     public boolean addDeadline(String[] userInputSplited){
         try{
             String contents = userInputSplited[0].replace("deadline ", "");
-            String end = userInputSplited[1].replace("/by ", "");
+            String end = userInputSplited[1].replace("by: ", "");
             Deadline newDeadline = new Deadline (contents, end);
             taskArray.add(newDeadline);
             totalTaskNum++;
@@ -55,8 +78,8 @@ public class TaskList {
     public boolean addEvent(String[] userInputSplited){
         try{
             String contents = userInputSplited[0].replace("event ", "");
-            String start = userInputSplited[1].replace("/from ", "");
-            String end = userInputSplited[2].replace("/to ", "");
+            String start = userInputSplited[1].replace("from: ", "");
+            String end = userInputSplited[2].replace("to: ", "");
             Event newEvent = new Event(contents, start, end);
             taskArray.add(newEvent);
             totalTaskNum++;
@@ -82,10 +105,7 @@ public class TaskList {
 
     public static void writeToFile(String filePath, String textAdded){
         try {
-            File file = new File(filePath);
-            if (file.createNewFile()) {
-                System.out.println("File created: " + file.getName());
-            }
+            File file = new File(FILEPATH);
             FileWriter fw = new FileWriter(file);
             fw.write(textAdded);
             fw.close();
@@ -104,6 +124,22 @@ public class TaskList {
         } catch(Exception e){
             System.out.println("☹ OOPS!!! I cannot remove the task. Try again.");
             return false;
+        }
+    }
+
+    public void loadData(ArrayList<String[]> existingTasks){
+        for(String[] taskInfo : existingTasks){
+            switch(taskInfo.length){
+                case 1:
+                    addTodo(taskInfo);
+                    break;
+                case 2:
+                    addDeadline(taskInfo);
+                    break;
+                case 3:
+                    addEvent(taskInfo);
+                    break;
+            }
         }
     }
 

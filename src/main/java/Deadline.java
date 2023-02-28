@@ -10,11 +10,11 @@ public class Deadline extends Task {
     public String toString() {
         String returnStr = "[D]";
         if (getIsDone()) {
-            returnStr = returnStr.concat("[O]");
+            returnStr = returnStr.concat("[O] ");
         } else {
-            returnStr = returnStr.concat("[ ]");
+            returnStr = returnStr.concat("[ ] ");
         }
 
-        return returnStr + getContents() + "(by: " + by + ")";
+        return returnStr + getContents() + "/by: " + by;
     }
 }

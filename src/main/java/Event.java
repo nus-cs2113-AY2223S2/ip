@@ -12,11 +12,11 @@ public class Event extends Task {
     public String toString() {
         String returnStr = "[E]";
         if (getIsDone()) {
-            returnStr = returnStr.concat("[O]");
+            returnStr = returnStr.concat("[O] ");
         } else {
-            returnStr = returnStr.concat("[ ]");
+            returnStr = returnStr.concat("[ ] ");
         }
 
-        return returnStr + getContents() + "(from: " + from + " | to: " + to + ")";
+        return returnStr + getContents() + "/from: " + from + "/to: " + to;
     }
 }

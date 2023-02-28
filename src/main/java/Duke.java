@@ -8,7 +8,7 @@ public class Duke {
     public static final String COMMAND_UNMARK = "unmark";
     public static final String COMMAND_DELETE = "delete";
 
-    private static TaskList TASKLIST = new TaskList();
+    private static TaskList TASKLIST;
 
     public static void main(String[] args) {
         String logo = " ____        _        \n"
@@ -19,6 +19,7 @@ public class Duke {
         System.out.println("Hello from\n" + logo);
 
         greetUser();
+        TASKLIST = new TaskList();
 
         while(true){
             executeCommand(getUserCommand());
