@@ -46,4 +46,10 @@ public class ErrorMessage {
         System.out.println("Please enter a valid command.");
         Ui.linePrint();
     }
+
+    public static void printEmptyFindMessage() {
+        Ui.linePrint();
+        System.out.println("Your description is empty.");
+        Ui.linePrint();
+    }
 }
