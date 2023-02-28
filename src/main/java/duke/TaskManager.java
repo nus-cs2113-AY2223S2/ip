@@ -5,6 +5,23 @@ import java.util.*;
 public class TaskManager {
     private ArrayList<Task> tasks = new ArrayList<>();
 
+    public void findItem(String s) {
+        boolean found = false;
+        if (tasks.size() == 0) {
+            System.out.println("The list is currently empty!");
+            return;
+        }
+        for (int i = 0; i < tasks.size(); i++) {
+            if (tasks.get(i).find(s)) {
+                System.out.println("Item found: " + (i + 1) + "." + tasks.get(i).toString());
+                found = true;
+            }
+        }
+        if (found == false) {
+            System.out.println("Sorry there is no match for your search !");
+        }
+    }
+
     public void addTask(String name, boolean isDone) {
         tasks.add(new Task(name, isDone));
     }

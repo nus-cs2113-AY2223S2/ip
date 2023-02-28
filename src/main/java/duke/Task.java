@@ -56,4 +56,9 @@ public class Task {
             System.out.println("." + this.toString());
         }
     }
+
+    public boolean find(String s) {
+        return this.name.contains(s);
+    }
+
 }

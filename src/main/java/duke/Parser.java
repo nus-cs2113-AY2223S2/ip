@@ -3,8 +3,8 @@ package duke;
 import java.io.IOException;
 
 public class Parser {
-    
-    public static void handleCmd(String userCmd, TaskManager listOfItems, Ui ui) throws IOException{
+
+    public static void handleCmd(String userCmd, TaskManager listOfItems, Ui ui) throws IOException {
         switch (firstWord(userCmd)) {
             case "todo":
                 executeAddTodo(userCmd, listOfItems, ui);
@@ -47,6 +47,10 @@ public class Parser {
             case "clear":
                 listOfItems.clearData();
                 Storage.saveFile(listOfItems);
+                ui.printHorizontalLine();
+                break;
+            case "find":
+                listOfItems.findItem(userCmd.substring(5, userCmd.length()));
                 ui.printHorizontalLine();
                 break;
             default:
@@ -114,5 +118,5 @@ public class Parser {
             ui.printInstructions();
         }
     }
-    
+
 }

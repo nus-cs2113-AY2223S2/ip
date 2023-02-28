@@ -13,6 +13,7 @@ public class Ui {
         System.out.println("unmark + \"task number\" to unmark an item");
         System.out.println("delete + \"task number\" to remove an item");
         System.out.println("clear to clear all data in the hard drive");
+        System.out.println("find + \"phrase\" to find an item containing the phrase");
     }
 
     public void printHorizontalLine() {
