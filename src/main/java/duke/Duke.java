@@ -73,14 +73,8 @@ public class Duke {
         System.out.println("Now you have " + tasks.size() + " tasks in your list.");
     }
 
-    private static String[] getInput() {
-        Scanner input = new Scanner(System.in);
-        String text = input.nextLine(); // input the whole sentence into text
-        return text.split(" ", 2);
-    }
-
     private static void editList(ArrayList<Task> tasks) throws UnknownCommandException, EmptyDescriptionException, TaskToMarkDoesNotExistException {
-        String[] splitText = getInput();
+        String[] splitText = Ui.getInput();
         while (!splitText[0].equals("bye")) {
             switch (splitText[0]) {
             case "mark":
@@ -137,19 +131,18 @@ public class Duke {
             default:
                 throw new UnknownCommandException();
             }
-            splitText = getInput();
+            splitText = Ui.getInput();
         }
         try {
             Storage.updateFile(tasks);
         } catch (IOException e){
             System.out.println("Error updating data in file");
         }
-        System.out.println("Bye! Hope to see you again soon!");
+        Ui.printBye();
     }
 
     public static void main(String[] args) {
-        System.out.println("Hello! I'm duke.Duke");
-        System.out.println("What can I do for you?");
+        Ui.printGreet();
         ArrayList<Task> tasks = new ArrayList<>();
         try {
             tasks = Storage.getData();
