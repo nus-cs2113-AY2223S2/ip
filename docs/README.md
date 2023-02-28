@@ -1,29 +1,41 @@
 # User Guide
+Duke is a helpful tool for managing a variety of chores, assisting you in organizing your day and increasing productivity.
+All the best features of any task manager are available to you in a compact yet potent package thanks to its optimized CLI performance!
 
 ## Features 
 
-### Feature-ABC
+### Store a list of tasks
 
-Description of the feature.
+- Only three different type of tasks are allowed to store ( todo, deadline, event).
 
-### Feature-XYZ
+### Mark/ Unmark task
 
-Description of the feature.
+- Keep track of the progress of the task.
+
+### View all tasks
+- View all saved tasks and  its progress.
+
+### Find occurrence of specified tasks
+- find tasks in the list which contains the input keyword.
+
+### Delete task
+- Remove specified task form the main list
 
 ## Usage
 
-### `Keyword` - Describe action
+### `todo` - Adds a todo task to the list
 
-Describe the action and its outcome.
+A todo task is task with no associated dateTime parameters.
+Adds a named todo task to the task list, which will be stored on local device.
 
 Example of usage: 
 
-`keyword (optional arguments)`
+`todo study CS2113 final`
 
 Expected outcome:
 
-Description of the outcome.
+A todo task of name "study CS2113 final" is added to the task list
 
 ```
-expected output
+
 ```

@@ -9,6 +9,8 @@ import duke.exception.InvalidTaskException;
 import duke.tasks.TaskList;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.util.zip.DataFormatException;
 
 import static duke.Storage.Storage.updateFile;
 import static duke.main.Duke.printHorizontalLine;
@@ -81,6 +83,10 @@ public class Parser {
             printHorizontalLine();
             System.out.println("Please enter all command parameter!");
             printHorizontalLine();
+        } catch (DataFormatException e) {
+            throw new RuntimeException(e);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
         }
 
         try {
