@@ -140,13 +140,14 @@ public class TaskList {
     }
 
     /**
-     * Finds and prints out all the tasks in the TaskList that contains the specified keyword.
+     * This method finds a task in the list of tasks that matches the provided keyword and displays the matching tasks' descriptions.
      *
-     * @param keyword the keyword to search for in the TaskList
-     * @throws EmptyListException       if the TaskList is empty
-     * @throws KeywordNotFoundException if no task in the TaskList contains the specified keyword
+     * @param keyword The keyword to search for in the task descriptions.
+     * @throws EmptyListException       if the task list is empty.
+     * @throws KeywordNotFoundException if no tasks matching the keyword are found in the task list.
+     * @throws InvalidArgumentException if the keyword is null or empty.
      */
-    public void findTask(String keyword) throws EmptyListException, KeywordNotFoundException {
+    public void findTask(String keyword) throws EmptyListException, KeywordNotFoundException, InvalidArgumentException {
 
         boolean found = false;
 

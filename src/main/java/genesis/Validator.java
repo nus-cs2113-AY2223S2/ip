@@ -10,26 +10,38 @@ public class Validator {
     }
 
     /**
-     * Validates that an index is provided in the user input.
+     * Validates the index component of user input.
      *
-     * @param contentArr An array of strings containing user input.
-     * @throws InvalidArgumentException If the index is missing or empty.
+     * @param contents an array of user input strings
+     * @throws InvalidArgumentException if the index is empty
      */
-    protected void validateIndex(String[] contentArr) throws InvalidArgumentException {
-        if (contentArr.length < 2) {
+    protected void validateIndex(String[] contents) throws InvalidArgumentException {
+        if (contents.length < 2) {
             throw new InvalidArgumentException("Index cannot be empty");
         }
     }
 
     /**
-     * Validates that a description is provided in the user input.
+     * Validates the description component of user input.
      *
-     * @param contentArr An array of strings containing user input.
-     * @throws InvalidArgumentException If the description is missing or empty.
+     * @param contents an array of user input strings
+     * @throws InvalidArgumentException if the description is empty or null
      */
-    protected void validateDescription(String[] contentArr) throws InvalidArgumentException {
-        if (contentArr.length < 2 || contentArr[1].isBlank()) {
+    protected void validateDescription(String[] contents) throws InvalidArgumentException {
+        if (contents.length < 2 || contents[1].isBlank()) {
             throw new InvalidArgumentException("The description cannot be empty.");
+        }
+    }
+
+    /**
+     * Validates the keyword component of user input.
+     *
+     * @param contents an array of user input strings
+     * @throws InvalidArgumentException if the keyword is empty or null
+     */
+    protected void validateKeyword(String[] contents) throws InvalidArgumentException {
+        if (contents.length < 2 || contents[1].isBlank()) {
+            throw new InvalidArgumentException("The keyword cannot be empty.");
         }
     }
 }
