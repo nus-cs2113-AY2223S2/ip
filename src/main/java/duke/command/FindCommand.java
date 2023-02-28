@@ -21,6 +21,7 @@ public class FindCommand {
 
     public static void findTask(TaskList tasks, String keyword){
         int counter = 0;
+        printBorder();
         System.out.println("Here are the matching tasks in your list:");
         for (Task t : tasks.getTasks()){
             counter++;

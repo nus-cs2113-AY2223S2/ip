@@ -20,6 +20,7 @@ public class ChangeStatusCommand {
         try {
             Integer taskIndex = Integer.parseInt(taskIndexInput) - 1;
             tasks.getTask(taskIndex).setStatus("mark");
+            Ui.printBorder();
             System.out.println("Nice! I've marked this task as done: \n");
             System.out.println(tasks.getTask(taskIndex) + "\n");
             Ui.printBorder();
@@ -38,6 +39,7 @@ public class ChangeStatusCommand {
         try {
             Integer taskIndex = Integer.parseInt(taskIndexInput) - 1;
             tasks.getTask(taskIndex).setStatus("unmark");
+            Ui.printBorder();
             System.out.println("OK, I've marked this task as not done yet: \n");
             System.out.println(tasks.getTask(taskIndex) + "\n");
             Ui.printBorder();

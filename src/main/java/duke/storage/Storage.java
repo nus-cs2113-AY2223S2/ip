@@ -39,7 +39,7 @@ public class Storage {
                 addFileDataToList(tasks, data);
             }
         }catch (FileNotFoundException e){
-            System.out.println("File not found");
+            System.out.println("File not found, new file will be created");
         }
     }
 

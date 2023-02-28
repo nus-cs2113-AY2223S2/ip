@@ -4,8 +4,6 @@ import duke.tasklist.TaskList;
 import duke.tasks.Task;
 import duke.ui.Ui;
 
-import static duke.ui.Ui.printBorder;
-
 /**
  * Represents the delete feature in Duke. Task object specified by the user
  * will be deleted from the task list.
@@ -24,10 +22,11 @@ public class DeleteCommand {
             Integer taskIndex = Integer.parseInt(taskIndexInput) - 1;
             Task temp = tasks.getTask(taskIndex);
             tasks.removeTask(taskIndex);
+            Ui.printBorder();
             System.out.println("Noted. I've removed this task: \n");
             System.out.println(temp + "\n");
             System.out.println("Now you have " + tasks.getSize() + " tasks in the list." );
-            printBorder();
+            Ui.printBorder();
         } catch(IndexOutOfBoundsException | NumberFormatException e){
             System.out.println("Error! Specify a valid task index!");
             Ui.printBorder();
