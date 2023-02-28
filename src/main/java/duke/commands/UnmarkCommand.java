@@ -39,6 +39,8 @@ public class UnmarkCommand extends Command {
             Messages.emptyUnmarkErrorMessage();
         } catch (IndexOutOfBoundsException exception) {
             Messages.invalidUnmarkErrorMessage();
+        } catch (NumberFormatException exception) {
+            Messages.nonNumberInputErrorMessage();
         }
     }
 }

@@ -78,17 +78,21 @@ public class UI {
      * @param tasks the entire tasklist
      */
     public void printTasksArray(TaskList tasks) {
-        showLine();
-        int count = 1;
-        System.out.println("Here are the tasks in your list:");
-        ArrayList<Task> listOfTasks = tasks.getTasksArray();
-        for (Task task : listOfTasks) {
-            if (task != null) {
-                System.out.println(count + "." + task);
-                count++;
+        if(tasks.getTasksArray().isEmpty()){
+            Messages.emptyListMessage();
+        }else {
+            int count = 1;
+            showLine();
+            System.out.println("Here are the tasks in your list:");
+            ArrayList<Task> listOfTasks = tasks.getTasksArray();
+            for (Task task : listOfTasks) {
+                if (task != null) {
+                    System.out.println(count + "." + task);
+                    count++;
+                }
             }
+            showLine();
         }
-        showLine();
     }
 
     /**
@@ -100,9 +104,9 @@ public class UI {
     public void printTaskStatusMessage(Task task, String taskStatus) {
         showLine();
         if (taskStatus.equals("mark")) {
-            System.out.println(" Nice! I've marked this task as done:");
+            System.out.println("Nice! I've marked this task as done:");
         } else {
-            System.out.println(" OK, I've marked this task as not done yet:");
+            System.out.println("OK, I've marked this task as not done yet:");
         }
         System.out.println(task);
         showLine();
@@ -149,23 +153,26 @@ public class UI {
     /**
      * Outputs the tasks within the tasklist that contains the keyword specified by the user
      * @param tasks the current tasklist
-     * @param input keyowrd specified by user
+     * @param input keyword specified by user
      */
     public void printFindTaskMessage(TaskList tasks, String input) {
-        showLine();
-        ArrayList<Task> taskList = tasks.getTasksArray();
-        int index = 1;
-        System.out.println("Here are the matching tasks in your list:");
-        for (Task task : taskList) {
-            if (task.getDescription().contains(input)){
-                System.out.println(index + "." + task);
-                index++;
-            }
+        if(tasks.getTasksArray().isEmpty()){
+            Messages.emptyListMessage();
         }
-        showLine();
+        else {
+            ArrayList<Task> taskList = tasks.getTasksArray();
+            int index = 1;
+            showLine();
+            System.out.println("Here are the matching tasks in your list:");
+            for (Task task : taskList) {
+                if (task.getDescription().contains(input)) {
+                    System.out.println(index + "." + task);
+                    index++;
+                }
+            }
+            showLine();
+        }
     }
-
-
 }
 
 

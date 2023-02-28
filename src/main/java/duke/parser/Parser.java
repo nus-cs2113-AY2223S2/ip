@@ -81,6 +81,7 @@ public class Parser {
             command = new FindCommand();
             command.execute(input, tasks, ui);
             break;
+
         default:
             Messages.unknownCommandErrorMessage();
         }

@@ -39,6 +39,8 @@ public class MarkCommand extends Command {
             Messages.emptyMarkErrorMessage();
         } catch (IndexOutOfBoundsException exception) {
             Messages.invalidMarkErrorMessage();
+        }catch (NumberFormatException exception) {
+            Messages.nonNumberInputErrorMessage();
         }
     }
 }

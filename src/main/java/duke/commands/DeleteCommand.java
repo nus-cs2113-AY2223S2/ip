@@ -39,6 +39,8 @@ public class DeleteCommand extends Command {
             Messages.emptyDeleteErrorMessage();
         } catch (IndexOutOfBoundsException exception) {
             Messages.invalidDeleteErrorMessage();
+        } catch (NumberFormatException exception) {
+            Messages.nonNumberInputErrorMessage();
         }
     }
 }

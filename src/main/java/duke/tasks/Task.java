@@ -50,7 +50,7 @@ public class Task {
      * @return "X" if it is done and " " if it is not done
      */
     public String getStatusIcon() {
-        return (isDone ? "[X]" : "[ ] ");
+        return (isDone ? "[X] " : "[ ] ");
     }
 
     /**
