@@ -11,7 +11,7 @@ public class Buddy {
     public static void main(String[] args) {
         String greeting = "Hello there! I'm Buddy\n"
                 + "How may I assist you?";
-        String listOfCommands = "Here are the commands you can use: todo, deadline, event,  list, mark, unmark, bye";
+        String listOfCommands = "Here are the commands you can use: todo, deadline, event,  list, mark, unmark, delete, bye";
         String exitMessage = "Hope I was of help to you! Have a great day and see you again, Buddy :)";
         String divider = "________________________________________________________________________________";
 
@@ -60,7 +60,7 @@ public class Buddy {
 
                     currentTask.setDone(false);
                     System.out.println(divider);
-                    System.out.println("Remember to come back to this task! Marked as undone!");
+                    System.out.println("Come on, remember to come back to this task! Marked as undone!");
                     System.out.println(currentTask);
                     System.out.println(divider);
                 } catch (IndexOutOfBoundsException a) {
@@ -69,12 +69,13 @@ public class Buddy {
                 }
             } else if (command.startsWith("todo") || command.startsWith("deadline") || command.startsWith("event")) { //todo or deadline or event --> put together so don't have to repeat the same code thrice
                 System.out.println(divider);
-                System.out.println("Got it! I have added this task: ");
+
                 if (command.startsWith("todo")) {
                     int todoStartingIndex = 5;
 
                     Todo todoBeingAdded = new Todo(command.substring(todoStartingIndex));
                     listOfThings[currentPosition] = todoBeingAdded;
+                    System.out.println("Got it! I have added this task: ");
 
                     // Task is not a Todo but Todo is a task
                     System.out.println(todoBeingAdded);
@@ -89,6 +90,7 @@ public class Buddy {
                     String date = taskWithDate.substring(indexOfSlash + 4);
                     Deadline deadlineBeingAdded = new Deadline(taskDescription, date);
                     listOfThings[currentPosition] = deadlineBeingAdded;
+                    System.out.println("Got it! I have added this task: ");
                     System.out.println(deadlineBeingAdded);
 
                 } else if (command.startsWith("event")) {
@@ -103,6 +105,7 @@ public class Buddy {
                     String to = wholeLine.substring(indexOfSecondSlash + 4);
                     Event eventBeingAdded = new Event(taskDescription, from, to);
                     listOfThings[currentPosition] = eventBeingAdded;
+                    System.out.println("Got it! I have added this task: ");
                     System.out.println(eventBeingAdded);
                 }
 
