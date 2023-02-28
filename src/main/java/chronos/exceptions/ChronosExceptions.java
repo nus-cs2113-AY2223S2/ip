@@ -9,20 +9,8 @@ public class ChronosExceptions extends Exception {
      *
      * @param message The error message associated with the exception.
      */
-    public ChronosExceptions(String message) {
+    public ChronosExceptions(String message){
         super(message);
     }
-    /**
-     * Custom exception for handling invalid user input in the Chronos application.
-     */
-    public static class InvalidInputException extends ChronosExceptions {
-        /**
-         * Constructor for the InvalidInputException class.
-         *
-         * @param message The error message associated with the exception.
-         */
-        public InvalidInputException(String message) {
-            super(message);
-        }
     }
-}
+

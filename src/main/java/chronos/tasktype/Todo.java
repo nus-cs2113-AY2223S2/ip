@@ -1,5 +1,6 @@
 package chronos.tasktype;
 
+import chronos.exceptions.ChronosExceptions;
 import chronos.savehandler.Save;
 
 
@@ -13,6 +14,13 @@ public class Todo extends Task{
      */
     public Todo(String description) {
         super(description);
+        try{
+            if (description == null){
+                throw new ChronosExceptions(null);
+            }
+        } catch (ChronosExceptions error){
+            System.err.println("THIS CANNOT BE EMPTY. REMOVE THIS TASK AND ENTER 'help' TO VIEW PROPER FORMAT");
+        }
     }
 
     /**

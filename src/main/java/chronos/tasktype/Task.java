@@ -1,4 +1,5 @@
 package chronos.tasktype;
+import chronos.exceptions.ChronosExceptions;
 import chronos.savehandler.*;
 
 /**
@@ -25,11 +26,15 @@ public class Task {
      *                                  Chronos will prompt the user to do so
      */
     public Task(String description){
-        if (description == null){
-            throw new IllegalArgumentException("This field cannot be empty.");
+        try {
+            if (description == null) {
+                throw new ChronosExceptions(description);
+            }
+            this.description = description;
+            this.isDone = false;
+        } catch (ChronosExceptions error){
+            System.out.println("THIS CANNOT BE EMPTY. REMOVE THIS TASK AND ENTER 'help' TO VIEW PROPER FORMAT");
         }
-        this.description = description;
-        this.isDone = false;
     }
 
     public void setDone(boolean done) {
