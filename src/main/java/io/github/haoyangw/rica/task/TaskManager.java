@@ -6,6 +6,8 @@ import io.github.haoyangw.rica.ui.TextUi;
 import io.github.haoyangw.rica.storage.StorageManager;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class TaskManager {
     private static final String ADD_PHRASE = " New %s I'll remember: ";
@@ -124,6 +126,12 @@ public class TaskManager {
             this.getTextUi().printlnWithIndent(String.format(TaskManager.SINGLE_TASK_ADDED_PHRASE,
                     this.getTasks().size()));
         }
+    }
+
+    public List<Task> getMatchingTasks(String keyword) {
+        return this.getTasks().stream()
+                .filter(task -> task.getDescription().contains(keyword))
+                .collect(Collectors.toList());
     }
 
     /**

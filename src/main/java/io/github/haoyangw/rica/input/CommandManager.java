@@ -11,6 +11,7 @@ public class CommandManager {
     private static final String DEADLINE_CMD = "deadline";
     private static final String DELETE_CMD = "delete";
     private static final String EVENT_CMD = "event";
+    private static final String FIND_CMD = "find";
     private static final String LIST_CMD = "list";
     private static final String MARK_CMD = "mark";
     private static final String TODO_CMD = "todo";
@@ -47,6 +48,8 @@ public class CommandManager {
             return new DeleteCommand(command, taskManager);
         case EVENT_CMD:
             return new EventCommand(command, taskManager);
+        case FIND_CMD:
+            return new FindCommand(command, taskManager);
         case LIST_CMD:
             return new ListCommand(command, taskManager);
         case MARK_CMD:
