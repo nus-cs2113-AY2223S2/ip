@@ -96,6 +96,23 @@ public class Duke {
         }
     }
 
+    public static void Find(String keyword) {
+        if (listOfTasks.isEmpty()) {
+            System.out.println("There are no tasks listed currently");
+        } else {
+            int index = 1;
+            for (int i = 0; i < listOfTasks.size(); i++) {
+                if (listOfTasks.get(i).description.contains(keyword)) {
+                    if (index == 1) {
+                        System.out.println("Here are the matching tasks in your list: ");
+                    }
+                    System.out.println(index + "." + listOfTasks.get(i).toString());
+                    index++;
+                }
+            }
+        }
+    }
+
     public static void main(String[] args) {
         greet_user();
         findFile();
@@ -169,7 +186,10 @@ public class Duke {
                         System.out.println(":( There is an error (Index is out of bounds/negative)");
                     }
                     break;
-
+                case "find":
+                    String keyword = command[1];
+                    Find(keyword);
+                    break;
                 default:
                     System.out.println("There was an error. Please try again");
                     break;
