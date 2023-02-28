@@ -6,7 +6,7 @@ import java.io.IOException;
 public class Storage {
     private static FileReading fileReading;
 
-    public void load() {
+    public static void load() {
         try {
             fileReading.getFileContents();
         } catch (FileNotFoundException e) {

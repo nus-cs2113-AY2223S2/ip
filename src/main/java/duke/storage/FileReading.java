@@ -10,6 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class FileReading {
@@ -47,17 +48,14 @@ public class FileReading {
         System.out.println("Readable: " + f.canRead());
 
         try {
-            String taskA = Files.readString(Path.of(filePath));
-            System.out.println(taskA);
-
+            List<String> taskList = Files.readAllLines(Path.of(filePath));
+            TaskList.readTask(taskList);
         } catch (NullPointerException e) {
             System.out.println("Can't remember what was saved :(");
         } catch (IOException e) {
             System.out.println("IOException :(");
             throw new RuntimeException(e);
         }
-        //tasksList.add(t);
-        //System.out.println(t.toString() + " has been added to tasks list.");
     }
 
     public static void deleteFileContents(String filePath) throws IOException {

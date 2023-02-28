@@ -58,6 +58,19 @@ public class Task {
     }
 
     /**
+     * Updates the status of this task after reading from the txt file.
+     * @param status the status of this task
+     *               as stored in the list previously.
+     */
+    public void addIsDone(String status) {
+        if(status.equals("X")) {
+            this.isDone = true;
+        } else {
+            this.isDone = false;
+        }
+    }
+
+    /**
      * Marks a task as completed or unmarks a task as incomplete.
      * Updates the status of this task.
      * @param action User command to be executed.
