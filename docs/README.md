@@ -239,6 +239,7 @@ Process finished with exit code 0
 <strong>Q</strong>: If I do not use the correct format, will the program still work?<br>
 <strong>A</strong>: No, the program will show an error message and provide you the correct format.<br>
 <strong>Example</strong>: 
+
 ```
 ____________________________________________________________
 event hahahah
