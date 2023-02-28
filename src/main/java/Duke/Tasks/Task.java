@@ -1,4 +1,4 @@
-package Duke;
+package Duke.Tasks;
 
 public class Task {
     //Instantiate
@@ -12,19 +12,24 @@ public class Task {
         this.taskName = taskName;
         this.isDone = false;
     }
+
     public void setDone() {
         isDone = true;
     }
+
     public void setNotDone() {
         isDone = false;
     }
+
     public String getTaskName() {
         return taskName;
     }
 
     public String getTaskType() {
         return "error with print task type override";
-    };
+    }
+
+    ;
 
     public void printTask() {
         System.out.print("[");
@@ -73,7 +78,7 @@ public class Task {
         System.out.println(BLANK + LINE);
     }
 
-    public String saveInfo () {
+    public String saveInfo() {
         return "error with save info override" + "\n";
     }
 }

@@ -1,19 +1,19 @@
-package Duke;
+package Duke.Tasks;
 
 public class Todo extends Task {
-    Todo(String taskName) {
+    public Todo(String taskName) {
         super(taskName);
     }
+
     @Override
     public String getTaskType() {
         return "T";
     }
 
     @Override
-    public String saveInfo () {
+    public String saveInfo() {
         return getTaskType() + "t/" +
                 (isDone ? "X" : "Y") + "m/" +
                 taskName + "\n";
     }
-
 }
