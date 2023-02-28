@@ -9,14 +9,11 @@ public class Duke {
 
     public static void main(String[] args) {
         greeting();
-        System.out.println("Retrieving your files...");
+        System.out.println("Attempting to retrieve your files..." + System.lineSeparator());
         try {
             printFileContents("test11.txt");
         } catch (FileNotFoundException e) {
-            //System.out.println("File not found");
-            //System.out.println("Creating new file...");
-            File f = new File("C:\\Users\\Kishore\\Desktop\\Code\\codeCS2113_ip\\ip\\src\\main\\java\\DukeTasks.txt");
-            //System.out.println("Current path: " + f.isDirectory());
+            System.out.println("File is not found. Creating a new file now...");
         }
 
         Task[] tasks = new Task[ARRAY_LENGTH];
@@ -189,12 +186,24 @@ public class Duke {
         System.out.println("________________________________________");
     }
 
+    // Adapted from CS2113 Week 6 documentation
+    // If there are saved tasks, print them out.
     private static void printFileContents(String filePath) throws FileNotFoundException {
-        File f = new File(filePath); // create a File for the given file path
-        Scanner s = new Scanner(f); // create a Scanner using the File as the source
-        while (s.hasNext()) {
-            System.out.println(s.nextLine());
+        File f = new File(filePath);
+        Scanner s = new Scanner(f);
+        if (s.hasNext()) {
+            System.out.println("Your previously saved tasks:");
+            horizontalLine();
+            while (s.hasNext()) {
+                System.out.println(s.nextLine());
+            }
+            horizontalLine();
+        } else {
+            System.out.println("There are no saved tasks.");
+            System.out.println("Add your first task :)");
+            horizontalLine();
         }
+
     }
 
 
