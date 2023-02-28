@@ -17,13 +17,15 @@ public class Ui {
             "     Enter \"mark 'task-index'\" to mark a task as done.\n" +
             "     Enter \"unmark 'task-index'\" to mark a task as not done yet.\n" +
             "     Enter \"delete 'task-index'\" to delete a task from the list.\n" +
-            "     Enter \"list\" to obtain a list of all your tasks!.\n";
+            "     Enter \"list\" to obtain a list of all your tasks!.\n" +
+            "     Enter \"find 'string'\" to obtain a list of tasks containing the string you input.\n" +
+            "     Enter \"help\" to view this list of instruction again.\n";
 
     public static final String LOGO =
-            "|  _ \\ _   _| | _____ \n"
-                    + "| | | | | | | |/ / _ \\\n"
-                    + "| |_| | |_| |   <  __/\n"
-                    + "|____/ \\__,_|_|\\_\\___|\n";
+            "     |  _ \\ _   _| | _____ \n"
+                    + "     | | | | | | | |/ / _ \\\n"
+                    + "     | |_| | |_| |   <  __/\n"
+                    + "     |____/ \\__,_|_|\\_\\___|\n";
     public static final String BYE = "     Bye. Hope to see you again soon!\n";
 
     public static final String ERROR = "    Invalid command! :( Check your input and try again! \n" +

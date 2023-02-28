@@ -15,10 +15,21 @@ Prerequisites: JDK 11, update Intellij to the most recent version.
    In the same dialog, set the **Project language level** field to the `SDK default` option.
 3. After that, locate the `src/main/java/Duke.java` file, right-click it, and choose `Run Duke.main()` (if the code editor is showing compile errors, try restarting the IDE). If the setup is correct, you should see something like the below as the output:
    ```
-   past.Hello from
+   ____________________________________________________________
     ____        _        
    |  _ \ _   _| | _____ 
    | | | | | | | |/ / _ \
    | |_| | |_| |   <  __/
    |____/ \__,_|_|\_\___|
+   Hello! I'm Duke
+   Welcome to Your To-do List!
+   Enter "todo 'task-name'" to add a task."
+   Enter "deadline 'task-name' /by 'deadline'" to add a task with a deadline."
+   Enter "event 'task-name' /from 'start-date' /to 'end-date'" to add a task with start and end dates."
+   Enter " mark 'task-index' " to mark a task as done."
+   Enter " unmark 'task-index' " to mark a task as not done yet."
+   Enter " delete 'task-index' " to delete a task from the list."
+   Enter " list " to obtain a list of all your tasks!."
+   ____________________________________________________________
+   Data file already exists. You list will be updated.
    ```
