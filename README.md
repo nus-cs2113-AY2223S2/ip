@@ -22,3 +22,9 @@ Prerequisites: JDK 11, update Intellij to the most recent version.
    | |_| | |_| |   <  __/
    |____/ \__,_|_|\_\___|
    ```
+
+User's input accepted:
+1. If you want to add task, you can type:
+   - todo
+   - deadline
+   - event
