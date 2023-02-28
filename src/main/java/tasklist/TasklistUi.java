@@ -82,5 +82,10 @@ public class TasklistUi {
     protected void printTaskFoundMessage(String keyword) {
         System.out.println("These tasks contain the keyword " + keyword);
     }
+
+    protected void printDelimiterFoundError() {
+        System.out.println("| character found in arguments. Please ensure that your arguments " + 
+                "do not contain the character |.");
+    }
 }
 

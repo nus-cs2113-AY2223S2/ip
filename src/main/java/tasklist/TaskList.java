@@ -81,10 +81,22 @@ public class TaskList {
         return false;
     }
 
+    private boolean hasDelimiter(String args) {
+        if(args.contains("|")) {
+            noOfTasks--;
+            ui.printDelimiterFoundError();
+            return true;
+        }
+        return false;
+    }
+
     public void addToDo(String args) {
         noOfTasks++;
         args = args.trim();
         if(hasBlankArgument(args, "Name")) {
+            return;
+        }
+        if(hasDelimiter(args)) {
             return;
         }
         tasks.add(new ToDo(args));
@@ -106,6 +118,9 @@ public class TaskList {
         String by = args.substring(indexOfBy);
         by = by.trim();
         if (hasBlankArgument(by, "by")) {
+            return;
+        }
+        if (hasDelimiter(name) || hasDelimiter(by)) {
             return;
         }
         tasks.add(new Deadline(name, by));
@@ -142,6 +157,9 @@ public class TaskList {
         String to = args.substring(indexOfTo);
         to = to.trim();
         if (hasBlankArgument(to, "to")) {
+            return;
+        }
+        if (hasDelimiter(name) || hasDelimiter(from) || hasDelimiter(to)) {
             return;
         }
         tasks.add(new Event(name, from, to));
