@@ -23,7 +23,7 @@ public class TaskList {
             try {
                 addTodoTask(task[2].trim());
             } catch (EmptyTaskException e) {
-                System.out.println("This shouldn't be happening :O");
+                ui.printImpossible();
             }
             break;
         case "D":
@@ -38,21 +38,18 @@ public class TaskList {
             try {
                 markTaskDone(tasks.size()-1);
             } catch (NumberFormatException e) {
-                System.out.println("☹ OOPS!!! Task number should be an integer.");
-                ui.printDivider();
+                ui.printNumberFormatException();
             } catch (InvalidTaskNumberException e) {
-                System.out.println("☹ OOPS!!! The task specified does not exist in the task list.");
-                ui.printDivider();
+                ui.printInvalidTaskNumberException();
             } catch (IndexOutOfBoundsException e) {
-                System.out.println("☹ OOPS!!! The description of 'mark' cannot be empty.");
-                ui.printDivider();
+                ui.printIndexOutOfBoundsException();
             }
         }
     }
 
     public void printTaskList() {
         if (tasks.size() == 0) {
-            System.out.println("You are free today :)");
+            ui.printEmptyTaskList();
         } else {
             for (int i = 0; i < tasks.size(); ++i) {
                 System.out.print(i+1 + ".");
@@ -112,4 +109,21 @@ public class TaskList {
             tasks.remove(tasks.get(taskIndex));
         }
     }
+
+    public void findTasks(String taskName) throws EmptyTaskException {
+        if (taskName.equals("")) {
+            throw new EmptyTaskException();
+        } else {
+            int index = 1;
+            System.out.println("Here are the matching tasks in your list:");
+            for (int i = 0; i < tasks.size(); ++i) {
+                if (tasks.get(i).containsTask(taskName)) {
+                    System.out.print(index + ".");
+                    System.out.println(tasks.get(i));
+                    ++index;
+                }
+            }
+        }
+    }
+
 }

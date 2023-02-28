@@ -32,4 +32,27 @@ public class Ui {
         System.out.println("Bye. Hope to see you again soon!");
         printDivider();
     }
+
+    public void printImpossible() {
+        System.out.println("This shouldn't be happening :O");
+    }
+
+    public void printNumberFormatException() {
+        System.out.println("☹ OOPS!!! Task number should be an integer.");
+        printDivider();
+    }
+
+    public void printInvalidTaskNumberException() {
+        System.out.println("☹ OOPS!!! The task specified does not exist in the task list.");
+        printDivider();
+    }
+
+    public void printIndexOutOfBoundsException() {
+        System.out.println("☹ OOPS!!! The description of 'mark' cannot be empty.");
+        printDivider();
+    }
+
+    public void printEmptyTaskList() {
+        System.out.println("You are free today :)");
+    }
 }

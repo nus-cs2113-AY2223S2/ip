@@ -43,6 +43,9 @@ public class Parser {
         case Command.COMMAND_DELETE:
             processCommandDelete(input, taskList);
             break;
+        case Command.COMMAND_FIND:
+            processCommandFind(input, taskList);
+            break;
         default:
             throw new CommandNotRecognisedException();
         }
@@ -119,6 +122,15 @@ public class Parser {
             System.out.println("☹ OOPS!!! The task specified does not exist in the task list.");
         } catch (IndexOutOfBoundsException e) {
             System.out.println("☹ OOPS!!! The description of 'mark' cannot be empty.");
+        }
+        ui.printDivider();
+    }
+
+    private void processCommandFind(String input, TaskList taskList) {
+        try {
+            taskList.findTasks(input.substring(Command.COMMAND_TODO.length()).trim());
+        } catch (EmptyTaskException e) {
+            System.out.println("☹ OOPS!!! The description of 'find' cannot be empty.");
         }
         ui.printDivider();
     }

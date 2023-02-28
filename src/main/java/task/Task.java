@@ -41,6 +41,10 @@ public class Task {
         return "";
     }
 
+    public boolean containsTask(String task) {
+        return description.contains(task);
+    }
+
     @Override
     public String toString() {
         return "[" + getStatusIcon() + "] " + getDescription();
