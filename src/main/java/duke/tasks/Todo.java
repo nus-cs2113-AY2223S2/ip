@@ -1,14 +1,14 @@
 package duke.tasks;
 
 /**
- * Represents todo object that it a type of task
+ * Represents a todo Task
  */
 public class Todo extends Task {
 
     /**
-     * Constructor for todo task object, with specified type "T"
+     * Constructor for todo task represented with specified type "T"
      *
-     * @param description the description of the current todo
+     * @param description the description of the todo task
      */
     public Todo(String description) {
         super(description);
@@ -16,9 +16,9 @@ public class Todo extends Task {
     }
 
     /**
-     * Prints the todo object elements
+     * Output the todo task and its details
      *
-     * @return the type, status and description of current todo object
+     * @return the type, status and description of current todo task
      */
     @Override
     public String toString() {

@@ -15,16 +15,16 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.io.BufferedReader;
 
-/*
-Format of tasks in txt file:
-For todo task:
-T | (status) | taskDescription
-For deadline task:
-D | (status) | taskDescription | by
-For event task:
-E | (status) | taskDescription | startTime | endTime
-
-where status can be marked or unmarked (1 / 0 )
+/**
+* Format of tasks in txt file:
+* For todo task:
+* T|(status)|taskDescription
+* For deadline task:
+* D|(status)|taskDescription|by
+* For event task:
+* E|(status)|taskDescription|startTime|endTime
+*
+* where status can be marked or unmarked (1 / 0 )
 */
 
 /**
@@ -68,19 +68,19 @@ public class Storage {
                 String[] textLinesArray = textFileLine.split("\\|", -1);
                 if (textFileLine.startsWith("T")) {
                     Todo todo = new Todo(textLinesArray[2]);
-                    if (textLinesArray[2].equals("1")) {
+                    if (textLinesArray[1].equals("1")) {
                         todo.markAsDone();
                     }
                     tasks.addNewTask(todo);
                 } else if (textFileLine.startsWith("D")) {
                     Deadline deadline = new Deadline(textLinesArray[2], textLinesArray[3]);
-                    if (textLinesArray[2].equals("1")) {
+                    if (textLinesArray[1].equals("1")) {
                         deadline.markAsDone();
                     }
                     tasks.addNewTask(deadline);
                 } else {
                     Event event = new Event(textLinesArray[2], textLinesArray[3], textLinesArray[4]);
-                    if (textLinesArray[2].equals("1")) {
+                    if (textLinesArray[1].equals("1")) {
                         event.markAsDone();
                     }
                     tasks.addNewTask(event);
@@ -105,19 +105,19 @@ public class Storage {
             Task task = tasks.getTask(i);
             String type;
             String description = task.getDescription();
-            String done = task.isDone() ? "1" : "0";
+            String status = task.isDone() ? "1" : "0";
             if (task instanceof Todo) {
                 type = "T";
-                fw.write(type + "|" + done + "|" + description + "\n");
+                fw.write(type + "|" + status + "|" + description + "\n");
             } else if (task instanceof Deadline) {
                 type = "D";
                 String by = ((Deadline) task).getBy();
-                fw.write(type + "|" + done + "|" + description + "|" + by + "\n");
+                fw.write(type + "|" + status + "|" + description + "|" + by + "\n");
             } else {
                 type = "E";
                 String startTime = ((Event) task).getStartTime();
                 String endTime = ((Event) task).getEndTime();
-                fw.write(type + "|" + done + "|" + description + "|" + startTime + "|" + endTime + "\n");
+                fw.write(type + "|" + status + "|" + description + "|" + startTime + "|" + endTime + "\n");
             }
         }
         fw.close();

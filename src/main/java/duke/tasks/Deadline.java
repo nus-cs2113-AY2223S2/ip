@@ -1,16 +1,16 @@
 package duke.tasks;
 
 /**
- * Represents deadline object that it a type of task
+ * Represents a deadline Task
  */
 public class Deadline extends Task {
     protected String by;
 
     /**
-     * Constructor of deadline task object, with specified type "D"
+     * Constructor for deadline task represented with specified type "D"
      *
-     * @param description the description of the current deadline
-     * @param by          the deadline of the current deadline object
+     * @param description the description of the deadline task
+     * @param by          the timing the task is due
      */
     public Deadline(String description, String by) {
         super(description);
@@ -19,18 +19,18 @@ public class Deadline extends Task {
     }
 
     /**
-     * Gets the by deadline of the current deadline object
+     * Getter function for the timing it is due
      *
-     * @return the deadline of the deadline object
+     * @return the timing it is due
      */
     public String getBy() {
         return by;
     }
 
     /**
-     * Prints the deadline object elements
+     * Output the deadline task and its details
      *
-     * @return the type, status, description and by deadline of current deadline object
+     * @return the type, status, description and timing it is due of current deadline task
      */
     @Override
     public String toString() {
