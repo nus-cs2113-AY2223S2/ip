@@ -1,3 +1,8 @@
+package duke.ui;
+
+import duke.tasklist.Task;
+import duke.tasklist.TaskList;
+
 import java.util.ArrayList;
 
 public class Ui {
