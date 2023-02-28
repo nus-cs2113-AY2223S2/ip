@@ -4,7 +4,7 @@ import io.github.haoyangw.rica.exception.RicaException;
 import io.github.haoyangw.rica.task.Task;
 
 import java.io.PrintStream;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class TextUi {
@@ -53,7 +53,7 @@ public class TextUi {
         this.getCmdLineOut().println(message);
     }
 
-    public void printTasks(ArrayList<Task> tasks) {
+    public void printTasks(List<Task> tasks) {
         if (tasks.isEmpty()) {
             this.printlnWithIndent(" Hope I'm not amnesiac, but I don't remember any tasks?");
         } else {
