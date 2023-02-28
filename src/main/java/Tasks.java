@@ -38,7 +38,7 @@ public class Tasks {
   }
 
   /**
-   * Returns the task icon and its description
+   * Returns the string corresponding to the task icon and its description
    */
   @Override
   public String toString() {
