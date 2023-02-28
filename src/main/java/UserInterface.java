@@ -29,7 +29,7 @@ public class UserInterface {
     public static void deleteMessage(int indexToDelete){
         Tasklist taskToDelete = Tasklist.get(indexToDelete-1);
         System.out.println(DASH+"\n Bye Bye task! It was nice meeting you :)\n"+taskToDelete.description);
-        System.out.println(" Now you have "+Integer.toString(Tasklist.lastIndex)+" tasks in the list.\n"+DASH);
+        System.out.println(" Now you have "+Integer.toString(Tasklist.lastIndex-1)+" tasks in the list.\n"+DASH);
     }
 
     /**
