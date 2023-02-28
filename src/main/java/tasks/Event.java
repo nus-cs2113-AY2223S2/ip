@@ -1,11 +1,19 @@
 package tasks;
 
-import tasks.Task;
-
+/**
+ * Represents a task of type event.
+ * Contains a description, from and to.
+ */
 public class Event extends Task {
 	protected String from;
 	protected String to;
 	
+	/**
+	 * Initialises event based on task with additional from and to.
+	 * @param description Description of event.
+	 * @param from Start of event.
+	 * @param to End of event.
+	 */
 	public Event(String description, String from, String to) {
 		super(description);
 		this.from = from;

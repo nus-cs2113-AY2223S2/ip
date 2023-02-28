@@ -37,6 +37,9 @@ public class Ui {
 	public static final String ERROR_UNABLE_TO_SAVE_CHANGES_MESSAGE = "Error: Unable to save changes";
 	public static final String ERROR_FILE_NOT_DETECTED_MESSAGE = "Error: Nothing detected in save file";
 	
+	/**
+	 * Generates and prints greeting upon the opening of the program.
+	 */
 	public static void greet() {
 		String greet = DIVIDER +
 				GREET_MESSAGE +
@@ -44,6 +47,9 @@ public class Ui {
 		System.out.println(greet);
 	}
 	
+	/**
+	 * Generates and prints help message
+	 */
 	public static void printHelp() {
 		System.out.println(PRINT_HELP_INSTRUCTIONS_MESSAGE);
 		printHelpTodo();
@@ -65,64 +71,104 @@ public class Ui {
 		printHelpBye();
 	}
 	
+	/**
+	 * Generates and prints help for adding todo.
+	 */
 	public static void printHelpTodo() {
 		System.out.println(HELP_TODO_FORMAT);
 		System.out.println(HELP_TODO_DESCRIPTION);
 	}
 	
+	/**
+	 * Generates and prints help for adding event.
+	 */
 	public static void printHelpEvent() {
 		System.out.println(HELP_EVENT_FORMAT);
 		System.out.println(HELP_EVENT_DESCRIPTION);
 	}
 	
+	/**
+	 * Generates and prints help for adding deadline.
+	 */
 	public static void printHelpDeadline() {
 		System.out.println(HELP_DEADLINE_FORMAT);
 		System.out.println(HELP_DEADLINE_DESCRIPTION);
 	}
 	
+	/**
+	 * Generates and prints help for marking tasks as done.
+	 */
 	public static void printHelpMark() {
 		System.out.println(HELP_MARK_FORMAT);
 		System.out.println(HELP_MARK_DESCRIPTION);
 	}
 	
+	/**
+	 * Generates and prints help for marking tasks as undone.
+	 */
 	public static void printHelpUnmark() {
 		System.out.println(HELP_UNMARK_FORMAT);
 		System.out.println(HELP_UNMARK_DESCRIPTION);
 	}
 	
+	/**
+	 * Generates and prints help for deleting task from list.
+	 */
 	public static void printHelpDelete() {
 		System.out.println(HELP_DELETE_FORMAT);
 		System.out.println(HELP_DELETE_DESCRIPTION);
 	}
 	
+	/**
+	 * Generates and prints help for clearing list.
+	 */
 	public static void printHelpClear() {
 		System.out.println(HELP_CLEAR_FORMAT);
 		System.out.println(HELP_CLEAR_DESCRIPTION);
 	}
 	
+	/**
+	 * Generates and prints help showing full list of tasks.
+	 */
 	public static void printHelpList() {
 		System.out.println(HELP_LIST_FORMAT);
 		System.out.println(HELP_LIST_DESCRIPTION);
 	}
 	
+	/**
+	 * Generates and prints help for exiting the program.
+	 */
 	public static void printHelpBye() {
 		System.out.println(HELP_BYE_FORMAT);
 		System.out.println(HELP_BYE_DESCRIPTION);
 	}
+	
+	/**
+	 * Generates and prints error message for unknown command.
+	 */
 	public static void printUnknownCommandMessage() {
 		System.out.println(UNKNOWN_COMMAND_MESSAGE);
 	}
 	
-	public static void exit() {
-		String exit = DIVIDER + EXIT_MESSAGE + DIVIDER;
-		System.out.println(exit);
-	}
-	
+	/**
+	 * Generates and prints error message when program is unable to save changes into save.txt file.
+	 */
 	public static void printUnableToSaveChanges() {
 		System.out.println(ERROR_UNABLE_TO_SAVE_CHANGES_MESSAGE);
 	}
 	
+	/**
+	 * Generates and prints error message when program is unable to find save.txt file after initialisation of program.
+	 */
 	public static void printNoFileDetected() {
 		System.out.println(ERROR_FILE_NOT_DETECTED_MESSAGE);
+	}
+	
+	/**
+	 * Generates and prints exit message before closing the program.
+	 */
+	public static void exit() {
+		String exit = DIVIDER + EXIT_MESSAGE + DIVIDER;
+		System.out.println(exit);
 	}
 }

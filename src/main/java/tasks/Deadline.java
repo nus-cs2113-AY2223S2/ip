@@ -1,10 +1,17 @@
 package tasks;
 
-import tasks.Task;
-
+/**
+ * Represents a task of type deadline.
+ * Contains a description and by.
+ */
 public class Deadline extends Task {
 	protected String by;
 	
+	/**
+	 * Initialises deadline based on task with additional by.
+	 * @param description Description of deadline.
+	 * @param by Deadline of deadline task.
+	 */
 	public Deadline(String description, String by) {
 		super(description);
 		this.by = by;
