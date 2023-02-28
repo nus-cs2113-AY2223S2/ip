@@ -5,3 +5,192 @@ Hello from
 | |_| | |_| |   <  __/
 |____/ \__,_|_|\_\___|
 
+Hello! I'm Duke
+What can I do for you?
+>Got it. I've added this task:
+[T][ ] borrow book
+Now you have 6 tasks in the list.
+>Got it. I've added this task:
+[D][ ] return book (by: June 6th)
+Now you have 7 tasks in the list.
+>Got it. I've added this task:
+[E][ ] project meeting (from: Aug 6th to: 4pm)
+Now you have 8 tasks in the list.
+>Got it. I've added this task:
+[T][ ] join sports club
+Now you have 9 tasks in the list.
+>Got it. I've added this task:
+[T][ ] read book
+Now you have 10 tasks in the list.
+>Here are the tasks in your list:
+1.[T][X] borrow book
+2.[D][ ] return book (by: June 6th)
+3.[E][ ] project meeting (from: Aug 6th to: 4pm)
+4.[T][X] join sports club
+5.[T][ ] read book
+6.[T][ ] borrow book
+7.[D][ ] return book (by: June 6th)
+8.[E][ ] project meeting (from: Aug 6th to: 4pm)
+9.[T][ ] join sports club
+10.[T][ ] read book
+>Nice! I've marked this task as done:
+[D][X] return book (by: June 6th)
+>Nice! I've marked this task as done:
+[T][X] borrow book
+>Nice! I've marked this task as done:
+[T][X] join sports club
+>Here are the tasks in your list:
+1.[T][X] borrow book
+2.[D][X] return book (by: June 6th)
+3.[E][ ] project meeting (from: Aug 6th to: 4pm)
+4.[T][X] join sports club
+5.[T][ ] read book
+6.[T][ ] borrow book
+7.[D][ ] return book (by: June 6th)
+8.[E][ ] project meeting (from: Aug 6th to: 4pm)
+9.[T][ ] join sports club
+10.[T][ ] read book
+>OK, I've marked this task as not done yet:
+[D][ ] return book (by: June 6th)
+>Here are the tasks in your list:
+1.[T][X] borrow book
+2.[D][ ] return book (by: June 6th)
+3.[E][ ] project meeting (from: Aug 6th to: 4pm)
+4.[T][X] join sports club
+5.[T][ ] read book
+6.[T][ ] borrow book
+7.[D][ ] return book (by: June 6th)
+8.[E][ ] project meeting (from: Aug 6th to: 4pm)
+9.[T][ ] join sports club
+10.[T][ ] read book
+>exceptions.DukeException: Please give me a valid integer that is within the list!
+Usage: mark <integer>
+List of valid commands:
+Usage: todo <description>
+Usage: mark/unmark <task number>
+Usage: deadline /by <specify by when>
+Usage: event /from <specify from when> /to <specify to when>
+Usage: delete <integer>
+Usage: bye
+>exceptions.DukeException: Please give me a valid integer that is within the list!
+Usage: mark <integer>
+List of valid commands:
+Usage: todo <description>
+Usage: mark/unmark <task number>
+Usage: deadline /by <specify by when>
+Usage: event /from <specify from when> /to <specify to when>
+Usage: delete <integer>
+Usage: bye
+>exceptions.DukeException: Please give me a valid integer that is within the list!
+Usage: mark <integer>
+List of valid commands:
+Usage: todo <description>
+Usage: mark/unmark <task number>
+Usage: deadline /by <specify by when>
+Usage: event /from <specify from when> /to <specify to when>
+Usage: delete <integer>
+Usage: bye
+>exceptions.DukeException: Please give me a valid integer that is within the list!
+Usage: unmark <integer>
+List of valid commands:
+Usage: todo <description>
+Usage: mark/unmark <task number>
+Usage: deadline /by <specify by when>
+Usage: event /from <specify from when> /to <specify to when>
+Usage: delete <integer>
+Usage: bye
+>exceptions.DukeException: Please give me a valid integer that is within the list!
+Usage: unmark <integer>
+List of valid commands:
+Usage: todo <description>
+Usage: mark/unmark <task number>
+Usage: deadline /by <specify by when>
+Usage: event /from <specify from when> /to <specify to when>
+Usage: delete <integer>
+Usage: bye
+>exceptions.DukeException: Please give me a valid integer that is within the list!
+Usage: unmark <integer>
+List of valid commands:
+Usage: todo <description>
+Usage: mark/unmark <task number>
+Usage: deadline /by <specify by when>
+Usage: event /from <specify from when> /to <specify to when>
+Usage: delete <integer>
+Usage: bye
+>exceptions.DukeException: OOPS!!! please give me a deadline.
+Usage: deadline /by <specify by when>
+List of valid commands:
+Usage: todo <description>
+Usage: mark/unmark <task number>
+Usage: deadline /by <specify by when>
+Usage: event /from <specify from when> /to <specify to when>
+Usage: delete <integer>
+Usage: bye
+>Got it. I've added this task:
+[T][ ]
+Now you have 11 tasks in the list.
+>exceptions.DukeException: OOPS!!! please give me a deadline.
+Usage: deadline /by <specify by when>
+List of valid commands:
+Usage: todo <description>
+Usage: mark/unmark <task number>
+Usage: deadline /by <specify by when>
+Usage: event /from <specify from when> /to <specify to when>
+Usage: delete <integer>
+Usage: bye
+>exceptions.DukeException: OOPS!!! please give me a event.
+Usage: event /from <specify from when> /to <specify to when>
+List of valid commands:
+Usage: todo <description>
+Usage: mark/unmark <task number>
+Usage: deadline /by <specify by when>
+Usage: event /from <specify from when> /to <specify to when>
+Usage: delete <integer>
+Usage: bye
+>Here are the tasks in your list:
+1.[T][X] borrow book
+2.[D][ ] return book (by: June 6th)
+3.[E][ ] project meeting (from: Aug 6th to: 4pm)
+4.[T][X] join sports club
+5.[T][ ] read book
+6.[T][ ] borrow book
+7.[D][ ] return book (by: June 6th)
+8.[E][ ] project meeting (from: Aug 6th to: 4pm)
+9.[T][ ] join sports club
+10.[T][ ] read book
+11.[T][ ]
+>Noted. I've removed this task:
+[T][X] join sports club
+Now you have 10 tasks in the list.
+>exceptions.DukeException: Please give me a valid integer that is within the list!
+Usage: delete <integer>
+List of valid commands:
+Usage: todo <description>
+Usage: mark/unmark <task number>
+Usage: deadline /by <specify by when>
+Usage: event /from <specify from when> /to <specify to when>
+Usage: delete <integer>
+Usage: bye
+>exceptions.DukeException: Please give me a valid integer that is within the list!
+Usage: delete <integer>
+List of valid commands:
+Usage: todo <description>
+Usage: mark/unmark <task number>
+Usage: deadline /by <specify by when>
+Usage: event /from <specify from when> /to <specify to when>
+Usage: delete <integer>
+Usage: bye
+>Noted. I've removed this task:
+[T][X] borrow book
+Now you have 9 tasks in the list.
+>Here are the tasks in your list:
+1.[D][ ] return book (by: June 6th)
+2.[E][ ] project meeting (from: Aug 6th to: 4pm)
+3.[T][ ] read book
+4.[T][ ] borrow book
+5.[D][ ] return book (by: June 6th)
+6.[E][ ] project meeting (from: Aug 6th to: 4pm)
+7.[T][ ] join sports club
+8.[T][ ] read book
+9.[T][ ]
+>
