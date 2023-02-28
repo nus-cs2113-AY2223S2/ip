@@ -22,10 +22,9 @@ public class ListDecoder {
 	public static final int FROM_INDEX = 3;
 	
 	/**
-	 * Reads the string and updates task list accordingly
-	 *
-	 * {@code @pre} taskString is correctly formatted
-	 * @param taskString String to be read to update the task list
+	 * Reads the string and updates task list accordingly.
+	 * {@code @pre} taskString is correctly formatted.
+	 * @param taskString String to be read to update the task list.
 	 */
 	public static void readTask(String taskString, Tasks list) {
 		String[] commandMarkAndArg = splitCommandAndArg(taskString);
@@ -53,10 +52,9 @@ public class ListDecoder {
 	}
 	
 	/**
-	 * returns an array of strings containing the individual commands and arguments from the line
-	 *
-	 * @param line String to be split up
-	 * @return array of String that is organised into its command and arguments
+	 * returns an array of strings containing the individual commands and arguments from the line.
+	 * @param line String to be split up.
+	 * @return array of String that is organised into its command and arguments.
 	 */
 	private static String[] splitCommandAndArg(String line) {
 		String[] splitStrings = line.split(SAVE_FILE_PARTITION);
@@ -65,15 +63,20 @@ public class ListDecoder {
 	
 	/**
 	 * Checks if task is marked as done or not,
-	 * if "1", means marked, otherwise it is unmarked
-	 *
-	 * @param mark String that indicates if task is marked or unmarked
-	 * @return True if task being checked is marked, false otherwise
+	 * if "1", means marked, otherwise it is unmarked.
+	 * @param mark String that indicates if task is marked or unmarked.
+	 * @return True if task being checked is marked, false otherwise.
 	 */
 	private static boolean isMark(String mark) {
 		return mark.contains(MARK_INDICATOR);
 	}
 	
+	/**
+	 * Loads todo task onto list.
+	 * @param isMark True is todo is marked done, false if otherwise.
+	 * @param description Description of todo.
+	 * @param list List of tasks of user.
+	 */
 	public static void loadTodo(boolean isMark, String description, Tasks list) {
 		Todo newTodo = new Todo(description);
 		int tasksCount = list.getTasksCount();
@@ -86,6 +89,13 @@ public class ListDecoder {
 		}
 	}
 	
+	/**
+	 * Loads deadline task onto list.
+	 * @param isMark True is deadline is marked done, false if otherwise.
+	 * @param description Description of deadline.
+	 * @param by By of deadline.
+	 * @param list List of tasks of user.
+	 */
 	public static void loadDeadline(boolean isMark, String description, String by, Tasks list) {
 		Deadline newDeadline = new Deadline(description, by);
 		int tasksCount = list.getTasksCount();
@@ -98,6 +108,14 @@ public class ListDecoder {
 		}
 	}
 	
+	/**
+	 * Loads event task onto list.
+	 * @param isMark True is event is marked done, false if otherwise.
+	 * @param description Description of event.
+	 * @param from From of event.
+	 * @param to To of event.
+	 * @param list List of tasks of user.
+	 */
 	public static void loadEvent(boolean isMark, String description, String from, String to, Tasks list) {
 		Event newEvent = new Event(description, from, to);
 		int tasksCount = list.getTasksCount();
