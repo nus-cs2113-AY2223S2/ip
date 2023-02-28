@@ -45,8 +45,7 @@ Now you have X in the list
 
 - A deadline task is task with **one** associated dateTime parameters.
 - Adds a named deadline task to the task list, which will be stored on local device.
-- MUST follow specified dateTime format `MMM d yyyy ha` , For example `May 3 2023 9PM` ( capital `PM`)
-- 
+- Must follow specified dateTime format `MMM d yyyy ha` , For example `May 3 2023 9PM` ( capital `PM`)
 
 Example of usage:
 
@@ -66,8 +65,8 @@ Now you have X in the list
 
 - A event task is task with **two** associated dateTime parameters, namely startTime and endTime for the event
 - Adds a named event task to the task list, which will be stored on local device.
-- MUST follow specified dateTime format `MMM d yyyy ha` , For example `May 3 2023 9PM` ( capital `PM`)
--
+- Must follow specified dateTime format `MMM d yyyy ha` , For example `May 3 2023 9PM` ( capital `PM`)
+
 
 Example of usage:
 
@@ -128,6 +127,7 @@ Expected outcome:
 OK, I've marked this task as not done yet:
 [E][ ] study CS2113 final (from: May 1 2023 4PM to: May 3 2023 6PM)
 ```
+
 ### `delete` - Delete specific tasks
 
 - The task specified will be removed and changes will be stored on your local device
@@ -143,6 +143,7 @@ Noted. I've removed this task:
 [T][ ] study
 Now you have 2 tasks in the list.
 ```
+
 
 ### `find` - find and shows all tasks with keywords
 
@@ -160,6 +161,7 @@ Here are the matching tasks in your list:
 2. [T][ ] study CS2040
 3. [D][ ] research study (by: May 3 2023 7PM )
 ```
+
 
 ### `bye` - Ends the program
 
