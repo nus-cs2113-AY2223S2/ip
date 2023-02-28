@@ -56,12 +56,12 @@ public class Orca {
                 ui.printTasks(taskList.get());
                 break;
             case MARK:
-                taskNo = parser.TaskNo(userInput, 5);
+                taskNo = parser.ParseTaskNo(userInput, 5);
                 taskList.markTask(taskNo);
                 ui.printMarkedTask(taskList.get(taskNo - 1));
                 break;
             case UNMARK:
-                taskNo = parser.TaskNo(userInput, 7);
+                taskNo = parser.ParseTaskNo(userInput, 7);
                 taskList.unmarkTask(taskNo);
                 ui.printUnmarkedTask(taskList.get(taskNo - 1));
                 break;
@@ -81,12 +81,12 @@ public class Orca {
                 ui.printAddedTask(newTask, taskList.getSize());
                 break;
             case DELETE:
-                taskNo = parser.TaskNo(userInput, 7);
+                taskNo = parser.ParseTaskNo(userInput, 7);
                 Task removedTask = taskList.deleteTask(taskNo);
                 ui.printRemovedTask(removedTask, taskList.getSize());
                 break;
             case FIND:
-                String keyword = userInput.substring(5);
+                String keyword = parser.ParseKeyword(userInput, 5);
                 ui.printFoundTasks(taskList.findTasks(keyword));
                 break;
             default:

@@ -37,13 +37,21 @@ public class Parser {
      * @return int
      * @throws OrcaException
      */
-    public int TaskNo(String userInput, int startIdx) throws OrcaException {
+    public int ParseTaskNo(String userInput, int startIdx) throws OrcaException {
         try {
             return Integer.parseInt(userInput.substring(startIdx));
         } catch (NumberFormatException e) {
             throw new OrcaException("I cannot parse the integer.");
         } catch (StringIndexOutOfBoundsException e) {
             throw new OrcaException("I cannot parse the integer.");
+        }
+    }
+
+    public String ParseKeyword(String userInput, int startIdx) throws OrcaException {
+        try {
+            return userInput.substring(startIdx);
+        } catch (StringIndexOutOfBoundsException e) {
+            throw new OrcaException("I cannot parse the keyword.");
         }
     }
 }
