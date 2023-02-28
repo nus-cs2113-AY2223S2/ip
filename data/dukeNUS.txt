@@ -1,1 +1,2 @@
-deadline kill /by 2000-12-12/true
+deadline kill /by2000-12-12/markedfalse
+todo MURDER/markedtrue

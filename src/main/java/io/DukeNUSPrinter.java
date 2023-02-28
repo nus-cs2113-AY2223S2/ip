@@ -17,6 +17,9 @@ public class DukeNUSPrinter {
             + "    |____/ \\__,_|_|\\_\\___| |_|  \\__|_____|______|\n";
     public static final String INDENT = "    ";
 
+    /**
+     * Prints a horizontal line made of underscores to the terminal.
+     */
     public static void printHorizontalLine() {
         System.out.println(INDENT + "____________________________________________________________");
     }

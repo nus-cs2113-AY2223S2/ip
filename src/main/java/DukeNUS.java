@@ -22,6 +22,11 @@ public class DukeNUS {
     private static final String FILEPATH = "data/dukeNUS.txt";
     private static ArrayList<Task> tasks = new ArrayList<Task>();
 
+    /**
+     * @param tasks The master ArrayList of all tasks.
+     * @param searchPrompt The string to be searched within the description of each task. This is case-sensitive.
+     * @return A filtered ArrayList of tasks with the searchPrompt as a substring in its description.
+     */
     public static ArrayList<Task> getFoundTasks(ArrayList<Task> tasks, String searchPrompt) {
         return tasks.stream()
                 .filter(task -> task.getDescription().contains(searchPrompt))
@@ -171,13 +176,15 @@ public class DukeNUS {
     }
 
     public static void main(String[] args) {
+        DukeNUSPrinter.printWelcomeMessage();
         try {
             tasks = TasksDataRead.readSavedTasks(FILEPATH);
         } catch (FileNotFoundException | NoSuchElementException exception) {
             //There is no data to read. Continue.
+        } catch (Exception exception) {
+            DukeNUSPrinter.printMessage("☹ Error: The data at \"" + FILEPATH + "\" is corrupted");
         }
         Scanner scanner = new Scanner(System.in);
-        DukeNUSPrinter.printWelcomeMessage();
         String userInput = scanner.nextLine();
         String[] userInputWords = userInput.split(" ", 2); //Contains 2 strings from the user delimited by spaces. The first word is the command and the subsequent words are arguments.
         //Continue reading the first word until "bye" is said.
@@ -190,7 +197,7 @@ public class DukeNUS {
         try {
             TasksDataWrite.writeSavedTasks(FILEPATH, tasks);
         } catch (IOException e) {
-            DukeNUSPrinter.printMessage("☹ Error: Something went wrong when saving your tasks to " + FILEPATH);
+            DukeNUSPrinter.printMessage("☹ Error: Something went wrong when saving your tasks to \"" + FILEPATH + "\"");
         }
     }
 }

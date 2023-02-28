@@ -10,7 +10,7 @@ public class Deadline extends Task{
     private LocalDate by;
 
     public String getBy() {
-        return by.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        return by.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     }
 
     public void setBy(String by) {
