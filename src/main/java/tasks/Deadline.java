@@ -23,7 +23,6 @@ public class Deadline extends Task {
         int month = Integer.parseInt(arrOfStr[1]);
         int day = Integer.parseInt(arrOfStr[0]);
         deadline = LocalDate.of(year,month,day);
-        System.out.println(deadline.getMonth());
     }
 
     @Override
