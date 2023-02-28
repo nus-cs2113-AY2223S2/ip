@@ -33,7 +33,7 @@ public class EventCommand {
         Task task = new Event(content, beginTime, endTime);
         Common.tasks.add(task);
         System.out.println(ADDING_TASK);
-        task.printTask();
+        System.out.println(task.formatTaskToPrint());
         System.out.println("Now you have " + Common.tasks.size() + " tasks in the list.");
         Common.dataFile.appendTaskToDataFile(task.putInputToDataFile());
     }

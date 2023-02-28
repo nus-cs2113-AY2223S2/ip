@@ -16,7 +16,7 @@ public class ToDo extends Task{
     }
 
     @Override
-    public String printTask() {
+    public String formatTaskToPrint() {
         return "[T]" + this.getMarkingStatus() + Common.WHITE_SPACE + this.content;
     }
 

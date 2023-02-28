@@ -63,7 +63,7 @@ public abstract class Task {
      * Returns the task in a formatted string.
      * @return the formatted string representation of the task as a string.
      */
-    public abstract String printTask();
+    public abstract String formatTaskToPrint();
 
     /**
      * Formats the task data to be written to the data file.

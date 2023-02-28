@@ -23,7 +23,7 @@ public class Event extends Task {
     }
 
     @Override
-    public String printTask() {
+    public String formatTaskToPrint() {
         return "[E]" + this.getMarkingStatus() + Common.WHITE_SPACE + this.content + " (from: " + this.beginTime
                 + " to " + this.endTime + ")";
     }

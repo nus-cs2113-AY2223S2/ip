@@ -20,7 +20,7 @@ public class Deadline extends Task{
     }
 
     @Override
-    public String printTask() {
+    public String formatTaskToPrint() {
         return "[D]" + this.getMarkingStatus() + " " + this.content + " (by: " + this.time + ")";
     }
 

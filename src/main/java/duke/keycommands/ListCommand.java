@@ -21,7 +21,7 @@ public class ListCommand {
             if (item == null) {
                 break;
             } else {
-                System.out.println((i + 1) + "." + item.printTask());
+                System.out.println((i + 1) + "." + item.formatTaskToPrint());
             }
         }
     }

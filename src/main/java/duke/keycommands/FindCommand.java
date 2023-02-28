@@ -14,7 +14,7 @@ public class FindCommand {
         System.out.println(FIND_MESSAGE);
         for (int i = 0; i < Common.tasks.size(); i++) {
             if (Common.tasks.get(i).getContent().contains(keyword)) {
-                System.out.println((i + 1) + ". " + Common.tasks.get(i).printTask());
+                System.out.println((i + 1) + ". " + Common.tasks.get(i).formatTaskToPrint());
             }
         }
     }

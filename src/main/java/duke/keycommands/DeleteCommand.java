@@ -26,7 +26,7 @@ public class DeleteCommand {
     private void deleteTask() {
         Task item = Common.tasks.get(taskNumber - 1);
         System.out.println(REMOVE_MESSAGE);
-        System.out.println(item.printTask());
+        System.out.println(item.formatTaskToPrint());
         Common.tasks.remove(taskNumber - 1);
         System.out.println("Now you have " + Common.tasks.size() + " tasks in the list");
         try {
