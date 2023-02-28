@@ -166,6 +166,7 @@ matched tasks will be listed down
 Found 1 Task!
 Here are the matching tasks in your list:
 1.[E][ ] Dinner (from:  7  to:  9pm)
+============================================================
 ```
 
 ### `bye` - end program
