@@ -85,6 +85,10 @@ public class Orca {
                 Task removedTask = taskList.deleteTask(taskNo);
                 ui.printRemovedTask(removedTask, taskList.getSize());
                 break;
+            case FIND:
+                String keyword = userInput.substring(5);
+                ui.printFoundTasks(taskList.findTasks(keyword));
+                break;
             default:
                 throw new OrcaException("Sorry. I can't understand what you mean. :(");
         }
