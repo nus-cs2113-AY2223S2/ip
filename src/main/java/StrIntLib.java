@@ -21,19 +21,21 @@ public class StrIntLib {
     public static final String cmdDelete = "delete";
     public static final String cmdSave = "save";
     public static final String to = "to ";
-    public static final String toReplacement = "to: ";
+    public static final String toReplacement = "";
     public static final String from = "from ";
-    public static final String fromReplacement = "from: ";
+    public static final String fromReplacement = "";
     public static final String by = "by ";
-    public static final String byReplacement = "by: ";
+    public static final String byReplacement = "";
     public static final String missingInputsError = "Huh! Something is missing!\n" +
-            "Please check your inputs and correct them accordingly!";
+                                                        "Please check your inputs and correct them accordingly!";
     public static final String done = "X";
     public static final String notDone = " ";
     public static final String wrongFormatError = "Huh! Something is in the wrong format!\n" +
-            "Please check your inputs and correct them accordingly!";
+                                                    "Please check your inputs and correct them accordingly!";
     public static final String generalError = "Huh! Something is missing or in the wrong format!\n" +
-            "Could you verify that?";
+                                                "Could you verify that?";
     public static final String emptyList = "You have no tasks on your list!";
     public static final String deleteText = "Noted. I've removed this task:";
+    public static final String IOExceptionText = "IOException occurred!";
+    public static final String saveDone = "Task list saved!";
 }

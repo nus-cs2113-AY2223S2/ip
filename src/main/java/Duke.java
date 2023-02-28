@@ -1,3 +1,6 @@
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 public class Duke {
@@ -68,13 +71,27 @@ public class Duke {
     }
 
     public static String printIconStatus(Task selectedTask) {
-        String out = "[" + selectedTask.getIcon() + "][" + selectedTask.getStatusIcon() + "] " + selectedTask.description;
+        String out = "[" + selectedTask.getIcon() + "][" +
+                selectedTask.getStatusIcon() + "] " +
+                selectedTask.description;
         if (selectedTask instanceof Events){
-            out += " (" + selectedTask.getStart() + " " + selectedTask.getEnd() + ")";
+            out += " (from: " + selectedTask.getStart() + " to: " + selectedTask.getEnd() + ")";
         } else if (selectedTask instanceof Deadlines) {
-            out += " (" + selectedTask.getDeadline() + ")";
+            out += " (by: " + selectedTask.getDeadline() + ")";
         }
         return out;
+    }
+    public static String saveFormat(Task selectedTask) {
+        String taskStatus = (selectedTask.getStatusIcon().equals("X")) ? "1" : "0";
+        String formattedTask = selectedTask.getIcon() + " | " +
+                                taskStatus + " | " +
+                                selectedTask.description;
+        if (selectedTask instanceof Events) {
+            formattedTask += " | " + selectedTask.getStart() + "-" + selectedTask.getEnd();
+        } else if (selectedTask instanceof Deadlines) {
+            formattedTask += " | " + selectedTask.getDeadline();
+        }
+        return formattedTask;
     }
     private static ArrayList<Task> addDeadline(ArrayList<Task> taskList, String[] parts) {
         try{
@@ -153,6 +170,19 @@ public class Duke {
         }
         return taskList;
     }
+    private static void createSave(ArrayList<Task> taskList) {
+        try{
+            File saveFile = new File("duke.txt");
+            FileWriter saveWriter = new FileWriter("duke.txt");
+            for (Task item : taskList) {
+                saveWriter.write(saveFormat(item)+"\n");
+            }
+            saveWriter.close();
+            System.out.println(StrIntLib.saveDone);
+        } catch (IOException e){
+            System.out.println(StrIntLib.IOExceptionText);
+        }
+    }
     public static void main(String[] args) {
         welcomeMessage();
         String input;
@@ -190,6 +220,9 @@ public class Duke {
                 break;
             case StrIntLib.cmdDelete:
                 taskList = deleteTask(taskList, inputs);
+                break;
+            case StrIntLib.cmdSave:
+                createSave(taskList);
                 break;
             default:
                 invalidCommand();
