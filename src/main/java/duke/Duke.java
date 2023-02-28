@@ -24,11 +24,11 @@ public class Duke {
      */
     public Duke(String filePath) {
         ui = new Ui();
-        ui.printWelcomeMessage();
         storage = new Storage(filePath);
         try {
             tasks = new TaskList(storage.load(ui));
             storage.update(tasks);
+            ui.printWelcomeMessage();
         } catch (IOException e) {
             ui.printErrorForIO();
         }

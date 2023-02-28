@@ -194,5 +194,6 @@ Duke automatically loads up your data on start-up.
 After any command that changes the data, Duke will save the changes into your hard disk automatically. 
 No need to save manually!  
 
-The save file is located at save.txt within the *home folder* for Duke.  
+The save file is located at save.txt within the *home folder* for Duke. 
+If the file is corrupted, Duke will show you a warning before the welcome message.  
 

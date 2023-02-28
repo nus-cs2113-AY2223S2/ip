@@ -21,7 +21,7 @@ Hello from
 The save file will be initialised at the location where you have launched Duke.   
 
 On opening, Duke will read and parse the contents in the save file to initialise your task list.  
-*If there are any errors with the data in the save file, a warning will be shown after the welcome message.*  
+*If there are any errors with the data in the save file, a warning will be shown before the welcome message.*  
 
 Each time the task list is updated, Duke will automatically overwrite the save file to the latest version.  
 There is no need to save the task list before exiting the program. 
