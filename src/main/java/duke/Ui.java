@@ -6,11 +6,11 @@ public class Ui {
 
     public static final String LINE_BREAK = "    ____________________________________________________________";
     public static final String INDENTATION = "    ";
-    public static final String HELP_PAGE = "    todo: add a new task to Duke\n" +
+    public static final String HELP_PAGE = LINE_BREAK + "\n    todo: add a new task to Duke\n" +
             "    deadline: add a new task and '/by' date to add a task with deadline\n" +
             "    event: add a new event with '/from' and '/to' duration\n" +
             "    list: list out all tasks stored\n" +
-            "    help: no :D\n    bye: end the program\n    Please enter command:\n";
+            "    help: no :D\n    bye: end the program\n" + LINE_BREAK + "\n    Please enter command:\n";
     public static Scanner in = new Scanner(System.in);
 
     /**
@@ -20,8 +20,7 @@ public class Ui {
         System.out.println(LINE_BREAK);
         printlnWithIndentation("Hello! I'm Duke");
         printlnWithIndentation("What can I do for you?");
-        printlnWithIndentation(HELP_PAGE);
-        System.out.println(LINE_BREAK);
+        System.out.println(HELP_PAGE);
     }
 
     /**
