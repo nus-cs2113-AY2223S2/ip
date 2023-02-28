@@ -9,6 +9,10 @@ import java.util.ArrayList;
 
 public class AddDeadline {
 
+    /**
+     * add deadline task into ArrayList
+     * @param ins UserCommand which contains task description and deadline
+     */
     public static void addDeadlineTask(ArrayList<Task> list, String ins) {
         try {
 

@@ -10,6 +10,9 @@ import static commands.Greeting.greeting;
 import static commands.HandleUserCommand.handleCommand;
 
 
+/**
+ *This is the main class that runs the program.
+ */
 public class Duke {
     public static void main(String[] args) throws InvalidTaskException {
         ArrayList<Task> list = new ArrayList<>();

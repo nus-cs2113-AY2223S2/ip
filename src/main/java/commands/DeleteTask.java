@@ -7,6 +7,11 @@ import tasks.Task;
 import java.util.ArrayList;
 
 public class DeleteTask {
+
+    /**
+     * delete the task in the ArrayList
+     * @param ins userCommand which contains the task number which should be deleted
+     */
     public static void deleteTask(ArrayList<Task> list, String ins) {
         try {
             if (list.size() == 0) {

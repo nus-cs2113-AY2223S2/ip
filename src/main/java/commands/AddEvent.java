@@ -8,6 +8,10 @@ import tasks.Task;
 import java.util.ArrayList;
 
 public class AddEvent {
+    /**
+     * add event task into ArrayList
+     * @param ins UserCommand contains task description and start and end dates
+     */
     public static void addEventTask(ArrayList<Task> list, String ins) {
         try {
             String[] arrOfStr = ins.split("event", 2);

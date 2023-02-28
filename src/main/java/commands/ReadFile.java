@@ -11,6 +11,9 @@ import java.io.FileNotFoundException;
 
 public class ReadFile {
     public static void readFile(File f, ArrayList<Task> list) {
+        /**
+         * Loads and saves TaskList from or to a file.
+         */
         try {
             Scanner myReader = new Scanner(f);
             System.out.println("Reading File");

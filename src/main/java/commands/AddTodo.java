@@ -8,7 +8,10 @@ import tasks.Todo;
 import java.util.ArrayList;
 
 public class AddTodo {
-
+    /**
+     * add event task into ArrayList
+     * @param ins UserCommand which contains task description
+     */
     public static void addTodoTask(ArrayList<Task> list, String ins) {
         try {
             if (!ins.contains(" ")) {
