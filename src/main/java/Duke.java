@@ -6,7 +6,7 @@ import java.io.FileWriter;
 import java.io.File;
 
 public class Duke {
-    public static final String DIVIDER  = "______________________________";
+    private static final String DIVIDER  = "______________________________";
 
     //Commands
     static final String COMMAND_EXIT = "bye";
@@ -24,12 +24,11 @@ public class Duke {
     static final String TODO_ICON = "T";
     static final String EVENT_ICON = "E";
     static final String DEADLINE_ICON = "D";
-    static final String FILE_LOCATION = "";
 
     //Data
     static ArrayList<Task> list = new ArrayList<>();
 
-    public static void printLogo() {
+    private static void printLogo() {
         String logoMessage = "Hello from\n" +
                 " ____        _        \n" +
                 "|  _ \\ _   _| | _____ \n" +
@@ -39,20 +38,20 @@ public class Duke {
         System.out.println(logoMessage);
     }
 
-    public static void greetUser() {
+    private static void greetUser() {
          String greeting = DIVIDER + System.lineSeparator() + "Hello! I'm Jarvis!"
                  + System.lineSeparator() + "What can I do for you?"
                  + System.lineSeparator() + DIVIDER + System.lineSeparator();
          System.out.println(greeting);
     }
 
-    public static void sayByeToUser() {
+    private static void sayByeToUser() {
         String bye = DIVIDER + System.lineSeparator() + "Bye. Hope to see you again soon!"
                 + System.lineSeparator() + DIVIDER + System.lineSeparator();
         System.out.println(bye);
     }
 
-    public static void printList() {
+    private static void printList() {
         String listMessage = DIVIDER + System.lineSeparator() + "Here are the tasks in your list:";
         System.out.println(listMessage);
         for (int i = 0; i < list.size(); i++) {
@@ -61,21 +60,21 @@ public class Duke {
         System.out.println(DIVIDER);
     }
 
-    public static void markTask(int taskNum) {
+    private static void markTask(int taskNum) {
         list.get(taskNum-1).markAsDone();
         System.out.println("Nice! I've marked this task as done:");
         System.out.println(DIVIDER + System.lineSeparator() + list.get(taskNum-1).toString()
                 + System.lineSeparator() + DIVIDER);
     }
 
-    public static void unmarkTask(int taskNum) {
+    private static void unmarkTask(int taskNum) {
         list.get(taskNum-1).markAsNotDone();
         System.out.println("OK, I've marked this task as not done yet:");
         System.out.println(DIVIDER + System.lineSeparator() + list.get(taskNum-1).toString()
                 + System.lineSeparator() + DIVIDER);
     }
 
-    public static void acknowledgementMessage() {
+    private static void acknowledgementMessage() {
         String acknowledgement = DIVIDER + System.lineSeparator()
                 + "Got it. I've added this task: " + System.lineSeparator()
                 + list.get(list.size()-1).toString();
@@ -84,7 +83,7 @@ public class Duke {
                 + System.lineSeparator() + DIVIDER);
     }
 
-    public static void deleteTask(int taskNum) {
+    private static void deleteTask(int taskNum) {
         String acknowledge = DIVIDER + System.lineSeparator() + "Noted. I've removed this task: "
                 + System.lineSeparator() + list.get(taskNum-1).toString() + System.lineSeparator()
                 + "Now you have " + (list.size()-1) + " tasks in the list." + System.lineSeparator() + DIVIDER;
@@ -93,7 +92,7 @@ public class Duke {
     }
 
     //Update the file
-    public static void updateFile() {
+    private static void updateFile() {
         for (Task currentTask : list) {
             String statusNum = currentTask.getStatusNum();
             String taskDesc = currentTask.getTask();
@@ -141,13 +140,13 @@ public class Duke {
         fw.close();
     }
 
-    public static void writeToFile(String textToAdd) throws IOException {
+    private static void writeToFile(String textToAdd) throws IOException {
         FileWriter fw = new FileWriter("duke.txt", true);
         fw.write(textToAdd+System.lineSeparator());
         fw.close();
     }
 
-    public static void readFileContents(String filePath) throws FileNotFoundException {
+    private static void readFileContents(String filePath) throws FileNotFoundException {
         //generates the text file input to new list each time user opens program.
         File f = new File(filePath); // create a File for the given file path
         Scanner s = new Scanner(f); // create a Scanner using the File as the source
@@ -187,7 +186,7 @@ public class Duke {
         }
     }
 
-    public static void taskManager() {
+    private static void taskManager() {
         String userInput;
         boolean isFinished = false;
         int taskNum;
