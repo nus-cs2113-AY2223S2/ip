@@ -49,6 +49,9 @@ public class Parser {
                 System.out.println("deadline <task> /by <due date>");
             } catch (CommandMissingArguments e) {
                 System.out.println("☹ OOPS!!! The description of a deadline cannot be empty.");
+            } catch (InvalidDateFormat e) {
+                System.out.println("ERROR: command must be of the following form:");
+                System.out.println("<YYYY-MM-DD>");
             }
         } else if (command.matches("^event.*$")) {
             try {
@@ -61,6 +64,11 @@ public class Parser {
                 System.out.println("event <task> /from <start> /to <end>");
             } catch (CommandMissingArguments e) {
                 System.out.println("☹ OOPS!!! The description of an event cannot be empty.");
+            } catch (InvalidDateFormat e) {
+                System.out.println("ERROR: command must be of the following form:");
+                System.out.println("<YYYY-MM-DD>");
+            } catch (InvalidStartEnd e) {
+                System.out.println("ERROR: start date cannot occur after end date.");
             }
         } else if (command.matches("^delete.*$")) {
             try {

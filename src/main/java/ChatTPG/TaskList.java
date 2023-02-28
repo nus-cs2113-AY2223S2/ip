@@ -12,21 +12,27 @@ public class TaskList {
         return todo;
     }
 
-    public static Deadline createDeadline(String command, boolean isDone) {
+    public static Deadline createDeadline(String command, boolean isDone)
+            throws InvalidDateFormat {
         int separator_idx = command.indexOf("/by");
         String description = command.substring(9, separator_idx - 1);
-        String by = command.substring(separator_idx + 4);
-        Deadline deadline = new Deadline(description, isDone, by);
+        String by = command.substring(separator_idx + 5);
+        String end = DateTimeParser.processDateTime(by);
+        Deadline deadline = new Deadline(description, isDone, end);
         return deadline;
     }
 
-    public static Event createEvent(String command, boolean isDone) {
+    public static Event createEvent(String command, boolean isDone)
+            throws InvalidDateFormat, InvalidStartEnd {
         int from_idx = command.indexOf("/from");
         int to_idx = command.indexOf("/to");
         String description = command.substring(6, from_idx - 1);
-        String from = command.substring(from_idx + 6, to_idx - 1);
-        String to = command.substring(to_idx + 4);
-        Event event = new Event(description, isDone, from, to);
+        String from = command.substring(from_idx + 7, to_idx - 1);
+        String to = command.substring(to_idx + 5);
+        String begin = DateTimeParser.processDateTime(from);
+        String end = DateTimeParser.processDateTime(to);
+        DateTimeParser.verifyDateInterval(from, to);
+        Event event = new Event(description, isDone, begin, end);
         return event;
     }
 

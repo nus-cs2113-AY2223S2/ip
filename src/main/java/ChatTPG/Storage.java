@@ -58,11 +58,19 @@ public class Storage {
                 ToDo todo = TaskList.createToDo(command, isDone);
                 TaskList.addToList(todo);
             } else if (command.matches("^deadline.*$")) {
-                Deadline deadline = TaskList.createDeadline(command, isDone);
-                TaskList.addToList(deadline);
+                try {
+                    Deadline deadline = TaskList.createDeadline(command, isDone);
+                    TaskList.addToList(deadline);
+                } catch (Exception e) {
+                    System.out.println("ERROR");
+                }
             } else {
-                Event event = TaskList.createEvent(command, isDone);
-                TaskList.addToList(event);
+                try {
+                    Event event = TaskList.createEvent(command, isDone);
+                    TaskList.addToList(event);
+                } catch (Exception e) {
+                    System.out.println("ERROR");
+                }
             }
         }
         scanner.close();
