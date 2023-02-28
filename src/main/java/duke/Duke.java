@@ -3,9 +3,7 @@ import duke.exceptions.*;
 import org.w3c.dom.Text;
 
 import java.util.Scanner;
-<<<<<<< HEAD
 import java.util.ArrayList;
-=======
 import java.io.FileWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -13,7 +11,6 @@ import java.io.IOException;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileOutputStream;
->>>>>>> branch-Level-7
 public class Duke {
     private static ArrayList<Task> tasks = new ArrayList<>();
     private static int numOfTask = 0;
@@ -80,7 +77,7 @@ public class Duke {
                     case"T":
                         try {
                             ToDo toDoTask = new ToDo(description,isDone);
-                            tasks[numOfTask-1] = toDoTask;
+                            tasks.add(toDoTask);
                         } catch (ToDoException e) {
                             System.out.println("The description of a todo cannot be empty!");
                         }
@@ -88,14 +85,14 @@ public class Duke {
                     case"D":
                         String deadline = taskSet[3].trim();
                         Deadline deadlineTask = new Deadline(description,isDone, deadline);
-                        tasks[numOfTask - 1] = deadlineTask;
+                        tasks.add(deadlineTask);
                         break;
                     case "E":
                         String fromDate = taskSet[3].trim();
                         String toDate = taskSet[4].trim();
                         try {
                             Event eventTask = new Event(description,isDone, fromDate, toDate);
-                            tasks[numOfTask - 1] = eventTask;
+                            tasks.add(eventTask);
                         } catch (EventException e) {
                             System.out.println("To field is empty!");
                         }
@@ -186,71 +183,61 @@ public class Duke {
                  return false;
              case "mark":
                  int indexMark = Integer.parseInt(taskNumber);
-<<<<<<< HEAD
-                 tasks.get(indexMark-1).markAsDone();
-                 System.out.println("  [" + tasks.get(indexMark-1).getStatusIcon() + "] " + tasks.get(indexMark-1).getDescription());
-                 return false;
-             case "unmark":
-                 int indexUnmark = Integer.parseInt(taskNumber);
-                 tasks.get(indexUnmark).markAsUndone();
-=======
-                 String typeM = tasks[indexMark-1].getType();
+                 String typeM = tasks.get(indexMark-1).getType();
                  switch(typeM) {
                      case "T":
-                         String targetT =  tasks[indexMark-1].getType() + " | " +tasks[indexMark-1].getStatusIconSave() + " | " + tasks[indexMark-1].getDescription();
-                         tasks[indexMark-1].markAsDone();
-                         String replaceWithT =  tasks[indexMark-1].getType() + " | " + tasks[indexMark-1].getStatusIconSave() + " | " + tasks[indexMark-1].getDescription();
+                         String targetT =  tasks.get(indexMark-1).getType() + " | " +tasks.get(indexMark-1).getStatusIconSave() + " | " + tasks.get(indexMark-1).getDescription();
+                         tasks.get(indexMark-1).markAsDone();
+                         String replaceWithT =  tasks.get(indexMark-1).getType() + " | " + tasks.get(indexMark-1).getStatusIconSave() + " | " + tasks.get(indexMark-1).getDescription();
                          replaceSelected(filePath, targetT, replaceWithT);
                          break;
                      case "D":
-                         String targetD =  tasks[indexMark-1].getType() + " | " +tasks[indexMark-1].getStatusIconSave() + " | " + tasks[indexMark-1].getDescription() + " | " +
-                                 tasks[indexMark-1].getDeadlineSave();
-                         tasks[indexMark-1].markAsDone();
-                         String replaceWithD =  tasks[indexMark-1].getType() + " | " +tasks[indexMark-1].getStatusIconSave() + " | " + tasks[indexMark-1].getDescription() + " | " +
-                                 tasks[indexMark-1].getDeadlineSave();
+                         String targetD =  tasks.get(indexMark-1).getType() + " | " +tasks.get(indexMark-1).getStatusIconSave() + " | " + tasks.get(indexMark-1).getDescription() + " | " +
+                                 tasks.get(indexMark-1).getDeadlineSave();
+                         tasks.get(indexMark-1).markAsDone();
+                         String replaceWithD =  tasks.get(indexMark-1).getType() + " | " +tasks.get(indexMark-1).getStatusIconSave() + " | " + tasks.get(indexMark-1).getDescription() + " | " +
+                                 tasks.get(indexMark-1).getDeadlineSave();
                          replaceSelected(filePath, targetD,replaceWithD);
                          break;
                      case "E":
-                         String targetE =  tasks[indexMark-1].getType() + " | " +tasks[indexMark-1].getStatusIconSave() + " | " + tasks[indexMark-1].getDescription() + " | " +
-                                 tasks[indexMark-1].getPeriodSave();
-                         tasks[indexMark-1].markAsDone();
-                         String replaceWithE =  tasks[indexMark-1].getType() + " | " +tasks[indexMark-1].getStatusIconSave() + " | " + tasks[indexMark-1].getDescription() + " | " +
-                                 tasks[indexMark-1].getPeriodSave();
+                         String targetE =  tasks.get(indexMark-1).getType() + " | " +tasks.get(indexMark-1).getStatusIconSave() + " | " + tasks.get(indexMark-1).getDescription() + " | " +
+                                 tasks.get(indexMark-1).getPeriodSave();
+                         tasks.get(indexMark-1).markAsDone();
+                         String replaceWithE =  tasks.get(indexMark-1).getType() + " | " +tasks.get(indexMark-1).getStatusIconSave() + " | " + tasks.get(indexMark-1).getDescription() + " | " +
+                                 tasks.get(indexMark-1).getPeriodSave();
                          replaceSelected(filePath, targetE, replaceWithE);
                          break;
                  }
                  System.out.println("OK, I've marked this task as done:");
-                 System.out.println("  [" + tasks[indexMark-1].getStatusIcon() + "] " + tasks[indexMark-1].getDescription());
-
+                 System.out.println("  [" + tasks.get(indexMark-1).getStatusIcon() + "] " + tasks.get(indexMark-1).getDescription());
                  return false;
              case "unmark":
                  int indexUnmark = Integer.parseInt(taskNumber);
-                 String typeU = tasks[indexUnmark-1].getType();
+                 String typeU = tasks.get(indexUnmark-1).getType();
                  switch(typeU) {
                      case "T":
-                         String targetT =  tasks[indexUnmark-1].getType() + " | " + tasks[indexUnmark-1].getStatusIconSave() + " | " + tasks[indexUnmark-1].getDescription() ;
-                         tasks[indexUnmark-1].markAsUndone();
-                         String replaceWithT =  tasks[indexUnmark-1].getType() + " | " + tasks[indexUnmark-1].getStatusIconSave() + " | " + tasks[indexUnmark-1].getDescription() ;
+                         String targetT =  tasks.get(indexUnmark-1).getType() + " | " + tasks.get(indexUnmark-1).getStatusIconSave() + " | " + tasks.get(indexUnmark-1).getDescription() ;
+                         tasks.get(indexUnmark-1).markAsUndone();
+                         String replaceWithT =  tasks.get(indexUnmark-1).getType() + " | " + tasks.get(indexUnmark-1).getStatusIconSave() + " | " + tasks.get(indexUnmark-1).getDescription() ;
                          replaceSelected(filePath, targetT, replaceWithT);
                          break;
                      case "D":
-                         String targetD =  tasks[indexUnmark-1].getType() + " | " + tasks[indexUnmark-1].getStatusIconSave() + " | " + tasks[indexUnmark-1].getDescription() + " | " +
-                                 tasks[indexUnmark-1].getDeadlineSave();
-                         tasks[indexUnmark-1].markAsUndone();
-                         String replaceWithD =  tasks[indexUnmark-1].getType() + " | " + tasks[indexUnmark-1].getStatusIconSave() + " | " + tasks[indexUnmark-1].getDescription() + " | " +
-                                 tasks[indexUnmark-1].getDeadlineSave();
+                         String targetD =  tasks.get(indexUnmark-1).getType() + " | " + tasks.get(indexUnmark-1).getStatusIconSave() + " | " + tasks.get(indexUnmark-1).getDescription() + " | " +
+                                 tasks.get(indexUnmark-1).getDeadlineSave();
+                         tasks.get(indexUnmark-1).markAsUndone();
+                         String replaceWithD =  tasks.get(indexUnmark-1).getType() + " | " + tasks.get(indexUnmark-1).getStatusIconSave() + " | " + tasks.get(indexUnmark-1).getDescription() + " | " +
+                                 tasks.get(indexUnmark-1).getDeadlineSave();
                          replaceSelected(filePath, targetD,replaceWithD);
                          break;
                      case "E":
-                         String targetE =  tasks[indexUnmark-1].getType() + " | " + tasks[indexUnmark-1].getStatusIconSave() + " | " + tasks[indexUnmark-1].getDescription() + " | " +
-                                 tasks[indexUnmark-1].getPeriodSave();
-                         tasks[indexUnmark-1].markAsUndone();
-                         String replaceWithE =  tasks[indexUnmark-1].getType() + " | " + tasks[indexUnmark-1].getStatusIconSave() + " | " + tasks[indexUnmark-1].getDescription() + " | " +
-                                 tasks[indexUnmark-1].getPeriodSave();
+                         String targetE =  tasks.get(indexUnmark-1).getType() + " | " + tasks.get(indexUnmark-1).getStatusIconSave() + " | " + tasks.get(indexUnmark-1).getDescription() + " | " +
+                                 tasks.get(indexUnmark-1).getPeriodSave();
+                         tasks.get(indexUnmark-1).markAsUndone();
+                         String replaceWithE =  tasks.get(indexUnmark-1).getType() + " | " + tasks.get(indexUnmark-1).getStatusIconSave() + " | " + tasks.get(indexUnmark-1).getDescription() + " | " +
+                                 tasks.get(indexUnmark-1).getPeriodSave();
                          replaceSelected(filePath, targetE, replaceWithE);
                          break;
                  }
->>>>>>> branch-Level-7
                  System.out.println("OK, I've marked this task as not done yet:");
                  System.out.println("  [" + tasks.get(indexUnmark-1).getStatusIcon() + "] " + tasks.get(indexUnmark-1).getDescription());
                  return false;
@@ -261,7 +248,7 @@ public class Duke {
                      tasks.add(toDoTask);
                      System.out.println(tasks.get(numOfTask-1));
                      System.out.println("Now you have " + numOfTask + " task in the list.");
-                     String text = tasks[numOfTask-1].getType() + " | " + tasks[numOfTask-1].getStatusIconSave() + " | "+ tasks[numOfTask-1].getDescription()
+                     String text = tasks.get(numOfTask-1).getType() + " | " + tasks.get(numOfTask-1).getStatusIconSave() + " | "+ tasks.get(numOfTask-1).getDescription()
                              + System.lineSeparator();
                      appendToFile(filePath, text);
                  } catch (ToDoException e) {
@@ -278,8 +265,8 @@ public class Duke {
                      tasks.add(deadlineTask);
                      System.out.println(tasks.get(numOfTask - 1));
                      System.out.println("Now you have " + numOfTask + " task in the list.");
-                     String text = tasks[numOfTask-1].getType() + " | " +  tasks[numOfTask-1].getStatusIconSave() + " | " + tasks[numOfTask-1].getDescription()
-                             + " | " + tasks[numOfTask-1].getDeadlineSave() + System.lineSeparator();
+                     String text = tasks.get(numOfTask-1).getType() + " | " +  tasks.get(numOfTask-1).getStatusIconSave() + " | " + tasks.get(numOfTask-1).getDescription()
+                             + " | " + tasks.get(numOfTask-1).getDeadlineSave() + System.lineSeparator();
 
                      appendToFile(filePath,text);
                  }catch (StringIndexOutOfBoundsException e){
@@ -296,8 +283,8 @@ public class Duke {
                      tasks.add(eventTask);
                      System.out.println(tasks.get(numOfTask - 1));
                      System.out.println("Now you have " + numOfTask + " task in the list.");
-                     String text =tasks[numOfTask-1].getType() + " | " + tasks[numOfTask-1].getStatusIconSave() + " | " + tasks[numOfTask-1].getDescription()
-                             + " | " + tasks[numOfTask-1].getPeriodSave() + System.lineSeparator();
+                     String text =tasks.get(numOfTask-1).getType() + " | " + tasks.get(numOfTask-1).getStatusIconSave() + " | " + tasks.get(numOfTask-1).getDescription()
+                             + " | " + tasks.get(numOfTask-1).getPeriodSave() + System.lineSeparator();
                      appendToFile(filePath,text);
                  }catch(StringIndexOutOfBoundsException e){
                      System.out.println("The description of the event and/or period of it cannot be empty!");
