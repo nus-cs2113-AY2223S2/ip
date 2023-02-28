@@ -21,18 +21,25 @@ Thank you for using Duke. Duke is a command-line interface, personal assistant b
 # Installation
 1. Before installing and using Duke, do note that Java 11 is required. If you do not already have it installed, you can do so [here](https://www.oracle.com/sg/java/technologies/downloads/#java11). 
 2. After installing Java 11, please download the .jar file [here](https://github.com/natashatanyt/ip/releases/) and place it in a folder. Doing so ensures that the save-file will not be lost, allowing you to use data that you have previously entered.
+
+   ![release.png](images/release.png)
+   
+   Click on `ip.jar` to automatically download the file. Ensure that it is the latest version. 
 3. Open the command terminal and navigate to the folder where the jar file is.
 4. Right-click the file and select the "Copy as path" option. 
 5. Open a command terminal by entering `cmd` in your start menu.
 6. In the terminal, navigate to the location of the folder by doing `cd FILE_PATH`
-7. Use the command `java -jar ip.jar` to launch Duke.
+   1. This step is important as it ensures that the saved tasks file will be saved in the same directory. Otherwise, the file will be stored in the current working directory.
+7. Use the command `java -jar ip.jar` to launch Duke. If done correctly, you will see something like this on your first start up:
+   ![startup.png](images/startup.png)
 8. When you are done using the app, enter `bye` to shut the application down. This ensures that Duke will save your data.
 
 # Quick Notes about Formatting and Inputs
 1. All words in `UPPER_CASE` are parameters, and all words in `this formatting` are instructions that you can copy directly.
 2. There are **no optional parameters**, so each parameter must have an input. Any mistakes will throw an error message to inform you that there has been a mistake, and what the correct format is. 
 3. All command words, such as `deadline` or `unmark`, are case-insensitive: any combination of capitalized and non-capitalized characters will still call the correct command, as long as it is spelt correctly.
-4. `DATE TIME` inputs for deadline and event tasks, ie. using the commands `/by`, `/from` and `/to`, will use the format `YYYY-MM-DD HH:MM`, in 24-hour time.
+4. `DATE TIME` inputs for deadline and event tasks, ie. using the commands `/by`, `/from` and `/to`, will use the format `YYYY-MM-DD HH:MM`, in 24-hour time, such as entering `2023-01-23 23:59` to represent 23 Jan 2023, 11:59pm.
+   1. You are required to have both the date and time. Omitting either will cause Duke to throw an error.
 
 # Features 
 The following sections will show you the features of Duke and how to use Duke effectively. It is broken up into a few sections to help you find what you need better. These sections are: [tasks](#tasks), [marking tasks](#marking-tasks), [delete](#delete), [search](#search), and [saving files](#saving-files).
@@ -49,7 +56,7 @@ The command usage is `todo TASK`, ie. `todo written assignment`.
 
 If the input method is correct, you will see something like this:
 
-![todoCorrectpng](images/todoCorrect.png)
+![todoCorrect.png](images/todoCorrect.png)
 
 
 ### Deadline
@@ -110,16 +117,18 @@ If the input method is correct, you will see something like this:
 ## Find
 If you wish to find tasks which contain specific words, you can do so with this feature.
 
-The command usage is `find DESCRIPTION`.
+The command usage is `find DESCRIPTION`. Currently, Duke is unable to search by time. If you were to try searching for tasks due on `2023-11-23`, Duke will not be able to print out tasks for you, unless it is part of the tasks' description. 
 
 If the input method is correct, you will see something like this:
 
 ![find.png](images/find.png)
 
 ## Saving Files
-On the first creation of Duke, the file will be created in the same folder as the .jar file. Note that putting the file in a different folder will cause Duke to be unable to read the file.
+On the first creation of Duke, the file will be created in the current working directory. As mentioned, it is recommended to put the `.jar` file in the same directory as the save file for your reference, if needed.
 
-After entering the exit command, `bye`, Duke will save the contents into a text file (Duke.txt). The file will save each task on a new line, with the order of task type, completion status, and description. Each section is segmented by a vertical pipe (`|`). 
+After entering the exit command, `bye`, Duke will save the contents into a text file (Duke.txt). The file will save each task on a new line, with the order of task type, completion status, and description. Each section is segmented by a slash (`/`), such as the following example:
+
+![savefile.png](images/savefile.png)
 
 If you want to edit the save file, you may do so, but note that improper edits may cause Duke to crash. If Duke fails to read the file, you can delete the file and restart the application. 
 
@@ -128,9 +137,9 @@ This section will give the full list of features that Duke has. If you want to s
 
 | Name of Command   | General Format                   | Examples                                                            |
 |-------------------|----------------------------------|---------------------------------------------------------------------|
+| Creating Todo     | `todo TASK`                      | `todo written assignment`                                           |
 | Creating Deadline | `deadline TASK /by DATE`         | `deadline return book /by 2023-12-23 12:55`                         |
 | Creating Event    | `event TASK /from DATE /to DATE` | `event project meeting /from 2023-11-23 12:55 /to 2023-11-23 15:55` |
-| Creating Todo     | `todo TASK`                      | `todo written assignment`                                           |
 | List              | `list`                           | `list`                                                              |
 | Mark Tasks        | `mark INDEX`                     | `mark 1`                                                            |
 | Unmark Tasks      | `unmark INDEX`                   | `unmark 1`                                                          |
