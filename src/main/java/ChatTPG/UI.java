@@ -1,7 +1,7 @@
 package ChatTPG;
 
 import java.util.Scanner;
-public class Duke {
+public class UI {
 
     public static void greet() {
         System.out.println("________________________________");
@@ -18,17 +18,16 @@ public class Duke {
 
     public static void main(String[] args) {
         greet();
-        TaskManager.initialize();
+        Storage.loadData();
         Scanner in = new Scanner(System.in);
         String input;
         input = in.nextLine();
         while ((input.compareTo("bye") != 0)) {
             System.out.println("________________________________");
-            TaskManager.handleCommand(input);
+            Parser.handleCommand(input);
             System.out.println("________________________________");
             input = in.nextLine();
         }
-        TaskManager.end();
         bye();
     }
 }

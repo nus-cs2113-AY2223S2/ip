@@ -10,23 +10,21 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.io.FileWriter;
 
-public class Data {
+public class Storage {
 
     static final String DIR_PATH = "./data/";
     static final String FILE_PATH = "./data/duke.txt";
 
-    public static ArrayList<Task> loadData() {
-        ArrayList<Task> tasks = new ArrayList<Task>();
+    public static void loadData() {
         try {
             createDirectory();
             createFile();
-            tasks = readFile();
+            readFile();
         } catch (FileNotFoundException e) {
             System.out.println("ERROR: File not found.");
         } catch (IOException e) {
             System.out.println("ERROR: Failed to create files for storage");
         }
-        return tasks;
     }
 
     public static void createDirectory() throws IOException {
@@ -39,10 +37,9 @@ public class Data {
         file.createNewFile();
     }
 
-    public static ArrayList<Task> readFile() throws FileNotFoundException {
+    public static void readFile() throws FileNotFoundException {
         File file = new File(FILE_PATH);
         Scanner scanner = new Scanner(file);
-        ArrayList<Task> tasks = new ArrayList<Task>();
         while (scanner.hasNextLine()) {
             String command = scanner.nextLine();
 
@@ -58,23 +55,21 @@ public class Data {
             }
             command = command.substring(1);
             if (command.matches("^todo.*$")) {
-                ToDo todo = TaskManager.createToDo(command, isDone);
-                tasks = TaskManager.addToList(tasks, todo);
+                ToDo todo = TaskList.createToDo(command, isDone);
+                TaskList.addToList(todo);
             } else if (command.matches("^deadline.*$")) {
-                Deadline deadline = TaskManager.createDeadline(command, isDone);
-                tasks = TaskManager.addToList(tasks, deadline);
+                Deadline deadline = TaskList.createDeadline(command, isDone);
+                TaskList.addToList(deadline);
             } else {
-                Event event = TaskManager.createEvent(command, isDone);
-                tasks = TaskManager.addToList(tasks, event);
+                Event event = TaskList.createEvent(command, isDone);
+                TaskList.addToList(event);
             }
         }
         scanner.close();
-        return tasks;
     }
 
     public static void saveData(ArrayList<Task> tasks) {
         try {
-            System.out.println("Saving your tasks before exit...");
             FileWriter writer = new FileWriter(FILE_PATH);
             for (Task task : tasks) {
                 String class_name = task.getClass().getName();
@@ -98,7 +93,6 @@ public class Data {
                 }
             }
             writer.close();
-            System.out.println("Save complete.");
         } catch (IOException e) {
             System.out.println("ERROR: Unable to save data to file.");
         }
