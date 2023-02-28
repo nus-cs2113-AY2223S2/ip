@@ -61,6 +61,14 @@ public class Ui {
         System.out.print(LINE);
     }
 
+    public static void printMatchingList(ArrayList<Task> tasks) {
+        System.out.println(LINE + "    Here are the matching tasks in your list:");
+        for (int i = 1; i <= tasks.size(); i++) {
+            System.out.println("    " + i + "." + tasks.get(i-1).toString());
+        }
+        System.out.print(LINE);
+    }
+
     public static String readInput(){
         return in.nextLine();
     }

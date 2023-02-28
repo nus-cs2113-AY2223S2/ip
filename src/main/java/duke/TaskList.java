@@ -14,7 +14,15 @@ public class TaskList {
     public static final String DONE = "    Nice! I've marked this task as done: \n    ";
     public TaskList() {}
 
-    public static void findString (ArrayList<Task> tasks, String[] words) throws ExcessInputsException {
+    /**
+     * Checks through every task the user has input in the task list for matches with
+     * the string input by user. Stores all matching tasks in a matchingTasks list and
+     * print out the list.
+     * @param tasks the list of tasks that the user input.
+     * @param words the input command of the user, the first element is the string "find",
+     *              the second element is the string the user wants to find.
+     */
+    public static void findString (ArrayList<Task> tasks, String[] words) {
         String toFind = words[1];
         ArrayList<Task> matchingTasks = new ArrayList<>();
         for (Task x : tasks) {
@@ -22,8 +30,7 @@ public class TaskList {
                 matchingTasks.add(x);
             }
         }
-        String[] line = toFind.split("NOSPLIT");
-        Ui.printList(matchingTasks, line);
+        Ui.printMatchingList(matchingTasks);
     }
     public static void editMarkStatus(ArrayList<Task> tasks, String[] words, String command) {
         int index = Integer.parseInt(words[1]) - 1;
