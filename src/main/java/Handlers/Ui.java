@@ -17,8 +17,8 @@ public interface Ui {
         boolean isComplete = false;
         Scanner in = new Scanner(System.in);
 
-        printHello();
-        printLineBreak();
+        Ui.printHello();
+        Ui.printLineBreak();
 
         while (!isComplete) {
 
@@ -62,7 +62,7 @@ public interface Ui {
             Ui.printLineBreak();
         }
 
-        printBye();
+        Ui.printBye();
         in.close();
     }
 

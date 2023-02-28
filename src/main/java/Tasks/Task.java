@@ -1,11 +1,12 @@
 package Tasks;
+
 public abstract class Task {
 
     protected String description;
     protected boolean isDone;
 
     /**
-     * Constructor for Task
+     * Constructs Task object.
      * 
      * @param description Description of the task
      * @param isDone      Status of the task
@@ -40,7 +41,7 @@ public abstract class Task {
     }
 
     /**
-     * Getter for the description of the task for user to read.
+     * Gets the description of the task for user to read.
      * 
      * @return String the description of the task
      */
@@ -56,6 +57,6 @@ public abstract class Task {
      *         suitable for writing to file
      */
     public String describeTaskForFile() {
-        return  "";
+        return "";
     }
 }

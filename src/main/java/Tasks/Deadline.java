@@ -1,14 +1,14 @@
 package Tasks;
 
 public class Deadline extends Task {
-    
+
     protected String dueDate;
 
     /**
-     * Constructor for Deadline
+     * Constucts deadline object
      * 
      * @param description Description of the task
-     * @param by          Due date of the task
+     * @param by Due date of the task
      */
     public Deadline(String description, String by) {
         super(description);

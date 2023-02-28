@@ -1,15 +1,16 @@
 package Tasks;
+
 public class Event extends Task {
-    
+
     protected String eventFrom;
     protected String eventTo;
 
     /**
-     * Constructor for Event
+     * Constructs event object.
      * 
      * @param description Description of the task
-     * @param from        Start time of the event
-     * @param to          End time of the event
+     * @param from Start time of the event
+     * @param to End time of the event
      */
     public Event(String description, String from, String to) {
         super(description);
@@ -35,7 +36,6 @@ public class Event extends Task {
      */
     @Override
     public String describeTaskForFile() {
-        return "E | " + (isDone ? "1" : "0") + " | " + description + " | " + eventFrom + "-" + eventTo; 
+        return "E | " + (isDone ? "1" : "0") + " | " + description + " | " + eventFrom + "-" + eventTo;
     }
 }
-    

@@ -16,8 +16,7 @@ public abstract class TaskManager {
     /**
      * Adds a task to the taskList Array
      * 
-     * @param t
-     *            the task to be added
+     * @param t the task to be added
      */
     public static void addTask(Task t) {
         taskList.add(t);
@@ -26,7 +25,7 @@ public abstract class TaskManager {
     /**
      * Deletes a task from the taskList Array
      * 
-     * @param index
+     * @param index the given user input stating the task number to be deleted
      */
     public static void deleteTask(int index) {
         Ui.deletedTaskMessage(index);
@@ -52,8 +51,7 @@ public abstract class TaskManager {
      * Checks if the taskList Array is empty and prints out the tasks in the
      * taskList Array.
      * 
-     * @throws EmptyListException
-     *             if the taskList Array is empty
+     * @throws EmptyListException if the taskList Array is empty
      */
     private static void printTasksFromArray() throws EmptyListException {
 
@@ -75,8 +73,7 @@ public abstract class TaskManager {
      * taskList Array and
      * marks it as done.
      * 
-     * @param index
-     *            the index of the task in the taskList Array
+     * @param index the given user input stating the task number to be marked as
      */
     public static void markTask(int index) {
         if (index > 0 && index <= getTaskCount()) {
@@ -92,8 +89,7 @@ public abstract class TaskManager {
      * taskList Array and
      * marks it as not done.
      * 
-     * @param index
-     *            the index of the task in the taskList Array
+     * @param index the given user input stating the task number to be unmarked as
      */
     public static void unmarkTask(int index) {
         if (index > 0 && index <= getTaskCount()) {
@@ -107,8 +103,7 @@ public abstract class TaskManager {
     /**
      * Prints out all tasks that contain the given description.
      * 
-     * @param description
-     *            the description to be searched for
+     * @param description the description to be searched for
      */
     public static void findTask(String description) {
         ArrayList<Task> list = getTaskList();
@@ -125,8 +120,7 @@ public abstract class TaskManager {
      * Reads a single task from the file and adds it to the task list
      * and input the relevant details depending on the task type.
      * 
-     * @param line
-     *            the line of text from the file
+     * @param line the line of text from the file
      */
     public static void readTaskFromFile(String line) {
         String[] taskAllDetails = line.split("\\|");
@@ -153,10 +147,8 @@ public abstract class TaskManager {
     /**
      * Checks if todo task is done and adds it to the task list.
      * 
-     * @param taskStatus
-     *            the status of the task
-     * @param taskDescription
-     *            the description of the task
+     * @param taskStatus the status of the task
+     * @param taskDescription the description of the task
      */
     private static void addTodoTask(String taskStatus, String taskDescription) {
         Task todo = new Tasks.Todo(taskDescription);
@@ -169,12 +161,9 @@ public abstract class TaskManager {
     /**
      * Checks if the deadline task is done and adds it to the task list.
      * 
-     * @param taskDetails
-     *            the full details of the task
-     * @param taskStatus
-     *            the status of the task
-     * @param taskDescription
-     *            the description of the task
+     * @param taskDetails the full details of the task
+     * @param taskStatus the status of the task
+     * @param taskDescription the description of the task
      */
     private static void addDeadlineTask(String[] taskDetails, String taskStatus, String taskDescription) {
         String taskDeadline = taskDetails[3].trim();
@@ -188,12 +177,9 @@ public abstract class TaskManager {
     /**
      * Checks if the event task is done and adds it to the task list.
      * 
-     * @param taskDetails
-     *            the full details of the task
-     * @param taskStatus
-     *            the status of the task
-     * @param taskDescription
-     *            the description of the task
+     * @param taskDetails the full details of the task
+     * @param taskStatus the status of the task
+     * @param taskDescription the description of the task
      */
     private static void addEventTask(String[] taskDetails, String taskStatus, String taskDescription) {
         String[] taskDate = taskDetails[3].split("-");
@@ -209,8 +195,7 @@ public abstract class TaskManager {
     /**
      * Checks if the task is done.
      * 
-     * @param taskStatus
-     *            the status of the task
+     * @param taskStatus the status of the task
      * @return true if the task is done, false otherwise
      */
     private static boolean isTaskDone(String taskStatus) {

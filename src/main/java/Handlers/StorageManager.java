@@ -14,10 +14,8 @@ public abstract class StorageManager {
      * Creates a new file if it does not exist and loads the tasks in the file into
      * the taskList in TaskManager
      * 
-     * @throws FileNotFoundException
-     *             if the file is not found
-     * @throws IOException
-     *             if there is an error reading the file
+     * @throws FileNotFoundException if the file is not found
+     * @throws IOException if there is an error reading the file
      */
     public static void loadFileContents() {
 
@@ -43,8 +41,7 @@ public abstract class StorageManager {
     /**
      * Saves the tasks in the taskList in TaskManager into the file
      * 
-     * @throws IOException
-     *             if there is an error writing to the file
+     * @throws IOException if there is an error writing to the file
      */
     public static void saveFileContents() {
 
@@ -59,10 +56,8 @@ public abstract class StorageManager {
      * Reads every line of the file and load each task into the taskList in
      * TaskManager
      * 
-     * @param f
-     *            the file to be read
-     * @throws FileNotFoundException
-     *             if the file is not found
+     * @param f the file to be read
+     * @throws FileNotFoundException if the file is not found
      */
     private static void writeToTaskManager(File f) throws FileNotFoundException {
         Scanner s = new Scanner(f);
@@ -76,8 +71,7 @@ public abstract class StorageManager {
     /**
      * Writes every task in the taskList in TaskManager into the file
      * 
-     * @throws IOException
-     *             if there is an error writing to the file
+     * @throws IOException if there is an error writing to the file
      */
     public static void writeToFile() throws IOException {
         FileWriter fw = new FileWriter(FILE_PATH);
