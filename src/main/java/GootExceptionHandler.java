@@ -18,6 +18,7 @@ public class GootExceptionHandler {
         System.out.println("I can't find the file :((");
     }
 
+    public static void indexOutOfBound(){System.out.println("there is no task with this ID! :O");}
     /**
      * this function determines if the format of the deadline is correct
      * @param inputArray a string array split by "/"
@@ -25,6 +26,12 @@ public class GootExceptionHandler {
      */
     public static void validateDeadline (String[] inputArray)throws GootExceptions{
         if (inputArray.length!=2 || !(inputArray[1].contains("by"))){
+            throw new GootExceptions();
+        }
+    }
+
+    public static void validateIndex(int inputIndex, int maxIndex)throws GootExceptions{
+        if(inputIndex>maxIndex){
             throw new GootExceptions();
         }
     }

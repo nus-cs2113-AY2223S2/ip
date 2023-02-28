@@ -48,17 +48,31 @@ public class Parser {
         }
         else if(inputSplitBySpace[0].equals("mark")|inputSplitBySpace[0].equals("unmark")){
             int indexToMark = Integer.parseInt(inputSplitBySpace[1]);
-            Tasklist.markOrUnmark(indexToMark);
-            Storage.save();
-            UserInterface.savedMessage();
+            try {
+                GootExceptionHandler.validateIndex(indexToMark,Tasklist.lastIndex);
+                Tasklist.markOrUnmark(indexToMark);
+                Storage.save();
+                UserInterface.savedMessage();
+            }
+            catch (GootExceptions exception){
+                GootExceptionHandler.indexOutOfBound();
+            }
+
         }
         else if (input.equals("list")) {
             UserInterface.printList();
         }
         else if (inputSplitBySpace[0].equals("delete")&&inputSplitBySpace.length==2){
-            Tasklist.deleteFromTaskArray(Integer.parseInt(inputSplitBySpace[1]));
-            Storage.save();
-            UserInterface.savedMessage();
+            int indexToDelete=Integer.parseInt(inputSplitBySpace[1]);
+            try {
+                GootExceptionHandler.validateIndex(indexToDelete,Tasklist.lastIndex);
+                Tasklist.deleteFromTaskArray(indexToDelete);
+                Storage.save();
+                UserInterface.savedMessage();
+            }
+            catch (GootExceptions exception){
+                GootExceptionHandler.indexOutOfBound();
+            }
         }
         else if(inputSplitBySpace[0].equals("find")){
             ArrayList<String> listOfTasksFound = Tasklist.find(input.substring(5));

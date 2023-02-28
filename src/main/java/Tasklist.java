@@ -51,7 +51,7 @@ public class Tasklist {
     }
 
     public static void deleteFromTaskArray(int indexToDelete){
-
+        UserInterface.deleteMessage(indexToDelete);
         if(lastIndex>1){
             for(int index = indexToDelete-1;index<lastIndex-1;index++){
                 taskArray[index] = taskArray[index+1];
@@ -64,7 +64,6 @@ public class Tasklist {
 
         lastIndex--;
         taskArray[lastIndex]=null;
-        UserInterface.deleteMessage(indexToDelete);
     }
 
     /**
