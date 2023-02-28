@@ -1,34 +1,15 @@
 import java.util.ArrayList;
-import java.io.File;
-import java.io.FileWriter;
-import java.util.Scanner;
-import java.io.IOException;
 
 public class TaskList {
-    public final static String FILEPATH = "./duke.txt";
-    private ArrayList<Task> taskArray = new ArrayList<>();
-    private int totalTaskNum = 0;
+    private ArrayList<Task> taskArray;
+    private int totalTaskNum;
+    private Storage taskStorage;
 
     public TaskList(){
-        try {
-            File file = new File(FILEPATH);
-            if (file.createNewFile()) {
-                System.out.println("I created the file " + file.getName());
-                System.out.println("From now on, I will record your tasks here.");
-            } else{
-                Scanner scanner = new Scanner(file);
-                ArrayList<String> existingTasks = new ArrayList<>();
-                while(scanner.hasNext()){
-                    String data = scanner.nextLine();
-                    String taskInfo = data.substring(6,7) + "/" + data.substring(8);
-                    existingTasks.add(taskInfo);
-                }
-                loadData(existingTasks);
-            }
-        } catch(IOException e){
-            System.out.println("☹ OOPS!!! I cannot create new file.");
-            System.out.println(e.getMessage());
-        }
+        taskArray = new ArrayList<>();
+        totalTaskNum = 0;
+        taskStorage = new Storage(this);
+
     }
 
     public boolean addTask(String userInput){
@@ -56,7 +37,7 @@ public class TaskList {
             System.out.println("☹ OOPS!!! The description of a todo cannot be empty.");
             return false;
         }
-        writeToFile(FILEPATH, this.toString());
+        taskStorage.writeToFile(this.toString());
         return true;
     }
 
@@ -71,7 +52,7 @@ public class TaskList {
             System.out.println("☹ OOPS!!! The description of a deadline cannot be empty.");
             return false;
         }
-        writeToFile(FILEPATH, this.toString());
+        taskStorage.writeToFile(this.toString());
         return true;
     }
 
@@ -87,33 +68,22 @@ public class TaskList {
             System.out.println("☹ OOPS!!! The description of an event cannot be empty.");
             return false;
         }
-        writeToFile(FILEPATH, this.toString());
+        taskStorage.writeToFile(this.toString());
         return true;
     }
 
     public boolean markTask(int taskNumInt){
         taskArray.get(taskNumInt-1).mark();
-        writeToFile(FILEPATH, this.toString());
+        taskStorage.writeToFile(this.toString());
         return true;
     }
 
     public boolean unmarkTask(int taskNumInt){
         taskArray.get(taskNumInt-1).unmark();
-        writeToFile(FILEPATH, this.toString());
+        taskStorage.writeToFile(this.toString());
         return true;
     }
 
-    public static void writeToFile(String filePath, String textAdded){
-        try {
-            File file = new File(FILEPATH);
-            FileWriter fw = new FileWriter(file);
-            fw.write(textAdded);
-            fw.close();
-        } catch (IOException e){
-            System.out.println("☹ OOPS!!! Something went wrong while saving.");
-            System.out.println(e.getMessage());
-        }
-    }
 
     public boolean delete(int taskNumInt){
         try{
@@ -124,27 +94,6 @@ public class TaskList {
         } catch(Exception e){
             System.out.println("☹ OOPS!!! I cannot remove the task. Try again.");
             return false;
-        }
-    }
-
-    public void loadData(ArrayList<String> existingTasks){
-        for(String taskInfo : existingTasks){
-            String taskState = taskInfo.substring(0,1);
-            String[] taskContent = taskInfo.substring(3).split("/");
-            switch(taskContent.length){
-                case 1:
-                    addTodo(taskContent);
-                    if(taskState.equals("O")) markTask(totalTaskNum);
-                    break;
-                case 2:
-                    addDeadline(taskContent);
-                    if(taskState.equals("O")) markTask(totalTaskNum);
-                    break;
-                case 3:
-                    addEvent(taskContent);
-                    if(taskState.equals("O")) markTask(totalTaskNum);
-                    break;
-            }
         }
     }
 
@@ -164,6 +113,10 @@ public class TaskList {
 
     public int getTotalTaskNum(){
         return totalTaskNum;
+    }
+
+    public Task getTask(int taskNumInt){
+        return taskArray.get(taskNumInt-1);
     }
 }
 
