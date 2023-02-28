@@ -1,29 +1,18 @@
-# User Guide
+<!-- ---
+layout: page
+title: User Guide
+--- -->
+<h1> User Guide </h1>
+<h2> Introduction </h2>
 
-## Features 
+<h2> Table of Contents </h2>
 
-### Feature-ABC
+* **[Quick Start](#quick-start)**
+* **[FAQ](#faq)**
+* **[Command Summary](#command-summary)**
 
-Description of the feature.
+<h2 id="quick-start"> Quick Start</h2>
 
-### Feature-XYZ
+1. Enusure you have `Java 11` installed on your Computer.
 
-Description of the feature.
-
-## Usage
-
-### `Keyword` - Describe action
-
-Describe the action and its outcome.
-
-Example of usage: 
-
-`keyword (optional arguments)`
-
-Expected outcome:
-
-Description of the outcome.
-
-```
-expected output
-```
+<h2 id='faq'> FAQ </h2>
