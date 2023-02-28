@@ -179,7 +179,3 @@ Expected outcome:
 ```
 Bye. Hope to see you again soon!
 ```
-
-## Conclusion
-
-That's it! With DukeRunner, you can easily manage your tasks and never miss a deadline again.
