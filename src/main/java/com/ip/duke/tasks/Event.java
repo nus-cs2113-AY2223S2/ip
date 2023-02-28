@@ -1,3 +1,5 @@
+package com.ip.duke.tasks;
+
 public class Event extends Task{
     String startDate, endDate;
     public Event(String description, String startDate, String endDate) {

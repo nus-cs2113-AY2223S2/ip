@@ -1,3 +1,9 @@
+package com.ip.duke;
+
+import com.ip.duke.tasks.Deadline;
+import com.ip.duke.tasks.Event;
+import com.ip.duke.tasks.TaskList;
+import com.ip.duke.tasks.Todo;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -128,12 +134,6 @@ public class Duke {
                 break;
             }
 
-            case "add": {
-                String itemDescription = getItemDescription(userInput);
-                Task newTask = new Task(itemDescription);
-                TaskList.addItem(newTask);
-                break;
-            }
 
             case "delete": {
                 String itemNum = getItemDescription(userInput);

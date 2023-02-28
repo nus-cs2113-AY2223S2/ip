@@ -1,3 +1,4 @@
+package com.ip.duke.tasks;
 
 public class Task {
     protected String description;
