@@ -26,10 +26,20 @@ public class Todo {
         return '[' + taskType + ']';
     }
 
+    /**
+     * Reformats the task to a string to be printed.
+     *
+     * @return The string to be printed.
+     */
     public String printTask() {
         return this.getTaskIcon() + getStatusIcon() + ' ' + this.description;
     }
 
+    /**
+     * Reformats the task to a string to be saved in a file.
+     *
+     * @return The string to be saved in a file.
+     */
     public String saveTask() {
         return this.taskType + ITEM_SEPARATOR + (this.isDone ? "1" : "0") + ITEM_SEPARATOR
                 + this.description + System.lineSeparator();
