@@ -1,6 +1,8 @@
 package task;
 
 import java.util.ArrayList;
+import exceptions.DukeException;
+import task.Task;
 
 public class TaskList {
     private static String LINE = "____________________________________________________________";
@@ -10,6 +12,15 @@ public class TaskList {
 
     public TaskList() {
         list = new ArrayList<Task>();
+    }
+
+    public static void deleteTask(int index) {
+        System.out.println(LINE);
+        System.out.println("Noted. I've removed this task:");
+        System.out.println("  " + list.get(index).toString());
+        list.remove(index);
+        int size = list.size();
+        System.out.println("Now you have " + size + " tasks in the list");
     }
 
     public static void markTask(int index) {
@@ -25,20 +36,20 @@ public class TaskList {
         System.out.println("What!?!? OK, I've marked this task as not done yet:");
         System.out.println("[" + list.get(index).getStatusIcon() + "] " + list.get(index).description);
     }
-    public static void addTodo(String input) throws Exceptions.DukeException {
+    public static void addTodo(String input) throws DukeException {
         try {
             Todo task = new Todo(input);
             task.setTaskType("T");
             list.add(task);
             if (task.description.split(" ").length < 2) {
-                throw new Exceptions.DukeException(todoError);
+                throw new DukeException(todoError);
             } else {
                 System.out.println(LINE);
                 System.out.println("Roger! The Todo task has been added: \n" + task.toString());
                 System.out.println("Now you have " + list.size() + " in the list");
                 System.out.println(LINE);
             }
-        } catch (Exceptions.DukeException e) {
+        } catch (DukeException e) {
             printError(e);
         }
     }
@@ -105,7 +116,7 @@ public class TaskList {
         }
     }
 
-    public static void printError(Exceptions.DukeException e) {
+    public static void printError(DukeException e) {
         System.out.println(LINE + System.lineSeparator() + e.getMessage() + System.lineSeparator() + LINE );
     }
 }

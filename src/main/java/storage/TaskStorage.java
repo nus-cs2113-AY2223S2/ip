@@ -1,6 +1,5 @@
 package storage;
 
-import Exceptions.DukeException;
 import task.Task;
 import task.TaskList;
 import java.io.File;
@@ -8,7 +7,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 import static storage.DataParser.*;
-import static task.TaskList.printList;
+import static task.TaskList.*;
 
 
 public class TaskStorage {
