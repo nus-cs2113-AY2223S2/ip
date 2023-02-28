@@ -18,6 +18,7 @@ public class Duke {
 
     public static void main(String[] args) {
         greet();
+        TaskManager.initialize();
         Scanner in = new Scanner(System.in);
         String input;
         input = in.nextLine();
@@ -27,6 +28,7 @@ public class Duke {
             System.out.println("________________________________");
             input = in.nextLine();
         }
+        TaskManager.end();
         bye();
     }
 }

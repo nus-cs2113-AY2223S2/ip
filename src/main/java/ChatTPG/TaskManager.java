@@ -1,11 +1,19 @@
 package ChatTPG;
 
+import java.util.ArrayList;
+
 public class TaskManager {
 
-    public static final int MAX_SIZE = 100;
+    private static ArrayList<Task> tasks = new ArrayList<Task>();
+    private static int task_count = 0;
 
-    public static Task[] tasks = new Task[MAX_SIZE];
-    public static int task_count = 0;
+    public static void initialize() {
+        tasks = Data.loadData();
+    }
+
+    public static void end() {
+        Data.saveData(tasks);
+    }
 
     public static void handleCommand(String command) {
         if (command.matches("^list$")) {
@@ -36,8 +44,9 @@ public class TaskManager {
         } else if (command.matches("^todo.*$")) {
             try {
                 verifyTodoCommand(command);
-                ToDo todo = new ToDo(command.substring(5));
-                addToList(todo);
+                ToDo todo = createToDo(command, false);
+                tasks = addToList(tasks, todo);
+                notifyTaskAdded(todo);
             } catch (InvalidCommandFormat e) {
                 System.out.println("ERROR: command must be of the following form:");
                 System.out.println("todo <task>");
@@ -47,11 +56,9 @@ public class TaskManager {
         } else if (command.matches("^deadline.*$")) {
             try {
                 verifyDeadlineCommand(command);
-                int separator_idx = command.indexOf("/by");
-                String description = command.substring(9, separator_idx - 1);
-                String by = command.substring(separator_idx + 4);
-                Deadline deadline = new Deadline(description, by);
-                addToList(deadline);
+                Deadline deadline = createDeadline(command, false);
+                tasks = addToList(tasks, deadline);
+                notifyTaskAdded(deadline);
             } catch (InvalidCommandFormat e) {
                 System.out.println("ERROR: command must be of the following form:");
                 System.out.println("deadline <task> /by <due date>");
@@ -61,13 +68,9 @@ public class TaskManager {
         } else if (command.matches("^event.*$")) {
             try {
                 verifyEventCommand(command);
-                int from_idx = command.indexOf("/from");
-                int to_idx = command.indexOf("/to");
-                String description = command.substring(6, from_idx - 1);
-                String from = command.substring(from_idx + 6, to_idx - 1);
-                String to = command.substring(to_idx + 4);
-                Event event = new Event(description, from, to);
-                addToList(event);
+                Event event = createEvent(command, false);
+                tasks = addToList(tasks, event);
+                notifyTaskAdded(event);
             } catch (InvalidCommandFormat e) {
                 System.out.println("ERROR: command must be of the following form:");
                 System.out.println("event <task> /from <start> /to <end>");
@@ -79,11 +82,42 @@ public class TaskManager {
         }
     }
 
-    public static void addToList(Task task) {
-        tasks[task_count] = task;
+    public static ToDo createToDo(String command, boolean isDone) {
+        ToDo todo = new ToDo(command.substring(5), isDone);
+        return todo;
+    }
+
+    public static Deadline createDeadline(String command, boolean isDone) {
+        int separator_idx = command.indexOf("/by");
+        String description = command.substring(9, separator_idx - 1);
+        String by = command.substring(separator_idx + 4);
+        Deadline deadline = new Deadline(description, isDone, by);
+        return deadline;
+    }
+
+    public static Event createEvent(String command, boolean isDone) {
+        int from_idx = command.indexOf("/from");
+        int to_idx = command.indexOf("/to");
+        String description = command.substring(6, from_idx - 1);
+        String from = command.substring(from_idx + 6, to_idx - 1);
+        String to = command.substring(to_idx + 4);
+        Event event = new Event(description, isDone, from, to);
+        return event;
+    }
+
+    public static ArrayList<Task> addToList(ArrayList<Task> tasks, Task task) {
+        tasks.add(task);
         task_count++;
+        return tasks;
+    }
+
+    public static void notifyTaskAdded(Task task) {
         System.out.println("Got it. I've added this task:");
         System.out.println(task.toString());
+        displayNumberOfTasks();
+    }
+
+    public static void displayNumberOfTasks() {
         if (task_count == 1) {
             System.out.println("Now you have 1 task in the list.");
         } else {
@@ -140,21 +174,21 @@ public class TaskManager {
     }
 
     public static void markTask(int task_number) {
-        tasks[task_number].setDone(true);
+        tasks.get(task_number).setDone(true);
         System.out.println("Nice! I've marked this task as done:");
-        System.out.println(tasks[task_number].toString());
+        System.out.println(tasks.get(task_number).toString());
     }
 
     public static void unmarkTask(int task_number) {
-        tasks[task_number].setDone(false);
+        tasks.get(task_number).setDone(false);
         System.out.println("OK, I've marked this task as not done yet:");
-        System.out.println(tasks[task_number].toString());
+        System.out.println(tasks.get(task_number).toString());
     }
 
     public static void listTasks() {
         System.out.println("Here are the tasks in your list:");
         for (int idx = 0; idx < task_count; idx++) {
-            System.out.println(tasks[idx].toString());
+            System.out.println(tasks.get(idx).toString());
         }
     }
 }
