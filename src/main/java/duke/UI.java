@@ -1,6 +1,9 @@
 package duke;
 
+import duke.data.textImage;
+
 public class UI {
+
     private static final String HORIZONTAL_LINE = "____________________________________________________________";
 
     public static void printTodo(String message) {
@@ -27,7 +30,7 @@ public class UI {
     }
 
     public static void showWelcomeMessage() {
-        printPicture(0);
+        textImage.printImage(1);
         System.out.println(HORIZONTAL_LINE);
         System.out.println("Hello! I'm Duke\n" + "What can I do for you?");
         System.out.println(HORIZONTAL_LINE);
@@ -36,55 +39,7 @@ public class UI {
     public static void showByeMessage() {
         System.out.println("Bye. Hope to see you again soon!");
     }
-
-    private static void printPicture(int index) {
-        switch (index) {
-        case 1:
-            System.out.println("        ___\n" +
-                    "      _/ ..\\\n" +
-                    "     ( \\  0/__\n" +
-                    "      \\    \\__)\n" +
-                    "      /     \\\n" +
-                    "     /      _\\\n" +
-                    "    `\"\"\"\"\"``");
-            break;
-        case 2:
-            System.out.println("        ___\n" +
-                    "      _/ oo\\\n" +
-                    "     ( \\  -/__\n" +
-                    "      \\    \\__)\n" +
-                    "      /     \\\n" +
-                    "     /      _\\\n" +
-                    "    `\"\"\"\"\"``   ");
-            break;
-        case 3:
-            System.out.println("        ___\n" +
-                    "      _/ @@\\\n" +
-                    "     ( \\  O/__\n" +
-                    "      \\    \\__)\n" +
-                    "      /     \\\n" +
-                    "     /      _\\\n" +
-                    "    `\"\"\"\"\"``");
-            break;
-        case 4:
-            System.out.println("        ___\n" +
-                    "      _/ 66\\\n" +
-                    "     ( \\  ^/__\n" +
-                    "      \\    \\__)\n" +
-                    "      /     \\\n" +
-                    "     /      _\\\n" +
-                    "    `\"\"\"\"\"``");
-            break;
-        default:
-            System.out.println("        ___\n" +
-                    "      _/  \"\\\n" +
-                    "     ( \\  ~/__\n" +
-                    "      \\    \\__)\n" +
-                    "      /     \\\n" +
-                    "     /      _\\\n" +
-                    "    `\"\"\"\"\"``");
-        }
-    }
 }
+
 
 

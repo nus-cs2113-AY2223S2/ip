@@ -16,11 +16,11 @@ import java.util.Scanner;
 
 public class Storage {
 
-    private static final String dirPath = "src/main/java/duke/data";
-    private static final String filePath = "src/main/java/duke/data/duke.txt";
+    private static final String dirPath = "data";
+    private static final String filePath = "data/duke.txt";
 
-    public static List<Task> convertToList() throws FileNotFoundException {
-        List<Task> taskList = new ArrayList<>();
+    public static ArrayList<Task> convertToList() throws FileNotFoundException {
+        ArrayList<Task> taskList = new ArrayList<>();
         File file = new File(filePath); // create a File for the given file path
         Scanner s = new Scanner(file); // create a Scanner using the File as the source
         while (s.hasNext()) {
@@ -73,7 +73,7 @@ public class Storage {
     }
 
     public static void appendToFile(String textToAppend) throws IOException {
-        FileWriter fw = new FileWriter(filePath, true); // create a FileWriter in append mode
+        FileWriter fw = new FileWriter(filePath, true);
         fw.write(textToAppend);
         fw.close();
     }
@@ -88,5 +88,4 @@ public class Storage {
             f.createNewFile();
         }
     }
-
 }
