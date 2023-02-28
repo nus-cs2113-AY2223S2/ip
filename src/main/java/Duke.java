@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 public class Duke {
 
-    public static ArrayList<Task> addTask(ArrayList<Task> taskList, Task newTask) {
+    public static ArrayList<Task> addToTaskList(ArrayList<Task> taskList, Task newTask) {
         taskList.add(newTask);
         return taskList;
     }
@@ -14,6 +14,10 @@ public class Duke {
         System.out.println(StrIntLib.byeText);
     }
     public static void list(ArrayList<Task> tasksList) {
+        if (tasksList.size() == 0) {
+            System.out.println(StrIntLib.emptyList);
+            return;
+        }
         System.out.println(StrIntLib.listText);
         int ID = 1;
         for (Task item : tasksList) {
@@ -23,6 +27,12 @@ public class Duke {
     }
 
     public static void uncheckDoneStatus(String[] stringsList, ArrayList<Task> taskList) {
+        try{
+            int test = Integer.parseInt(stringsList[1]);
+        } catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
+            System.out.println(StrIntLib.generalError);
+            return;
+        }
         if (Integer.parseInt(stringsList[1]) > taskList.size()){
             System.out.println(StrIntLib.noItemText);
         } else {
@@ -35,6 +45,12 @@ public class Duke {
     }
 
     public static void checkDoneStatus(String[] stringsList, ArrayList<Task> taskList) {
+        try{
+            int test = Integer.parseInt(stringsList[1]);
+        } catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
+            System.out.println(StrIntLib.generalError);
+            return;
+        }
         if (Integer.parseInt(stringsList[1]) > taskList.size()){
             System.out.println(StrIntLib.noItemText);
         } else {
@@ -55,41 +71,61 @@ public class Duke {
         return out;
     }
     private static ArrayList<Task> addDeadline(ArrayList<Task> taskList, String[] parts) {
-        String content = parts[0];
-        String dueDate = parts[1].replace(StrIntLib.by, StrIntLib.byReplacement).trim();
-        Deadlines newDeadline = new Deadlines(content, dueDate);
-        ArrayList<Task> newTaskList = addTask(taskList, newDeadline);
-        System.out.println(StrIntLib.addTaskText);
-        System.out.println(printIconStatus(newDeadline));
-        System.out.println(StrIntLib.taskCount1 + newTaskList.size() + StrIntLib.taskCount2);
-        return newTaskList;
+        try{
+            String content = parts[0];
+            String dueDate = parts[1].replace(StrIntLib.by, StrIntLib.byReplacement).trim();
+            Deadlines newDeadline = new Deadlines(content, dueDate);
+            ArrayList<Task> newTaskList = addToTaskList(taskList, newDeadline);
+            System.out.println(StrIntLib.addTaskText);
+            System.out.println(printIconStatus(newDeadline));
+            System.out.println(StrIntLib.taskCount1 + newTaskList.size() + StrIntLib.taskCount2);
+            return newTaskList;
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println(StrIntLib.missingInputsError);
+            return taskList;
+        }
     }
 
     private static ArrayList<Task> addEvent(ArrayList<Task> taskList, String[] parts) {
-        String content = parts[0];
-        String start = parts[1].replace(StrIntLib.from, StrIntLib.fromReplacement).trim();
-        String end = parts[2].replace(StrIntLib.to, StrIntLib.toReplacement).trim();
-        Events newEvent = new Events(content, start, end);
-        ArrayList<Task> newTaskList = addTask(taskList, newEvent);
-        System.out.println(StrIntLib.addTaskText);
-        System.out.println(printIconStatus(newEvent));
-        System.out.println(StrIntLib.taskCount1 + newTaskList.size() + StrIntLib.taskCount2);
-        return newTaskList;
+        try {
+            String content = parts[0];
+            String start = parts[1].replace(StrIntLib.from, StrIntLib.fromReplacement).trim();
+            String end = parts[2].replace(StrIntLib.to, StrIntLib.toReplacement).trim();
+            Events newEvent = new Events(content, start, end);
+            ArrayList<Task> newTaskList = addToTaskList(taskList, newEvent);
+            System.out.println(StrIntLib.addTaskText);
+            System.out.println(printIconStatus(newEvent));
+            System.out.println(StrIntLib.taskCount1 + newTaskList.size() + StrIntLib.taskCount2);
+            return newTaskList;
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println(StrIntLib.missingInputsError);
+            return taskList;
+        }
     }
     private static ArrayList<Task> addToDo(ArrayList<Task> taskList, String[] inputs) {
-        ToDos newToDo = new ToDos(inputs[1]);
-        ArrayList<Task> newTaskList = addTask(taskList, newToDo);
-        System.out.println(StrIntLib.addTaskText);
-        System.out.println(printIconStatus(newToDo));
-        System.out.println(StrIntLib.taskCount1 + newTaskList.size() + StrIntLib.taskCount2);
-        return newTaskList;
+        try {
+            ToDos newToDo = new ToDos(inputs[1]);
+            ArrayList<Task> newTaskList = addToTaskList(taskList, newToDo);
+            System.out.println(StrIntLib.addTaskText);
+            System.out.println(printIconStatus(newToDo));
+            System.out.println(StrIntLib.taskCount1 + newTaskList.size() + StrIntLib.taskCount2);
+            return newTaskList;
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println(StrIntLib.missingInputsError);
+            return taskList;
+        }
     }
 
     private static ArrayList<Task> addTask(ArrayList<Task> taskList, String[] parts) {
-        Task newTask = new Task(parts[0]);
-        ArrayList<Task> newTaskList = addTask(taskList, newTask);
-        System.out.println(StrIntLib.taskAddedDebug);
-        return newTaskList;
+        try {
+            Task newTask = new Task(parts[0]);
+            ArrayList<Task> newTaskList = addToTaskList(taskList, newTask);
+            System.out.println(StrIntLib.taskAddedDebug);
+            return newTaskList;
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println(StrIntLib.missingInputsError);
+            return taskList;
+        }
     }
     private static void invalidCommand() {
         System.out.println(StrIntLib.invalidCmdText);
@@ -105,7 +141,7 @@ public class Duke {
             String[] inputs = input.split(" ", 2);
             String command = inputs[0];
             String[] partsList = (inputs.length > 1) ? inputs[1].split("/") : null;
-            switch (command) {
+            switch (command.toLowerCase()) {
             case StrIntLib.cmdBye:
                 byeMessage();
                 return;
