@@ -80,17 +80,26 @@ public class DukeNUSPrinter {
     }
 
     /**
-     * Prints all tasks in the tasks array that is not null.
+     * Prints all tasks in the tasks array that is not null. To be used by the list command.
      *
      * @param tasks     The array of tasks. The array used in practice is of fixed size 100.
      */
-    public static void printTasks(ArrayList<Task> tasks) {
+    public static void listTasks(ArrayList<Task> tasks) {
         printHorizontalLine();
         System.out.println(INDENT + "Here are the tasks in your list:");
+        printTasks(tasks);
+        printHorizontalLine();
+    }
+    public static void showSearchResults(ArrayList<Task> tasks) {
+        printHorizontalLine();
+        System.out.println(INDENT + "Here are the matching tasks in your list:");
+        printTasks(tasks);
+        printHorizontalLine();
+    }
+    private static void printTasks(ArrayList<Task> tasks) {
         for (int i = 0; i < tasks.size(); i += 1) {
             System.out.println(INDENT + (i + 1) + '.' + tasks.get(i).getTaskString());
         }
-        printHorizontalLine();
     }
 
     public static void printWelcomeMessage() {
@@ -100,4 +109,6 @@ public class DukeNUSPrinter {
     public static void printFarewellMessage() {
         printMessage("Bye. Hope to see you again soon!");
     }
+
+
 }
