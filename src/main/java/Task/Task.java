@@ -38,6 +38,9 @@ public abstract class Task {
     public boolean getStatus() {
         return isDone;
     }
+    public static void setTotal(int number) {
+        total = number;
+    }
     public abstract String getTaskType();
     public String getTaskDescription() {
         return description;
