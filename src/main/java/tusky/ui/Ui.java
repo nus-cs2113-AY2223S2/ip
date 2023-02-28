@@ -5,6 +5,7 @@ import tusky.exceptions.EmptyDescriptionException;
 import tusky.tasks.Task;
 import tusky.tasks.TaskList;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Ui {
@@ -73,6 +74,15 @@ public class Ui {
         printf(Messages.SMALL_INDENT + "%s\n", task.getDetailedString());
         printf(Messages.TASK_COUNT.toString(), size);
     }
+
+    public void showFoundTasks (ArrayList<Task> tasks) {
+        println(Messages.TASK_LIST.toString());
+        for (int i = 1; i <= tasks.size(); i++) {
+            printf(" %d.%s\n", i, tasks.get(i-1).getDetailedString());
+        }
+    }
+
+    // Errors
     public void showEmptyDescription (EmptyDescriptionException e) {
         printf(e.getMessage());
     }

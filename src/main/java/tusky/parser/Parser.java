@@ -84,6 +84,8 @@ public class Parser {
         case DELETE:
             index = Integer.parseInt(body) - 1;
             return new DeleteCommand(index);
+        case FIND:
+            return new FindCommand(body);
         default:
             throw new IllegalArgumentException(Messages.ERR_UNKNOWN_COMMAND.toString());
         }

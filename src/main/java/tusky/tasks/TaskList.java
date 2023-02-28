@@ -1,6 +1,7 @@
 package tusky.tasks;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Collections;
 
 public class TaskList {
@@ -11,15 +12,9 @@ public class TaskList {
     }
 
     public TaskList(ArrayList<Task> tasks) {
-        if(tasks == null){
-            this.tasks = new ArrayList<>();
-        } else {
-            this.tasks = tasks;
-            // remove all null entries in the list
-            this.tasks.removeAll(Collections.singleton(null));
-        }
-
-
+        this.tasks = Objects.requireNonNullElseGet(tasks, ArrayList::new);
+        // remove all null entries in the list
+        this.tasks.removeAll(Collections.singleton(null));
     }
 
     public ArrayList<Task> getTasks() {
