@@ -126,3 +126,7 @@ __________________________________
 Bye bye! see you soon!
 __________________________________
 ```
+# 7. File creation
+- no command needed
+- file named ```tasks.txt``` will be created in the directory where the ```java -jar <jar file path>``` command was run
+- file is updated whenever ```Saved!``` is displayed.
