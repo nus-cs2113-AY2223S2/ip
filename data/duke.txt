@@ -1,4 +1,0 @@
-T|X|coffee
-T| |coffee 2
-D| |coffee /by:  2pm
-E| |coffee again /from:  1pm /by:  2pm
