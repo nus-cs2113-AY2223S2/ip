@@ -4,7 +4,7 @@
 
 1. Ensure you have the latest version of Java (11 or above)
 
-2. Download the latest copy of the duke.jar file [here]
+2. Download the latest copy of the duke.jar file [here](https://github.com/ghzr0/ip/releases)
 
 3. Move the .jar file to the folder where you want to run the program
 
