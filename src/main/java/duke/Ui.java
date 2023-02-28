@@ -54,7 +54,7 @@ public class Ui {
         if (words.length > 1) {
             throw new ExcessInputsException();
         }
-        System.out.println(LINE + "Here are the tasks in your list:");
+        System.out.println(LINE + "    Here are the tasks in your list:");
         for (int i = 1; i <= tasks.size(); i++) {
             System.out.println("    " + i + "." + tasks.get(i-1).toString());
         }
