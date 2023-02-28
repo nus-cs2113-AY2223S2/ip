@@ -20,7 +20,7 @@ then
 fi
 
 # run the program, feed commands from input.txt file and redirect the output to the ACTUAL.TXT
-cp save_test.txt ../save.txt
+cp save_test.txt save.txt
 java -classpath ../bin duke.Duke < input.txt > ACTUAL.TXT
 
 # convert to UNIX format
@@ -33,7 +33,7 @@ if [ $? -eq 0 ]
 then
     echo "Output: PASSED"
     # compare save file to expected save file
-    diff ../save.txt save_result.txt
+    diff save.txt save_result.txt
     if [ $? -eq 0 ]
     then
         echo "Save file: PASSED"
