@@ -9,7 +9,7 @@ import java.io.IOException;
 
 public class Exit {
 
-    /** 
+    /**
      * Save the data stored in list to a txt file
      */
     public static void saveFile(ArrayList<Task> list) {

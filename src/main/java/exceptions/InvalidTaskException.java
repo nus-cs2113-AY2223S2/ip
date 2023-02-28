@@ -7,6 +7,7 @@ public class InvalidTaskException extends Exception{
      * when the user enters wrong command and ask the user to re-enter
      */
     public String call(){
-        return "Invalid Command! I cannot understand your instruction please re-enter";
+        return "Invalid Command! I cannot understand your instruction please re-enter" +
+                "\nIf you wish to get help please enter \"help\"";
     }
 }

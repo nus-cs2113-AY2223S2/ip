@@ -44,6 +44,9 @@ public class HandleUserCommand {
                 case "delete":
                     DeleteTask.deleteTask(list, userCommand);
                     break;
+                case "help":
+                    Help.getHelpMessage();
+                    break;
                 case "bye":
                     Bye.bye();
                     Exit.saveFile(list);
