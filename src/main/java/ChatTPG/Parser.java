@@ -73,6 +73,17 @@ public class Parser {
             } catch (IndexOutOfBoundsException | NullPointerException e) {
                 System.out.println("ERROR: invalid task number");
             }
+        } else if (command.matches("^find.*$")) {
+            try {
+                verifyFindCommand(command);
+                String keyword = command.substring(5);
+                TaskList.findTasks(keyword);
+            } catch (InvalidCommandFormat e) {
+                System.out.println("ERROR: command must be of the following form:");
+                System.out.println("find <keyword>");
+            } catch (CommandMissingArguments e) {
+                System.out.println("☹ OOPS!!! The keyword of a find cannot be empty.");
+            }
         } else {
             System.out.println("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
         }
@@ -128,6 +139,16 @@ public class Parser {
 
     public static void verifyDeleteCommand(String command) throws InvalidCommandFormat {
         if (!command.matches("^delete [0-9]*$")) {
+            throw new InvalidCommandFormat();
+        }
+    }
+
+    public static void verifyFindCommand(String command)
+            throws CommandMissingArguments, InvalidCommandFormat {
+        if (command.matches("^find *$")) {
+            throw new CommandMissingArguments();
+        }
+        else if (!command.matches("^find .*$")) {
             throw new InvalidCommandFormat();
         }
     }
