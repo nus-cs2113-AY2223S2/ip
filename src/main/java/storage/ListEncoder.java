@@ -18,7 +18,7 @@ public class ListEncoder {
 	 * Overwrites saveFile to input updated list of tasks.
 	 * @param list List of tasks of the user.
 	 * @param saveFile File to write the encoded list into.
-	 * @throws IOException 6
+	 * @throws IOException when file cannot be written into.
 	 */
 	public static void saveList(Tasks list, File saveFile) throws IOException {
 		FileWriter fw = new FileWriter(saveFile);

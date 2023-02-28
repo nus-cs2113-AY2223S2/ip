@@ -7,7 +7,7 @@ import tasks.Todo;
 
 /**
  * Decodes string line from the save text file,
- * and updates tasks list accordingly
+ * and updates tasks list accordingly.
  */
 public class ListDecoder {
 	public static final int COMMAND_INDEX = 0;

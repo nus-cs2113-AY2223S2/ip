@@ -5,6 +5,11 @@ package tasks;
  * Contains a description, from and to.
  */
 public class Event extends Task {
+	public static final String TO_STRING = " to: ";
+	public static final String FROM_STRING = " (from: ";
+	public static final String CLOSING_BRACKET = ")";
+	public static final String EVENT_SYMBOL = "[E]";
+	public static final String EVENT_SYMBOL_SAVE_FILE = "E";
 	protected String from;
 	protected String to;
 	
@@ -22,12 +27,12 @@ public class Event extends Task {
 	
 	@Override
 	public String toString() {
-		return "[E]" + super.toString() + " (from: " + from + " to: " + to + ")";
+		return EVENT_SYMBOL + super.toString() + FROM_STRING + from + TO_STRING + to + CLOSING_BRACKET;
 	}
 	
 	@Override
 	public String getTaskType() {
-		return "E";
+		return EVENT_SYMBOL_SAVE_FILE;
 	}
 	
 	@Override

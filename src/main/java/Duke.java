@@ -4,7 +4,6 @@ import tasks.Event;
 import tasks.Tasks;
 import tasks.Todo;
 import ui.Ui;
-
 import java.io.IOException;
 import java.util.Scanner;
 
