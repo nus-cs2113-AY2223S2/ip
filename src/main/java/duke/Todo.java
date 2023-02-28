@@ -8,10 +8,6 @@ public class Todo extends Task {
         isDone = false;
     }
 
-    public void setDone(boolean done) {
-        isDone = done;
-    }
-
     @Override
     public String toString() {
         return "[T]" + super.toString() ;

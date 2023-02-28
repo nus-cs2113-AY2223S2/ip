@@ -4,7 +4,6 @@ import duke.exceptions.FormatException;
 import duke.exceptions.InvalidCommandException;
 import duke.exceptions.NoDescriptionException;
 
-import java.text.Normalizer;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
