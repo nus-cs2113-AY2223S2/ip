@@ -131,7 +131,7 @@ public class Duke {
      * @param line The line submitted by the user excluding the command
      */
     private static void createDeadline(String line) { 
-        
+          
         Deadline item = Parser.initDeadline(line);
         tasklist.addItem(item);
         Ui.printResponse(String.format(OperationsMessages.ADDED_MSG, item.toString(), tasklist.size()));

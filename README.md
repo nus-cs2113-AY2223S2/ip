@@ -1,6 +1,40 @@
-# Duke project template
+# Duke Task Tracker
 
-This is a project template for a greenfield Java project. It's named after the Java mascot _Duke_. Given below are instructions on how to use it.
+This is a desktop app to track your tasks. Optimized for used via Command Line Interface (CLI)
+
+- [Quick Start](#quick-start)
+- [Commands Format](#commands-format)
+- [Additional Notes](#additional-notes)
+- [Guide for setting up in IntelliJ](#setting-up-in-intellij)
+
+## Quick Start
+1. Ensure you have Java 11 or above installed in your Computer  
+   a. If you are new to java you may follow the [provided guide](#setting-up-in-intellij) to confirm your installation
+2. Download the latest duke.jar from here
+3. Copy the file to the folder you want to use as the home folder for your AddressBook
+4. Start with `java -jar duke.jar`
+
+## Commands Format
+- Words in UPPER_CASE are the parameters to be supplied by the user e.g. in `todo DESCRIPTION`, DESCRIPTION is a parameter that can be added with variable length with even white space in between
+
+- Words in lower_case are fixed key words. e.g. in `deadline DESCRIPTION /by END_DATETIME`, all fixed key words are separated by white space. Consult the [Feature List](#feature-list) for the list of commands/ key words required by each command
+
+## Feature List
+1. Add a Todo task `todo DESCRIPTION`
+2. Add a Deadline task `deadline DESCRIPTION /by END_DATETIME`
+3. Add a Event task `event DESCRIPTION /from START_DATETIME /to END_DATETIME`
+4. List all tasks that exists already `list`
+5. Mark the task that as completed `mark TASK_IDX`
+6. Unmark the task that as uncompleted `unmark TASK_IDX`
+7. Lists all tasks that are like the input TASK_NAMELIKE `find TASK_NAMELIKE`
+8. Save all tasks that are currently stored `save`
+8. Load all tasks that are in the file data/duke.txt `load`
+9. End the conversation `bye`
+
+## Additional Notes
+- Leaving the app does NOT save your current task list. Make sure to save using the `save` command if you would like to keep your tasks. You can find the output file '{ROOT_FOLDER}/data/duke.txt'
+- You may also edit the files directly from the output save file '{ROOT_FOLDER}/data/duke.txt' for quick loads. The `load` function works appends all tasks into the current tasklist. Make sure to check for duplicates
+- The non-autosave function allows more advanced users to edit their tasklists quickly
 
 ## Setting up in Intellij
 
