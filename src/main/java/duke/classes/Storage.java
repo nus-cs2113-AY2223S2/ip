@@ -37,5 +37,4 @@ public class Storage {
         }
         writeFile(filePath, newList);
     }
-
 }
