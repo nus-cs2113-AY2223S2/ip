@@ -21,15 +21,15 @@ public class Duke {
 
     private static ArrayList<Task> listOfTask = new ArrayList<Task>();
 
-    private static void addTask(Task task) {
+    static void addTask(Task task) {
         listOfTask.add(task);
     }
 
-    private static void markTask(Task task) {
+    static void markTask(Task task) {
         task.isDone = true;
     }
 
-    private static void unmarkTask(Task task) {
+    static void unmarkTask(Task task) {
         task.isDone = false;
     }
     private static void printTasks() {
@@ -121,6 +121,8 @@ public class Duke {
         int count = 0;
         String filePath = "src/duke_list.txt";
         foundationList(filePath, listOfTask);
+        //Storage storage = new Storage(filePath, listOfTask);
+        //storage.getStorage();
 
         for (int i = 0; i < listOfTask.size(); i++) {
             count++;
@@ -138,92 +140,73 @@ public class Duke {
 
         boolean isBye = false;
         while (!isBye) {
+            Parser parser = new Parser(input);
 
-            if (Objects.equals(input, "bye")) {
+            if (Objects.equals(parser.getInputType(), "bye")) {
                 isBye = true;
                 updateFile(filePath, listOfTask);
                 break;
-            } else if (Objects.equals(input, "list")) {
-                System.out.println("Here are the tasks in your list:");
+            } else if (Objects.equals(parser.getInputType(), "list")) {
+                ui.showTasksMessage();
                 printTasks();
 
-            } else if (input.length() > 5 && (input.substring(0,5)).equals("mark ") && input.substring(5, input.length()).matches("[0-9]+")) {
-                    Integer order = Integer.valueOf(input.substring(5, input.length()));
-                    if(order - 1 >= count) {
-                        //System.out.println("You cannot mark a task that hasn't been made");
+            } else if (Objects.equals(parser.getInputType(), "mark")) {
+                    if(parser.getOrder(input) - 1 >= count) {
                         ui.showMarkTaskWarning();
                     } else {
-                        Task task = listOfTask.get(order - 1);
+                        Task task = listOfTask.get(parser.getOrder(input) - 1);
                         InputUi inputUi = new InputUi(task, count);
                         markTask(task);
-                        listOfTask.set(order - 1, task);
+                        listOfTask.set(parser.getOrder(input) - 1, task);
                         updateFile(filePath, listOfTask);
                         inputUi.showMarkedTask();
-                        //System.out.println("Nice! I've marked this task as done:\n" + task);
                     }
-            } else if (input.length() > 7 && (input.substring(0,7)).equals("unmark ") && input.substring(7, input.length()).matches("[0-9]+")) {
-                    Integer order = Integer.valueOf(input.substring(7, input.length()));
-                    if(order - 1 >= count) {
-                        //System.out.println("You cannot unmark a task that hasn't been made");
+            } else if (Objects.equals(parser.getInputType(), "unmark")) {
+                    if(parser.getOrder(input) - 1 >= count) {
                         ui.showUnmarkTaskWarning();
                     } else {
-                        Task task = listOfTask.get(order - 1);
+                        Task task = listOfTask.get(parser.getOrder(input) - 1);
                         InputUi inputUi = new InputUi(task, count);
                         unmarkTask(task);
-                        listOfTask.set(order - 1, task);
+                        listOfTask.set(parser.getOrder(input) - 1, task);
                         updateFile(filePath, listOfTask);
-                        //System.out.println("OK, I've marked this task as not done yet:\n" + task);
                         inputUi.showUnmarkedTask();
                     }
-            } else if (input.length() > 7 && input.substring(0,7).equals("delete ") && input.substring(7, input.length()).matches("[0-9]+")) {
-                Integer order = Integer.valueOf(input.substring(7, input.length()));
-                if(order - 1 >= count) {
-                    //System.out.println("You cannot delete a task that hasn't been made");
+            } else if (Objects.equals(parser.getInputType(), "delete")) {
+                if(parser.getOrder(input) - 1 >= count) {
                     ui.showDeleteTaskWarning();
-                }
-                else {
-                    InputUi inputUi = new InputUi(listOfTask.get(order - 1), count - 1);
+                } else {
+                    InputUi inputUi = new InputUi(listOfTask.get(parser.getOrder(input) - 1), count - 1);
                     inputUi.showDeletedTask();
-                    //System.out.println("Noted, I've removed this task\n" + listOfTask.get(order - 1));
-                    listOfTask.remove(order - 1);
+                    listOfTask.remove(parser.getOrder(input) - 1);
                     updateFile(filePath, listOfTask);
                     count--;
                     inputUi.showRemainingTasks();
-                    //System.out.println("Now you have " + count + " tasks in the list");
                 }
             } else {
-                if (input.length() > 3 && input.substring(0,4).equals("todo")) {
-                    String info = input.substring(5,input.length());
-                    Todo task = new Todo(info);
+                if (Objects.equals(parser.getInputType(), "todo")) {
+                    Todo task = new Todo(parser.getTodoInfo(input));
                     task.isDone = false;
                     addTask(task);
                     updateFile(filePath, listOfTask);
                     InputUi inputUi = new InputUi(task, count);
                     inputUi.showTaskAdded();
-                    //System.out.println("Got it. I've added this task: \n" + task + "\nNow you have " + (count + 1) + " tasks in your list." );
                     count++;
-                } else if (input.length() > 7 && input.substring(0,8).equals("deadline")) {
-                    String info = input.substring(9,input.indexOf("/"));
-                    String timeBy = input.substring(input.indexOf("/")+1, input.length());
-                    Deadline task = new Deadline(info, timeBy);
+                } else if (Objects.equals(parser.getInputType(), "deadline")) {
+                    Deadline task = new Deadline(parser.getDeadlineInfo(input), parser.getDeadlineTimeBy(input));
                     task.isDone = false;
                     addTask(task);
                     updateFile(filePath, listOfTask);
                     InputUi inputUi = new InputUi(task, count);
                     inputUi.showTaskAdded();
-                    //System.out.println("Got it. I've added this task: \n" + task + "\nNow you have " + (count + 1) + " tasks in your list." );
                     count++;
-                } else if (input.length() > 4 && input.substring(0,5).equals("event")) {
-                    String info = input.substring(6,input.indexOf("/"));
-                    String timeFrom = input.substring(input.indexOf("/")+1, input.lastIndexOf("/") - 1);
-                    String timeBy = input.substring(input.lastIndexOf("/")+1, input.length());
-                    Event task = new Event(info, timeFrom, timeBy);
+                } else if (Objects.equals(parser.getInputType(), "event")) {
+                    Event task = new Event(parser.getEventInfo(input), parser.getEventTimeFrom(input), parser.getEventTimeBy(input));
                     task.isDone = false;
                     addTask(task);
                     updateFile(filePath, listOfTask);
                     InputUi inputUi = new InputUi(task, count);
                     inputUi.showTaskAdded();
-                    //System.out.println("Got it. I've added this task: \n" + task + "\nNow you have " + (count + 1) + " tasks in your list." );
                     count++;
                 } else {
                     try {

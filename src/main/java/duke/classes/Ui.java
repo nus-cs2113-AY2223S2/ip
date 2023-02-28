@@ -41,6 +41,10 @@ public class Ui {
         System.out.println("You cannot delete a task that hasn't been made");
     }
 
+    public void showTasksMessage() {
+        System.out.println("Here are the tasks in your list:");
+    }
+
     public void showWelcomeEnd() {
         System.out.println("----------------------End of file----------------------\n" + "Please input your commands here: ");
     }
