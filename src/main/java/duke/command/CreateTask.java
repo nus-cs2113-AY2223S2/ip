@@ -9,10 +9,11 @@ import duke.task.Event;
 import duke.task.Task;
 import duke.task.Todo;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 
 public class CreateTask {
-    public static void createTodo(String userCommand, ArrayList<Task> storedUserTasks) throws DukeException {
+    public static void createTodo(String userCommand, ArrayList<Task> storedUserTasks) throws DukeException, ParseException {
         if (userCommand.length()<=4) {
             throw new BlankDescException();
         }
@@ -23,7 +24,7 @@ public class CreateTask {
         Display.printNumberOfTasks();
     }
 
-    public static void createDeadline(String userCommand, ArrayList<Task> storedUserTasks) throws DukeException {
+    public static void createDeadline(String userCommand, ArrayList<Task> storedUserTasks) throws DukeException, ParseException {
         if (userCommand.length()<=8) {
             throw new BlankDescException();
         }
@@ -35,7 +36,7 @@ public class CreateTask {
         Display.printNumberOfTasks();
     }
 
-    public static void createEvent(String userCommand, ArrayList<Task> storedUserTasks) throws DukeException {
+    public static void createEvent(String userCommand, ArrayList<Task> storedUserTasks) throws DukeException, ParseException {
         if (userCommand.length()<=5) {
             throw new BlankDescException();
         }
