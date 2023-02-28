@@ -5,16 +5,17 @@ import hina.task.Deadline;
 import hina.task.Event;
 import hina.task.Task;
 
+
+import java.util.ArrayList;
 import java.util.Scanner;
 
+
 public class HinaBot {
-    protected static Task[] taskList = new Task[100];
-    protected static int taskCount = 0;
+    protected static ArrayList<Task> taskList = new ArrayList<Task>();
 
     public static void main(String[] args) {
         String line;
         Scanner in = new Scanner(System.in);
-        showGreeting();
         while (true) {
             try {
                 line = in.nextLine();
@@ -50,6 +51,9 @@ public class HinaBot {
             addDeadline(command.substring(9));
         } else if (command.split(" ")[0].equalsIgnoreCase("event")) {
             addEvent(command.substring(6));
+        } else if (command.split(" ")[0].equalsIgnoreCase("delete")) {
+            int taskIndex = Integer.parseInt(command.split(" ")[1]);
+            deleteTask(taskIndex);
         } else {
             throw new HinaException();
         }
@@ -57,31 +61,31 @@ public class HinaBot {
 
     public static void addTask(String description) {
         Task newTask = new Task(description);
-        taskList[taskCount] = newTask;
-        taskCount++;
+        taskList.add(newTask);
         System.out.println("Noted! This task has been added:");
         System.out.println(newTask.toString());
         getTaskCount();
     }
 
     public static void listTasks() {
-        for (int i = 0; i < taskCount; i++) {
+        for (Task task : taskList) {
+            int i = taskList.indexOf(task);
             System.out.print(i + 1);
             System.out.print(". ");
-            System.out.println(taskList[i].toString());
+            System.out.println(task.toString());
         }
     }
 
     public static void markTask(int taskIndex) {
-        taskList[taskIndex - 1].setDone(true);
+        taskList.get(taskIndex - 1).setDone(true);
         System.out.println("Roger that! This task is marked as done: ");
-        System.out.println(taskList[taskIndex - 1].toString());
+        System.out.println(taskList.get(taskIndex - 1).toString());
     }
 
     public static void unmarkTask(int taskIndex) {
-        taskList[taskIndex - 1].setDone(false);
+        taskList.get(taskIndex - 1).setDone(false);
         System.out.println("Roger that! This task is marked as not done: ");
-        System.out.println(taskList[taskIndex - 1].toString());
+        System.out.println(taskList.get(taskIndex - 1).toString());
     }
 
     public static void addDeadline(String deadline) {
@@ -90,8 +94,7 @@ public class HinaBot {
             System.out.println("Hina needs to know the deadline for this task!");
         } else {
             Deadline newDeadline = new Deadline(details[0], details[1].substring(3));
-            taskList[taskCount] = newDeadline;
-            taskCount++;
+            taskList.add(newDeadline);
             System.out.println("Noted! This task has been added:");
             System.out.println(newDeadline.toString());
             getTaskCount();
@@ -104,15 +107,20 @@ public class HinaBot {
             System.out.println("Please tell Hina when this event starts and ends!");
         } else {
             Event newEvent = new Event(details[0], details[1].substring(5).trim(), details[2].substring(3));
-            taskList[taskCount] = newEvent;
-            taskCount++;
+            taskList.add(newEvent);
             System.out.println("Noted! This task has been added:");
             System.out.println(newEvent.toString());
             getTaskCount();
         }
     }
 
+    public static void deleteTask(int taskIndex) {
+        System.out.println("Got it! This task will be removed:");
+        System.out.println(taskList.get(taskIndex - 1).toString());
+        taskList.remove(taskIndex - 1);
+    }
+
     public static void getTaskCount() {
-        System.out.printf("There are %d items on your list.\n", taskCount);
+        System.out.printf("There are %d items on your list.\n", taskList.size());
     }
 }
