@@ -16,8 +16,6 @@
 
 
 
-
-
 ## Features 
 
 * [Viewing help : `help`](#viewing-help--help)
@@ -46,15 +44,11 @@
 
 
 
-
-
 ### Viewing help : `help`
 
 Shows the list of commands with the command format and short explanation.
 
 Format: `help`
-
-
 
 
 
@@ -81,8 +75,6 @@ List format: `[Task Type][Completion status] name (keyword: argument of keyword)
 
 
 
-
-
 ### Adding tasks
 
 Command format:
@@ -97,8 +89,6 @@ Command format:
 
 
 
-
-
 ### Adding ToDo task : `todo`
 
 Adds a ToDo task into the list of tasks. ToDo tasks are tasks that need to be done but do not have a specified deadline.
@@ -106,8 +96,6 @@ Adds a ToDo task into the list of tasks. ToDo tasks are tasks that need to be do
 Format: `todo <name>`
 
 Example: `todo hi` adds a ToDo task with the name/description **"hi"**.
-
-
 
 
 
@@ -121,8 +109,6 @@ Example: `deadline hihi /by today` adds a Deadline task with the name/descriptio
 
 
 
-
-
 ### Adding Event task : `event`
 
 Adds an Event task into the list of tasks. Event tasks are tasks that have a specific start and end time.
@@ -130,8 +116,6 @@ Adds an Event task into the list of tasks. Event tasks are tasks that have a spe
 Format: `event <name> /from <from when> /to <to when>`
 
 Example: `event hihihi /from 28 Feb 10 am /to 28 Feb 10 pm` adds an Event task with the name/description **"hihihi"**, start time **"28 Feb 10 am"** and end time **"28 Feb 10 pm"**.
-
-
 
 
 
@@ -147,8 +131,6 @@ Note: Error messages will be shown if `<task number>` is invalid. E.g. Negative 
 
 
 
-
-
 ### Marking task as not done : `unmark`
 
 Marks a task as not done.
@@ -158,8 +140,6 @@ Format: `unmark <task number>`
 Example: `unmark 1` marks task number 1 as not done.
 
 Note: Error messages will be shown if `<task number>` is invalid. E.g. Negative task number, task number bigger than number of existing tasks.
-
-
 
 
 
@@ -175,8 +155,6 @@ Note: Error messages will be shown if `<task number>` is invalid. E.g. Negative 
 
 
 
-
-
 ### Finding a task : `find`
 
 Finds a task which contains the keyword in its name.
@@ -187,15 +165,11 @@ Example: `find hihi` will find and print out the tasks which have `hihi` in its 
 
 
 
-
-
 ### Saving data : `save`
 
 Data is automatically saved when the application is properly exited, but there is the option to manually save with the command `save`.
 
 Format: `save`
-
-
 
 
 
