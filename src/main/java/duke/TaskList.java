@@ -9,8 +9,6 @@ public class TaskList {
     public static void printLine() {
         System.out.println("____________________________________________________________");
     }
-    public TaskList() {
-    }
 
     /**
      * Add a new task to the list.
