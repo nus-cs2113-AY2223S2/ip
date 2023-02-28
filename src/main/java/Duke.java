@@ -7,24 +7,15 @@ import java.io.File;
 public class Duke {
     static final int COMMAND_INDEX = 0;
     static final int MAX_COMMAND_LENGTH = 1;
-    static final int DESCRIPTION_INDEX = 1;
     static final int STARTDATE_INDEX = 0;
     static final int ENDDATE_INDEX = 1;
-    static final String DEADLINE_MARKER = "/by";
+    public static final String DEADLINE_USERINPUT_PREFIX = "/by";
     static final String TASK_NO_EXIST = "Task does not exist!";
     static final String DELETE_TASK_MESSAGE = "Okay! I've deleted task: ";
     public static final String TASKLIST_EXPORT_PATH = "TaskList.txt";
     public static final String SUCCESS_EXPORT = "Successfully exported TaskList!";
     public static final String EXPORT_ERROR_PREFIX = "Error occurred while writing to ";
-    public static final String STARTDATE_USERINPUT_PREFIX = "/from";
-    public static final String ENDDATE_USERINPUT_PREFIX = "/to";
-    public static final String DEADLINE_USERINPUT_PREFIX = "/by";
-
-    public static void exitMessage() {
-        System.out.println("Go away Anna");
-        System.out.println("O-kay bye......");
-    }
-
+    
     public static void writeToTaskList() {
         File exportTaskList = new File (TASKLIST_EXPORT_PATH);
         try {
@@ -41,51 +32,9 @@ public class Duke {
             System.out.println(EXPORT_ERROR_PREFIX + exportTaskList.getAbsolutePath());
         }
     }
-    public static String getItemDescription(String userInput) {
-        Scanner in = new Scanner(System.in);
-        String description;
-        try {
-            description = userInput.split(" ", 2)[DESCRIPTION_INDEX];
-        } catch (ArrayIndexOutOfBoundsException e) {
-            System.out.println("What are you referring to?");
-            description = in.nextLine().trim();
-        }
-        return description;
-    }
-
-    public static String getDueDate(String userInput) {
-        Scanner in = new Scanner(System.in);
-        String dueDate;
-        if (userInput.contains(DEADLINE_USERINPUT_PREFIX)) {
-            dueDate = userInput.substring(userInput.indexOf(DEADLINE_USERINPUT_PREFIX));
-        } else {
-            System.out.println("When is this due by?");
-            dueDate = in.nextLine().trim();
-         }
-        return dueDate;
-    }
-
-    public static String[] getStartEndDates(String userInput) {
-        Scanner in = new Scanner(System.in);
-        String[] StartEndDates = new String[2];
-
-        if (userInput.contains(STARTDATE_USERINPUT_PREFIX)) {
-            StartEndDates[STARTDATE_INDEX] = userInput.substring(userInput.indexOf(STARTDATE_USERINPUT_PREFIX),userInput.indexOf(ENDDATE_USERINPUT_PREFIX)).trim();
-        } else {
-            System.out.println("When does this event start?");
-            StartEndDates[STARTDATE_INDEX] = in.nextLine().trim();
-        }
-
-        if (userInput.contains(ENDDATE_USERINPUT_PREFIX)) {
-            StartEndDates[ENDDATE_INDEX] = userInput.substring(userInput.indexOf(ENDDATE_USERINPUT_PREFIX)).trim();
-        } else {
-            System.out.println("When does this event end?");
-            StartEndDates[ENDDATE_INDEX] = in.nextLine().trim();
-        }
-        return StartEndDates;
-    }
+    
     public static void main(String[] args) {
-        System.out.println("Hi it's Anna!\nWhat do you need to do?");
+        Ui.welcomeMessage();
         Scanner in = new Scanner(System.in);
 
         while (true) {
@@ -98,7 +47,7 @@ public class Duke {
 
             case "exit":
             case "bye":
-                exitMessage();
+                Ui.exitMessage();
                 return;
             case "list":
                 if (TaskList.getNumItems() == 0) {
@@ -111,7 +60,7 @@ public class Duke {
                 break;
 
             case "mark": {
-                String itemNum = getItemDescription(userInput);
+                String itemNum = Ui.getItemDescription(userInput);
 
                 TaskList.markDone(Integer.parseInt(itemNum) - 1);
                 System.out.println("Okay I've marked item " + itemNum + " as done:");
@@ -120,7 +69,7 @@ public class Duke {
             }
 
             case "unmark": {
-                String itemNum = getItemDescription(userInput);
+                String itemNum = Ui.getItemDescription(userInput);
 
                 TaskList.markNotDone(Integer.parseInt(itemNum) - 1);
                 System.out.println("Oh no! Are we not done with " + itemNum + " after all?");
@@ -129,14 +78,14 @@ public class Duke {
             }
 
             case "add": {
-                String itemDescription = getItemDescription(userInput);
+                String itemDescription = Ui.getItemDescription(userInput);
                 Task newTask = new Task(itemDescription);
                 TaskList.addItem(newTask);
                 break;
             }
 
             case "delete": {
-                String itemNum = getItemDescription(userInput);
+                String itemNum = Ui.getItemDescription(userInput);
                 int itemIndex = Integer.parseInt(itemNum) - 1;
                 if (itemIndex <= TaskList.getNumItems() - 1) {
                     TaskList.deleteTask(itemIndex);
@@ -153,7 +102,7 @@ public class Duke {
             }
 
             case "todo": {
-                String itemDescription = getItemDescription(userInput);
+                String itemDescription = Ui.getItemDescription(userInput);
                 Todo newTask = new Todo(itemDescription);
                 TaskList.addItem(newTask);
                 break;
@@ -161,12 +110,12 @@ public class Duke {
 
             case "deadline": {
                 String itemDescription, dueDate;
-                if (userInput.contains(DEADLINE_MARKER)) {
-                    itemDescription = userInput.split(DEADLINE_MARKER, 2)[0];
-                    dueDate = userInput.split(DEADLINE_MARKER, 2)[1];
+                if (userInput.contains(DEADLINE_USERINPUT_PREFIX)) {
+                    itemDescription = userInput.split(DEADLINE_USERINPUT_PREFIX, 2)[0];
+                    dueDate = userInput.split(DEADLINE_USERINPUT_PREFIX, 2)[1];
                 } else {
-                    itemDescription = getItemDescription(userInput);
-                    dueDate = getDueDate(userInput);
+                    itemDescription = Ui.getItemDescription(userInput);
+                    dueDate = Ui.getDueDate(userInput);
                 }
                 Deadline newTask = new Deadline(itemDescription,dueDate);
                 TaskList.addItem(newTask);
@@ -174,8 +123,8 @@ public class Duke {
             }
 
             case "event":
-                String itemDescription = getItemDescription(userInput);
-                String[] StartEndDates = getStartEndDates(userInput);
+                String itemDescription = Ui.getItemDescription(userInput);
+                String[] StartEndDates = Ui.getStartEndDates(userInput);
                 String startDate = StartEndDates[STARTDATE_INDEX];
                 String endDate = StartEndDates[ENDDATE_INDEX];
                 Event newTask = new Event(itemDescription,startDate,endDate);
