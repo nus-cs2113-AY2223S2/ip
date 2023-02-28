@@ -1,39 +1,41 @@
 package duke;
 
-//import duke.command.CommandManager;
-import duke.command.FolderNotFoundException;
-import duke.command.NoKeyException;
-import duke.command.Storage;
-import duke.task.*;
+
+import duke.exception.FolderNotFoundException;
+import duke.exception.NoKeyException;
+import duke.parser.Parser;
+import duke.storage.Storage;
+import duke.ui.Ui;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
 
 
 public class Duke {
-    public static void main(String[] args) throws IOException, NoKeyException {
+    public static void main(String[] args) throws IOException{
         Storage storage = new Storage("data", "data/Duke.txt");
         Ui ui = new Ui();
         Ui.sayHi();
         try {
             storage.load();
         } catch (FileNotFoundException e) {
-            System.out.println("Duke.txt file does not exist in /data. Creating one for you...");
+            Ui.displayErrorFileNotFoundException();
             storage.createNewFile();
         } catch (FolderNotFoundException e) {
-            System.out.println("data folder does not exist. Creating one for you...");
+            Ui.displayErrorFolderNotFoundException();
             storage.createNewFolder();
         }
         do {
-            ui.readUserInput();
-            Parser.parseCommand(ui.getUserInput());
             try {
+                ui.readUserInput();
+                Parser.parseCommand(ui.getUserInput());
                 storage.save();
+            } catch (NoKeyException e) {
+                Ui.displayErrorNoKeyException();
             } catch (IOException e) {
-                System.out.println("Something went wrong: " + e.getMessage());
+                Ui.displayErrorIOException();
             }
-        } while (!ui.getUserInput().equals("bye"));
+        } while (!ui.getUserInput().equals("/bye"));
 
 //        while (!Ui.readUserInput().equals("bye")) {
 //            String[] userInput = command.getUserInput().split(" ", 2);

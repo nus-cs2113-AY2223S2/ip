@@ -1,6 +1,6 @@
 package duke.command;
 
-import duke.Ui;
+import duke.ui.Ui;
 import duke.task.TaskList;
 import duke.task.Tasks;
 
@@ -11,8 +11,13 @@ public class MarkCommand extends Command{
     }
     @Override
     public void execute() {
-        Tasks markTask = TaskList.getTaskList().get(Integer.parseInt(item) - 1);
-        markTask.setMarked(true);
-        Ui.displayMark(markTask);
+        try {
+            Tasks markTask = TaskList.getTaskList().get(Integer.parseInt(item) - 1);
+            markTask.setMarked(true);
+            Ui.displayMark(markTask);
+        } catch (NumberFormatException e) {
+            System.out.println("Please enter a number after /mark" +
+                    "\nEXAMPLE: /mark 2");
+        }
     }
 }

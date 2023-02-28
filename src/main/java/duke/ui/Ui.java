@@ -1,4 +1,4 @@
-package duke;
+package duke.ui;
 
 import duke.task.TaskList;
 import duke.task.Tasks;
@@ -9,12 +9,15 @@ public class Ui {
 
     private String userInput;
     private static final String DIVIDER = "\t____________________________________________________________";
+
     public Ui() {
         userInput = null;
     }
+
     public String getUserInput() {
         return userInput;
     }
+
     public static void sayHi() {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -25,20 +28,32 @@ public class Ui {
         System.out.print(DIVIDER + '\n'
                 + " \t Hello! I'm Duke\n\t What can I do for you?\n" + DIVIDER + "\n\n");
     }
+
     public static void sayBye() {
         System.out.println(DIVIDER + "\n\t Bye. Hope to see you again soon!\n" + DIVIDER);
     }
+
     public static void displayLine() {
         System.out.println(DIVIDER);
     }
+
     public static void displayMark(Tasks task) {
         System.out.println(DIVIDER + "\n\t Nice! I've marked this task as done:\n\t  " + task);
         System.out.println(DIVIDER);
     }
+
     public static void displayUnmark(Tasks task) {
         System.out.println(DIVIDER + "\n\t Nice! I've marked this task as not done yet:\n\t  " + task);
         System.out.println(DIVIDER);
     }
+
+    public static void displayAddTask(Tasks task) {
+        System.out.println(DIVIDER + "\n\t Got it. I've added this task:\n\t  "
+                + task);
+        System.out.println("\t Now you have " + TaskList.getNumberOfTasks() + " in your list.\n"
+                + DIVIDER);
+    }
+
     public static void displayList() {
         int totalNumberOfTasks = TaskList.getNumberOfTasks();
         System.out.println(DIVIDER + "\n\t Here are the tasks in your list:");
@@ -49,16 +64,31 @@ public class Ui {
         System.out.println(DIVIDER);
 
     }
-    public static void displayDelete(Tasks task){
+
+    public static void displayDelete(Tasks task) {
         System.out.println(DIVIDER + "\n\t Got it. I've deleted this task:\n\t  "
                 + task);
         System.out.println("\t Now you have " + (TaskList.getNumberOfTasks() - 1) + " in your list.\n"
                 + DIVIDER);
     }
+
     public void readUserInput() {
-        System.out.println("Please enter your data below: (send 'bye' to exit) ");
+        System.out.println("Please enter your data below: (send '/bye' to exit) ");
         Scanner in = new Scanner(System.in);
         this.userInput = in.nextLine();
-        }
+    }
+
+    public static void displayErrorFileNotFoundException()  {
+        System.out.println("Duke.txt file does not exist in /data. Creating one for you...");
+    }
+    public static void displayErrorFolderNotFoundException() {
+        System.out.println("data folder does not exist. Creating one for you...");
+    }
+    public static void displayErrorNoKeyException() {
+        System.out.println("Missing Keyword");
+    }
+    public static void displayErrorIOException() {
+        System.out.println("Trouble accessing files");
+    }
 
 }

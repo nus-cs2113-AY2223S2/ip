@@ -1,5 +1,6 @@
 package duke.command;
 
+import duke.ui.Ui;
 import duke.task.TaskList;
 import duke.task.Todo;
 
@@ -10,6 +11,8 @@ public class ToDoCommand extends Command{
     }
     @Override
     public void execute() {
-        TaskList.addToList(new Todo(item, false));
+        Todo newToDo = new Todo(item, false);
+        TaskList.addToList(newToDo);
+        Ui.displayAddTask(newToDo);
     }
 }

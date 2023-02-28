@@ -1,6 +1,6 @@
 package duke.command;
 
-import duke.Ui;
+import duke.ui.Ui;
 import duke.task.TaskList;
 import duke.task.Tasks;
 

@@ -1,4 +1,4 @@
-package duke.command;
+package duke.exception;
 
 public class NoKeyException extends Exception{
 }
