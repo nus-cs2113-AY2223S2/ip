@@ -10,10 +10,13 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.File;
 import java.io.IOException;
+//import java.io.FileInputStream;
+//import java.io.ObjectInputStream;
 
 public class Duke {
     //    private static int taskCount = 0;
     private static ArrayList<Task> tasks = new ArrayList<>();
+
     private static final String dividingLine = "\n————————————————————————————————————————————————————————\n";
 
     public static void printList() {
@@ -49,7 +52,7 @@ public class Duke {
             System.out.println("[" + tasks.get(taskNum).getStatusIcon() + "] " + tasks.get(taskNum).description
                     + dividingLine);
         } else if (line.contains("delete")) {
-            if(line.length() == 6){
+            if (line.length() == 6) {
                 throw new MarkIndexException();
             }
             int taskNum = Integer.parseInt(line.substring((7))) - 1;
@@ -97,7 +100,7 @@ public class Duke {
     public static void printTask(String line, String path) {
         try {
             processTask(line);
-            WriteToFile(tasks, path);
+            writeToFile(tasks, path);
         } catch (IndexOutOfBoundsException e2) {
             System.out.println(dividingLine + "☹ OOPS!!! The description of a " + line + " cannot be empty."
                     + dividingLine);
@@ -115,7 +118,19 @@ public class Duke {
         }
     }
 
-    private static void WriteToFile(ArrayList<Task> tasks, String path) throws IOException {
+//    private static void loadTasks() {
+//        try {
+//            FileInputStream fis = new FileInputStream("tasks.txt");
+//            ObjectInputStream ois = new ObjectInputStream(fis);
+//            tasks = (ArrayList<Task>) ois.readObject();
+//            ois.close();
+//            fis.close();
+//        } catch (IOException | ClassNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//    }
+
+    private static void writeToFile(ArrayList<Task> tasks, String path) throws IOException {
         FileWriter fl = new FileWriter(path);
         for (Task task : tasks) {
             fl.write(task.toString());
@@ -124,7 +139,8 @@ public class Duke {
         fl.close();
     }
 
-    private static void createFile(File file){
+
+    private static void createFile(File file) {
         if (!file.exists()) {
             System.out.println("File not exists, create it ...");
             //getParentFile() 获取上级目录（包含文件名时无法直接创建目录的）
@@ -145,6 +161,7 @@ public class Duke {
     public static void main(String[] args) {
         String path = "data/tasks.txt";
         createFile(new File(path));
+//        loadTasks();
 
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
