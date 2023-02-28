@@ -12,7 +12,6 @@
   * [Finding all tasks containing a keyword](https://mustafaah10.github.io/ip/#finding-all-tasks-containing-a-keyword-find)
   * [Marking a task as done](https://mustafaah10.github.io/ip/#marking-a-task-as-done-mark)
   * [Unmarking a task as not done](https://mustafaah10.github.io/ip/#unmarking-a-task-as-not-done-unmark)
-* Command Summary
 * [FAQ](https://mustafaah10.github.io/ip/#faq)
   
 ## What is Duke?
@@ -25,7 +24,8 @@
 2. Download the latest JAR file.
 3. Copy the file to the folder you want to use as the home folder for Duke.
 4. Open a command terminal, cd into the folder you put the jar file in, and use the java -jar ip.jar command to run the application.
-   <br/><br/>
+   <br/>
+   <br/>
 ## Features 
 <br/><br/>
 ### Add a new Todo: `todo`
