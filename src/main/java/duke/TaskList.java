@@ -80,6 +80,18 @@ public class TaskList {
         Ui.printNumberOfTasks(tasks);
     }
 
+    public static void findTask(String task) {
+        System.out.println("Here are the matching tasks in your list:");
+        int matchingTasksCount = 0;
+        for (Task i : tasks) {
+            if (i.getDescription().contains(task)) {
+                matchingTasksCount++;
+                System.out.print(matchingTasksCount + ". ");
+                i.printTask();
+            }
+        }
+    }
+
     public static void editList() throws UnknownCommandException, EmptyDescriptionException, TaskToMarkDoesNotExistException {
         String[] splitText = Ui.getInput();
         while (!splitText[0].equals("bye")) {
@@ -134,6 +146,9 @@ public class TaskList {
                 } catch (IndexOutOfBoundsException e) {
                     throw new TaskToMarkDoesNotExistException("delete");
                 }
+                break;
+            case "find":
+                TaskList.findTask(splitText[1]);
                 break;
             default:
                 throw new UnknownCommandException();
