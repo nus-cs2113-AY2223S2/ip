@@ -129,13 +129,13 @@ public abstract class TaskManager {
         String taskDescription = taskAllDetails[2].trim();
 
         switch (taskType) {
-        case "T":
+        case Parser.TODO_TASK_TYPE:
             addTodoTask(taskStatus, taskDescription);
             break;
-        case "D":
+        case Parser.DEADLINE_TASK_TYPE:
             addDeadlineTask(taskAllDetails, taskStatus, taskDescription);
             break;
-        case "E":
+        case Parser.EVENT_TASK_TYPE:
             addEventTask(taskAllDetails, taskStatus, taskDescription);
             break;
         default:

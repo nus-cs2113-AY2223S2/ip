@@ -1,5 +1,7 @@
 package Tasks;
 
+import Handlers.Parser;
+
 public class Todo extends Task {
 
     /**
@@ -18,7 +20,7 @@ public class Todo extends Task {
      */
     @Override
     public String describeTask() {
-        return "[T]" + super.describeTask();
+        return "["+ Parser.TODO_TASK_TYPE +"]" + super.describeTask();
     }
 
     /**
@@ -29,6 +31,6 @@ public class Todo extends Task {
      */
     @Override
     public String describeTaskForFile() {
-        return "T | " + (isDone ? "1" : "0") + " | " + description;
+        return Parser.TODO_TASK_TYPE + " | " + (isDone ? "1" : "0") + " | " + description;
     }
 }

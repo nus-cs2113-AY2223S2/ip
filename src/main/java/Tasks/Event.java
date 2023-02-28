@@ -1,5 +1,7 @@
 package Tasks;
 
+import Handlers.Parser;
+
 public class Event extends Task {
 
     protected String eventFrom;
@@ -25,7 +27,7 @@ public class Event extends Task {
      */
     @Override
     public String describeTask() {
-        return "[E]" + super.describeTask() + " (from: " + eventFrom + " to: " + eventTo + ")";
+        return "[" + Parser.EVENT_TASK_TYPE + "]" + super.describeTask() + " (from: " + eventFrom + " to: " + eventTo + ")";
     }
 
     /**
@@ -36,6 +38,6 @@ public class Event extends Task {
      */
     @Override
     public String describeTaskForFile() {
-        return "E | " + (isDone ? "1" : "0") + " | " + description + " | " + eventFrom + "-" + eventTo;
+        return Parser.EVENT_TASK_TYPE + " | " + (isDone ? "1" : "0") + " | " + description + " | " + eventFrom + "-" + eventTo;
     }
 }

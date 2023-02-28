@@ -26,32 +26,32 @@ public interface Ui {
             String firstWord = Parser.getFirstWord(line);
 
             switch (firstWord) {
-            case "mark":
+            case Parser.MARK_COMMAND:
                 TaskManager.markTask(Parser.getTaskNumber(line));
                 break;
-            case "unmark":
+            case Parser.UNMARK_COMMAND:
                 TaskManager.unmarkTask(Parser.getTaskNumber(line));
                 break;
-            case "delete":
+            case Parser.DELETE_COMMAND:
                 int taskNumberDelete = Parser.getTaskNumber(line);
                 TaskManager.deleteTask(taskNumberDelete);
                 break;
-            case "list":
+            case Parser.LIST_COMMAND:
                 TaskManager.listTask();
                 break;
-            case "todo":
+            case Parser.TODO_COMMAND:
                 Parser.addTodoTask(line);
                 break;
-            case "deadline":
+            case Parser.DEADLINE_COMMAND:
                 Parser.addDeadlineTask(line);
                 break;
-            case "event":
+            case Parser.EVENT_COMMAND:
                 Parser.addEventTask(line);
                 break;
-            case "find":
+            case Parser.FIND_COMMAND:
                 TaskManager.findTask(Parser.getTaskDescription(line));
                 break;
-            case "bye":
+            case Parser.BYE_COMMAND:
                 isComplete = true;
                 break;
             default:

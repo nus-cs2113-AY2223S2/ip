@@ -51,7 +51,7 @@ DukeRunner stores the tasks added upon exiting the program and loads them upon s
 
 ### `todo` - Adds a new Todo task
 
-Adds a Todo task to your list of tasks and displays the number of existing tasks.
+Adds a Todo task to your list of tasks and displays the number of existing tasks.  
 Example of usage: `todo math homework`
 
 Expected outcome:
@@ -67,7 +67,7 @@ Now you have 1 tasks in the list.
 
 ### `deadline` - Adds a new Deadline task
 
-Adds a Deadline task to your list of tasks and displays the number of existing tasks.
+Adds a Deadline task to your list of tasks and displays the number of existing tasks.  
 Example of usage: `deadline do science homework /by Monday`
 
 Expected outcome:
@@ -83,8 +83,7 @@ Now you have 2 tasks in the list.
 
 ### `event` - Adds a new Event task
 
-Adds an Event task to your list of tasks and displays the number of existing tasks.
-
+Adds an Event task to your list of tasks and displays the number of existing tasks.  
 Example of usage: `event school carnival /from Monday 9am /to 12pm`
 
 Expected outcome:
@@ -100,8 +99,7 @@ Now you have 3 tasks in the list.
 
 ### `list` - Lists all current tasks
 
-Displays all the tasks in the order they were added.
-
+Displays all the tasks in the order they were added.  
 Example of usage: `list`
 
 Expected outcome:
@@ -118,8 +116,7 @@ You have 3 tasks in the list.
 
 ### `mark` - Marks a task as completed
 
-Marks a task of certain task number as completed
-
+Marks a task of certain task number as completed.  
 Example of usage: `mark 1`
 
 Expected outcome:
@@ -133,8 +130,7 @@ Nice! I've marked this task as done:
 
 ### `unmark` - Unmarks a task from being completed
 
-Unmarks a task of certain task number from being completed
-
+Unmarks a task of certain task number from being completed.  
 Example of usage: `unmark 1`
 
 Expected outcome:
@@ -148,6 +144,7 @@ OK, Ive marked this task as not done yet:
 
 ### `delete` - Deletes a task from the list of tasks
 
+Deletes a task of certain task number from list of tasks.  
 Example of usage: `delete 3`
 
 Expected outcome:
@@ -161,8 +158,7 @@ Noted. I've removed this task:
 
 ### `find` - Finds tasks
 
-Find tasks using keywords found in the description of task.
-
+Find tasks using keywords found in the description of task.  
 Example of usage: `find homework`
 
 Expected outcome:
@@ -175,8 +171,7 @@ Expected outcome:
 
 ### `bye` - Exits DukeRunner
 
-Exits the program and saves existing tasks into a text file.
-
+Exits the program and saves existing tasks into a text file.  
 Example of usage: `bye`
 
 Expected outcome:

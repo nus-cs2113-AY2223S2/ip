@@ -1,5 +1,7 @@
 package Tasks;
 
+import Handlers.Parser;
+
 public class Deadline extends Task {
 
     protected String dueDate;
@@ -22,7 +24,7 @@ public class Deadline extends Task {
      */
     @Override
     public String describeTask() {
-        return "[D]" + super.describeTask() + " (by: " + dueDate + ")";
+        return "[" + Parser.DEADLINE_TASK_TYPE + "]" + super.describeTask() + " (by: " + dueDate + ")";
     }
 
     /**
@@ -33,6 +35,6 @@ public class Deadline extends Task {
      */
     @Override
     public String describeTaskForFile() {
-        return "D | " + (isDone ? "1" : "0") + " | " + description + " | " + dueDate;
+        return Parser.DEADLINE_TASK_TYPE + " | " + (isDone ? "1" : "0") + " | " + description + " | " + dueDate;
     }
 }
