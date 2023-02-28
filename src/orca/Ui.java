@@ -31,6 +31,10 @@ public class Ui {
         System.out.println("    --------------------------------------------------\n");
     }
 
+
+    /**
+     * @param tasks
+     */
     public void printTasks(ArrayList<Task> tasks) {
         System.out.println("    --------------------------------------------------");
         System.out.println("    Here are the tasks in your list:");
@@ -40,6 +44,10 @@ public class Ui {
         System.out.println("    --------------------------------------------------\n");
     }
 
+    /**
+     * @param removedTask
+     * @param taskSize
+     */
     public void printRemovedTask(Task removedTask, int taskSize) {
         System.out.println("    --------------------------------------------------");
         System.out.println("    Noted. I've removed this task:");
@@ -48,6 +56,10 @@ public class Ui {
         System.out.println("    --------------------------------------------------\n");
     }
 
+
+    /**
+     * @param markedTask
+     */
     public void printMarkedTask(Task markedTask) {
         System.out.println("    --------------------------------------------------");
         System.out.println("    Nice! I've marked this task as done:");
@@ -55,6 +67,10 @@ public class Ui {
         System.out.println("    --------------------------------------------------\n");
     }
 
+
+    /**
+     * @param unmarkedTask
+     */
     public void printUnmarkedTask(Task unmarkedTask) {
         System.out.println("    --------------------------------------------------");
         System.out.println("    Nice! I've marked this task as not done yet:");
@@ -62,6 +78,11 @@ public class Ui {
         System.out.println("    --------------------------------------------------\n");
     }
 
+
+    /**
+     * @param task
+     * @param taskSize
+     */
     public void printAddedTask(Task task, int taskSize) {
         System.out.println("    --------------------------------------------------");
         System.out.println("    Got it. I've added this task:");

@@ -23,6 +23,10 @@ public class Deadline extends Task {
         this.type = "D";
     }
 
+
+    /**
+     * @return String
+     */
     @Override
     public String toString() {
         return super.toString() + " (by: " + this.by + ")";

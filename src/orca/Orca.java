@@ -19,14 +19,30 @@ public class Orca {
         parser = new Parser();
     }
 
+
+    /**
+     * @return boolean true if there is input available, false otherwise.
+     */
     public static boolean isInputAvailable() {
         return in.hasNextLine();
     }
 
+
+    /**
+     * @return String user input
+     */
     public static String readUserInput() {
         return in.nextLine();
     }
 
+
+
+    /**
+     * @param commandType
+     * @param userInput
+     * @return boolean
+     * @throws OrcaException
+     */
     public static boolean executeCommand(CommandType commandType, String userInput)
             throws OrcaException {
         int taskNo;

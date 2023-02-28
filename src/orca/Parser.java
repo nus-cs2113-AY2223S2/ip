@@ -1,6 +1,11 @@
 package orca;
 
 public class Parser {
+
+    /**
+     * @param userInput
+     * @return CommandType
+     */
     public CommandType findCommandType(String userInput) {
         if (userInput.equals("bye")) {
             return CommandType.BYE;
@@ -23,6 +28,13 @@ public class Parser {
         }
     }
 
+
+    /**
+     * @param userInput
+     * @param startIdx start index of the integer
+     * @return int
+     * @throws OrcaException
+     */
     public int TaskNo(String userInput, int startIdx) throws OrcaException {
         try {
             return Integer.parseInt(userInput.substring(startIdx));

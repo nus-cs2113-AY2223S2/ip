@@ -25,6 +25,10 @@ public class Event extends Task {
         this.type = "E";
     }
 
+
+    /**
+     * @return String
+     */
     @Override
     public String toString() {
         return super.toString() + " (from: " + this.from + " to: " + this.to + ")";
