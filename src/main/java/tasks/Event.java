@@ -1,8 +1,23 @@
 package tasks;
 
+/**
+ * The Event class that represents the event task in the tasklist. Has the from and to arguments
+ * to simulates the duration of the event.
+ */
+
 public class Event extends Task {
     private String fromWhen;
     private String toWhen;
+
+    /**
+     * Creates an event task.
+     * 
+     * @param name the name of the event
+     * 
+     * @param from the start time of the event as a string
+     * 
+     * @param to the end time of the event as a string
+     */
 
     public Event(String name, String from, String to) {
         super(name, "E");

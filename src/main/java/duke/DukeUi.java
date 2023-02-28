@@ -2,11 +2,21 @@ package duke;
 
 import java.util.Scanner;
 
+/**
+ * Handles input and output for Duke. Mostly contains printing methods.
+ */
+
 public class DukeUi {
     
     private final String LINE = "____________________________________________________________";
 
     private Scanner scanner;
+
+    /**
+     * Instantiates DukeUi with or without a scanner for reading.
+     * 
+     * @param withScanner A boolean that instantiates DukeUi with a scanner if true.
+     */
 
     public DukeUi(boolean withScanner) {
         if (withScanner) {
@@ -16,9 +26,19 @@ public class DukeUi {
 
     // Input
 
+    /**
+     * Returns the next line entered in the terminal.
+     * 
+     * @return line entered in terminal.
+     */
+
     public String getNextLine() {
         return scanner.nextLine();
     }
+
+    /**
+     * Closes the scanner to prevent errors.
+     */
 
     public void closeScanner() {
         this.scanner.close();
@@ -26,9 +46,16 @@ public class DukeUi {
 
     // Output
 
+    /**
+     * Prints the standard LINE string on the terminal.
+     */
+
     public void printLine() {
         System.out.println(LINE);
     }
+
+    // Come to think about it, printing functions seems to be pretty trivial, let's 
+    // not javadoc those.
 
     public void greetUser() {
         printLine();
