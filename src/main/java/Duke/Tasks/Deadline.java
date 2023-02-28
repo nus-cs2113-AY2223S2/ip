@@ -1,9 +1,11 @@
 package Duke;
 
+import Duke.Tasks.Task;
+
 public class Deadline extends Task {
 
     protected String dueDate;
-    Deadline(String taskName, String dueDate) {
+    public Deadline(String taskName, String dueDate) {
         super(taskName);
         this.dueDate = dueDate;
     }
