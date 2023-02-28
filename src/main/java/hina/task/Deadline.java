@@ -13,10 +13,13 @@ public class Deadline extends Task {
         String mark;
         if (super.isDone()) {
             mark = "X";
-        }
-        else {
+        } else {
             mark = " ";
         }
         return String.format("[D][%s] %s (by: %s)", mark, super.getDescription(), by);
+    }
+
+    public String toSave() {
+        return String.format("T / %s / %s / %s", isDone? "1" : "0", description, by);
     }
 }
