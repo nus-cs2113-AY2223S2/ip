@@ -34,6 +34,13 @@ Task Manager is a <strong>Command Line Interface(CLI) task manager application t
 
 <h2 id="features"> Features</h2>
 
+!!! note
+    Words in **UPPER_CASE** are the parameters to be supplied by the user.
+    e.g. in `todo DESCRIPTION`, `DESCRIPTION` is a parameter which can be used as `todo readbook`.
+    
+    **Extraneous parameters** for commands that do not take in parameters (such as `help` and `exit`) **will be ignored**.
+    e.g. if the command specifies `list 123`, it will be interpreted as `list`.
+    
 <h2 id="adding-a-task-todo"> Adding a task: <code class="language-plaintext highlighter-rouge">todo</code></h2>
 
 Add a task to the task manager.
