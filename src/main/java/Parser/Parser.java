@@ -13,7 +13,8 @@ public class Parser {
   }
 
   /**
-   * Processes the input and follows the command
+   * Processes the input and follows the command.
+   *
    * @param line is the user's input
    * @param tasks is the task list
    * @param i is the number of tasks in the task list currently

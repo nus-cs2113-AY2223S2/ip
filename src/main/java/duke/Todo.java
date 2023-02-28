@@ -10,6 +10,7 @@ public class Todo extends Task {
 
     /**
      * Creates a task to do.
+     *
      * @param description is the task name
      * @param length is the number of arguments in user's input
      * @throws DukeException Its thrown when the user input is empty
@@ -26,7 +27,8 @@ public class Todo extends Task {
     }
 
     /**
-     * To display the task in a specific way
+     * To display the task in a specific way.
+     *
      * @return the format of how the task is shown
      */
 

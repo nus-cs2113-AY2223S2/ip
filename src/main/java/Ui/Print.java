@@ -12,7 +12,8 @@ public class Print {
     }
 
     /**
-     * Displays the list of tasks
+     * Displays the list of tasks.
+     *
      * @param tasks is the task list
      * @param i is the number of tasks in the task list currently
      */
@@ -90,6 +91,7 @@ public class Print {
 
     /**
      * Displays a message to show the task added.
+     *
      * @param tasks is the task list
      * @param i is the number of tasks in the task list currently
      */
@@ -103,7 +105,8 @@ public class Print {
     }
 
     /**
-     * Displays the tasks that has been chosen to be unmarked
+     * Displays the tasks that has been chosen to be unmarked.
+     *
      * @param tasks is the task list
      * @param indexToMark is the number of tasks in the task list currently
      */
@@ -116,7 +119,8 @@ public class Print {
     }
 
     /**
-     * Displays the tasks that has been chosen to be marked
+     * Displays the tasks that has been chosen to be marked.
+     *
      * @param tasks is the task list
      * @param indexToMark is the number of tasks in the task list currently
      */
@@ -129,7 +133,8 @@ public class Print {
     }
 
     /**
-     * Displays the tasks that has been chosen to be deleted
+     * Displays the tasks that has been chosen to be deleted.
+     *
      * @param tasks is the task list
      * @param indexToDelete is the number of tasks in the task list currently
      * @param i is the number of tasks in the task list currently
@@ -144,7 +149,8 @@ public class Print {
     }
 
     /**
-     * Displays the tasks that match the keyword given
+     * Displays the tasks that match the keyword given.
+     *
      * @param foundTasks is the list of tasks that match the keyword given
      * @param count is the number of tasks that match the keyword given
      */
