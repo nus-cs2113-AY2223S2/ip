@@ -1,15 +1,15 @@
 package duke.tasktypes;
 
 /**
- * represents a task in the application.
+ * Represents a task in the application.
  */
 public abstract class Task {
+
     protected String content;
     private boolean isMarked;
 
     /**
      * Initializes the content and marking status of the task.
-     *
      * @param content the content of the task.
      */
     public Task(String content) {
@@ -33,7 +33,6 @@ public abstract class Task {
 
     /**
      * Returns the marking status of the task.
-     *
      * @return the marking status of the task as a string.
      */
     public String getMarkingStatus() {
@@ -41,17 +40,7 @@ public abstract class Task {
     }
 
     /**
-     * Returns the content of the task.
-     *
-     * @return the content of the task as a string.
-     */
-    public String getContent() {
-        return this.content;
-    }
-
-    /**
      * Converts the marking status of the task to a number.
-     *
      * @return the marking status of the task as a number.
      */
     public String convertMarkingStatusToNumber() {
@@ -63,15 +52,21 @@ public abstract class Task {
     }
 
     /**
+     * Returns the content of the task.
+     * @return the content of the task as a string.
+     */
+    public String getContent() {
+        return this.content;
+    }
+
+    /**
      * Returns the task in a formatted string.
-     *
      * @return the formatted string representation of the task as a string.
      */
     public abstract String printTask();
 
     /**
      * Formats the task data to be written to the data file.
-     *
      * @return the formatted task data to be written to the data file as a string.
      */
     public abstract String putInputToDataFile();

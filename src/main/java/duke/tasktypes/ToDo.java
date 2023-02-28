@@ -24,4 +24,5 @@ public class ToDo extends Task{
     public String putInputToDataFile() {
         return "T | " + this.convertMarkingStatusToNumber() + Common.VERTICAL_BAR + this.content + "\n";
     }
+
 }

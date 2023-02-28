@@ -17,23 +17,41 @@ import duke.keycommands.ByeCommand;
 public class Parser {
 
     public static final String BYE_COMMAND = "bye";
+
     public static final String HELP_COMMAND = "help";
+
     public static final String LIST_COMMAND = "list";
+
     public static final String DELETE_COMMAND = "delete";
+
     public static final String TODO_COMMAND = "todo";
+
     public static final String DEADLINE_COMMAND = "deadline";
+
     public static final String EVENT_COMMAND = "event";
+
     public static final String MARK_COMMAND = "mark";
+
     public static final String UNMARK_COMMAND = "unmark";
+
     public static final String INCORRECT_KEYWORD = "OOPS!!! I'm sorry, but I don't know what that means :-(";
+
     public static final String NEEDLESS_SENTENCE_AFTER_ONE_WORD_COMMAND = "I don't know the meaning of the sentence after the keyword";
+
     public static final String REMINDING_MESSAGE_ABOUT_GIVING_TASK_NUMBER = "Please give me the task number";
+
     public static final String THE_TASK_NUMBER_NOT_WITHIN_THE_LIST = "The task number is out of range";
+
     public static final String REMINDING_MESSAGE_ABOUT_GIVING_TASK_CONTENT = "Please give me the task content";
+
     public static final String REMINDING_MESSAGE_ABOUT_GIVING_DEADLINE_TIME = "Please give me the deadline time";
+
     public static final String REMINDING_MESSAGE_ABOUT_GIVING_DESCRIPTION = "Please give me some description to perform the command";
+
     public static final String REMINDING_MESSAGE_ABOUT_GIVING_TIME_TO_THE_EVENT = "Please give me the time for the event";
+
     public static final String REMINDING_MESSAGE_ABOUT_GIVING_THE_BEGINNING_TIME = "Please give me the beginning time";
+
     public static final String REMINDING_MESSAGE_ABOUT_GIVING_THE_END_TIME = "Please give me the end time";
 
     private String[] separatedKeywordAndDescription;

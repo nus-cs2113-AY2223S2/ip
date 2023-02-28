@@ -4,8 +4,7 @@ import duke.common.Common;
 import duke.ui.TextUi;
 
 /**
- * The Duke class is responsible for starting the chatbot application.
- * It contains a main method that starts the application and interaction with the user.
+ * Starts the chatbot application and interacts with the user.
  */
 public class Duke {
 
@@ -17,7 +16,7 @@ public class Duke {
         ui.executeInputUntilExit();
     }
 
-    /** Starts the application by loading the data from storage and shows welcome message  */
+    /** Starts the application by loading the data from storage and shows welcome message.  */
     private static void start() {
         Common.dataFile.moveDataToArrayList();
         ui.showWelcomeMessage();

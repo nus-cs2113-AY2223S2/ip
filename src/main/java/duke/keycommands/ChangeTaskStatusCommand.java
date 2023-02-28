@@ -10,10 +10,13 @@ import java.io.IOException;
 public class ChangeTaskStatusCommand {
 
     private static final String FINISH_UNMARKING_MESSAGE = "Ok! I've marked this task as not done yet:";
+
     private static final String FINISH_MARKING_MESSAGE = "Nice! I've marked this task as done:";
+
     public static final String UNMARK = "unmark";
 
     private int taskNumber;
+
     private String keyword;
 
     /**

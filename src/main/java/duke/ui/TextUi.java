@@ -12,8 +12,13 @@ import java.util.Scanner;
 public class TextUi {
 
     private static final String HELLO_IM_DUKE = "Hello! I'm Duke";
+
     private static final String KEYWORD_TO_SEE_THE_INSTRUCTIONS = "Please type 'help' if you want to see the instructions";
+
     private static final String ASKING_MESSAGE = "What can I do for you?";
+
+    // Regex format to match one or more consecutive spaces, tabs, or newlines
+    public static final String EXTRA_SPACE_REGEX_FORMAT = "\\s+";
 
     private String userInput;
     private Scanner in;
@@ -31,7 +36,7 @@ public class TextUi {
     public void executeInputUntilExit() {
         while (true) {
             getInput();
-            String refinedUserInput = userInput.trim().replaceAll("\\s+", " ");
+            String refinedUserInput = userInput.trim().replaceAll(EXTRA_SPACE_REGEX_FORMAT, " ");
             parser.splitKeywordAndDescription(refinedUserInput);
             parser.executeUserInput();
         }
