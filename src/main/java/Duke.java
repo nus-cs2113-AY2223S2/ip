@@ -1,16 +1,38 @@
 import java.util.Scanner;
 import java.util.ArrayList;
+<<<<<<< HEAD
 import commands.Event;
 import commands.Task;
 import commands.Deadline;
 import commands.Todo;
 import exceptions.DukeException;
+=======
+
+import storage.TaskStorage;
+import task.*;
+import Exceptions.DukeException;
+>>>>>>> branch-Level-7
+
+import static storage.TaskStorage.*;
+import static task.TaskList.*;
 
 public class Duke {
+<<<<<<< HEAD
     private static final String LINE = "____________________________________________________________";
     private static final String errorMessage = "☹ OOPS!!! I'm sorry, but I don't know what that means :-(";
     private static final String todoError = "☹ OOPS!!! The description of a todo cannot be empty.";
     private static ArrayList<Task> list = new ArrayList<Task>();
+=======
+    private static String LINE = "____________________________________________________________";
+    private static String errorMessage = "☹ OOPS!!! I'm sorry, but I don't know what that means :-(";
+    private static TaskList tasks;
+
+    public Duke(String dataPath){
+        TaskStorage.dataPath = dataPath;
+        tasks = new TaskList();
+        TaskStorage.loadSaveData();
+    }
+>>>>>>> branch-Level-7
 
     public static void greet() {
         System.out.println(LINE);
@@ -24,6 +46,7 @@ public class Duke {
         System.out.println(LINE);
     }
 
+<<<<<<< HEAD
     public static void printList() {
         System.out.println(LINE);
         int numTask = list.size();
@@ -97,6 +120,8 @@ public class Duke {
         System.out.println(LINE);
     }
 
+=======
+>>>>>>> branch-Level-7
     private static void runCommand(String input, String command) throws DukeException {
         if (command.equalsIgnoreCase("todo")) {
             addTodo(input);
@@ -119,11 +144,9 @@ public class Duke {
         } else {
             throw new DukeException(errorMessage);
         }
+        writeSaveData(tasks);
     }
 
-    private static void printError(DukeException e) {
-        System.out.println(LINE + "\n" + e.getMessage() + LINE);
-    }
     public static void main(String[] args) {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -131,9 +154,9 @@ public class Duke {
                 + "| |_| | |_| |   <  __/\n"
                 + "|____/ \\__,_|_|\\_\\___|\n";
         System.out.println(logo);
+        new Duke("tasks.txt");
         greet();
         String input, command;
-        int inputCounter = 0;
         while (true) {
             Scanner in = new Scanner(System.in);
             input = in.nextLine();
