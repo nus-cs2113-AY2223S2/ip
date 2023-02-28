@@ -12,11 +12,20 @@ import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Scanner;
+import java.util.stream.Collectors;
+
 import static java.lang.Integer.parseInt;
+import static java.util.stream.Collectors.toCollection;
 
 public class DukeNUS {
     private static final String FILEPATH = "data/dukeNUS.txt";
     private static ArrayList<Task> tasks = new ArrayList<Task>();
+
+    public static ArrayList<Task> getFoundTasks(ArrayList<Task> tasks, String searchPrompt) {
+        return tasks.stream()
+                .filter(task -> task.getDescription().contains(searchPrompt))
+                .collect(toCollection(ArrayList::new));
+    }
 
     /**
      * @param todo A newly constructed todo object as a child of Task that has a user-defined description.
@@ -81,7 +90,15 @@ public class DukeNUS {
             if (tasks.isEmpty()) {
                 DukeNUSPrinter.printMessage("You have no tasks. ¯\\_(ツ)_/¯");
             } else {
-                DukeNUSPrinter.printTasks(tasks);
+                DukeNUSPrinter.listTasks(tasks);
+            }
+            break;
+        case "find":
+            ArrayList<Task> filteredTasks = getFoundTasks(tasks, userInputWords[1]);
+            if (filteredTasks.isEmpty()) {
+                DukeNUSPrinter.printMessage("Tasks containing the term \"" + userInputWords[1] + "\" were not found.");
+            } else {
+                DukeNUSPrinter.showSearchResults(filteredTasks);
             }
             break;
         case "delete":
