@@ -1,5 +1,12 @@
+<<<<<<< HEAD
 [T][X] sleep
 [D][ ] finish assignment (by: 7pm)
 [T][ ] have fun
 [D][X] hi (by: 5pm)
 [T][ ] maybe
+=======
+[T][ ] eat
+[T][ ] eat kuayteow
+[T][ ] sleep
+[T][ ] play
+>>>>>>> branch-level-9

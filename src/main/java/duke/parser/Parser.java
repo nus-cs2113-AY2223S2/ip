@@ -17,6 +17,15 @@ public class Parser {
                 break;
             } else if (userInput.equals("list")) {
                 Ui.printMessage(Ui.CommandType.LIST);
+            } else if (userInput.startsWith("find")) {
+                try {
+                    String query = userInput.substring(5);
+                    query.trim();
+                    System.out.println("query to find is " + query);
+                    Ui.printMessage(query, Ui.CommandType.FIND);
+                } catch (IndexOutOfBoundsException e) {
+                    Ui.printMessage(Ui.CommandType.INDEXOUT);
+                }
             } else if (userInput.startsWith("mark") || userInput.startsWith("unmark")) {
                 String[] command = userInput.split(" ");
                 try {

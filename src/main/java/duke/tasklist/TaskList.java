@@ -69,11 +69,15 @@ public class TaskList {
      * @throws IndexOutOfBoundsException
      */
     public static void markValidTask(String[] userInput) throws IndexOutOfBoundsException {
-        int x = Integer.parseInt(userInput[1]);
-        if (tasks.get(x-1) == null || tasks.size() == 0) {
-            throw new IndexOutOfBoundsException();
+        try {
+            int x = Integer.parseInt(userInput[1]);
+            if (tasks.get(x-1) == null || tasks.size() == 0) {
+                throw new IndexOutOfBoundsException();
+            }
+            tasks.get(x - 1).markAsDone(userInput[0]);
+        } catch (NumberFormatException e) {
+            System.out.println("This is not a valid index... unable to mark the task for you.");
         }
-        tasks.get(x-1).markAsDone(userInput[0]);
     }
 
     /**
@@ -157,5 +161,17 @@ public class TaskList {
         tasks.remove(x-1);
         numTasks = tasks.size();
         Ui.printMessage(temp, Ui.CommandType.DELETE);
+    }
+
+    public static void findTasks(String query) throws IndexOutOfBoundsException {
+        if (tasks.isEmpty()) {
+            throw new IndexOutOfBoundsException();
+        }
+        //System.out.println("testing to for loop?");
+        for (Task t : tasks) {
+            if (t.description.contains(query)) {
+                System.out.println(t.toString());
+            }
+        }
     }
 }

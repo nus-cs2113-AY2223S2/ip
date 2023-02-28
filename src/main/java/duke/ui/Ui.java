@@ -10,7 +10,7 @@ public class Ui {
 
     private static TaskList taskList;
     public enum CommandType {
-        TODO, DEADLINE, EVENT, LIST, MARK, UNMARK, DELETE, INDEXOUT
+        TODO, DEADLINE, EVENT, LIST, MARK, UNMARK, DELETE, INDEXOUT, FIND
     }
     public static void printMessage(Task t, CommandType c) {
         System.out.println(line);
@@ -42,6 +42,17 @@ public class Ui {
         case UNMARK:
             System.out.println("Gotcha, this task has been unmarked. Remember to complete it: ");
             System.out.println(t.toString());
+            break;
+        }
+        System.out.println(line);
+    }
+
+    public static void printMessage(String query, CommandType c) {
+        System.out.println(line);
+        switch(c) {
+        case FIND:
+            System.out.println("Here are the matching tasks in your list:");
+            TaskList.findTasks(query);
             break;
         }
         System.out.println(line);

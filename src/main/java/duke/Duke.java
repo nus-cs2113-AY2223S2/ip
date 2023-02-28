@@ -15,7 +15,6 @@ public class Duke {
     private static final String filePath = "data/duke.txt";
 
     public static void main(String[] args) throws IOException {
-
         Ui.greet();
         try {
             Storage.load();
