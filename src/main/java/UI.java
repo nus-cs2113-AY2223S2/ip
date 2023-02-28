@@ -75,7 +75,7 @@ public class UI {
     }
 
     public void printInputErrorComment(){
-        System.out.println("[DUKE] Uh oh! Cannot Understand you. Here's what you can do.");
+        System.out.println("[DUKE] Uh oh! Wrong Input :( I Cannot Understand you. Please check input format.");
         printAvailableInput();
         System.out.println(HORIZONTAL_LINE);
     }
@@ -85,4 +85,10 @@ public class UI {
         printAvailableInput();
         System.out.println(HORIZONTAL_LINE);
     }
+
+    public static void printEmptyDescriptionComment(String taskType){
+        System.out.println("[Duke] ☹ OOPS!!! The description of a(n) " + taskType + " cannot be empty.");
+    }
+
+
 }

@@ -1,15 +1,40 @@
 import java.util.ArrayList;
+import java.io.IOException;
 
 public class TaskList {
     private ArrayList<Task> taskArray;
     private int totalTaskNum;
-    private Storage taskStorage;
+    private Storage taskStorage = new Storage(this);
 
     public TaskList(){
         taskArray = new ArrayList<>();
         totalTaskNum = 0;
-        taskStorage = new Storage(this);
+        try{
+            ArrayList<String> existingTasks = Storage.scanData();
+            loadData(existingTasks);
+        } catch(IOException e){
+            System.out.println("File loading error");
+            System.out.println(e.getMessage());
+        }
+    }
 
+    public void loadData(ArrayList<String> existingTasks){
+        for(String taskInfo : existingTasks){
+            String taskState = taskInfo.substring(0,1);
+            String[] taskContent = taskInfo.substring(3).split("/");
+            switch(taskContent.length){
+                case 1:
+                    addTodo(taskContent);
+                    break;
+                case 2:
+                    addDeadline(taskContent);
+                    break;
+                case 3:
+                    addEvent(taskContent);
+                    break;
+            }
+            if(taskState.equals("O")) markTask(getTotalTaskNum());
+        }
     }
 
     public boolean addTask(String userInput){
@@ -23,7 +48,7 @@ public class TaskList {
             case "event":
                 return addEvent(userInputSplited);
             default:
-                System.out.println("Failed to add: Invalid Task format"); return false;
+                return false;
         }
     }
 
@@ -34,7 +59,7 @@ public class TaskList {
             taskArray.add(newTodo);
             totalTaskNum++;
         } catch(Exception e) {
-            System.out.println("☹ OOPS!!! The description of a todo cannot be empty.");
+            UI.printEmptyDescriptionComment("todo");
             return false;
         }
         taskStorage.writeToFile(this.toString());
@@ -49,7 +74,7 @@ public class TaskList {
             taskArray.add(newDeadline);
             totalTaskNum++;
         } catch(Exception e){
-            System.out.println("☹ OOPS!!! The description of a deadline cannot be empty.");
+            UI.printEmptyDescriptionComment("deadline");
             return false;
         }
         taskStorage.writeToFile(this.toString());
@@ -65,7 +90,7 @@ public class TaskList {
             taskArray.add(newEvent);
             totalTaskNum++;
         } catch(Exception e){
-            System.out.println("☹ OOPS!!! The description of an event cannot be empty.");
+            UI.printEmptyDescriptionComment("event");
             return false;
         }
         taskStorage.writeToFile(this.toString());
@@ -89,12 +114,13 @@ public class TaskList {
         try{
             taskArray.remove(taskNumInt-1);
             totalTaskNum--;
+            taskStorage.writeToFile(this.toString());
             return true;
 
         } catch(Exception e){
-            System.out.println("☹ OOPS!!! I cannot remove the task. Try again.");
             return false;
         }
+
     }
 
 

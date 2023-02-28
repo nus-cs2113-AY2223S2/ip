@@ -14,9 +14,6 @@ public class Storage {
             File file = new File(FILEPATH);
             if (file.createNewFile()) {
                 System.out.println("File created: " + file.getName());
-            } else{
-                ArrayList<String> existingTasks = scanData(file);
-                loadData(existingTasks);
             }
         } catch(IOException e){
             System.out.println("File cannot be created");
@@ -24,7 +21,8 @@ public class Storage {
         }
     }
 
-    public ArrayList<String> scanData(File file) throws IOException {
+    public static ArrayList<String> scanData() throws IOException {
+        File file = new File(FILEPATH);
         Scanner scanner = new Scanner(file);
         ArrayList<String> existingTasks = new ArrayList<>();
         while(scanner.hasNext()){
@@ -35,24 +33,6 @@ public class Storage {
         return existingTasks;
     }
 
-    public void loadData(ArrayList<String> existingTasks){
-        for(String taskInfo : existingTasks){
-            String taskState = taskInfo.substring(0,1);
-            String[] taskContent = taskInfo.substring(3).split("/");
-            switch(taskContent.length){
-                case 1:
-                    taskList.addTodo(taskContent);
-                    break;
-                case 2:
-                    taskList.addDeadline(taskContent);
-                    break;
-                case 3:
-                    taskList.addEvent(taskContent);
-                    break;
-            }
-            if(taskState.equals("O")) taskList.markTask(taskList.getTotalTaskNum());
-        }
-    }
 
     public void writeToFile(String textAdded){
         try {
