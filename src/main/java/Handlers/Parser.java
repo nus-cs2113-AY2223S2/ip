@@ -21,7 +21,7 @@ public abstract class Parser {
     }
 
     /**
-     * Extracts the second word of the user input
+     * Extracts everything after the first word of the user input
      * 
      * @param line
      *            the user input
@@ -105,7 +105,8 @@ public abstract class Parser {
      * Gets the todo description from the user input, creates a todo object
      * then adds the event to the task list.
      * 
-     * @param line the user input
+     * @param line
+     *            the user input
      */
     public static void addTodoTask(String line) {
         String todoLine = "";
@@ -120,10 +121,12 @@ public abstract class Parser {
     }
 
     /**
-     * Gets the deadline description and deadline date from the user input, creates a
-     * deadline object then adds the event to the task list. 
+     * Gets the deadline description and deadline date from the user input, creates
+     * a
+     * deadline object then adds the event to the task list.
      * 
-     * @param line the user input
+     * @param line
+     *            the user input
      */
     public static void addDeadlineTask(String line) {
         String deadlineLine = "";
@@ -136,12 +139,13 @@ public abstract class Parser {
             Ui.deadlineDescriptionMissingMessage();
         }
     }
-    
-    /** 
+
+    /**
      * Takes in a string containing the deadline description and deadline date and
      * returns a Deadline object.
      * 
-     * @param deadlineLine the deadline description and deadline date 
+     * @param deadlineLine
+     *            the deadline description and deadline date
      * @return Deadline the Deadline object
      */
     private static Deadline getDeadlineObject(String deadlineLine) {
@@ -156,7 +160,8 @@ public abstract class Parser {
      * Gets the event description, event start date and event end date from the user
      * input, creates an event object then adds the event to the task list.
      * 
-     * @param line the user input
+     * @param line
+     *            the user input
      */
     public static void addEventTask(String line) {
         String eventLine = "";
@@ -169,12 +174,14 @@ public abstract class Parser {
             Ui.eventDescriptionMissingMessage();
         }
     }
-    
-    /** 
-     * Takes in a string containing the event description, event start date and event
+
+    /**
+     * Takes in a string containing the event description, event start date and
+     * event
      * end date and returns an Event object.
      * 
-     * @param eventLine the event description, event start date and event end date
+     * @param eventLine
+     *            the event description, event start date and event end date
      * @return Event the Event object
      */
     private static Event getEventObject(String eventLine) {

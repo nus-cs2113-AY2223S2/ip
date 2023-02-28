@@ -144,11 +144,11 @@ public interface Ui {
     public static void taskNumberMissingMessage() {
         System.out.println("task number must be stated.");
     }
-    
+
     public static void taskDescriptionEmptyMessage() {
         System.out.println("task description for find function cannot be empty.");
     }
-    
+
     public static void todoDescriptionMissingMessage() {
         System.out.println("description for todo cannot be empty.");
     }
@@ -156,13 +156,25 @@ public interface Ui {
     public static void deadlineDescriptionMissingMessage() {
         System.out.println("description for deadline cannot be empty.");
     }
-    
+
     public static void eventDescriptionMissingMessage() {
         System.out.println("description for event cannot be empty.");
     }
 
     public static void emptyTaskListMessage() {
         System.out.println("You have no tasks in your list yet!");
+    }
+
+    public static void createFileErrorMessage() {
+        System.out.println("Error creating file");
+    }
+
+    public static void fileNotFoundMessage() {
+        System.out.println("File not found");
+    }
+
+    public static void writeToFileErrorMessage() {
+        System.out.println("Error writing to file");
     }
 
 }

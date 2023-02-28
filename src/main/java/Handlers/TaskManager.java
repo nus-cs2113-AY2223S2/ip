@@ -129,41 +129,81 @@ public abstract class TaskManager {
      *            the line of text from the file
      */
     public static void readTaskFromFile(String line) {
-        String[] taskDetails = line.split("\\|");
-        String taskType = taskDetails[0].trim();
-        String taskStatus = taskDetails[1].trim();
-        String taskDescription = taskDetails[2].trim();
+        String[] taskAllDetails = line.split("\\|");
+        String taskType = taskAllDetails[0].trim();
+        String taskStatus = taskAllDetails[1].trim();
+        String taskDescription = taskAllDetails[2].trim();
 
         switch (taskType) {
         case "T":
-            Task todo = new Tasks.Todo(taskDescription);
-            if (isTaskDone(taskStatus)) {
-                todo.markAsDone();
-            }
-            TaskManager.addTask(todo);
+            addTodoTask(taskStatus, taskDescription);
             break;
         case "D":
-            String taskDeadline = taskDetails[3].trim();
-            Task deadline = new Tasks.Deadline(taskDescription, taskDeadline);
-            if (isTaskDone(taskStatus)) {
-                deadline.markAsDone();
-            }
-            TaskManager.addTask(deadline);
+            addDeadlineTask(taskAllDetails, taskStatus, taskDescription);
             break;
         case "E":
-            String[] taskDate = taskDetails[3].split("-");
-            String taskDateFrom = taskDate[0].trim();
-            String taskDateTo = taskDate[1].trim();
-            Task event = new Tasks.Event(taskDescription, taskDateFrom, taskDateTo);
-            if (isTaskDone(taskStatus)) {
-                event.markAsDone();
-            }
-            TaskManager.addTask(event);
+            addEventTask(taskAllDetails, taskStatus, taskDescription);
             break;
         default:
             Ui.fileErrorMessage();
             break;
         }
+    }
+
+    /**
+     * Checks if todo task is done and adds it to the task list.
+     * 
+     * @param taskStatus
+     *            the status of the task
+     * @param taskDescription
+     *            the description of the task
+     */
+    private static void addTodoTask(String taskStatus, String taskDescription) {
+        Task todo = new Tasks.Todo(taskDescription);
+        if (isTaskDone(taskStatus)) {
+            todo.markAsDone();
+        }
+        TaskManager.addTask(todo);
+    }
+
+    /**
+     * Checks if the deadline task is done and adds it to the task list.
+     * 
+     * @param taskDetails
+     *            the full details of the task
+     * @param taskStatus
+     *            the status of the task
+     * @param taskDescription
+     *            the description of the task
+     */
+    private static void addDeadlineTask(String[] taskDetails, String taskStatus, String taskDescription) {
+        String taskDeadline = taskDetails[3].trim();
+        Task deadline = new Tasks.Deadline(taskDescription, taskDeadline);
+        if (isTaskDone(taskStatus)) {
+            deadline.markAsDone();
+        }
+        TaskManager.addTask(deadline);
+    }
+
+    /**
+     * Checks if the event task is done and adds it to the task list.
+     * 
+     * @param taskDetails
+     *            the full details of the task
+     * @param taskStatus
+     *            the status of the task
+     * @param taskDescription
+     *            the description of the task
+     */
+    private static void addEventTask(String[] taskDetails, String taskStatus, String taskDescription) {
+        String[] taskDate = taskDetails[3].split("-");
+        String taskDateFrom = taskDate[0].trim();
+        String taskDateTo = taskDate[1].trim();
+        Task event = new Tasks.Event(taskDescription, taskDateFrom, taskDateTo);
+        if (isTaskDone(taskStatus)) {
+            event.markAsDone();
+        }
+        TaskManager.addTask(event);
     }
 
     /**
