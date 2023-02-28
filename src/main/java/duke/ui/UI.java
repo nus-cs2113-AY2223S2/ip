@@ -146,6 +146,24 @@ public class UI {
         showLine();
     }
 
+    /**
+     * Outputs the tasks within the tasklist that contains the keyword specified by the user
+     * @param tasks the current tasklist
+     * @param input keyowrd specified by user
+     */
+    public void printFindTaskMessage(TaskList tasks, String input) {
+        showLine();
+        ArrayList<Task> taskList = tasks.getTasksArray();
+        int index = 1;
+        System.out.println("Here are the matching tasks in your list:");
+        for (Task task : taskList) {
+            if (task.getDescription().contains(input)){
+                System.out.println(index + "." + task);
+                index++;
+            }
+        }
+        showLine();
+    }
 
 
 }

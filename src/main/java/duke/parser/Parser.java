@@ -77,6 +77,10 @@ public class Parser {
             command.execute(input, tasks, ui);
             break;
 
+        case "find":
+            command = new FindCommand();
+            command.execute(input, tasks, ui);
+            break;
         default:
             Messages.unknownCommandErrorMessage();
         }

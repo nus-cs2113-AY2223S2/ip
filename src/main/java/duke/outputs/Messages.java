@@ -26,6 +26,8 @@ public class Messages {
     public static final String ERROR_MESSAGE_EMPTY_DELETE = "Please specify a task number to delete!";
     public static final String ERROR_MESSAGE_EMPTY_MARK = "Please specify a task number to mark!";
     public static final String ERROR_MESSAGE_EMPTY_UNMARK = "Please specify a task number to unmark!";
+    public static final String ERROR_MESSAGE_KEYWORD_NOT_FOUND = "Oops! I could not find any task matching that keyword.";
+    public static final String ERROR_MESSAGE_KEYWORD_UNSPECIFIED = "Please enter a keyword to for me to search.";
     public static final String ERROR_MESSAGE_FILE_IOEXCEPTION_ERROR = "☹ OOPS!!! The file is corrupted.";
     public static final String ERROR_MESSAGE_FILE_LOAD_ERROR = "There is an error during loading of the file.";
 
@@ -66,6 +68,12 @@ public class Messages {
         System.out.println(MARGIN);
     }
 
+    public static void emptyFindErrorMessage() {
+        System.out.println(MARGIN);
+        System.out.println(ERROR_MESSAGE_KEYWORD_UNSPECIFIED);
+        System.out.println(MARGIN);
+    }
+
     public static void invalidDeleteErrorMessage() {
         System.out.println(MARGIN);
         System.out.println(ERROR_MESSAGE_WRONG_TASK_INDEX);
@@ -81,6 +89,12 @@ public class Messages {
     public static void invalidUnmarkErrorMessage() {
         System.out.println(MARGIN);
         System.out.println(ERROR_MESSAGE_WRONG_TASK_INDEX);
+        System.out.println(MARGIN);
+    }
+
+    public static void invalidFindErrorMessage() {
+        System.out.println(MARGIN);
+        System.out.println(ERROR_MESSAGE_KEYWORD_NOT_FOUND);
         System.out.println(MARGIN);
     }
 
