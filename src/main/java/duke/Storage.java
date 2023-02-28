@@ -44,14 +44,13 @@ public class Storage {
 
             }
 
-            System.out.println(gson.toJson(jsonArray));
             gson.toJson(jsonArray, input);
             input.close();
 
         } catch (IOException e) {
             System.out.println("Error saving file");
         } catch (JsonIOException e) {
-            System.out.println(e);
+            System.out.println("Error saving file");
         }
 
     }

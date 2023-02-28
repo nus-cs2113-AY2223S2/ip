@@ -1,11 +1,9 @@
 package duke.command;
-
 import duke.Storage;
 import duke.TaskList;
 import duke.UI;
 import duke.task.Event;
 import duke.task.Task;
-
 import java.io.IOException;
 
 public class AddEventCommand extends Command {
@@ -20,10 +18,10 @@ public class AddEventCommand extends Command {
 
     }
 
+    @ Override
     public void execute(TaskList tasks, Storage storage, UI ui) {
 
         try {
-
             Task task = new Event(description, from, to);
             tasks.addTask(task);
 

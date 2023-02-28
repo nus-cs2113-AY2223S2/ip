@@ -2,11 +2,9 @@ package duke.command;
 import duke.Storage;
 import duke.TaskList;
 import duke.UI;
-import duke.exception.DukeException;
-import duke.task.Event;
 import duke.task.Task;
 
-import java.io.IOException;
+
 
 public class DeleteCommand extends Command {
 
@@ -15,6 +13,7 @@ public class DeleteCommand extends Command {
         this.taskNumber = taskNumber;
     }
 
+    @ Override
     public void execute(TaskList tasks, Storage storage, UI ui) {
         try {
             Task task = tasks.getTask(taskNumber);

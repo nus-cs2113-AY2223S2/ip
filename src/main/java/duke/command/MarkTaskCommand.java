@@ -3,19 +3,17 @@ import duke.Storage;
 import duke.TaskList;
 import duke.UI;
 import duke.exception.DukeException;
-import duke.task.Event;
 import duke.task.Task;
 
 import java.io.IOException;
 
 public class MarkTaskCommand extends Command {
-
     private int taskNumber;
-
     public MarkTaskCommand(int taskNumber) {
         this.taskNumber = taskNumber;
     }
 
+    @Override
     public void execute(TaskList tasks, Storage storage, UI ui) {
 
         try {

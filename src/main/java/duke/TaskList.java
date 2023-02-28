@@ -2,7 +2,6 @@ package duke;
 
 import duke.task.Task;
 import java.util.Iterator;
-
 import java.util.ArrayList;
 public class TaskList implements Iterable<Task> {
     private static ArrayList<Task>tasks = new ArrayList<>();
@@ -10,11 +9,6 @@ public class TaskList implements Iterable<Task> {
     public Iterator<Task> iterator() {
         return tasks.iterator();
     }
-    /*public ArrayList<Task> getAllTasks() {
-        return tasks;
-    }
-    */
-
     public void addTask(Task task) {
         tasks.add(task);
     }
@@ -36,11 +30,9 @@ public class TaskList implements Iterable<Task> {
             if(task.isFound(keyword)) {
                 foundTasks.add(task);
             }
-
         }
 
         return foundTasks;
-
     }
 
 }

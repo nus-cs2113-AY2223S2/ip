@@ -14,15 +14,13 @@ public class AddTodoCommand extends Command {
         this.description = description;
 
     }
+   @Override
     public void execute(TaskList tasks, Storage storage, UI ui) {
 
         try {
-
             ui.printAddTask();
-
             Task task = new Todo(description);
             tasks.addTask(task);
-
             ui.printTask(task);
             ui.printNoOfTasks(tasks.getSize());
             storage.saveData(tasks);
