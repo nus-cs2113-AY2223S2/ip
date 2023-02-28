@@ -22,7 +22,6 @@ public class Buddy {
         System.out.println(divider);
 
         ArrayList<Task> listOfThings = new ArrayList<>();
-        //Task[] listOfThings = new Task[TOTAL_TASKS];
         int currentPosition = 0;
         String command;
         Scanner in = new Scanner(System.in);
@@ -37,10 +36,10 @@ public class Buddy {
                     System.out.println(index + "." + listOfThings.get(index - 1));
                     index++;
                 }
-            } else if (command.startsWith("mark")) {  // .startsWith(" ")
+            } else if (command.startsWith("mark")) {
                 int taskNumberIndexMark = 5;
                 int taskNumber = Integer.parseInt(command.substring(taskNumberIndexMark));
-                // have to parse
+
 
                 try {
                     Task currentTask = listOfThings.get(taskNumber - 1);
