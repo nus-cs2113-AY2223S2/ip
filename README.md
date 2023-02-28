@@ -18,7 +18,7 @@ Hello from
 
 ## Loading Save File
 
-The default path for the save file has been defined in ```Duke.java```  
+The save file will be initialised at the location where you have launched Duke.   
 
 On opening, Duke will read and parse the contents in the save file to initialise your task list.  
 *If there are any errors with the data in the save file, a warning will be shown after the welcome message.*  

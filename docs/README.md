@@ -194,5 +194,5 @@ Duke automatically loads up your data on start-up.
 After any command that changes the data, Duke will save the changes into your hard disk automatically. 
 No need to save manually!  
 
-The default path for the save file is defined in `Duke.java` should you wish to change it.  
+The save file is located at save.txt within the *home folder* for Duke.  
 
