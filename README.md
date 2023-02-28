@@ -1,6 +1,6 @@
-# Duke project template
+# CS2113 Individual Project - Duke
 
-This is a project template for a greenfield Java project. It's named after the Java mascot _Duke_. Given below are instructions on how to use it.
+This is a project developed from CS2113 ip template (https://github.com/nus-cs2113-AY2223S2/ip) . It's named after the Java mascot _Duke_. Given below are instructions on how to use it.
 
 ## Setting up in Intellij
 
