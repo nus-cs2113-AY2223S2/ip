@@ -4,6 +4,8 @@ public class Task {
     final String description;
     boolean isDone;
 
+    TaskType type;
+
     public Task(String desc) {
         this.description = desc;
         this.isDone = false;
@@ -18,4 +20,8 @@ public class Task {
     public void setIsDone(boolean isDone) {
         this.isDone = isDone;
     }
+}
+
+enum TaskType {
+    TODO, EVENT, DEADLINE
 }

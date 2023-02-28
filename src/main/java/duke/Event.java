@@ -6,6 +6,7 @@ public class Event extends Deadline {
     public Event(String description, String from, String to) {
         super(description, to);
         this.from = from;
+        this.type = TaskType.EVENT;
     }
 
     @Override

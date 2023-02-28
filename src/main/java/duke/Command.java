@@ -73,14 +73,6 @@ public class Command {
         }
     }
 
-    public CommandType getCommandType() {
-        return this.type;
-    }
-
-    public String getCommandValue() {
-        return this.value;
-    }
-
     public String getParameterValueByType(ParameterType type) throws IllegalCommandException {
         for (Parameter parameter : parameters) {
             if (parameter.getParameterType() == type) {
@@ -88,6 +80,47 @@ public class Command {
             }
         }
         throw new IllegalCommandException(IllegalCommandExceptionType.MISSING_PARAMETER, type.toString().toLowerCase());
+    }
+
+    public void execute(TaskList tasks, Ui ui, Storage storage) throws Exception {
+        if (type == CommandType.CREATE_TODO) {
+            Task addedTask = tasks.addTask(new Todo(value));
+            storage.save(tasks);
+            ui.showAddedTask(tasks, addedTask);
+        } else if (type == CommandType.CREATE_DEADLINE) {
+            String description = value;
+            String deadline = getParameterValueByType(ParameterType.DEADLINE);
+            Task addedTask = tasks.addTask(new Deadline(description, deadline));
+            storage.save(tasks);
+            ui.showAddedTask(tasks, addedTask);
+        } else if (type == CommandType.CREATE_EVENT) {
+            String description = value;
+            String from = getParameterValueByType(ParameterType.EVENT_START);
+            String to = getParameterValueByType(ParameterType.EVENT_END);
+            Task addedTask = tasks.addTask(new Event(description, from, to));
+            ui.showAddedTask(tasks, addedTask);
+        } else if (type == CommandType.DELETE) {
+            int displayedIndex = Integer.parseInt(value);
+            Task removedTask = tasks.removeTaskByDisplayedIndex(displayedIndex);
+            storage.save(tasks);
+            ui.showRemovedTask(removedTask);
+        } else if (type == CommandType.LIST) {
+            ui.showAllTasks(tasks);
+        } else if (type == CommandType.MARK) {
+            int displayedIndex = Integer.parseInt(value);
+            Task markedTask = tasks.markTaskByDisplayedIndex(displayedIndex);
+            storage.save(tasks);
+            ui.showMarkedTask(markedTask);
+        } else if (type == CommandType.UNMARK) {
+            int displayedIndex = Integer.parseInt(value);
+            Task unmarkedTask = tasks.unmarkTaskByDisplayedIndex(displayedIndex);
+            storage.save(tasks);
+            ui.showUnmarkedTask(unmarkedTask);
+        }
+    }
+
+    public boolean isExit() {
+        return type == CommandType.EXIT;
     }
 }
 
