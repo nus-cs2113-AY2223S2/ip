@@ -3,8 +3,14 @@
  */
 public class Todo extends Task {
 
+    private String smallSpace;
+    private String bigSpace;
+
     public Todo(String description) {
         super(description);
+        Ui ui = new Ui();
+        this.smallSpace = ui.SMALL_SPACE;
+        this.bigSpace = ui.BIG_SPACE;
     }
 
     /**
@@ -43,7 +49,7 @@ public class Todo extends Task {
      * @return formatted todo information for user.
      */
     public String toString() {
-        return "       [T][ ] " + super.description;
+        return this.bigSpace + "[T][ ] " + super.description;
     }
 
 }

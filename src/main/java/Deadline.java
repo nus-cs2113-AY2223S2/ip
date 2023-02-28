@@ -4,9 +4,15 @@
 public class Deadline extends Task {
 
     protected String by;
+    private String smallSpace;
+    private String bigSpace;
+
     public Deadline(String description, String by) {
         super(description);
         this.by = by;
+        Ui ui = new Ui();
+        this.smallSpace = ui.SMALL_SPACE;
+        this.bigSpace = ui.BIG_SPACE;
     }
 
     /**
@@ -46,6 +52,6 @@ public class Deadline extends Task {
      */
     @Override
     public String toString() {
-        return "       [D][ ] " + super.description + " (by: " + this.by + ")";
+        return this.bigSpace + "[D][ ] " + super.description + " (by: " + this.by + ")";
     }
 }
