@@ -1,8 +1,8 @@
 package duke;
 import duke.exceptions.ToDoException;
 public class ToDo extends Task{
-    public ToDo(String description) throws ToDoException{
-        super(description);
+    public ToDo(String description, boolean isDone) throws ToDoException{
+        super(description,isDone);
         if(description.length() == 0){
             throw new ToDoException();
         }
