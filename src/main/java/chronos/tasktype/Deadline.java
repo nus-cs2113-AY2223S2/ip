@@ -23,7 +23,7 @@ public class Deadline extends Task {
             }
             this.due = due;
         } catch (ChronosExceptions e) {
-            System.err.println("DESCRIPTION OR DUE DATE IS MISSING. PLEASE VIEW HELP MENU FOR PROPER FORMAT. REMOVE THE INVALID TASK");
+            System.out.println("DESCRIPTION OR DUE DATE IS MISSING. PLEASE VIEW HELP MENU FOR PROPER FORMAT. REMOVE THE INVALID TASK");
         }
     }
 
@@ -41,7 +41,7 @@ public class Deadline extends Task {
             }
             this.due = due;
         } catch(ChronosExceptions error){
-            System.err.println("DESCRIPTION OR DUE DATE IS MISSING. PLEASE VIEW HELP MENU FOR PROPER FORMAT. REMOVE THE INVALID TASK");
+            System.out.println("DESCRIPTION OR DUE DATE IS MISSING. PLEASE VIEW HELP MENU FOR PROPER FORMAT. REMOVE THE INVALID TASK");
         }
     }
 

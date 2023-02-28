@@ -138,7 +138,6 @@ public class TaskManager {
                 case "timer":
                     timerModule();
                     continue;
-
                 default:
                     throw new ChronosExceptions(category);
                 }

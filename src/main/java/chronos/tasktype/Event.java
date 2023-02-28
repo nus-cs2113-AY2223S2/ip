@@ -29,7 +29,7 @@ public class Event extends Task {
             this.end = end;
             this.start = start;
         } catch(ChronosExceptions error){
-            System.err.println("INVALID FORMAT. PLEASE REMOVE TASK AND ENTER 'help' TO VIEW ALL COMMANDS AND FORMATS");
+            System.out.println("INVALID FORMAT. PLEASE REMOVE TASK AND ENTER 'help' TO VIEW ALL COMMANDS AND FORMATS");
         }
     }
 
@@ -51,7 +51,7 @@ public class Event extends Task {
             this.end = end;
             this.start = start;
         } catch(ChronosExceptions error){
-            System.err.println("INVALID FORMAT. PLEASE REMOVE TASK AND ENTER 'help' TO VIEW ALL COMMANDS AND FORMATS");
+            System.out.println("INVALID FORMAT. PLEASE REMOVE TASK AND ENTER 'help' TO VIEW ALL COMMANDS AND FORMATS");
         }
     }
 

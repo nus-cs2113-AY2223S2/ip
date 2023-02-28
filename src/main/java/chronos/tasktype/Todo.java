@@ -11,6 +11,7 @@ public class Todo extends Task{
     /**
      * Constructs a new Todo object
      * @param description The description of the task
+     * @throws ChronosExceptions if the description field is left empty
      */
     public Todo(String description) {
         super(description);
