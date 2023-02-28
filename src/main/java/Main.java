@@ -3,7 +3,6 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Duke Duke = new Duke();
-        Duke.greet();
         Scanner userInput = new Scanner(System.in); // create Scanner object
         String inputCommand; // read user input
         String[] commandPhrase;
@@ -16,30 +15,30 @@ public class Main {
                 if (command.equals("bye")) {
                     break;
                 } else if (command.equals("list")) {
-                    Duke.list();
+                    Duke.tasks.list();
                 } else {
                     System.out.println("Invalid command");
                 }
             } else {
                 phrase = commandPhrase[1];
                 if (command.equals("mark")) {
-                    Duke.changeTaskState(true, Integer.parseInt(phrase));
+                    Duke.tasks.changeTaskState(true, Integer.parseInt(phrase));
                 } else if (command.equals("unmark")) {
-                    Duke.changeTaskState(false, Integer.parseInt(phrase));
+                    Duke.tasks.changeTaskState(false, Integer.parseInt(phrase));
                 } else if (command.equals("event")) {
-                    Duke.addEvent(phrase);
+                    Duke.tasks.addEvent(phrase);
                 } else if (command.equals("todo")) {
-                    Duke.addTodo(phrase);
+                    Duke.tasks.addTodo(phrase);
                 } else if (command.equals("deadline")) {
-                    Duke.addDeadline(phrase);
+                    Duke.tasks.addDeadline(phrase);
                 } else if (command.equals("delete")) {
-                    Duke.delete(Integer.parseInt(phrase));
+                    Duke.tasks.delete(Integer.parseInt(phrase));
                 } else {
                     System.out.println("Invalid command");
                 }
             }
-            Duke.saveToFile();
-            System.out.println("------------------------------------");
+            Storage.saveToFile();
+            UI.horizontalLine();
         }
         userInput.close();
         System.out.println("Bye. Hope to see you again soon!");
