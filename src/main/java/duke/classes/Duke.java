@@ -22,14 +22,6 @@ public class Duke {
     private static ArrayList<Task> listOfTask = new ArrayList<Task>();
     static Tasklist tasklist = new Tasklist(listOfTask);
 
-    public static void printFile(String filePath) throws FileNotFoundException {
-        File file = new File(filePath);
-        Scanner scan = new Scanner(file);
-        while (scan.hasNext()) {
-            System.out.println(scan.nextLine());
-        }
-    }
-
     public static void foundationList(String filepath, ArrayList<Task> listOfTask) throws FileNotFoundException {
         File file = new File(filepath);
         Scanner scan = new Scanner(file);
@@ -71,20 +63,6 @@ public class Duke {
         }
     }
 
-    public static void writeFile(String filePath, String textAdd) throws IOException {
-        FileWriter writer = new FileWriter(filePath);
-        writer.write(textAdd);
-        writer.close();
-    }
-
-    public static void updateFile(String filePath, ArrayList<Task> listOfTask) throws IOException {
-        String newList = "";
-        for (int i = 0; i < listOfTask.size(); i++) {
-            newList += listOfTask.get(i).toString() + System.lineSeparator();
-        }
-        writeFile(filePath, newList);
-    }
-
     public static void main(String[] args) throws IOException {
 
         Ui ui = new Ui();
@@ -103,6 +81,7 @@ public class Duke {
         int count = 0;
         String filePath = "src/duke_list.txt";
         foundationList(filePath, listOfTask);
+        Storage storage = new Storage(filePath, listOfTask);
 
         for (int i = 0; i < listOfTask.size(); i++) {
             count++;
@@ -110,7 +89,7 @@ public class Duke {
 
         try {
             ui.showFileContent();
-            printFile("src/duke_list.txt");
+            storage.printFile("src/duke_list.txt");
         } catch (FileNotFoundException e) {
             ui.showFileNotFoundError();
         }
@@ -124,7 +103,7 @@ public class Duke {
 
             if (Objects.equals(parser.getInputType(), "bye")) {
                 isBye = true;
-                updateFile(filePath, listOfTask);
+                storage.updateFile(filePath, listOfTask);
                 break;
             } else if (Objects.equals(parser.getInputType(), "list")) {
                 ui.showTasksMessage();
@@ -138,7 +117,7 @@ public class Duke {
                         InputUi inputUi = new InputUi(task, count);
                         tasklist.markTask(task);
                         listOfTask.set(parser.getOrderMark(input) - 1, task);
-                        updateFile(filePath, listOfTask);
+                        storage.updateFile(filePath, listOfTask);
                         inputUi.showMarkedTask();
                     }
             } else if (Objects.equals(parser.getInputType(), "unmark")) {
@@ -149,7 +128,7 @@ public class Duke {
                         InputUi inputUi = new InputUi(task, count);
                         tasklist.unmarkTask(task);
                         listOfTask.set(parser.getOrderUnmark(input) - 1, task);
-                        updateFile(filePath, listOfTask);
+                        storage.updateFile(filePath, listOfTask);
                         inputUi.showUnmarkedTask();
                     }
             } else if (Objects.equals(parser.getInputType(), "delete")) {
@@ -159,7 +138,7 @@ public class Duke {
                     InputUi inputUi = new InputUi(listOfTask.get(parser.getOrderDelete(input) - 1), count - 1);
                     inputUi.showDeletedTask();
                     listOfTask.remove(parser.getOrderDelete(input) - 1);
-                    updateFile(filePath, listOfTask);
+                    storage.updateFile(filePath, listOfTask);
                     count--;
                     inputUi.showRemainingTasks();
                 }
@@ -168,7 +147,7 @@ public class Duke {
                     Todo task = new Todo(parser.getTodoInfo(input));
                     task.isDone = false;
                     tasklist.addTask(task);
-                    updateFile(filePath, listOfTask);
+                    storage.updateFile(filePath, listOfTask);
                     InputUi inputUi = new InputUi(task, count);
                     inputUi.showTaskAdded();
                     count++;
@@ -176,7 +155,7 @@ public class Duke {
                     Deadline task = new Deadline(parser.getDeadlineInfo(input), parser.getDeadlineTimeBy(input));
                     task.isDone = false;
                     tasklist.addTask(task);
-                    updateFile(filePath, listOfTask);
+                    storage.updateFile(filePath, listOfTask);
                     InputUi inputUi = new InputUi(task, count);
                     inputUi.showTaskAdded();
                     count++;
@@ -184,7 +163,7 @@ public class Duke {
                     Event task = new Event(parser.getEventInfo(input), parser.getEventTimeFrom(input), parser.getEventTimeBy(input));
                     task.isDone = false;
                     tasklist.addTask(task);
-                    updateFile(filePath, listOfTask);
+                    storage.updateFile(filePath, listOfTask);
                     InputUi inputUi = new InputUi(task, count);
                     inputUi.showTaskAdded();
                     count++;
