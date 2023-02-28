@@ -8,8 +8,8 @@ import duke.common.Common;
 public class ToDo extends Task{
 
     /**
-     Creates a new ToDo object with the given content.
-     @param content The content of the ToDo task.
+     * Creates a new ToDo object with the given content.
+     * @param content The content of the ToDo task.
      */
     public ToDo(String content) {
         super(content);

@@ -33,8 +33,9 @@ public class Storage {
 
     /**
      * Constructs a new Storage object with the given file path and task list.
+     *
      * @param filePath The file path of the data file.
-     * @param tasks The task list.
+     * @param tasks    The task list.
      */
     public Storage(String filePath, ArrayList<Task> tasks) {
         directory = new File("data");
@@ -57,6 +58,7 @@ public class Storage {
 
     /**
      * Reads each line of the file and adds it as a task to the task list.
+     *
      * @throws FileNotFoundException if the file cannot be found
      */
     private void addTasks() throws FileNotFoundException {
@@ -70,6 +72,7 @@ public class Storage {
     /**
      * Takes a line of text from the data file
      * Determines the task type and calls the appropriate method to add the task to the task list.
+     *
      * @param line a line of text from the data file containing task details
      */
     private void addToTaskList(String line) {
@@ -85,26 +88,27 @@ public class Storage {
 
     private void addTodoToTaskList(String[] elements) {
         ToDo task = new ToDo(elements[2]);
-        setTaskStatus(elements[1],task);
+        setTaskStatus(elements[1], task);
         tasks.add(task);
     }
 
     private void addDeadlineToTaskList(String[] elements) {
         Deadline task = new Deadline(elements[2], elements[3]);
-        setTaskStatus(elements[1],task);
+        setTaskStatus(elements[1], task);
         tasks.add(task);
     }
 
     private void addEventToTaskList(String[] elements) {
         Event task = new Event(elements[2], elements[3], elements[4]);
-        setTaskStatus(elements[1],task);
+        setTaskStatus(elements[1], task);
         tasks.add(task);
     }
 
     /**
      * Sets the status of a task to done if the task is marked as done in the data file.
+     *
      * @param taskStatus the status of the task in the data file
-     * @param task the task to be marked as done
+     * @param task       the task to be marked as done
      */
     private void setTaskStatus(String taskStatus, Task task) {
         if (taskStatus.equals("1")) {
@@ -116,6 +120,7 @@ public class Storage {
 
     /**
      * Appends a string to the data file.
+     *
      * @param textToAppend the string to be appended to the data file
      * @throws IOException if there is a problem with appending the string to the data file
      */
@@ -127,6 +132,7 @@ public class Storage {
 
     /**
      * Appends a task in string format to the data file.
+     *
      * @param inputToDataFile the string to be appended to the data file
      */
     public void appendTaskToDataFile(String inputToDataFile) {
@@ -139,6 +145,7 @@ public class Storage {
 
     /**
      * Deletes a task from the data file.
+     *
      * @param lineNumber the position of the task to be deleted
      * @throws IOException if there is a problem with deleting the task
      */
@@ -165,6 +172,7 @@ public class Storage {
 
     /**
      * Updates the data file with the latest task list.
+     *
      * @throws IOException if there is a problem with updating the data file
      */
     public void updateTask() throws IOException {
