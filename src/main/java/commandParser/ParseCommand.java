@@ -36,8 +36,9 @@ public class ParseCommand {
         } else if (command.equalsIgnoreCase("unmark")) {
             int taskIdx = Integer.parseInt(input.split(" ")[1]) - 1;
             unmarkTask(taskIdx);
-        }
-        else if (command.equalsIgnoreCase("delete")) {
+        } else if (command.equalsIgnoreCase("find")) {
+            findTask(input.split(" ")[1]);
+        } else if (command.equalsIgnoreCase("delete")) {
             int taskIdx = Integer.parseInt(input.split(" ")[1]) - 1;
             deleteTask(taskIdx);
         } else {
