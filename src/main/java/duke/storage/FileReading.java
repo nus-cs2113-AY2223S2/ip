@@ -13,11 +13,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Represents a txt file storing information.
+ */
 public class FileReading {
     private static final String filePath = "data/Duke.txt";
-    private static Task t;
+
+    /**
+     * The list of tasks.
+     */
     private static ArrayList<Task> tasks;
 
+    /**
+     * Creates a new txt file using the specified file path.
+     * @throws IOException if stream to file cannot be written.
+     */
     public static void createFile() throws IOException {
         File newFolder = new File("data");
         if (!newFolder.exists()) {
@@ -36,16 +46,16 @@ public class FileReading {
         }
     }
 
+    /**
+     * Gets content of the txt file and putting them into the list.
+     * @throws FileNotFoundException if file does not exist.
+     */
     public static void getFileContents() throws FileNotFoundException {
         File f = new File(filePath);
         if (!f.exists()) {
             throw new FileNotFoundException();
         }
         Scanner s = new Scanner(f);
-        System.out.println("File name: " + f.getName());
-        System.out.println("Absolute Path: " + f.getAbsolutePath());
-        System.out.println("Writeable: " + f.canWrite());
-        System.out.println("Readable: " + f.canRead());
 
         try {
             List<String> taskList = Files.readAllLines(Path.of(filePath));
@@ -54,10 +64,17 @@ public class FileReading {
             System.out.println("Can't remember what was saved :(");
         } catch (IOException e) {
             System.out.println("IOException :(");
-            throw new RuntimeException(e);
+            //throw new RuntimeException(e);
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("There is something wrong.");
         }
     }
 
+    /**
+     * Delete all content from the txt file and create a new file.
+     * @param filePath The path of the txt file.
+     * @throws IOException if stream to file cannot be written to.
+     */
     public static void deleteFileContents(String filePath) throws IOException {
         File f = new File(filePath);
         try {
@@ -68,6 +85,10 @@ public class FileReading {
         }
     }
 
+    /**
+     * Writes to the txt file the list of tasks.
+     * @throws IOException if stream to file cannot be written to.
+     */
     public static void writeToFile() throws IOException {
         FileWriter fw = new FileWriter(filePath);
         deleteFileContents(filePath);

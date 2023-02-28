@@ -7,7 +7,14 @@ import duke.ui.Ui;
 
 import java.util.Scanner;
 
+/**
+ * Represents the class that deals with making sense of the user command.
+ */
 public class Parser {
+
+    /**
+     * Get user command and process accordingly.
+     */
     public static void getCommand() {
         Scanner in = new Scanner(System.in);
         String userInput = in.nextLine();
@@ -64,7 +71,6 @@ public class Parser {
             Storage.write();
             userInput = in.nextLine();
         }
-        //f.main(inputList);
         in.close();
     }
 }

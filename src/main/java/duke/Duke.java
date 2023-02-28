@@ -8,19 +8,24 @@ import duke.ui.Ui;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * Represents Duke, the personal assistant chatbot
+ * that can help keep track of things.
+ */
 public class Duke {
-    private static final String line = "__________________________________________________________";
-    private static ArrayList<Task> inputList = new ArrayList<>();
 
-    private static final String filePath = "data/duke.txt";
-
-    public static void main(String[] args) throws IOException {
-        Ui.greet();
-        try {
-            Storage.load();
-        } catch (RuntimeException e) {
-            System.out.println("Unable to load due to runtime exception :(");
-        }
+    /**
+     * The main function for 'Duke' to run.
+     * @param args
+     */
+    public static void main(String[] args) {
+        Ui.printGreet();
+//        try {
+//            Storage.load();
+//        } catch (RuntimeException e) {
+//            System.out.println("Unable to load due to runtime exception :(");
+//        }
+        Storage.load();
         Parser.getCommand();
         Ui.printBye();
     }

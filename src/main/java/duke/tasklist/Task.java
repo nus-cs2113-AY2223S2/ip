@@ -26,6 +26,7 @@ public class Task {
     /**
      * Creates a task with the given description.
      * Default status is incomplete, and has no type.
+     * @param description The description of the task.
      */
     public Task(String description) {
         this.description = description;

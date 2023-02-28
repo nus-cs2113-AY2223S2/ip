@@ -13,7 +13,15 @@ import java.util.List;
  */
 public class TaskList {
     private static final String line = "__________________________________________________________";
+
+    /**
+     * The list of tasks.
+     */
     protected static ArrayList<Task> tasks = new ArrayList<>();
+
+    /**
+     * The number of tasks in the list.
+     */
     private static int numTasks = 0;
 
     /**
@@ -83,9 +91,9 @@ public class TaskList {
     /**
      * Reads tasks from the list stored in the txt file.
      * @param taskList The list of tasks stored in the txt file.
-     * @throws IOException
+     * @throws IndexOutOfBoundsException if task cannot be found and read.
      */
-    public static void readTask(List<String> taskList) throws IOException {
+    public static void readTask(List<String> taskList) throws IndexOutOfBoundsException {
         for(String task: taskList) {
             Task t;
             String type = task.substring(1,2); //type of task
@@ -103,7 +111,7 @@ public class TaskList {
                 String to = task.substring(task.indexOf("to: ")+4, task.indexOf(")"));
                 t = new Event(descriptor, from, to);
             } else {
-                throw new IOException();
+                throw new IndexOutOfBoundsException();
             }
             tasks.add(t);
             tasks.get(tasks.size()-1).addIsDone(status);
