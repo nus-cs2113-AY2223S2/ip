@@ -1,0 +1,7 @@
+D | 0 | return book | June 6th
+E | 0 | project meeting | Aug 6th 2-4pm | Dec
+T | 1 | join sports club
+T | 1 | asdsad
+E | 1 | asdsad | te | asd
+T | 1 | ada
+T | 0 | adwada
