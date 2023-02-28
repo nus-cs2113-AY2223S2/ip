@@ -185,3 +185,53 @@ tasks are stored in .txt file
 Bye! See you next time!
 ============================================================
 ```
+
+### `help` - show all commands
+
+Example of usage:
+
+`help`
+
+Expected outcome:
+
+show commands and the way that user should enter
+
+```
+If you wish to view all tasks -Enter: 
+
+list
+------------------------------------------------------------
+If you wish to add a ToDo task -Enter: 
+
+todo <task description>
+------------------------------------------------------------
+If you wish to add a Deadline task -Enter: 
+
+deadline <task description> /by <deadline date DD/MM/YYYY>
+------------------------------------------------------------
+If you wish to add a Event task -Enter: 
+
+event <task description> /from <start date> /to <end date> 
+------------------------------------------------------------
+If you wish to mark a task as Done -Enter: 
+
+mark <task number>
+------------------------------------------------------------
+If you wish to undo a mark -Enter: 
+
+unmark <task number>
+------------------------------------------------------------
+If you wish to delete a task -Enter: 
+
+delete <task number>
+OR delete all (delete all tasks)
+------------------------------------------------------------
+If you wish to find tasks -Enter: 
+
+find <task description>
+------------------------------------------------------------
+If you wish to exit the program -Enter: 
+
+bye
+============================================================
+```
