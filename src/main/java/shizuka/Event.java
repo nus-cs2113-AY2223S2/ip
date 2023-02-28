@@ -20,11 +20,21 @@ public class Event extends Todo {
         this.endDate = args[4];
     }
 
+    /**
+     * Reformats the task to a string to be printed.
+     *
+     * @return The string to be printed.
+     */
     public String printTask() {
         return this.getTaskIcon() + this.getStatusIcon() + ' ' + this.description
                 + " (from: " + startDate + " to: " + endDate + ")";
     }
 
+    /**
+     * Reformats the task to a string to be saved in a file.
+     *
+     * @return The string to be saved in a file.
+     */
     public String saveTask() {
         return this.taskType + ITEM_SEPARATOR + (this.isDone ? "1" : "0") + ITEM_SEPARATOR + this.description
                 + ITEM_SEPARATOR + this.startDate + ITEM_SEPARATOR + this.endDate + System.lineSeparator();
