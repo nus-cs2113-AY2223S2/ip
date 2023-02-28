@@ -285,7 +285,7 @@ public class TaskList {
             return;
         }
         keyword.trim();
-        int taskNo = 1;
+        int taskNo = 0;
         boolean taskFound = false;
         for (Task task : tasks) {
             if (task.getName().contains(keyword)) {
