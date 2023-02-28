@@ -8,6 +8,10 @@ public class Duke {
     static final int DESCRIPTION_INDEX = 1;
     static final int STARTDATE_INDEX = 0;
     static final int ENDDATE_INDEX = 1;
+    static final String DEADLINE_MARKER = "/by";
+
+    static final String TASK_NO_EXIST = "Task does not exist!";
+    static final String DELETE_TASK_MESSAGE = "Okay! I've deleted task: ";
 
     public static void exitMessage() {
         System.out.println("Go away Anna");
@@ -77,6 +81,7 @@ public class Duke {
                 } else {
                     System.out.println("Here's what we've gotta do:");
                     TaskList.viewList();
+                    System.out.println("We currently have " + TaskList.getNumItems() + " tasks");
                 }
                 break;
 
@@ -105,6 +110,18 @@ public class Duke {
                 break;
             }
 
+            case "delete": {
+                String itemNum = getItemDescription(userInput);
+                int itemIndex = Integer.parseInt(itemNum) - 1;
+                if (itemIndex <= TaskList.getNumItems()-1) {
+                    TaskList.deleteTask(itemIndex);
+                    System.out.println(DELETE_TASK_MESSAGE + itemNum);
+                } else {
+                    System.out.println(TASK_NO_EXIST);
+                }
+                break;
+            }
+
             case "todo": {
                 String itemDescription = getItemDescription(userInput);
                 Todo newTask = new Todo(itemDescription);
@@ -113,8 +130,14 @@ public class Duke {
             }
 
             case "deadline": {
-                String itemDescription = getItemDescription(userInput);
-                String dueDate = getDueDate(userInput);
+                String itemDescription, dueDate;
+                if (userInput.contains(DEADLINE_MARKER)) {
+                    itemDescription = userInput.split(DEADLINE_MARKER, 2)[0];
+                    dueDate = userInput.split(DEADLINE_MARKER, 2)[1];
+                } else {
+                    itemDescription = getItemDescription(userInput);
+                    dueDate = getDueDate(userInput);
+                }
                 Deadline newTask = new Deadline(itemDescription,dueDate);
                 TaskList.addItem(newTask);
                 break;
