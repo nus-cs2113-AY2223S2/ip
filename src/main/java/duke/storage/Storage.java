@@ -1,8 +1,8 @@
 package duke.storage;
 
-import duke.Task;
-import duke.TaskList;
-import duke.UI;
+import duke.task.Task;
+import duke.tasklist.TaskList;
+import duke.ui.UI;
 import duke.task.Deadline;
 import duke.task.Event;
 import duke.task.Todo;
@@ -12,7 +12,6 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class Storage {

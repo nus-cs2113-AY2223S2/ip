@@ -1,7 +1,12 @@
 package duke;
 
+import duke.command.Command;
 import duke.exception.DukeException;
+import duke.parser.Parser;
 import duke.storage.Storage;
+import duke.tasklist.TaskList;
+import duke.ui.UI;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
@@ -31,8 +36,8 @@ public class Duke {
         } while (!input.equals("bye"));
     }
     private static void run(String input) {
-        Command c = Parser.parse(input);
-        c.execute(tasks);
+        Command command = Parser.parse(input);
+        command.execute(tasks);
     }
     public static void main(String[] args) {
         new Duke();

@@ -1,6 +1,6 @@
 package duke.exception;
 
-import duke.UI;
+import duke.ui.UI;
 
 import java.util.ArrayList;
 import java.util.Arrays;

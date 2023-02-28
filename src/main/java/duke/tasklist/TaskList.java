@@ -1,11 +1,14 @@
-package duke;
+package duke.tasklist;
 
 import duke.exception.EmptyListError;
+import duke.task.Task;
+import duke.ui.UI;
 
 import java.util.ArrayList;
 
 public class TaskList {
     public ArrayList<Task> tasksList;
+
     public TaskList(ArrayList<Task> tasksList) {
         this.tasksList = tasksList;
     }
@@ -43,18 +46,12 @@ public class TaskList {
         return tasksList.get(index).toString();
     }
 
-    public boolean isEmpty(){
-        return tasksList.isEmpty();
-    }
-
     public void printList() throws EmptyListError {
         if (tasksList.isEmpty()) {
             throw new EmptyListError();
         }
         UI.printMessage("Here are the tasks in your list:");
-        for (int i = 0; i < tasksList.size(); i++) {
-            System.out.println((i + 1) + "." + tasksList.get(i).toString());
-        }
+        UI.printList(returnTasks());
     }
 
     public ArrayList<Task> returnTasks(){

@@ -1,9 +1,11 @@
-package duke;
+package duke.ui;
 
 import duke.data.textImage;
+import duke.task.Task;
+
+import java.util.ArrayList;
 
 public class UI {
-    private static final String HORIZONTAL_LINE = "____________________________________________________________";
 
     public static void printTodo(String message) {
         System.out.println("Got it. I've added this task:");
@@ -20,8 +22,17 @@ public class UI {
         System.out.println("  [E][ ] " + taskName + " (from: " + start + " to: " + end + ")");
     }
 
-    public static void printTaskList(int taskListLength) {
+    public static void printTaskListLength(int taskListLength) {
         System.out.println("Now you have " + taskListLength + " tasks in the list.");
+    }
+
+    public static void printList(ArrayList<Task> tasks) {
+        for (int i = 0; i < tasks.size(); i++) {
+            System.out.println((i + 1) + "." + tasks.get(i).toString());    }
+    }
+
+    public static void printMarkMessage(String status, String description) {
+        System.out.println("  [" + status + "] " + description);
     }
 
     public static void printMessage(String message) {
@@ -29,10 +40,10 @@ public class UI {
     }
 
     public static void showWelcomeMessage() {
-        System.out.println(textImage.welcomeTextImage);
-        System.out.println(HORIZONTAL_LINE);
+        System.out.println(textImage.WELCOME_TEXT_IMAGE);
+        System.out.println(textImage.HORIZONTAL_LINE);
         System.out.println("Hello! I'm Duke\n" + "What can I do for you?");
-        System.out.println(HORIZONTAL_LINE);
+        System.out.println(textImage.HORIZONTAL_LINE);
     }
 
     public static void showByeMessage() {
