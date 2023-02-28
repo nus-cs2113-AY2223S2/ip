@@ -25,9 +25,13 @@ public class ProcessStorageTasks {
      */
     public static void processFile() {
         File directory = new File(DIRECTORY.toString());
-        if (!directory.exists()) {
-            Display.notifyUser("Creating required directories...");
-            directory.mkdirs();
+        try {
+            if (!directory.exists()) {
+                Display.notifyUser("Initialising program...");
+                directory.mkdirs();
+            }
+        } catch (Exception e) {
+            Display.warnUser(e.getMessage());
         }
 
         try {
@@ -39,6 +43,7 @@ public class ProcessStorageTasks {
             System.out.println("Path: " + FILE_PATH);
             Display.warnUser(e.getMessage());
         }
+        Display.notifyUser("Program initialised. How may I help you?");
     }
 
     /**

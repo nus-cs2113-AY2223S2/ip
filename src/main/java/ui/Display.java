@@ -13,7 +13,7 @@ public class Display {
     static public final String MESSAGE_WELCOME = LINE + System.lineSeparator() +
             "Hello from\n" + LOGO + System.lineSeparator() + "How can I help you?" + System.lineSeparator()
             + "Here are some possibly useful commands:" + System.lineSeparator() + LINE
-            + System.lineSeparator() + "/todo { description } - Add a todo task to ur task list."
+            + System.lineSeparator() + "/todo DESCRIPTION - Add a todo task to ur task list."
             + System.lineSeparator() +
             "/deadline DESCRIPTION /by CUTOFF - Add a deadline task to ur task list." + System.lineSeparator() +
             "/event DESCRIPTION /start START_TIME /end END_TIME - Add an event task to ur task list."

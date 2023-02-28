@@ -8,6 +8,7 @@ import commandHandler.Delete;
 import commandHandler.Find;
 import commandHandler.List;
 import commandHandler.Mark;
+import commandHandler.Help;
 import data.tasksList;
 
 /**
@@ -24,6 +25,7 @@ public class Parser {
     private static final String COMMAND_DEADLINE = "/deadline";
     private static final String COMMAND_DELETE = "/delete";
     private static final String COMMAND_FIND = "/find";
+    private static final String COMMAND_HELP = "/help";
 
     public enum MarkType {
         MARK, UNMARK
@@ -40,41 +42,65 @@ public class Parser {
      * @see MissingCommandException
      */
     public static void parseUserInput(String userInput) throws MissingCommandException {
-        /** Handle single-word input commands with no arguments **/
-        if (userInput.equals(COMMAND_BYE)) {
-            Display.goodbyeUser();
-            return;
-        }
-        if (userInput.equals(COMMAND_LIST)) {
-            List.listTasks();
-        } else {
-            /** Handle multi-word input commands with required arguments **/
-            String[] userInputArray = userInput.split(" ", 2);
-            String command = userInputArray[0];
-            if (userInputArray.length == 1) {
-                throw new MissingCommandException("Please enter the required arguments!");
-            }
-            String arguments = userInputArray[1];
-            if (command.equals(COMMAND_TODO) || command.equals(COMMAND_EVENT) || command.equals(COMMAND_DEADLINE)) {
+        String[] userInputArray = userInput.split(" ", 2);
+        String command = userInputArray[0];
+        String arguments;
+        switch (command) {
+            case COMMAND_BYE:
+                Display.goodbyeUser();
+                break;
+            case COMMAND_LIST:
+                List.listTasks();
+                break;
+            case COMMAND_HELP:
+                Help.displayHelp();
+                break;
+            case COMMAND_TODO:
+            case COMMAND_DEADLINE:
+            case COMMAND_EVENT:
+                if (userInputArray.length < 2) {
+                    throw new MissingCommandException("Please enter the required arguments!");
+                }
+                arguments = userInputArray[1];
                 Add.addTask(command, arguments);
                 Display.notifyUser(
-                        "Added the following task:\n" + tasksList.userTasksList.get(tasksList.userTaskCount - 1));
-            } else if (command.equals(COMMAND_FIND)) {
+                        "Added the following task:\n" +
+                                tasksList.userTasksList.get(tasksList.userTaskCount - 1));
+                break;
+            case COMMAND_FIND:
+                if (userInputArray.length < 2) {
+                    throw new MissingCommandException("Please enter the required arguments!");
+                }
+                arguments = userInputArray[1];
                 new Find(arguments);
-            } else if (command.equals(COMMAND_MARK)) {
+                break;
+            case COMMAND_MARK:
+                if (userInputArray.length < 2) {
+                    throw new MissingCommandException("Please enter the required arguments!");
+                }
+                arguments = userInputArray[1];
                 Mark.markTask(arguments, MarkType.MARK);
-            } else if (command.equals(COMMAND_UNMARK)) {
+                break;
+            case COMMAND_UNMARK:
+                if (userInputArray.length < 2) {
+                    throw new MissingCommandException("Please enter the required arguments!");
+                }
+                arguments = userInputArray[1];
                 Mark.markTask(arguments, MarkType.UNMARK);
-            } else if (command.equals(COMMAND_DELETE)) {
+                break;
+            case COMMAND_DELETE:
+                if (userInputArray.length < 2) {
+                    throw new MissingCommandException("Please enter the required arguments!");
+                }
+                arguments = userInputArray[1];
                 try {
-                    Delete.deleteTask(Integer.parseInt(userInputArray[1]));
+                    Delete.deleteTask(Integer.parseInt(arguments));
                 } catch (Exception e) {
                     Display.warnUser("Please enter a valid numerical index of the task!");
                 }
-            } else {
-                /** Handle non-command inputs **/
-                Display.warnUser("Please enter a valid command!");
-            }
+                break;
+            default:
+                throw new MissingCommandException("Please enter a valid command!");
         }
     }
 }
