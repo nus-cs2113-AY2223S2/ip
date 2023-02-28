@@ -1,16 +1,23 @@
 import java.util.Scanner;
 import java.util.ArrayList;
-import commands.Event;
-import commands.Task;
-import commands.Deadline;
-import commands.Todo;
+
+import storage.TaskStorage;
+import task.*;
 import Exceptions.DukeException;
+
+import static storage.TaskStorage.*;
+import static task.TaskList.*;
 
 public class Duke {
     private static String LINE = "____________________________________________________________";
     private static String errorMessage = "☹ OOPS!!! I'm sorry, but I don't know what that means :-(";
-    private static String todoError = "☹ OOPS!!! The description of a todo cannot be empty.";
-    private static ArrayList<Task> list = new ArrayList<Task>();
+    private static TaskList tasks;
+
+    public Duke(String dataPath){
+        TaskStorage.dataPath = dataPath;
+        tasks = new TaskList();
+        TaskStorage.loadSaveData();
+    }
 
     public static void greet() {
         System.out.println(LINE);
@@ -21,70 +28,6 @@ public class Duke {
     public static void bye() {
         System.out.println(LINE);
         System.out.println("Bye. Hope to see you again soon!");
-        System.out.println(LINE);
-    }
-
-    public static void printList() {
-        System.out.println(LINE);
-        int numTask = list.size();
-        if (numTask == 0) {
-            System.out.println("No task added yet");
-            System.out.println(LINE);
-        } else {
-            System.out.println("Here are the tasks in your list:");
-            for (int i = 0; i < list.size(); i++) {
-                System.out.println((i+1) + "." + list.get(i).toString());
-            }
-            System.out.println(LINE);
-        }
-    }
-
-    public static void markTask(int index) {
-        System.out.println(LINE);
-        list.get(index).markDone();
-        System.out.println("Awesome! I've mark this task as done:");
-        System.out.println("[" + list.get(index).getStatusIcon() + "] " + list.get(index).description);
-    }
-
-    public static void unmarkTask(int index) {
-        System.out.println(LINE);
-        list.get(index).markUndone();
-        System.out.println("What!?!? OK, I've marked this task as not done yet:");
-        System.out.println("[" + list.get(index).getStatusIcon() + "] " + list.get(index).description);
-    }
-
-    public static void addTodo(String input) throws DukeException {
-        try {
-            Todo task = new Todo(input);
-            list.add(task);
-            if (task.description.split(" ").length < 2) {
-                throw new DukeException(todoError);
-            } else {
-                System.out.println(LINE);
-                System.out.println("Roger! The Todo task has been added: \n    " + task.toString());
-                System.out.println("Now you have " + list.size() + " in the list");
-                System.out.println(LINE);
-            }
-        } catch (DukeException e) {
-            printError(e);
-        }
-    }
-
-    public static void addDeadline(String input) {
-        Deadline task = new Deadline(input);
-        list.add(task);
-        System.out.println(LINE);
-        System.out.println("Roger! The Deadline task has been added: \n    " + task.toString());
-        System.out.println("Now you have " + list.size() + " in the list");
-        System.out.println(LINE);
-    }
-
-    public static void addEvent(String input) {
-        Event task = new Event(input);
-        list.add(task);
-        System.out.println(LINE);
-        System.out.println("Roger! The Deadline task has been added: \n    " + task.toString());
-        System.out.println("Now you have " + list.size() + " in the list");
         System.out.println(LINE);
     }
 
@@ -106,11 +49,9 @@ public class Duke {
         } else {
             throw new DukeException(errorMessage);
         }
+        writeSaveData(tasks);
     }
 
-    private static void printError(DukeException e) {
-        System.out.println(LINE + "\n" + e.getMessage() + LINE);
-    }
     public static void main(String[] args) {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -118,9 +59,9 @@ public class Duke {
                 + "| |_| | |_| |   <  __/\n"
                 + "|____/ \\__,_|_|\\_\\___|\n";
         System.out.println(logo);
+        new Duke("tasks.txt");
         greet();
         String input, command;
-        int inputCounter = 0;
         while (true) {
             Scanner in = new Scanner(System.in);
             input = in.nextLine();
