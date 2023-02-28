@@ -93,7 +93,7 @@ Expected Outcome:<br/>
 
 
 ### SHOW LIST OF TASKS THAT CONTAINS KEYWORD(S): ```find```
-      Shows a list of all taks with the keyword(s) with their corresponding task number
+      Shows a list of all tasks with the keyword(s) with their corresponding task number
       find KEYWORDS
 
       EXAMPLE: find book
