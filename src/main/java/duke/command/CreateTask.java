@@ -1,6 +1,7 @@
 package duke.command;
 
 import duke.Duke;
+import duke.Parser;
 import duke.exception.BlankDescException;
 import duke.exception.DukeException;
 import duke.task.Deadline;
@@ -15,7 +16,7 @@ public class CreateTask {
         if (userCommand.length()<=4) {
             throw new BlankDescException();
         }
-        String description = userCommand.substring(5);
+        String description = Parser.extractInfo(userCommand, "desc", "todo");
         storedUserTasks.add(new Todo(description));
         Display.displayCreateTask(storedUserTasks);
         Duke.userTextCount++;
@@ -26,9 +27,8 @@ public class CreateTask {
         if (userCommand.length()<=8) {
             throw new BlankDescException();
         }
-        int indexOfBy = userCommand.indexOf("/by");
-        String description = userCommand.substring( 9, indexOfBy-1);
-        String by = userCommand.substring(indexOfBy+4);
+        String description = Parser.extractInfo(userCommand, "desc", "deadline");
+        String by = Parser.extractInfo(userCommand, "by", "none");
         storedUserTasks.add(new Deadline(description,by));
         Display.displayCreateTask(storedUserTasks);
         Duke.userTextCount++;
@@ -39,11 +39,9 @@ public class CreateTask {
         if (userCommand.length()<=5) {
             throw new BlankDescException();
         }
-        int indexOfFrom = userCommand.indexOf("/from");
-        int indexOfTo = userCommand.indexOf("/to");
-        String description = userCommand.substring(6,indexOfFrom-1);
-        String from = userCommand.substring(indexOfFrom+6,indexOfTo-1);
-        String to = userCommand.substring(indexOfTo+4);
+        String description = Parser.extractInfo(userCommand, "desc", "event");
+        String from = Parser.extractInfo(userCommand, "from", "none");
+        String to = Parser.extractInfo(userCommand, "to", "none");
         storedUserTasks.add(new Event(description,from,to));
         Display.displayCreateTask(storedUserTasks);
         Duke.userTextCount++;
