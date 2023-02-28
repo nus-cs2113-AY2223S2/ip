@@ -41,9 +41,18 @@ public class Ui {
     private final Scanner in;
     private final PrintStream out;
 
+    /**
+     * Constructor for Ui class
+     */
     public Ui(){
         this(System.in, System.out);
     }
+
+    /**
+     * Constructor for Ui class
+     * @param in This is the InputStream that will be set to the inputStream for this Ui.
+     * @param out This is the PrintStream that will be set to the output for this Ui.
+     */
     public Ui(InputStream in, PrintStream out) {
         this.in = new Scanner(in);
         this.out = out;
@@ -53,6 +62,10 @@ public class Ui {
         return inputLine.trim().isEmpty();
     }
 
+    /**
+     * Shows an exception message to the user depending on the message received.
+     * @param message This is the message received when exceptions are raised by other methods in Duke.
+     */
     public void showException(String message){
         switch(message) {
         case "EmptyTaskException":
@@ -72,6 +85,11 @@ public class Ui {
             break;
         }
     }
+
+    /**
+     * Returns text input from user.
+     * @return String The full input that the user has typed into the command line.
+     */
     public String getUserCommand(){
         out.print("Enter Command: ");
         String fullInputLine = in.nextLine();
@@ -82,6 +100,10 @@ public class Ui {
         return fullInputLine;
     }
 
+    /**
+     * Prints messages from other methods display for the user.
+     * @param message These are the String outputs to be shown to the user.
+     */
     public void showToUser(String ... message) {
         for (String m : message){
             out.println(m);
@@ -89,31 +111,53 @@ public class Ui {
         out.println(DIVIDER);
     }
 
+    /**
+     * Prints Greeting message.
+     */
     public void showWelcome(){
         showToUser(DIVIDER, DIVIDER, LOGO, DIVIDER, DIVIDER, WELCOME, DIVIDER);
     }
 
+    /**
+     * Prints Goodbye Message.
+     */
     public void handleExit(){
         showToUser(FAREWELL, DIVIDER, DIVIDER, GOODBYE, DIVIDER);
     }
 
+    /**
+     * Prints success message to user when task is added to TaskList.
+     * @param task This is the task that has been added.
+     */
     public void showSuccessfulAdd(Task task){
         out.println("Got it. I've added this to duke: ");
         out.println("    " + task.toString());
         out.println(DIVIDER);
     }
 
+    /**
+     * Prints success message to user when task is marked successfully.
+     * @param task This is the task that has been marked.
+     */
     public void showSuccessfulMark(Task task){
         out.println("Nice! I've marked this task as done: ");
         out.println(task.toString());
         out.println(DIVIDER);
     }
+
+    /**
+     * Prints success message to user when task is unmarked successfully.
+     * @param task This is the task that has been unmarked.
+     */
     public void showSuccessfulUnmark(Task task){
         out.println("Nice! I've marked this task as not done yet: ");
         out.println(task.toString());
         out.println(DIVIDER);
     }
 
+    /**
+     * Prints list of commands that the user can use as well as the format for using these commands.
+     */
     public void printHelp(){ //duke.Duke prints this if none of the duke.commands below are used
         System.out.println("Looks like you did not enter a valid duke.Duke.command.\n");
         System.out.println("Command list:");
@@ -131,13 +175,25 @@ public class Ui {
         System.out.println("    6. bye: Exits duke");
         out.println(DIVIDER);
     }
+
+    /**
+     * Prints success message to user after deleting a Task.
+     * @param task This is the task that has been deleted.
+     * @param size This is the number of remaining tasks in the list.
+     */
     public void showSuccessfulDelete(Task task, int size){
         System.out.println("Noted. I've removed this task: ");
         System.out.println("    " + task.toString());
         System.out.println("Now you have " +  + size + " tasks in the list");
         out.println(DIVIDER);
     }
+
+    /**
+     * Prints all the tasks in the TaskList.
+     * @param tasks This is the list of tasks.
+     */
     public void listTasks(ArrayList<Task> tasks){
+        out.println("Here are the tasks that you have currently:");
         for (int i = 0; i < tasks.size(); i++){
             System.out.print((i+1)+ ".");
             System.out.println(tasks.get(i).toString());
