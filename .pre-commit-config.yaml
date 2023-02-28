@@ -1,0 +1,13 @@
+fail_fast: false
+repos:
+  - repo: https://github.com/pre-commit/mirrors-clang-format
+    rev: v15.0.7
+    hooks:
+      - id: clang-format
+        args: [-i, --verbose]
+  - repo: https://github.com/jguttman94/pre-commit-gradle
+    rev: v0.3.0
+    hooks:
+      - id: gradle-task
+        args: [checkStyleMain]
+        args: [--wrapper, --output]
