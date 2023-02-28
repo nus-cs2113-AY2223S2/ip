@@ -23,7 +23,7 @@ public class TaskList {
     }
 
     public void unmark(int index){
-        tasksList.get(index).markAsDone();
+        tasksList.get(index).markAsUndone();
     }
 
     public String getStatus(int index){

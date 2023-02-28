@@ -1,6 +1,7 @@
 package duke.storage;
 
 import duke.Task;
+import duke.TaskList;
 import duke.UI;
 import duke.task.Deadline;
 import duke.task.Event;
@@ -19,7 +20,7 @@ public class Storage {
     private static final String dirPath = "data";
     private static final String filePath = "data/duke.txt";
 
-    public static ArrayList<Task> convertToList() throws FileNotFoundException {
+    public static ArrayList<Task> load() throws FileNotFoundException {
         ArrayList<Task> taskList = new ArrayList<>();
         File file = new File(filePath); // create a File for the given file path
         Scanner s = new Scanner(file); // create a Scanner using the File as the source
@@ -86,6 +87,18 @@ public class Storage {
         File f = new File(filePath);
         if (!f.exists()) {
             f.createNewFile();
+        }
+    }
+
+    public static void updateFile(TaskList tasks) {
+        ArrayList<Task> tasksList = tasks.returnTasks();
+        try {
+            writeToFile("");
+            for (Task task : tasksList) {
+                appendToFile(task.textToSave() + System.lineSeparator());
+            }
+        } catch (IOException err) {
+            UI.printMessage("Something went wrong: " + err.getMessage());
         }
     }
 }

@@ -3,7 +3,6 @@ package duke;
 import duke.data.textImage;
 
 public class UI {
-
     private static final String HORIZONTAL_LINE = "____________________________________________________________";
 
     public static void printTodo(String message) {
@@ -30,7 +29,7 @@ public class UI {
     }
 
     public static void showWelcomeMessage() {
-        textImage.printImage(1);
+        System.out.println(textImage.welcomeTextImage);
         System.out.println(HORIZONTAL_LINE);
         System.out.println("Hello! I'm Duke\n" + "What can I do for you?");
         System.out.println(HORIZONTAL_LINE);
