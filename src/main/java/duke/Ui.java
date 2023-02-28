@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Ui {
+    /**
+     * Show a brief user guide to the users.
+     */
     public static void showHelpMessage() {
         printLine();
         System.out.println("First time using Duke?\n" +
@@ -40,9 +43,17 @@ public class Ui {
         System.out.println("Hope it helps!! woof a nice day ੯•໒꒱❤︎");
         printLine();
     }
+
+    /**
+     * Print a separation line
+     */
     public static void printLine() {
         System.out.println("____________________________________________________________");
     }
+
+    /**
+     * Show welcome message to the user
+     */
     public static void showWelcomeMessage() {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -54,14 +65,28 @@ public class Ui {
         System.out.println("Hello! I'm Duke  U ´ᴥ` U\n" + "What can I do for you?");
         printLine();
     }
+
+    /**
+     * Show error message when no previous file found
+     */
     public static void showInitErrorMessage() {
         System.out.println("No previous file found, Duke will try to create a file to store your data.");
     }
+
+    /**
+     * Show goodby message when user exit the program
+     */
     public static void showGoodByeMessage() {
         printLine();
         System.out.println("Bye. Hope to see you again soon!ﾉ~");
         printLine();
     }
+
+    /**
+     * Scan in the user input and return it
+     *
+     * @return the user input string
+     */
     public static String getUserCommand() {
         Scanner scan = new Scanner(System.in);
         String s;
@@ -71,12 +96,24 @@ public class Ui {
         }
         return s;
     }
+
+    /**
+     * Show successfully add task message to the user.
+     *
+     * @param tasks The list of user's tasks
+     */
     public static void showAddTaskMessage(ArrayList<Task> tasks) {
         printLine();
         System.out.println("Got it. I've added this task: \n" + tasks.get(tasks.size()-1));
         System.out.println("Now you have " + tasks.size() + " tasks in your list. ^ ^");
         printLine();
     }
+
+    /**
+     * Print all of the user's tasks in sequence, including done status and task type.
+     *
+     * @param tasks The list containing user's tasks.
+     */
     public static void printListOfTasks(ArrayList<Task> tasks) {
         for (int i = 0; i < tasks.size(); i += 1) {
             System.out.print(i + 1);

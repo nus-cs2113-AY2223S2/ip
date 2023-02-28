@@ -11,10 +11,6 @@ public class Duke {
     static ArrayList <Task> tasks = new ArrayList<>();
 
 
-    public static void printLine() {
-        System.out.println("____________________________________________________________");
-    }
-
 
     /**
      * This function will start process user input and perform task correspondingly.
@@ -67,7 +63,7 @@ public class Duke {
                 process(s);
             } catch (InvalidCommandException e) {
                 System.out.println("WOOF!! The command is not found, please type 'help' for more info");
-                printLine();
+                ui.printLine();
             }
             s = inputCommand();
         }
