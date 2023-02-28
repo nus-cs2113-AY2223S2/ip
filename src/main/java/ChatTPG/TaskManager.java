@@ -29,7 +29,6 @@ public class TaskManager {
             } catch (IndexOutOfBoundsException | NullPointerException e) {
                 System.out.println("ERROR: invalid task number");
             }
-
         } else if (command.matches("^unmark.*$")) {
             try {
                 verifyUnmarkCommand(command);
@@ -76,6 +75,17 @@ public class TaskManager {
                 System.out.println("event <task> /from <start> /to <end>");
             } catch (CommandMissingArguments e) {
                 System.out.println("☹ OOPS!!! The description of an event cannot be empty.");
+            }
+        } else if (command.matches("^delete.*$")) {
+            try {
+                verifyDeleteCommand(command);
+                int task_number = Integer.parseInt(command.substring(7)) - 1;
+                deleteTask(task_number);
+            } catch (InvalidCommandFormat e) {
+                System.out.println("ERROR: command must be of the following form:");
+                System.out.println("delete <number>");
+            } catch (IndexOutOfBoundsException | NullPointerException e) {
+                System.out.println("ERROR: invalid task number");
             }
         } else {
             System.out.println("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
@@ -173,6 +183,12 @@ public class TaskManager {
         }
     }
 
+    public static void verifyDeleteCommand(String command) throws InvalidCommandFormat {
+        if (!command.matches("^delete [0-9]*$")) {
+            throw new InvalidCommandFormat();
+        }
+    }
+
     public static void markTask(int task_number) {
         tasks.get(task_number).setDone(true);
         System.out.println("Nice! I've marked this task as done:");
@@ -183,6 +199,15 @@ public class TaskManager {
         tasks.get(task_number).setDone(false);
         System.out.println("OK, I've marked this task as not done yet:");
         System.out.println(tasks.get(task_number).toString());
+    }
+
+    public static void deleteTask(int task_number) {
+        String description = tasks.get(task_number).toString();
+        tasks.remove(task_number);
+        System.out.println("Noted. I've removed this task:");
+        System.out.println(description);
+        task_count--;
+        displayNumberOfTasks();
     }
 
     public static void listTasks() {
