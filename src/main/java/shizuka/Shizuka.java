@@ -98,6 +98,9 @@ public class Shizuka {
                     Printer.ioError();
                     break;
                 }
+            case "find":
+                list0.find(command[1]);
+                break;
             default:
                 Printer.parseError();
             }
