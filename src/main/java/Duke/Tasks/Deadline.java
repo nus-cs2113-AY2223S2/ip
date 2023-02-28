@@ -1,7 +1,5 @@
 package Duke.Tasks;
 
-import Duke.Tasks.Task;
-
 public class Deadline extends Task {
 
     protected String dueDate;
