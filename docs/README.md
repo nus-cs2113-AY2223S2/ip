@@ -5,7 +5,7 @@ Dude is a light-weight task-managing application that can be used on a command l
 ## Quick Start
 
 1. Ensure you have `Java 11` or above installed in your computer.
-2. Download the latest `ip.jar` from [here](github.com).
+2. Download the latest `ip.jar` from [here](https://github.com/Rayleigh47/ip/releases/).
 3. Copy the file to the folder you want to use as your home folder.
 4. Open a command line terminal and change directory into the folder.
 5. Run the application by entering into the terminal `java -jar ip.jar`
