@@ -7,7 +7,7 @@ import duke.tasks.Event;
 import duke.tasks.Todo;
 import duke.ui.Ui;
 
-import static duke.ui.Ui.printBorder;
+//import static duke.ui.Ui.printBorder;
 
 /**
  * Represents the add feature in Duke. A task object corresponding to the type
@@ -29,10 +29,11 @@ public class AddCommand {
                 throw new EmptyTaskException();
             }
             tasks.addTask(new Todo(name, false));
-            printBorder();
+            Ui.printBorder();
             System.out.println("added: " + name + "\n");
-            printBorder();
+            Ui.printBorder();
         } catch (NullPointerException e) {
+            Ui.printBorder();
             System.out.println("OOPS! The description of task cannot be empty");
             Ui.printBorder();
         }
@@ -51,10 +52,11 @@ public class AddCommand {
             String name = taskInfo[0];
             String deadline = taskInfo[1];
             tasks.addTask(new Deadline(name, deadline, false));
-            printBorder();
+            Ui.printBorder();
             System.out.println("added: " + name + "\n");
-            printBorder();
+            Ui.printBorder();
         } catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
+            Ui.printBorder();
             System.out.println("OOPS! The description of task is invalid");
             Ui.printBorder();
         }
@@ -74,10 +76,11 @@ public class AddCommand {
             String start = taskInfo[1];
             String end = taskInfo[2];
             tasks.addTask(new Event(name, start, end, false));
-            printBorder();
+            Ui.printBorder();
             System.out.println("added: " + name + "\n");
-            printBorder();
+            Ui.printBorder();
         } catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
+            Ui.printBorder();
             System.out.println("OOPS! The description of task is invalid");
             Ui.printBorder();
         }

@@ -40,6 +40,17 @@ added: math quiz
 ____________________________________________________________ 
 
 ```
+Exceptions:
+
+The following error message will be displayed if the user does not input a task description
+
+```
+____________________________________________________________ 
+
+OOPS! The description of task cannot be empty
+____________________________________________________________ 
+
+```
 ### `deadline` - adds a deadline Task to user's task list
 
 Example of usage:
