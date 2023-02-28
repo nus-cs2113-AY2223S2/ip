@@ -11,6 +11,7 @@ public class Duke {
     private Memory memory;
     private IO io;
     private TaskList tasks;
+    private Parser parser;
 
     /**
      * Constructor for Duke object.
@@ -50,17 +51,6 @@ public class Duke {
     }
 
     /**
-     * Splits user input into an action and a description array.
-     *
-     * @param userInput The user's input.
-     * @return An array containing the action and description of the input.
-     */
-    public String[] splitActionAndDescription(String userInput) {
-        String[] actionAndDescription = userInput.split(" ", 2);
-        return actionAndDescription.length == 2 ? actionAndDescription : new String[]{actionAndDescription[0], ""};
-    }
-
-    /**
      * Processes user input by executing the appropriate action.
      * Prints an error message if an invalid command is entered.
      *
@@ -68,7 +58,8 @@ public class Duke {
      * @param fileDoesExist Whether the file exists or not.
      */
     private void processUserInput(String userInput, boolean fileDoesExist) {
-        String[] actionAndDescription = splitActionAndDescription(userInput);
+        parser = new Parser();
+        String[] actionAndDescription = parser.splitActionAndDescription(userInput);
         String action = actionAndDescription[0];
         String description = actionAndDescription[1];
         try {
