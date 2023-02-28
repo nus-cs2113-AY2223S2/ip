@@ -32,6 +32,9 @@ public class Duke {
                     case "delete":
                         TaskList.deleteTask(tasks, words);
                         break;
+                    case "find":
+                        TaskList.findString(tasks, words);
+                        break;
                     case "todo":
                         TaskList.addTodo(tasks, words);
                         Ui.showAddedTask(tasks);

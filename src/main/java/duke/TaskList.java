@@ -1,5 +1,6 @@
 package duke;
 
+import duke.exceptions.ExcessInputsException;
 import duke.exceptions.MissingDescriptionException;
 import duke.task.Deadline;
 import duke.task.Event;
@@ -13,6 +14,17 @@ public class TaskList {
     public static final String DONE = "    Nice! I've marked this task as done: \n    ";
     public TaskList() {}
 
+    public static void findString (ArrayList<Task> tasks, String[] words) throws ExcessInputsException {
+        String toFind = words[1];
+        ArrayList<Task> matchingTasks = new ArrayList<>();
+        for (Task x : tasks) {
+            if (x.description.contains(toFind)){
+                matchingTasks.add(x);
+            }
+        }
+        String[] line = toFind.split("NOSPLIT");
+        Ui.printList(matchingTasks, line);
+    }
     public static void editMarkStatus(ArrayList<Task> tasks, String[] words, String command) {
         int index = Integer.parseInt(words[1]) - 1;
         if (command.equals("unmark")) {
