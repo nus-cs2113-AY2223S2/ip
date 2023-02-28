@@ -3,7 +3,14 @@ package duke.keycommands;
 import duke.common.Common;
 import duke.tasktypes.Task;
 
+/**
+ * Represents the command to list all the current tasks in the task list.
+ */
 public class ListCommand {
+
+    /**
+     * Constructs a new ListCommand object and list all the current tasks in the task list.
+     */
     public ListCommand() {
         printItems();
     }

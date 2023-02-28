@@ -4,9 +4,20 @@ import duke.common.Common;
 import duke.tasktypes.Task;
 import java.io.IOException;
 
+/**
+ * Represents the command to delete a task from the task list.
+ */
 public class DeleteCommand {
-    private int taskNumber;
+
     private static final String REMOVE_MESSAGE = "Noted. I've removed this task:";
+
+    private int taskNumber;
+
+    /**
+     * Constructs a new DeleteCommand object with the given task number locating the task
+     * and deletes this task from the task list.
+     * @param taskNumber The position of the task to be deleted.
+     */
     public DeleteCommand(int taskNumber) {
         this.taskNumber = taskNumber;
         deleteTask();

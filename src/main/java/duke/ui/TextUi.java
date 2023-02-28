@@ -5,11 +5,20 @@ import duke.parser.Parser;
 
 import java.util.Scanner;
 
+/**
+ * Provides the text-based user interface application.
+ * Accepts user input, passes it to the Parser for processing, and displays output to the console.
+ */
 public class TextUi {
 
     private static final String HELLO_IM_DUKE = "Hello! I'm Duke";
+
     private static final String KEYWORD_TO_SEE_THE_INSTRUCTIONS = "Please type 'help' if you want to see the instructions";
+
     private static final String ASKING_MESSAGE = "What can I do for you?";
+
+    // Regex format to match one or more consecutive spaces, tabs, or newlines
+    public static final String EXTRA_SPACE_REGEX_FORMAT = "\\s+";
 
     private String userInput;
     private Scanner in;
@@ -20,12 +29,16 @@ public class TextUi {
         this.parser = new Parser();
     }
 
+    /**
+     * Receives user input, refines it, and passes it to the Parser for processing.
+     * The loop continues until the user types the "bye" command to exit the application.
+     */
     public void executeInputUntilExit() {
         while (true) {
             getInput();
-            String refinedUserInput = userInput.trim().replaceAll("\\s+", " ");
-            parser.splitKeywordAndContent(refinedUserInput);
-            parser.handleInput();
+            String refinedUserInput = userInput.trim().replaceAll(EXTRA_SPACE_REGEX_FORMAT, " ");
+            parser.splitKeywordAndDescription(refinedUserInput);
+            parser.executeUserInput();
         }
     }
 
@@ -36,6 +49,7 @@ public class TextUi {
         System.out.println(Common.HORIZONTAL_LINE);
     }
 
+    /** Displays the welcome message to the user.  */
     public void showWelcomeMessage() {
         System.out.println(Common.HORIZONTAL_LINE);
         System.out.println(HELLO_IM_DUKE);

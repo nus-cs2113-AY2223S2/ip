@@ -4,14 +4,19 @@ import duke.common.Common;
 import duke.tasktypes.Task;
 import duke.tasktypes.ToDo;
 
+/**
+ * Represents the command to add a new ToDo task to the task list.
+ */
 public class TodoCommand {
 
-    private static final String EMPTY_TODO_DESCRIPTION = "OOPS!!! The description of a todo cannot be empty.";
-    private static final String EMPTY_TODO_TASK = "OOPS!!! your task can not be empty";
     private static final String ADDING_TASK = "Got it. I've added this task:";
 
     private String content;
 
+    /**
+     * Constructs a new TodoCommand object with the given content, and adds a new ToDo task to the task list.
+     * @param content The content of a ToDo task.
+     */
     public TodoCommand(String content) {
         this.content = content;
         addTodoTask();

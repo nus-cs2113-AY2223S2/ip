@@ -2,6 +2,7 @@ package duke.keycommands;
 
 import duke.common.Common;
 public class FindCommand {
+
     private String keyword;
     private static final String FIND_MESSAGE = "Here are the matching tasks in your list:";
     public FindCommand(String keyword) {
