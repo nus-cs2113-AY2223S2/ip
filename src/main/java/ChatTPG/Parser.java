@@ -1,6 +1,15 @@
 package ChatTPG;
 
+/**
+ * Class which handles user commands and verifies the syntax of the commands passed in.
+ */
 public class Parser {
+
+    /**
+     * Processes the specified user command to perform the relevant actions.
+     *
+     * @param command User command.
+     */
     public static void handleCommand(String command) {
         if (command.matches("^list$")) {
             TaskList.listTasks();
@@ -97,18 +106,37 @@ public class Parser {
         }
     }
 
+    /**
+     * Verifies the syntax of the mark command passed in.
+     *
+     * @param command User command.
+     * @throws InvalidCommandFormat if syntax of command is wrong.
+     */
     public static void verifyMarkCommand(String command) throws InvalidCommandFormat {
         if (!command.matches("^mark [0-9]*$")) {
             throw new InvalidCommandFormat();
         }
     }
 
+    /**
+     * Verifies the syntax of the unmark command passed in.
+     *
+     * @param command User command.
+     * @throws InvalidCommandFormat if syntax of command is wrong.
+     */
     public static void verifyUnmarkCommand(String command) throws InvalidCommandFormat {
         if (!command.matches("^unmark [0-9]*$")) {
             throw new InvalidCommandFormat();
         }
     }
 
+    /**
+     * Verifies the syntax of the todo command passed in.
+     *
+     * @param command User command.
+     * @throws CommandMissingArguments if no arguments are detected after the todo keyword.
+     * @throws InvalidCommandFormat if syntax of command is wrong.
+     */
     public static void verifyTodoCommand(String command)
             throws CommandMissingArguments, InvalidCommandFormat {
         if (command.matches("^todo *$")) {
@@ -119,6 +147,13 @@ public class Parser {
         }
     }
 
+    /**
+     * Verifies the syntax of the deadline command passed in.
+     *
+     * @param command User command.
+     * @throws CommandMissingArguments if no arguments are detected after the deadline keyword.
+     * @throws InvalidCommandFormat if syntax of command is wrong.
+     */
     public static void verifyDeadlineCommand(String command)
             throws CommandMissingArguments, InvalidCommandFormat {
         if (command.matches("^deadline *$")) {
@@ -132,6 +167,13 @@ public class Parser {
         }
     }
 
+    /**
+     * Verifies the syntax of the event command passed in.
+     *
+     * @param command User command.
+     * @throws CommandMissingArguments if no arguments are detected after the event keyword.
+     * @throws InvalidCommandFormat if syntax of command is wrong.
+     */
     public static void verifyEventCommand(String command)
             throws CommandMissingArguments, InvalidCommandFormat {
         if (command.matches("^event *$")) {
@@ -145,12 +187,25 @@ public class Parser {
         }
     }
 
+    /**
+     * Verifies the syntax of the delete command passed in.
+     *
+     * @param command User command.
+     * @throws InvalidCommandFormat if syntax of command is wrong.
+     */
     public static void verifyDeleteCommand(String command) throws InvalidCommandFormat {
         if (!command.matches("^delete [0-9]*$")) {
             throw new InvalidCommandFormat();
         }
     }
 
+    /**
+     * Verifies the syntax of the find command passed in.
+     *
+     * @param command User command.
+     * @throws CommandMissingArguments if no arguments are detected after the find keyword.
+     * @throws InvalidCommandFormat if syntax of command is wrong.
+     */
     public static void verifyFindCommand(String command)
             throws CommandMissingArguments, InvalidCommandFormat {
         if (command.matches("^find *$")) {

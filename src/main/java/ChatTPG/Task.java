@@ -1,10 +1,20 @@
 package ChatTPG;
 
+/**
+ * Class to represent the Tasks which will be created and added to the list of tasks.
+ */
 public abstract class Task {
+
+    /** Description of the task */
     protected String description;
+
+    /** True if the task has already been done and False otherwise */
     protected boolean isDone;
 
+    /** Marker if specified task is done */
     protected static final String DONE = "X";
+
+    /** Marker if specified task is not yet done */
     protected static final String NOT_DONE = " ";
 
     public Task(String description) {

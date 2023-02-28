@@ -10,11 +10,20 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.io.FileWriter;
 
+/**
+ * Class to load tasks from data file and save tasks to data file.
+ */
 public class Storage {
 
+    /** Specifies the directory path to be created */
     static final String DIR_PATH = "./data/";
+
+    /** Specifies the file path to be created */
     static final String FILE_PATH = "./data/duke.txt";
 
+    /**
+     * Loads the tasks into the list of tasks by reading from the data file.
+     */
     public static void loadData() {
         try {
             createDirectory();
@@ -27,16 +36,32 @@ public class Storage {
         }
     }
 
+    /**
+     * Creates the directory used to store the data file.
+     *
+     * @throws IOException
+     */
     public static void createDirectory() throws IOException {
         Path path = Paths.get(DIR_PATH);
         Files.createDirectories(path);
     }
 
+    /**
+     * Creates the file used to store the data on the tasks in the list.
+     *
+     * @throws IOException
+     */
     public static void createFile() throws IOException {
         File file = new File(FILE_PATH);
         file.createNewFile();
     }
 
+    /**
+     * Reads from the data file and converts the data back into the individual tasks
+     * before adding the tasks to the list accordingly.
+     *
+     * @throws FileNotFoundException if data file does not exist.
+     */
     public static void readFile() throws FileNotFoundException {
         File file = new File(FILE_PATH);
         Scanner scanner = new Scanner(file);
@@ -76,6 +101,11 @@ public class Storage {
         scanner.close();
     }
 
+    /**
+     * Writes to the data file to save the current state of tasks in the list.
+     *
+     * @param tasks List of tasks.
+     */
     public static void saveData(ArrayList<Task> tasks) {
         try {
             FileWriter writer = new FileWriter(FILE_PATH);

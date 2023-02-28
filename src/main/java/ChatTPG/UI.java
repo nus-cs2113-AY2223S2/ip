@@ -1,8 +1,15 @@
 package ChatTPG;
 
 import java.util.Scanner;
+
+/**
+ * Specifications of UI class which allows the user to interact with ChatTPG.
+ */
 public class UI {
 
+    /**
+     * Greets user and prompts user for command.
+     */
     public static void greet() {
         System.out.println("________________________________");
         System.out.println("Hello! I'm ChatTPG");
@@ -10,6 +17,9 @@ public class UI {
         System.out.println("________________________________");
     }
 
+    /**
+     * Ends conversation with user upon command "bye" before program termination.
+     */
     public static void bye() {
         System.out.println("________________________________");
         System.out.println("Bye. Hope to see you again soon!");
