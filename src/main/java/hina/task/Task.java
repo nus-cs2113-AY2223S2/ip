@@ -33,4 +33,8 @@ public class Task {
         }
         return String.format("[T][%s] %s", mark, description);
     }
+
+    public String toSave() {
+        return String.format("T / %s / %s", isDone? "1" : "0", description);
+    }
 }

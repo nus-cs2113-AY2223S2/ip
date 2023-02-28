@@ -18,7 +18,7 @@ public class Event extends Task {
         } else {
             mark = " ";
         }
-        return String.format("[D][%s] %s(from: %s to: %s)", mark, super.getDescription(), from, to);
+        return String.format("[E][%s] %s(from: %s to: %s)", mark, super.getDescription(), from, to);
     }
 
     public String getFrom() {
@@ -27,5 +27,9 @@ public class Event extends Task {
 
     public String getTo() {
         return to;
+    }
+
+    public String toSave() {
+        return String.format("E / %s / %s / %s / %s", isDone? "1" : "0", description, from, to);
     }
 }

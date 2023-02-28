@@ -18,4 +18,8 @@ public class Deadline extends Task {
         }
         return String.format("[D][%s] %s (by: %s)", mark, super.getDescription(), by);
     }
+
+    public String toSave() {
+        return String.format("D / %s / %s / %s", isDone? "1" : "0", description, by);
+    }
 }
