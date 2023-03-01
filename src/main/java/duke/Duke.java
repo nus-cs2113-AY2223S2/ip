@@ -1,5 +1,6 @@
 package duke;
 
+import duke.exceptions.EmptyFindException;
 import duke.exceptions.EmptyListException;
 import duke.exceptions.ExcessInputsException;
 import duke.exceptions.MissingDescriptionException;
@@ -56,21 +57,23 @@ public class Duke {
                     }
                 }
             } catch (NumberFormatException e) {
-                System.out.println(LINE + "Command must only be followed by the index number!\n" +
-                        "Enter \"list\" to check the index.\n" + LINE);
+                System.out.println(LINE + "    Command must only be followed by the index number!\n" +
+                        "    Enter \"list\" to check the index.\n" + LINE);
             } catch (IndexOutOfBoundsException e) {
-                System.out.println(LINE + "Missing/Invalid task index number!\n" +
-                        "Enter \"list\" to check the index.\n" + LINE);
+                System.out.println(LINE + "    Missing/Invalid task index number!\n" +
+                        "    Enter \"list\" to check the index.\n" + LINE);
             } catch (NullPointerException e) {
-                System.out.println(LINE + "Invalid task index number!\n" +
-                        "Enter \"list\" to check the index.\n" + LINE);
+                System.out.println(LINE + "    Invalid task index number!\n" +
+                        "    Enter \"list\" to check the index.\n" + LINE);
             } catch (ExcessInputsException e) {
-                System.out.println(LINE + "Too many inputs! Please only enter \"list\"\n" + LINE);
+                System.out.println(LINE + "    Too many inputs! Please only enter \"list\"\n" + LINE);
             } catch (MissingDescriptionException e) {
-                System.out.println(LINE + "Missing task description details.\n" +
-                    "Type 'help' to view list of command formats.\n" + LINE);
+                System.out.println(LINE + "    Missing task description details.\n" +
+                    "    Type 'help' to view list of command formats.\n" + LINE);
             } catch (EmptyListException e) {
-                System.out.println(LINE + "Oops there is nothing in your list yet, try adding a task item first. :)\n" + LINE);
+                System.out.println(LINE + "    Oops there is nothing in your list yet, try adding a task item first. :)\n" + LINE);
+            } catch (EmptyFindException e) {
+                System.out.println(LINE + "    I cannot find your keyword :(. Try adding a related task item first.\n" + LINE);
             }
             line = Ui.readInput();
             storage.saveChanges(tasks);

@@ -34,7 +34,7 @@ public class Storage {
         try {
             writeToFile(tasks);
         } catch (IOException e) {
-            System.out.println("Something went wrong: " + e.getMessage());
+            System.out.println("    Something went wrong: " + e.getMessage());
         }
     }
 
@@ -67,7 +67,7 @@ public class Storage {
                 Event event = new Event(description[0], "E", dates[0], dates[1]);
                 tasks.add(event);
             } else {
-                System.out.print(LINE + "There are invalid inputs in you To-do List, " +
+                System.out.print(LINE + "    There are invalid inputs in you To-do List, " +
                         "please edit it first." + LINE);
             }
             if (command.contains("X")) {
@@ -96,7 +96,7 @@ public class Storage {
             createFile();
             readFile(tasks);
         } catch (IOException e) {
-            System.out.println(LINE + "Data File Missing! Check if you have accidentally deleted it.\n" + LINE);
+            System.out.println(LINE + "    Data File Missing! Check if you have accidentally deleted it.\n" + LINE);
         }
     }
 }

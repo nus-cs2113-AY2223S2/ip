@@ -1,5 +1,6 @@
 package duke;
 
+import duke.exceptions.EmptyFindException;
 import duke.exceptions.EmptyListException;
 import duke.exceptions.ExcessInputsException;
 import duke.task.Task;
@@ -68,9 +69,9 @@ public class Ui {
         System.out.print(LINE);
     }
 
-    public static void printMatchingList(ArrayList<Task> tasks) throws EmptyListException {
+    public static void printMatchingList(ArrayList<Task> tasks) throws EmptyFindException {
         if (tasks.size() < 1) {
-            throw new EmptyListException();
+            throw new EmptyFindException();
         }
         System.out.println(LINE + "    Here are the matching tasks in your list:");
         for (int i = 1; i <= tasks.size(); i++) {
