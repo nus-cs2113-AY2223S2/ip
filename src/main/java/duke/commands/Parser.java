@@ -48,6 +48,9 @@ public class Parser {
         case "delete":
             TaskList.deleteTask(Integer.parseInt(commandDescription));
             break;
+        case "find":
+            TaskList.findTask(commandDescription);
+            break;
         default:
             System.out.println("Wrong command, please try again");
             break;

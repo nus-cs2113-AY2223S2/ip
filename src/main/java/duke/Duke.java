@@ -5,8 +5,6 @@ import duke.exceptions.IncorrectDeadlineException;
 import duke.exceptions.IncorrectEventException;
 
 
-import java.util.ArrayList;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;

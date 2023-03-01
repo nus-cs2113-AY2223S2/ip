@@ -66,4 +66,15 @@ public abstract class TaskList{
         System.out.println("Nice! I've marked this task as done:");
         System.out.println(tasks.get(index - 1).printTask());
     }
+
+    public static void findTask(String input) {
+        int matchCount = 1;
+        System.out.println("Here are the matching tasks in your list:");
+        for (Integer i = 0; i < getTaskSize(); i++) {
+            if (tasks.get(i).description.contains(input)) {
+                System.out.println(matchCount + "." + tasks.get(i).toString());
+                matchCount ++;
+            }
+        }
+    }
 }
