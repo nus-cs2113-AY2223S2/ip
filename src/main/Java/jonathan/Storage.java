@@ -6,6 +6,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -41,7 +44,8 @@ public class Storage {
 
                         break;
                     case "D":
-                        String by = extract[3].trim();
+                        String byString = extract[3].trim();
+                        LocalDateTime by = getDateAndTimeFormat(byString);
                         Deadline deadline = new Deadline(description, by);
 
                         if (isDone.equals("1")) {
@@ -52,8 +56,10 @@ public class Storage {
 
                         break;
                     case "E":
-                        String start = extract[3].trim();
-                        String end = extract[4].trim();
+                        String startString = extract[3].trim();
+                        String endString = extract[4].trim();
+                        LocalDateTime start = getDateAndTimeFormat(startString);
+                        LocalDateTime end = getDateAndTimeFormat(endString);
                         Event event = new Event(description, start, end);
 
                         if (isDone.equals("1")) {
@@ -70,7 +76,7 @@ public class Storage {
             reader.close();
 
         } catch (FileNotFoundException e) {
-            throw new JonathanException();
+            throw new JonathanException("Unfortunately, file can't be found!");
         }
 
         return tasks;
@@ -92,12 +98,13 @@ public class Storage {
                 } else if (task instanceof Deadline) {
                     Deadline deadline = (Deadline) task;
                     String line = "D | " + deadline.getIsDone() + " | " + deadline.getDescription() +
-                            " | " + deadline.getBy() + "\n";
+                            " | " + convertDateTime(deadline.getRawBy()) + "\n";
                     fileWriter.write(line);
                 } else if (task instanceof Event) {
                     Event event = (Event) task;
                     String line = "E | " + event.getIsDone() + " | " + event.getDescription() +
-                            " | " + event.getStart() + " | " + event.getEnd() + "\n";
+                            " | " + convertDateTime(event.getRawStart()) + " | " +
+                            convertDateTime(event.getRawEnd()) + "\n";
                     fileWriter.write(line);
                 }
             }
@@ -109,5 +116,21 @@ public class Storage {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
+    }
+
+    private LocalDateTime getDateAndTimeFormat(String substring) {
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
+            LocalDateTime dateTime = LocalDateTime.parse(substring, formatter);
+            return dateTime;
+        } catch (DateTimeParseException e) {
+            // do something here
+        }
+        return null;
+    }
+
+    private String convertDateTime(LocalDateTime dateTime) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
+        return dateTime.format(formatter);
     }
 }

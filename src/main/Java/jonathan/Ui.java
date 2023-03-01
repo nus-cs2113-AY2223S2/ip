@@ -77,4 +77,8 @@ public class Ui {
     public void showLoadingError() {
         System.out.println("    Unfortunately, file can't be found!");
     }
+
+    public void showError(String message) {
+        System.out.println("    " + message);
+    }
 }
