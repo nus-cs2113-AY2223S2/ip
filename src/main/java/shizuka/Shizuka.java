@@ -5,27 +5,6 @@ import java.util.Scanner;
 
 public class Shizuka {
 
-    /**
-     * Splits the input string into command keyword and arguments.
-     *
-     * @param args User input string
-     * @return Array of size 2, with command keyword at index 0 and arguments at index 1
-     */
-    public static String[] parseCommand(String args) {
-        return args.split(" ", 2);
-    }
-
-    /**
-     * Parses the task number from the input string.
-     *
-     * @param args User input string
-     * @return Task number
-     */
-    public static int parseNumber(String args) {
-        int endIndex = args.indexOf(' ') + 1;
-        return Integer.parseInt(args.substring(endIndex));
-    }
-
     public static void main(String[] args) {
         UI.intro();
         Scanner in = new Scanner(System.in);
@@ -41,7 +20,7 @@ public class Shizuka {
         do {
             line = in.nextLine();
             lineTrimmed = line.trim();
-            String[] command = parseCommand(lineTrimmed);
+            String[] command = Parser.parseCommand(lineTrimmed);
             int taskNum;
             switch (command[0]) {
             case "bye":
@@ -51,7 +30,7 @@ public class Shizuka {
                 break;
             case "mark":
                 try {
-                    taskNum = parseNumber(command[1]);
+                    taskNum = Parser.parseNumber(command[1]);
                 } catch (ArrayIndexOutOfBoundsException e) {
                     UI.noArgsError();
                     break;
@@ -60,7 +39,7 @@ public class Shizuka {
                 break;
             case "unmark":
                 try {
-                    taskNum = parseNumber(command[1]);
+                    taskNum = Parser.parseNumber(command[1]);
                 } catch (ArrayIndexOutOfBoundsException e) {
                     UI.noArgsError();
                     break;
@@ -93,7 +72,7 @@ public class Shizuka {
                 break;
             case "delete":
                 try {
-                    taskNum = parseNumber(command[1]);
+                    taskNum = Parser.parseNumber(command[1]);
                 } catch (ArrayIndexOutOfBoundsException e) {
                     UI.noArgsError();
                     break;
