@@ -15,6 +15,25 @@ MAX is the individual project component for CS2113, AY22/23 Semester 2.
 
 MAX is your *paw*-sonal productivity to help you *MAX*-imize your productivity!
 
+## Table of Contents
+
+- [MAX User Guide](#max-user-guide)
+  - [Features](#features)
+    - [Task Creation](#task-creation)
+    - [Task Management](#task-management)
+    - [Persistent State](#persistent-state)
+  - [Usage](#usage)
+    - [`todo` - Add a TODO task](#todo---add-a-todo-task)
+    - [`deadline` - Add a Deadline Task](#deadline---add-a-deadline-task)
+    - [`event` - Add an Event Task](#event---add-an-event-task)
+    - [`list` - Get your Task List](#list---get-your-task-list)
+    - [`mark` - Tag task as done](#mark---tag-task-as-done)
+    - [`unmark` - Tag task as undone](#unmark---tag-task-as-undone)
+    - [`delete` - Remove a Task](#delete---remove-a-task)
+    - [`fetch` or `find` - Query for a task](#fetch-or-find---query-for-a-task)
+    - [`debug` - Activate debug mode](#debug---activate-debug-mode)
+    - [`exit` - Exit MAX](#exit---exit-max)
+
 ## Features
 
 Max comes with features for you to manage your daily tasks efficiently via CLI.
@@ -102,7 +121,7 @@ These are compulsory parameters that must be included.
 
 Syntax:
 
-`event (description) --from (YYYY-MM-dd HHmm) --to (YYYY-MM-dd HHMM)`
+`event (description) --from (YYYY-MM-dd HHmm) --to (YYYY-MM-dd HHmm)`
 
 Note that the order of `--to` and `--from` arguments do not matter!
 
@@ -216,7 +235,7 @@ Woof woof this task will be rem-woofed:
 You now have 2 tasks in your list.
 ```
 
-### `fetch` or `find` - Describe action
+### `fetch` or `find` - Query for a task
 
 Ask MAX to fetch tasks that match a search query.  
 Fetch and Find do the same thing. Find is an alias for Fetch.
