@@ -22,20 +22,28 @@ Prerequisites: JDK 11, update Intellij to the most recent version.
    | |_| | |_| |   <  __/
    |____/ \__,_|_|\_\___|
    ```
+   
+## Run the jar file
+Put the jar file in some directory in your computer, and use java -jar "your jar file path" to run it in your terminal
+
 
 ## User's input accepted:
 1. If you want to add task, you can type:
    - todo
    - deadline
    - event<br>
-   And your task status will be shown as T, D, E respectively.<br>
-   e.g., event do homework /by no idea :wuwu: [E][ ] do homework (by: no idea :wuwu)<br>
-   If you want to add time to your task, you can do so:<br>
-   e.g., deadline return book /by 2/12/2019 1800: <br>
-   or deadline return book /by 2/12/2019: <br>
+And your task status will be shown as T, D, E respectively.<br>
+e.g., event do homework /by no idea :wuwu: [E][ ] do homework (by: no idea :wuwu)<br>
+If you want to add time to your task, you can do so:<br>
+e.g., deadline return book /by 2/12/2019 1800: <br>
+or deadline return book /by 2/12/2019: <br>
 
+2. If you want to list all the task you have added before, you can type:
+   - list
+Your tasks will be displayed in the chronological order in which you add them
 
+3. If you want to delete one task based on its position, you can type:
+   - delete "The task position"
+Then this task will be deleted, and the system will tell you which one is deleted
 
-
-
-
+4. 
