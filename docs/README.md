@@ -20,16 +20,16 @@ Duke is a command-line (CLI) chatbot application that helps you keep track of yo
 
 ## Quick Start
 
-1 Ensure that you have Java 11 installed in your computer. To check your java version, open your terminal and type the following command `java --version` and the following should show up:
+- Ensure that you have Java 11 installed in your computer. To check your java version, open your terminal and type the following command `java --version` and the following should show up:
 
 ```
 C:\Users\example>java --version
 java 11.0.17 2022-10-18 LTS
 ```
 
-2 Download the latest `.jar` file from [here](https://github.com/ong-ck/ip/releases). You may move it to a directory of your choice in your computer.
+- Download the latest `.jar` file from [here](https://github.com/ong-ck/ip/releases). You may move it to a directory of your choice in your computer.
 
-3 Open the terminal in the directory that the `.jar` file is stored and type the following command `java -jar ip.jar`. A welcome message should pop up as follows:
+- Open the terminal in the directory that the `.jar` file is stored and type the following command `java -jar ip.jar`. A welcome message should pop up as follows:
 
 ```
 C:\Users\example>java -jar ip.jar
@@ -46,7 +46,7 @@ What can I do for you?
 ____________________________________________________________
 ```
 
-4 You may start using Duke following the instructions in this user guide!
+- You may start using Duke following the instructions in this user guide!
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 <div id="features"></div>
