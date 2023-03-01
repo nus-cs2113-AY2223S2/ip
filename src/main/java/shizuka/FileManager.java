@@ -19,9 +19,9 @@ public class FileManager {
         File f = new File(filePath);
         FileWriter fw = new FileWriter(filePath);
         if (f.createNewFile()) {
-            Printer.fileCreated();
+            UI.fileCreated();
         } else {
-            Printer.fileExists();
+            UI.fileExists();
         }
         for (String item : text) {
             fw.write(item);

@@ -65,7 +65,7 @@ public class TodoList {
     public void addTodo(String args) {
         this.todos.add(new Todo(args));
         numberOfTasks += 1;
-        Printer.addToList(args);
+        UI.addToList(args);
     }
 
     /**
@@ -78,12 +78,12 @@ public class TodoList {
         try {
             vars = parseDeadline(args);
         } catch (ArrayIndexOutOfBoundsException | InvalidCommandFormatException e) {
-            Printer.formatError();
+            UI.formatError();
             return;
         }
         this.todos.add(new Deadline(vars[0], vars[1]));
         numberOfTasks += 1;
-        Printer.addToList(vars[0]);
+        UI.addToList(vars[0]);
     }
 
     /**
@@ -96,12 +96,12 @@ public class TodoList {
         try {
             vars = parseEvent(args);
         } catch (ArrayIndexOutOfBoundsException | InvalidCommandFormatException e) {
-            Printer.formatError();
+            UI.formatError();
             return;
         }
         this.todos.add(new Event(vars[0], vars[1], vars[2]));
         numberOfTasks += 1;
-        Printer.addToList(vars[0]);
+        UI.addToList(vars[0]);
     }
 
     /**

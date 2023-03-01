@@ -1,6 +1,6 @@
 package shizuka;
 
-public class Printer {
+public class UI {
     final static String LOGO = "   _____  __     _               __        \n"
             + "  / ___/ / /_   (_)____  __  __ / /__ ____ _\n"
             + "  \\__ \\ / __ \\ / //_  / / / / // //_// __ `/\n"

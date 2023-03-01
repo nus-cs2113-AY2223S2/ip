@@ -26,15 +26,15 @@ public class Shizuka {
     }
 
     public static void main(String[] args) {
-        Printer.intro();
+        UI.intro();
         Scanner in = new Scanner(System.in);
         String line, lineTrimmed;
         TodoList list0 = new TodoList();
         try {
             FileManager.load(FILE_PATH, list0);
-            Printer.fileLoaded();
+            UI.fileLoaded();
         } catch (IOException e) {
-            Printer.fileNotFound();
+            UI.fileNotFound();
         }
 
         do {
@@ -52,7 +52,7 @@ public class Shizuka {
                 try {
                     taskNum = parseNumber(command[1]);
                 } catch (ArrayIndexOutOfBoundsException e) {
-                    Printer.noArgsError();
+                    UI.noArgsError();
                     break;
                 }
                 list0.mark(taskNum);
@@ -61,7 +61,7 @@ public class Shizuka {
                 try {
                     taskNum = parseNumber(command[1]);
                 } catch (ArrayIndexOutOfBoundsException e) {
-                    Printer.noArgsError();
+                    UI.noArgsError();
                     break;
                 }
                 list0.unmark(taskNum);
@@ -70,7 +70,7 @@ public class Shizuka {
                 try {
                     list0.addTodo(command[1]);
                 } catch (ArrayIndexOutOfBoundsException e) {
-                    Printer.noArgsError();
+                    UI.noArgsError();
                     break;
                 }
                 break;
@@ -78,7 +78,7 @@ public class Shizuka {
                 try {
                     list0.addDeadline(command[1]);
                 } catch (ArrayIndexOutOfBoundsException e) {
-                    Printer.noArgsError();
+                    UI.noArgsError();
                     break;
                 }
                 break;
@@ -86,7 +86,7 @@ public class Shizuka {
                 try {
                     list0.addEvent(command[1]);
                 } catch (ArrayIndexOutOfBoundsException e) {
-                    Printer.noArgsError();
+                    UI.noArgsError();
                     break;
                 }
                 break;
@@ -94,7 +94,7 @@ public class Shizuka {
                 try {
                     taskNum = parseNumber(command[1]);
                 } catch (ArrayIndexOutOfBoundsException e) {
-                    Printer.noArgsError();
+                    UI.noArgsError();
                     break;
                 }
                 list0.deleteTask(taskNum);
@@ -102,20 +102,20 @@ public class Shizuka {
             case "save":
                 try {
                     FileManager.save(FILE_PATH, list0.listWriter());
-                    Printer.saveSuccess();
+                    UI.saveSuccess();
                     break;
                 } catch (IOException e) {
-                    Printer.ioError();
+                    UI.ioError();
                     break;
                 }
             case "find":
                 list0.find(command[1]);
                 break;
             default:
-                Printer.parseError();
+                UI.parseError();
             }
         }
         while (!lineTrimmed.equals("bye"));
-        Printer.exit();
+        UI.exit();
     }
 }
