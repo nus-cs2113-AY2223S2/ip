@@ -51,7 +51,7 @@ public class TaskStorage {
                 Scanner readData = new Scanner(saveData);
                 while (readData.hasNext()) {
                     String data = readData.nextLine();
-                    String taskType = data.split("|",5)[0];
+                    String taskType = data.split("|",4)[0];
                     if (taskType.equals("T")) {
                         parseTodo(data);
                     } else if (taskType.equals("D")) {
