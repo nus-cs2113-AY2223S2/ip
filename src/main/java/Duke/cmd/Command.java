@@ -91,12 +91,20 @@ public class Command {
 				textUI.printTask (tasks);
 				break;
 			case "deadline":
-				tasks.addDeadline (description);
-				textUI.printTask (tasks);
+				if(description.contains ("/by")) {
+					tasks.addDeadline (description);
+					textUI.printTask (tasks);
+				}else{
+					throw new DukeException ("Please use the correct command format.");
+				}
 				break;
 			case "event":
-				tasks.addEvent (description);
-				textUI.printTask (tasks);
+				if(description.contains ("/from") && description.contains ("/to")) {
+					tasks.addEvent (description);
+					textUI.printTask (tasks);
+				}else{
+					throw new DukeException ("Please use the correct command format.");
+				}
 				break;
 			case "mark":
 				int mIndex = checkIndex (tasks, cmd, description);
