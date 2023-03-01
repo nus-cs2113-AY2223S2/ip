@@ -1,6 +1,7 @@
-# Duke project template
+# Duke (Alfred Version)
 
 This is a project template for a greenfield Java project. It's named after the Java mascot _Duke_. Given below are instructions on how to use it.
+It has been modified to be a little different
 
 ## Setting up in Intellij
 
@@ -16,9 +17,19 @@ Prerequisites: JDK 11, update Intellij to the most recent version.
 3. After that, locate the `src/main/java/Duke.java` file, right-click it, and choose `Run Duke.main()` (if the code editor is showing compile errors, try restarting the IDE). If the setup is correct, you should see something like the below as the output:
    ```
    Hello from
-    ____        _        
-   |  _ \ _   _| | _____ 
-   | | | | | | | |/ / _ \
-   | |_| | |_| |   <  __/
-   |____/ \__,_|_|\_\___|
+      _____  .__   _____                   .___
+     /  _  \ |  |_/ ____\______   ____   __| _/
+    /  /_\  \|  |\   __\\_  __ \_/ __ \ / __ |
+   /    |    \  |_|  |   |  | \/\  ___// /_/ |
+   \____|__  /____/__|   |__|    \___  >____ |
+           \/                        \/     \/
+   
+   ____________________________________________________________
+   Hello! I'm Alfred Pennyworth.
+   What can I do for you?
+   ____________________________________________________________
+      
    ```
+
+## User Guide
+[Read the user guide](https://shawntangy.github.io/ip)
