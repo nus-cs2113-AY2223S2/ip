@@ -2,6 +2,7 @@ package duke;
 
 import duke.command.*;
 import duke.exception.BlankDescException;
+import duke.exception.CommandParseException;
 import duke.exception.DukeException;
 import duke.exception.TimeParseException;
 import duke.task.Task;
@@ -58,7 +59,11 @@ public class Duke {
                 Display.listTasks(userTextCount, storedUserTasks);
                 break;
             case "find":
-                FindTask.searchForKeyword(userCommand.substring(4), storedUserTasks);
+                try {
+                    FindTask.searchForKeyword(userCommand, storedUserTasks);
+                } catch (ParseException e) {
+                    CommandParseException.errorMessage();
+                }
                 break;
             case "bye":
                 isExit = true;

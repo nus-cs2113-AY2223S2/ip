@@ -73,6 +73,8 @@ public class Parser {
             dateInString = userCommand.substring(indexOfTo+4);
             strDate = extractDateAndTime(dateInString);
             return strDate;
+        case "keyword":
+            return userCommand.substring(4);
         }
 
         return "";
