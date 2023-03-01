@@ -217,6 +217,9 @@ public class Duke {
         case "D":
             copyDeadlineToList("D", line.substring(2), tasks);
             break;
+        case "E":
+            copyEventToList("E", line.substring(2), tasks);
+            break;
         default:
             System.out.println("Unknown task type detected...");
             System.out.println("Skipping task...");
@@ -244,6 +247,17 @@ public class Duke {
         Deadline newDeadline = new Deadline(messageComponents[1], messageComponents[2]);
         int currentIndexInTaskStorage = Task.getNumberOfTasks();
         tasks[currentIndexInTaskStorage] = newDeadline;
+        if (messageComponents[0].equals("1")) {
+            Task currentTask = tasks[currentIndexInTaskStorage];
+            currentTask.markAsDone();
+        }
+    }
+
+    private static void copyEventToList(String taskType, String taskInfo, Task[] tasks) {
+        String[] messageComponents = taskInfo.split("/", 4);
+        Event newEvent = new Event(messageComponents[1], messageComponents[2], messageComponents[3]);
+        int currentIndexInTaskStorage = Task.getNumberOfTasks();
+        tasks[currentIndexInTaskStorage] = newEvent;
         if (messageComponents[0].equals("1")) {
             Task currentTask = tasks[currentIndexInTaskStorage];
             currentTask.markAsDone();
