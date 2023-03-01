@@ -6,6 +6,9 @@ import task.Task;
 import task.TaskList;
 import jonathan.Ui;
 
+/**
+ * model a class to handle the delete command. inherit from Command class.
+ */
 public class DeleteCommand extends Command {
     private final int taskNum;
 
@@ -13,6 +16,14 @@ public class DeleteCommand extends Command {
         this.taskNum = taskNum;
     }
 
+    /**
+     * Method to execute the delete command class.
+     * @param tasks list of tasks.
+     * @param ui the interface of the program.
+     * @param storage the storage of the program.
+     * @return list of tasks.
+     * @throws JonathanException when the task doesn't exist.
+     */
     @Override
     public TaskList execute(TaskList tasks, Ui ui, Storage storage) throws JonathanException {
         try {
