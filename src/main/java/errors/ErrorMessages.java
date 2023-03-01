@@ -9,47 +9,47 @@ public class ErrorMessages {
     /**
      * The following are meant for Tasks
      */
-    public static String provideTaskEmptyDescriptionText() {
+    public static String errorTaskEmptyDescriptionText() {
         return "Description cannot be empty :<,"
                 + " please write a description after the task keyword (i.e. todo/deadline/event)";
     }
 
-    public static String provideTaskNoDeadlineParamsText() {
+    public static String errorTaskNoDeadlineParamsText() {
         return "You did not include the /by parameter, please split include it for Pikapi!";
     }
 
-    public String provideTaskEmptyDescriptionForDeadlineText() {
+    public String errorTaskEmptyDescriptionForDeadlineText() {
         return "Description cannot be empty :<, please write a description after the word deadline";
     }
 
-    public String provideTaskEmptyDueDateDeadlineText() {
+    public String errorTaskEmptyDueDateDeadlineText() {
         return "DueDate cannot be empty :<, please write a the description of a deadline";
     }
 
-    public String provideTaskEmptyStartDateEventText() {
+    public String errorTaskEmptyStartDateEventText() {
         return "Start Date cannot be empty :<";
     }
 
-    public String provideTaskEmptyEndDateEventText() {
+    public String errorTaskEmptyEndDateEventText() {
         return "End Date cannot be empty :<";
     }
 
-    public String provideTaskWrongEventFormatText() {
+    public String errorTaskWrongEventFormatText() {
         return "You did not key in a correct format for events :< ";
     }
 
-    public String provideTaskWrongEventParamsText() {
+    public String errorTaskWrongEventParamsText() {
         return "Pikapi's events should include /to and /from fields!";
     }
 
-    public String provideWrongTaskNameText() {
+    public String errorWrongTaskNameText() {
         return "Pikapi does not understand this task, please give Pikapi a todo, deadline or event task";
     }
 
     /**
      * @return Provides error text when trying to access an empty list
      */
-    public String provideEmptyListText() {
+    public String errorEmptyListText() {
         return "PIKAPII the list is currently empty! "
                 + "You can't mark/unmark an empty list! "
                 + "Please input some tasks for Pikapi to add :3";
@@ -59,25 +59,25 @@ public class ErrorMessages {
      * This is a message that prints a message when someone inputs an index out of
      * the bounds of the task list
      */
-    public String provideExceedListLengthText(int listLength) {
+    public String errorExceedListLengthText(int listLength) {
         if (listLength == 1) {
             return "PIKAPII you dont have that many tasks! You only have 1 task hehe :3";
         }
         return "PIKAPII you dont have that many tasks! Please write a number between 1 and " + listLength;
     }
 
-    public String provideInvalidNumberText() {
+    public String errorInvalidNumberText() {
         return "PIKAPII we dont have negative or tasks indexed as 0 >:<";
     }
 
-    public String provideNoNumberText() {
+    public String errorNoNumberText() {
         return "PIKAPII you did not input a number beside your marking action!";
     }
 
     /**
      * @return Provides error text when a String is provided as input instead of a number
      */
-    public String provideStringAsNumber() {
+    public String errorStringAsNumber() {
         return "Pikapiii you did not give me an index(number)! "
                 + "Please give me a number after the mark/unmark/delete keyword please :3 UwU";
     }
@@ -85,41 +85,33 @@ public class ErrorMessages {
     /**
      * @return Provides error text when a specific line of data in listData.txt is not of correct format
      */
-    public static String provideCorruptDataErrorText() {
+    public static String errorCorruptDataErrorText() {
         return "PIKAPII There seems to be something wrong with this task in your save file,"
                 + " not loading a specific task into the task list";
     }
 
-    public static String provideDeleteContentErrorText() {
+    public static String errorDeleteContentErrorText() {
         return "For some reason I cant delete the content of the folder";
     }
 
-    public static String provideLoadInvalidTaskErrorText() {
+    public static String errorLoadInvalidTaskErrorText() {
         return "For some reason the current file is not of a known subclass of Task, please check implementation";
     }
 
-    public static String provideUnableToWriteToFileText() {
+    public static String errorUnableToWriteToFileText() {
         return "Unable to append to file";
     }
 
-    public static String provideUnableToFindListData() {
+    public static String errorUnableToFindListData() {
         return "For some reason, listData is still unable to be found";
     }
 
     //The following are meant for wrong command errors
-    public String provideWrongCommandText() {
+    public String errorWrongCommandText() {
         return "Pikapi is unable to find that command, please type in a correct command";
     }
 
-    /**
-     * @return String that shows that find keyword does not exist in any existing task description
-     */
-    public String provideNoTaskKeywordInput() {
-        return "Pikapi is unable to find a keyword to search the list for you,"
-                + " please add a word after the word \"find\"";
-    }
-
-    public String provideCorruptDataText() {
+    public String errorCorruptDataText() {
         return "A specific line in data is corrupted, not adding corrupted data";
     }
 }

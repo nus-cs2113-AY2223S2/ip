@@ -37,7 +37,7 @@ public class TaskAdder extends ErrorMessages {
         String[] taskDescription = description.split(CHAR_SPACE, 2);
         try {
             if (taskDescription.length != 2) {
-                throw new TaskAddError(provideTaskEmptyDescriptionText());
+                throw new TaskAddError(errorTaskEmptyDescriptionText());
             }
             switch (taskDescription[0]) {
             case TODO_TASK:
@@ -50,7 +50,7 @@ public class TaskAdder extends ErrorMessages {
                 addEventTask(listOfTasks, taskDescription[1], loadFromSaveData);
                 break;
             default:
-                System.out.println(provideWrongTaskNameText());
+                System.out.println(errorWrongTaskNameText());
             }
         } catch (TaskAddError e) {
             System.out.println(e.getMessage());
@@ -62,7 +62,7 @@ public class TaskAdder extends ErrorMessages {
             throws TaskAddError {
         String descriptionBlankCheck = clearBlankSpaces(description);
         if (descriptionBlankCheck.equals(BLANK)) {
-            throw new TaskAddError(provideTaskEmptyDescriptionText());
+            throw new TaskAddError(errorTaskEmptyDescriptionText());
         }
         Todo todoTask = new Todo(" " + description.trim());
         listOfTasks.add(todoTask);
@@ -75,15 +75,15 @@ public class TaskAdder extends ErrorMessages {
     private void addDeadlineTask(ArrayList<Task> listOfTasks, String description, boolean hideOutput)
             throws TaskAddError {
         if (!description.contains(BY_SPLIT)) {
-            throw new TaskAddError(provideTaskNoDeadlineParamsText());
+            throw new TaskAddError(errorTaskNoDeadlineParamsText());
         }
         String descriptionBlankCheck = clearBlankSpaces(description);
         if (descriptionBlankCheck.equals(BLANK)) {
-            throw new TaskAddError(provideTaskEmptyDescriptionText());
+            throw new TaskAddError(errorTaskEmptyDescriptionText());
         }
         String[] deadlineInput = description.split(BY_SPLIT);
         if (deadlineInput.length != 2) {
-            throw new TaskAddError(provideTaskEmptyDescriptionText());
+            throw new TaskAddError(errorTaskEmptyDescriptionText());
         }
         String deadlineDescription = deadlineInput[0].trim();
         String deadlineFinishByDate = deadlineInput[1].trim();
@@ -99,11 +99,11 @@ public class TaskAdder extends ErrorMessages {
 
     private void addEventTask(ArrayList<Task> listOfTasks, String description, boolean hideOutput) throws TaskAddError {
         if (!containsEventParams(description, EVENT_PARAMS)) {
-            throw new TaskAddError(provideTaskWrongEventParamsText());
+            throw new TaskAddError(errorTaskWrongEventParamsText());
         }
         String descriptionBlankCheck = clearBlankSpaces(description);
         if (descriptionBlankCheck.equals(BLANK)) {
-            throw new TaskAddError(provideTaskEmptyDescriptionText());
+            throw new TaskAddError(errorTaskEmptyDescriptionText());
         }
         String[] eventData = description.split(FROM_SPLIT + "|" + TO_SPLIT);
 
@@ -115,7 +115,7 @@ public class TaskAdder extends ErrorMessages {
             eventFrom = eventData[1].trim();
             eventTo = eventData[2].trim();
         } else {
-            throw new TaskAddError(provideTaskWrongEventFormatText());
+            throw new TaskAddError(errorTaskWrongEventFormatText());
         }
         if (eventFieldsAreNotBlank(eventDescription, eventFrom, eventTo)) {
             Event newEvent = new Event(eventDescription, eventFrom, eventTo);
@@ -128,10 +128,10 @@ public class TaskAdder extends ErrorMessages {
 
     private boolean deadlineFieldsAreNotBlank(String description, String deadline) throws TaskAddError {
         if (description.equals(BLANK)) {
-            throw new TaskAddError(provideTaskEmptyDescriptionForDeadlineText());
+            throw new TaskAddError(errorTaskEmptyDescriptionForDeadlineText());
         }
         if (deadline.equals(BLANK)) {
-            throw new TaskAddError(provideTaskEmptyDueDateDeadlineText());
+            throw new TaskAddError(errorTaskEmptyDueDateDeadlineText());
         }
         return true;
     }
@@ -150,13 +150,13 @@ public class TaskAdder extends ErrorMessages {
     private boolean eventFieldsAreNotBlank(String eventDescription, String eventFrom, String eventTo)
             throws TaskAddError {
         if (eventDescription.equals(BLANK)) {
-            throw new TaskAddError(provideTaskEmptyDescriptionText());
+            throw new TaskAddError(errorTaskEmptyDescriptionText());
         }
         if (eventFrom.equals(BLANK)) {
-            throw new TaskAddError(provideTaskEmptyStartDateEventText());
+            throw new TaskAddError(errorTaskEmptyStartDateEventText());
         }
         if (eventTo.equals(BLANK)) {
-            throw new TaskAddError(provideTaskEmptyEndDateEventText());
+            throw new TaskAddError(errorTaskEmptyEndDateEventText());
         }
         return true;
     }

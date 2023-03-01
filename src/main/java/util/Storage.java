@@ -21,6 +21,11 @@ public class Storage {
     private static final Boolean LOAD_FROM_SAVE_DATA = true;
     private static final String MARK = "mark ";
     private static final String FILE_LOCATION = "listData.txt";
+    private static final String BLANK = " ";
+    private static final String MARKED = "1";
+    private static final String UNMARKED = "0";
+
+    private static final String EMPTY = "";
 
 
     /**
@@ -44,18 +49,18 @@ public class Storage {
             TaskAdder taskAdder = new TaskAdder();
             Marker marker = new Marker();
             while (listDataScanner.hasNext()) {
-                String[] currentTaskInput = listDataScanner.nextLine().split(" ", 2);
+                String[] currentTaskInput = listDataScanner.nextLine().split(BLANK, 2);
                 taskAdder.addTaskToList(taskList, currentTaskInput[1], LOAD_FROM_SAVE_DATA);
                 try {
                     if (Integer.parseInt(currentTaskInput[0]) == 1) {
                         marker.handleMarkUnmarkAction(taskList, MARK + (taskList.size()), LOAD_FROM_SAVE_DATA);
                     }
                 } catch (NumberFormatException e) {
-                    System.out.println(ErrorMessages.provideCorruptDataErrorText());
+                    System.out.println(ErrorMessages.errorCorruptDataErrorText());
                 }
             }
         } catch (FileNotFoundException e) {
-            System.out.println(ErrorMessages.provideUnableToFindListData());
+            System.out.println(ErrorMessages.errorUnableToFindListData());
         }
     }
 
@@ -85,7 +90,7 @@ public class Storage {
         try {
             writeToFile();
         } catch (IOException e) {
-            System.out.println(ErrorMessages.provideDeleteContentErrorText());
+            System.out.println(ErrorMessages.errorDeleteContentErrorText());
         }
         for (Task task : taskList) {
             String currentLine;
@@ -96,45 +101,45 @@ public class Storage {
             } else if (task instanceof Event) {
                 currentLine = parseString((Event) task) + System.lineSeparator();
             } else {
-                System.out.println(ErrorMessages.provideLoadInvalidTaskErrorText());
+                System.out.println(ErrorMessages.errorLoadInvalidTaskErrorText());
                 continue;
             }
             try {
                 appendToFile(currentLine);
             } catch (IOException e) {
-                System.out.println(ErrorMessages.provideUnableToWriteToFileText());
+                System.out.println(ErrorMessages.errorUnableToWriteToFileText());
             }
         }
     }
 
     private static String parseString(Todo todo) {
-        String done = "0";
+        String done = MARKED;
         if (todo.getDone()) {
-            done = "1";
+            done = MARKED;
         }
         return done + " todo " + todo.getDescription();
     }
 
     private static String parseString(Deadline deadline) {
-        String done = "0";
+        String done = MARKED;
         if (deadline.getDone()) {
-            done = "1";
+            done = MARKED;
         }
         return done + " deadline " + deadline.getDescription() + " /by " + deadline.getDeadline();
     }
 
     private static String parseString(Event event) {
-        String done = "0";
+        String marked = UNMARKED;
         if (event.getDone()) {
-            done = "1";
+            marked = MARKED;
         }
-        return done + " event " + event.getDescription() + " /from " + event.getStartDate()
+        return marked + " event " + event.getDescription() + " /from " + event.getStartDate()
                 + " /to " + event.getEndDate();
     }
 
     private static void writeToFile() throws IOException {
         FileWriter fw = new FileWriter(Storage.FILE_LOCATION);
-        fw.write("");
+        fw.write(EMPTY);
         fw.close();
     }
 

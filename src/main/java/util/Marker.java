@@ -30,7 +30,7 @@ public class Marker extends ErrorMessages {
         String[] markActions = (input.split(BLANK, 2));
         try {
             if (markActions.length != 2) {
-                throw new MarkTaskError(provideNoNumberText());
+                throw new MarkTaskError(errorNoNumberText());
             }
             int indexToMark = Integer.parseInt(markActions[1]);
             if (markActions[0].equals(MARK_TASK)) {
@@ -40,15 +40,15 @@ public class Marker extends ErrorMessages {
             }
         } catch (MarkTaskError e) {
             if (loadFromSaveData) {
-                System.out.println(provideCorruptDataText());
+                System.out.println(errorCorruptDataText());
             } else {
                 System.out.println(e.getMessage());
             }
         } catch (NumberFormatException e) {
             if (loadFromSaveData) {
-                System.out.println(provideCorruptDataText());
+                System.out.println(errorCorruptDataText());
             } else {
-                System.out.println(provideStringAsNumber());
+                System.out.println(errorStringAsNumber());
             }
         }
     }
@@ -69,11 +69,11 @@ public class Marker extends ErrorMessages {
 
     private boolean verifyMarkAction(ArrayList<Task> taskList, int indexToMark) throws MarkTaskError {
         if (taskList.size() == 0) {
-            throw new MarkTaskError(provideEmptyListText());
+            throw new MarkTaskError(errorEmptyListText());
         } else if (indexToMark > taskList.size()) {
-            throw new MarkTaskError((provideExceedListLengthText(taskList.size())));
+            throw new MarkTaskError((errorExceedListLengthText(taskList.size())));
         } else if (indexToMark <= 0) {
-            throw new MarkTaskError(provideInvalidNumberText());
+            throw new MarkTaskError(errorInvalidNumberText());
         }
         return true;
     }

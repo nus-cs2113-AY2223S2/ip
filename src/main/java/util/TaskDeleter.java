@@ -20,10 +20,10 @@ public class TaskDeleter extends ErrorMessages {
         String[] deleteActions = (input.split(BLANK, 2));
         try {
             if (listOfTasks.size() <= 0) {
-                throw new DeleteTaskError(provideEmptyListText());
+                throw new DeleteTaskError(errorEmptyListText());
             }
             if (deleteActions.length != 2) {
-                throw new DeleteTaskError(provideNoNumberText());
+                throw new DeleteTaskError(errorNoNumberText());
             }
             int indexToDelete = Integer.parseInt(deleteActions[1]);
             OutputUI outputUI = new OutputUI();
@@ -32,7 +32,7 @@ public class TaskDeleter extends ErrorMessages {
         } catch (DeleteTaskError e) {
             System.out.println(e.getMessage());
         } catch (NumberFormatException e) {
-            System.out.println(provideStringAsNumber());
+            System.out.println(errorStringAsNumber());
         }
     }
 
@@ -45,11 +45,11 @@ public class TaskDeleter extends ErrorMessages {
 
     private boolean verifyMarkAction(ArrayList<Task> taskList, int indexToDelete) throws DeleteTaskError {
         if (taskList.size() == 0) {
-            throw new DeleteTaskError(provideEmptyListText());
+            throw new DeleteTaskError(errorEmptyListText());
         } else if (indexToDelete > taskList.size()) {
-            throw new DeleteTaskError((provideExceedListLengthText(taskList.size())));
+            throw new DeleteTaskError((errorExceedListLengthText(taskList.size())));
         } else if (indexToDelete <= 0) {
-            throw new DeleteTaskError(provideInvalidNumberText());
+            throw new DeleteTaskError(errorInvalidNumberText());
         }
         return true;
     }

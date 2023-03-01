@@ -77,7 +77,7 @@ public class StartPikaDuke {
                     finder.findTaskFromList(listOfTasks, input);
                     break;
                 default:
-                    throw new DukeException(errMsgs.provideWrongCommandText());
+                    throw new DukeException(errMsgs.errorWrongCommandText());
                 }
             } catch (DukeException e) {
                 System.out.println(e.getMessage());
