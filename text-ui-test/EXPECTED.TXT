@@ -5,3 +5,16 @@ Hello from
 | |_| | |_| |   <  __/
 |____/ \__,_|_|\_\___|
 
+what can i do for you
+Got it, Ive done the Following!
+Added: [T][ ]borrow book
+now you have: 1 tasks in this list.
+Got it, ive done the Following
+Added: return book (by: Sunday)
+now you have: 2 tasks in this list.
+-------TODO-LIST------
+----------------------
+1. [T][ ] borrow book
+2. [D][ ] return book (by: Sunday)
+----------------------
+Bye! see you soon!
