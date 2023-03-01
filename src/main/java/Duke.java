@@ -1,147 +1,31 @@
-import java.util.ArrayList;
-import java.util.Scanner;
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
 
 public class Duke {
-    private final static ArrayList<Task> list = new ArrayList<>();
-    static String lineBreak = "-----------------";
+
+    private Storage storage;
+    private TaskList tasks;
+    private UI ui;
+    private Parser parser=new Parser();
+
+    public Duke(String filePath) {
+        ui = new UI();
+        storage = new Storage(filePath);
+        tasks = new TaskList(storage.load());
+
+    }
+
+    public void run() {
+        ui.showWelcome();
+        while (!parser.isExit()) {
+
+            String fullCommand = ui.readCommand();
+            ui.showLine();
+            parser.parse(fullCommand);
+        }
+    }
 
     public static void main(String[] args) {
-        read();
-        System.out.println(lineBreak + '\n' + "Hello! I'm Duke" + '\n'
-                + "What can I do for you?" + '\n' + lineBreak);
-        String instruction;
-        while (true) {
-            Scanner myObj = new Scanner(System.in);
-            instruction = myObj.nextLine();
-            if (instruction.equalsIgnoreCase("list")) {
-                System.out.println(lineBreak + '\n'
-                        + "Here are the tasks in your list:");
-                for (int i = 0; i < list.size(); i++) {
-                    System.out.println(i + 1 + "." + list.get(i).toString());
-                }
-                System.out.println(lineBreak);
-            } else if (instruction.equalsIgnoreCase("bye")) {
-                System.out.println(lineBreak + '\n'
-                        + "Bye. Hope to see you again soon!" + '\n' + lineBreak);
-                save();
-                break;
-            } else if (instruction.toLowerCase().contains("mark")) {
-                try {
-                    String[] split = instruction.split("\\s+");
-                    int toMark = Integer.parseInt(split[1]);
-                    if (split[0].equalsIgnoreCase("mark")) {
-                        list.get(toMark - 1).markAsDone();
-                        System.out.println("Nice! I've marked this task as done: ");
-                    } else {
-                        list.get(toMark - 1).markAsUnDone();
-                        System.out.println("OK, I've marked this task as not done yet: ");
-                    }
-                    System.out.println(list.get(toMark - 1).toString() + '\n' + lineBreak);
-                } catch (NullPointerException e) {
-                    System.out.println("Item is not in list!");
-                }
-            } else if (instruction.toLowerCase().contains("delete")) {
-                String[] split = instruction.split("\\s+");
-                int toDelete = Integer.parseInt(split[1]);
-                taskListDelete(toDelete - 1);
-            } else {
-                Task t;
-                if (instruction.toLowerCase().contains("deadline")) {
-                    try {
-                        String description = instruction.substring(instruction.indexOf(' ') + 1, instruction.indexOf('/'));
-                        String ddl = instruction.substring(instruction.indexOf('/') + 1);
-                        String by = ddl.replace("by", "");
-                        t = new Deadline(description, by);
-                        taskListAdd(t);
-                    } catch (StringIndexOutOfBoundsException e) {
-                        System.out.println(lineBreak + '\n' + "☹ OOPS!!! The description of a deadline cannot be empty." + '\n' + lineBreak);
-                    }
-                } else if (instruction.toLowerCase().contains("event")) {
-                    try {
-                        String substring = instruction.substring(instruction.indexOf(' ') + 1);
-                        String[] info = substring.split("/");
-                        String from = info[1].replace("from", "");
-                        String to = info[2].replace("to", "");
-                        t = new Event(info[0], from, to);
-                        taskListAdd(t);
-                    } catch (ArrayIndexOutOfBoundsException e) {
-                        System.out.println(lineBreak + '\n' + "☹ OOPS!!! The description of a event cannot be empty." + '\n' + lineBreak);
-                    }
-                } else if (instruction.toLowerCase().contains("todo")) {
-                    if (instruction.indexOf(' ') == -1) {
-                        System.out.println(lineBreak + '\n' + "☹ OOPS!!! The description of a todo cannot be empty." + '\n' + lineBreak);
-                    } else {
-                        String description = instruction.substring(instruction.indexOf(' ') + 1);
-                        t = new Todo(description);
-                        taskListAdd(t);
-                    }
-                } else {
-                    System.out.println(lineBreak + '\n' + "☹ OOPS!!! I'm sorry, but I don't know what that means :-(" + '\n' + lineBreak);
-                }
-            }
-        }
+        new Duke("duke.txt").run();
     }
 
-    public static void taskListAdd(Task t) {
-        list.add(t);
-        System.out.println(lineBreak + '\n' + "Got it. I've added this task:");
-        System.out.println('\t' + t.toString());
-        System.out.println("Now you have " + list.size() + " tasks in the list." + '\n' + lineBreak);
-    }
-
-    public static void taskListDelete(int t) {
-        System.out.println(lineBreak + '\n' + "Noted. I've removed this task:");
-        System.out.println('\t' + list.get(t).toString());
-        list.remove(t);
-        System.out.println("Now you have " + list.size() + " tasks in the list." + '\n' + lineBreak);
-    }
-    public static void read(){
-        try {
-            File myObj = new File("duke.txt");
-            Scanner myReader = new Scanner(myObj);
-            while (myReader.hasNextLine()) {
-                String data = myReader.nextLine();
-                Task t=null;
-                String type=data.substring(1,2);
-                String mark=data.substring(4,5);
-                if(type.equals("T")){
-                    String context=data.substring(7);
-                    t=new Todo(context);
-                } else if (type.equals("D")) {
-                    String context=data.substring(7,data.indexOf("(")-1);
-                    String by=data.substring(data.indexOf("by")+3,data.indexOf(")"));
-                    t=new Deadline(context,by);
-                } else if (type.equals("E")) {
-                    String context=data.substring(7,data.indexOf("(")-1);
-                    String from=data.substring(data.indexOf("from")+5,data.indexOf("to"));
-                    String to=data.substring(data.indexOf("to")+3,data.indexOf(")"));
-                    t=new Event(context,from,to);
-                }
-                if(mark.equals("X")){
-                    t.markAsDone();
-                }
-                list.add(t);
-            }
-            myReader.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void save() {
-        try {
-            FileWriter writer = new FileWriter("duke.txt", false);
-            for (int i = 0; i < list.size(); i++) {
-                writer.write(list.get(i).toString());
-                writer.write("\r\n");
-            }
-            writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 }
