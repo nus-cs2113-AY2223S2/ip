@@ -1,4 +1,4 @@
-# User Guide
+# User Guide - Siri
 Siri is a **desktop app for managing tasks, optimized for use via
 a Command Line Interface (CLI)** while still having the benefits 
 of a Graphic User Interface (GUI). If you can type fast, Siri 
