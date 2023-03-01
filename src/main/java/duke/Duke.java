@@ -14,11 +14,29 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * The Duke program implements a todo list application that
+ * takes in "todo", "deadline", and "event" tasks.
+ *
+ * @author  Rayden Teo
+ * @version 1.0
+ * @since   2023-01-13
+ */
 public class Duke {
 
     public static int userTextCount = 0;
 
+    /**
+     * This is the main method which lets you:
+     * 1) List tasks
+     * 2) Mark or Unmark tasks
+     * 3) Delete tasks
+     * 4) Add todo, deadline, or event
+     *
+     * @param args String class that stores java command line arguments.
+     */
     public static void main(String[] args) {
+
         Scanner scanner = new Scanner(System.in);
 
         Display.printWelcome();

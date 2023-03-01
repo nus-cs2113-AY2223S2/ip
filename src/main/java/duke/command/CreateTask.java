@@ -11,7 +11,20 @@ import duke.task.Todo;
 
 import java.util.ArrayList;
 
+
+/**
+ * The CreateTask class helps to extract
+ * necessary information from the user command for later use.
+ */
 public class CreateTask {
+
+    /**
+     * This method is used to create a todo task
+     *
+     * @param userCommand User's command
+     * @param storedUserTasks ArrayList containing listed Tasks
+     * @throws DukeException DukeException has occurred
+     */
     public static void createTodo(String userCommand, ArrayList<Task> storedUserTasks) throws DukeException {
         if (userCommand.length()<=4) {
             throw new BlankDescException();
@@ -23,6 +36,13 @@ public class CreateTask {
         Display.printNumberOfTasks();
     }
 
+    /**
+     * This method is used to create a deadline task
+     *
+     * @param userCommand User's command
+     * @param storedUserTasks ArrayList containing listed Tasks
+     * @throws DukeException DukeException has occurred
+     */
     public static void createDeadline(String userCommand, ArrayList<Task> storedUserTasks) throws DukeException {
         if (userCommand.length()<=8) {
             throw new BlankDescException();
@@ -35,6 +55,13 @@ public class CreateTask {
         Display.printNumberOfTasks();
     }
 
+    /**
+     * This method is used to create a event task
+     *
+     * @param userCommand User's command
+     * @param storedUserTasks ArrayList containing listed Tasks
+     * @throws DukeException DukeException has occurred
+     */
     public static void createEvent(String userCommand, ArrayList<Task> storedUserTasks) throws DukeException {
         if (userCommand.length()<=5) {
             throw new BlankDescException();
