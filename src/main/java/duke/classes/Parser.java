@@ -33,6 +33,8 @@ public class Parser {
             return "unmark";
         } else if (input.length() > 7 && input.substring(0,7).equals("delete ") && input.substring(7, input.length()).matches("[0-9]+")) {
             return "delete";
+        } else if (input.length() > 5 && (input.substring(0,5)).equals("find ")) {
+            return "find";
         } else {
             if (input.length() > 4 && input.substring(0, 5).equals("todo ")) {
                 return "todo";
@@ -134,5 +136,9 @@ public class Parser {
      */
     public String getEventTimeBy(String input) {
         return input.substring(input.lastIndexOf("/")+1, input.length());
+    }
+
+    public String getFindKeyWord(String input) {
+        return input.substring(5, input.length());
     }
 }
