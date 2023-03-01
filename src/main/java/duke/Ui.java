@@ -10,8 +10,12 @@ public class Ui {
         System.out.println("Hello! I'm Duke");
         System.out.println("What can I do for you?");
     }
-    public static void listTasks(ArrayList<Task> tasks) {
-        System.out.println("Here are the tasks in your list:");
+    public static void listTasks(ArrayList<Task> tasks, String purpose) {
+        if (purpose.equals("find")) {
+            System.out.println("Here are the matching tasks in your list:");
+        } else if (purpose.equals("list")){
+            System.out.println("Here are the tasks in your list:");
+        }
         for (int i = 0; i < tasks.size(); i++) {
             System.out.print(i + 1);
             System.out.print(".");
@@ -41,6 +45,9 @@ public class Ui {
             System.out.print("Got it. I've added this task:\n" + "  ");
             task.printTask();
             System.out.println("Now you have " + numberOfTasks + " task(s) in the list.");
+            break;
+        default:
+            System.out.println("Something went wrong!");
             break;
         }
     }

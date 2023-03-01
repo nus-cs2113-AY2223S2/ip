@@ -29,7 +29,7 @@ public class Duke {
 
     public static void initDuke(TaskList list) {
         Ui.greetUser();
-        Ui.listTasks(list.get());
+        Ui.listTasks(list.get(), "list");
         inputReader = new Scanner(System.in);
     }
 
@@ -46,7 +46,7 @@ public class Duke {
             Ui.printExitMessage();
             break;
         case "list":
-            Ui.listTasks(tasks);
+            Ui.listTasks(tasks, "list");
             break;
         case "mark":
             TaskList.markTask(informationNeededForPerformingUserRequest);
@@ -65,6 +65,9 @@ public class Duke {
             break;
         case "event":
             TaskList.addEventTask(informationNeededForPerformingUserRequest);
+            break;
+        case "find": // find case
+            TaskList.findTask(informationNeededForPerformingUserRequest);
             break;
         case "invalid command": // earlier on we detected that such a command doesn't exist
             Ui.printErrorMessage("invalid command");
