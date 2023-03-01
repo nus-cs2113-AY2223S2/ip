@@ -17,7 +17,7 @@ public class Duke {
         try {
             printFileContents(filePath, tasks);
         } catch (FileNotFoundException e) {
-            System.out.println("File is not found. Creating a new file now...");
+            System.out.println("File is not found. Created a new file!");
         }
 
         boolean isExit = false;
@@ -33,7 +33,7 @@ public class Duke {
                 } else if (messageFromUser.equals("list")) {
                     displayList(tasks);
                 } else if (messageFromUser.equals("bye")) {
-                    exitGreeting();
+                    exitGreeting(tasks, filePath);
                     isExit = true;
                 } else {
                     throw new DukeException();
@@ -48,10 +48,6 @@ public class Duke {
         }
     }
 
-//    else {
-//        System.out.println("Invalid instruction. Please try again.");
-//        horizontalLine();
-//    }
 
     public static boolean hasTaskKeyword(String messageFromUser) {
         boolean isToDo = messageFromUser.startsWith("todo");
@@ -178,7 +174,8 @@ public class Duke {
         horizontalLine();
     }
 
-    public static void exitGreeting() {
+    public static void exitGreeting(Task[] tasks, String filePath) {
+        initialiseWriteTasksToFile(tasks, filePath);
         System.out.println("Bye. Hope to see you again soon!");
         horizontalLine();
     }
@@ -193,13 +190,12 @@ public class Duke {
         File f = new File(filePath);
         Scanner s = new Scanner(f);
         if (s.hasNext()) {
-            System.out.println("Your previously saved tasks:");
             horizontalLine();
             while (s.hasNext()) {
                 String lineInFile = s.nextLine();
-                System.out.println(lineInFile);
                 copyToList(lineInFile, tasks, filePath);
             }
+            displayList(tasks);
             horizontalLine();
         } else {
             System.out.println("There are no saved tasks.");
@@ -219,6 +215,9 @@ public class Duke {
             break;
         case "E":
             copyEventToList("E", line.substring(2), tasks);
+            break;
+        case "S":
+            // Saved data text on the first line (initialisation step)
             break;
         default:
             System.out.println("Unknown task type detected...");
@@ -263,5 +262,54 @@ public class Duke {
             currentTask.markAsDone();
         }
     }
+
+    private static void initialiseWriteTasksToFile(Task[] tasks, String filePath) {
+        try {
+            FileWriter fw = new FileWriter(filePath);
+            fw.write("Saved tasks: " + System.lineSeparator());
+            fw.close();
+            FileWriter fwAppend = new FileWriter(filePath, true);
+            writeTasksToFile(fwAppend, tasks);
+            fwAppend.close();
+        } catch (IOException e) {
+            System.out.println("Something went wrong: " + e.getMessage());
+        }
+    }
+
+    private static void writeTasksToFile(FileWriter fwAppend, Task[] tasks) throws IOException {
+        int totalNumberOfTasks = Task.getNumberOfTasks();
+        for (int index = 1; index <= totalNumberOfTasks; index += 1) {
+            Task task = tasks[index];
+            String taskType = task.getTaskType().substring(1,2);
+            String taskStatus = task.getStatus();
+            int isTaskDone = taskStatus.substring(1,2).equals("X") ? 1 : 0;
+            String taskInfo = task.getTaskInfo();
+            handleWritingSpecificTaskTypes(fwAppend, taskType, task, taskStatus, isTaskDone, taskInfo);
+        }
+    }
+
+    private static void handleWritingSpecificTaskTypes(FileWriter fwAppend, String taskType, Task currentTask,
+                                                       String taskStatus, int isTaskDone, String taskInfo) throws IOException{
+        String additionalTaskInfo = "";
+        switch(taskType) {
+        case "T":
+            fwAppend.write(taskType + "/" + isTaskDone + "/" + taskInfo + System.lineSeparator());
+            break;
+        case "D":
+            Deadline currentDeadline = (Deadline) currentTask;
+            additionalTaskInfo = currentDeadline.getDueInfo();
+            fwAppend.write(taskType + "/" + isTaskDone + "/" + taskInfo + "/" + additionalTaskInfo + System.lineSeparator());
+            break;
+        case "E":
+            Event currentEvent = (Event) currentTask;
+            String eventStart = currentEvent.getEventStartInfo();
+            String eventEnd = currentEvent.getEventEndInfo();
+            fwAppend.write(taskType + "/" + isTaskDone + "/" + taskInfo + "/" + eventStart + "/" + eventEnd +  System.lineSeparator());
+            break;
+        default:
+            System.out.println("Unknown task type error!");
+        }
+    }
+
 
 }
