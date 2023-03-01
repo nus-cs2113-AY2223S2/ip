@@ -1,15 +1,16 @@
 # 📜 <span style="color:DarkMagenta">User Guide</span> 
 
 <pre>
-██████╗░██╗░░░██╗██╗░░██╗███████╗
-██╔══██╗██║░░░██║██║░██╔╝██╔════╝
-██║░░██║██║░░░██║█████═╝░█████╗░░
-██║░░██║██║░░░██║██╔═██╗░██╔══╝░░
-██████╔╝╚██████╔╝██║░╚██╗███████╗
-╚═════╝░░╚═════╝░╚═╝░░╚═╝╚══════╝
+
+██╗░░██╗██╗███╗░░██╗░██████╗░
+██║░██╔╝██║████╗░██║██╔════╝░
+█████═╝░██║██╔██╗██║██║░░██╗░
+██╔═██╗░██║██║╚████║██║░░╚██╗
+██║░╚██╗██║██║░╚███║╚██████╔╝
+╚═╝░░╚═╝╚═╝╚═╝░░╚══╝░╚═════╝░
 </pre>
 
-Duke is a Command Line Interface (CLI) based application for keeping track of your tasks
+King is a Command Line Interface (CLI) based application for keeping track of your tasks.
 
 ___
 
@@ -37,9 +38,9 @@ ___
 <!-- Quick Start guide -->
 ## <span style="color:DarkMagenta">Quick Start</span> ⚙️
 1. Ensure you have Java 11 or above installed in your Computer.
-2. Download the latest `duke.jar` from here.
-3. Copy the file to the folder you want to use as the home folder for your Duke.
-4. Open a command terminal, cd into the folder you put the jar file in, and use the java -jar duke.jar command to run the application.
+2. Download the latest `king.jar`.
+3. Copy the file to the folder you want to use as the home folder for your King.
+4. Open a command terminal, cd into the folder you put the jar file in, and use the java -jar king.jar command to run the application.
 5. Type the command in the command box and press Enter to execute it.
     <br/>Some example commands you can try:
     - `list`: Lists all tasks.
@@ -153,7 +154,7 @@ Format: `find KEYWORD`
 - `KEYWORD` accepts a snlge `String` or multiple `Strings`
 - `KEYWORD` is not case-sensitive
 - Only exact matches will be found
-- If no matches are found `Duke Error: No tasks fit the filter KEYWORD` is returned
+- If no matches are found `My utmost apologies sir, nay tasks fit thy keyword KEYWORD` is returned
 
 Examples:
 ```js
@@ -171,14 +172,14 @@ Format: `bye`
 <br/>
 
 ### Saving the data
-Duke data are saved in the hard disk automatically after exiting the program. <br/>
+King data are saved in the hard disk automatically after exiting the program. <br/>
 There is no need to save manually.
 
 <br/>
 
 ### Editing the data file
-Duke data are saved as a .txt file in `[JAR file location]
-/data/duke.txt`. <br/>
+King data are saved as a .txt file in `[JAR file location]
+/data/king.txt`. <br/>
 Edits must be made according to the formatting of the data.
 
 <br/>
@@ -188,7 +189,7 @@ ___
 ## <span style="color:DarkMagenta">FAQ</span> 💻
 > Q: How do I transfer my data to another Computer?
 >
-> A: In your new application folder in the new Computer, paste the copied `/data/duke.txt` file from your old Computer into the same folder as the new `duke.jar`.
+> A: In your new application folder in the new Computer, paste the copied `/data/king.txt` file from your old Computer into the same folder as the new `king.jar`.
 
 ___
 <!-- Summary of Commands -->
