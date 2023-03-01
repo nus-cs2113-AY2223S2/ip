@@ -1,4 +1,4 @@
-package duke.tasklist;
+package duke.parser.json;
 
 import com.google.gson.*;
 import duke.exceptions.CorruptSaveDataException;

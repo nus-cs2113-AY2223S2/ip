@@ -1,9 +1,9 @@
-package duke.tasklist;
+package duke.parser.json;
 
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import duke.parser.DateTimeParser;
+import duke.parser.datetime.DateTimeParser;
 
 import java.io.IOException;
 import java.time.LocalDateTime;

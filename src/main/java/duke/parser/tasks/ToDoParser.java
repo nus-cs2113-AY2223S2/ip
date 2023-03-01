@@ -1,4 +1,4 @@
-package duke.parser;
+package duke.parser.tasks;
 
 import duke.exceptions.InvalidTaskFormatException;
 import duke.tasks.TaskEnum;

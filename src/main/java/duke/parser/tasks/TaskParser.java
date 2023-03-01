@@ -1,4 +1,4 @@
-package duke.parser;
+package duke.parser.tasks;
 
 import duke.exceptions.InvalidDateTimeException;
 import duke.exceptions.InvalidTaskFormatException;
