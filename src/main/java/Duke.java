@@ -1,5 +1,4 @@
 import java.util.Scanner;  // Import the Scanner class
-import java.util.Arrays;
 public class Duke {
 
     public static void drawLine() {  // Draw horizontal lines
@@ -15,7 +14,6 @@ public class Duke {
                 + "| | | | | | | |/ / _ \\\n"
                 + "| |_| | |_| |   <  __/\n"
                 + "|____/ \\__,_|_|\\_\\___|\n";
-
         System.out.println("Hello from\n" + logo);
         drawLine();
         System.out.println("Hello! I'm Duke");
@@ -58,7 +56,6 @@ public class Duke {
         String todo = "todo";
         String deadline = "deadline";
         String event = "event";
-
         System.out.println("Got it. I've added this task:");
 
         if (arrOfInput[0].equals(todo)) {
@@ -88,9 +85,42 @@ public class Duke {
         return curPos;
     }
 
+    // @@[yuanners] [aaronxujiachen]-reused
+    // With minor modification
+    public static void checkInput(String input, Task[] tasks, int curPos) throws DukeException {
+
+        if(input.length () > 4) {
+            if(input.startsWith ("mark") || input.startsWith ("unmark")) {
+                markStatus(input, tasks);
+            }
+            else if(input.startsWith ("todo") || input.startsWith ("deadline") || input.startsWith ("event")) {
+                curPos = updateTasks(input, tasks, curPos);
+            }
+            else if(!((input.startsWith("mark")) || (input.startsWith ("unmark")) || (input.startsWith ("todo")) || (input.startsWith ("deadline")) || (input.startsWith ("event")))) {
+                throw new DukeException("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
+            }
+            else{
+                throw new DukeException("☹ OOPS!!! The description of a " + input + " cannot be empty.");
+            }
+        }
+        else {
+            if(input.equals("list")) {
+                listTasks(tasks, curPos);
+            }
+            else if(input.equals("mark") || input.equals("todo")) {
+                throw new DukeException("☹ OOPS!!! The description of a " + input + " cannot be empty.");
+            }
+            else {
+                throw new DukeException("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
+            }
+        }
+    }
+
+
+    // @@[yuanners]
+
     public static void main(String[] args) {
         hiDuke();  //Print Logo
-
         Scanner scan = new Scanner(System.in);
         String input = scan.nextLine();
         Task tasks[] = new Task[100];
@@ -101,20 +131,21 @@ public class Duke {
             if(input.equals("bye")) {
                 break;
             }
-            else if(input.equals("list")) {
-                listTasks(tasks, curPos);
+            else {
+                try {
+                    checkInput(input, tasks, curPos);
+                }
+                catch(DukeException duEx) {
+                    System.out.println(duEx.getMessage());
+                    drawLine();
+                    continue;
+                }
+                finally {
+                    input = scan.nextLine();
+                }
             }
-            else if(input.startsWith("mark") || input.startsWith("unmark")){
-                markStatus(input, tasks);
-            }
-            else if(input.startsWith("todo") || input.startsWith("deadline") || input.startsWith("event")){
-                curPos = updateTasks(input, tasks, curPos);
-            }
-            input = scan.nextLine();
         }
 
         byeDuke();
-
     }
-
 }
