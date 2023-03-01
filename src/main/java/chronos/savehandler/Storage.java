@@ -20,7 +20,8 @@ public class Storage {
 
     /**
      * Writes the given content to a file located at the specified path.
-     * @param path the path of the file to write to
+     *
+     * @param path    the path of the file to write to
      * @param content the content to write to the file
      */
     private static void writeToFile(String path, String content) {
@@ -36,30 +37,35 @@ public class Storage {
 
     /**
      * Reads the contents of the file located at the specified path.
+     *
      * @param path the path of the file to read from
      * @return the contents of the file as a string
      */
     private static String readFromFile(String path) {
         try {
             return Files.readString(Paths.get(path));
-        } catch (IOException error){
+        } catch (IOException error) {
             LOGGER.warning("Failed to read from file: " + error.getMessage());
             return "";
         }
     }
+
     /**
      * Reads the saved tasks from the file and returns them as an ArrayList.
+     *
      * @return an ArrayList of saved tasks
      */
-    public static ArrayList<Task> readSavedTasks(){
+    public static ArrayList<Task> readSavedTasks() {
         String savedTask = readFromFile(FILE);
         return savedTask.isEmpty() ? new ArrayList<>() :
                 Arrays.stream(savedTask.split("\n"))
                         .map(Task::new)
                         .collect(Collectors.toCollection(ArrayList::new));
     }
+
     /**
      * Saves the given tasks to the file.
+     *
      * @param tasks the tasks to save
      */
     public static void saveTasks(ArrayList<Task> tasks) {

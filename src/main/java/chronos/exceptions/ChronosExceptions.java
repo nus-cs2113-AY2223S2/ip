@@ -9,8 +9,8 @@ public class ChronosExceptions extends Exception {
      *
      * @param message The error message associated with the exception.
      */
-    public ChronosExceptions(String message){
+    public ChronosExceptions(String message) {
         super(message);
     }
-    }
+}
 

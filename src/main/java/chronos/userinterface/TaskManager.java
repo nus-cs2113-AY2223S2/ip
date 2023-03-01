@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import chronos.timer.Clock;
+
 /**
  * TaskManager class manages the input commands and the task stash.
  */
@@ -25,6 +26,7 @@ public class TaskManager {
 
     /**
      * Constructor for TaskManager class.
+     *
      * @param inOut The Input object used for input/output operations.
      * @param stash The Stash object used to store tasks.
      */
@@ -35,31 +37,36 @@ public class TaskManager {
 
     /**
      * Adds a new task to the stash and prints a message indicating that the task was added
+     *
      * @param task the task to be added
      */
     public void addNew(Task task) {
         stash.addNewTask(task);
         Output.printNewTask(task, stash.ObtainTaskCount());
     }
+
     /**
      * Deletes a task from the task list based on the user input details.
+     *
      * @param details the details of the task to be deleted.
      * @throws ChronosExceptions if the input is invalid.
      */
-   public void deleteTask(String details) throws ChronosExceptions {
-       try {
-           int index = Integer.parseInt(details) - 1;
-           Task task = stash.getTask(index);
-           stash.deleteTask(index);
-           //Output.printIsDone(stash, index);
-           Output.printDeletedTask(task, stash.ObtainTaskCount());
-       } catch (ArrayIndexOutOfBoundsException e) {
-           System.out.println("The index you have entered is invalid");
-       }
+    public void deleteTask(String details) throws ChronosExceptions {
+        try {
+            int index = Integer.parseInt(details) - 1;
+            Task task = stash.getTask(index);
+            stash.deleteTask(index);
+            //Output.printIsDone(stash, index);
+            Output.printDeletedTask(task, stash.ObtainTaskCount());
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("The index you have entered is invalid");
+        }
 
-   }
+    }
+
     /**
      * Toggles the status of a task.
+     *
      * @param details the index of the task to toggle the status of
      */
     public void toggleTaskStatus(String details) {
@@ -76,10 +83,11 @@ public class TaskManager {
     /**
      * This method starts the timer module which allows users to keep track of their work and break times.
      * Users can start a work session and then press Enter to start a break, or type 'cancel' to stop the timer.
+     *
      * @throws IllegalStateException if the timer cannot be started
      */
 
-    public void  timerModule() {
+    public void timerModule() {
         Scanner timerCommand = new Scanner(System.in);
         Clock clock = new Clock();
         clock.startWork();
@@ -95,9 +103,11 @@ public class TaskManager {
             timerCommand.close();
         }
     }
+
     /**
      * This method continuously reads input from the user and executes the corresponding action.
      * The method will keep running until the user enters the "done" command.
+     *
      * @throws ChronosExceptions if the user enters an invalid input
      */
     public void inputCommands() {
@@ -141,7 +151,7 @@ public class TaskManager {
                 default:
                     throw new ChronosExceptions(category);
                 }
-            } catch(ChronosExceptions exceptions){
+            } catch (ChronosExceptions exceptions) {
                 System.out.println("Sorry, I do not understand the input at this point in time.");
             }
         }

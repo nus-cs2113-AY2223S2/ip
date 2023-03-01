@@ -15,7 +15,8 @@ public class Stash {
      * Constructs a new, empty {@code Stash} object.
      */
     public Stash() {
-        this.tasks = new ArrayList<Task>();;
+        this.tasks = new ArrayList<Task>();
+        ;
     }
 
     /**
@@ -31,9 +32,9 @@ public class Stash {
      * Adds a specified number of copies of the given task to this {@code Stash}.
      *
      * @param count the number of copies to add
-     * @param task the task to add
+     * @param task  the task to add
      */
-    public void generateTask(int count, Task task){
+    public void generateTask(int count, Task task) {
         this.tasks.add(task);
     }
 
@@ -54,7 +55,7 @@ public class Stash {
      * @param index the index of the task to delete
      * @throws IndexOutOfBoundsException if the index is out of range (index < 0 || index >= size())
      */
-    public void deleteTask(int index){
+    public void deleteTask(int index) {
         this.tasks.remove(index);
     }
 
@@ -80,15 +81,16 @@ public class Stash {
         System.out.printf("Currently, you have %d tasks(s) in your ToDo list.", ObtainTaskCount());
         System.out.print("\n");
     }
+
     /**
      * Searches for all tasks in this {@code Stash} whose description contains the
      * specified keyword, and prints their string representations to the console.
      *
      * @param keyword the keyword to search for in task descriptions
      */
-    public void searchTask(String keyword){
-        for (Task task: tasks){
-            if (task.getDescription().contains(keyword)){
+    public void searchTask(String keyword) {
+        for (Task task : tasks) {
+            if (task.getDescription().contains(keyword)) {
                 System.out.printf(" %s", task.toString());
             }
         }
@@ -114,7 +116,6 @@ public class Stash {
         }
         Storage.saveTasks(saveTasks.stream().map(Save::bucketConverter).collect(Collectors.toCollection(ArrayList::new)));
     }
-
 
 
 }

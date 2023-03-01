@@ -22,6 +22,7 @@ public class Output {
         System.out.println(logo);
 
     }
+
     /**
      * Displays a welcome message to the user on the console, including the Chronos logo.
      */
@@ -30,6 +31,7 @@ public class Output {
         printLogo();
         System.out.println("Tick, tick, boom! I'm Chronos, your personal time manager.\n");
     }
+
     /**
      * Displays a help menu to the user on the console.
      * The menu includes several useful commands to get started with Chronos.
@@ -57,6 +59,7 @@ public class Output {
 
     /**
      * Prints the status of a task at a given index in a Stash object.
+     *
      * @param stash The Stash object containing the task.
      * @param index The index of the task to be printed.
      */
@@ -76,9 +79,11 @@ public class Output {
         System.out.printf("You now have %d task(s) in the list.", stashSize);
         System.out.print("\n");
     }
+
     /**
      * Prints information about a task that was deleted from a Stash object.
-     * @param task The Task object that was deleted from the Stash.
+     *
+     * @param task      The Task object that was deleted from the Stash.
      * @param stashSize The number of tasks in the Stash after the task was deleted.
      */
     public static void printDeletedTask(Task task, int stashSize) {
@@ -89,12 +94,14 @@ public class Output {
         System.out.printf("You now have %d task(s) in the list.", stashSize);
         System.out.print("\n");
     }
+
     /**
      * Prints the results of a search for tasks in a Stash object that contain a given keyword.
-     * @param stash The Stash object to be searched.
+     *
+     * @param stash   The Stash object to be searched.
      * @param keyword The keyword to search for in the tasks.
      */
-    public static void printSearchResults(Stash stash, String keyword){
+    public static void printSearchResults(Stash stash, String keyword) {
         String searchBreak = "----------------------------------------------------";
         System.out.println(searchBreak);
         System.out.println("Here are the tasks matching the keyword you have input\n");

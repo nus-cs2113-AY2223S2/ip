@@ -1,4 +1,5 @@
 package chronos.tasktype;
+
 import chronos.exceptions.ChronosExceptions;
 import chronos.savehandler.*;
 
@@ -11,8 +12,9 @@ public class Task {
 
     /**
      * Constructs a new Task Object
-     * @param isDone        The complete status of the task
-     * @param description   The details of the
+     *
+     * @param isDone      The complete status of the task
+     * @param description The details of the
      */
     public Task(boolean isDone, String description) {
         this.isDone = isDone;
@@ -21,18 +23,19 @@ public class Task {
 
     /**
      * Creates a new Task Object
-     * @param description               The details of the task
+     *
+     * @param description The details of the task
      * @throws IllegalArgumentException If the user does not provide any description,
      *                                  Chronos will prompt the user to do so
      */
-    public Task(String description){
+    public Task(String description) {
         try {
             if (description == null) {
                 throw new ChronosExceptions(description);
             }
             this.description = description;
             this.isDone = false;
-        } catch (ChronosExceptions error){
+        } catch (ChronosExceptions error) {
             System.out.println("THIS CANNOT BE EMPTY. REMOVE THIS TASK AND ENTER 'help' TO VIEW PROPER FORMAT");
         }
     }
@@ -45,14 +48,15 @@ public class Task {
         return description;
     }
 
-    public boolean isDone(){
+    public boolean isDone() {
         return isDone;
     }
 
     /**
      * Returns a character symbol to represent the completion status of a task
      * If the task is marked as done, the symbol will be a checked box ('√');
-     *  * otherwise, the symbol will be an empty box ('□').
+     * * otherwise, the symbol will be an empty box ('□').
+     *
      * @return a character symbol representing the completion status of a task
      */
     public char setCheckMark() {
@@ -68,17 +72,18 @@ public class Task {
      * as done, it will be marked as not done; if it's not done, it will be
      * marked as done.
      */
-    public void toggleDone(){
+    public void toggleDone() {
         this.isDone = !this.isDone;
     }
 
     /**
      * Returns a string representation of a task, including its completion status
      * (represented by a checkmark symbol) and its description.
+     *
      * @return a string representation of the task
      */
     @Override
-    public String toString(){
+    public String toString() {
         return String.format("%c %s", setCheckMark(), getDescription());
     }
 

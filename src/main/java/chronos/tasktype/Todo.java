@@ -7,19 +7,20 @@ import chronos.savehandler.Save;
 /**
  * Represents a Todo type of task, subclass of Task
  */
-public class Todo extends Task{
+public class Todo extends Task {
     /**
      * Constructs a new Todo object
+     *
      * @param description The description of the task
      * @throws ChronosExceptions if the description field is left empty
      */
     public Todo(String description) {
         super(description);
-        try{
-            if (description == null){
+        try {
+            if (description == null) {
                 throw new ChronosExceptions(null);
             }
-        } catch (ChronosExceptions error){
+        } catch (ChronosExceptions error) {
             System.err.println("THIS CANNOT BE EMPTY. REMOVE THIS TASK AND ENTER 'help' TO VIEW PROPER FORMAT");
         }
     }
@@ -28,7 +29,7 @@ public class Todo extends Task{
      * Creates a new instance of the {@code Todo} class with the specified completion status
      * and description.
      *
-     * @param isDone whether the task is completed (true) or not (false)
+     * @param isDone      whether the task is completed (true) or not (false)
      * @param description a string describing the task
      */
     public Todo(boolean isDone, String description) {

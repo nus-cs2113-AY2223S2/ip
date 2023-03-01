@@ -17,12 +17,13 @@ public class Save {
 
     /**
      * Constructs a Save object with the specified components.
-     * @param taskType The type of task: [T] for Todo, [E] for Event, [D] for Deadline.
-     * @param isDone Indicates if the task is completed.
+     *
+     * @param taskType    The type of task: [T] for Todo, [E] for Event, [D] for Deadline.
+     * @param isDone      Indicates if the task is completed.
      * @param description The description of the task.
-     * @param dueDate The due date of the task. Null for Todo tasks.
-     * @param start The start date of the task. Null for Deadline tasks.
-     * @param end The end date of the task. Null for Deadline tasks.
+     * @param dueDate     The due date of the task. Null for Todo tasks.
+     * @param start       The start date of the task. Null for Deadline tasks.
+     * @param end         The end date of the task. Null for Deadline tasks.
      */
     public Save(String taskType, boolean isDone, String description, String dueDate, String start, String end) {
         this.taskType = taskType;
@@ -35,6 +36,7 @@ public class Save {
 
     /**
      * Converts a Save object into a Todo task.
+     *
      * @return A new Todo task with the components from the Save object.
      */
     public Todo convertToTodo() {
@@ -43,6 +45,7 @@ public class Save {
 
     /**
      * Converts a Save object into an Event task.
+     *
      * @return A new Event task with the components from the Save object.
      */
     public Event convertToEvent() {
@@ -51,6 +54,7 @@ public class Save {
 
     /**
      * Converts a Save object into a Deadline task.
+     *
      * @return A new Deadline task with the components from the Save object.
      */
     public Deadline convertToDeadline() {
@@ -59,20 +63,18 @@ public class Save {
 
     /**
      * Converts the Save object into the appropriate task based on its taskType.
+     *
      * @return A new Task object with the components from the Save object.
      * @throws RuntimeException If the taskType is not one of [T], [E], or [D].
      */
     public Task bucketConverter() {
-        if (taskType.equals("[T]")){
-           return convertToTodo();
-        }
-        else if (taskType.equals("[E]")){
+        if (taskType.equals("[T]")) {
+            return convertToTodo();
+        } else if (taskType.equals("[E]")) {
             return convertToEvent();
-        }
-        else if (taskType.equals("[D]")){
-           return convertToDeadline();
-        }
-        else {
+        } else if (taskType.equals("[D]")) {
+            return convertToDeadline();
+        } else {
             throw new RuntimeException("Unknown Task Type");
         }
     }

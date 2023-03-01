@@ -11,6 +11,7 @@ public class UserHandler {
 
     /**
      * Constructs a UserHandler object with an Input object.
+     *
      * @param inOut the Input object used to get user input
      */
     public UserHandler(Input inOut) {
