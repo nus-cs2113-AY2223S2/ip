@@ -55,7 +55,7 @@ public class textUI {
 		printLine ();
 		System.out.println ("Noted. I've removed this task:");
 		System.out.println ("	" + tasks.get (index).getType () + tasks.get (index).toString ());
-		System.out.println ("Now you have " + tasks.size () + " tasks in the list.");
+		System.out.println ("Now you have " + (tasks.size ()-1) + " tasks in the list.");
 		printLine ();
 	}
 

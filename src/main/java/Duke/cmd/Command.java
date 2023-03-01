@@ -110,7 +110,7 @@ public class Command {
 				break;
 			case "delete":
 				int dIndex = checkIndex (tasks, cmd, description);
-				textUI.printDelete (tasks, dIndex - 1);
+				textUI.printDelete (tasks, dIndex);
 				tasks.deleteTask (dIndex);
 				break;
 			case "find":

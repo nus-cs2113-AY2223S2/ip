@@ -39,14 +39,14 @@ public class fileIO {
 				while (data != null) {
 					String[] arrData = data.split ("\\|");
 					if (data.startsWith ("T")) {
-						tasks.add (new Task (arrData[2]));
+						tasks.add (new Task (arrData[2].trim()));
 					} else if (data.startsWith ("D")) {
-						tasks.add (new Deadline (arrData[2], arrData[3]));
+						tasks.add (new Deadline (arrData[2].trim (), arrData[3].trim ()));
 					} else {
 						String[] arrEvent = arrData[3].split ("-");
-						tasks.add (new Event (arrData[2], arrEvent[0], arrEvent[1]));
+						tasks.add (new Event (arrData[2].trim(), arrEvent[0].trim (), arrEvent[1].trim ()));
 					}
-					tasks.get (count).setIsDone (arrData[1].equals (" 1 "));
+					tasks.get (count).setIsDone ((arrData[1].trim()).equals ("1"));
 					count++;
 					data = reader.readLine ();
 				}
