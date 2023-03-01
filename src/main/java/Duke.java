@@ -153,7 +153,7 @@ public class Duke {
         done.add("[ ]");
         DateTime(dates_and_times, "2015-10-23T03:34", formatter);
     }
-
+    
     public static void event(ArrayList<LocalDateTime> dates_and_times, DateTimeFormatter formatter, String line, ArrayList<String> tasks, ArrayList<String> done, ArrayList<String> type) throws DukeException {
         int slash1 = line.indexOf("/");
         int slash2 = line.indexOf("/", slash1 + 1);
