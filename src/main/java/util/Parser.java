@@ -1,21 +1,17 @@
+package util;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
 import errors.DukeException;
 import errors.ErrorMessages;
 import tasks.Task;
-import util.Finder;
-import util.Marker;
-import util.OutputUI;
-import util.Storage;
-import util.TaskAdder;
-import util.TaskDeleter;
 
 
 /**
 * Starts the main processing of input
 * */
-public class StartPikaDuke {
+public class Parser {
 
     private static final boolean NOT_FROM_SAVE_DATA = false;
     private static final String CHAR_SPACE = " ";
@@ -29,6 +25,7 @@ public class StartPikaDuke {
     private static final String DELETE_COMMAND = "delete";
     private static final String FIND_COMMAND = "find";
 
+
     /**
     * Stores the list of tasks
     * */
@@ -36,7 +33,7 @@ public class StartPikaDuke {
     /**
      * Starts the main function
      * */
-    public void startPikaDuke() {
+    public void Parser() {
         Storage storage = new Storage();
         storage.loadData(listOfTasks);
 
@@ -65,14 +62,17 @@ public class StartPikaDuke {
                 case TODO_COMMAND:
                 case DEADLINE_COMMAND:
                 case EVENT_COMMAND:
+                    //
                     taskAdder.addTaskToList(listOfTasks, input, NOT_FROM_SAVE_DATA);
                     break;
                 case MARK_COMMAND:
                 case UNMARK_COMMAND:
-                    marker.handleMarkUnmarkAction(listOfTasks, input, NOT_FROM_SAVE_DATA);
+                    //
+                    marker.markOrUnamrkTask(listOfTasks, input, NOT_FROM_SAVE_DATA);
                     break;
                 case DELETE_COMMAND:
-                    taskDeleter.handleDeleteAction(listOfTasks, input);
+                    //
+                    taskDeleter.attemptToDeleteTask(listOfTasks, input);
                     break;
                 case FIND_COMMAND:
                     finder.findTaskFromList(listOfTasks, input);
