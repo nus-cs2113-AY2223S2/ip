@@ -1,6 +1,7 @@
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
@@ -74,19 +75,47 @@ public class Duke {
         }
         for (Task task: list) {
             String taskType = String.valueOf(task.getClass());
+            ArrayList<String> attributesToStore = new ArrayList<String>();
+            String taskInLineForm = "";
             switch (taskType) {
                 case ("Task"):
+                    attributesToStore.add(taskType);
+                    attributesToStore.add(task.getTaskName());
+                    attributesToStore.add(String.valueOf(task.isDone()));
+                    taskInLineForm = deliminterAdder(attributesToStore);
                     break;
                 case ("Deadline"):
+                    attributesToStore.add(taskType);
+                    attributesToStore.add(task.getTaskName());
+                    attributesToStore.add(String.valueOf(task.isDone()));
+                    attributesToStore.add(((Deadline) task).getDeadline());
+                    taskInLineForm = deliminterAdder(attributesToStore);
                     break;
                 case ("Event"):
-                    break;
+                    attributesToStore.add(taskType);
+                    attributesToStore.add(task.getTaskName());
+                    attributesToStore.add(String.valueOf(task.isDone()));
+                    attributesToStore.add(((Event) task).getDeadline());
+                    attributesToStore.add(((Event) task).getStart());
+                    taskInLineForm = deliminterAdder(attributesToStore);
                 default:
                     break;
             }
 
-            Files.write(path, )
+            try {
+                Files.write(path, taskInLineForm.getBytes(StandardCharsets.UTF_8));
+            } catch (IOException e) {
+                //TODO error catching still needed
+            }
         }
+    }
+
+    private static String deliminterAdder(ArrayList<String> items) {
+        String taskInStringForm = "";
+        for (String item : items) {
+            taskInStringForm = taskInStringForm.concat("|" + item);
+        }
+        return taskInStringForm;
     }
 
 
