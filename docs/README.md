@@ -36,6 +36,7 @@ Examples:
 * `todo homework`
 * `todo make coffee`
 
+
 #### Adding a deadline task: `deadline`
 
 Adds a deadline task to the task list, which includes a specified end timing.
@@ -46,6 +47,7 @@ Examples:
 * `deadline assignment submission /by 2359`
 * `deadline project work /by sometime next week`
 
+
 #### Adding an event task: `event`
 
 Adds an event task to the task list, which includes a specified start and end timing.
@@ -55,6 +57,7 @@ Format: `event TASK_DESCRIPTION /from START_TIMING /to END_TIMING`
 Examples:
 * `event lecture /from 1200 /to 1400`
 * `event holidays /from today /to hopefully forever`
+
 
 #### Listing all tasks: `list`
 
@@ -70,6 +73,7 @@ Here are your current tasks:
 3.[E][ ] lecture  (from: 1200  to: 1400)
 ```
 
+
 #### Marking a task as done: `mark`
 
 Marks a task as complete given its current index on the tasklist.
@@ -79,6 +83,7 @@ Format: `mark TASKLIST_INDEX`
 Example:
 * `mark 1`
 
+
 #### Marking a task as not done: `unmark`
 
 Marks a task as incomplete given its current index on the tasklist.
@@ -87,6 +92,7 @@ Format: `unmark TASKLIST_INDEX`
 
 Example:
 * `unmark 1`
+
 
 #### Finding tasks: `find`
 
@@ -104,6 +110,7 @@ Here are the matching tasks in your list:
 2.[T][ ] hot coffee
 ```
 
+
 #### Deleting a task: `delete`
 
 Deletes a task given its current index on the tasklist.
@@ -119,6 +126,7 @@ Got it! This task will be removed:
 [T][ ] coffee
 Number of tasks left: 2
 ```
+
 
 #### Exiting the program: `bye`
 
