@@ -1,9 +1,10 @@
-import utility.Methods;
-import java.util.Scanner;
+import parser.DukeSession;
+import utility.Ui;
+
 public class Duke {
     public static void main(String[] args) {
         DukeSession dukeSession = new DukeSession();
-        Methods.printGreetings();
+        Ui.printGreetings();
         dukeSession.setUpArrayList();
         dukeSession.execute();
     }
