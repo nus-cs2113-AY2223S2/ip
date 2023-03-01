@@ -49,8 +49,7 @@ public class Duke {
     }
 
     public static void main(String[] args) {
-        String homePath = System.getProperty("user.home") + "/Desktop";
-        String folderPath = homePath + "/data";
+        String folderPath = "data";
         String filePath = folderPath + "/duke.txt";
         Duke ChatBot = new Duke(folderPath, filePath);
         ChatBot.run();

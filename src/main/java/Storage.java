@@ -37,8 +37,8 @@ public class Storage {
     public ArrayList<Task> initialiseDuke()  throws IOException {
         ArrayList<Task> savedTaskList = new ArrayList<>();
         new File(getFolderPath()).mkdir();
-        File dukeDataFile = new File(getFilePath());
         new File(getFilePath()).createNewFile();
+        File dukeDataFile = new File(getFilePath());
         try {
             loadSavedData(dukeDataFile, savedTaskList);
         } catch (IOException e) {
