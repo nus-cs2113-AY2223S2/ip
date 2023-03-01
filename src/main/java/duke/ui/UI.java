@@ -15,6 +15,8 @@ public class UI {
             + "|____/ \\__,_|_|\\_\\___|\n";
     private static final String MESSAGE_EXIT = "Bye. Hope to see you again soon!";
     private static final String MESSAGE_GREET = "Hello! I'm Duke\nWhat can I do for you?";
+    private static final String MESSAGE_HELP = "Welcome to Duke." + System.lineSeparator()
+            + "Duke is a ";
     private static final String MESSAGE_LOGO = "Hello from";
 
     public void greet() {
@@ -42,6 +44,11 @@ public class UI {
 
     public void printLine() {
         print(LINE + "\n");
+    }
+
+    public void printLine(String text) {
+        print(text);
+        printLine();
     }
 
     public void printLogo() {

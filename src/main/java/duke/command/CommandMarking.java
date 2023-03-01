@@ -18,6 +18,6 @@ public class CommandMarking extends Command {
     @Override
     public void executor(TaskList tasks, UI ui) throws Exception {
         String result = tasks.setStatus(taskNum - 1, isMark);
-        ui.print(result);
+        ui.printLine(result);
     }
 }
