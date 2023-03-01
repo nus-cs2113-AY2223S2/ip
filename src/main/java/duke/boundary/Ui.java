@@ -110,7 +110,7 @@ public class Ui {
         this.printHorizontalLine();
 
         for (int i = 0; i < searchedTasks.size(); i++) {
-            System.out.printf("\t" + "%3d." + searchedTasks.get(i).toString(), i + 1);
+            System.out.printf("\t" + "%3d." + searchedTasks.get(i).toString() + System.lineSeparator(), i + 1);
         }
         this.printHorizontalLine();
 
