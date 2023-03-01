@@ -108,8 +108,9 @@ public class Ui {
         String keyword = payloadData[0];
         ArrayList<Task> searchedTasks = taskList.getSearchedTasks(keyword);
         this.printHorizontalLine();
-        for (Task task : searchedTasks) {
-            System.out.println(task.toString());
+
+        for (int i = 0; i < searchedTasks.size(); i++) {
+            System.out.printf("\t" + "%3d." + searchedTasks.get(i).toString(), i + 1);
         }
         this.printHorizontalLine();
 
