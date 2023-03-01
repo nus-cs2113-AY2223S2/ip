@@ -63,7 +63,9 @@ Format: ``todo <task description>``
 Example: ``todo homework``
 
 Expected output:
-```
+
+
+````
 File found. Reading file content:
 Successfully wrote to the file.
 ____________________________________________________________
@@ -71,7 +73,7 @@ Got it. I've added this task:
 [T][ ] homework
 Now you have 1 task in the list.
 ____________________________________________________________
-```
+````
 
 ## 2.1.2 Add Deadline
 
@@ -82,7 +84,9 @@ Format: ``deadline <task description> /by <deadline>``
 Example: ``deadline assigment /by Mon 2pm``
 
 Expected output:
-```
+
+
+````
 File found. Reading file content:
 Successfully wrote to the file.
 ____________________________________________________________
@@ -90,7 +94,9 @@ Got it. I've added this task:
 [D][ ] assigment (by: Mon 2pm)
 Now you have 2 tasks in the list.
 ____________________________________________________________
-```
+````
+
+
 ## 2.1.3 Add Event
 
 Add a event task.
@@ -100,7 +106,9 @@ Format: ``event <task description> /from <start> /to <end>``
 Example: ``event Attend class /from 4pm /to 6pm``
 
 Expected output:
-```
+
+
+````
 File found. Reading file content:
 Successfully wrote to the file.
 ____________________________________________________________
@@ -108,7 +116,7 @@ Got it. I've added this task:
 [E][ ] Attend class (from: 4pm to: 6pm)
 Now you have 3 tasks in the list.
 ____________________________________________________________
-```
+````
 
 ## 2.2 List tasks
 
@@ -117,7 +125,9 @@ List all the tasks stored.
 Format: ``list``
 
 Expected output:
-```
+
+
+````
 File found. Reading file content:
 ____________________________________________________________
 Here are the tasks in your list:
@@ -125,7 +135,8 @@ Here are the tasks in your list:
 2. [D][ ] assignment (by: Mon 2pm)
 3. [E][ ] Attend class (from: 4pm to: 6pm)
 ____________________________________________________________
-```
+````
+
 
 ## 2.3 Change task status
 Change the task status by mark or unmark a task.
@@ -137,13 +148,17 @@ Format: ``mark <task number>``
 Example: ``mark 1``
 
 Expected output:
-```
+
+
+````
 Successfully wrote to the file.
 ____________________________________________________________
 Nice! I've marked this task as done:
 [T][X] homework
 ____________________________________________________________
-```
+````
+
+
 ## 2.3.2 Un-mark task
 Unmark a task as not completed using task number.
 
@@ -152,13 +167,16 @@ Format: ``unmark <task number>``
 Example: ``unmark 1``
 
 Expected output:
-```
+
+
+````
 Successfully wrote to the file.
 ____________________________________________________________
 Nice! I've marked this task as undone:
 [T][ ] homework
 ____________________________________________________________
-```
+````
+
 
 ## 2.4 Delete task
 Delete a task using task number.
@@ -168,14 +186,17 @@ Format: ``delete <task number>``
 Example: ``delete 2``
 
 Expected output:
-```
+
+
+````
 ____________________________________________________________
 Noted. I've removed this task:
 	D[ ] assignment(by:Mon 2pm)
 Now you have 1 tasks in the list.
 ____________________________________________________________
 Successfully wrote to the file.
-```
+````
+
 
 ## 2.5 Find tasks
 Find tasks using keyword.
@@ -185,14 +206,17 @@ Format: ``find <keyword>``
 Example: ``find book``
 
 Expected output:
-```
+
+
+````
 ____________________________________________________________
 Here are the matching tasks in your list:
 1. [T][ ] read book
 2. [D][ ] return book (by: Mon)
 3. [E][ ] book club (from: 4pm to: 6pm)
 ____________________________________________________________
-```
+````
+
 
 ## 2.6 Exit program
 Exit the program.
@@ -200,11 +224,14 @@ Exit the program.
 Format: ``bye``
 
 Expected output:
-```
+
+
+````
 ____________________________________________________________
 Bye. Hope to see you again soon!
 ____________________________________________________________
-```
+````
+
 
 ## 3. Summary of features
 Here is the table of summary for all the features.
