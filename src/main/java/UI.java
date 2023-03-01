@@ -30,8 +30,8 @@ public class UI {
     public static void printAvailableInput(){
         System.out.println("These are what You can do:");
         System.out.println("* |Add todo| ex) todo individual project" );
-        System.out.println("* |Add deadline| ex) deadline do coursemology /by Tuesday");
-        System.out.println("* |Add event| ex) event tutorial /from Wednesday 12pm /to 1pm");
+        System.out.println("* |Add deadline| ex) deadline do coursemology by Tuesday");
+        System.out.println("* |Add event| ex) event tutorial from Wednesday 12pm to 1pm");
         System.out.println("* |List tasks| ex) list");
         System.out.println("* |Mark a task as Done| ex) mark 2");
         System.out.println("* |Unmark a task as Undone| ex) unmark 2");

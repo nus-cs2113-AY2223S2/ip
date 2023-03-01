@@ -24,9 +24,6 @@ public class Storage {
         Scanner scanner = new Scanner(file);
         ArrayList<String> existingTasks = new ArrayList<>();
         while(scanner.hasNext()){
-            //String data = scanner.nextLine();
-            //String taskInfo = data.substring(6,7) + "/" + data.substring(8);
-            //existingTasks.add(taskInfo);
             existingTasks.add(scanner.nextLine());
         }
         return existingTasks;

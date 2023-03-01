@@ -15,6 +15,10 @@ abstract public class Command {
     }
 
     public String getContent(){
+        content = content.replace("| ", "");
+        content = content.replace("by ", "");
+        content = content.replace("from ", "");
+        content = content.replace("to ", "");
         return content;
     }
 

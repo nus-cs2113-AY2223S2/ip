@@ -7,7 +7,7 @@ public class AddEventCommand extends Command{
         int toBeginIndex = originalInput.indexOf("to");
 
         content = originalInput.substring(0, fromBeginIndex);
-        from = originalInput.substring(fromBeginIndex, toBeginIndex).replace("from", " ").trim();
-        to = originalInput.substring(toBeginIndex).replace("to", " ").trim();
+        from = originalInput.substring(fromBeginIndex, toBeginIndex).replace("from", "").trim();
+        to = originalInput.substring(toBeginIndex).replace("to", "").trim();
     }
 }

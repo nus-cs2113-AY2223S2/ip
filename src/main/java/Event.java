@@ -17,6 +17,6 @@ public class Event extends Task {
             returnStr = returnStr.concat("[ ] ");
         }
 
-        return returnStr + getContents() + "/from: " + from + "/to: " + to;
+        return returnStr + getContents() + "| from " + from + " | to " + to;
     }
 }

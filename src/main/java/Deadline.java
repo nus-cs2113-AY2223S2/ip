@@ -15,6 +15,6 @@ public class Deadline extends Task {
             returnStr = returnStr.concat("[ ] ");
         }
 
-        return returnStr + getContents() + "/by: " + by;
+        return returnStr + getContents() + "| by " + by;
     }
 }

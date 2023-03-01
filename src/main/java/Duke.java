@@ -23,6 +23,8 @@ public class Duke {
     public static void executeCommand(){
         Command command = Parser.getCommand();
 
+        if(command == null) return;
+
         switch(command.getType()){
             case COMMAND_BYE:
                 exitProgram(); break;

@@ -5,6 +5,6 @@ public class AddDeadlineCommand extends Command{
 
         int byBeginIndex = originalInput.indexOf("by");
         super.content = originalInput.substring(0, byBeginIndex);
-        super.by = originalInput.substring(byBeginIndex).replace("by", " ").trim();
+        super.by = originalInput.substring(byBeginIndex).replace("by", "").trim();
     }
 }
