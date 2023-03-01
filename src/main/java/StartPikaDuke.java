@@ -17,7 +17,6 @@ import util.TaskDeleter;
 * */
 public class StartPikaDuke {
 
-    //NOT_FROM_SAVE_DATA helps with ensuring that there is no random output when loading in data from listData.txt
     private static final boolean NOT_FROM_SAVE_DATA = false;
     private static final String CHAR_SPACE = " ";
     private static final String LIST_COMMAND = "list";
