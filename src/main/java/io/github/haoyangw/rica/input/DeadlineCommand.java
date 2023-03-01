@@ -12,11 +12,9 @@ public class DeadlineCommand extends Command {
     /**
      * Executes the 'deadline' command issued by the user, creating a new Deadline
      *   Task for Rica to keep track of
-     *
-     * @throws RicaTaskException If Deadline Task could not be created by TaskManager
      */
     @Override
-    public void run() throws RicaTaskException {
+    public void run() {
         try {
             super.getTaskManager().createTaskFrom(super.getCommand());
         } catch (RicaTaskException exception) {

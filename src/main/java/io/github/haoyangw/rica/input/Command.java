@@ -51,9 +51,6 @@ public abstract class Command {
     /**
      * Executes the command currently issued by the user, including printing any
      *   messages to inform the user of the results
-     *
-     * @throws RicaException If the current command fails during execution. Exact
-     *   exception category will be determined in child class implementation of run()
      */
-    public abstract void run() throws RicaException;
+    public abstract void run();
 }

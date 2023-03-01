@@ -11,11 +11,9 @@ public class EventCommand extends Command {
 
     /**
      * Executes the 'event' command, creating a new Event for Rica to keep track of
-     *
-     * @throws RicaTaskException If a new Event could not be created by TaskManager
      */
     @Override
-    public void run() throws RicaTaskException {
+    public void run() {
         try {
             super.getTaskManager().createTaskFrom(super.getCommand());
         } catch (RicaTaskException exception) {
