@@ -7,7 +7,7 @@ public class TaskIndexArgumentValidator extends IntegerArgumentValidator {
         super.validateArgument(bunny, argument);
 
         int integerArgument = Integer.parseInt(argument);
-        if (integerArgument <= 0 || integerArgument > bunny.numTasks()) {
+        if (integerArgument <= 0 || integerArgument > bunny.getTasks().numTasks()) {
             throw new InvalidArgumentException("is not a valid task number");
         }
     }

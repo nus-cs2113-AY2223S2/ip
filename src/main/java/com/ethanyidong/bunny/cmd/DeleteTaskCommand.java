@@ -21,9 +21,9 @@ public class DeleteTaskCommand extends ExecutableCommand {
     }
 
     public void execute(BunnySession bunny) {
-        Task deletedTask = bunny.getTask(this.taskIndex);
-        bunny.deleteTask(this.taskIndex);
-        bunny.printMessage("Noted. I've removed this task:\n\t" + deletedTask + "\nNow you have " +
-                bunny.numTasks() + " tasks in the list.");
+        Task deletedTask = bunny.getTasks().getTask(this.taskIndex);
+        bunny.getTasks().deleteTask(this.taskIndex);
+        bunny.getUI().printMessage("Noted. I've removed this task:\n\t" + deletedTask + "\nNow you have " +
+                bunny.getTasks().numTasks() + " tasks in the list.");
     }
 }

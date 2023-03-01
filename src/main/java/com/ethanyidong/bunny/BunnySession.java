@@ -1,57 +1,27 @@
 package com.ethanyidong.bunny;
 
-import com.ethanyidong.bunny.task.Task;
+import com.ethanyidong.bunny.arg.InvalidCommandException;
+import com.ethanyidong.bunny.cmd.ExecutableCommand;
+import com.ethanyidong.bunny.cmd.TokenizedCommand;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.nio.file.Paths;
 
 public class BunnySession {
-    private final static String DIVIDER = "____________________________________________________________";
-    private final static String GLOBAL_INDENTATION = "\t";
-    private final static String MESSAGE_INDENTATION = " ";
+    private final BunnyTaskList tasks;
+    private final BunnyUI ui;
+    private final BunnyStorage storage;
 
-    private final ArrayList<Task> taskList;
     private boolean isQuit;
-
     private boolean isSuppressed;
 
-    public BunnySession() {
-        this.taskList = new ArrayList<>();
+    public BunnySession(boolean saveEnabled) {
+        String home = System.getProperty("user.home");
+
+        this.tasks = new BunnyTaskList();
+        this.ui = new BunnyUI();
+        this.storage = new BunnyStorage(saveEnabled, Paths.get(home, "bunny.aof"));
         this.isQuit = false;
         this.isSuppressed = false;
-    }
-
-    public void printMessage(String message) {
-        this.printMessage(Arrays.asList(message.split("\n")));
-    }
-
-    public void printMessage(Iterable<String> messageLines) {
-        if (!this.isSuppressed) {
-            String output = "";
-            output += GLOBAL_INDENTATION + DIVIDER + "\n";
-            for (String line : messageLines) {
-                output += GLOBAL_INDENTATION + MESSAGE_INDENTATION + line + "\n";
-            }
-            output += GLOBAL_INDENTATION + DIVIDER + "\n";
-
-            System.out.print(output);
-        }
-    }
-
-    public void addTask(Task task) {
-        this.taskList.add(task);
-    }
-
-    public Task getTask(int index) {
-        return this.taskList.get(index);
-    }
-
-    public void deleteTask(int index) {
-        this.taskList.remove(index);
-    }
-
-    public int numTasks() {
-        return this.taskList.size();
     }
 
     public boolean isQuit() {
@@ -64,5 +34,45 @@ public class BunnySession {
 
     public void setIsSuppressed(boolean isSuppressed) {
         this.isSuppressed = isSuppressed;
+        this.ui.setIsSuppressed(isSuppressed);
+    }
+
+    public BunnyTaskList getTasks() {
+        return this.tasks;
+    }
+
+    public BunnyUI getUI() {
+        return this.ui;
+    }
+
+    public void runCommandString(String commandString) {
+        TokenizedCommand inputCommand = new TokenizedCommand(commandString);
+        ExecutableCommand executableCommand;
+        try {
+            executableCommand = ExecutableCommand.validateAndParse(this, inputCommand);
+        } catch (InvalidCommandException ice) {
+            this.ui.printMessage(ice.toString());
+            return;
+        }
+        executableCommand.execute(this);
+    }
+
+    public void runBunny() {
+        this.storage.loadSave(this);
+
+        this.ui.printMessage("Hello! I'm Bunny.\nWhat can I do for you?");
+
+        try {
+            this.storage.beginSave();
+            while (!this.isQuit()) {
+                String input = this.ui.getNextCommandString();
+                this.storage.save(input);
+                this.runCommandString(input);
+            }
+            this.ui.printMessage("Bye. Hope to see you again soon!");
+            this.storage.endSave();
+        } catch (Exception _ex) {
+            System.out.println("Error writing save file! Quitting...");
+        }
     }
 }

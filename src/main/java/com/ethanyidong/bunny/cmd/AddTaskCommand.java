@@ -13,9 +13,10 @@ public abstract class AddTaskCommand extends ExecutableCommand {
     }
 
     private void addTask(BunnySession bunny, Task newTask) {
-        bunny.addTask(newTask);
-        bunny.printMessage("I've added this task: " + newTask + "\nNow you have "
-                + bunny.numTasks() + " " + Formatter.pluralize("task", "tasks", bunny.numTasks())
+        bunny.getTasks().addTask(newTask);
+        bunny.getUI().printMessage("I've added this task: " + newTask + "\nNow you have "
+                + bunny.getTasks().numTasks() + " "
+                + Formatter.pluralize("task", "tasks", bunny.getTasks().numTasks())
                 + " in the list.");
     }
 

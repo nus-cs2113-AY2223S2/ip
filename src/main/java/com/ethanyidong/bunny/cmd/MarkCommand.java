@@ -34,7 +34,7 @@ public class MarkCommand extends ExecutableCommand {
     }
 
     public void execute(BunnySession bunny) {
-        bunny.getTask(this.taskIndex).setIsDone(this.isDone);
-        bunny.printMessage(this.markedMessage() + ":\n\t" + bunny.getTask(this.taskIndex));
+        bunny.getTasks().getTask(this.taskIndex).setIsDone(this.isDone);
+        bunny.getUI().printMessage(this.markedMessage() + ":\n\t" + bunny.getTasks().getTask(this.taskIndex));
     }
 }
