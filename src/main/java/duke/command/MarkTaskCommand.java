@@ -8,7 +8,6 @@ import duke.util.Ui;
  * A <code>MarkTaskCommand</code> object takes care of the marking/un-marking of specified tasks.
  */
 public class MarkTaskCommand extends Command {
-    private static Ui ui;
     private String action;
     private int itemNumber;
 
@@ -22,7 +21,7 @@ public class MarkTaskCommand extends Command {
                 action = "unmark";
             }
         } catch (IndexOutOfBoundsException e) {
-            ui.printError();
+            Ui.printError();
         }
 
     }

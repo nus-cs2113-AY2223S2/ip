@@ -36,6 +36,10 @@ public class Task {
         System.out.println(LINE_BREAK);
     }
 
+    public void markAsDoneSilent() {
+        this.isDone = true;
+    }
+
     public void markAsUndone() {
         this.isDone = false;
         System.out.println("Ok, I've marked this task as not done yet:");

@@ -90,7 +90,7 @@ public class Parser {
         }
 
         if (isDone) {
-            lists.get(lists.size() - 1).markAsDone();
+            lists.get(lists.size() - 1).markAsDoneSilent();
         }
         return lists;
     }
