@@ -144,8 +144,10 @@ public class Event extends Todo {
      *
      * @param objectData String representation of an Event Object's state variables
      * @return Instance of Event with the previously saved state
+     * @throws RicaSerializationException If the serialised Task is not an Event
+     *   or not all state variables were saved
      */
-    public static Event deserializeObject(String objectData) {
+    public static Event deserializeObject(String objectData) throws RicaSerializationException {
         String[] variables = objectData.split(Task.DATA_STRING_SEPARATOR_REGEX);
         if (variables.length < Event.NUM_OF_SERIALIZED_DATA) {
             throw new RicaSerializationException(Task.INCOMPLETE_SERIALIZED_OBJECT_STRING);
