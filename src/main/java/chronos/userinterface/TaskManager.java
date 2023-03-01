@@ -88,21 +88,21 @@ public class TaskManager {
      */
 
     public void timerModule() {
-        Scanner timerCommand = new Scanner(System.in);
+        Input input = new Input();
         Clock clock = new Clock();
         clock.startWork();
         System.out.println("Press Enter ONCE to START a break, or type 'cancel' to stop the timer: ");
-        while (timerCommand.hasNextLine()) {
-            String line = timerCommand.nextLine();
+        while (true) {
+            String line = input.readInput();
             if (line.equals("cancel")) {
                 clock.cancelClock();
                 break;
             } else {
                 clock.startBreak();
             }
-            timerCommand.close();
         }
     }
+
 
     /**
      * This method continuously reads input from the user and executes the corresponding action.
