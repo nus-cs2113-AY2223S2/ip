@@ -91,11 +91,11 @@ delete 1
     ____________________________________________________________
 ```
 
-## Searching specific tasks
+## Finding specific tasks
 
-Search your task based on specific keyword. Format: `search <keyword>`
+Find your task based on specific keyword. Format: `find <keyword>`
 
-### Searching specific tasks example
+### Finding specific tasks example
 
 ```
 find tP
