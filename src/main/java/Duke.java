@@ -1,11 +1,23 @@
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.FileNotFoundException;
 
 public class Duke {
     public static void main(String[] args) {
-        greeting();
         ArrayList<Task> tasks = new ArrayList<>();
         Scanner in = new Scanner(System.in);
+        String filePath = "test11.txt";
+
+        greeting();
+        System.out.println("Attempting to retrieve your files..." + System.lineSeparator());
+        try {
+            printFileContents(filePath, tasks);
+        } catch (FileNotFoundException e) {
+            System.out.println("File is not found. Created a new file!");
+        }
 
         boolean isExit = false;
         while (!isExit) {
@@ -20,7 +32,7 @@ public class Duke {
                 } else if (messageFromUser.equals("list")) {
                     displayList(tasks);
                 } else if (messageFromUser.equals("bye")) {
-                    exitGreeting();
+                    exitGreeting(tasks, filePath);
                     isExit = true;
                 } else if (messageFromUser.startsWith("delete")) {
                     deleteFromList(messageFromUser, tasks);
@@ -178,7 +190,8 @@ public class Duke {
         horizontalLine();
     }
 
-    public static void exitGreeting() {
+    public static void exitGreeting(ArrayList<Task> tasks, String filePath) {
+        initialiseWriteTasksToFile(tasks, filePath);
         System.out.println("Bye. Hope to see you again soon!");
         horizontalLine();
     }
@@ -186,4 +199,134 @@ public class Duke {
     public static void horizontalLine() {
         System.out.println("________________________________________");
     }
+
+    // Adapted from CS2113 Week 6 documentation
+    // If there are saved tasks, print them out.
+    private static void printFileContents(String filePath, ArrayList<Task> tasks) throws FileNotFoundException {
+        File f = new File(filePath);
+        Scanner s = new Scanner(f);
+        if (s.hasNext()) {
+            horizontalLine();
+            while (s.hasNext()) {
+                String lineInFile = s.nextLine();
+                copyToList(lineInFile, tasks, filePath);
+            }
+            displayList(tasks);
+            horizontalLine();
+        } else {
+            System.out.println("There are no saved tasks.");
+            System.out.println("Add your first task :)");
+            horizontalLine();
+        }
+    }
+
+    // Copying text file contents over to tasks list
+    private static void copyToList(String line, ArrayList<Task> tasks, String filePath) {
+        switch(line.substring(0,1)) {
+        case "T":
+            copyTodoToList("T", line.substring(2), tasks);
+            break;
+        case "D":
+            copyDeadlineToList("D", line.substring(2), tasks);
+            break;
+        case "E":
+            copyEventToList("E", line.substring(2), tasks);
+            break;
+        case "S":
+            // Saved data text on the first line (initialisation step)
+            break;
+        default:
+            System.out.println("Unknown task type detected...");
+            System.out.println("Skipping task...");
+        }
+    }
+
+    //Does creation of ToDo and copying to tasks
+    private static void copyTodoToList(String taskType, String taskInfo, ArrayList<Task> tasks) {
+        // Parse line to split task status and task info
+        String[] messageComponents = taskInfo.split("/", 2);
+        // Create new todo with task info
+        ToDo newToDo = new ToDo(messageComponents[1]);
+        // Store todo in list of tasks
+        tasks.add(newToDo);
+        int currentTaskIndex = tasks.size() - 1;
+        // Mark task as done if task status was stored as 1
+        if (messageComponents[0].equals("1")) {
+            Task currentTask = tasks.get(currentTaskIndex);
+            currentTask.markAsDone();
+        }
+    }
+
+    private static void copyDeadlineToList(String taskType, String taskInfo, ArrayList<Task> tasks) {
+        String[] messageComponents = taskInfo.split("/", 3);
+        Deadline newDeadline = new Deadline(messageComponents[1], messageComponents[2]);
+        tasks.add(newDeadline);
+        int currentTaskIndex = tasks.size() - 1;
+        if (messageComponents[0].equals("1")) {
+            Task currentTask = tasks.get(currentTaskIndex);
+            currentTask.markAsDone();
+        }
+    }
+
+    private static void copyEventToList(String taskType, String taskInfo, ArrayList<Task> tasks) {
+        String[] messageComponents = taskInfo.split("/", 4);
+        Event newEvent = new Event(messageComponents[1], messageComponents[2], messageComponents[3]);
+        tasks.add(newEvent);
+        int currentTaskIndex = tasks.size() - 1;
+        if (messageComponents[0].equals("1")) {
+            Task currentTask = tasks.get(currentTaskIndex);
+            currentTask.markAsDone();
+        }
+    }
+
+    private static void initialiseWriteTasksToFile(ArrayList<Task> tasks, String filePath) {
+        try {
+            FileWriter fw = new FileWriter(filePath);
+            fw.write("Saved tasks: " + System.lineSeparator());
+            fw.close();
+            FileWriter fwAppend = new FileWriter(filePath, true);
+            writeTasksToFile(fwAppend, tasks);
+            fwAppend.close();
+        } catch (IOException e) {
+            System.out.println("Something went wrong: " + e.getMessage());
+        }
+    }
+
+
+    private static void writeTasksToFile(FileWriter fwAppend, ArrayList<Task> tasks) throws IOException {
+        int totalNumberOfTasks = tasks.size();
+        for (int index = 0; index < totalNumberOfTasks; index += 1) {
+            Task currentTask = tasks.get(index);
+            String taskType = currentTask.getTaskType().substring(1,2);
+            String taskStatus = currentTask.getStatus();
+            int isTaskDone = taskStatus.substring(1,2).equals("X") ? 1 : 0;
+            String taskInfo = currentTask.getTaskInfo();
+            handleWritingSpecificTaskTypes(fwAppend, taskType, currentTask, taskStatus, isTaskDone, taskInfo);
+        }
+    }
+
+    private static void handleWritingSpecificTaskTypes(FileWriter fwAppend, String taskType, Task currentTask,
+                                                       String taskStatus, int isTaskDone, String taskInfo) throws IOException{
+        String additionalTaskInfo = "";
+        switch(taskType) {
+        case "T":
+            fwAppend.write(taskType + "/" + isTaskDone + "/" + taskInfo + System.lineSeparator());
+            break;
+        case "D":
+            Deadline currentDeadline = (Deadline) currentTask;
+            additionalTaskInfo = currentDeadline.getDueInfo();
+            fwAppend.write(taskType + "/" + isTaskDone + "/" + taskInfo + "/" + additionalTaskInfo + System.lineSeparator());
+            break;
+        case "E":
+            Event currentEvent = (Event) currentTask;
+            String eventStart = currentEvent.getEventStartInfo();
+            String eventEnd = currentEvent.getEventEndInfo();
+            fwAppend.write(taskType + "/" + isTaskDone + "/" + taskInfo + "/" + eventStart + "/" + eventEnd +  System.lineSeparator());
+            break;
+        default:
+            System.out.println("Unknown task type error!");
+        }
+    }
+
+
 }
