@@ -33,10 +33,10 @@ public class Buddy {
                     System.out.println(index + "." + listOfThings.get(index - 1));
                     index++;
                 }
-            } else if (command.startsWith("mark")) {  // .startsWith(" ")
+            } else if (command.startsWith("mark")) {
                 int taskNumberIndexMark = 5;
                 int taskNumber = Integer.parseInt(command.substring(taskNumberIndexMark));
-                // have to parse
+
 
                 try {
                     Task currentTask = listOfThings.get(taskNumber - 1);
