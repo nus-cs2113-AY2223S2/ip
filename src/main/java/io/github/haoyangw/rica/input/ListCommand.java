@@ -9,6 +9,10 @@ public class ListCommand extends Command {
         super(command, taskManager);
     }
 
+    /**
+     * Executes the 'list' command, which lists out all Tasks that Rica is currently
+     *   keeping track of on the user's screen
+     */
     @Override
     public void run() {
         super.getTaskManager().printTasks();

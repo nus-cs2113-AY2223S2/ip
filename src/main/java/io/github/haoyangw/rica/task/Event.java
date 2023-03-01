@@ -3,6 +3,9 @@ package io.github.haoyangw.rica.task;
 import io.github.haoyangw.rica.exception.RicaSerializationException;
 import io.github.haoyangw.rica.exception.RicaTaskException;
 
+/**
+ * Represents an Event Task that involves a start date/time and end date/time
+ */
 public class Event extends Todo {
     private static final String COMMAND = "event";
     private static final String MISSING_DESC_ERROR = " Remember to provide a description of the event you're adding y'know!";
@@ -26,6 +29,15 @@ public class Event extends Todo {
         this.endTime = endTime;
     }
 
+    /**
+     * Parses a command issued by the user and extracts the deadline description
+     *   portion, which is returned to the caller
+     *
+     * @param command Full command issued by the user
+     * @return String Object containing the description of the deadline to be created
+     * @throws RicaTaskException If command doesn't contain a description of the
+     *   deadline to be created
+     */
     private static String getDescriptionOf(String command) throws RicaTaskException {
         String[] parameters = command.split(" ");
         StringBuilder descBuilder = new StringBuilder();
@@ -49,6 +61,15 @@ public class Event extends Todo {
         return this.endTime;
     }
 
+    /**
+     * Parses an Event creation command issued by the user and extracts the desired
+     *   end date/time, which is returned to the caller.
+     *
+     * @param command Event creation command issued by the user
+     * @return String Object containing the desired end date/time
+     * @throws RicaTaskException If an end date/time is not found within the event
+     *   creation command
+     */
     private static String getEndTimeOf(String command) throws RicaTaskException {
         int endDateFirstIndex = command.indexOf(Event.END_KEYWORD)
                 + Event.END_KEYWORD.length();
@@ -63,6 +84,15 @@ public class Event extends Todo {
         return this.startTime;
     }
 
+    /**
+     * Parses an Event creation command issued by the user and extracts the desired
+     *   start date/time, which is returned to the caller.
+     *
+     * @param command Event creation command issued by the user
+     * @return String Object containing the start date/time of this Event
+     * @throws RicaTaskException If no start date/time is found within Event creation
+     *   command
+     */
     private static String getStartTimeOf(String command) throws RicaTaskException {
         boolean hasStartTimeKeyword = command.contains(Event.START_KEYWORD);
         if (!hasStartTimeKeyword) {
@@ -87,6 +117,15 @@ public class Event extends Todo {
         return Event.TYPE;
     }
 
+    /**
+     * Parses an Event creation command and instantiates an Event object with the
+     *   desired start date, end date and description.
+     *
+     * @param command Event creation command issued by the user
+     * @return Instance of Event with the user's desired start date, end date and
+     *   description
+     * @throws RicaTaskException If wrong command was issued for Event creation
+     */
     public static Event create(String command) throws RicaTaskException {
         String[] parameters = command.trim().split(" ");
         // Wrong command for adding an event
@@ -99,7 +138,16 @@ public class Event extends Todo {
         return new Event(description, startTime, endTime);
     }
 
-    public static Event deserializeObject(String objectData) {
+    /**
+     * Parses a String representation of an Event Object and re-creates an instance
+     *   of Event with the previously saved state.
+     *
+     * @param objectData String representation of an Event Object's state variables
+     * @return Instance of Event with the previously saved state
+     * @throws RicaSerializationException If the serialised Task is not an Event
+     *   or not all state variables were saved
+     */
+    public static Event deserializeObject(String objectData) throws RicaSerializationException {
         String[] variables = objectData.split(Task.DATA_STRING_SEPARATOR_REGEX);
         if (variables.length < Event.NUM_OF_SERIALIZED_DATA) {
             throw new RicaSerializationException(Task.INCOMPLETE_SERIALIZED_OBJECT_STRING);
@@ -114,6 +162,13 @@ public class Event extends Todo {
         return new Event(description, isDone, startTime, endTime);
     }
 
+    /**
+     * Generates a String representation of the current Event's state variables
+     *   to be written to persistent storage later.
+     *
+     * @return String representation of the current Event instance
+     * @see io.github.haoyangw.rica.storage.Serializable
+     */
     @Override
     public String serializeObject() {
         String todoData = super.serializeObject();
@@ -121,12 +176,24 @@ public class Event extends Todo {
                 + Task.DATA_STRING_SEPARATOR + this.getEndTime();
     }
 
+    /**
+     * Sets this Event Task as done/not done by the user
+     *
+     * @param isDone Whether this Event is now done
+     * @return Instance of Event with isDone state variable set accordingly
+     */
     @Override
     public Event setDone(boolean isDone) {
         return new Event(super.getDescription(), isDone, this.getStartTime(),
                 this.getEndTime());
     }
 
+    /**
+     * Generates a user-friendly String representation of this Event instance
+     *   for the user to understand this Event's current state
+     *
+     * @return String representation of this Event instance's state
+     */
     @Override
     public String toString() {
         return String.format("%s (from: %s to: %s)", super.toString(),

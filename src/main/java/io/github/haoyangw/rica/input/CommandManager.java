@@ -6,6 +6,10 @@ import io.github.haoyangw.rica.task.TaskManager;
 import java.io.InputStream;
 import java.util.Scanner;
 
+/**
+ * Handles the reading of commands from the user, and the parsing of commands to
+ *   determine which <code>Command</code> implementation the user wants us to execute.
+ */
 public class CommandManager {
     private static final String BYE_CMD = "bye";
     private static final String DEADLINE_CMD = "deadline";
@@ -31,10 +35,27 @@ public class CommandManager {
         return this.userInput;
     }
 
+    /**
+     * Reads in the next command from the user as a String
+     *
+     * @return String object representing the full command issued by
+     *   the user
+     */
     public String getNextCommand() {
         return this.getUserInput().nextLine();
     }
 
+    /**
+     * Parses a command issued by the user to determine the corresponding Command
+     *   subclass that can execute that command
+     *
+     * @param command String of the full command issued by the user
+     * @param taskManager TaskManager instance currently used by Rica that will provide
+     *   the corresponding Command subclass with access to the user's tasks
+     * @return Corresponding implementation of Command that can execute the user's
+     *   current command
+     * @throws RicaCommandException If an unrecognised command is issued by the user
+     */
     public static Command parse(String command, TaskManager taskManager)
             throws RicaCommandException {
         String[] params = command.split(" ");

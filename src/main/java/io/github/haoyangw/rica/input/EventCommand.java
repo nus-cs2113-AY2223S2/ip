@@ -9,8 +9,11 @@ public class EventCommand extends Command {
         super(command, taskManager);
     }
 
+    /**
+     * Executes the 'event' command, creating a new Event for Rica to keep track of
+     */
     @Override
-    public void run() throws RicaTaskException {
+    public void run() {
         try {
             super.getTaskManager().createTaskFrom(super.getCommand());
         } catch (RicaTaskException exception) {

@@ -8,6 +8,10 @@ public class UnmarkCommand extends Command {
         super(command, taskManager);
     }
 
+    /**
+     * Executes the 'unmark' command, marking a specified Task as no longer already
+     *   done by the user
+     */
     @Override
     public void run() {
         String[] params = super.getCommand().split(Command.CMD_SEPARATOR);

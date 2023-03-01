@@ -9,6 +9,10 @@ public class ByeCommand extends Command {
         super(command, taskManager);
     }
 
+    /**
+     * Executes the 'bye' command issued by the user, which involves printing Rica's
+     *   signature goodbye message to tell the user how much she'll miss him/her
+     */
     @Override
     public void run() {
         super.getTextUi().printGoodbyeMessage();

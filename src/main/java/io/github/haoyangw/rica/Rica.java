@@ -7,8 +7,10 @@ import io.github.haoyangw.rica.input.CommandManager;
 import io.github.haoyangw.rica.task.TaskManager;
 import io.github.haoyangw.rica.ui.TextUi;
 
-import java.util.Scanner;
-
+/**
+ * Main class of the Rica program. main() is the method executed each time this
+ *   Java program is run.
+ */
 public class Rica {
     private static final String BYE_COMMAND = "bye";
     private final CommandManager commandManager;
@@ -34,7 +36,10 @@ public class Rica {
     }
 
     /**
-     * Parse the command entered into CLI and execute the corresponding actions
+     * Parse the command entered into CLI and execute the corresponding actions.
+     *
+     * If an error occurs while executing any command, print an error message to
+     *   inform the user about it.
      */
     private void runCommands() throws RicaTaskException {
         String command = "";
@@ -51,6 +56,10 @@ public class Rica {
         } while (!command.equals(Rica.BYE_COMMAND));
     }
 
+    /**
+     * Performs Rica's initialisation steps, namely greeting the user and continuously
+     *   reading the user's commands
+     */
     public void start() {
         this.getTextUi().printWelcomeMessage();
         try {
@@ -60,6 +69,12 @@ public class Rica {
         }
     }
 
+    /**
+     * Main method of the Rica program that is executed every time Rica is started.
+     *
+     * @param args Commandline arguments passed by the user when executing the Rica
+     *   jar file
+     */
     public static void main(String[] args) {
         new Rica().start();
     }
