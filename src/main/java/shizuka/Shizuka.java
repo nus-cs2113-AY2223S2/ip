@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class Shizuka {
-    static final String FILE_PATH = "shizuka.txt";
 
     /**
      * Splits the input string into command keyword and arguments.
@@ -33,7 +32,7 @@ public class Shizuka {
         String line, lineTrimmed;
         TodoList list0 = new TodoList();
         try {
-            Storage.load(FILE_PATH, list0);
+            Storage.load(list0);
             UI.fileLoaded();
         } catch (IOException e) {
             UI.fileNotFound();
@@ -103,7 +102,7 @@ public class Shizuka {
                 break;
             case "save":
                 try {
-                    Storage.save(FILE_PATH, list0.listWriter());
+                    Storage.save(list0.listWriter());
                     UI.saveSuccess();
                     break;
                 } catch (IOException e) {
