@@ -1,29 +1,15 @@
 package com.ethanyidong.bunny.task;
 
+import com.ethanyidong.bunny.date.FlexibleDate;
+
 public class Event extends Task {
-    private String from;
-    private String to;
+    private FlexibleDate from;
+    private FlexibleDate to;
 
     public Event(String name, String from, String to) {
         super(name);
-        this.from = from;
-        this.to = to;
-    }
-
-    public String getFrom() {
-        return from;
-    }
-
-    public void setFrom(String from) {
-        this.from = from;
-    }
-
-    public String getTo() {
-        return to;
-    }
-
-    public void setTo(String to) {
-        this.to = to;
+        this.from = new FlexibleDate(from);
+        this.to = new FlexibleDate(to);
     }
 
     protected String label() {
