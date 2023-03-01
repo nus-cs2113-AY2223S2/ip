@@ -1,23 +1,32 @@
+import Exceptions.GootExceptionHandler;
+import Parser.Parser;
+import Storage.Storage;
+import UI.UserInterface;
+
 import java.io.IOException;
 import java.util.Scanner;
+
 public class Goot {
     public static void main(String[] args) {
-    UserInterface.greet();
-    Storage storage = new Storage();
-    try{
-        Storage.loadFileContentsToTaskArray();
-    }
-    catch (IOException e){
-        GootExceptionHandler.fileNotFound();
-    }
-    while (true) {
-        Scanner scan = new Scanner(System.in);
-        String input = scan.nextLine();
-        if(input.equals("bye")){
-            UserInterface.farewellMessage();
-            break;
+        UserInterface.greet();
+        Storage storage = new Storage();
+        try {
+            Storage.loadFileContentsToTaskArray();
+        } catch (IOException e) {
+            GootExceptionHandler.fileNotFound();
         }
-        Parser.interpretInput(input);
-    }
+        try {
+            while (true) {
+                Scanner scan = new Scanner(System.in);
+                String input = (scan.nextLine()).trim();
+                if (input.equals("bye")) {
+                    UserInterface.farewellMessage();
+                    break;
+                }
+                Parser.interpretInput(input);
+            }
+        } catch (Exception error) {
+
+        }
     }
 }
