@@ -13,6 +13,7 @@ Welcome to the Haru task bot! This bot can be used as your personal todo list.
 	What can I do for you?
 	____________________________________________________________
 ```
+Ensure that there is a folder named "data" with a .txt file named "tasklist" inside to read and write the tasks successfully. 
 
 ## Features
 
