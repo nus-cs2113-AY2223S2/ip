@@ -21,6 +21,11 @@ public class Task {
         }
     }
 
+    // necessary for find functionality
+    public String getTaskName() {
+        return this.taskName;
+    }
+
     public void printTask() {
         System.out.println(this.toString());
     }

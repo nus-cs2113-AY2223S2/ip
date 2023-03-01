@@ -69,6 +69,7 @@ public class Storage {
         String taskName;
         taskName = taskInformation.split(LOADING_FRONT_PARENTHESIS_DELIMITER, 2)[0];
         String deadlineBy = taskInformation.split(": ", 2)[1].replace(")","");
+        deadlineBy = Parser.parseSavedDeadline(deadlineBy); // format the deadline
         TaskList.addTask(new Deadline(taskName, deadlineBy)); // tasks.add(new Deadline(taskName, deadlineBy));
         if (taskType.charAt(TASK_TYPE_STATUS_INDEX) == 'X') {
             tasks.get(tasks.size() - 1).setDone(true);

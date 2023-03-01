@@ -22,7 +22,6 @@ public class Ui {
             tasks.get(i).printTask();
         }
     }
-
     public static void printNotification(Task task, String action, int numberOfTasks) {
         switch (action) {
         case "unmark":
@@ -52,7 +51,6 @@ public class Ui {
             break;
         }
     }
-
     public static void printErrorMessage(String errorType) {
         switch(errorType) {
         case "conversion":
