@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -13,14 +14,15 @@ import java.util.Scanner;
 public final class Storage {
     private static final String DEFAULT_FILE_PATH = "data/papatask.txt";
     public static final String FILE_DELIMITER = "|";
+    private String filePath; // To store custom file path and for methods to reference.
 
     /**
      * Constructor with custom FilePath defined
      * @param filePath Where the saved files are stored.
      */
     public Storage(String filePath) {
-        openFile(filePath);
-
+        this.filePath = filePath;
+        openFile();
     }
 
     /**
@@ -34,10 +36,9 @@ public final class Storage {
     /**
      * Open the saved tasks file upon startup of PAPA.<br>
      * Checks if the directory and text file exist, and writes to the file.
-     * @param filePath the path where data is stored.
      */
-    public static void openFile(String filePath) {
-        File file = new File(filePath);
+    private void openFile() {
+        File file = new File(this.filePath);
 
         // Create the directories required (if not exist)
         if (!file.getParentFile().exists()) {
@@ -60,19 +61,90 @@ public final class Storage {
         } else {
             System.out.println("Loaded your saved tasks.");
         }
-
-        readFile(DEFAULT_FILE_PATH);
     }
 
     /**
-     * Appends input text to the save file.
-     * @param textToAdd The String to append to the file.
+     * Loads and parses each line of data in the save file.
+     * @return ArrayList ({@link java.util.ArrayList}) of String (Task in parseable string format).
+     */
+    public ArrayList<String> load() {
+        File f = new File(this.filePath);
+        Scanner s;
+        ArrayList<String> output = new ArrayList<String>();
+        try {
+            s = new Scanner(f);
+            while (s.hasNext()) {
+                output.add(readFileLine(s.nextLine()));
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found >_<: " + e.getMessage());
+        }
+        return output;
+    }
+
+    /**
+     * Read individual lines of the save file.
+     * @param line each line of the file.
+     * @return String representation of Task.
+     */
+    private String readFileLine(String line) {
+        String output = "";
+
+        // Delimiter and any amount of whitespace on left/right.
+        // Backslashes are also to escape regex \\.
+        String[] linesSplit = line.split("\\s+" + "\\" + FILE_DELIMITER + "\\s+");
+
+        // Currently assumes the file has not been tampered with.
+        // Very simplistic checks.
+        switch (linesSplit[0]) {
+        case "T":
+            // Has to contain T, isDone, and Description
+            if (linesSplit.length == 3) {
+                output = formatTaskAsString(linesSplit);
+            }
+            // FALLTHROUGH
+        case "D":
+            // Has to contain D, isdone, description, by
+            if (linesSplit.length == 4) {
+                output = formatTaskAsString(linesSplit);
+            }
+            // FALLTHROUGH
+        case "E":
+            // Has to contain E, isdone, description, from, to
+            if (linesSplit.length == 5) {
+                output = formatTaskAsString(linesSplit);
+            }
+            // FALLTHROUGH
+        default:
+            System.out.println("I think there's an error with the file.");
+        }
+        return output;
+    }
+
+    /**
+     * Method to format Save File Task to TaskList parseable format.
+     * Simply just concatenate the strings together.
+     * @param linesSplit String[] of Task properties.
+     * @return One whole String
+     */
+    private String formatTaskAsString(String[] linesSplit) {
+        String output = "";
+        for (String s : linesSplit) {
+            output += s;
+            output += " ";
+        }
+        // Just to remove the last trailing whitespace (or any other whitespace in input).
+        return output.trim();
+    }
+
+    /**
+     * Writes input text to file.
+     * This will overwrite existing contents (Intended, for updating)
+     * @param textToAdd Everything to be written into the file.
      * @throws IOException Unable to write successfully.
      */
-    public static void writeToFile(String textToAdd) {
+    public void writeToFile(String textToAdd) {
         try {
-            // 2nd argument true: indicates to append instead of overwrite.
-            // I want to overwrite.
             FileWriter writer = new FileWriter(DEFAULT_FILE_PATH);
             writer.write(textToAdd);
             // Add newline
@@ -80,62 +152,6 @@ public final class Storage {
             writer.close();
         } catch (IOException e) {
             System.out.println("Something wrong: " + e.getMessage());
-        }
-    }
-
-    /**
-     * Read the file and return.
-     * @param filePath Path where the save data is stored.
-     */
-    public static void readFile(String filePath) {
-        File f = new File(path);
-        Scanner s;
-        try {
-            s = new Scanner(f);
-            while (s.hasNext()) {
-                readLineAsTask(s.nextLine());
-            }
-        } catch (FileNotFoundException e) {
-            System.out.println("File not found >_<: " + e.getMessage());
-        }
-    }
-
-    /**
-     * Reads the line in the save file and invokes TaskList to add task, if any.
-     * @param line String line in the text file.
-     */
-    private static void readLineAsTask(String line) {
-        if (line.isBlank()) {
-            return;
-        }
-        // Delimiter and any amount of whitespace on left/right. Note, need to escape regex \\.
-        String[] linesSplit = line.split("\\s+" + "\\" + FILE_DELIMITER + "\\s+");
-
-
-        switch (linesSplit[0]) {
-        case "T":
-            // Has to contain T, isdone, and Description
-            if (linesSplit.length == 3) {
-                TaskList.addTaskFromFile(linesSplit);
-                break;
-            }
-            // FALLTHROUGH
-        case "D":
-            // Has to contain D, isdone, description, by
-            if (linesSplit.length == 4) {
-                TaskList.addTaskFromFile(linesSplit);
-                break;
-            }
-            // FALLTHROUGH
-        case "E":
-            // Has to contain E, isdone, description, from, to
-            if (linesSplit.length == 5) {
-                TaskList.addTaskFromFile(linesSplit);
-                break;
-            }
-            // FALLTHROUGH
-        default:
-            System.out.println("I think there's an error with the file.");
         }
     }
 }
