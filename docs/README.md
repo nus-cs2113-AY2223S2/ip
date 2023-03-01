@@ -66,8 +66,6 @@ Expected output:
 
 
 ````
-File found. Reading file content:
-Successfully wrote to the file.
 ____________________________________________________________
 Got it. I've added this task:
 [T][ ] homework
@@ -87,8 +85,6 @@ Expected output:
 
 
 ````
-File found. Reading file content:
-Successfully wrote to the file.
 ____________________________________________________________
 Got it. I've added this task:
 [D][ ] assigment (by: Mon 2pm)
@@ -109,8 +105,6 @@ Expected output:
 
 
 ````
-File found. Reading file content:
-Successfully wrote to the file.
 ____________________________________________________________
 Got it. I've added this task:
 [E][ ] Attend class (from: 4pm to: 6pm)
@@ -128,7 +122,6 @@ Expected output:
 
 
 ````
-File found. Reading file content:
 ____________________________________________________________
 Here are the tasks in your list:
 1. [T][ ] homework
@@ -151,7 +144,6 @@ Expected output:
 
 
 ````
-Successfully wrote to the file.
 ____________________________________________________________
 Nice! I've marked this task as done:
 [T][X] homework
@@ -170,7 +162,6 @@ Expected output:
 
 
 ````
-Successfully wrote to the file.
 ____________________________________________________________
 Nice! I've marked this task as undone:
 [T][ ] homework
@@ -194,7 +185,6 @@ Noted. I've removed this task:
 	D[ ] assignment(by:Mon 2pm)
 Now you have 1 tasks in the list.
 ____________________________________________________________
-Successfully wrote to the file.
 ````
 
 
