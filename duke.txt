@@ -1,3 +1,4 @@
 T| |hii
 D|X|homework|tmr
 E| |date|Monday|Friday
+E| |date with you|today|forever

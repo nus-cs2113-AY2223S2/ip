@@ -32,6 +32,9 @@ public class Parser {
             case UnmarkCommand.COMMAND_WORD:
                 return prepareUnmarkCommand(arguments);
 
+            case FindCommand.COMMAND_WORD:
+                return prepareFindCommand(arguments);
+
             case ExitCommand.COMMAND_WORD:
                 return new ExitCommand();
 
@@ -81,9 +84,7 @@ public class Parser {
         try {
             final int targetIndex = Integer.parseInt(args) - 1;
             return new DeleteCommand(targetIndex);
-        } catch (IndexOutOfBoundsException ie) {
-            return new IncorrectCommand("OOPS! Your task index exceeds the maximum.");
-        } catch (NumberFormatException nfe) {
+        }  catch (NumberFormatException nfe) {
             return new IncorrectCommand("Please input number.");
         }
     }
@@ -107,6 +108,14 @@ public class Parser {
             return new UnmarkCommand(targetIndex);
         } catch (NumberFormatException nfe) {
             return new IncorrectCommand("Please input number.");
+        }
+    }
+
+    private Command prepareFindCommand(String args) {
+        try {
+            return new FindCommand(args);
+        } catch (StringIndexOutOfBoundsException e) {
+            return new IncorrectCommand(FindCommand.MESSAGE_USAGE);
         }
     }
 
