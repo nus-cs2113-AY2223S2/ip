@@ -22,6 +22,7 @@ public class TaskList {
     public void addTodo(Todo td) {
         tasks.add(td);
     }
+
     /**
      * Adds the new Deadline task to the task list
      *
@@ -30,6 +31,7 @@ public class TaskList {
     public void addDeadline(Deadline d) {
         tasks.add(d);
     }
+
     /**
      * Adds the new Event task to the task list
      *
@@ -57,6 +59,7 @@ public class TaskList {
 
     /**
      * Retrieve a Task that is located in the Task list
+     *
      * @return ArrayList of Tasks
      */
     public ArrayList<Task> getTaskList() {
@@ -123,7 +126,7 @@ public class TaskList {
     }
 
     /**
-     *  Print the current Task list
+     * Print the current Task list
      */
     public void printList() {
         int listIndex = 0;
@@ -139,12 +142,12 @@ public class TaskList {
      *
      * @param words Original string that the user typed in
      */
-    public void printMatchedList(String[] words){
+    public void printMatchedList(String[] words) {
         System.out.println(MATCHING_TASK_MESSAGE);
         String keyword = words[1];
         int listIndex = 0;
         for (Task t : tasks) {
-            if (t != null && t.description.matches("(.*)"+keyword+"(.*)")) {
+            if (t != null && t.description.matches("(.*)" + keyword + "(.*)")) {
                 System.out.println(++listIndex + ". " + t);
             }
         }

@@ -30,7 +30,6 @@ public class Duke {
     private Storage storage;
 
     /**
-     *
      * Creates the Duke class by initializing the other classes
      */
     public Duke() {
@@ -84,8 +83,8 @@ public class Duke {
      *
      * @param line Original string that user typed in
      * @throws UnknownCommandException when the command is not in the list
-     * @throws IOException when there is input/output error
-     * @throws EmptyCommandException when a command is empty (e.g. mark without index)
+     * @throws IOException             when there is input/output error
+     * @throws EmptyCommandException   when a command is empty (e.g. mark without index)
      */
     private void processInput(String line) throws UnknownCommandException, IOException, EmptyCommandException {
         String[] words = parser.splitCommandsIntoWords(line);
