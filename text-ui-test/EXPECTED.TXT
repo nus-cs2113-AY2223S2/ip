@@ -65,6 +65,12 @@ Now you have 3 tasks in the list.
 ____________________________________________________________
 
 ____________________________________________________________
+Here are the matching tasks in your list and its index:
+1.[T][ ] read book
+2.[D][ ] return book (by: Sunday)
+____________________________________________________________
+
+____________________________________________________________
 Error: The description of Todo cannot be empty
 Todo [description]
 Creates Todo task. Requires a description text.
@@ -87,6 +93,12 @@ Now you have 2 tasks in the list.
 ____________________________________________________________
 
 ____________________________________________________________
+Error: keyword not inputted!
+find [keyword]
+Finds for tasks with keyword in it.
+____________________________________________________________
+
+____________________________________________________________
 The following are the commands available and their arguments:
 Todo [description]
 Creates Todo task. Requires a description text.
@@ -95,7 +107,7 @@ event [description] /from [from] /to [to]
 Creates Event task. Requires a description, from and to texts.
 
 deadline [description] /by [by]
-Creates a Deadline task. Requires a Description, by text
+Creates a Deadline task. Requires a Description, by text.
 
 mark [task number]
 Marks selected task indicating it is done. Requires a task number.
@@ -103,17 +115,20 @@ Marks selected task indicating it is done. Requires a task number.
 unmark [task number]
 Unmarks selected task indicating it is undone. Requires a task number.
 
+find [keyword]
+Finds for tasks with keyword in it.
+
 delete [task number]
-Deletes selected task from the list
+Deletes selected task from the list.
 
 clear
-Empties the list
+Empties the list.
 
 list
 Lists the available commands.
 
 bye
-Exits and closes the program
+Exits and closes the program.
 ____________________________________________________________
 
 ____________________________________________________________

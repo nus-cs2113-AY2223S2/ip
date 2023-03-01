@@ -12,7 +12,7 @@ public class Ui {
 	public static final String FIND_TASK_MESSAGE = "Here are the matching tasks in your list and its index:";
 	public static final String BYE_COMMAND = "bye";
 	public static final String ERROR_EMPTY_TODO_DESCRIPTION_MESSAGE = "Error: The description of Todo cannot be empty";
-	public static final String ERROR_EMPTY_EVENT_DESCRIPTION_MESSAGE = "Error: The description, from or to cannot be empty";
+	public static final String ERROR_EMPTY_EVENT_DESCRIPTION_MESSAGE = "Error: The description, from or to cannot be empty.";
 	public static final String ERROR_EMPTY_DEADLINE_DESCRIPTION = "Error: The description or by cannot be empty";
 	public static final String ERROR_TASK_NUMBER_OUT_OF_RANGE_MESSAGE = "Error: task number given out of range";
 	public static final String ERROR_TASK_NUMBER_NOT_INT_MESSAGE = "Error: Task Number given empty/not a number!";
@@ -25,7 +25,7 @@ public class Ui {
 	public static final String HELP_EVENT_FORMAT = "event [description] /from [from] /to [to]";
 	public static final String HELP_EVENT_DESCRIPTION = "Creates Event task. Requires a description, from and to texts.";
 	public static final String HELP_DEADLINE_FORMAT = "deadline [description] /by [by]";
-	public static final String HELP_DEADLINE_DESCRIPTION = "Creates a Deadline task. Requires a Description, by text";
+	public static final String HELP_DEADLINE_DESCRIPTION = "Creates a Deadline task. Requires a Description, by text.";
 	public static final String HELP_MARK_FORMAT = "mark [task number]";
 	public static final String HELP_MARK_DESCRIPTION = "Marks selected task indicating it is done. Requires a task number.";
 	public static final String HELP_UNMARK_FORMAT = "unmark [task number]";
@@ -33,12 +33,14 @@ public class Ui {
 	public static final String HELP_LIST_FORMAT = "list";
 	public static final String HELP_LIST_DESCRIPTION = "Lists the available commands.";
 	public static final String HELP_BYE_FORMAT = "bye";
-	public static final String HELP_BYE_DESCRIPTION = "Exits and closes the program";
+	public static final String HELP_BYE_DESCRIPTION = "Exits and closes the program.";
 	public static final String RUN_CLEAR_COMPLETE_MESSAGE = "List has been cleared";
 	public static final String HELP_DELETE_FORMAT = "delete [task number]";
-	public static final String HELP_DELETE_DESCRIPTION = "Deletes selected task from the list";
+	public static final String HELP_DELETE_DESCRIPTION = "Deletes selected task from the list.";
 	public static final String HELP_CLEAR_FORMAT = "clear";
-	public static final String HELP_CLEAR_DESCRIPTION = "Empties the list";
+	public static final String HELP_CLEAR_DESCRIPTION = "Empties the list.";
+	public static final String HELP_FIND_FORMAT = "find [keyword]";
+	public static final String HELP_FIND_DESCRIPTION = "Finds for tasks with keyword in it.";
 	
 	/**
 	 * Generates and prints greeting upon the opening of the program.
@@ -64,6 +66,8 @@ public class Ui {
 		printHelpMark();
 		System.out.println();
 		printHelpUnmark();
+		System.out.println();
+		printHelpFind();
 		System.out.println();
 		printHelpDelete();
 		System.out.println();
@@ -112,6 +116,14 @@ public class Ui {
 	public static void printHelpUnmark() {
 		System.out.println(HELP_UNMARK_FORMAT);
 		System.out.println(HELP_UNMARK_DESCRIPTION);
+	}
+	
+	/**
+	 * Generates and prints help for finding tasks by keyword
+	 */
+	public static void printHelpFind() {
+		System.out.println(HELP_FIND_FORMAT);
+		System.out.println(HELP_FIND_DESCRIPTION);
 	}
 	
 	/**
