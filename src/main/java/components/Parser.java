@@ -6,6 +6,7 @@ import command.AddTodoCommand;
 import command.ByeCommand;
 import command.Command;
 import command.DeleteCommand;
+import command.FindCommand;
 import command.ListCommand;
 import command.ToggleMarkCommand;
 import exception.DukeException;
@@ -77,6 +78,14 @@ public class Parser {
         }
     }
 
+    private static void ParseFindCommand(String fullCommand, String[] commandFields) throws DukeException {
+        try {
+            commandFields[0] = fullCommand.substring(5);
+        } catch (IndexOutOfBoundsException error) {
+            throw new DukeException(ErrorMessage.MISSING_FIND_PARAMETER.toString());
+        }
+    }
+
     public static Command parse(String fullCommand) throws DukeException {
         String[] words = fullCommand.split(" ");
         String[] commandFields = new String[5];
@@ -104,6 +113,9 @@ public class Parser {
         } else if (words[0].equalsIgnoreCase("unmark")) {
             ParseToggleCommand(words, commandFields);
             return new ToggleMarkCommand(commandFields);
+        } else if (words[0].equalsIgnoreCase("find")){
+            ParseFindCommand(fullCommand, commandFields);
+            return new FindCommand(commandFields);
         } else {
             throw new DukeException(ErrorMessage.INVALID_COMMAND.toString());
         }
