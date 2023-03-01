@@ -12,16 +12,16 @@ import tasks.Todo;
 import tasks.Deadline;
 import tasks.Event;
 
+import errors.ErrorMessages;
+
 public class Storage {
     private static final Boolean LOAD_FROM_SAVE_DATA = true;
     private static final String MARK = "mark ";
-    private static final String directoryLocation = "/";
-    private static final String fileLocation = "listData.txt";
+
+    private static final String FILE_LOCATION = "listData.txt";
 
     public void loadData(ArrayList<Task> taskList) {
-        File data = new File(directoryLocation);
-        checkForDataDirectory(data);
-        File listData = new File(fileLocation);
+        File listData = new File(FILE_LOCATION);
         checkForListData(listData);
         pushDataToTaskList(taskList, listData);
     }
@@ -39,47 +39,34 @@ public class Storage {
                         marker.handleMarkUnmarkAction(taskList, MARK + (taskList.size()), LOAD_FROM_SAVE_DATA);
                     }
                 } catch (NumberFormatException e) {
-                    System.out.println("This data's entry seems to be corrupted, not entering corrupted data");
+                    System.out.println(ErrorMessages.provideCorruptDataErrorText());
                 }
             }
         } catch (FileNotFoundException e) {
-            System.out.println("For some reason, listData is still unable to be found");
+            System.out.println(ErrorMessages.provideUnableToFindListData());
         }
     }
 
-    private void checkForDataDirectory(File directory){
-        if (!directory.isDirectory()){
-            System.out.println("Data directory does not exist, creating a new one");
-            if (directory.mkdir()){
-                System.out.println("Successfully created a data directory");
-            }
-            else{
-                System.out.println("Unable to create a data directory for some reason :<");
-            }
-        }
-    }
 
-    private void checkForListData(File listData){
-        if (!listData.exists()){
+    private void checkForListData(File listData) {
+        if (!listData.exists()) {
             System.out.println("Data file does not exist, creating a new one");
-            try{
-                if (listData.createNewFile()){
+            try {
+                if (listData.createNewFile()) {
                     System.out.println("Created a new listData file");
                 }
-            }
-            catch(IOException e){
+            } catch (IOException e) {
                 System.out.println("We can't create a file for some reason :<, exiting program");
                 System.exit(1);
             }
         }
     }
 
-    public void saveListDate(ArrayList<Task> taskList){
-        try{
+    public void saveList(ArrayList<Task> taskList) {
+        try {
             writeToFile();
-        }
-        catch (IOException e){
-            System.out.println("For some reason I cant delete the content of the folder");
+        } catch (IOException e) {
+            System.out.println(ErrorMessages.provideDeleteContentErrorText());
         }
         for (Task task : taskList) {
             String currentLine;
@@ -90,50 +77,49 @@ public class Storage {
             } else if (task instanceof Event) {
                 currentLine = parseString((Event) task) + System.lineSeparator();
             } else {
-                System.out.println("For some reason the current file is not of a known subclass of Task, please check implementation");
+                System.out.println(ErrorMessages.provideLoadInvalidTaskErrorText());
                 continue;
             }
             try {
                 appendToFile(currentLine);
             } catch (IOException e) {
-                System.out.println("Unable to append to file");
+                System.out.println(ErrorMessages.provideUnableToWriteToFileText());
             }
-
         }
     }
 
-
-    private static String parseString(Todo todo){
+    private static String parseString(Todo todo) {
         String done = "0";
-        if (todo.done){
+        if (todo.done) {
             done = "1";
         }
         return done + " todo " + todo.description;
     }
-    private static String parseString(Deadline deadline){
+
+    private static String parseString(Deadline deadline) {
         String done = "0";
-        if (deadline.done){
+        if (deadline.done) {
             done = "1";
         }
         return done + " deadline " + deadline.description + " /by " + deadline.by;
     }
 
-    private static String parseString(Event event){
+    private static String parseString(Event event) {
         String done = "0";
-        if (event.done){
+        if (event.done) {
             done = "1";
         }
         return done + " event " + event.description + " /from " + event.startDate + " /to " + event.endDate;
     }
 
     private static void writeToFile() throws IOException {
-        FileWriter fw = new FileWriter(Storage.fileLocation);
+        FileWriter fw = new FileWriter(Storage.FILE_LOCATION);
         fw.write("");
         fw.close();
     }
 
     private static void appendToFile(String textToAppend) throws IOException {
-        FileWriter fw = new FileWriter(Storage.fileLocation, true); // create a FileWriter in append mode
+        FileWriter fw = new FileWriter(Storage.FILE_LOCATION, true); // create a FileWriter in append mode
         fw.write(textToAppend);
         fw.close();
     }

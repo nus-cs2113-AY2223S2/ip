@@ -1,10 +1,11 @@
 package errors;
 
 public class MarkTaskError extends Exception {
-    public MarkTaskError(){
+    public MarkTaskError() {
         super("There seems like some error with marking this task");
     }
-    public MarkTaskError(String message){
+
+    public MarkTaskError(String message) {
         super(message);
     }
 
