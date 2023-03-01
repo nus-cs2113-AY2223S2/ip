@@ -102,6 +102,13 @@ public class Parser {
         return new UnknownCommand(commandParams);
     }
 
+    public static Command prepareFindCommand(String commandParams) {
+        if(commandParams == null) {
+            return new UnknownCommand(commandParams);
+        }
+        return new FindCommand(commandParams);
+    }
+
     public static Command parse(String userCommand){
         String[] commandTypeAndParams = getCommandTypeAndParams(userCommand);
         String commandType = commandTypeAndParams[0];
@@ -122,8 +129,10 @@ public class Parser {
                 return prepareDeadlineCommand(commandParams);
             } case("event"):{
                 return prepareEventCommand(commandParams);
-            } case("delete"):{
+            } case("delete"): {
                 return new DeleteCommand(commandParams);
+            } case("find"):{
+                return prepareFindCommand(commandParams);
             } case("bye"):{
                 return new ExitCommand();
             }default:{
