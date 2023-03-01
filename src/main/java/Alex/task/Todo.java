@@ -7,7 +7,9 @@ public class Todo extends Task {
 
     }
 
-
+    /**
+     * Override to update standard printing format of a Todo Type
+     */
     @Override
     public String toString() {
         return "[T]" + super.toString();

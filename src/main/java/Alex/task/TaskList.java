@@ -6,29 +6,32 @@ import java.util.ArrayList;
 
 public class TaskList {
     private ArrayList<Task> allTasks = new ArrayList<>();
-    private boolean isExit = false;
-
 
     public void setTask(Task t) {
         allTasks.add(t);
     }
 
+    /**
+     * retrieve all stored tasks
+     *
+     * @return  ArrayList containing all task
+     */
     public ArrayList<Task> getAllTasks() {
         return allTasks;
     }
-
-    public void setExit() {
-        isExit = !isExit;
-    }
-
-    public boolean getExit() {
-        return isExit;
-    }
-
+    /**
+     * get total number of tasks
+     *
+     * @return int that shows total tasks
+     */
     public int getNumberOfTasks() {
         return allTasks.size();
     }
-
+    /**
+     * Delete a task from taskList
+     *
+     * @param taskNo index position of task in taskList
+     */
     public void deleteTask(int taskNo) {
         allTasks.remove(taskNo);
     }

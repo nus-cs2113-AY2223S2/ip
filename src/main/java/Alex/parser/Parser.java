@@ -4,16 +4,26 @@ import Alex.command.*;
 
 import java.util.Scanner;
 
+
 public class Parser {
     private static String[] userInput;
     private static Scanner myScanner = new Scanner(System.in);
 
+    /**
+     * Takes in user input and returns an array.
+     *
+     * @return user input in the form of String Array
+     */
     public static String[] takeInput() {
         String line = myScanner.nextLine();
         userInput = line.split(" ");
         return userInput;
     }
-
+    /**
+     * Parses user input and decides which command to execute.
+     *
+     * @return command that will be executed
+     */
     public Command parseCommand() {
         userInput = takeInput();
         String commandAction = userInput[0].toLowerCase();
@@ -40,7 +50,11 @@ public class Parser {
         }
     }
 
-
+    /**
+     * Prepares arguments to execute TodoCommand
+     *
+     * @return prepared TodoCommand to be executed
+     */
     private Command prepareTodo() {
         String activity = "";
         for (int i = 1; i < userInput.length; i++) {
@@ -55,6 +69,11 @@ public class Parser {
 
 
 
+    /**
+     * Prepares arguments to execute DeadlineCommand
+     *
+     * @return prepared DeadlineCommand to be executed
+     */
     private Command prepareDeadline() {
         String activity = "";
         for (int i = 1; i < userInput.length; i++) {
@@ -78,6 +97,11 @@ public class Parser {
         return new DeadlineCommand(activity, by);
     }
 
+    /**
+     * Prepares arguments to execute EventCommand
+     *
+     * @return prepared EventCommand to be executed
+     */
     private Command prepareEvent() {
         String activity = "";
         for (int i = 1; i < userInput.length; i++) {
@@ -108,7 +132,11 @@ public class Parser {
         return new EventCommand(activity,from,to);
 
     }
-
+    /**
+     * Prepares arguments to execute MarkCommand
+     *
+     * @return prepared MarkCommand to be executed
+     */
     private Command prepareMark() {
         int number = Integer.parseInt(userInput[1]);
         return new MarkCommand(number);

@@ -32,7 +32,6 @@ public class Alex {
             System.out.println("File not found" + e.getMessage());
         }
         Ui.showWelcomeMessage();
-        /** Constantly asks for user input until bye is received */
         boolean isExit = false;
         while (!isExit) {
             try {

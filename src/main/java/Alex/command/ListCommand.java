@@ -9,6 +9,12 @@ public class ListCommand extends Command{
     private static final String NEW_LINE = System.lineSeparator();
 
 
+    /**
+     * Executes the command and returns the result.
+     *
+     * @param taskList the taskList that contains all tasks of the user
+     * @return CommandResult that will print to user all the current tasks
+     */
     @Override
     public CommandResult execute(TaskList taskList) {
         int taskNo = 1;
