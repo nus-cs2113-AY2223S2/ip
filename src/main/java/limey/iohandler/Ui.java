@@ -4,7 +4,7 @@ import limey.command.Task;
 
 import java.util.ArrayList;
 
-public class Speech {
+public class Ui {
     /**
      * Prints the closing message for Limey
      */

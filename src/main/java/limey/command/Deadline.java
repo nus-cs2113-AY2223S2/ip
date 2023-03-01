@@ -1,8 +1,5 @@
 package limey.command;
-
 import limey.exception.invalidDateException;
-
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -11,11 +8,17 @@ public class Deadline extends Task {
 
     private java.time.LocalDateTime dueDate;
     private String inDate;
-
+    /**
+     * Returns the due date and time of the deadline in the format that the
+     * list should print out the date and time
+     */
     public String getDueDate() {
         return dueDate.format(DateTimeFormatter.ofPattern("dd MMM yyyy h:mm a"));
     }
-
+    /**
+     * Returns the due date of the deadline in the format that the user
+     * initially input the /by date
+     */
     public String getInDate() {
         return inDate;
     }
@@ -42,7 +45,12 @@ public class Deadline extends Task {
         }
         setTaskName(super.getTaskName() + " (by: " + getDueDate() + ")");
     }
-
+    /**
+     * Returns identity of the current task including the following
+     * - task type [D] for deadline
+     * - [X] or [ ] for marked or unmarked tasks - task name
+     * - Deadline due date and time
+     */
     @Override
     public String getTaskIdentity() {
         String todoSymbol = "[D]";

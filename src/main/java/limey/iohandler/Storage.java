@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class FileHandler {
+public class Storage {
     /**
      * Creates an empty text file in the given filePath
      *
@@ -81,23 +81,19 @@ public class FileHandler {
                 break;
             case 'D':
                 try {
-                    //taskName = taskName.substring(0,taskName.indexOf("(by:")) + taskName.substring(taskName.lastIndexOf(")") + 1);
                     Deadline inDeadline = new Deadline(taskName);
-                    //tasks[Task.numTasks] = inDeadline;
                     tasks.add(inDeadline);
                     tasks.get(Task.numTasks).setDone(isTaskDone);
                 } catch (invalidDateException e){
-                    Speech.invalidMessage("Invalid Date");
+                    Ui.invalidMessage("Invalid Date");
                 }
                 break;
             case 'E':
-                try {
-                    //taskName = taskName.substring(0,taskName.indexOf("(from:")) + taskName.substring(taskName.lastIndexOf(")") + 1);
-                    Event inEvent = new Event(taskName);
+                try {Event inEvent = new Event(taskName);
                     tasks.add(inEvent);
                     tasks.get(Task.numTasks).setDone(isTaskDone);
                 } catch (invalidDateException e){
-                    Speech.invalidMessage("Invalid Date");
+                    Ui.invalidMessage("Invalid Date");
                 }
                 break;
             default:
@@ -105,6 +101,20 @@ public class FileHandler {
                 break;
             }
             Task.numTasks++;
+        }
+    }
+    /***
+     * Updates the tasks list to contain the relevant tasks that can be found in the saved
+     * list from previous run of limey
+     *
+     * @param tasks the task list being updated and changed to the saved list
+     */
+    public static void retrieveSavedList(ArrayList<Task> tasks) {
+        try {
+            String filePath = "SavedList";
+            Storage.readFileToTasks(filePath, tasks);
+        } catch (FileNotFoundException e) {
+            Ui.invalidMessage("File not found");
         }
     }
 }

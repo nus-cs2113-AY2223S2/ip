@@ -6,7 +6,6 @@ public class Task {
     public static int numTasks = 0;
 
     public Task(String inLine) {
-        //int firstSpace = inLine.indexOf(" ");
         if (inLine.contains("/")) {
             int firstSlash = inLine.indexOf("/");
             this.taskName = inLine.substring(0, firstSlash).trim();
@@ -52,27 +51,45 @@ public class Task {
     public void setDone(boolean isDone) {
         this.isDone = isDone;
     }
-
+    /**
+     * Returns the due date and time of the deadline in the format that the
+     * list should print out the date and time
+     */
     public String getDueDate() {
         return "";
     }
-
+    /**
+     * Returns the start date and time of the event in the format that the
+     * list should print out the date and time
+     */
     public String getFromDate() {
         return "";
     }
-
+    /**
+     * Returns the end date and time of the event in the format that the
+     * list should print out the date and time
+     */
     public String getToDate() {
         return "";
     }
-
+    /**
+     * Returns the due date of the deadline in the format that the user
+     * initially input the /by date
+     */
     public String getInDate() {
         return "";
     }
-
+    /**
+     * Returns the start date and time of the event in the format that the
+     * list should print out the date and time
+     */
     public String getInFromDate() {
         return "";
     }
-
+    /**
+     * Returns the end date of the event in the format that the user
+     * initially input the /to date
+     */
     public String getInToDate() {
         return "";
     }
