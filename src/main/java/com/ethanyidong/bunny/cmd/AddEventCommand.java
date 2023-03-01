@@ -19,7 +19,7 @@ public class AddEventCommand extends AddTaskCommand {
      * @return Validators checking that the name (positional argument) and /from, /to (flag arguments) are not empty
      */
     @Override
-    protected CommandValidator[] validators() {
+    protected CommandValidator[] getValidators() {
         CommandValidator eventNameValidator =
                 new PositionalArgumentCommandValidator(new NotEmptyArgumentValidator());
         CommandValidator fromValidator =

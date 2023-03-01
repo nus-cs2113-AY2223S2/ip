@@ -11,14 +11,14 @@ public class TaskIndexArgumentValidator extends IntegerArgumentValidator {
      * @param bunny    the current Bunny session
      * @param argument the value of the argument to validate
      * @throws InvalidArgumentException if the passed argument cannot be parsed as an integer,
-     *  or that integer is not a valid index pointing to a task
+     *                                  or that integer is not a valid index pointing to a task
      */
     public void validateArgument(BunnySession bunny, String argument) throws InvalidArgumentException {
         super.validateArgument(bunny, argument);
 
         int integerArgument = Integer.parseInt(argument);
         if (integerArgument <= 0 || integerArgument > bunny.getTasks().numTasks()) {
-            throw new InvalidArgumentException("is not a valid task number");
+            throw new InvalidArgumentException(bunny.getUI().TASK_INDEX_ARGUMENT_ERROR);
         }
     }
 }

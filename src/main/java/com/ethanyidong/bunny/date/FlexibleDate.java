@@ -13,7 +13,7 @@ public class FlexibleDate {
         this.dateString = dateString;
         try {
             this.concreteDate = LocalDate.parse(dateString);
-        } catch(DateTimeParseException _dtpe) {
+        } catch (DateTimeParseException e) {
             this.concreteDate = null;
         }
     }
@@ -21,6 +21,7 @@ public class FlexibleDate {
     public boolean isConcrete() {
         return this.concreteDate != null;
     }
+
     @Override
     public String toString() {
         if (this.isConcrete()) {

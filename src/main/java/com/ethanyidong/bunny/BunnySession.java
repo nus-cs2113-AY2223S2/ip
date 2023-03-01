@@ -39,6 +39,7 @@ public class BunnySession {
 
     /**
      * Quits the session if control is not currently suppressed
+     *
      * @see BunnySession#setIsSuppressed(boolean)
      */
     public void quit() {
@@ -47,6 +48,7 @@ public class BunnySession {
 
     /**
      * Suppresses or unsuppresses output and control
+     *
      * @param isSuppressed new suppression state
      */
     public void setIsSuppressed(boolean isSuppressed) {
@@ -70,6 +72,7 @@ public class BunnySession {
 
     /**
      * Parses raw input into a command executes the command on the current session
+     *
      * @param commandString the raw (unparsed) string of the command to run
      */
     public void runCommandString(String commandString) {
@@ -78,7 +81,7 @@ public class BunnySession {
         try {
             executableCommand = ExecutableCommand.validateAndParse(this, inputCommand);
         } catch (InvalidCommandException ice) {
-            this.ui.printMessage(ice.toString());
+            this.ui.printMessage(ice.getFriendlyErrorMessage(this));
             return;
         }
         executableCommand.execute(this);
@@ -91,7 +94,7 @@ public class BunnySession {
     public void runBunny() {
         this.storage.loadSave(this);
 
-        this.ui.printMessage("Hello! I'm Bunny.\nWhat can I do for you?");
+        this.ui.printMessage(this.ui.WELCOME_MESSAGE);
 
         try {
             this.storage.beginSave();
@@ -100,10 +103,10 @@ public class BunnySession {
                 this.storage.save(input);
                 this.runCommandString(input);
             }
-            this.ui.printMessage("Bye. Hope to see you again soon!");
+            this.ui.printMessage(this.ui.EXIT_MESSAGE);
             this.storage.endSave();
-        } catch (Exception _ex) {
-            System.out.println("Error writing save file! Quitting...");
+        } catch (Exception e) {
+            System.out.println(this.ui.SAVE_ERROR_MESSAGE);
         }
     }
 }

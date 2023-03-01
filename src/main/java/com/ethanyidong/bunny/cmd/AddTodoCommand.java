@@ -15,7 +15,7 @@ public class AddTodoCommand extends AddTaskCommand {
      * @return Validators checking that the name (positional argument) and /by (flag argument) are both not empty
      */
     @Override
-    protected CommandValidator[] validators() {
+    protected CommandValidator[] getValidators() {
         CommandValidator todoNameValidator =
                 new PositionalArgumentCommandValidator(new NotEmptyArgumentValidator());
         return new CommandValidator[]{todoNameValidator};

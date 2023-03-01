@@ -19,7 +19,7 @@ public class BunnyStorage {
     /**
      * @param saveEnabled whether saving is enabled.
      *                    If set to <code>false</code>, other methods will do nothing.
-     * @param savePath the path to the save file
+     * @param savePath    the path to the save file
      */
     public BunnyStorage(boolean saveEnabled, Path savePath) {
         this.saveEnabled = saveEnabled;
@@ -28,6 +28,7 @@ public class BunnyStorage {
 
     /**
      * Loads previously entered commands from a save file
+     *
      * @param bunny the session to load the save into
      */
     public void loadSave(BunnySession bunny) {
@@ -49,8 +50,8 @@ public class BunnyStorage {
                 saveFileLine = reader.readLine();
             }
             reader.close();
-        } catch (Exception _ex) {
-            System.out.println("Error reading save file! Continuing...");
+        } catch (Exception e) {
+            System.out.println(bunny.getUI().LOAD_ERROR_MESSAGE);
         } finally {
             bunny.setIsSuppressed(false);
         }
@@ -58,6 +59,7 @@ public class BunnyStorage {
 
     /**
      * Opens the save file for writing. Must be called before calling <code>save()</code>.
+     *
      * @throws IOException if there is an error opening the file at savePath for writing
      */
     public void beginSave() throws IOException {
@@ -72,9 +74,10 @@ public class BunnyStorage {
 
     /**
      * Saves a command to the save file
+     *
      * @param saveData the command to save to the saveFile
      * @throws IOException if the save file is not opened using <code>beginSave()</code>, or if other errors occured
-     * while writing to the save file
+     *                     while writing to the save file
      */
     public void save(String saveData) throws IOException {
         if (!saveEnabled) {
@@ -85,6 +88,7 @@ public class BunnyStorage {
 
     /**
      * Closes the save file
+     *
      * @throws IOException if errors occured while flushing the buffer to the save file
      */
     public void endSave() throws IOException {

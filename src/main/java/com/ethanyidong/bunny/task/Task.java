@@ -12,6 +12,7 @@ public abstract class Task {
     /**
      * Create a task with a name.
      * The new task will be not done by default.
+     *
      * @param name the name of the task to create
      */
     public Task(String name) {
@@ -28,6 +29,7 @@ public abstract class Task {
 
     /**
      * Flags the task as done or not done
+     *
      * @param isDone the new doneness state of the task
      */
     public void setIsDone(boolean isDone) {

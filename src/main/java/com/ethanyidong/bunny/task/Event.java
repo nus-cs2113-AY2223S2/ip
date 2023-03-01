@@ -12,9 +12,10 @@ public class Event extends Task {
     /**
      * Creates a new event with a name, start, and end time.
      * The new event will be not done by default.
+     *
      * @param name the name of the event to create
      * @param from the start time of the event
-     * @param to the end time of the event
+     * @param to   the end time of the event
      */
     public Event(String name, String from, String to) {
         super(name);

@@ -17,7 +17,7 @@ public class FindCommand extends ExecutableCommand {
      * @return Validators checking that the keywords (positional argument) is not empty
      */
     @Override
-    protected CommandValidator[] validators() {
+    protected CommandValidator[] getValidators() {
         CommandValidator todoNameValidator =
                 new PositionalArgumentCommandValidator(new NotEmptyArgumentValidator());
         return new CommandValidator[]{todoNameValidator};
@@ -30,23 +30,25 @@ public class FindCommand extends ExecutableCommand {
 
     /**
      * Lists the tasks in the current Bunny session containing the specified keyword
+     *
      * @param bunny the current Bunny session
      */
     public void execute(BunnySession bunny) {
         if (bunny.getTasks().numTasks() == 0) {
             bunny.getUI().printMessage("Your TODO list is empty!");
-        } else {
-            ArrayList<String> messageLines = new ArrayList<>();
-            int taskLineNum = 1;
-            for (int i = 0; i < bunny.getTasks().numTasks(); i++) {
-                if(!bunny.getTasks().getTask(i).getName().contains(keyword)) {
-                    continue;
-                }
-                messageLines.add((taskLineNum) + ". " + bunny.getTasks().getTask(i));
-                taskLineNum ++;
-            }
-            bunny.getUI().printMessage(messageLines);
+            return;
         }
+        ArrayList<String> messageLines = new ArrayList<>();
+        int taskLineNum = 1;
+        for (int i = 0; i < bunny.getTasks().numTasks(); i++) {
+            if (!bunny.getTasks().getTask(i).getName().contains(keyword)) {
+                continue;
+            }
+            messageLines.add(String.format(bunny.getUI().LIST_ELEMENT_MESSAGE_FORMAT,
+                    taskLineNum, bunny.getTasks().getTask(i)));
+            taskLineNum++;
+        }
+        bunny.getUI().printMessage(messageLines);
     }
 }
 

@@ -13,11 +13,11 @@ public class NotEmptyArgumentValidator implements ArgumentValidator {
      */
     public void validateArgument(BunnySession bunny, String argument) throws InvalidArgumentException {
         if (argument == null) {
-            throw new InvalidArgumentException("is missing");
+            throw new InvalidArgumentException(bunny.getUI().MISSING_ARGUMENT_ERROR);
         }
 
         if (argument.isEmpty()) {
-            throw new InvalidArgumentException("is empty");
+            throw new InvalidArgumentException(bunny.getUI().EMPTY_ARGUMENT_ERROR);
         }
     }
 }

@@ -19,6 +19,7 @@ public class BunnyTaskList {
 
     /**
      * Adds a task to the list
+     *
      * @param task the task to add to the list
      */
     public void addTask(Task task) {
@@ -35,6 +36,7 @@ public class BunnyTaskList {
 
     /**
      * Delete a task at a specified index
+     *
      * @param index the index of the task to delete
      */
     public void deleteTask(int index) {

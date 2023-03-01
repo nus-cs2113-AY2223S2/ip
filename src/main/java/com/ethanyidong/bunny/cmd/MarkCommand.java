@@ -23,7 +23,7 @@ public class MarkCommand extends ExecutableCommand {
      * @return Validators checking that the index (positional argument) is a valid task index
      */
     @Override
-    protected CommandValidator[] validators() {
+    protected CommandValidator[] getValidators() {
         CommandValidator markIndexValidator =
                 new PositionalArgumentCommandValidator(new TaskIndexArgumentValidator());
         return new CommandValidator[]{markIndexValidator};
@@ -34,20 +34,22 @@ public class MarkCommand extends ExecutableCommand {
         this.taskIndex = Integer.parseInt(command.getPositionalArgument()) - 1;
     }
 
-    private String markedMessage() {
+    private String markedMessage(BunnySession bunny) {
         if (this.isDone) {
-            return "Nice! I've marked this task as done";
+            return bunny.getUI().MARKED_MESSAGE;
         } else {
-            return "Nice! I've marked this task as not done yet";
+            return bunny.getUI().UNMARKED_MESSAGE;
         }
     }
 
     /**
      * Marks the specified task as done or not done
+     *
      * @param bunny the current Bunny session
      */
     public void execute(BunnySession bunny) {
         bunny.getTasks().getTask(this.taskIndex).setIsDone(this.isDone);
-        bunny.getUI().printMessage(this.markedMessage() + ":\n\t" + bunny.getTasks().getTask(this.taskIndex));
+        bunny.getUI().printMessage(String.format(bunny.getUI().MARK_MESSAGE_FORMAT,
+                this.markedMessage(bunny), bunny.getTasks().getTask(this.taskIndex)));
     }
 }

@@ -7,6 +7,7 @@ public class Todo extends Task {
     /**
      * Create a todo with a name.
      * The new todo will be not done by default.
+     *
      * @param name the name of the todo to create
      */
     public Todo(String name) {

@@ -13,6 +13,7 @@ public class TokenizedCommand {
 
     /**
      * Parses a String command into its tokens (name, positional argument, flag arguments)
+     *
      * @param command the String representation of the command to parse
      */
     public TokenizedCommand(String command) {
@@ -41,18 +42,18 @@ public class TokenizedCommand {
     }
 
     private static HashMap<String, String> extractFlagArguments(String[] positionalAndFlagArguments) {
-        HashMap<String, String> ret = new HashMap<>();
+        HashMap<String, String> flagArguments = new HashMap<>();
 
         for (int i = 1; i < positionalAndFlagArguments.length; i++) {
             String[] flagAndFlagArgument = positionalAndFlagArguments[i].split(" ", 2);
             if (flagAndFlagArgument.length == 2) {
-                ret.put(flagAndFlagArgument[0], flagAndFlagArgument[1].trim());
+                flagArguments.put(flagAndFlagArgument[0], flagAndFlagArgument[1].trim());
             } else {
-                ret.put(flagAndFlagArgument[0], "");
+                flagArguments.put(flagAndFlagArgument[0], "");
             }
         }
 
-        return ret;
+        return flagArguments;
     }
 
     /**

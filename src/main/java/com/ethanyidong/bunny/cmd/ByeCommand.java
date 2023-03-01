@@ -8,6 +8,7 @@ import com.ethanyidong.bunny.BunnySession;
 public class ByeCommand extends ExecutableCommand {
     /**
      * Quits the current Bunny session
+     *
      * @param bunny the current Bunny session
      */
     public void execute(BunnySession bunny) {

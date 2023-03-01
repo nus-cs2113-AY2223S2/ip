@@ -18,6 +18,7 @@ public class PositionalArgumentCommandValidator implements CommandValidator {
 
     /**
      * Validates the positional argument using the provided argument validator
+     *
      * @param bunny   the current Bunny session
      * @param command the tokenized command to validate
      * @throws InvalidCommandException if the positional argument is invalid according to the argument validator
@@ -26,7 +27,7 @@ public class PositionalArgumentCommandValidator implements CommandValidator {
         try {
             this.argumentValidator.validateArgument(bunny, command.getPositionalArgument());
         } catch (InvalidArgumentException iae) {
-            throw new InvalidCommandException("positional argument", iae);
+            throw new InvalidCommandException(bunny.getUI().POSITIONAL_ARGUMENT_ERROR, iae);
         }
     }
 }

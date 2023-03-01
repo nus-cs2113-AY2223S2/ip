@@ -16,7 +16,7 @@ public class DeleteTaskCommand extends ExecutableCommand {
      * @return Validators checking that the index (positional argument) is a valid task index
      */
     @Override
-    protected CommandValidator[] validators() {
+    protected CommandValidator[] getValidators() {
         CommandValidator markIndexValidator =
                 new PositionalArgumentCommandValidator(new TaskIndexArgumentValidator());
         return new CommandValidator[]{markIndexValidator};
@@ -28,12 +28,13 @@ public class DeleteTaskCommand extends ExecutableCommand {
 
     /**
      * Deletes a task from the current Bunny session
+     *
      * @param bunny the current Bunny session
      */
     public void execute(BunnySession bunny) {
         Task deletedTask = bunny.getTasks().getTask(this.taskIndex);
         bunny.getTasks().deleteTask(this.taskIndex);
-        bunny.getUI().printMessage("Noted. I've removed this task:\n\t" + deletedTask + "\nNow you have " +
-                bunny.getTasks().numTasks() + " tasks in the list.");
+        bunny.getUI().printMessage(String.format(bunny.getUI().DELETE_TASK_MESSAGE_FORMAT,
+                deletedTask, bunny.getTasks().numTasks()));
     }
 }

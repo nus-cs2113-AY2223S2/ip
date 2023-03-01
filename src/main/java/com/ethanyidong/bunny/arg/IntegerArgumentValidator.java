@@ -13,13 +13,13 @@ public class IntegerArgumentValidator implements ArgumentValidator {
      */
     public void validateArgument(BunnySession bunny, String argument) throws InvalidArgumentException {
         if (argument == null) {
-            throw new InvalidArgumentException("is missing");
+            throw new InvalidArgumentException(bunny.getUI().MISSING_ARGUMENT_ERROR);
         }
 
         try {
             Integer.parseInt(argument);
         } catch (NumberFormatException nfe) {
-            throw new InvalidArgumentException("is not a number");
+            throw new InvalidArgumentException(bunny.getUI().INTEGER_ARGUMENT_ERROR);
         }
     }
 }

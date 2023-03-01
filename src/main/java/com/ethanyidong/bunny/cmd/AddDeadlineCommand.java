@@ -18,7 +18,7 @@ public class AddDeadlineCommand extends AddTaskCommand {
      * @return Validators checking that the name (positional argument) and /by (flag argument) are both not empty
      */
     @Override
-    protected CommandValidator[] validators() {
+    protected CommandValidator[] getValidators() {
         CommandValidator deadlineNameValidator =
                 new PositionalArgumentCommandValidator(new NotEmptyArgumentValidator());
         CommandValidator byValidator =

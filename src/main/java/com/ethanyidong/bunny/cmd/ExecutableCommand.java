@@ -12,6 +12,7 @@ import com.ethanyidong.bunny.arg.InvalidCommandException;
 public abstract class ExecutableCommand {
     /**
      * Maps the command name to a concrete <code>ExecutableCommand</code> class
+     *
      * @param commandString the name of the command
      * @return a new instance of the <code>ExecutableCommand</code> for that command name
      */
@@ -45,7 +46,8 @@ public abstract class ExecutableCommand {
      * Uses the specific implementation of <code>ExecutableCommand</code>'s
      * <code>validateCommand</code> and <code>parseArguments</code> methods
      * to validate the input and parse the arguments.
-     * @param bunny the current Bunny session
+     *
+     * @param bunny   the current Bunny session
      * @param command the <code>TokenizedCommand</code> representation of the input
      * @return a new <code>ExecutableCommand</code> which has been parsed from the passed <code>command</code>
      * @throws InvalidCommandException if the passed <code>command</code> does not represent a valid command.
@@ -65,16 +67,18 @@ public abstract class ExecutableCommand {
     /**
      * Provides a list of command validators.
      * Implementors of <code>ExecutableCommand</code> with arguments to be validated should override this method
+     *
      * @return a list of command validators to be run by <code>validateCommand()</code>
      */
-    protected CommandValidator[] validators() {
+    protected CommandValidator[] getValidators() {
         return new CommandValidator[]{};
     }
 
     /**
      * Parses input from the <code>command</code>
      * and stores the arguments it into the current <code>ExecutableCommand</code>'s properties
-     * @param bunny the current Bunny session
+     *
+     * @param bunny   the current Bunny session
      * @param command the <code>TokenizedCommand</code> to parse
      */
     protected void parseArguments(BunnySession bunny, TokenizedCommand command) {
@@ -83,19 +87,21 @@ public abstract class ExecutableCommand {
 
     /**
      * Validates the <code>command</code> using validators provided by <code>validators()</code>
-     * @param bunny the current Bunny session
+     *
+     * @param bunny   the current Bunny session
      * @param command the <code>TokenizedCommand</code> to validate
      * @throws InvalidCommandException if the passed <code>command</code> does not represent a valid command
      */
     private void validateCommand(BunnySession bunny, TokenizedCommand command)
             throws InvalidCommandException {
-        for (CommandValidator validator : this.validators()) {
+        for (CommandValidator validator : this.getValidators()) {
             validator.validateCommand(bunny, command);
         }
     }
 
     /**
      * Executes the <code>ExecutableCommand</code> on the passed Bunny session
+     *
      * @param bunny the current Bunny session
      */
     public abstract void execute(BunnySession bunny);

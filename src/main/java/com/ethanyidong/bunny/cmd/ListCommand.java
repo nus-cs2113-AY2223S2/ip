@@ -10,17 +10,20 @@ import java.util.ArrayList;
 public class ListCommand extends ExecutableCommand {
     /**
      * Lists the tasks in the current Bunny session
+     *
      * @param bunny the current Bunny session
      */
     public void execute(BunnySession bunny) {
         if (bunny.getTasks().numTasks() == 0) {
             bunny.getUI().printMessage("Your TODO list is empty!");
-        } else {
-            ArrayList<String> messageLines = new ArrayList<>();
-            for (int i = 0; i < bunny.getTasks().numTasks(); i++) {
-                messageLines.add((i + 1) + ". " + bunny.getTasks().getTask(i));
-            }
-            bunny.getUI().printMessage(messageLines);
+            return;
         }
+
+        ArrayList<String> messageLines = new ArrayList<>();
+        for (int i = 0; i < bunny.getTasks().numTasks(); i++) {
+            messageLines.add(String.format(bunny.getUI().LIST_ELEMENT_MESSAGE_FORMAT,
+                    i + 1, bunny.getTasks().getTask(i)));
+        }
+        bunny.getUI().printMessage(messageLines);
     }
 }

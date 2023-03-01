@@ -8,7 +8,8 @@ import com.ethanyidong.bunny.BunnySession;
 public interface ArgumentValidator {
     /**
      * Validates an argument
-     * @param bunny the current Bunny session
+     *
+     * @param bunny    the current Bunny session
      * @param argument the value of the argument to validate
      * @throws InvalidArgumentException if the argument is invalid
      */

@@ -11,7 +11,7 @@ public class FlagArgumentCommandValidator implements CommandValidator {
     private final ArgumentValidator argumentValidator;
 
     /**
-     * @param flag the name of the flag argument to validate
+     * @param flag              the name of the flag argument to validate
      * @param argumentValidator the validator to run on the flag argument
      */
     public FlagArgumentCommandValidator(String flag, ArgumentValidator argumentValidator) {
@@ -21,6 +21,7 @@ public class FlagArgumentCommandValidator implements CommandValidator {
 
     /**
      * Validates the specified flag argument using the provided argument validator
+     *
      * @param bunny   the current Bunny session
      * @param command the tokenized command to validate
      * @throws InvalidCommandException if the flag argument is invalid according to the argument validator
@@ -29,7 +30,7 @@ public class FlagArgumentCommandValidator implements CommandValidator {
         try {
             this.argumentValidator.validateArgument(bunny, command.getFlagArgument(this.flag));
         } catch (InvalidArgumentException iae) {
-            throw new InvalidCommandException("/" + flag + " argument", iae);
+            throw new InvalidCommandException(String.format(bunny.getUI().FLAG_ARGUMENT_ERROR_FORMAT, flag), iae);
         }
     }
 }

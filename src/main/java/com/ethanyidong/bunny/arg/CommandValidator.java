@@ -8,7 +8,7 @@ import com.ethanyidong.bunny.cmd.TokenizedCommand;
  */
 public interface CommandValidator {
     /**
-     * @param bunny the current Bunny session
+     * @param bunny   the current Bunny session
      * @param command the tokenized command to validate
      * @throws InvalidCommandException if the command is invalid
      */
