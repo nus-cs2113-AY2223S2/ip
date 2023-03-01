@@ -7,4 +7,5 @@
 [E][X] KEKW (from: 5pm to: 6pm)
 [T][ ] food
 [D][X] feed (by: 5pm)
-[E][ ] farm (from: t to: y)
+[T][X] cry
+[D][ ] food (by: 5l)

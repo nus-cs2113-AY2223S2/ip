@@ -21,7 +21,8 @@ public class Storage {
     static final String LOADING_FRONT_PARENTHESIS_DELIMITER = " \\(";
     static final String LOADING_EVENT_FROM_DELIMITER = "from: ";
     static final String LOADING_EVENT_TO_DELIMITER = " to: ";
-    public static void loadData(ArrayList<Task> tasks, String filepath) {
+
+    public static void loadData(String filepath, ArrayList<Task> tasks) {
         try {
             File f = new File(filepath);
             Scanner s = new Scanner(f);
@@ -31,7 +32,7 @@ public class Storage {
                 String taskInformation = taskInStringFormat.substring(TASK_INFORMATION_BEGIN_INDEX);
                 switch (taskType.charAt(TASK_TYPE_INDICATOR_INDEX)) {
                 case 'T': // example for reference: return book
-                    loadTodoTask(tasks, taskInformation, taskType);
+                    loadToDoTask(tasks, taskInformation, taskType);
                     break;
                 case 'D': // example for reference: return book (by: June 6th)
                     loadDeadlineTask(tasks, taskInformation, taskType);
@@ -51,33 +52,33 @@ public class Storage {
         }
     }
 
-    private static void loadEventTask(ArrayList<Task> tasks, String taskInformation, String taskType) {
+    public static void loadEventTask(ArrayList<Task> tasks, String taskInformation, String taskType) {
         String taskName;
         taskName = taskInformation.split(LOADING_FRONT_PARENTHESIS_DELIMITER, 2)[0];
         taskInformation = taskInformation.split(LOADING_EVENT_FROM_DELIMITER,2)[1];
         String eventStart = taskInformation.split(LOADING_EVENT_TO_DELIMITER,2)[0];
         String eventEnd = taskInformation.split(LOADING_EVENT_TO_DELIMITER,2)[1].replace(")", "");
-        tasks.add(new Event(taskName, eventStart, eventEnd));
+        TaskList.addTask(new Event(taskName, eventStart, eventEnd)); // tasks.add(new Event(taskName, eventStart, eventEnd));
         if (taskType.charAt(TASK_TYPE_STATUS_INDEX) == 'X') {
             tasks.get(tasks.size() - 1).setDone(true);
         }
 
     }
 
-    private static void loadDeadlineTask(ArrayList<Task> tasks, String taskInformation, String taskType) {
+    public static void loadDeadlineTask(ArrayList<Task> tasks, String taskInformation, String taskType) {
         String taskName;
         taskName = taskInformation.split(LOADING_FRONT_PARENTHESIS_DELIMITER, 2)[0];
         String deadlineBy = taskInformation.split(": ", 2)[1].replace(")","");
-        tasks.add(new Deadline(taskName, deadlineBy));
+        TaskList.addTask(new Deadline(taskName, deadlineBy)); // tasks.add(new Deadline(taskName, deadlineBy));
         if (taskType.charAt(TASK_TYPE_STATUS_INDEX) == 'X') {
             tasks.get(tasks.size() - 1).setDone(true);
         }
     }
 
-    private static void loadTodoTask(ArrayList<Task> tasks, String taskInformation, String taskType) {
+    public static void loadToDoTask(ArrayList<Task> tasks, String taskInformation, String taskType) {
         String taskName;
         taskName = taskInformation; // for TODO task, taskInformation is the task name
-        tasks.add(new ToDo(taskName));
+        TaskList.addTask(new ToDo(taskName)); // tasks.add(new ToDo(taskName));
         if (taskType.charAt(TASK_TYPE_STATUS_INDEX) == 'X') {
             tasks.get(tasks.size() - 1).setDone(true);
         }

@@ -6,30 +6,30 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 public class Duke {
-    // private static ArrayList<Task> tasks = new ArrayList<>();
     public static boolean isInUse = true;
     public static Scanner inputReader;
-    static final String DEADLINE_BY_DELIMITER = " /by ";
-    static final String EVENT_FROM_DELIMITER = " /from ";
-    static final String EVENT_TO_DELIMITER = " /to ";
-    static final int EVENT_START_INDEX = 7;
-    static final int EVENT_END_INDEX = 5;
-    static final String SPACE_DELIMITER = " ";
-    private static ArrayList<Task> tasks = new ArrayList<>();
+
+    /*
+    private Ui ui = new Ui();
+    private TaskList list = new TaskList();
+    private Storage storage = new Storage();
+    private Parser parser = new Parser();
+    */
     public static void main(String[] args) {
-        Storage.loadData(tasks, "./data.txt");
-        initDuke();
+        TaskList list = new TaskList();
+        Storage.loadData("./data.txt", list.get());
+        initDuke(list);
         while (isInUse) {
             String userInput = getUserInput(inputReader);
             String[] informationNeededForPerformingUserRequest = Parser.parseUserInput(userInput);
-            performUserRequest(tasks, informationNeededForPerformingUserRequest);
-            Storage.saveData("./data.txt", tasks);
+            performUserRequest(list.get(), informationNeededForPerformingUserRequest);
+            Storage.saveData("./data.txt", list.get());
         }
     }
 
-    public static void initDuke() {
+    public static void initDuke(TaskList list) {
         Ui.greetUser();
-        Ui.listTasks(tasks);
+        Ui.listTasks(list.get());
         inputReader = new Scanner(System.in);
     }
 
@@ -49,22 +49,22 @@ public class Duke {
             Ui.listTasks(tasks);
             break;
         case "mark":
-            TaskList.markTask(tasks, informationNeededForPerformingUserRequest);
+            TaskList.markTask(informationNeededForPerformingUserRequest);
             break;
         case "unmark":
-            TaskList.unmarkTask(tasks, informationNeededForPerformingUserRequest);
+            TaskList.unmarkTask(informationNeededForPerformingUserRequest);
             break;
         case "delete": // new functionality to delete tasks
-            TaskList.deleteTask(tasks, informationNeededForPerformingUserRequest);
+            TaskList.deleteTask(informationNeededForPerformingUserRequest);
             break;
         case "todo":
-            TaskList.addTodoTask(tasks, informationNeededForPerformingUserRequest);
+            TaskList.addToDoTask(informationNeededForPerformingUserRequest);
             break;
         case "deadline":
-            TaskList.addDeadlineTask(tasks, informationNeededForPerformingUserRequest);
+            TaskList.addDeadlineTask(informationNeededForPerformingUserRequest);
             break;
         case "event":
-            TaskList.addEventTask(tasks, informationNeededForPerformingUserRequest);
+            TaskList.addEventTask(informationNeededForPerformingUserRequest);
             break;
         case "invalid command": // earlier on we detected that such a command doesn't exist
             Ui.printErrorMessage("invalid command");
