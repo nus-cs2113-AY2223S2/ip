@@ -2,16 +2,25 @@ package duke.ui;
 
 import duke.tasks.TaskList;
 
+import java.util.Scanner;
+
 /**
  * Class that contains methods to send messages to users depending on what they input.
  */
 public class Ui {
-
     /**
      * String of underscores that represents a divider in the terminal.
      */
     public static final String LONG_LINE = "____________________________________________________________";
+    private Scanner in;
+    public Ui() {
+        in = new Scanner(System.in);
+    }
 
+    public String readUserInput() {
+        String userInput = in.nextLine();
+        return userInput;
+    }
     /**
      * Prints out the long line, divider on a new line.
      */
@@ -34,7 +43,6 @@ public class Ui {
      */
     public static void printExit() {
         System.out.println("Bye. Hope to see you again soon!");
-        printLine();
     }
 
     /**

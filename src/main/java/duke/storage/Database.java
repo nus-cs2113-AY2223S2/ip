@@ -1,6 +1,9 @@
 package duke.storage;
 
-import duke.tasks.*;
+import duke.tasks.Task;
+import duke.tasks.Todo;
+import duke.tasks.Deadline;
+import duke.tasks.Event;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -82,7 +85,7 @@ public class Database {
     }
 
     /**
-     * Method used to convert the saved string from the saved file to a task object
+     * Convert the saved string from the saved file to a task object
      * so that it can be added to the list.
      *
      * @param taskInput The saved string being read from the file.
@@ -114,7 +117,7 @@ public class Database {
     }
 
     /**
-     * Method used to determine if the task is mark as done from the saved string in the saved file.
+     * Determines if the task is mark as done from the saved string in the saved file.
      *
      * @param mark The string that represents whether the task has been marked/unmarked.
      * @param task The task that is currently being added to the list.

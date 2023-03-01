@@ -1,9 +1,9 @@
 package duke;
 
+import duke.commands.Command;
 import duke.commands.Parser;
+import duke.tasks.TaskList;
 import duke.ui.Ui;
-
-import duke.exception.DukeException;
 
 import java.util.Scanner;
 
@@ -11,7 +11,8 @@ import java.util.Scanner;
  * The main class. Reads in different commands from the user, and parses them accordingly.
  */
 public class Duke {
-    public static String userInput = "start";
+
+    public static TaskList taskList = new TaskList();
 
     /**
      * Main method called when the program is running.
@@ -19,19 +20,15 @@ public class Duke {
      * @param args Not used, should be empty.
      */
     public static void main(String[] args) {
-        Ui.printGreetings();
         Scanner in = new Scanner(System.in);
-        while (!userInput.equals("bye")) {
-            userInput = in.nextLine();
-            if (!userInput.equals("bye")) {
-                try {
-                    Parser.handleUserInputs(userInput);
-                } catch (DukeException e) {
-                    System.out.println("error");
-                }
-            }
+        Ui.printGreetings();
+        boolean isRunning = true;
+        while (isRunning) {
+            String userInput = in.nextLine();
+            Command command = Parser.handleUserInputs(userInput, taskList);
+            command.execute(taskList);
             Ui.printLine();
+            isRunning = !command.isExit();
+            }
         }
-        Ui.printExit();
-    }
 }

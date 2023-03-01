@@ -10,8 +10,8 @@ import java.util.ArrayList;
  */
 public class TaskList {
 
-    private static Database database;
     public ArrayList<Task> tasks;
+    public static Database database;
 
     /**
      * Constructor of the TaskList where it takes in the stored tasks in the database's Arraylist of tasks.
