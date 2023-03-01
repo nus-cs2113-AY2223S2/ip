@@ -3,10 +3,8 @@
 #### by [Ong Yuan](https://github.com/yuanners)
 
 
--------------
 __Duke__ is a chat bot application created for tasks tracking, optimized for use via a Command Line Interface (CLI) while still having the 
 benefits of a Graphical User Interface (GUI).
--------------
 ## Table of Contents
 
 * [1. Quick start](#1-quick-start)
@@ -23,7 +21,7 @@ benefits of a Graphical User Interface (GUI).
   * [2.5 Find tasks](#25-find-tasks)
   * [2.6 Exit program](#26-exit-program)
 * [3. Summary of features](#3-summary-of-features)
--------------
+
 # 1. Quick start
 
 1. Ensure you have Java `11` or above installed in your Computer.
@@ -35,7 +33,8 @@ benefits of a Graphical User Interface (GUI).
 1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar ip.jar` command to run the application.<br>
    
 1. A GUI similar to the below should appear in a few seconds.
-```
+
+````
    Hello from
  ____        _        
 |  _ \ _   _| | _____
@@ -47,8 +46,8 @@ ____________________________________________________________
 Hello! I'm Duke
 What can I do for you?
 ____________________________________________________________
-```
--------------
+````
+
 # 2. Features
 
 ## 2.1 Add tasks
@@ -110,7 +109,7 @@ Got it. I've added this task:
 Now you have 3 tasks in the list.
 ____________________________________________________________
 ```
--------------
+
 ## 2.2 List tasks
 
 List all the tasks stored.
@@ -127,7 +126,7 @@ Here are the tasks in your list:
 3. [E][ ] Attend class (from: 4pm to: 6pm)
 ____________________________________________________________
 ```
--------------
+
 ## 2.3 Change task status
 Change the task status by mark or unmark a task.
 ## 2.3.1 Mark task
@@ -160,7 +159,7 @@ Nice! I've marked this task as undone:
 [T][ ] homework
 ____________________________________________________________
 ```
--------------
+
 ## 2.4 Delete task
 Delete a task using task number.
 
@@ -177,7 +176,7 @@ Now you have 1 tasks in the list.
 ____________________________________________________________
 Successfully wrote to the file.
 ```
--------------
+
 ## 2.5 Find tasks
 Find tasks using keyword.
 
@@ -194,7 +193,7 @@ Here are the matching tasks in your list:
 3. [E][ ] book club (from: 4pm to: 6pm)
 ____________________________________________________________
 ```
--------------
+
 ## 2.6 Exit program
 Exit the program.
 
@@ -206,7 +205,7 @@ ____________________________________________________________
 Bye. Hope to see you again soon!
 ____________________________________________________________
 ```
--------------
+
 ## 3. Summary of features
 Here is the table of summary for all the features.
 
