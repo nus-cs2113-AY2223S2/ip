@@ -28,6 +28,7 @@ java 11.0.17 2022-10-18 LTS
 ```
 
 2 Download the latest `.jar` file from [here](https://github.com/ong-ck/ip/releases). You may move it to a directory of your choice in your computer.
+
 3 Open the terminal in the directory that the `.jar` file is stored and type the following command `java -jar ip.jar`. A welcome message should pop up as follows:
 
 ```
