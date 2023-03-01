@@ -93,7 +93,7 @@ bye
 ```
 Result:
 ```
-    Bye. Hope to see you again soon!s
+    Bye. Hope to see you again soon!
 ```
 Terminating the program will save the list of tasks you had into a .txt file in a `data` folder from where you ran the executable .jar file. Running the program again, you will notice that the tasks have been loaded when you check with `list`:
 ```
