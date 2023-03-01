@@ -101,34 +101,24 @@ public class Command {
                 textUI.printTask (tasks);
                 break;
             case "deadline":
-                if (description.contains ("/by")) {
-                    String[] deadlineArr = description.split (" /by ");
-
-                    if (deadlineArr.length < 2) {
-                        printLine ();
-                        throw new DukeException ("The description and deadline of task cannot be empty.");
-                    }
+                String[] deadlineArr = description.split (" /by ");
+                if (deadlineArr.length < 2) {
+                    printLine ();
+                    throw new DukeException ("The description and deadline of task cannot be empty.");
+                } else {
                     tasks.addDeadline (description);
                     textUI.printTask (tasks);
-                } else {
-                    printLine ();
-                    throw new DukeException ("Please use /by to add deadline. ");
                 }
                 break;
             case "event":
-                if (description.contains ("/from") && description.contains ("/to")) {
-                    String[] startArr = description.split (" /from ");
-                    String[] endArr = description.split (" /to ");
-
-                    if (startArr.length < 2 || endArr.length < 2) {
-                        printLine ();
-                        throw new DukeException ("The description, start and end of event cannot be empty.");
-                    }
+                String[] startArr = description.split (" /from ");
+                String[] endArr = description.split (" /to ");
+                if (startArr.length < 2 || endArr.length < 2) {
+                    printLine ();
+                    throw new DukeException ("The description, start and end of task cannot be empty.");
+                } else {
                     tasks.addEvent (description);
                     textUI.printTask (tasks);
-                } else {
-                    printLine ();
-                    throw new DukeException ("Please use /from and /to to add event.");
                 }
                 break;
             case "mark":
