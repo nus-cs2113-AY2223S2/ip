@@ -55,7 +55,7 @@ public class TaskList {
                 responseList.add("Nice! I've marked this task as done:");
             }
             this.taskList.set(index, updatedTask);
-            responseList.add(updatedTask.toString());
+            responseList.add("  " + updatedTask.toString());
         } catch (IndexOutOfBoundsException a) {
             throw new IncorrectParameterException("The index provided does not exist! ");
         }
@@ -109,7 +109,7 @@ public class TaskList {
             this.createEvent(input);
         }
         responseList.add("Got it. I've added this task:");
-        responseList.add(this.get(this.size() - 1).toString());
+        responseList.add("  " + this.get(this.size() - 1).toString());
         responseList.add("Now you have " + this.size() + " tasks in the list");
         return responseList;
     }
@@ -164,7 +164,6 @@ public class TaskList {
             String[] dateTimeArray = inputArray[1].split("/to");
             String from = dateTimeArray[0];
             String to = dateTimeArray[1];
-            System.out.println(description + "|" +from + "|" + to);
 
             Event event = new Event(false, description, from, to);
             this.taskList.add(event);
@@ -193,7 +192,7 @@ public class TaskList {
         }
         if (matchingTasks.size() == 1) {
             matchingTasks = new ArrayList<String>();
-            matchingTasks.add("There are no tasks that match that description!");
+            matchingTasks.add("There is no task that match that description!");
         }
         return matchingTasks;
     }
