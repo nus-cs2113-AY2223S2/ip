@@ -7,12 +7,15 @@ import util.TaskList;
 
 
 public class Duke {
-    private static final String dukeGreetUser= "PIKAPIKAPI HELLOO\n"
+    private static final String dukeGreetUser = "PIKAPIKAPI HELLOO\n"
             + "Please let Pikapi write you a lists";
     private Storage storage;
     private TaskList tasks;
 
-    public Duke(){
+    /**
+     * Creates a new tasklist and loads the data from listData.txt (if any)
+     */
+    public Duke() {
         storage = new Storage();
         tasks = new TaskList();
         storage.loadData(tasks.accessTaskList());
@@ -25,10 +28,14 @@ public class Duke {
         new Duke().run();
     }
 
-    public void run(){
+
+    /**
+     * Starts taking in user input and starts the Duke Application
+     */
+    public void run() {
         System.out.println(dukeGreetUser);
         Parser addList = new Parser();
-        addList.Parser(tasks);
+        addList.parseData(tasks);
     }
 
 }

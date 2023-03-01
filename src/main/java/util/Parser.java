@@ -25,7 +25,7 @@ public class Parser {
     /**
      * Starts the main function
      * */
-    public void Parser( TaskList taskListHandler) {
+    public void parseData(TaskList taskListHandler) {
         Ui ui = new Ui();
         OutputUI outPutUI = new OutputUI();
         ErrorMessages errMsgs = new ErrorMessages();

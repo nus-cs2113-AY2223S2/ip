@@ -8,32 +8,35 @@ import tasks.Task;
 
 /**
  * Handles Deleting tasks from a list
- * */
+ */
 public class TaskDeleter extends ErrorMessages {
     private static final String BLANK = " ";
+    private static final Integer CORRECT_INPUT_FORMAT = 2;
+    private static final Integer ZERO = 0;
+    private static final Integer MANAGE_ZERO_INDEXING = 1;
 
     /**
-    * Takes in input for a delete command and deletes accordingly
-    * Handles index out of taskList bounds or incorrect input (e.g. input as String)
-    * */
+     * Takes in input for a delete command and deletes accordingly
+     * Handles index out of taskList bounds or incorrect input (e.g. input as String)
+     */
     public void attemptToDeleteTask(ArrayList<Task> listOfTasks, String input) {
-        String[] deleteActions = (input.split(BLANK, 2));
+        String[] deleteActions = (input.split(BLANK, CORRECT_INPUT_FORMAT));
         try {
-            if (listOfTasks.size() <= 0) {
+            if (listOfTasks.size() <= ZERO) {
                 throw new DeleteTaskError(errorEmptyListText());
             }
-            if (deleteActions.length != 2) {
+            if (deleteActions.length != CORRECT_INPUT_FORMAT) {
                 throw new DeleteTaskError(errorNoNumberText());
             }
             int indexToDelete = Integer.parseInt(deleteActions[1]);
-            if (indexToDelete > listOfTasks.size()){
+            if (indexToDelete > listOfTasks.size()) {
                 throw new DeleteTaskError((errorExceedListLengthText(listOfTasks.size())));
-            }
-            else if (indexToDelete <= 0){
+            } else if (indexToDelete <= ZERO) {
                 throw new DeleteTaskError(errorInvalidNumberText());
             }
             OutputUI outputUI = new OutputUI();
-            outputUI.printDeleteTaskMessage(listOfTasks.get(indexToDelete - 1), listOfTasks.size() - 1);
+            outputUI.printDeleteTaskMessage(listOfTasks.get(indexToDelete - MANAGE_ZERO_INDEXING),
+                    listOfTasks.size() - MANAGE_ZERO_INDEXING);
             deleteTask(listOfTasks, indexToDelete);
         } catch (DeleteTaskError e) {
             System.out.println(e.getMessage());
@@ -45,16 +48,16 @@ public class TaskDeleter extends ErrorMessages {
 
     private void deleteTask(ArrayList<Task> listOfTasks, int indexToDelete) throws DeleteTaskError {
         if (verifyMarkAction(listOfTasks, indexToDelete)) {
-            listOfTasks.remove(indexToDelete - 1);
+            listOfTasks.remove(indexToDelete - MANAGE_ZERO_INDEXING);
         }
     }
 
     private boolean verifyMarkAction(ArrayList<Task> taskList, int indexToDelete) throws DeleteTaskError {
-        if (taskList.size() == 0) {
+        if (taskList.size() == ZERO) {
             throw new DeleteTaskError(errorEmptyListText());
         } else if (indexToDelete > taskList.size()) {
             throw new DeleteTaskError((errorExceedListLengthText(taskList.size())));
-        } else if (indexToDelete <= 0) {
+        } else if (indexToDelete <= ZERO) {
             throw new DeleteTaskError(errorInvalidNumberText());
         }
         return true;

@@ -10,17 +10,17 @@ import tasks.Task;
  * Carries out the function of finding a task within a list using a keyword
  */
 public class Finder extends ErrorMessages {
+
+    public static final Integer EMPTY = 0;
     private static final String CHAR_SPACE = " ";
     private static final String BLANK = " ";
-    public static final Integer EMPTY = 0;
 
     /**
      * Finds a task with a certain keyword given as input
-     * 
      * @param listOfTasks The list of tasks to search for keyword
      * @param input       The input containing the keyword
      */
-    public void findTaskFromList(ArrayList<Task> listOfTasks, String input) {
+    public void findTasksFromList(ArrayList<Task> listOfTasks, String input) {
         String[] inputString = input.split(CHAR_SPACE, 2);
         String keyword;
         OutputUI outputUI = new OutputUI();

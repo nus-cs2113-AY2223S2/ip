@@ -97,6 +97,11 @@ public class OutputUI {
         System.out.println("Pikapi is surprised to see you go, see you soon friend\n");
     }
 
+
+    /**
+     * Prints a list when queried for tasks for a specific keyword with the corresponding flavour text
+     * @param output
+     */
     public void printTaskListWithKeyword(ArrayList<Task> output) {
         System.out.println("Pikapi has found  list of things pertaining to your keyword");
         printList(output, output.size());
