@@ -4,6 +4,10 @@ import io.github.haoyangw.rica.exception.RicaSerializationException;
 import io.github.haoyangw.rica.exception.RicaStorageException;
 import io.github.haoyangw.rica.storage.Serializable;
 
+/**
+ * Represents a Task for the user. Can be extended further to provide more specialised/
+ *   specific Tasks created by the user.
+ */
 public class Task implements Serializable {
     private static final String TYPE = "T";
     private static final int NUM_OF_SERIALIZED_DATA = 2;
@@ -26,6 +30,16 @@ public class Task implements Serializable {
         return this.description;
     }
 
+    /**
+     * Parses a String representation of a Task and re-creates an instance
+     *   of corresponding Task(sub-type) with the previously saved state.
+     *
+     * @param objectData String representation containing values for a Task's state
+     *   variables
+     * @return Instance of Task with the previously saved state
+     * @throws RicaSerializationException If too few state variables were saved
+     *   within the String representation, which implies an invalid saved state
+     */
     public static Task deserializeObject(String objectData) throws RicaSerializationException {
         String[] variables = objectData.split(Task.DATA_STRING_SEPARATOR_REGEX);
         if (variables.length < Task.NUM_OF_SERIALIZED_DATA) {
@@ -50,12 +64,23 @@ public class Task implements Serializable {
         String description = variables[1];
         return new Task(description);
     }
-
+    /**
+     * Generates a user-friendly String representation of this Task instance
+     *   for the user to understand this Task's current state
+     *
+     * @return String representation of this Task instance's state
+     */
     @Override
     public String toString() {
         return this.getDescription();
     }
 
+    /**
+     * Generates a String representation of this Task instance so that its state
+     *   may be preserved in persistent storage and restored later.
+     *
+     * @return String representation of this Task Object's state
+     */
     @Override
     public String serializeObject() {
         return String.format("%s | %s", this.getType(), this.getDescription());

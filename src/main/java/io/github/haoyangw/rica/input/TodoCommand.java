@@ -9,6 +9,10 @@ public class TodoCommand extends Command {
         super(command, taskManager);
     }
 
+    /**
+     * Executes the 'todo' command, which creates a new Todo Task for Rica to keep
+     *   track of
+     */
     @Override
     public void run() {
         try {

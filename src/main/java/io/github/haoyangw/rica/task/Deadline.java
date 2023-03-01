@@ -3,6 +3,9 @@ package io.github.haoyangw.rica.task;
 import io.github.haoyangw.rica.exception.RicaSerializationException;
 import io.github.haoyangw.rica.exception.RicaTaskException;
 
+/**
+ * Represents a deadline kind of Task that consists of a due date
+ */
 public class Deadline extends Todo {
     private static final String COMMAND = "deadline";
     private static final String DEADLINE_KEYWORD = "/by";
@@ -22,6 +25,15 @@ public class Deadline extends Todo {
         this.deadline = deadline;
     }
 
+    /**
+     * Parses a command issued by the user and extracts the deadline description
+     *   portion, which is returned to the caller
+     *
+     * @param command Full command issued by the user
+     * @return String Object containing the description of the deadline to be created
+     * @throws RicaTaskException If command doesn't contain a description of the
+     *   deadline to be created
+     */
     private static String getDescriptionOf(String command) throws RicaTaskException {
         String[] parameters = command.split(" ");
         int MISSING_PARAMS = 1;
@@ -44,6 +56,15 @@ public class Deadline extends Todo {
         return descBuilder.toString();
     }
 
+    /**
+     * Parses a command issued by the user and extracts the date of the deadline,
+     *   which is returned to the caller.
+     *
+     * @param command Full command issued by the user
+     * @return String Object containing the date of the deadline to be created
+     * @throws RicaTaskException If command doesn't contain a date to set as the
+     *   deadline of the new Task
+     */
     private static String getDeadlineOf(String command) throws RicaTaskException {
         int deadlineKeywordFirstIndex = command.indexOf(Deadline.DEADLINE_KEYWORD);
         final int NOT_FOUND = -1;
@@ -59,6 +80,15 @@ public class Deadline extends Todo {
         return deadline;
     }
 
+    /**
+     * Parses a full command issued by the user and creates a new deadline Task
+     *   with the given parameters
+     *
+     * @param command Full command issued by the user
+     * @return Instance of Deadline containing the designated due date and Task
+     *   description
+     * @throws RicaTaskException If the wrong command was issued(not 'deadline')
+     */
     public static Deadline create(String command) throws RicaTaskException {
         String[] parameters = command.split(" ");
         // Wrong command for adding a deadline
@@ -74,6 +104,13 @@ public class Deadline extends Todo {
         return this.deadline;
     }
 
+    /**
+     * Takes a String representation of a Deadline(probably saved in the data file)
+     *   and re-creates an instance of Deadline with the corresponding state variables.
+     *
+     * @param objectData String representation of all of Deadline's state variables
+     * @return Instance of Deadline with the previously saved state
+     */
     public static Deadline deserializeObject(String objectData) {
         String[] variables = objectData.split(Task.DATA_STRING_SEPARATOR_REGEX);
         if (variables.length < Deadline.NUM_OF_SERIALIZED_DATA) {
@@ -93,17 +130,36 @@ public class Deadline extends Todo {
         return Deadline.TYPE;
     }
 
+    /**
+     * Saves all of this Deadline instance's state into a String Object that can
+     *   then be written to persistent storage.
+     *
+     * @return String representation of Deadline instance's state
+     * @see io.github.haoyangw.rica.storage.Serializable
+     */
     @Override
     public String serializeObject() {
         String todoData = super.serializeObject();
         return todoData + Task.DATA_STRING_SEPARATOR + this.getDeadline();
     }
 
+    /**
+     * Sets this Deadline Task as done/not done by the user
+     *
+     * @param isDone Whether this Deadline is now done
+     * @return Instance of Deadline with isDone state variable set accordingly
+     */
     @Override
     public Deadline setDone(boolean isDone) {
         return new Deadline(super.getDescription(), isDone, this.getDeadline());
     }
 
+    /**
+     * Generates a user-friendly String representation of this Deadline instance
+     *   for the user to understand this Deadline's current state
+     *
+     * @return String representation of this Deadline instance's state
+     */
     @Override
     public String toString() {
         return String.format("%s (by: %s)", super.toString(), this.getDeadline());

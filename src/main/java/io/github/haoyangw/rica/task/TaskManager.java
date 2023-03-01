@@ -4,9 +4,12 @@ import io.github.haoyangw.rica.exception.RicaStorageException;
 import io.github.haoyangw.rica.exception.RicaTaskException;
 import io.github.haoyangw.rica.ui.TextUi;
 import io.github.haoyangw.rica.storage.StorageManager;
-
 import java.util.ArrayList;
 
+/**
+ * Manages a list of Tasks that Rica is keeping track of. Provides utility methods
+ *   for other classes to modify Rica's recorded Tasks.
+ */
 public class TaskManager {
     private static final String ADD_PHRASE = " New %s I'll remember: ";
     private static final String BAD_TASK_INDEX_ERROR = " Invalid task number? Are you trying too hard to avoid work xP";
@@ -39,12 +42,24 @@ public class TaskManager {
         }
     }
 
+    /**
+     * Adds a new Task to Rica's list of remembered Tasks
+     *
+     * @param newTask New Task Object to be added to Rica's list of Tasks
+     */
     private void addTask(Task newTask) {
         if (newTask != null) {
             this.getTasks().add(newTask);
         }
     }
 
+    /**
+     * Creates the corresponding type of Task based on the given user command and
+     *   adds it to Rica's list of Tasks she remembers.
+     *
+     * @param typeOfTask String describing what type of Task to create
+     * @param command Full Task creation command that was issued by the user
+     */
     private void createTask(String typeOfTask, String command) {
         switch (typeOfTask) {
         case TaskManager.TODO_CMD:
@@ -111,6 +126,13 @@ public class TaskManager {
         return this.getTasks().remove(indexOfTask);
     }
 
+    /**
+     * Given a Task creation command issued by the user, create the correct type
+     *   of Task, add it to Rica's memory, and help her record the new list of Tasks
+     *   to persistent storage.
+     *
+     * @param command Task creation command issued by the user
+     */
     public void createTaskFrom(String command) {
         String[] parameters = command.split(" ");
         String typeOfTask = parameters[0];
@@ -132,6 +154,8 @@ public class TaskManager {
      * @param indexOfTask Index of given task in the task list
      * @return rica.Task object representing the desired task being marked as done,
      * null if not an instance of rica.Todo
+     * @throws RicaTaskException If an invalid Task index is given or a Task cannot
+     *   be marked done
      */
     public Todo markDone(int indexOfTask) throws RicaTaskException {
         boolean isNegativeIndex = indexOfTask < 0;
@@ -168,6 +192,14 @@ public class TaskManager {
         this.getTextUi().printTasks(this.getTasks());
     }
 
+    /**
+     * Parses a remove command issued by the user and removes the corresponding
+     *   Task from Rica's list of Tasks.
+     *
+     * @param command Full remove command issued by the user
+     * @throws RicaTaskException If the wrong command keyword was used, no Tasks
+     *   exist, or a non-integer index was given within the command
+     */
     public void rmTask(String command) throws RicaTaskException {
         String[] parameters = command.split(" ");
         if (!parameters[0].equals(TaskManager.DELETE_CMD)) {

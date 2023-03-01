@@ -9,6 +9,11 @@ public class DeleteCommand extends Command {
         super(command, taskManager);
     }
 
+    /**
+     * Executes the 'delete' command, deleting a specified Task from Rica's memory
+     *
+     * @throws RicaTaskException If specified Task could not be removed by TaskManager
+     */
     @Override
     public void run() throws RicaTaskException {
         try {

@@ -8,6 +8,9 @@ public class MarkCommand extends Command {
         super(command, taskManager);
     }
 
+    /**
+     * Executes the 'mark' command, which marks a specified Task as done by the user
+     */
     @Override
     public void run() {
         String[] params = super.getCommand().split(Command.CMD_SEPARATOR);

@@ -32,27 +32,52 @@ public class TextUi {
         return this.cmdLineOut;
     }
 
+    /**
+     * Prints a given runtime Exception on the user's screen using Rica's own output
+     *   format.
+     *
+     * @param exception Exception to inform the user about
+     */
     public void printErrorMessage(RicaException exception) {
         this.printlnWithIndent(exception.getMessage());
     }
 
+    /**
+     * Prints the footer found at the end of each of Rica's messages.
+     */
     public void printFooter() {
         this.printlnWithIndent(TextUi.LINE);
     }
 
+    /**
+     * Tells the user that Rica is sad to say goodbye :(
+     */
     public void printGoodbyeMessage() {
         this.printlnWithIndent(TextUi.BYE_PHRASE);
     }
 
+    /**
+     * Prints the header found at the beginning of each of Rica's messages.
+     */
     public void printHeader() {
         this.printlnWithIndent(TextUi.LINE);
     }
 
+    /**
+     * Prints a given message on the user's screen with Rica's own unique indentation.
+     *
+     * @param message Message to print on the user's screen
+     */
     public void printlnWithIndent(String message) {
         this.getCmdLineOut().print(TextUi.INDENT);
         this.getCmdLineOut().println(message);
     }
 
+    /**
+     * Prints a list of Tasks remembered by Rica in Rica's unique output format.
+     *
+     * @param tasks ArrayList of Tasks to show the user
+     */
     public void printTasks(ArrayList<Task> tasks) {
         if (tasks.isEmpty()) {
             this.printlnWithIndent(" Hope I'm not amnesiac, but I don't remember any tasks?");
@@ -64,6 +89,10 @@ public class TextUi {
         }
     }
 
+    /**
+     * Prints Rica's lively welcome message shown to the user every time Rica comes
+     *   back to life.
+     */
     public void printWelcomeMessage() {
         this.printHeader();
         this.printlnWithIndent(" Hello! I'm R.I.C.A.");
