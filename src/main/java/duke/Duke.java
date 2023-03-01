@@ -1,7 +1,9 @@
 package duke;
 
-
-import java.util.ArrayList;
+/**
+ * Duke is a task recording robot with different functions.
+ * Functions include: delete, mark, unmark, deadline, todo, event, find
+ */
 
 import java.io.File;
 import java.io.IOException;
@@ -28,6 +30,11 @@ public class Duke {
             doCommand(commandLine);
         }
     }
+
+    /**
+     * Loads file and parses file contents.
+     * @throws IOException
+     */
     private static void loadFile() throws IOException {
         File file = storage.createFile();
         Scanner fileReader = new Scanner(file);
@@ -45,6 +52,10 @@ public class Duke {
         }
     }
 
+    /**
+     * Handles command input by user.
+     * @param commandLine the commands the user has inputted
+     */
     private static void doCommand(String[] commandLine) {
         switch (commandLine[0]) {
         case "todo":
@@ -87,8 +98,11 @@ public class Duke {
         throw new IllegalDukeArgumentException();
     }
 
+    /**
+     * list all the tasks stored in the taskList.
+     */
     private static void listTasks() {
-        listMessage();
+        ui.printListMessage();
         int count = 0;
         for (Task i : taskList.getStoredTasks()) {
             System.out.println((count + 1) + ". " + i.getTypeIcon() +
@@ -97,6 +111,10 @@ public class Duke {
         }
     }
 
+    /**
+     * deletes task from taskList.
+     * @param commandLine commands the user has inputted
+     */
     private static void deleteTask(String[] commandLine) {
         int delIndex = Integer.parseInt((commandLine[1])) - 1;
         System.out.println("Noted. I've removed this task:");
@@ -110,7 +128,10 @@ public class Duke {
             System.out.println("Oops! Something broke: " + e);
         }
     }
-
+    /**
+     * un-marks task in taskList.
+     * @param commandLine commands the user has inputted
+     */
     private static void unmarkTask(String[] commandLine) {
         int unmarkIndex = Integer.parseInt(commandLine[1]) - 1;
         taskList.getStoredTasks().get(unmarkIndex).setDone(false);
@@ -124,7 +145,10 @@ public class Duke {
             System.out.println("Oops! Something broke: " + e);
         }
     }
-
+    /**
+     * marks task in taskList.
+     * @param commandLine commands the user has inputted
+     */
     private static void markTask(String[] commandLine) {
         int taskIndex = Integer.parseInt(commandLine[1]) - 1;
         taskList.getStoredTasks().get(taskIndex).setDone(true);
@@ -139,13 +163,16 @@ public class Duke {
         }
 
     }
-
+    /**
+     * adds event type task to taskList.
+     * @param commandLine commands the user has inputted
+     */
     private static void addEventTask(String[] commandLine) {
         String[] eventString = commandLine[1].split("/from");
         String[] eventStartEnd = eventString[1].split("/to");
         Event ev = new Event(eventString[0], eventStartEnd[0], eventStartEnd[1]);
         taskList.addItem(ev);
-        addTaskMessage();
+        ui.printAddTaskMessage();
         System.out.println("  " + ev.getTypeIcon() +
                 ev.getStatusIcon() + " " + ev.getDescription() + "(from: " + ev.getStart() + " to: " + ev.getEnd() +")");
         taskList.incrementTaskNum();
@@ -156,6 +183,10 @@ public class Duke {
             System.out.println("Oops! Something broke: " + e);
         }
     }
+    /**
+     * adds Todo type task to taskList.
+     * @param commandLine commands the user has inputted
+     */
     private static void addTodoTask(String[] commandLine) {
 
         try {
@@ -166,7 +197,7 @@ public class Duke {
         }
         Todo td = new Todo(commandLine[1]);
         taskList.addItem(td);
-        addTaskMessage();
+        ui.printAddTaskMessage();
         System.out.println("  " + td.getTypeIcon() + td.getStatusIcon() + " " + td.getDescription());
         taskList.incrementTaskNum();
         displayTasksNum();
@@ -177,17 +208,25 @@ public class Duke {
         }
     }
 
+    /**
+     * checks if Todo input statement is valid
+     * @param commandLine the commands the user has inputted
+     * @throws IllegalDukeArgumentException
+     */
     private static void validateTodo(String[] commandLine) throws IllegalDukeArgumentException{
         if (commandLine.length == 1) {
             throw new IllegalDukeArgumentException();
         }
     }
-
+    /**
+     * adds deadline type task to taskList.
+     * @param commandLine commands the user has inputted
+     */
     private static void addDeadlineTask(String[] commandLine) {
         String[] deadlineString = commandLine[1].split("/by");
         Deadline dl = new Deadline(deadlineString[0], deadlineString[1]);
         taskList.addItem(dl);
-        addTaskMessage();
+        ui.printAddTaskMessage();
         System.out.println("  " + dl.getTypeIcon() +
                 dl.getStatusIcon() + " " + dl.getDescription() + "(by: " + dl.getBy() + ")");
         taskList.incrementTaskNum();
@@ -198,6 +237,10 @@ public class Duke {
             System.out.println("Oops! Something broke: " + e);
         }
     }
+    /**
+     * finds tasks from taskList with matching keyword
+     * @param commandLine commands the user has inputted
+     */
     private static void findItem(String[] commandLine) {
         String keyword = commandLine[1];
         int count = 1;
@@ -215,13 +258,7 @@ public class Duke {
             }
         }
     }
-    private static void addTaskMessage() {
-        System.out.println("Got it. I've added this task.");
-    }
-    private static void listMessage() {
-        System.out.println("Here are the tasks in your list:");
-    }
     private static void displayTasksNum() {
-        System.out.println("Now you have " + taskList.getTaskNum() + " task(s) in the list.");
+        ui.printTaskNum(taskList.getTaskNum());
     }
 }

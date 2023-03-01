@@ -16,6 +16,12 @@ public class Storage {
         }
         return file;
     }
+
+    /**
+     * Writes into the file when change is made to data.
+     * @param storedTasks list of tasks stored by user.
+     * @throws IOException error when file does not exist.
+     */
     public void updateFile(ArrayList<Task> storedTasks) throws IOException {
         FileWriter fileWriter = new FileWriter(filePath);
         for (Task i : storedTasks) {

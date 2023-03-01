@@ -8,6 +8,13 @@ public class Parser {
     public String[] parseCommand(String command) {
         return command.split(" ", 2);
     }
+
+    /**
+     * Parses deadline from the save file
+     * @param savedDataLine line of file to be parsed
+     * @param storedTasks List of all tasks user has stored
+     * @return
+     */
     public ArrayList<Task> parseDeadline(String[] savedDataLine, ArrayList<Task>storedTasks) {
         Deadline deadline = new Deadline(savedDataLine[2], savedDataLine[3]);
         if (savedDataLine[1].equals("[X]")) {
@@ -16,6 +23,12 @@ public class Parser {
         storedTasks.add(deadline);
         return storedTasks;
     }
+    /**
+     * Parses todo from the save file
+     * @param savedDataLine line of file to be parsed
+     * @param storedTasks List of all tasks user has stored
+     * @return
+     */
     public ArrayList<Task> parseTodo(String[] savedDataLine, ArrayList<Task>storedTasks){
         Todo todo = new Todo(savedDataLine[2]);
         if (savedDataLine[1].equals("[X]")) {
@@ -24,6 +37,12 @@ public class Parser {
         storedTasks.add(todo);
         return storedTasks;
     }
+    /**
+     * Parses event from the save file
+     * @param savedDataLine line of file to be parsed
+     * @param storedTasks List of all tasks user has stored
+     * @return
+     */
     public ArrayList<Task> parseEvent(String[] savedDataLine, ArrayList<Task>storedTasks){
         String[] period = savedDataLine[3].split(",");
         Event event = new Event(savedDataLine[2], period[0], period[1]);

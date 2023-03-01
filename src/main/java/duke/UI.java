@@ -1,5 +1,7 @@
 package duke;
-
+/**
+ * UI handling class. Prints most UI.
+ */
 public class UI {
     public UI () {
     }
@@ -15,5 +17,14 @@ public class UI {
     }
     public void printLinebreak() {
         System.out.println("--------------------------------------------------------------");
+    }
+    public void printTaskNum(int taskNum) {
+        System.out.println("Now you have " + taskNum + " task(s) in the list.");
+    }
+    public void printListMessage() {
+        System.out.println("Here are the tasks in your list:");
+    }
+    public void printAddTaskMessage() {
+        System.out.println("Got it. I've added this task.");
     }
 }
