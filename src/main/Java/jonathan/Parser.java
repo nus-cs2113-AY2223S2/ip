@@ -44,7 +44,6 @@ public class Parser {
                 String description = fullCommand.substring(fullCommand.indexOf(" ") + 1, fullCommand.indexOf(" /by"));
                 String byString = fullCommand.substring(fullCommand.indexOf("/by") + 4);
                 LocalDateTime by = getDateAndTimeFormat(byString);
-                System.out.println(by);
                 Deadline deadline = new Deadline(description, by);
                 command = new DeadlineCommand(deadline);
 
