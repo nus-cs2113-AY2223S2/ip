@@ -284,10 +284,24 @@ Task list is corrupted. Initializing new task list.
 ```
 
 Your locally stored data have been corrupted.
-Therefore, all previously stored data has been lost. 
+Therefore, all previously stored data has been lost.
 
 To get you back up and running, a new data store will automatically
 be created for you.
 
 
 ---
+
+## Commands overview
+
+| Command                                                    | Example                                                    |
+|------------------------------------------------------------|------------------------------------------------------------|
+| `list`                                                       | `list`                                                     |
+| `todo <task_description>`                                    | `todo revise CS2133T`                                      |
+| `deadline <task_description> /by <date>`                     | `deadline CS2133T assignment /by 3/3/2023 2359`            |
+| `event <task_description> /from <start_date> /to <end_date>` | `event CS2133T exam /from 3/5/2023 0900 /to 3/5/2023 1100` |
+| `mark <index>`                                               | `mark 2`                                                   |
+| `unmark <index>`                                             | `unmark 2`                                                 |
+| `delete <index>`                                             | `delete 2`                                                 |
+| `find <keyword>`                                             | `find exam`                                                |
+| `bye`                                                        | `bye`                                                       |
