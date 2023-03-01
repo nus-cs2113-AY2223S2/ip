@@ -11,6 +11,8 @@ import tasks.Task;
  */
 public class Finder extends ErrorMessages {
     private static final String CHAR_SPACE = " ";
+    private static final String BLANK = " ";
+    public static final Integer EMPTY = 0;
 
     /**
      * Finds a task with a certain keyword given as input
@@ -24,18 +26,18 @@ public class Finder extends ErrorMessages {
         OutputUI outputUI = new OutputUI();
         try {
             if (inputString.length != 2) {
-                throw new FindTaskError(provideNoTaskKeywordInput());
+                throw new FindTaskError(errorNoTaskKeywordInput());
             } else if (inputString[1].equals(BLANK)) {
-                throw new FindTaskError(provideNoTaskKeywordInput());
+                throw new FindTaskError(errorNoTaskKeywordInput());
             } else {
                 keyword = inputString[1];
                 ArrayList<Task> output = new ArrayList<>();
                 for (int i = 0; i < listOfTasks.size(); i++) {
-                    if (listOfTasks.get(i).description.contains(keyword)) {
+                    if (listOfTasks.get(i).getDescription().contains(keyword)) {
                         output.add(listOfTasks.get(i));
                     }
                 }
-                if (output.size() == 0) {
+                if (output.size() == EMPTY) {
                     outputUI.printNoTaskWithKeyword();
                 } else {
                     outputUI.printTaskListWithKeyword(output);

@@ -1,8 +1,8 @@
 package errors;
 
-
 /**
- * This is an error class that stores all the texts meant for storing most output text for printing
+ * This is an error class that stores all the texts meant for storing most
+ * output text for printing
  */
 public class ErrorMessages {
 
@@ -75,7 +75,8 @@ public class ErrorMessages {
     }
 
     /**
-     * @return Provides error text when a String is provided as input instead of a number
+     * @return Provides error text when a String is provided as input instead of a
+     *         number
      */
     public String errorStringAsNumber() {
         return "Pikapiii you did not give me an index(number)! "
@@ -83,7 +84,8 @@ public class ErrorMessages {
     }
 
     /**
-     * @return Provides error text when a specific line of data in listData.txt is not of correct format
+     * @return Provides error text when a specific line of data in listData.txt is
+     *         not of correct format
      */
     public static String errorCorruptDataErrorText() {
         return "PIKAPII There seems to be something wrong with this task in your save file,"
@@ -106,7 +108,7 @@ public class ErrorMessages {
         return "For some reason, listData is still unable to be found";
     }
 
-    //The following are meant for wrong command errors
+    // The following are meant for wrong command errors
     public String errorWrongCommandText() {
         return "Pikapi is unable to find that command, please type in a correct command";
     }
@@ -114,5 +116,8 @@ public class ErrorMessages {
     public String errorCorruptDataText() {
         return "A specific line in data is corrupted, not adding corrupted data";
     }
-}
 
+    public String errorNoTaskKeywordInput() {
+        return "No Task keyword provided to find, Pikapi tried :3";
+    }
+}
