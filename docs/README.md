@@ -157,8 +157,8 @@ Delete a task from the list.\
 &nbsp;&nbsp;&nbsp;&nbsp;Input:
     ```
     date 2023-02-23
-    ```\`
-&nbsp;&nbsp;&nbsp;&nbsp;Output:\
+    ```\
+&nbsp;&nbsp;&nbsp;&nbsp;Output:
     
     ____________________________________________________________
     Here are the matching tasks in your list:
