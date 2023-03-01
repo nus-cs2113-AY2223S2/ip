@@ -21,6 +21,8 @@ public abstract class ExecutableCommand {
             return new ByeCommand();
         case "list":
             return new ListCommand();
+        case "find":
+            return new FindCommand();
         case "mark":
             return new MarkCommand(true);
         case "unmark":
@@ -98,3 +100,4 @@ public abstract class ExecutableCommand {
      */
     public abstract void execute(BunnySession bunny);
 }
+

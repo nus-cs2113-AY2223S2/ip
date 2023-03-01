@@ -1,11 +1,13 @@
 package com.ethanyidong.bunny.task;
 
+import com.ethanyidong.bunny.date.FlexibleDate;
+
 /**
  * Represents an implementation of <code>Task</code> with a start and end time.
  */
 public class Event extends Task {
-    private String from;
-    private String to;
+    private FlexibleDate from;
+    private FlexibleDate to;
 
     /**
      * Creates a new event with a name, start, and end time.
@@ -16,8 +18,8 @@ public class Event extends Task {
      */
     public Event(String name, String from, String to) {
         super(name);
-        this.from = from;
-        this.to = to;
+        this.from = new FlexibleDate(from);
+        this.to = new FlexibleDate(to);
     }
 
     protected String label() {

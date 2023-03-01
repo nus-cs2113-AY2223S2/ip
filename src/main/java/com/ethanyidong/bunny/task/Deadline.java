@@ -1,10 +1,12 @@
 package com.ethanyidong.bunny.task;
 
+import com.ethanyidong.bunny.date.FlexibleDate;
+
 /**
  * Represents an implementation of <code>Task</code> with a due date
  */
 public class Deadline extends Task {
-    private String by;
+    private FlexibleDate by;
 
     /**
      * Creates a new deadline with a name and due date
@@ -14,15 +16,7 @@ public class Deadline extends Task {
      */
     public Deadline(String name, String by) {
         super(name);
-        this.by = by;
-    }
-
-    public String getBy() {
-        return by;
-    }
-
-    public void setBy(String by) {
-        this.by = by;
+        this.by = new FlexibleDate(by);
     }
 
     protected String label() {
