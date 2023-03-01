@@ -95,8 +95,8 @@ public class BunnySession {
         this.storage.beginSave(this);
         while (!this.isQuit()) {
             String input = this.ui.getNextCommandString();
-            this.storage.save(this, input);
             this.runCommandString(input);
+            this.storage.save(this, input);
         }
         this.ui.printMessage(this.ui.EXIT_MESSAGE);
         this.storage.endSave(this);
