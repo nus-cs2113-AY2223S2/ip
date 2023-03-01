@@ -5,7 +5,6 @@ import components.TaskList;
 import components.Ui;
 import components.Storage;
 
-
 public class AddEventCommand extends Command {
     public AddEventCommand(String[] commandFields) {
         super(commandFields);

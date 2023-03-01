@@ -6,10 +6,11 @@ import components.Ui;
 import exception.DukeException;
 import exception.ErrorMessage;
 import task.Task;
+
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-public class FindCommand extends Command{
+public class FindCommand extends Command {
     public FindCommand(String[] commandFields) {
         super(commandFields);
     }
@@ -22,7 +23,7 @@ public class FindCommand extends Command{
             throw new DukeException(ErrorMessage.NO_MATCHING_TASKS.toString());
         } else {
             System.out.println("Here are the matching tasks in your list:\n");
-            for (Task task: filteredList) {
+            for (Task task : filteredList) {
                 System.out.println((filteredList.indexOf(task) + 1) + "." + task);
             }
         }

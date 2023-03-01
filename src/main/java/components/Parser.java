@@ -92,8 +92,7 @@ public class Parser {
 
         if (words[0].equalsIgnoreCase("bye")) {
             return new ByeCommand();
-        }
-        else if (words[0].equalsIgnoreCase("list")) {
+        } else if (words[0].equalsIgnoreCase("list")) {
             return new ListCommand();
         } else if (words[0].equalsIgnoreCase("todo")) {
             ParseTodoCommand(fullCommand, commandFields);
@@ -113,7 +112,7 @@ public class Parser {
         } else if (words[0].equalsIgnoreCase("unmark")) {
             ParseToggleCommand(words, commandFields);
             return new ToggleMarkCommand(commandFields);
-        } else if (words[0].equalsIgnoreCase("find")){
+        } else if (words[0].equalsIgnoreCase("find")) {
             ParseFindCommand(fullCommand, commandFields);
             return new FindCommand(commandFields);
         } else {

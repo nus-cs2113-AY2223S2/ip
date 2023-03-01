@@ -7,7 +7,6 @@ import components.TaskList;
 import components.Ui;
 import components.Storage;
 
-
 public class ListCommand extends Command {
     public ListCommand() {
     }

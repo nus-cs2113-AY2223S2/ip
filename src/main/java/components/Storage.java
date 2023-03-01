@@ -24,6 +24,7 @@ public class Storage {
         readStream.close();
         return data;
     }
+
     public void writeToFile(ArrayList<Task> tasks, String filePath) {
         try {
             FileOutputStream writeData = new FileOutputStream(filePath);

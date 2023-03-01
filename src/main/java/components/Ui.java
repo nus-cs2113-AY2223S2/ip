@@ -1,13 +1,13 @@
 package components;
 
 import task.Task;
-
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Ui {
     public Ui() {
     }
+
     private static final String LOGO =
             " ____        _\n"
                     + "|  _ \\ _   _| | _____\n"

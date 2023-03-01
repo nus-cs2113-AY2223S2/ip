@@ -5,9 +5,9 @@ import components.TaskList;
 import components.Ui;
 import components.Storage;
 
-
 public abstract class Command {
     String[] commandFields;
+
     public Command(String[] commandFields) {
         this.commandFields = commandFields;
     }

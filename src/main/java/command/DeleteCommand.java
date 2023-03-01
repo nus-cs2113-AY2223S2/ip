@@ -13,7 +13,7 @@ public class DeleteCommand extends Command {
         super(commandFields);
     }
 
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws DukeException{
+    public void execute(TaskList tasks, Ui ui, Storage storage) throws DukeException {
         int taskNumber = Integer.parseInt(commandFields[0]);
         if (taskNumber > tasks.tasks.size()) {
             throw new DukeException(ErrorMessage.INVALID_DELETE.toString());

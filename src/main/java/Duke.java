@@ -1,5 +1,8 @@
 import command.Command;
-import components.*;
+import components.Parser;
+import components.Storage;
+import components.TaskList;
+import components.Ui;
 import exception.DukeException;
 
 import java.util.Scanner;

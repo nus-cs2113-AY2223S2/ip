@@ -7,17 +7,15 @@ public abstract class Task implements Serializable {
     private boolean isDone;
 
 
-
-    public Task(String description){
+    public Task(String description) {
         this.description = description;
         this.isDone = false;
     }
 
-    public void toggleMark(int value){
+    public void toggleMark(int value) {
         if (value == 1) {
             isDone = true;
-        }
-        else {
+        } else {
             isDone = false;
         }
     }
