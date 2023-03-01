@@ -12,6 +12,7 @@ public class Parser {
         for (String keyWord : keyWords) {
             if (userInput.contains(keyWord)) {
                 hasKeyword = true;
+                break;
             }
         }
         if (!hasKeyword) {
