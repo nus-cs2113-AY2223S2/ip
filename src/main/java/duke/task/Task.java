@@ -3,7 +3,7 @@ package duke.task;
 public class Task {
     protected String description;
     protected boolean isDone;
-    String lineBreaker = "____________________________________________________________\n";
+    String LINE = "────────────────────────────────────────────────────────────────────────\n";
     public Task(String description) {
         this.description = description;
         this.isDone = false;
@@ -12,20 +12,28 @@ public class Task {
     public String toString() {
         return taskStatus() + description;
     }
-    public void markAsDone() {
+    public void setDone() {
         this.isDone = true;
-        System.out.println(lineBreaker);
+    }
+
+    public void setUndone() {
+        this.isDone = false;
+    }
+
+    public void markAsDone() {
+        setDone();
+        System.out.println(LINE);
         System.out.println("Nice! I've marked this duke.task as DONE:");
         System.out.println("  " + this.toString());
-        System.out.println(lineBreaker);
+        System.out.println(LINE);
     }
 
     public void markAsUndone() {
-        this.isDone = false;
-        System.out.println(lineBreaker);
+        setUndone();
+        System.out.println(LINE);
         System.out.println("OK! I've marked this duke.task as NOT DONE YET:");
         System.out.println("  " + this.toString());
-        System.out.println(lineBreaker);
+        System.out.println(LINE);
     }
 
     public String getStatusIcon() {
