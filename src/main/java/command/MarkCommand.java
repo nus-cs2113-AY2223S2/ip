@@ -37,10 +37,7 @@ public class MarkCommand extends Command{
 
         //set mark or unmark status, and get feedback
         Task taskToMark = tasks.get(index);
-
         taskToMark.setStatus(isMarkAsDone);
-
-
 
         storage.rewrite(tasks, ui);
 

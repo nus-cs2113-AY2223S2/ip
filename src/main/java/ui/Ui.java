@@ -69,7 +69,12 @@ public class Ui {
             System.out.println((i + 1) + "." + tasks.get(i).toString() + "\n");
         }
     }
-
+    public void showFindNotEmpty(){
+        System.out.println("Here are the matching tasks in your list:");
+    }
+    public void showFindEmpty(){
+        System.out.println("Cannot find anything matching the keyword!");
+    }
 
     public void showAddTask(Task newTaskObject, TaskList tasks){
         String feedback = "Got it. I've added this task:\n"
