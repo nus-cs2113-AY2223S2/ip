@@ -7,10 +7,17 @@ import com.ethanyidong.bunny.arg.PositionalArgumentCommandValidator;
 
 import java.util.ArrayList;
 
+/**
+ * An implementation of <code>ExecutableCommand</code> to represent the 'find' command
+ */
 public class FindCommand extends ExecutableCommand {
     private String keyword;
+
+    /**
+     * @return Validators checking that the keywords (positional argument) is not empty
+     */
     @Override
-    public CommandValidator[] validators() {
+    protected CommandValidator[] validators() {
         CommandValidator todoNameValidator =
                 new PositionalArgumentCommandValidator(new NotEmptyArgumentValidator());
         return new CommandValidator[]{todoNameValidator};
@@ -20,6 +27,11 @@ public class FindCommand extends ExecutableCommand {
     protected void parseArguments(BunnySession bunny, TokenizedCommand command) {
         this.keyword = command.getPositionalArgument();
     }
+
+    /**
+     * Lists the tasks in the current Bunny session containing the specified keyword
+     * @param bunny the current Bunny session
+     */
     public void execute(BunnySession bunny) {
         if (bunny.getTasks().numTasks() == 0) {
             bunny.getUI().printMessage("Your TODO list is empty!");

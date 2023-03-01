@@ -5,7 +5,7 @@ import com.ethanyidong.bunny.BunnySession;
 import java.util.ArrayList;
 
 /**
- * An implementation of <code>ExecutableCommand</code> to represent the 'list' and command
+ * An implementation of <code>ExecutableCommand</code> to represent the 'list' command
  */
 public class ListCommand extends ExecutableCommand {
     /**
