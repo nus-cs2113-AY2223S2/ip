@@ -4,23 +4,26 @@ import duke.task.Task;
 
 import java.util.ArrayList;
 
+/**
+ * The FindTask class finds
+ * a listed task with a given keyword
+ */
 public class FindTask {
+    /**
+     * This method searches for tasks with a given keyword
+     *
+     * @param keyWord User's input keyword
+     * @param storedUserTasks ArrayList containing listed Tasks
+     */
     public static void searchForKeyword(String keyWord, ArrayList<Task> storedUserTasks) {
-        System.out.println(Display.DIVIDER);
-        int count = 0;
+
+        ArrayList<Integer> taskIndexesWithKeyword = new ArrayList<>();
         for (int i = 0; i < storedUserTasks.size(); i++) {
             if(storedUserTasks.get(i).toString().contains(keyWord)){
-                count++;
-                if (count==1) {
-                    System.out.println(Display.SPACER+"Here are the matching tasks in your list:");
-                }
-                System.out.println(Display.SPACER+(i+1)+"."+storedUserTasks.get(i).toString());
+                taskIndexesWithKeyword.add(i);
             }
         }
-        if (count==0) {
-            System.out.println(Display.SPACER+"No tasks contained the keyword.");
-        }
-        System.out.println(Display.DIVIDER);
+        Display.displayTasksWithKeyword(storedUserTasks, taskIndexesWithKeyword);
     }
 
 }

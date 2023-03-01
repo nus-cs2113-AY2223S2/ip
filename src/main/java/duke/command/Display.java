@@ -100,4 +100,23 @@ public class Display {
         System.out.println(SPACER+storedUserTasks.get(Duke.userTextCount).toString());
     }
 
+    /**
+     * This method prints tasks containing a keyword
+     */
+    public static void displayTasksWithKeyword(ArrayList<Task> storedUserTasks, ArrayList<Integer> taskIndexesWithKeyword) {
+        int listIndex;
+        System.out.println(DIVIDER);
+        if (taskIndexesWithKeyword.size()==0) {
+            System.out.println(SPACER+"No tasks contained the keyword.");
+        }
+        else {
+            System.out.println(SPACER+"Here are the matching tasks in your list:");
+            for (Integer integer : taskIndexesWithKeyword) {
+                listIndex = integer;
+                System.out.println(SPACER + (listIndex + 1) + "." + storedUserTasks.get(listIndex).toString());
+            }
+        }
+        System.out.println(DIVIDER);
+    }
+
 }

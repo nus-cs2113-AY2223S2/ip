@@ -24,6 +24,7 @@ public class CreateTask {
      * @param userCommand User's command
      * @param storedUserTasks ArrayList containing listed Tasks
      * @throws DukeException DukeException has occurred
+     * @throws ParseException ParseException has occurred
      */
     public static void createTodo(String userCommand, ArrayList<Task> storedUserTasks) throws DukeException, ParseException {
         if (userCommand.length()<=4) {
@@ -43,6 +44,7 @@ public class CreateTask {
      * @param userCommand User's command
      * @param storedUserTasks ArrayList containing listed Tasks
      * @throws DukeException DukeException has occurred
+     * @throws ParseException ParseException has occurred
      */
     public static void createDeadline(String userCommand, ArrayList<Task> storedUserTasks) throws DukeException, ParseException {
         if (userCommand.length()<=8) {
@@ -63,6 +65,7 @@ public class CreateTask {
      * @param userCommand User's command
      * @param storedUserTasks ArrayList containing listed Tasks
      * @throws DukeException DukeException has occurred
+     * @throws ParseException ParseException has occurred
      */
     public static void createEvent(String userCommand, ArrayList<Task> storedUserTasks) throws DukeException, ParseException {
         if (userCommand.length()<=5) {

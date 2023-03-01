@@ -19,7 +19,7 @@ public class ModifyTask {
      * @param storedUserTasks ArrayList containing listed Tasks
      */
     public static void markTask(String userCommand, ArrayList<Task> storedUserTasks) {
-        int taskIndex = Parser.getIndex(userCommand, "task");
+        int taskIndex = Parser.extractIndex(userCommand, "task");
         storedUserTasks.get(taskIndex).isDone = true;
         Display.displayTaskProgress("mark", taskIndex, storedUserTasks);
     }
@@ -31,7 +31,7 @@ public class ModifyTask {
      * @param storedUserTasks ArrayList containing listed Tasks
      */
     public static void unmarkTask(String userCommand, ArrayList<Task> storedUserTasks) {
-        int taskIndex = Parser.getIndex(userCommand, "task");
+        int taskIndex = Parser.extractIndex(userCommand, "task");
         storedUserTasks.get(taskIndex).isDone = false;
         Display.displayTaskProgress("unmark", taskIndex, storedUserTasks);
     }
@@ -43,7 +43,7 @@ public class ModifyTask {
      * @param storedUserTasks ArrayList containing listed Tasks
      */
     public static void deleteTask(String userCommand, ArrayList<Task> storedUserTasks) {
-        int taskIndex = Parser.getIndex(userCommand, "task");
+        int taskIndex = Parser.extractIndex(userCommand, "task");
         Display.displayDeleteTask(taskIndex, storedUserTasks);
         Duke.userTextCount--;
         Display.printNumberOfTasks();

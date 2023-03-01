@@ -18,7 +18,7 @@ public class Parser {
      * @param type Type of index to be extracted
      * @return int
      */
-    public static int getIndex(String userCommand, String type) {
+    public static int extractIndex(String userCommand, String type) {
         switch (type) {
         case "task":
             return Integer.parseInt(userCommand.split(" ")[1])-1;
@@ -40,6 +40,7 @@ public class Parser {
      * @param type Type of String to be extracted
      * @param task Type of Task String is being extracted from
      * @return String
+     * @throws ParseException ParseException has occurred
      */
     public static String extractInfo(String userCommand, String type, String task) throws ParseException {
         int indexOfBy, indexOfFrom, indexOfTo;
@@ -50,25 +51,25 @@ public class Parser {
             case "todo":
                 return userCommand.substring(5);
             case "deadline":
-                indexOfBy = Parser.getIndex(userCommand, "by");
+                indexOfBy = Parser.extractIndex(userCommand, "by");
                 return userCommand.substring(9, indexOfBy - 1);
             case "event":
-                indexOfFrom = Parser.getIndex(userCommand, "from");
+                indexOfFrom = Parser.extractIndex(userCommand, "from");
                 return userCommand.substring(6,indexOfFrom-1);
             }
         case "by":
-            indexOfBy = Parser.getIndex(userCommand, "by");
+            indexOfBy = Parser.extractIndex(userCommand, "by");
             dateInString = userCommand.substring(indexOfBy + 4);
             strDate = extractDateAndTime(dateInString);
             return strDate;
         case "from":
-            indexOfFrom = Parser.getIndex(userCommand, "from");
-            indexOfTo = Parser.getIndex(userCommand, "to");
+            indexOfFrom = Parser.extractIndex(userCommand, "from");
+            indexOfTo = Parser.extractIndex(userCommand, "to");
             dateInString = userCommand.substring(indexOfFrom+6,indexOfTo-1);
             strDate = extractDateAndTime(dateInString);
             return strDate;
         case "to":
-            indexOfTo = Parser.getIndex(userCommand, "to");
+            indexOfTo = Parser.extractIndex(userCommand, "to");
             dateInString = userCommand.substring(indexOfTo+4);
             strDate = extractDateAndTime(dateInString);
             return strDate;
@@ -77,6 +78,14 @@ public class Parser {
         return "";
     }
 
+    /**
+     * This method is used to format the date
+     * and time in the user command string
+     *
+     * @param dateAndTime String of the date and time
+     * @return String
+     * @throws ParseException ParseException has occurred
+     */
     public static String extractDateAndTime(String dateAndTime) throws ParseException {
         SimpleDateFormat formatter = new SimpleDateFormat("dd-M-yyyy hh:mm a");
         Date date = formatter.parse(dateAndTime);
