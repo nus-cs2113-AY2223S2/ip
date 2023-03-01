@@ -15,9 +15,9 @@ through those tasks quickly.
 
 > Java 11 is recommended to run `Duke`
 
-1. Download the latest duke.jar from [here](https://github.com/kristianachwan/ip/releases)
+1. Download the latest ip.jar from [here](https://github.com/kristianachwan/ip/releases)
 2. Go to the directory where you downloaded
-3. Run `java -jar duke.jar`
+3. Run `java -jar ip.jar`
 
 ## Add ToDo
 
