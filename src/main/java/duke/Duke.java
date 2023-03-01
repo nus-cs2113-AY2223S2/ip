@@ -13,7 +13,7 @@ import java.util.Scanner;
  */
 public class Duke {
     public static void main(String[] args) {
-        Storage dataAccess = new Storage("data/duke.txt");
+        Storage dataAccess = new Storage("duke.txt");
         Scanner scanner = new Scanner(System.in);
         TaskList taskList = new TaskList();
         Ui ui = new Ui(taskList);
