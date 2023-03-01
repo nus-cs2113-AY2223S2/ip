@@ -14,6 +14,9 @@ public class TaskList {
     public void incrementTaskNum() {
         taskNum++;
     }
+    public void decrementTaskNum() {
+        taskNum--;
+    }
     public int getTaskNum() {
         return taskNum;
     }

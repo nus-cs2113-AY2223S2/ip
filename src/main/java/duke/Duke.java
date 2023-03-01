@@ -103,10 +103,9 @@ public class Duke {
      */
     private static void listTasks() {
         ui.printListMessage();
-        int count = 0;
+        int count = 1;
         for (Task i : taskList.getStoredTasks()) {
-            System.out.println((count + 1) + ". " + i.getTypeIcon() +
-                    i.getStatusIcon() + " " + i.getDescription());
+            printTaskBasedOnType(count, i);
             count++;
         }
     }
@@ -127,6 +126,7 @@ public class Duke {
         } catch (IOException e) {
             System.out.println("Oops! Something broke: " + e);
         }
+        taskList.decrementTaskNum();
     }
     /**
      * un-marks task in taskList.
@@ -247,17 +247,22 @@ public class Duke {
         System.out.println("Here are the matching tasks in your list: ");
         for (Task i : taskList.getStoredTasks()) {
             if (i.getDescription().contains(keyword)) {
-                if (i instanceof Deadline) {
-                    System.out.println(count + "." + i.getTypeIcon() + i.getStatusIcon() + i.getDescription() + "/by: " + i.getInfo());
-                } else if (i instanceof Event) {
-                    System.out.println(count + "." + i.getTypeIcon() + i.getStatusIcon() + i.getDescription() + "/start, end: " + i.getInfo());
-                } else {
-                    System.out.println(count + "." + i.getTypeIcon() + i.getStatusIcon() + i.getDescription() + i.getInfo());
-                }
+                printTaskBasedOnType(count, i);
                 count++;
             }
         }
     }
+
+    private static void printTaskBasedOnType(int count, Task i) {
+        if (i instanceof Deadline) {
+            System.out.println(count + "." + i.getTypeIcon() + i.getStatusIcon() + i.getDescription() + "/by: " + i.getInfo());
+        } else if (i instanceof Event) {
+            System.out.println(count + "." + i.getTypeIcon() + i.getStatusIcon() + i.getDescription() + "/start, end: " + i.getInfo());
+        } else {
+            System.out.println(count + "." + i.getTypeIcon() + i.getStatusIcon() + i.getDescription() + i.getInfo());
+        }
+    }
+
     private static void displayTasksNum() {
         ui.printTaskNum(taskList.getTaskNum());
     }
