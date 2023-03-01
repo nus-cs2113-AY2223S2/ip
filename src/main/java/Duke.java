@@ -11,7 +11,7 @@ public class Duke {
         System.out.println("How can I help you today?\n____________________________________________________________");
 
         // store in array
-        String[] todos = new String[100];
+        Task[] todos = new Task[100];
         // num of items in list
         int num;
         num = 0;
@@ -28,40 +28,38 @@ public class Duke {
 
                 // store in list
                 for (int i = 1; num >= i; i += 1) {
-                    System.out.println(i + ". " + todos[i - 1]);
+                    System.out.println(i + "." + "[" + todos[i-1].getStatusIcon() + "] " + todos[i - 1].description);
                 }
 
                 System.out.println("____________________________________________________________");
-                // read next command
-                //cmd = in.nextLine();
             } else {
                 String list[] = cmd.split(" ",2);
 
                 if (list[0].equals("unmark")) {
                     int pt;
                     pt = Integer.parseInt(list[1]);
-                    String command[] = todos[pt-1].split("] ");
-                    todos[pt-1] = "[ ] " + command[1];
+                    Task command = todos[pt-1];
+                    command.unmarkTask();
                     System.out.println("____________________________________________________________");
                     System.out.println("This task is marked as undone:");
-                    System.out.println(todos[pt-1]);
+                    System.out.println("[" + command.getStatusIcon() + "] " + command.description);
                     System.out.println("____________________________________________________________");
                 } else if (list[0].equals("mark")) {
                     int pt;
                     pt = Integer.parseInt(list[1]);
-                    String command[] = todos[pt-1].split("] ");
-                    todos[pt-1] = "[X] " + command[1];
+                    Task command = todos[pt-1];
+                    command.markTask();
                     System.out.println("____________________________________________________________");
                     System.out.println("This task is marked as done:");
-                    System.out.println(todos[pt-1]);
+                    System.out.println("[" + command.getStatusIcon() + "] " + command.description);
                     System.out.println("____________________________________________________________");
                 } else {
-                    System.out.println("____________________________________________________________");
-                    System.out.println("added: " + cmd);
-                    System.out.println("____________________________________________________________");
-
-                    todos[num] = "[ ] " + cmd;
+                    Task command = new Task(cmd);
+                    todos[num] = command;
                     num += 1;
+                    System.out.println("____________________________________________________________");
+                    System.out.println("added: " + command.description);
+                    System.out.println("____________________________________________________________");
                 }
             }
             // read next command
