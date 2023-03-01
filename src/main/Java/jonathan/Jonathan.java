@@ -14,7 +14,7 @@ public class Jonathan {
         try {
             tasks = new TaskList(storage.load());
         } catch (JonathanException e) {
-            ui.showLoadingError();
+            ui.showError(e.getMessage());
             tasks = new TaskList();
         }
     }
@@ -29,6 +29,8 @@ public class Jonathan {
                 Command c = Parser.parse(fullCommand);
                 c.execute(tasks, ui, storage);
                 isExit = c.isExit();
+            } catch(JonathanException e) {
+                ui.showError(e.getMessage());
             } finally {
                 ui.showLine();
             }

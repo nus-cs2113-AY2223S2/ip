@@ -29,6 +29,30 @@ public class Task {
         return (isDone ? "1" : "0");
     }
 
+    public String nthNumber(int number) {
+        if (number > 0) {
+            int lastDigit = number % 10;
+            int secondLastDigit = (number / 10) % 10;
+
+            if (secondLastDigit == 1) {
+                return "th";
+            } else {
+                switch (lastDigit) {
+                    case 1:
+                        return "st";
+                    case 2:
+                        return "nd";
+                    case 3:
+                        return "rd";
+                    default:
+                        return "th";
+                }
+            }
+        } else {
+            return "";
+        }
+    }
+
     public String stringRepresentation() {
         return "[" + getStatusIcon() + "] " + getDescription();
     }

@@ -1,21 +1,44 @@
 package task;
 
-public class Event extends Task {
-    private final String start;
-    private final String end;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
-    public Event(String description, String start, String end) {
+public class Event extends Task {
+    private final LocalDateTime start;
+    private final LocalDateTime end;
+
+    public Event(String description, LocalDateTime start, LocalDateTime end) {
         super(description);
         this.start = start;
         this.end = end;
     }
 
-    public String getStart() {
+    public LocalDateTime getRawStart() {
         return start;
     }
 
-    public String getEnd() {
+    public LocalDateTime getRawEnd() {
         return end;
+    }
+
+    public String getStart() {
+        String literal = nthNumber(Integer.parseInt(start.format(DateTimeFormatter.ofPattern("d"))));
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(String.format("d 'of' MMMM yyyy', 'h:ma"));
+        String formatted = start.format(formatter);
+        String date = formatted.split(" ")[0];
+        String rest = formatted.substring(formatted.indexOf(" "));
+        String newFormatted = date + literal + rest;
+        return newFormatted;
+    }
+
+    public String getEnd() {
+        String literal = nthNumber(Integer.parseInt(end.format(DateTimeFormatter.ofPattern("d"))));
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(String.format("d 'of' MMMM yyyy', 'h:ma"));
+        String formatted = end.format(formatter);
+        String date = formatted.split(" ")[0];
+        String rest = formatted.substring(formatted.indexOf(" "));
+        String newFormatted = date + literal + rest;
+        return newFormatted;
     }
 
     @Override

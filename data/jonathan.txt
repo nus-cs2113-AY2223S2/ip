@@ -1,3 +1,2 @@
-E | 1 | project meeting | Mon 2pm | 4pm
-D | 0 | return book | Sunday
-T | 0 | borrow book
+T | 1 | borrow book
+D | 0 | return book | 23/01/2022 1530

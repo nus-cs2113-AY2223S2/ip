@@ -5,11 +5,14 @@ import task.Deadline;
 import task.Event;
 import task.Todo;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Objects;
 
 public class Parser {
-    public static Command parse(String fullCommand) {
-        Command command;
+    public static Command parse(String fullCommand) throws JonathanException {
+        Command command = new ByeCommand();
 
         try {
             if (Objects.equals(fullCommand, "bye")) {
@@ -39,14 +42,19 @@ public class Parser {
 
             } else if (fullCommand.split(" ")[0].equals("deadline")) {
                 String description = fullCommand.substring(fullCommand.indexOf(" ") + 1, fullCommand.indexOf(" /by"));
-                String by = fullCommand.substring(fullCommand.indexOf("/by") + 4);
+                String byString = fullCommand.substring(fullCommand.indexOf("/by") + 4);
+                LocalDateTime by = getDateAndTimeFormat(byString);
+                System.out.println(by);
                 Deadline deadline = new Deadline(description, by);
                 command = new DeadlineCommand(deadline);
 
+
             } else if (fullCommand.split(" ")[0].equals("event")) {
                 String description = fullCommand.substring(fullCommand.indexOf(" ") + 1, fullCommand.indexOf(" /from"));
-                String start = fullCommand.substring(fullCommand.indexOf("/from") + 6, fullCommand.indexOf(" /to"));
-                String end = fullCommand.substring(fullCommand.indexOf("/to") + 4);
+                String startString = fullCommand.substring(fullCommand.indexOf("/from") + 6, fullCommand.indexOf(" /to"));
+                String endString = fullCommand.substring(fullCommand.indexOf("/to") + 4);
+                LocalDateTime start = getDateAndTimeFormat(startString);
+                LocalDateTime end = getDateAndTimeFormat(endString);
                 Event event = new Event(description, start, end);
                 command = new EventCommand(event);
 
@@ -55,19 +63,24 @@ public class Parser {
                 command = new DeleteCommand(taskNum);
 
             } else {
-                throw new JonathanException();
+                throw new JonathanException("Wrong input, please type it correctly!");
             }
-
-        } catch (ArrayIndexOutOfBoundsException e) {
-            command = new TaskNotFoundCommand();
 
         } catch (StringIndexOutOfBoundsException e) {
             command = new WrongFormatCommand();
 
-        } catch (JonathanException e) {
-            command = new WrongInputCommand();
         }
 
         return command;
+    }
+
+    private static LocalDateTime getDateAndTimeFormat(String substring) throws JonathanException {
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
+            LocalDateTime dateTime = LocalDateTime.parse(substring, formatter);
+            return dateTime;
+        } catch (DateTimeParseException e) {
+            throw new JonathanException("Please input the date and time in the correct format!");
+        }
     }
 }
