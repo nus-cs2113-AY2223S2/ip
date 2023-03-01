@@ -13,11 +13,21 @@ public class Parser {
         input = new Scanner(System.in);
     }
 
+    /**
+     * Retrieves the next line of user input
+     *
+     * @return Input from user
+     */
     public String getInput() {
         String line = input.nextLine();
         return line;
     }
 
+    /**
+     * @param line original line that the user input
+     * @return String array of each word that is separated by the space char
+     * @throws EmptyCommandException When the command is empty (e.g. mark without index)
+     */
     public String[] splitCommandsIntoWords(String line) throws EmptyCommandException {
         String[] words = line.split(" ", 2);
         checkIfCommandEmpty(words);

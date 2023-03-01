@@ -14,14 +14,27 @@ public class TaskList {
         tasks = new ArrayList<>();
     }
 
+    /**
+     * Adds the new Todo task to the task list
+     *
+     * @param td The Todo task to add
+     */
     public void addTodo(Todo td) {
         tasks.add(td);
     }
-
+    /**
+     * Adds the new Deadline task to the task list
+     *
+     * @param d The Deadline task to add
+     */
     public void addDeadline(Deadline d) {
         tasks.add(d);
     }
-
+    /**
+     * Adds the new Event task to the task list
+     *
+     * @param e The Event task to add
+     */
     public void addEvent(Event e) {
         tasks.add(e);
     }

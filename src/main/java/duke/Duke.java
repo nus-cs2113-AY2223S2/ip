@@ -40,6 +40,10 @@ public class Duke {
         taskList = new TaskList();
     }
 
+    /**
+     * Run Duke by displaying welcome message, loading any previous tasks, starts to read input and finally
+     * prints ending message
+     */
     private void run() {
         ui.showWelcomeMessage();
         taskList = storage.load(OUTPUT_FILE);
@@ -75,6 +79,14 @@ public class Duke {
     }
 
 
+    /**
+     * Process the input of the user and execute the relevant command
+     *
+     * @param line Original string that user typed in
+     * @throws UnknownCommandException when the command is not in the list
+     * @throws IOException when there is input/output error
+     * @throws EmptyCommandException when a command is empty (e.g. mark without index)
+     */
     private void processInput(String line) throws UnknownCommandException, IOException, EmptyCommandException {
         String[] words = parser.splitCommandsIntoWords(line);
         String command = words[0]; // words[0] is the command, words[n] is the next few words
