@@ -26,14 +26,14 @@ public class TaskList {
         System.out.println(LINE);
         list.get(index).markDone();
         System.out.println("Awesome! I've mark this task as done:");
-        System.out.println("[" + list.get(index).getStatusIcon() + "] " + list.get(index).description);
+        System.out.println("[" + list.get(index).getStatusIcon() + "] " + list.get(index).description.split(" ", 2)[1]);
     }
 
     public static void unmarkTask(int index) {
         System.out.println(LINE);
         list.get(index).markUndone();
         System.out.println("What!?!? OK, I've marked this task as not done yet:");
-        System.out.println("[" + list.get(index).getStatusIcon() + "] " + list.get(index).description);
+        System.out.println("[" + list.get(index).getStatusIcon() + "] " + list.get(index).description.split(" ", 2)[1]);
     }
 
     public static void addTodo(String input) throws DukeException {
@@ -129,6 +129,32 @@ public class TaskList {
             }
             System.out.println(LINE);
         }
+    }
+
+    private static void printFoundList(ArrayList<Task> foundTasks) {
+        System.out.println(LINE);
+        int numTask = foundTasks.size();
+        if (numTask == 0) {
+            System.out.println("No task found");
+            System.out.println(LINE);
+        } else {
+            System.out.println("Here are the matching tasks in your save list:");
+            for (int i = 0; i < foundTasks.size(); i++) {
+                System.out.println((i+1) + "." + foundTasks.get(i).toString());
+            }
+            System.out.println(LINE);
+        }
+    }
+
+    public static void findTask(String input) {
+        ArrayList<Task> foundTasks = new ArrayList<>();
+        for(Task t : list) {
+            String task = t.description;
+            if (task.contains(input)) {
+                foundTasks.add(t);
+            }
+        }
+        printFoundList(foundTasks);
     }
 
     public static void printError(DukeException e) {
