@@ -83,6 +83,17 @@ public class TextUi {
                 " Hope I'm not amnesiac, but I don't remember any tasks?");
     }
 
+    /**
+     * Prints a list of Tasks remembered by Rica in Rica's unique output format
+     *   with caller-specified messages for when no Tasks are being tracked yet,
+     *   and when Rica is currently tracking a list of Tasks.
+     *
+     * @param tasks List of Tasks to print on the user's screen
+     * @param messageToUser Message shown to the user when list of Tasks contains
+     *   one or more Tasks
+     * @param noTasksMessageToUser Message shown to the user when list of Tasks
+     *   is empty
+     */
     public void printTasks(List<Task> tasks, String messageToUser, String noTasksMessageToUser) {
         if (tasks.isEmpty()) {
             this.printlnWithIndent(noTasksMessageToUser);
