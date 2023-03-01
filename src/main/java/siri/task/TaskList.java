@@ -94,7 +94,7 @@ public class TaskList {
     public void printDeletedTask(int taskNumber) {
         String deleteString = taskList.get(taskNumber - 1).toString();
         System.out.println("Noted! I've deleted this task:");
-        System.out.println(deleteString);
+        System.out.println("  " + deleteString);
         System.out.println("Now you have " + (indexOfTask - 1) + " tasks in the list.");
     }
 
@@ -108,11 +108,11 @@ public class TaskList {
         if (marker.equals("mark")) {
             taskList.get(taskNumber - 1).setDone(true);
             System.out.println("Nice! I've marked this task as done: ");
-            System.out.println(taskList.get(taskNumber - 1).toString());
+            System.out.println("  " + taskList.get(taskNumber - 1).toString());
         } else {
             taskList.get(taskNumber - 1).setDone(false);
             System.out.println("Ok! I've marked this task as not done yet: ");
-            System.out.println(taskList.get(taskNumber - 1).toString());
+            System.out.println("  " + taskList.get(taskNumber - 1).toString());
         }
 
         //Null Pointer Exception (taskNumber > indexOfTask)
