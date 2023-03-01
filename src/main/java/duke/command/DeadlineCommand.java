@@ -14,7 +14,7 @@ public class DeadlineCommand extends Command {
     public static final String COMMAND_WORD = "deadline";
     public static final String COMMAND_USAGE = COMMAND_WORD
             + ": add a deadline task with by time "
-            + "Example: deadline eat lunch /by 2023-01-01";
+            + "Example: deadline prepare exam /by 31/07/2023";
 
     private final String content;
     private final LocalDate byTime;

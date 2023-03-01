@@ -48,7 +48,7 @@ public class Main {
 
             try {
                 int lines = storageFile.loadCsv(taskList);
-                ui.printMessage(String.format("Load %d task(es) from file '%s'", lines, storageFile.getPath()));
+                ui.printMessage(String.format("Load %d task(s) from file '%s'", lines, storageFile.getPath()));
             } catch (FileNotFoundException e) {
                 storageFile.initCsv();
                 ui.printMessage(String.format("Create new data file '%s'", storageFile.getPath()));

@@ -125,7 +125,7 @@ public final class CommandParser {
             LocalDate byDate = LocalDate.parse(by, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
             return new DeadlineCommand(content, byDate);
         } catch (DateTimeParseException e) {
-            throw new IllegalArgumentException("Invalid date time. Format: dd/mm/yyyy");
+            throw new IllegalArgumentException(OOPS + "Invalid date time. Format: dd/mm/yyyy");
         }
     }
 
@@ -178,7 +178,7 @@ public final class CommandParser {
             LocalDate toDate = LocalDate.parse(to, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
             return new EventCommand(content, fromDate, toDate);
         } catch (DateTimeParseException e) {
-            throw new IllegalArgumentException("Invalid date time. Format: dd/mm/yyyy");
+            throw new IllegalArgumentException(OOPS + "Invalid date time. Format: dd/mm/yyyy");
         }
 
     }
