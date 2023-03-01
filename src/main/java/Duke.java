@@ -1,3 +1,7 @@
+import java.io.File;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -5,9 +9,18 @@ import java.util.Scanner;
 public class Duke {
     public static void main(String[] args) {
         Scanner input = dukeStart();
-        dukeAddList(input);
+        ArrayList<Task> list = dukeReadFromFile();
+        dukeAddList(input, list);
     }
+    public static ArrayList<Task> dukeReadFromFile() {
+        //Frome https://www.sghill.net/2014/how-do-i-make-cross-platform-file-paths-in-java/
+        String home = System.getProperty("user.dir");
+//        System.out.println(home);
+        java.nio.file.Path path = java.nio.file.Paths.get(home, "src", "main", "savefile");
+//        System.out.println(path);
 
+        return new ArrayList<>();
+    }
     // Printing the startup code
     public static Scanner dukeStart() {
         String logo = " ____        _        \n"
@@ -22,8 +35,7 @@ public class Duke {
     }
 
     // The bulk of the logic (should change name soon)
-    public static void dukeAddList(Scanner inputScanner) {
-        ArrayList<Task> list = new ArrayList<>();
+    public static void dukeAddList(Scanner inputScanner, ArrayList<Task> list) {
         while (true) {
             String nextLine = inputScanner.nextLine();
             if (nextLine.equals("list")) {
@@ -41,12 +53,42 @@ public class Duke {
                 dukeCommandEvent(nextLine, list);
             } else if (nextLine.equals("bye")) {
                 System.out.println("Bye. Hope to see you again soon!");
+                dukeSaveList(list);
                 return;
             } else {
                 continue;
             }
         }
     }
+    public static void dukeSaveList(ArrayList<Task> list) {
+        String home = System.getProperty("user.dir");
+        java.nio.file.Path path = java.nio.file.Paths.get(home, "src", "main", "savefile");
+        boolean directoryExists = java.nio.file.Files.exists(path);
+        if (!directoryExists) {
+        // https://docs.oracle.com/javase/7/docs/api/java/nio/file/Files.html
+            try {
+               Files.createFile(path);
+            } catch (IOException e) {
+                //complete
+            }
+        }
+        for (Task task: list) {
+            String taskType = String.valueOf(task.getClass());
+            switch (taskType) {
+                case ("Task"):
+                    break;
+                case ("Deadline"):
+                    break;
+                case ("Event"):
+                    break;
+                default:
+                    break;
+            }
+
+            Files.write(path, )
+        }
+    }
+
 
     public static void dukeCommandDelete(String nextLine, List<Task> list) {
         String[] inputArray = nextLine.split(" ", 0);
