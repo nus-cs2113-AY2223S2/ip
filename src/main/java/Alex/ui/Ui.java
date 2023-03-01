@@ -2,10 +2,15 @@ package Alex.ui;
 
 public class Ui {
 
-    /** A platform independent line separator. */
+
+    /**
+     * Commonly used printing outputs
+     */
     private static final String LS = System.lineSeparator();
     private static final String DIVIDER = "===================================================";
-
+    /**
+     * Print welcome message for user
+     */
     public static void showWelcomeMessage() {
         printLineDivider();
         String greet = "Hello! I'm Alex\nWhat can I do for you today?";
@@ -18,7 +23,9 @@ public class Ui {
         System.out.println(exit);
         printLineDivider();
     }
-
+    /**
+     * Print output for user encased in line dividers
+     */
     public static void showOutput (String output) {
         printLineDivider();
         System.out.println(output);

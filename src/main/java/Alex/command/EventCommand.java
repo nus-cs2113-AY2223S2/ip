@@ -11,6 +11,14 @@ public class EventCommand extends Command{
     private String from;
     private String to;
 
+
+    /**
+     * Constructor when a EventCommand is initialized
+     *
+     * @param description description of activity
+     * @param from start time of event
+     * @param to end time of event
+     */
     public EventCommand(String description, String from, String to) {
         this.description = description;
         this.from = from;
@@ -19,7 +27,12 @@ public class EventCommand extends Command{
 
 
 
-
+    /**
+     * Executes the command and returns the result.
+     *
+     * @param taskList the taskList which contains all different tasks
+     * @return CommandResult that will show which task user added and total number of tasks
+     */
     @Override
     public CommandResult execute(TaskList taskList) {
         Task event = new Event(description, COMMAND_WORD.substring(0,1).toUpperCase(), from, to);

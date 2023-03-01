@@ -11,6 +11,12 @@ public class TodoCommand extends Command{
     public TodoCommand(String description) {
         this.description = description;
     }
+    /**
+     * Executes the command and returns the result.
+     *
+     * @param taskList the taskList that contains all tasks of the user
+     * @return CommandResult that will show which task user added and total number of tasks
+     */
     @Override
     public CommandResult execute(TaskList taskList) {
         Task t = new Todo(description, COMMAND_WORD.substring(0,1).toUpperCase());

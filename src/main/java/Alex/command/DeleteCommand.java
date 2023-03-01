@@ -8,10 +8,21 @@ public class DeleteCommand extends Command {
 
     private int position;
 
+    /**
+     * Constructor when a DeleteCommand is initialized
+
+     * @param position index position of command to be deleted in taskList
+     */
     public DeleteCommand(int position) {
         this.position = position;
     }
 
+    /**
+     * Executes the command and returns the result.
+     *
+     * @param taskList the taskList that contains all tasks of the user
+     * @return CommandResult that will show which task user removed and number of tasks left
+     */
     @Override
     public CommandResult execute(TaskList taskList) {
         Task t = taskList.getAllTasks().get(position - 1);

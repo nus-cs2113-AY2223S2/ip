@@ -10,11 +10,22 @@ public class DeadlineCommand extends Command {
     private String description;
     private String by;
 
+    /**
+     * Constructor when a DeadlineCommand is initialized
+     *
+     * @param description description of activity
+     * @param by to be completed time
+     */
     public DeadlineCommand(String description, String by) {
         this.description = description;
         this.by = by;
     }
-
+    /**
+     * Executes the command and returns the result.
+     *
+     * @param taskList that taskList contains all tasks of the user
+     * @return CommandResult that will show which task he added and the number of total task
+     */
     @Override
     public CommandResult execute(TaskList taskList) {
         Task deadline = new Deadline(description, COMMAND_WORD.substring(0, 1).toUpperCase(), by);
