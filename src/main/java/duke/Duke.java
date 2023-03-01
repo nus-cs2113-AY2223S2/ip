@@ -17,7 +17,7 @@ public class Duke {
             taskList = storage.loadTaskList();
             ui.printValidSave();
         } catch (IOException ex) {
-            ui.printNoValidSaveIOException();
+            ui.printNoValidSave();
             taskList = new TaskList();
 
         } catch (ClassNotFoundException ex) {
