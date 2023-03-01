@@ -71,7 +71,7 @@ public class TaskList implements java.io.Serializable {
     public void addEvent(String taskDetails) throws InvalidCommandException {
         int fromIndex = taskDetails.toLowerCase().indexOf(" /from ");
         int toIndex = taskDetails.toLowerCase().indexOf(" /to ");
-        if (fromIndex == -1 || toIndex == -1) {
+        if (fromIndex == -1 || toIndex == -1 || fromIndex > toIndex) {
             throw new InvalidCommandException();
         }
         String taskName = taskDetails.substring(0, fromIndex);
