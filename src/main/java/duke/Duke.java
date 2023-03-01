@@ -6,11 +6,13 @@ import duke.command.IOFile;
 import duke.command.ModifyTask;
 import duke.exception.BlankDescException;
 import duke.exception.DukeException;
+import duke.exception.TimeParseException;
 import duke.task.Task;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -19,6 +21,7 @@ public class Duke {
     public static int userTextCount = 0;
 
     public static void main(String[] args) {
+
         Scanner scanner = new Scanner(System.in);
 
         Display.printWelcome();
@@ -57,6 +60,8 @@ public class Duke {
                     CreateTask.createTodo(userCommand, storedUserTasks);
                 } catch (BlankDescException e) {
                     BlankDescException.errorMessage("todo");
+                } catch (ParseException e) {
+                    TimeParseException.errorMessage();
                 } catch (DukeException e) {
                     DukeException.errorMessage();
                 }
@@ -66,6 +71,8 @@ public class Duke {
                     CreateTask.createDeadline(userCommand, storedUserTasks);
                 } catch (BlankDescException e) {
                     BlankDescException.errorMessage("deadline");
+                } catch (ParseException e) {
+                    TimeParseException.errorMessage();
                 } catch (DukeException e) {
                     DukeException.errorMessage();
                 }
@@ -75,6 +82,8 @@ public class Duke {
                     CreateTask.createEvent(userCommand, storedUserTasks);
                 } catch (BlankDescException e) {
                     BlankDescException.errorMessage("event");
+                } catch (ParseException e) {
+                    TimeParseException.errorMessage();
                 } catch (DukeException e) {
                     DukeException.errorMessage();
                 }
