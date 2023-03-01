@@ -4,19 +4,32 @@ import duke.task.Event;
 import duke.task.Task;
 import duke.task.Todos;
 import duke.utils.DukeException;
-import duke.data.DataManager;
-import java.io.FileWriter;
+import duke.utils.Parser;
+import duke.utils.TaskList;
+import duke.utils.Ui;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import static duke.utils.Ui.*;
+
 public class Duke {
+    public TaskList taskList;
+    public Ui ui;
+    public Parser parser;
+    public Duke () {
+        this.taskList = new TaskList();
+        this.ui = new Ui();
+        this.parser = new Parser(this.taskList, this.ui);
+    }
     public static Scanner input = new Scanner(System.in);
-    public static ArrayList<Task> list = new ArrayList<>();
-    public static String[] words = new String[10];
-    public static String[] phrases = new String[10];
-    public static int currentTaskNum = 0;
+    /*    public static ArrayList<Task> list = new ArrayList<>();*/
+    //public static String[] words = new String[10];
+    /*    public static String[] phrases = new String[10];*/
+    //public static int currentTaskNum = 0;
     public static String FILE_LOCATION = "./data/duke.txt";
+    /*
     public static String LINE = "────────────────────────────────────────────────────────────────────────\n";
     public static String GENERAL_ERROR_MESSAGE = LINE + "Invalid input. Please try again! (=ಠᆽಠ=)\n" + LINE;
     public static String INVALID_NUM_ERROR_MESSAGE = LINE + "The task number is out of bound. Please try again! (=ಠᆽಠ=)\n" + LINE;
@@ -51,30 +64,14 @@ public class Duke {
             LINE;
     public static String FAREWELL_MESSAGE =
             " Bye. Hope to see you again soon meow!\n" + LINE;
-
+*/
     public boolean shouldExit = false;
 
-    public void setShouldExit () {
+    public void setShouldExit() {
         this.shouldExit = true;
     }
 
-    public static void printList(int currentTaskNum) {
-        int currentPrintedTask = 0;
-        int placeHolder = currentTaskNum;
-        System.out.println(LINE);
-        if (placeHolder == 0) {
-            System.out.println("No Task! 〲⚆ﻌ⚆〉");
-        } else {
-            while (placeHolder > 0) {
-                System.out.println(currentPrintedTask + 1 + ". " + list.get(currentPrintedTask).toString());
-                currentPrintedTask++;
-                placeHolder--;
-            }
-        }
-        System.out.println(LINE);
-    }
-
-    public void printErrorMessage(String errorMessage) {
+/*    public void printErrorMessage(String errorMessage) {
         System.out.println(errorMessage);
     }
 
@@ -84,14 +81,15 @@ public class Duke {
         } else {
             System.out.println("Now you have " + currentTaskNum + " tasks in the list.");
         }
-    }
+    }*/
 
-    public int getMarkPosition(String userInput) {
-        words = userInput.split(" ");
-        return Integer.parseInt(words[1]) - 1;
-    }
+/*    public int getMarkPosition(String content) {
+        //words = content.split(" ");
+        return Integer.parseInt(content) - 1;
+    }*/
     
-    public void toggleMark(int posOfMark, boolean shouldMarkAsDone) throws DukeException {
+/*    public void toggleMark(String content, boolean shouldMarkAsDone) throws DukeException {
+        int posOfMark = Integer.parseInt(content) - 1;
         if (!(posOfMark >= 0 && posOfMark <= currentTaskNum)) {
             printErrorMessage(INVALID_NUM_ERROR_MESSAGE);
             throw new DukeException();
@@ -102,32 +100,59 @@ public class Duke {
                 list.get(posOfMark).markAsUndone();
             }
         }
-    }
-
+    }*/
+/*
     private void processAddTaskRequest() {
         printAddTaskMessage();
         currentTaskNum++;
         printTotalTasks(currentTaskNum);
         System.out.println(LINE);
-    }
-
-    private static void printAddTaskMessage() {
-        System.out.println(LINE + "Got it. I've added this task:\n"
-                + "  "
-                + list.get(currentTaskNum).toString()
-                + System.lineSeparator());
-    }
-
-    private static void printDeleteTaskMessage(int taskNum) {
-        System.out.println(LINE + "Got it. I've deleted this task:\n"
-                + "  "
-                + list.get(taskNum).toString()
-                + System.lineSeparator());
-    }
+    }*/
 
 
-    public void handleRequest(String userInput) throws DukeException {
-        if (userInput.startsWith("mark")) {
+    /*public void handleRequest(String userInput) throws DukeException {
+        TaskList taskList = new TaskList();
+        Ui ui = new Ui();
+        String[] splitInput = userInput.split("", 2);
+        String command = splitInput[0];
+        String content = splitInput[1];
+        switch (command) {
+        case "mark":
+            taskList.toggleMark(content, true);
+        case "unmark":
+            taskList.toggleMark(content, false);
+        case "list":
+            System.out.println("Here is your list!  ( ⓛ ω ⓛ✧)");
+            TaskList.printList(taskList.currentTaskNum);
+        case "todo":
+*//*            list.add(new Todos(content));*//*
+            taskList.processAddTaskRequest();
+        case "event":
+            phrases = content.split("/");
+            if (phrases.length < 3) {
+                ui.printErrorMessage(EVENT_TIME_ERROR_MESSAGE);
+            } else {
+                list.add(new Event(phrases[0], phrases[1], phrases[2]));
+                taskList.processAddTaskRequest();
+            }
+        case "deadline":
+            phrases = userInput.split("/by ");
+            if (phrases.length < 2) {
+                ui.printErrorMessage(DEADLINE_TIME_ERROR_MESSAGE);
+            } else {
+                list.add(new Deadline(phrases[0], phrases[1]));
+                taskList.processAddTaskRequest();
+            }
+        case "delete":
+            ui.printDeleteTaskMessage(Integer.parseInt(content) - 1);
+            list.remove(Integer.parseInt(content) - 1);
+            taskList.currentTaskNum--;
+        case "find":
+        case "guide":
+        default:
+            ui.printErrorMessage(GENERAL_ERROR_MESSAGE);
+        }*/
+       /* if (userInput.startsWith("mark")) {
             int posOfMark = getMarkPosition(userInput);
             toggleMark(posOfMark, true);
         } else if (userInput.startsWith("unmark")) {
@@ -164,18 +189,20 @@ public class Duke {
                 currentTaskNum--;
         } else {
             printErrorMessage(GENERAL_ERROR_MESSAGE);
-        }
-    }
+        }*/
+
     
     public static void main(String[] args) throws DukeException, IOException {
         Duke obj = new Duke();
+/*        Parser parser = new Parser(obj.taskList, obj.ui);*/
         System.out.println("Hello from\n" + LOGO);
         System.out.println(GREETING);
         while (!obj.shouldExit) {
             String userInput = input.nextLine();
-            obj.handleRequest(userInput);
+            obj.parser.doCommand(userInput);
         }
-        DataManager dataManager= new DataManager(FILE_LOCATION, list);
-        dataManager.writeToFileWithErrorHandler();
+/*        DataManager dataManager= new DataManager(FILE_LOCATION, obj.taskList.list);*/
+/*        dataManager.writeToFileWithErrorHandler();*/
     }
 }
+
