@@ -214,6 +214,9 @@ public class Duke {
         case "T":
             copyTodoToList("T", line.substring(2), tasks);
             break;
+        case "D":
+            copyDeadlineToList("D", line.substring(2), tasks);
+            break;
         default:
             System.out.println("Unknown task type detected...");
             System.out.println("Skipping task...");
@@ -230,13 +233,21 @@ public class Duke {
         int currentIndexInTaskStorage = Task.getNumberOfTasks();
         tasks[currentIndexInTaskStorage] = newToDo;
         // Mark task as done if task status was stored as 1
-        if (messageComponents[0] == "1") {
+        if (messageComponents[0].equals("1")) {
             Task currentTask = tasks[currentIndexInTaskStorage];
             currentTask.markAsDone();
         }
-
-
     }
 
+    private static void copyDeadlineToList(String taskType, String taskInfo, Task[] tasks) {
+        String[] messageComponents = taskInfo.split("/", 3);
+        Deadline newDeadline = new Deadline(messageComponents[1], messageComponents[2]);
+        int currentIndexInTaskStorage = Task.getNumberOfTasks();
+        tasks[currentIndexInTaskStorage] = newDeadline;
+        if (messageComponents[0].equals("1")) {
+            Task currentTask = tasks[currentIndexInTaskStorage];
+            currentTask.markAsDone();
+        }
+    }
 
 }
