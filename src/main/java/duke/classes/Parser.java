@@ -138,6 +138,12 @@ public class Parser {
         return input.substring(input.lastIndexOf("/")+1, input.length());
     }
 
+    /**
+     * Returns the keyword for the find command.
+     *
+     * @param input the input command
+     * @return the keyword for the find command
+     */
     public String getFindKeyWord(String input) {
         return input.substring(5, input.length());
     }
