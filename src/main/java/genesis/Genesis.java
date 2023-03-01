@@ -38,7 +38,6 @@ public class Genesis {
             String command = contents[0];
 
             Boolean isList = command.equals("list");
-            String argument = !isList ? contents[1] : "";
 
             switch (command) {
             case "list":
@@ -47,36 +46,36 @@ public class Genesis {
 
             case "mark":
                 validator.validateIndex(contents);
-                tasks.markTask(argument);
+                tasks.markTask(contents[1]);
                 break;
 
             case "unmark":
                 validator.validateIndex(contents);
-                tasks.unmarkTask(argument);
+                tasks.unmarkTask(contents[1]);
                 break;
 
             case "todo":
                 validator.validateDescription(contents);
-                tasks.addTodo(argument);
+                tasks.addTodo(contents[1]);
                 break;
 
             case "deadline":
                 validator.validateDescription(contents);
-                tasks.addDeadline(argument);
+                tasks.addDeadline(contents[1]);
                 break;
 
             case "event":
                 validator.validateDescription(contents);
-                tasks.addEvent(argument);
+                tasks.addEvent(contents[1]);
                 break;
 
             case "delete":
                 validator.validateIndex(contents);
-                tasks.deleteTask(argument);
+                tasks.deleteTask(contents[1]);
                 break;
             case "find":
                 validator.validateKeyword(contents);
-                tasks.findTask(argument);
+                tasks.findTask(contents[1]);
                 break;
             default:
                 throw new UnknownCommandException();
