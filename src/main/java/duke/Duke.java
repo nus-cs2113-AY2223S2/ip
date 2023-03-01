@@ -1,16 +1,15 @@
 package duke;
 
-import duke.command.CreateTask;
-import duke.command.Display;
-import duke.command.IOFile;
-import duke.command.ModifyTask;
+import duke.command.*;
 import duke.exception.BlankDescException;
 import duke.exception.DukeException;
+import duke.exception.TimeParseException;
 import duke.task.Task;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -58,6 +57,9 @@ public class Duke {
             case "list":
                 Display.listTasks(userTextCount, storedUserTasks);
                 break;
+            case "find":
+                FindTask.searchForKeyword(userCommand.substring(4), storedUserTasks);
+                break;
             case "bye":
                 isExit = true;
                 break;
@@ -75,6 +77,8 @@ public class Duke {
                     CreateTask.createTodo(userCommand, storedUserTasks);
                 } catch (BlankDescException e) {
                     BlankDescException.errorMessage("todo");
+                } catch (ParseException e) {
+                    TimeParseException.errorMessage();
                 } catch (DukeException e) {
                     DukeException.errorMessage();
                 }
@@ -84,6 +88,8 @@ public class Duke {
                     CreateTask.createDeadline(userCommand, storedUserTasks);
                 } catch (BlankDescException e) {
                     BlankDescException.errorMessage("deadline");
+                } catch (ParseException e) {
+                    TimeParseException.errorMessage();
                 } catch (DukeException e) {
                     DukeException.errorMessage();
                 }
@@ -93,6 +99,8 @@ public class Duke {
                     CreateTask.createEvent(userCommand, storedUserTasks);
                 } catch (BlankDescException e) {
                     BlankDescException.errorMessage("event");
+                } catch (ParseException e) {
+                    TimeParseException.errorMessage();
                 } catch (DukeException e) {
                     DukeException.errorMessage();
                 }

@@ -9,6 +9,7 @@ import duke.task.Event;
 import duke.task.Task;
 import duke.task.Todo;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 
 
@@ -17,7 +18,6 @@ import java.util.ArrayList;
  * necessary information from the user command for later use.
  */
 public class CreateTask {
-
     /**
      * This method is used to create a todo task
      *
@@ -25,7 +25,7 @@ public class CreateTask {
      * @param storedUserTasks ArrayList containing listed Tasks
      * @throws DukeException DukeException has occurred
      */
-    public static void createTodo(String userCommand, ArrayList<Task> storedUserTasks) throws DukeException {
+    public static void createTodo(String userCommand, ArrayList<Task> storedUserTasks) throws DukeException, ParseException {
         if (userCommand.length()<=4) {
             throw new BlankDescException();
         }
@@ -36,6 +36,7 @@ public class CreateTask {
         Display.printNumberOfTasks();
     }
 
+
     /**
      * This method is used to create a deadline task
      *
@@ -43,7 +44,7 @@ public class CreateTask {
      * @param storedUserTasks ArrayList containing listed Tasks
      * @throws DukeException DukeException has occurred
      */
-    public static void createDeadline(String userCommand, ArrayList<Task> storedUserTasks) throws DukeException {
+    public static void createDeadline(String userCommand, ArrayList<Task> storedUserTasks) throws DukeException, ParseException {
         if (userCommand.length()<=8) {
             throw new BlankDescException();
         }
@@ -55,6 +56,7 @@ public class CreateTask {
         Display.printNumberOfTasks();
     }
 
+
     /**
      * This method is used to create a event task
      *
@@ -62,7 +64,7 @@ public class CreateTask {
      * @param storedUserTasks ArrayList containing listed Tasks
      * @throws DukeException DukeException has occurred
      */
-    public static void createEvent(String userCommand, ArrayList<Task> storedUserTasks) throws DukeException {
+    public static void createEvent(String userCommand, ArrayList<Task> storedUserTasks) throws DukeException, ParseException {
         if (userCommand.length()<=5) {
             throw new BlankDescException();
         }
