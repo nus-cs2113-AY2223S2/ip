@@ -10,7 +10,16 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Objects;
 
+/**
+ * Model a class to handle fullCommand, and produce in nicer/understandable format.
+ */
 public class Parser {
+    /**
+     * Method to parse the raw command.
+     * @param fullCommand the raw command.
+     * @return the Command class to be executed.
+     * @throws JonathanException for error handling.
+     */
     public static Command parse(String fullCommand) throws JonathanException {
         Command command = new ByeCommand();
 
@@ -81,6 +90,12 @@ public class Parser {
         return command;
     }
 
+    /**
+     * Method to convert the String into LocalDateTime.
+     * @param substring string to be converted.
+     * @return LocalDateTime.
+     * @throws JonathanException when the string is not following the format.
+     */
     private static LocalDateTime getDateAndTimeFormat(String substring) throws JonathanException {
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");

@@ -12,13 +12,25 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Model a class to handle storage for the program.
+ */
 public class Storage {
     private final File file;
 
+    /**
+     * Build constructor for the Storage class.
+     * @param filepath the filepath of the storage.
+     */
     Storage(String filepath) {
         this.file = new File(filepath);
     }
 
+    /**
+     * Method to load the file.
+     * @return the ArrayList of the tasks.
+     * @throws JonathanException when the file can't be found.
+     */
     public ArrayList<Task> load() throws JonathanException {
         ArrayList<Task> tasks = new ArrayList<>();
 
@@ -82,6 +94,10 @@ public class Storage {
         return tasks;
     }
 
+    /**
+     * Method to save the current state of the program into a file.
+     * @param tasks the list of the task.
+     */
     public void save(TaskList tasks) {
         try {
             file.createNewFile();
@@ -118,6 +134,12 @@ public class Storage {
         }
     }
 
+    /**
+     * Method to convert the String into LocalDateTime.
+     * @param substring string to be converted.
+     * @return LocalDateTime.
+     * @throws JonathanException when the string is not following the format.
+     */
     private LocalDateTime getDateAndTimeFormat(String substring) {
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
@@ -129,6 +151,11 @@ public class Storage {
         return null;
     }
 
+    /**
+     * Method to convert LocalDateTime into String
+     * @param dateTime the LocalDateTime.
+     * @return the string representation to be print in the file.
+     */
     private String convertDateTime(LocalDateTime dateTime) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
         return dateTime.format(formatter);
