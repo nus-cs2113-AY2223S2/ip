@@ -13,8 +13,10 @@ public enum ErrorMessage {
     EMPTY_DELETE_PARAMETER("I am sorry, please indicate the task number you want to delete"),
     EMPTY_MARK_OR_UNMARK_PARAMETER("I am sorry, you need to indicate the task number you want to mark or unmark"),
     INVALID_NUMBER("Please enter a valid task number"),
+    MISSING_FIND_PARAMETER("I am sorry, pls enter the parameter you are trying to find"),
     INVALID_DELETE("I am sorry, you are trying to delete a task that does not exist."),
-    EMPTY_LIST("I am sorry you need to have something in your list before I can show you");
+    EMPTY_LIST("I am sorry you need to have something in your list before I can show you"),
+    NO_MATCHING_TASKS("I am sorry there is no matching tasks");
     private final String error;
 
     ErrorMessage(String error) {
