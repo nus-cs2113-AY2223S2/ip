@@ -6,21 +6,23 @@ import java.util.ArrayList;
 import java.io.*;
 import java.util.Scanner;
 
+
+/*
+Things to do:
+
+- copy refactored functions into created classes
+
+- Create proper parser
+
+- Setup text file reading at startup
+    -use Scanner to read in text file
+    -use .nextline to read in each line
+ */
+
+
 public class Duke {
     public static void main(String[] args) throws FileNotFoundException {
-        String logo = " ____        _        \n"
-                + "|  _ \\ _   _| | _____ \n"
-                + "| | | | | | | |/ / _ \\\n"
-                + "| |_| | |_| |   <  __/\n"
-                + "|____/ \\__,_|_|\\_\\___|\n";
-
-        System.out.println("    Hello from\n" + logo);
-        System.out.println("    _________________________________________");
-
-        System.out.println("    Hello! I'm Duke");
-        System.out.println("    What can I do for you?");
-        System.out.println("    _________________________________________");
-        System.out.println("     ");
+        printGreetingMessage();
 
         //Read in input from user
         String inputString;
@@ -51,7 +53,7 @@ public class Duke {
             case "mark":
                 System.out.println("    Please specify task number: ");
                 int taskNumber = getTaskNumber();
-                tasks.get(taskNumber - 1).setDone(true);
+                markAsDone(tasks, taskNumber);
                 printMarkedAcknowledgement(tasks, taskNumber);
                 break;
 
@@ -129,12 +131,32 @@ public class Duke {
         System.out.println("    _________________________________________");
         System.out.println("     ");
 
-        PrintWriter fw = new PrintWriter("C:\\Users\\Manoj\\OneDrive - National University of Singapore\\Documents\\Module Files\\Y2S2\\CS2113\\iP\\src\\main\\java\\duke\\list.txt");
+        PrintWriter fw = new PrintWriter("out\\list.txt");
         for (int i = 0; i < counter; i++) {
             fw.println(tasks.get(i).getClass() + " | " + tasks.get(i).getDescription() + " | " + tasks.get(i).isDone + " | " + tasks.get(i).getBy() + " | " + tasks.get(i).getEnd());
         }
         fw.close();
 
+    }
+
+    private static void markAsDone(ArrayList<Todo> tasks, int taskNumber) {
+        tasks.get(taskNumber - 1).setDone(true);
+    }
+
+    private static void printGreetingMessage() {
+        String logo = " ____        _        \n"
+                + "|  _ \\ _   _| | _____ \n"
+                + "| | | | | | | |/ / _ \\\n"
+                + "| |_| | |_| |   <  __/\n"
+                + "|____/ \\__,_|_|\\_\\___|\n";
+
+        System.out.println("    Hello from\n" + logo);
+        System.out.println("    _________________________________________");
+
+        System.out.println("    Hello! I'm Duke");
+        System.out.println("    What can I do for you?");
+        System.out.println("    _________________________________________");
+        System.out.println("     ");
     }
 
 
