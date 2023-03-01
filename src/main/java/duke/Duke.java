@@ -5,14 +5,16 @@ import tasks.Event;
 import tasks.Task;
 import tasks.Todo;
 
-
+// IO and task-storage
 import java.util.Scanner;
 import java.util.ArrayList;
 
+// Writing and Saving to File
 import java.io.FileWriter;
 import java.io.File;
 import java.io.IOException;
 
+// Date/Time Formatter
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -20,18 +22,25 @@ import java.util.Locale;
 
 public class Duke {
     /* --- GLOBAL VARIABLES --- */
+    // Print on start
     private static final String LOGO = " ____        _        \n|  _ / _   _| | _____ \n| | | | | | | |/ / _ /\n| |_| | |_| |   <  __/\n|____/ /__,_|_|/_/___|\n";
 
     // Horizontal Rule to act as a divider
-    private static final String HORIZONTAL_RULE = "___________________________________________________________________";
+    private static final String HORIZONTAL_RULE = "________________________________________________________________________________";
 
+    // Sets the date & time
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm", Locale.US);
 
+
+
+    /* --- FUNCTIONS --- */
+
+    /**
+     * Prints horizontal rule
+     */
     public static void printHorizontalRule() {
         System.out.println(HORIZONTAL_RULE);
     }
-
-    /* --- FUNCTIONS --- */
 
     /**
      * Either creates a save file if one does not exist,
@@ -116,7 +125,6 @@ public class Duke {
                 String[] splitTaskDescription = task.split("] ", 3);
                 saveFile.write(tasks.get(i).getType() + " / " + tasks.get(i).getStatus() + " / " + splitTaskDescription[2] + '\n');
             }
-
             saveFile.close();
         } catch (IOException e) {
             System.out.println("An error has occurred. Please try again.");
@@ -186,6 +194,7 @@ public class Duke {
         // Setting up input reading
         final Scanner INPUT = new Scanner(System.in);
 
+        // Start up sequence
         System.out.println(LOGO);
         printHorizontalRule();
         startFileProcessing(tasks);
@@ -208,6 +217,7 @@ public class Duke {
 
             switch (firstWord) {
                 case ("bye"): {
+                    // Shut down process
                     printHorizontalRule();
                     endFileProcessing(tasks);
                     System.out.println("Shutting Down! Hope to see you again soon!");
@@ -216,9 +226,12 @@ public class Duke {
                 }
                 case ("find"): {
                     try {
+                        // Gets the description
                         description = removeCommandWord(userInput);
+
                         int counter = 0;
 
+                        // If the description of the task matches the description, the task gets printed
                         printHorizontalRule();
                         System.out.println("The index given here is not reflective of the task's actual index.\nHere are all tasks which contain " + description + " in your list:");
                         for (int i = 0; i < tasks.size(); i++) {
@@ -228,6 +241,7 @@ public class Duke {
                             }
                         }
                         printHorizontalRule();
+
                     } catch (IndexOutOfBoundsException e) {
                         printHorizontalRule();
                         System.out.println("Wrong usage of deadline. Format is: find DESCRIPTION");
@@ -247,7 +261,6 @@ public class Duke {
                     printHorizontalRule();
                     break;
                 }
-
                 case ("mark"): {
                     try {
                         // Sets specified task to complete
@@ -258,9 +271,16 @@ public class Duke {
                         printHorizontalRule();
                         System.out.println("Marking task \"" + (tasks.get(taskIndex - 1)).getTask() + "\" as complete!");
                         printHorizontalRule();
+
                     } catch (IndexOutOfBoundsException e) {
+                        // Invalid index
                         printHorizontalRule();
                         System.out.println("Please provide a valid index!");
+                        printHorizontalRule();
+                    } catch (NumberFormatException e) {
+                        // Invalid input - a string or non-integer
+                        printHorizontalRule();
+                        System.out.println("Please give an integer!");
                         printHorizontalRule();
                     }
                     break;
@@ -277,8 +297,14 @@ public class Duke {
                         System.out.println("Marking task \"" + (tasks.get(taskIndex - 1)).getTask() + "\" as incomplete!");
                         printHorizontalRule();
                     } catch (IndexOutOfBoundsException e) {
+                        // Invalid index
                         printHorizontalRule();
                         System.out.println("Please provide a valid index!");
+                        printHorizontalRule();
+                    } catch (NumberFormatException e) {
+                        // Invalid input - a string or non-integer
+                        printHorizontalRule();
+                        System.out.println("Please give an integer!");
                         printHorizontalRule();
                     }
                     break;
@@ -294,29 +320,36 @@ public class Duke {
                         System.out.println("Deleting task: \"" + (tasks.get(taskIndex)).getTask() + "\"");
                         printHorizontalRule();
 
+                        // Deletes task
                         tasks.remove(taskIndex);
 
                     } catch (IndexOutOfBoundsException e) {
+                        // Invalid index
                         printHorizontalRule();
                         System.out.println("Please provide a valid index!");
+                        printHorizontalRule();
+                    } catch (NumberFormatException e) {
+                        // Invalid input - a string or non-integer
+                        printHorizontalRule();
+                        System.out.println("Please give an integer!");
                         printHorizontalRule();
                     }
                     break;
                 }
 
                 case ("todo"): {
-                /*
-                  For to do tasks
-                  Removes the command word, then adds a new to do with the description to the array
-                 */
                     try {
+                        // Removes command word to get the description
                         String todoDescription = removeCommandWord(userInput);
+
+                        // Creates a new task
                         Todo newTodo = new Todo(todoDescription);
                         tasks.add(newTodo);
 
                         // Prints acknowledgement
                         printAcknowledgement("Todo", todoDescription, String.valueOf(tasks.size()));
                     } catch (IndexOutOfBoundsException e) {
+                        // Invalid input
                         printHorizontalRule();
                         System.out.println("Invalid command for todo. Cannot have a blank description!");
                         printHorizontalRule();
@@ -325,28 +358,30 @@ public class Duke {
                 }
 
                 case ("deadline"): {
-                /*
-                  For deadline tasks
-                  Removes the command word and extracts the description
-                  Also extracts the deadline to the by variable
-                  Adds a new deadline to the array
-                 */
                     try {
+                        // Removes the command word
                         withoutCommand = removeCommandWord(userInput);
+
+                        // Obtains description - name of deadline task
                         description = getDescriptionForDeadline(withoutCommand);
+
+                        // Obtains date/time deadline
                         String by = getDeadline(withoutCommand);
 
+                        // Creates a new deadline, parsing the date and time
                         Deadline deadline = new Deadline(description, LocalDateTime.parse(by, FORMATTER).format(FORMATTER));
                         tasks.add(deadline);
 
                         // Prints acknowledgement
                         printAcknowledgement("Deadline", description, String.valueOf(tasks.size()));
                     } catch (IndexOutOfBoundsException e) {
+                        // Invalid input
                         printHorizontalRule();
-                        System.out.println("Wrong usage of deadline. Format is: deadline DESCRIPTION /by DATE TIME");
+                        System.out.println("Wrong usage of deadline. Format is: deadline DESCRIPTION /by YYYY-MM-DD HH:MM");
                         System.out.println("You entered: " + userInput);
                         printHorizontalRule();
                     } catch (DateTimeParseException e) {
+                        // Invalid time input
                         printHorizontalRule();
                         System.out.println("Wrong date and time format used! The required format is YYYY-MM-DD HH:MM");
                         printHorizontalRule();
@@ -354,30 +389,30 @@ public class Duke {
                     break;
                 }
                 case ("event"): {
-                /*
-                  For event tasks
-                  Removes the command word and extracts the description
-                  Also extracts the start and end to the from and to variable
-                  Adds a new event to the array
-                 */
                     try {
+                        // Removes command word
                         withoutCommand = removeCommandWord(userInput);
+
+                        // Obtains description - name of the event task
                         description = getDescriptionForEvent(withoutCommand);
 
                         // Returns in the format [from, to]
                         String[] timings = getTimings(withoutCommand);
 
+                        // Creates a new event, parsing the date and time
                         Event event = new Event(description, LocalDateTime.parse(timings[0], FORMATTER).format(FORMATTER), LocalDateTime.parse(timings[1], FORMATTER).format(FORMATTER));
                         tasks.add(event);
 
                         // Prints acknowledgement
                         printAcknowledgement("Event", description, String.valueOf(tasks.size()));
                     } catch (IndexOutOfBoundsException e) {
+                        // Invalid input
                         printHorizontalRule();
-                        System.out.println("Wrong usage of event. Format is: event DESCRIPTION /from DATE TIME /to DATE TIME");
+                        System.out.println("Wrong usage of event. Format is: event DESCRIPTION /from YYYY-MM-DD HH:MM /to YYYY-MM-DD HH:MM");
                         System.out.println("You entered: " + userInput);
                         printHorizontalRule();
                     } catch (DateTimeParseException e) {
+                        // Invalid date time input
                         printHorizontalRule();
                         System.out.println("Wrong date and time format used! The required format is YYYY-MM-DD HH:MM");
                         printHorizontalRule();
