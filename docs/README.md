@@ -315,37 +315,37 @@ ____________________________________________________________
 <tbody>
   <tr>
     <td>Add</td>
-    <td>`todo NAME_OF_TASK`<br>`deadline NAME_OF_TASK /by DEADLINE_OF_TASK`<br>`event NAME_OF_EVENT /from EVENT_START /to EVENT_END`</td>
-    <td>`todo TaskA`<br>`deadline TaskB /by 8 May 2023 6pm`<br>`deadline TaskC /by 2023-01-01`<br>`event EventD /from 1 May /to 2 May`</td>
+    <td>todo NAME_OF_TASK<br>deadline NAME_OF_TASK /by DEADLINE_OF_TASK<br>event NAME_OF_EVENT /from EVENT_START /to EVENT_END</td>
+    <td>todo TaskA<br>deadline TaskB /by 8 May 2023 6pm<br>deadline TaskC /by 2023-01-01<br>event EventD /from 1 May /to 2 May</td>
   </tr>
   <tr>
     <td>List</td>
-    <td>`list`</td>
+    <td>list</td>
     <td>-</td>
   </tr>
   <tr>
     <td>Mark</td>
-    <td>`mark INDEX`</td>
-    <td>`mark 1`</td>
+    <td>mark INDEX</td>
+    <td>mark 1</td>
   </tr>
   <tr>
     <td>Unmark</td>
-    <td>`unmark INDEX`</td>
-    <td>`unmark 1`</td>
+    <td>unmark INDEX</td>
+    <td>unmark 1</td>
   </tr>
   <tr>
     <td>Find</td>
-    <td>`find KEYWORD`</td>
-    <td>`find book`<br>`find Task`</td>
+    <td>find KEYWORD</td>
+    <td>find book<br>find Task</td>
   </tr>
   <tr>
     <td>Delete</td>
-    <td>`delete INDEX`</td>
-    <td>`delete 1`</td>
+    <td>delete INDEX</td>
+    <td>delete 1</td>
   </tr>
   <tr>
     <td>Exit</td>
-    <td>`bye`</td>
+    <td>bye</td>
     <td>-</td>
   </tr>
 </tbody>
