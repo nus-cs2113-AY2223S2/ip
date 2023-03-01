@@ -43,6 +43,59 @@ public class Storage {
         }
         fileWriter.close();
     }
+    private static Task getEventTask(String currTask, String taskDetails) {
+        Task task;
+        String eventName = taskDetails.split(" \\(from:")[0];
+        String eventTime = taskDetails.split("\\(from: ")[1];
+        String startTime = eventTime.split(" to: ")[0];
+        String endTime = eventTime.split(" to: ")[1].split("\\)")[0];
+        task = new Event(eventName, startTime, endTime);
+        if (currTask.substring(3, 7).contains("X")) {
+            task.setDone(true);
+        }
+        return task;
+    }
+
+    private static Task getDeadlineTask(String currTask, String taskDetails) {
+        Task task;
+        String deadlineName = taskDetails.split("\\(by:")[0];
+        String by = taskDetails.split(" \\(by: ")[1].split("\\)")[0];
+        task = new Deadline(deadlineName, by);
+        if (currTask.substring(3, 7).contains("X")) {
+            task.setDone(true);
+        }
+        return task;
+    }
+    private static Task getTodoTask(String currTask, String taskDetails) {
+        Task task;
+        task = new Todo(taskDetails);
+        if (currTask.substring(3, 7).contains("X")) {
+            task.setDone(true);
+        }
+        return task;
+    }
+    private static void prepareTasks(Scanner readFile, ArrayList<Task> tasks) throws DukeException {
+        while (readFile.hasNextLine()) {
+            Task task;
+            String currTask = readFile.nextLine();
+            String taskType = currTask.substring(0, 3);
+            String taskDetails = currTask.substring(7);
+            switch (taskType) {
+            case "[T]":
+                task = getTodoTask(currTask, taskDetails);
+                break;
+            case "[D]":
+                task = getDeadlineTask(currTask, taskDetails);
+                break;
+            case "[E]":
+                task = getEventTask(currTask, taskDetails);
+                break;
+            default:
+                throw new DukeException("task type not saved properly");
+            }
+            tasks.add(task);
+        }
+    }
 
     /**
      * Retrieves data from a previous session of Duke, if it exists,
@@ -58,41 +111,7 @@ public class Storage {
             if (file.exists()) {
                 Scanner readFile = new Scanner(file);
                 ArrayList<Task> tasks = new ArrayList<>();
-                while (readFile.hasNextLine()) {
-                    Task task;
-                    String currTask = readFile.nextLine();
-                    String taskType = currTask.substring(0, 3);
-                    String taskDetails = currTask.substring(7);
-                    switch (taskType) {
-                    case "[T]":
-                        task = new Todo(taskDetails);
-                        if (currTask.substring(3, 7).contains("X")) {
-                            task.setDone(true);
-                        }
-                        break;
-                    case "[D]":
-                        String deadlineName = taskDetails.split("\\(by:")[0];
-                        String by = taskDetails.split(" \\(by: ")[1].split("\\)")[0];
-                        task = new Deadline(deadlineName, by);
-                        if (currTask.substring(3, 7).contains("X")) {
-                            task.setDone(true);
-                        }
-                        break;
-                    case "[E]":
-                        String eventName = taskDetails.split(" \\(from:")[0];
-                        String eventTime = taskDetails.split("\\(from: ")[1];
-                        String startTime = eventTime.split(" to: ")[0];
-                        String endTime = eventTime.split(" to: ")[1].split("\\)")[0];
-                        task = new Event(eventName, startTime, endTime);
-                        if (currTask.substring(3, 7).contains("X")) {
-                            task.setDone(true);
-                        }
-                        break;
-                    default:
-                        throw new DukeException("task type not saved properly");
-                    }
-                    tasks.add(task);
-                }
+                prepareTasks(readFile, tasks);
                 if (tasks.size() > 0) {
                     Ui.showWelcomeBackMessage();
                 }
