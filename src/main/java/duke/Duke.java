@@ -8,9 +8,10 @@ import duke.utils.Storage;
 
 import java.util.Scanner;
 
+/**
+ * A class that serves as an entry point to the application
+ */
 public class Duke {
-
-
     public static void main(String[] args) {
         Storage dataAccess = new Storage("data/duke.txt");
         Scanner scanner = new Scanner(System.in);

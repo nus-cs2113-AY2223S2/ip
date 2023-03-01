@@ -1,19 +1,21 @@
 package duke.exception;
 
-import java.util.Arrays;
+/**
+ * A class that represents basic custom exception for Duke
+ */
 
 public class DukeException extends Exception {
+    /**
+     * Prefix for exception message
+     */
     private static final String DUKE_PREFIX = "Duke Error: ";
 
 
-    public static String[] parseCommand (String command) throws InvalidCommandException{
-        String[] commandArray = command.split(" ");
-        if (commandArray.length < 2){
-            throw new InvalidCommandException("Description of  cannot be empty!");
-        }
-        return Arrays.copyOfRange(commandArray, 1, commandArray.length);
-    }
-
+    /**
+     * Constructor that initiates the exception message
+     *
+     * @param message The message corresponding to the exception
+     */
     public DukeException(String message) {
         super(DUKE_PREFIX + message);
     }
