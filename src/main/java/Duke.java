@@ -5,9 +5,6 @@ import java.util.Scanner;
 import java.util.ArrayList;
 import java.io.IOException;
 public class Duke {
-    public static void main(String[] args) {
-        new Duke("DUKE/Duke.txt");
-    }
     private Memory memory;
     private IO io;
     private TaskList tasks;
@@ -48,6 +45,9 @@ public class Duke {
         for (String s : inputCommands) {
             processUserInput(s, false);
         }
+    }
+    public static void main(String[] args) {
+        new Duke("DUKE/Duke.txt");
     }
 
     /**
