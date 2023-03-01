@@ -1,6 +1,9 @@
 import java.io.File;
 import java.io.FileWriter;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -66,15 +69,15 @@ public class Storage {
     }
 
     /**
-     * Saves task that user has inputted in the current session into local file
+     * Saves task whenever user makes a change in the task list into local file
      *
-     * @param listOfTasks
-     * @throws IOException
+     * @param task task to be saved
+     * @throws IOException if file cannot be found
      */
     public void saveTasks(Task task) throws IOException {
         String content = "";
         content += formatContentToBeSaved(task);
-        FileWriter fileToWriteTo = new FileWriter(getFilePath());
+        FileWriter fileToWriteTo = new FileWriter(getFilePath(), true);
         fileToWriteTo.write(content);
         fileToWriteTo.close();
     }
@@ -107,5 +110,61 @@ public class Storage {
                     + "/" + ((Event) task).getEnd();
         }
         return content + "\n";
+    }
+
+    public void updateStatusOfSavedTask (Task task, boolean isCompleted) {
+        String data = "";
+        String line;
+        try {
+            File savedDataFile = new File(getFilePath());
+            FileReader readSavedData = new FileReader(savedDataFile);
+            BufferedReader oldSavedData = new BufferedReader(readSavedData);
+            while ((line = oldSavedData.readLine()) != null) {
+                if (line.contains(task.getName())) {
+                    if (isCompleted) {
+                        line = line.replace("0", "1");
+                    } else {
+                        line = line.replace("1", "0");
+                    }
+                }
+                data += line + "\n";
+            }
+            readSavedData.close();
+            oldSavedData.close();
+
+            FileWriter writeSavedData = new FileWriter(savedDataFile);
+            BufferedWriter newSavedData = new BufferedWriter(writeSavedData);
+            newSavedData.write(data);
+            newSavedData.flush();
+            newSavedData.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void deleteSavedTask (Task task) {
+        String data = "";
+        String line;
+        try {
+            File savedDataFile = new File(getFilePath());
+            FileReader readSavedData = new FileReader(savedDataFile);
+            BufferedReader oldSavedData = new BufferedReader(readSavedData);
+            while ((line = oldSavedData.readLine()) != null) {
+                if (line.contains(task.getName())) {
+                    continue;
+                }
+                data += line + "\n";
+            }
+            readSavedData.close();
+            oldSavedData.close();
+
+            FileWriter writeSavedData = new FileWriter(savedDataFile);
+            BufferedWriter newSavedData = new BufferedWriter(writeSavedData);
+            newSavedData.write(data);
+            newSavedData.flush();
+            newSavedData.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 }

@@ -11,6 +11,7 @@ public class Parser {
      *
      * @param input the user input.
      * @param listOfTasks the list of tasks that is currently in the ChatBot.
+     * @param storage the storage object that the user is using in the current session
      */
     public static void checkInput(String input, ArrayList<Task> listOfTasks, Storage storage) {
         String[] inputs = input.split(" ");
@@ -24,14 +25,17 @@ public class Parser {
             Task taskToBeMarked = listOfTasks.get(Integer.parseInt(inputs[1]) - 1);
             taskToBeMarked.setStatus(true);
             UI.printUpdateStatusMessage(taskToBeMarked.getStatus(), taskToBeMarked);
+            storage.updateStatusOfSavedTask(taskToBeMarked, true);
             break;
         case "unmark":
             Task taskToBeUnmarked = listOfTasks.get(Integer.parseInt(inputs[1]) - 1);
             taskToBeUnmarked.setStatus(false);
             UI.printUpdateStatusMessage(taskToBeUnmarked.getStatus(), taskToBeUnmarked);
+            storage.updateStatusOfSavedTask(taskToBeUnmarked, false);
             break;
         case "delete":
             int taskNumber = Integer.parseInt(inputs[1]) - 1;
+            storage.deleteSavedTask(listOfTasks.get(taskNumber));
             TaskList.deleteTask(taskNumber, listOfTasks);
             break;
         case "find":
