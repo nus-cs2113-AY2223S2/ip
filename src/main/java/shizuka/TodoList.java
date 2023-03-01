@@ -197,7 +197,7 @@ public class TodoList {
      * @param keyword The keyword to be searched for.
      */
     public void find(String keyword) {
-        ArrayList<Integer> foundItems = new ArrayList<Integer>();
+        ArrayList<Integer> foundItems = new ArrayList<>();
         for (int i = 0; i < numberOfTasks; i += 1) {
             if (todos.get(i).description.contains(keyword)) {
                 foundItems.add(i);
