@@ -14,29 +14,30 @@ public class Duke {
         String userInput;
         userInput = myObj.nextLine();
         ArrayList<Task> taskList = new ArrayList<Task>(100);
-        while (!userInput.equals("bye")) { //if user inputs "by" the loop will break
-            if (userInput.equals("list")) { //to list all tasks
+        while (!userInput.equals("bye")) {
+            if (userInput.equals("list")) {
                 command.printList(taskList);
-            } else if(userInput.contains("delete")){ //to delete an item from the list
+            }
+            else if(userInput.contains("delete")){
                 command.deleteItem(userInput, taskList);
-            } else if(userInput.contains("mark")) { //to check if an input is to mark/unmark an item
+            } else if(userInput.contains("mark")) {
                 if (userInput.contains("unmark")) {
                     command.unMarkItem(userInput, taskList);
                 } else {
                     command.markItem(userInput, taskList);
                 }
-            } else if (userInput.contains("event")){ //to add an event to the list
+            } else if (userInput.contains("event")){
                 command.createEvent(userInput,taskList);
-            } else if (userInput.contains("deadline")) { //to add a deadline to the list
+            } else if (userInput.contains("deadline")) {
                 command.createDeadline(userInput, taskList);
-            } else if (userInput.contains("todo")){  //to add to do item to the list
+            } else if (userInput.contains("todo")){
                 command.createToDo(userInput,taskList);
-            } else { //For any command that is not within the list of commands
+            } else {
                error.invalidCommand();
                Text.printHelp();
             }
             System.out.println("What would you like to do?");
-            userInput = myObj.nextLine(); //to take in next input
+            userInput = myObj.nextLine();
         }
         Text.printBye();
     }

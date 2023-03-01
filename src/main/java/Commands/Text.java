@@ -6,8 +6,10 @@ public class Text {
             + "| | | | | | | |/ / _ \\\n"
             + "| |_| | |_| |   <  __/\n"
             + "|____/ \\__,_|_|\\_\\___|\n";
+
     static String line = "____________________________________________________________\n";
     static String greeting = (line + "Hello! I'm Duke\n" + "What can I do for you?\n" + line);
+
     static String goodBye = (line + "Bye. Hope to see you again soon!\n" + line);
 
     public static void printLogo(){
