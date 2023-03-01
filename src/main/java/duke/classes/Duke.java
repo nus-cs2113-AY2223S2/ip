@@ -8,7 +8,21 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 
+/**
+ * This class represents the main class of the Duke program, which is a simple task manager.
+ * Duke stores a list of tasks that can be added, marked as done, and deleted.
+ * Tasks can be of three types: to-dos, deadlines, and events.
+ */
 public class Duke {
+
+    /**
+     * Checks if the given input is valid, and throws a DukeException if it is not.
+     * The input is invalid if it is an empty string, or if it is not one of the three keywords:
+     * "event", "todo", or "deadline".
+     *
+     * @param input The user input to be checked.
+     * @throws DukeException If the input is not valid.
+     */
     private static void checkError(String input) throws DukeException {
         if (Objects.equals(input, "event") || Objects.equals(input, "todo") || Objects.equals(input, "deadline")) {
             throw new DukeException("The description of the body cannot be empty! Please enter a proper input.");
@@ -19,9 +33,19 @@ public class Duke {
         }
     }
 
+    /** A list of tasks that the user has added to the program */
     private static ArrayList<Task> listOfTask = new ArrayList<Task>();
+
+    /** A Tasklist object that contains the list of tasks */
     static Tasklist tasklist = new Tasklist(listOfTask);
 
+    /**
+     * Reads the list of tasks from a file and initializes the listOfTask and tasklist objects.
+     *
+     * @param filepath The path to the file to be read.
+     * @param listOfTask An empty list of tasks to be populated with tasks from the file.
+     * @throws FileNotFoundException If the file does not exist.
+     */
     public static void foundationList(String filepath, ArrayList<Task> listOfTask) throws FileNotFoundException {
         File file = new File(filepath);
         Scanner scan = new Scanner(file);
@@ -63,6 +87,12 @@ public class Duke {
         }
     }
 
+    /**
+     * The main method of the Duke program.
+     *
+     * @param args The command line arguments.
+     * @throws IOException If an I/O error occurs.
+     */
     public static void main(String[] args) throws IOException {
 
         Ui ui = new Ui();

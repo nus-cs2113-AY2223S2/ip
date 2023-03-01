@@ -1,13 +1,27 @@
 package duke.classes;
 
+/**
+ * Represents a todo task.
+ * Inherits from Task class.
+ */
 public class Todo extends Task{
-    protected String by;
 
+    /**
+     * Constructor for Todo class.
+     *
+     * @param description Description of the task.
+     */
     public Todo(String description) {
 
         super(description);
     }
 
+    /**
+     * Returns a formatted string representation of the task.
+     * Overrides the toString() method in the Task class.
+     *
+     * @return Formatted string representation of the task.
+     */
     @Override
     public String toString() {
 
