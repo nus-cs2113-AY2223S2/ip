@@ -18,10 +18,11 @@ import java.util.Scanner;
  */
 public class InputParser {
     private static final String CHAR_SPACE = " ";
+    private static final String COMMAND_BYE = "bye";
     private static final String COMMAND_DEADLINE = "deadline";
     private static final String COMMAND_DELETE = "delete";
     private static final String COMMAND_EVENT = "event";
-    private static final String COMMAND_EXIT = "bye";
+    private static final String COMMAND_EXIT = "exit";
     private static final String COMMAND_FIND = "find";
     private static final String COMMAND_LIST = "list";
     private static final String COMMAND_MARK = "mark";
@@ -92,7 +93,8 @@ public class InputParser {
      * @throws InvalidCommandException    If the command does not match any supported commands
      */
     public Command parse(String input) throws Exception {
-        boolean isExit = input.split(CHAR_SPACE)[0].equals(COMMAND_EXIT);
+        final String keyword = input.split(CHAR_SPACE)[0];
+        boolean isExit = keyword.equals(COMMAND_BYE) || keyword.equals(COMMAND_EXIT);
         if (isExit) {
             return new ExitCommand();
         }
