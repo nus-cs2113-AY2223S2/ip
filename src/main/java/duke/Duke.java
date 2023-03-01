@@ -1,9 +1,6 @@
 package duke;
 
-import duke.command.CreateTask;
-import duke.command.Display;
-import duke.command.IOFile;
-import duke.command.ModifyTask;
+import duke.command.*;
 import duke.exception.BlankDescException;
 import duke.exception.DukeException;
 import duke.exception.TimeParseException;
@@ -42,6 +39,9 @@ public class Duke {
             switch (userCommand.split(" ")[0]) {
             case "list":
                 Display.listTasks(userTextCount, storedUserTasks);
+                break;
+            case "find":
+                FindTask.searchForKeyword(userCommand.substring(4), storedUserTasks);
                 break;
             case "bye":
                 isExit = true;
