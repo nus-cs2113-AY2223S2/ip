@@ -8,7 +8,7 @@ public class Parser {
         String key;
         String item;
         Boolean hasKeyword = false;
-        String[] keyWords = {"/list", "/bye", "/mark", "/unmark", "/todo", "/event", "/deadline", "/help" };
+        String[] keyWords = {"/find", "/list", "/bye", "/mark", "/unmark", "/todo", "/event", "/deadline", "/help" };
         for (String keyWord : keyWords) {
             if (userInput.contains(keyWord)) {
                 hasKeyword = true;
@@ -56,6 +56,9 @@ public class Parser {
                 command = new DeleteCommand(item);
                 command.execute();
                 break;
+            case "/find":
+                command= new FindCommand(item);
+                command.execute();
             case "/bye":
                 break;
             case "/help":
