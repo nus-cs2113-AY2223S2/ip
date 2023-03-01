@@ -16,6 +16,11 @@ public class Duke {
         TaskStorage.loadSaveData();
     }
 
+    /**
+     * Run the program Duke to read and process the input given by user
+     * @exception DukeException addTodo error and runCommand error
+     * @see DukeException
+     */
     public void run() {
         start();
         String input, command;

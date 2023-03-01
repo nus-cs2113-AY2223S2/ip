@@ -1,4 +1,8 @@
 package ui;
+
+/**
+ * User interaction of Duke by printing out the respective messages
+ */
 public class UI {
     private static final String LINE = "____________________________________________________________";
     private static final String logo = " ____        _        \n"
@@ -7,6 +11,9 @@ public class UI {
             + "| |_| | |_| |   <  __/\n"
             + "|____/ \\__,_|_|\\_\\___|\n";
 
+    /**
+     * Print out the logo and greet the user
+     */
     public static void greet() {
         System.out.println(logo);
         System.out.println(LINE);
