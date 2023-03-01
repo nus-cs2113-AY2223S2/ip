@@ -8,7 +8,7 @@ public class Parser {
         String key;
         String item;
         Boolean hasKeyword = false;
-        String[] keyWords = {"/list", "/bye", "/mark", "/unmark", "/todo", "/event", "/deadline", "/help" };
+        String[] keyWords = {"/list", "/bye", "/mark", "/unmark", "/todo", "/event", "/deadline", "/help", "delete" };
         for (String keyWord : keyWords) {
             if (userInput.contains(keyWord)) {
                 hasKeyword = true;

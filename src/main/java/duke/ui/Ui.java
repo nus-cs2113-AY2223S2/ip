@@ -33,25 +33,21 @@ public class Ui {
         System.out.println(DIVIDER + "\n\t Bye. Hope to see you again soon!\n" + DIVIDER);
     }
 
-    public static void displayLine() {
-        System.out.println(DIVIDER);
-    }
-
     public static void displayMark(Tasks task) {
         System.out.println(DIVIDER + "\n\t Nice! I've marked this task as done:\n\t  " + task);
-        System.out.println(DIVIDER);
+        System.out.println(DIVIDER + '\n');
     }
 
     public static void displayUnmark(Tasks task) {
         System.out.println(DIVIDER + "\n\t Nice! I've marked this task as not done yet:\n\t  " + task);
-        System.out.println(DIVIDER);
+        System.out.println(DIVIDER + '\n');
     }
 
     public static void displayAddTask(Tasks task) {
         System.out.println(DIVIDER + "\n\t Got it. I've added this task:\n\t  "
                 + task);
-        System.out.println("\t Now you have " + TaskList.getNumberOfTasks() + " in your list.\n"
-                + DIVIDER);
+        System.out.println("\t Now you have " + TaskList.getNumberOfTasks() + " item(s) in your list.\n"
+                + DIVIDER + '\n');
     }
 
     public static void displayList() {
@@ -61,14 +57,14 @@ public class Ui {
             Tasks thisTask = TaskList.getTaskList().get(num - 1);
             System.out.println("\t  " + num + ". " + thisTask);
         }
-        System.out.println(DIVIDER);
+        System.out.println(DIVIDER +'\n');
 
     }
 
     public static void displayDelete(Tasks task) {
         System.out.println(DIVIDER + "\n\t Got it. I've deleted this task:\n\t  "
                 + task);
-        System.out.println("\t Now you have " + (TaskList.getNumberOfTasks() - 1) + " in your list.\n"
+        System.out.println("\t Now you have " + (TaskList.getNumberOfTasks() - 1) + " item(s) in your list.\n"
                 + DIVIDER);
     }
 
