@@ -4,6 +4,8 @@ import duke.controller.TaskList;
 import duke.exception.InvalidCommandException;
 import duke.model.*;
 
+import java.util.ArrayList;
+
 /**
  * Class that is mainly responsible to display an information to the user
  */
@@ -52,6 +54,9 @@ public class Ui {
         Deadline deadline;
         try {
             switch (command.getType()) {
+                case "find":
+                    this.printSearchedTasks(payloadData);
+                    break;
                 case "list":
                     this.printTaskList();
                     break;
@@ -92,6 +97,22 @@ public class Ui {
         } catch (InvalidCommandException e) {
             this.printMessage(e.getMessage());
         }
+    }
+
+    /**
+     * Method to print the searched tasks i.e. if the taskName contains the searched keyword
+     *
+     * @param payloadData The payload data the command object
+     */
+    public void printSearchedTasks(String[] payloadData) {
+        String keyword = payloadData[0];
+        ArrayList<Task> searchedTasks = taskList.getSearchedTasks(keyword);
+        this.printHorizontalLine();
+        for (Task task : searchedTasks) {
+            System.out.println(task.toString());
+        }
+        this.printHorizontalLine();
+
     }
 
     /**

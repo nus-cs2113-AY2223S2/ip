@@ -147,4 +147,14 @@ public class TaskList {
         }
         return taskListString;
     }
+
+    public ArrayList<Task> getSearchedTasks(String keyword) {
+        ArrayList<Task> searchedTasks = new ArrayList<Task>();
+        for (Task task : tasks) {
+            if (task.getTaskName().contains(keyword)) {
+                searchedTasks.add(task);
+            }
+        }
+        return searchedTasks;
+    }
 }

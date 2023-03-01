@@ -1,1 +1,8 @@
+<<<<<<< HEAD
 	  1. [D][X]	return book (by: by Sunday)
+=======
+	  1. [T][ ]	assd
+	  2. [T][ ]	asd2
+	  3. [T][ ]	book1
+	  4. [T][ ]	book2
+>>>>>>> master

@@ -82,5 +82,7 @@ public class Task {
         return "[" + this.getStatusIcon() + "]" + "\t" + this.taskName;
     }
 
-
+    public String getTaskName() {
+        return this.taskName;
+    }
 }
