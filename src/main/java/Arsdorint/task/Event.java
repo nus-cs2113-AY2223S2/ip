@@ -1,13 +1,13 @@
 package Arsdorint.task;
 
 public class Event extends Task {
-    public static final String typeEvent = "E";
+    public static final String TYPE_EVENT = "E";
     public String date;
     public Event(String description, String date) {
         super(description);
         this.date = date;
         this.taskType = "[E]";
-        this.taskName = typeEvent;
+        this.taskName = TYPE_EVENT;
     }
 
     public void printTask() {

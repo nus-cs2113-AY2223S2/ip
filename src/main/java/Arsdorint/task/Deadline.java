@@ -1,13 +1,13 @@
 package Arsdorint.task;
 
 public class Deadline extends Task {
-    public static final String typeDeadline = "D";
+    public static final String TYPE_DEADLINE = "D";
     public String date;
     public Deadline(String description, String date) {
         super(description);
         this.date = date;
         this.taskType = "[D]";
-        this.taskName = typeDeadline;
+        this.taskName = TYPE_DEADLINE;
     }
     public void printTask() {
         System.out.println(this.taskType + this.getStatus()
