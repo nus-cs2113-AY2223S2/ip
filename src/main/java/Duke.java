@@ -279,6 +279,7 @@ public class Duke {
 		// check if keyword is empty
 		if (keyword.isBlank()) {
 			System.out.println(Ui.ERROR_NO_KEYWORD_MESSAGE);
+			Ui.printHelpFind();
 			return;
 		}
 		

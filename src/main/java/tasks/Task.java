@@ -21,6 +21,14 @@ public class Task {
     }
     
     /**
+     * returns description of task.
+     * @return Description of task.
+     */
+    public String getDescription() {
+        return description;
+    }
+    
+    /**
      * returns whether task is done or not done.
      * @return isDone True if done, false if not done.
      */
