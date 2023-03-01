@@ -140,7 +140,8 @@ public class TaskList {
     }
 
     /**
-     * This method finds a task in the list of tasks that matches the provided keyword and displays the matching tasks' descriptions.
+     * This method finds a task in the list of tasks that matches the provided keyword
+     * and displays the matching tasks' descriptions.
      *
      * @param keyword The keyword to search for in the task descriptions.
      * @throws EmptyListException       if the task list is empty.
