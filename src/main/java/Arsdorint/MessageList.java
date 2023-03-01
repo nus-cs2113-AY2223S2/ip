@@ -28,6 +28,7 @@ public class MessageList {
     public static final String MESSAGE_DIVIDER_LIST =
             "____________________________LIST____________________________";
     public static final String MESSAGE_DELETE = "Noted. I've removed this task:";
+    public static final String MESSAGE_UNKNOWN = "unknown message";
 
     public static final String ERROR_MESSAGE_BYE = " ";
     public static final String ERROR_MESSAGE_LIST = " ";
@@ -48,4 +49,5 @@ public class MessageList {
     public static final String ERROR_MESSAGE_DELETE = "Syntax for delete item \n\t>>> delete <item index number> \n" +
             "Note: item index must exist in the current list";
 
+    public static final int OFFSET = 1;
 }
