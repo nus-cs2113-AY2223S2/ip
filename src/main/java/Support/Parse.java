@@ -1,8 +1,11 @@
-package BasisSupport;
+package Support;
+
+import BasisSupport.DukeException;
 
 import java.util.Arrays;
 
-public class CatchError {
+public class Parse {
+    // Making sense of the User's input, and deal with cases when it is invalid
     // These are the possible instructions that the user will input.
     // If the user's inputs are not in the below array, then it will be invalid.
     static final String[] INSTRUCTIONS = new String[] {"todo", "deadline", "event", "mark", "unmark",

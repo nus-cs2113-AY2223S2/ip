@@ -1,6 +1,5 @@
 package Support;
 
-import BasisSupport.CatchError;
 import BasisSupport.DukeException;
 import BasisSupport.Spliterator;
 
@@ -32,7 +31,7 @@ public class Ui {
      */
     public static boolean exceptionCheck(String line) {
         try {
-            CatchError.validateMeaningful(line.split(" ")[0]);
+            Parse.validateMeaningful(line.split(" ")[0]);
         } catch (DukeException e) {
             Spliterator.printSpliterator();
             System.out.println(" ☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
@@ -40,7 +39,7 @@ public class Ui {
             return true;
         }
         try {
-            CatchError.validateEmpty(line);
+            Parse.validateEmpty(line);
         } catch (DukeException e) {
             Spliterator.printSpliterator();
             System.out.println(" ☹ OOPS!!! The description of a todo cannot be empty.");
