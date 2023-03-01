@@ -18,13 +18,13 @@ public class Ui {
     }
 
     public static void printAddTask(Task item) {
-        System.out.println("Got it. I've added this task: " + item.getTypeIcon()
-                + item.getStatusIcon() + item.description);
+        System.out.println("Got it. I've added this task: ");
+        System.out.println(item.getTypeIcon() + item.getStatusIcon() + item.description);
     }
 
     public static void printRemoveTask(Task item) {
-        System.out.println("Got it. I've removed this task: " + item.getTypeIcon()
-                + item.getStatusIcon() + item.description);
+        System.out.println("Got it. I've removed this task: ");
+        System.out.println(item.getTypeIcon() + item.getStatusIcon() + item.description);
     }
 
     public static void printListSize(int size) {
