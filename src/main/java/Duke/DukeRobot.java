@@ -30,7 +30,7 @@ public class DukeRobot {
             System.out.println("Loading tasks from file...");
             storage.loadTask(tasks);
         } catch (DukeException e) {
-            ui.printError(e.getMessage());
+            ui.printString(e.getMessage());
         }
         ui.printLine();
     }
