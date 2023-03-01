@@ -54,6 +54,14 @@ public class Parser {
                 int taskNum = Integer.parseInt(fullCommand.split(" ")[1]);
                 command = new DeleteCommand(taskNum);
 
+            } else if (fullCommand.split(" ")[0].equals("find")) {
+                if (fullCommand.split(" ").length == 1) {
+                    throw new StringIndexOutOfBoundsException();
+                }
+
+                String keyword = fullCommand.substring(fullCommand.indexOf(" ") + 1);
+                command = new FindCommand(keyword);
+
             } else {
                 throw new JonathanException();
             }
