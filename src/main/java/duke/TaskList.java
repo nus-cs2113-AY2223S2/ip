@@ -45,39 +45,17 @@ public class TaskList {
     }
 
     public static void addEvent(ArrayList<Task> tasks, String[] words) throws MissingDescriptionException {
-        if (words.length != 2) {
-            throw new MissingDescriptionException();
-        }
-        String[] description = words[1].split(" /from ");
-        if (description.length != 2) {
-            throw new MissingDescriptionException();
-        }
-        String[] dates = description[1].split(" /to ");
-        if (dates.length != 2) {
-            throw new MissingDescriptionException();
-        }
-        Event event = new Event(description[0], "E", dates[0], dates[1]);
+        Event event = Parser.parseEvent(words);
         tasks.add(event);
     }
 
     public static void addDeadline(ArrayList<Task> tasks, String[] words) throws MissingDescriptionException {
-        if (words.length != 2) {
-            throw new MissingDescriptionException();
-        }
-        String[] description = words[1].split(" /by ");
-        if (description.length != 2) {
-            throw new MissingDescriptionException();
-        }
-        Deadline deadline = new Deadline(description[0], "D", description[1]);
+        Deadline deadline = Parser.parseDeadline(words);
         tasks.add(deadline);
     }
 
     public static void addTodo(ArrayList<Task> tasks, String[] words) throws MissingDescriptionException {
-        if (words.length != 2) {
-            throw new MissingDescriptionException();
-        }
-        String description = words[1];
-        Task todo = new Task(description, "T");
+        Task todo = Parser.parseTodo(words);
         tasks.add(todo);
     }
 

@@ -7,9 +7,7 @@ import duke.task.Task;
 import java.util.ArrayList;
 
 public class Duke {
-    private static Ui ui;
     private static Storage storage;
-    private static TaskList taskList;
     static ArrayList<Task> tasks = new ArrayList<>();
     public static final String LINE = "    ____________________________________________________________\n";
 
@@ -19,7 +17,7 @@ public class Duke {
      */
     private static void processCommands(String line) {
         while (!line.equals("bye")) {
-            String[] words = line.split(" ", 2);
+            String[] words = Parser.splitCommand(line," ", 2);
             String command = words[0];
             try {
                 if (command.contains("mark")) {
@@ -81,9 +79,7 @@ public class Duke {
      * Initialises a storage space to store user inputs as well as reads past inputs.
      */
     private void run(){
-        ui = new Ui();
         storage = new Storage();
-        taskList = new TaskList();
         Ui.showWelcome();
         Storage.load(tasks);
         String line = Ui.initialiseScanner();
