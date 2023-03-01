@@ -5,8 +5,8 @@ import Duke.Tasks.Task;
 import java.util.ArrayList;
 
 public class Ui {
-    private static final String LINE = "____________________________________________________________";
-    private static final String BLANK = "    ";
+    static final String LINE = "____________________________________________________________";
+    static final String BLANK = "    ";
 
     static void printWelcome() {
         String logo = BLANK + LINE + "\n"
@@ -21,6 +21,17 @@ public class Ui {
         for (int i = 0; i < numberOfTasks; i += 1) {
             System.out.print(BLANK + (i + 1) + ".");
             taskList.get(i).printTask();
+        }
+        System.out.println(BLANK + LINE);
+    }
+
+    static void doFind(ArrayList<Task> taskList, String keyString) {
+        System.out.println(BLANK + LINE);
+        for (int i = 0; i < taskList.size(); i += 1) {
+            if (taskList.get(i).getTaskName().contains(keyString)) {
+                System.out.print(BLANK + (i + 1) + ".");
+                taskList.get(i).printTask();
+            }
         }
         System.out.println(BLANK + LINE);
     }

@@ -1,9 +1,6 @@
 package Duke;
 
-import Duke.Exceptions.DukeException;
-
 import java.util.Scanner;
-
 import java.io.IOException;
 
 public class Duke {
@@ -23,7 +20,7 @@ public class Duke {
                 }
 
             } catch (IndexOutOfBoundsException e) {
-                System.out.println("Wrong index");
+                System.out.println("Command used wrongly");
             } catch (NumberFormatException e) {
                 System.out.println("Number only for argument");
             } catch (DukeException e) {
