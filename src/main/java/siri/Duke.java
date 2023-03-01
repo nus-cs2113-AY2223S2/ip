@@ -44,13 +44,17 @@ public class Duke {
             } catch (MarkerArrayIndexOutOfBoundsException e) {
                 ui.showError(e.printError());
             } catch (NumberFormatException e) {
-                System.out.println("Please mark / unmark each task one by one, in the following format: ");
-                System.out.println("For example if you want to mark / unmark task 2 as done / undone: mark 2 / unmark 2");
+                System.out.println("Please mark / unmark / delete each task one by one, in the following format: \n");
+                System.out.println("For example if you want to mark / unmark task 2: mark 2 / unmark 2");
+                System.out.println("For example if you want to delete task 2: delete 2");
             } catch (ArrayIndexOutOfBoundsException e) {
                 System.out.println("Please add the tasks in the following format: \n");
                 System.out.println("Todo task format: todo task_name");
                 System.out.println("Deadline task format: deadline deadline_name /by deadline_date");
-                System.out.println("Event task format: event event_name /from event_from_timing /to event_to_timing");
+                System.out.println("Event task format: event event_name /from event_from_timing /to event_to_timing \n");
+
+                System.out.println("Please find the task in the following format: \n");
+                System.out.println("find keyword");
             } catch (IndexOutOfBoundsException e) {
                 System.out.println("Please only mark / unmark / delete task that is available in your task list.");
                 System.out.println("You have up to " + indexOfTask + " number of tasks.");
