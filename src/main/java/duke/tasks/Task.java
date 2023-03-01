@@ -4,7 +4,6 @@ package duke.tasks;
  * Todo, Event and Deadline are derived.
  */
 public class Task {
-
     public String name;
     public Boolean isCompleted;
 
@@ -18,8 +17,6 @@ public class Task {
         this.name = name;
         this.isCompleted = isCompleted;
     }
-
-
     public void setStatus(String action){
         if (action.equals("mark")){
             this.isCompleted = true;
@@ -28,14 +25,11 @@ public class Task {
         }
     }
 
-
     public String toString(){
         String checkbox = "[ ]";
-        String typeIndicator = null;
         if(isCompleted){
             checkbox = "[X]";
         }
-
         return  checkbox + " " + name;
     }
 

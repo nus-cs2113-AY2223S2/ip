@@ -1,5 +1,6 @@
 package duke.command;
 
+import duke.exceptions.UncheckedExceptionHandler;
 import duke.tasklist.TaskList;
 import duke.tasks.Task;
 import duke.ui.Ui;
@@ -28,8 +29,7 @@ public class DeleteCommand {
             System.out.println("Now you have " + tasks.getSize() + " tasks in the list." );
             Ui.printBorder();
         } catch(IndexOutOfBoundsException | NumberFormatException e){
-            System.out.println("Error! Specify a valid task index!");
-            Ui.printBorder();
+            UncheckedExceptionHandler.printInvalidTaskIndexMessage();
         }
     }
 

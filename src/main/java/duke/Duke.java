@@ -8,7 +8,6 @@ import duke.ui.Ui;
 import static duke.storage.Storage.writeToFile;
 
 public class Duke {
-
     public static void main(String[] args) {
         TaskList tasks = new TaskList();
         Ui.printGreeting();

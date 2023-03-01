@@ -18,14 +18,10 @@ public class Deadline extends Task {
         super(name, isCompleted);
         this.deadline = deadline;
     }
+
     @Override
     public String toString() {
-        String checkbox = "[ ]";
-        String typeIndicator = null;
-        if(isCompleted){
-            checkbox = "[X]";
-        }
-        return "[D]" + checkbox + " " + name + " (by: " + deadline + ")";
+        return "[D]" + super.toString() + " (by: " + deadline + ")";
     }
 
     @Override

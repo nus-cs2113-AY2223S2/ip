@@ -1,5 +1,6 @@
 package duke.command;
 
+import duke.exceptions.UncheckedExceptionHandler;
 import duke.tasklist.TaskList;
 import duke.ui.Ui;
 
@@ -25,8 +26,7 @@ public class ChangeStatusCommand {
             System.out.println(tasks.getTask(taskIndex) + "\n");
             Ui.printBorder();
         } catch(NumberFormatException | IndexOutOfBoundsException e){
-            System.out.println("Error! Specify a valid task index!");
-            Ui.printBorder();
+            UncheckedExceptionHandler.printInvalidTaskIndexMessage();
         }
     }
     /**
@@ -44,8 +44,7 @@ public class ChangeStatusCommand {
             System.out.println(tasks.getTask(taskIndex) + "\n");
             Ui.printBorder();
         } catch(NumberFormatException | IndexOutOfBoundsException e){
-            System.out.println("Error! Specify a valid task index!");
-            Ui.printBorder();
+            UncheckedExceptionHandler.printInvalidTaskIndexMessage();
         }
     }
 }

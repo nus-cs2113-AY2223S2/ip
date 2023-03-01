@@ -12,8 +12,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
+/**
+ * Represents the storage used to store and retrieve data
+ * from the user's task list
+ */
 public class Storage {
-//    write to file
     public static final String filePath = "duke.txt";
     public static void writeToFile(TaskList tasks){
         try {
@@ -42,23 +45,37 @@ public class Storage {
         }
     }
 
+    /**
+     * Adds data stored in duke.txt into user's tasklist.
+     *
+     * @param tasks  Task list containing all saved task
+     * @param data   Loaded data from duke.txt
+     */
+
     public static void addFileDataToList(TaskList tasks, String data){
         String[] inputData = data.split("/");
         String taskType = inputData[0];
-        Task loadedTask = null;
         switch (taskType){
-            case "todo":
-                loadedTask = new Todo(inputData[1], Boolean.parseBoolean(inputData[2]));
-                break;
+        case "todo":
+            String todoName = inputData[1];
+            Boolean todoStatus = Boolean.parseBoolean(inputData[2]);
+            tasks.addTask(new Todo(todoName, todoStatus));
+            break;
 
-            case "deadline":
-                loadedTask = new Deadline(inputData[1], inputData[3], Boolean.parseBoolean(inputData[2]));
-                break;
+        case "deadline":
+            String deadlineName = inputData[1];
+            String deadline = inputData[3];
+            Boolean deadlineStatus = Boolean.parseBoolean(inputData[2]);
+            tasks.addTask(new Deadline(deadlineName, deadline, deadlineStatus));
+            break;
 
-            case "event":
-                loadedTask = new Event(inputData[1], inputData[3], inputData[4], Boolean.parseBoolean(inputData[2]));
+        case "event":
+            String eventName = inputData[1];
+            String start = inputData[3];
+            String end = inputData[4];
+            Boolean eventStatus = Boolean.parseBoolean(inputData[2]);
+            tasks.addTask(new Event(eventName, start, end, eventStatus));
+            break;
         }
-        tasks.addTask(loadedTask);
     }
-
 }

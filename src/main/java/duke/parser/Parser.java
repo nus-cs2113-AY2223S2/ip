@@ -17,33 +17,31 @@ import java.util.Scanner;
 public class Parser {
 
     public static Boolean isRunning = true;
-
     public static Boolean isRunning(){
         return isRunning;
     }
     public static String entry;
     public static Scanner input = new Scanner(System.in);
     public static void readInput() {
-        entry = input.nextLine();
+        entry = input.nextLine().trim();
     }
 
     public static String getCommand() {
         String[] userInput = entry.split(" ",2);
-        String command = userInput[0];
+        String command = userInput[0].trim();
         return command;
     }
 
     public static String getArguments(){
         String[] userInput = entry.split(" ",2);
         if (userInput.length > 1) {
-            String arguments = userInput[1];
+            String arguments = userInput[1].trim();
             return arguments;
         }
         else{
             return null;
         }
     }
-
 
     /**
      * Executes command from the user
@@ -56,54 +54,53 @@ public class Parser {
             String command = getCommand();
             String arguments = getArguments();
             switch (command) {
-                case "list":
-                    TaskList.printList(tasks);
-                    break;
+            case "list":
+                TaskList.printList(tasks);
+                break;
 
-                case "mark":
-                    ChangeStatusCommand.markTask(tasks, arguments);
-                    break;
+            case "mark":
+                ChangeStatusCommand.markTask(tasks, arguments);
+                break;
 
-                case "unmark":
-                    ChangeStatusCommand.unmarkTask(tasks, arguments);
-                    break;
+            case "unmark":
+                ChangeStatusCommand.unmarkTask(tasks, arguments);
+                break;
 
-                case "deadline":
-                    AddCommand.addDeadline(tasks, arguments);
-                    break;
+            case "deadline":
+                AddCommand.addDeadline(tasks, arguments);
+                break;
 
-                case "todo":
-                    try {
-                        AddCommand.addTodo(tasks, arguments);
-                    } catch (EmptyTaskException e) {
-                        e.printErrorMessage();
-                        Ui.printBorder();
-                    }
-                    break;
+            case "todo":
+                try {
+                    AddCommand.addTodo(tasks, arguments);
+                } catch (EmptyTaskException e) {
+                    e.printErrorMessage();
+                    Ui.printBorder();
+                }
+                break;
 
-                case "event":
-                    AddCommand.addEvent(tasks, arguments);
-                    break;
+            case "event":
+                AddCommand.addEvent(tasks, arguments);
+                break;
 
-                case "delete":
-                    DeleteCommand.deleteTask(tasks, arguments);
-                    break;
+            case "delete":
+                DeleteCommand.deleteTask(tasks, arguments);
+                break;
 
-                case "find":
-                    FindCommand.findTask(tasks, arguments);
-                    break;
+            case "find":
+                FindCommand.findTask(tasks, arguments);
+                break;
 
-                case "bye":
-                    isRunning = false;
-                    break;
+            case "bye":
+                isRunning = false;
+                break;
 
-                default:
-                    throw new InvalidCommandException();
+            default:
+                throw new InvalidCommandException();
             }
         } catch(InvalidCommandException e){
         e.printErrorMessage();
         Ui.printBorder();
         }
     }
-
 }

@@ -13,14 +13,8 @@ public class Todo extends Task {
         super(name, isCompleted);
     }
 
-    @Override
     public String toString() {
-        String checkbox = "[ ]";
-        String typeIndicator = null;
-        if(isCompleted){
-            checkbox = "[X]";
-        }
-        return "[T]" + checkbox + " " + name;
+        return "[T]" + super.toString();
     }
 
     @Override

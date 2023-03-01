@@ -20,13 +20,8 @@ public class Event extends Task {
         this.end = end;
     }
 
-    @Override
     public String toString() {
-        String checkbox = "[ ]";
-        if(isCompleted){
-            checkbox = "[X]";
-        }
-        return "[E]" + checkbox + " " + name + " (from: " + start  + ", to: " + end + ")";
+        return "[E]" + super.toString() + " (from: " + start  + ", to: " + end + ")";
     }
 
     @Override

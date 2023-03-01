@@ -1,9 +1,9 @@
 package duke.command;
 
+import duke.exceptions.InvalidSearchWordException;
 import duke.tasklist.TaskList;
 import duke.tasks.Task;
-
-import static duke.ui.Ui.printBorder;
+import duke.ui.Ui;
 
 /**
  * Represents the find feature in Duke. Task objects which description contains
@@ -20,16 +20,23 @@ public class FindCommand {
      */
 
     public static void findTask(TaskList tasks, String keyword){
-        int counter = 0;
-        printBorder();
-        System.out.println("Here are the matching tasks in your list:");
-        for (Task t : tasks.getTasks()){
-            counter++;
-            if(t.name.contains(keyword)){
-                System.out.println(counter + ". " + t);
+        try {
+            if(keyword == null){
+                throw new InvalidSearchWordException();
             }
-        } 
-        printBorder();
+            int counter = 0;
+            Ui.printBorder();
+            System.out.println("Here are the matching tasks in your list:");
+            for (Task t : tasks.getTasks()) {
+                counter++;
+                if (t.name.contains(keyword)) {
+                    System.out.println(counter + ". " + t);
+                }
+            }
+            Ui.printBorder();
+        } catch (InvalidSearchWordException e){
+            InvalidSearchWordException.printErrorMessage();
+            Ui.printBorder();
+        }
     }
-
 }

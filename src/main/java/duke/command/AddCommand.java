@@ -1,6 +1,7 @@
 package duke.command;
 
 import duke.exceptions.EmptyTaskException;
+import duke.exceptions.UncheckedExceptionHandler;
 import duke.tasklist.TaskList;
 import duke.tasks.Deadline;
 import duke.tasks.Event;
@@ -32,9 +33,7 @@ public class AddCommand {
             System.out.println("added: " + name + "\n");
             Ui.printBorder();
         } catch (NullPointerException e) {
-            Ui.printBorder();
-            System.out.println("OOPS! The description of task cannot be empty");
-            Ui.printBorder();
+            UncheckedExceptionHandler.printInvalidDescriptionMessage();
         }
     }
 
@@ -48,16 +47,14 @@ public class AddCommand {
     public static void addDeadline(TaskList tasks, String taskDetails){
         try {
             String[] taskInfo = taskDetails.split("/by", 2);
-            String name = taskInfo[0];
-            String deadline = taskInfo[1];
+            String name = taskInfo[0].trim();
+            String deadline = taskInfo[1].trim();
             tasks.addTask(new Deadline(name, deadline, false));
             Ui.printBorder();
             System.out.println("added: " + name + " (by: " + deadline + ")" + "\n");
             Ui.printBorder();
         } catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
-            Ui.printBorder();
-            System.out.println("OOPS! The description of task is invalid");
-            Ui.printBorder();
+            UncheckedExceptionHandler.printInvalidDescriptionMessage();
         }
     }
 
@@ -71,17 +68,15 @@ public class AddCommand {
     public static void addEvent(TaskList tasks, String taskDetails){
         try{
             String[] taskInfo = taskDetails.split("/from|/to", 3);
-            String name = taskInfo[0];
-            String start = taskInfo[1];
-            String end = taskInfo[2];
+            String name = taskInfo[0].trim();
+            String start = taskInfo[1].trim();
+            String end = taskInfo[2].trim();
             tasks.addTask(new Event(name, start, end, false));
             Ui.printBorder();
             System.out.println("added: " + name + " (from: " + start + ", to: " + end + ")" + "\n");
             Ui.printBorder();
         } catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
-            Ui.printBorder();
-            System.out.println("OOPS! The description of task is invalid");
-            Ui.printBorder();
+            UncheckedExceptionHandler.printInvalidDescriptionMessage();
         }
     }
 }
