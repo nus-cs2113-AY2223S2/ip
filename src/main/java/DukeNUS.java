@@ -18,7 +18,7 @@ import java.util.Scanner;
 import static java.lang.Integer.parseInt;
 
 public class DukeNUS {
-    private static final String FILEPATH = "data/dukeNUS.txt";
+    private static final String FILEPATH = "./dukeNUS.txt";
     private static ArrayList<Task> tasks = new ArrayList<Task>();
 
     /**
