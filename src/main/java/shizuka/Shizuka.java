@@ -31,7 +31,7 @@ public class Shizuka {
         String line, lineTrimmed;
         TodoList list0 = new TodoList();
         try {
-            FileManager.load(FILE_PATH, list0);
+            Storage.load(FILE_PATH, list0);
             UI.fileLoaded();
         } catch (IOException e) {
             UI.fileNotFound();
@@ -101,7 +101,7 @@ public class Shizuka {
                 break;
             case "save":
                 try {
-                    FileManager.save(FILE_PATH, list0.listWriter());
+                    Storage.save(FILE_PATH, list0.listWriter());
                     UI.saveSuccess();
                     break;
                 } catch (IOException e) {

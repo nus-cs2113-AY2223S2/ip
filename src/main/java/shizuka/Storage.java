@@ -5,7 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
-public class FileManager {
+public class Storage {
     private static final String ITEM_SEPARATOR = " / ";
 
     /**
