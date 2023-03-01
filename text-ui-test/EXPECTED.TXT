@@ -29,9 +29,11 @@ Here is your list:
 2. [T][ ] check 2
   ____________________________________________________________
 Pikapi add this task: 
+Pikapi add this task: 
   [T][ ] check 1
 Pikapi sees that now you have 3 tasks in the list
   ____________________________________________________________
+Pikapi add this task: 
 Pikapi add this task: 
   [T][ ] check 2
 Pikapi sees that now you have 4 tasks in the list

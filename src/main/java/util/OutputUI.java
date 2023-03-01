@@ -9,20 +9,20 @@ import tasks.Todo;
 
 /**
  * Stores functions that prints lines accessible to most classes
- * */
+ */
 
 public class OutputUI {
 
     /**
-    * Prints a Line
-    * */
+     * Prints a Line
+     */
     private static void printLine() {
         System.out.println("  ____________________________________________________________");
     }
 
     /**
      * Prints Marked Message when it is done
-     * */
+     */
     public void markTaskMessage(Task task) {
         System.out.println("Pikapi has marked the task as done\n");
         System.out.println("[" + task.getStatusIcon() + "] " + task.getDescription());
@@ -30,26 +30,24 @@ public class OutputUI {
 
     /**
      * Prints Unmarked Message when it is unmarked
-     * */
+     */
     public void unmarkTaskMessage(Task task) {
         System.out.println("Pikapi has unmarked the task\n");
         System.out.println("[" + task.getStatusIcon() + "] " + task.getDescription());
     }
 
-
     /**
      * Parses and prints a task list
-     * */
+     */
     public void addToListMessage(Todo todo, int numTasks) {
         printLine();
         System.out.println("Pikapi add this task: " + "\n" + "  [T][ ]" + todo.getDescription());
         System.out.println("Pikapi sees that now you have " + numTasks + " tasks in the list");
     }
 
-
     /**
      * Prints the output when finished adding a deadline Task
-     * */
+     */
     public void addToListMessage(Deadline deadline, int numTasks) {
         printLine();
         System.out.println("Pikapi add this task: " + "\n" + "  [D][ ]"
@@ -59,7 +57,7 @@ public class OutputUI {
 
     /**
      * Prints the output when finished adding an event Task
-     * */
+     */
     public void addToListMessage(Event event, int numTasks) {
         printLine();
         System.out.println("Pikapi add this task: " + "\n" + "  [E][ ] "
@@ -67,10 +65,9 @@ public class OutputUI {
         System.out.println("Pikapi sees that now you have " + numTasks + " tasks in the list");
     }
 
-
     /**
      * Prints the whole list of a given set of tasks in a parsed manner
-     * */
+     */
     public void printList(ArrayList<Task> tasks, int numTasks) {
 
         if (numTasks == 0) {
@@ -85,7 +82,7 @@ public class OutputUI {
 
     /**
      * Prints the output when finished deleting a task
-     * */
+     */
     public void printDeleteTaskMessage(Task task, int numTasks) {
         printLine();
         System.out.println("Pikapi has deleted the task: " + "\n" + "  [T]["
@@ -93,11 +90,20 @@ public class OutputUI {
         System.out.println("Pikapi sees that now you have " + numTasks + " tasks in the list");
     }
 
-
     /**
      * Prints the output when quitting Duke
-     * */
+     */
     public void printByeByeMessage() {
         System.out.println("Pikapi is surprised to see you go, see you soon friend\n");
     }
+
+    public void printTaskListWithKeyword(ArrayList<Task> output) {
+        System.out.println("Pikapi has found  list of things pertaining to your keyword");
+        printList(output, output.size());
+    }
+
+    public void printNoTaskWithKeyword() {
+        System.out.println("No tasks with descriptions containing the keyword is found, Pikapi tried his best");
+    }
+
 }
