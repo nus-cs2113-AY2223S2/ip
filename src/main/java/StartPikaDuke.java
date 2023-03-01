@@ -1,11 +1,20 @@
-import errors.DukeException;
-import errors.ErrorMessages;
-import tasks.Task;
-import util.*;
-
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import errors.DukeException;
+import errors.ErrorMessages;
+import tasks.Task;
+import util.Finder;
+import util.Marker;
+import util.OutputUI;
+import util.Storage;
+import util.TaskAdder;
+import util.TaskDeleter;
+
+
+/**
+* Starts the main processing of input
+* */
 public class StartPikaDuke {
     private static final boolean NOT_FROM_SAVE_DATA = false;
     private static final String CHAR_SPACE = " ";
@@ -18,8 +27,14 @@ public class StartPikaDuke {
     private static final String UNMARK_COMMAND = "unmark";
     private static final String DELETE_COMMAND = "delete";
     private static final String FIND_COMMAND = "find";
-    static ArrayList<Task> listOfTasks = new ArrayList<>();
 
+    /**
+    * Stores the list of tasks
+    * */
+    private static ArrayList<Task> listOfTasks = new ArrayList<>();
+    /**
+     * Starts the main function
+     * */
     public void startPikaDuke() {
         Storage storage = new Storage();
         storage.loadData(listOfTasks);
@@ -45,6 +60,7 @@ public class StartPikaDuke {
                     newScanner.close();
                     storageManager.saveList(listOfTasks);
                     System.exit((0));
+                    break;
                 case TODO_COMMAND:
                 case DEADLINE_COMMAND:
                 case EVENT_COMMAND:

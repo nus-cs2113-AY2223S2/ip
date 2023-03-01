@@ -1,5 +1,7 @@
 package util;
 
+import java.util.ArrayList;
+
 import errors.ErrorMessages;
 import errors.TaskAddError;
 import tasks.Deadline;
@@ -7,8 +9,10 @@ import tasks.Event;
 import tasks.Task;
 import tasks.Todo;
 
-import java.util.ArrayList;
 
+/**
+ * Handles Adding tasks to a list
+ * */
 public class TaskAdder extends ErrorMessages {
     private static final String BLANK = "";
 
@@ -23,7 +27,12 @@ public class TaskAdder extends ErrorMessages {
 
     private final OutputUI outputUI = new OutputUI();
 
-    //This is used for loading from save files
+    /**
+     * @param listOfTasks TaskList to add task to
+     * @param description Description of new task
+     * @param loadFromSaveData Whether to output the new task or not,
+     *                         Mainly to be differentiated when saving or during a Duke session
+     */
     public void addTaskToList(ArrayList<Task> listOfTasks, String description, boolean loadFromSaveData) {
         String[] taskDescription = description.split(CHAR_SPACE, 2);
         try {
@@ -49,7 +58,8 @@ public class TaskAdder extends ErrorMessages {
 
     }
 
-    private void addTodoTask(ArrayList<Task> listOfTasks, String description, boolean hideOutput) throws TaskAddError {
+    private void addTodoTask(ArrayList<Task> listOfTasks, String description, boolean hideOutput)
+            throws TaskAddError {
         String descriptionBlankCheck = clearBlankSpaces(description);
         if (descriptionBlankCheck.equals(BLANK)) {
             throw new TaskAddError(provideTaskEmptyDescriptionText());
@@ -62,7 +72,8 @@ public class TaskAdder extends ErrorMessages {
     }
 
 
-    private void addDeadlineTask(ArrayList<Task> listOfTasks, String description, boolean hideOutput) throws TaskAddError {
+    private void addDeadlineTask(ArrayList<Task> listOfTasks, String description, boolean hideOutput)
+            throws TaskAddError {
         if (!description.contains(BY_SPLIT)) {
             throw new TaskAddError(provideTaskNoDeadlineParamsText());
         }
@@ -136,7 +147,8 @@ public class TaskAdder extends ErrorMessages {
         return found;
     }
 
-    private boolean eventFieldsAreNotBlank(String eventDescription, String eventFrom, String eventTo) throws TaskAddError {
+    private boolean eventFieldsAreNotBlank(String eventDescription, String eventFrom, String eventTo)
+            throws TaskAddError {
         if (eventDescription.equals(BLANK)) {
             throw new TaskAddError(provideTaskEmptyDescriptionText());
         }

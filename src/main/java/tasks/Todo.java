@@ -1,16 +1,19 @@
 package tasks;
 
-import tasks.Task;
-
+/**
+ * This is the Todo Task Class, Stores a task with a description
+ * */
 public class Todo extends Task {
-    public String by;
 
+    /**
+     * Factory function for todo task
+     * */
     public Todo(String description) {
         super(description);
     }
 
     @Override
     public String toString() {
-        return "[T]" + "[" + this.getStatusIcon() + "]" + super.description.toString();
+        return "[T]" + "[" + this.getStatusIcon() + "]" + super.getDescription().toString();
     }
 }

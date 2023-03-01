@@ -1,12 +1,17 @@
 package errors;
 
 
-
+/**
+ * This is an error class that stores all the texts meant for storing most output text for printing
+ */
 public class ErrorMessages {
 
-    //The following are meant for Tasks
+    /**
+     * The following are meant for Tasks
+     */
     public static String provideTaskEmptyDescriptionText() {
-        return "Description cannot be empty :<, please write a description after the task keyword (i.e. todo/deadline/event)";
+        return "Description cannot be empty :<,"
+                + " please write a description after the task keyword (i.e. todo/deadline/event)";
     }
 
     public static String provideTaskNoDeadlineParamsText() {
@@ -41,11 +46,19 @@ public class ErrorMessages {
         return "Pikapi does not understand this task, please give Pikapi a todo, deadline or event task";
     }
 
-    //The following are meant for Marking tasks
+    /**
+     * @return Provides error text when trying to access an empty list
+     */
     public String provideEmptyListText() {
-        return "PIKAPII the list is currently empty! You can't mark/unmark an empty list! Please input some tasks for Pikapi to add :3";
+        return "PIKAPII the list is currently empty! "
+                + "You can't mark/unmark an empty list! "
+                + "Please input some tasks for Pikapi to add :3";
     }
 
+    /**
+     * This is a message that prints a message when someone inputs an index out of
+     * the bounds of the task list
+     */
     public String provideExceedListLengthText(int listLength) {
         if (listLength == 1) {
             return "PIKAPII you dont have that many tasks! You only have 1 task hehe :3";
@@ -61,13 +74,20 @@ public class ErrorMessages {
         return "PIKAPII you did not input a number beside your marking action!";
     }
 
+    /**
+     * @return Provides error text when a String is provided as input instead of a number
+     */
     public String provideStringAsNumber() {
-        return "Pikapiii you did not give me an index(number)! Please give me a number after the mark/unmark/delete keyword please :3 UwU";
+        return "Pikapiii you did not give me an index(number)! "
+                + "Please give me a number after the mark/unmark/delete keyword please :3 UwU";
     }
 
-    //The following are meant for Load Data errors
+    /**
+     * @return Provides error text when a specific line of data in listData.txt is not of correct format
+     */
     public static String provideCorruptDataErrorText() {
-        return "PIKAPII There seems to be something wrong with this task in your save file, not loading a specific task into the task list";
+        return "PIKAPII There seems to be something wrong with this task in your save file,"
+                + " not loading a specific task into the task list";
     }
 
     public static String provideDeleteContentErrorText() {
@@ -91,10 +111,16 @@ public class ErrorMessages {
         return "Pikapi is unable to find that command, please type in a correct command";
     }
 
-    //The following are meant for find task errors
-    public String provideNoTaskKeywordInput(){
-        return "Pikapi is unable to find a keyword to search the list for you, please add a word after the word \"find\"";
+    /**
+     * @return String that shows that find keyword does not exist in any existing task description
+     */
+    public String provideNoTaskKeywordInput() {
+        return "Pikapi is unable to find a keyword to search the list for you,"
+                + " please add a word after the word \"find\"";
     }
 
-
+    public String provideCorruptDataText() {
+        return "A specific line in data is corrupted, not adding corrupted data";
+    }
 }
+

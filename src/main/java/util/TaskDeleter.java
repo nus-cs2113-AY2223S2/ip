@@ -1,14 +1,21 @@
 package util;
 
+import java.util.ArrayList;
+
 import errors.DeleteTaskError;
 import errors.ErrorMessages;
 import tasks.Task;
 
-import java.util.ArrayList;
-
+/**
+ * Handles Deleting tasks from a list
+ * */
 public class TaskDeleter extends ErrorMessages {
     private static final String BLANK = " ";
 
+    /**
+    * Takes in input for a delete command and deletes accordingly
+    * Handles index out of taskList bounds or incorrect input (e.g. input as String)
+    * */
     public void handleDeleteAction(ArrayList<Task> listOfTasks, String input) {
         String[] deleteActions = (input.split(BLANK, 2));
         try {
@@ -29,7 +36,8 @@ public class TaskDeleter extends ErrorMessages {
         }
     }
 
-    public void deleteTask(ArrayList<Task> listOfTasks, int indexToDelete) throws DeleteTaskError {
+
+    private void deleteTask(ArrayList<Task> listOfTasks, int indexToDelete) throws DeleteTaskError {
         if (verifyMarkAction(listOfTasks, indexToDelete)) {
             listOfTasks.remove(indexToDelete - 1);
         }

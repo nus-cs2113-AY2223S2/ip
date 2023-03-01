@@ -7,25 +7,37 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import tasks.Task;
-import tasks.Todo;
+import errors.ErrorMessages;
 import tasks.Deadline;
 import tasks.Event;
+import tasks.Task;
+import tasks.Todo;
 
-import errors.ErrorMessages;
-
+/**
+ * Manages Storing Data on exit
+ * and Loading Data upon starting Duke
+ * */
 public class Storage {
     private static final Boolean LOAD_FROM_SAVE_DATA = true;
     private static final String MARK = "mark ";
-
     private static final String FILE_LOCATION = "listData.txt";
 
+
+    /**
+    * Finds the data file and pushes data into the current Array
+    * */
     public void loadData(ArrayList<Task> taskList) {
         File listData = new File(FILE_LOCATION);
         checkForListData(listData);
         pushDataToTaskList(taskList, listData);
     }
 
+    /**
+    * Reads every line of data in listData and adds each of them into
+    * the current ArrayList of tasks
+    * If there are any corrupted/incorrect inputs in the data file,
+    * they will not be added and an error will be shown for each line of data corrupted
+    * */
     private void pushDataToTaskList(ArrayList<Task> taskList, File listData) {
         try {
             Scanner listDataScanner = new Scanner(listData);
@@ -62,6 +74,13 @@ public class Storage {
         }
     }
 
+    /**
+    * Updates the listData.txt file with every single current task inside
+    * the task list.
+    * It is sorted out as if it were an normal input with a value of 1 or 0 infront of it
+    * E.g.
+    * 0 todo do a task
+    * */
     public void saveList(ArrayList<Task> taskList) {
         try {
             writeToFile();
@@ -90,26 +109,27 @@ public class Storage {
 
     private static String parseString(Todo todo) {
         String done = "0";
-        if (todo.done) {
+        if (todo.getDone()) {
             done = "1";
         }
-        return done + " todo " + todo.description;
+        return done + " todo " + todo.getDescription();
     }
 
     private static String parseString(Deadline deadline) {
         String done = "0";
-        if (deadline.done) {
+        if (deadline.getDone()) {
             done = "1";
         }
-        return done + " deadline " + deadline.description + " /by " + deadline.by;
+        return done + " deadline " + deadline.getDescription() + " /by " + deadline.getDeadline();
     }
 
     private static String parseString(Event event) {
         String done = "0";
-        if (event.done) {
+        if (event.getDone()) {
             done = "1";
         }
-        return done + " event " + event.description + " /from " + event.startDate + " /to " + event.endDate;
+        return done + " event " + event.getDescription() + " /from " + event.getStartDate()
+                + " /to " + event.getEndDate();
     }
 
     private static void writeToFile() throws IOException {
@@ -119,7 +139,8 @@ public class Storage {
     }
 
     private static void appendToFile(String textToAppend) throws IOException {
-        FileWriter fw = new FileWriter(Storage.FILE_LOCATION, true); // create a FileWriter in append mode
+        // create a FileWriter in append mode
+        FileWriter fw = new FileWriter(Storage.FILE_LOCATION, true);
         fw.write(textToAppend);
         fw.close();
     }
