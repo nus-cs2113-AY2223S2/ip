@@ -16,6 +16,7 @@ import duke.commands.DeleteCommand;
 import duke.commands.MarkCommand;
 import duke.commands.UnmarkCommand;
 import duke.commands.FindCommand;
+import duke.storage.FileManager;
 
 public class CommandParser {
     private static final String LIST = "list";
@@ -114,7 +115,7 @@ public class CommandParser {
      * @throws InvalidDateTimeException the date and time of the input string is in the wrong format
      * @throws NoTasksException no tasks resulting from the filter is found
      */
-    public void getInput() throws InvalidCommandException, InvalidTaskException, InvalidFormatException, InvalidDateTimeException , NoTasksException {
+    public void getInput(FileManager fileManager) throws InvalidCommandException, InvalidTaskException, InvalidFormatException, InvalidDateTimeException , NoTasksException {
         Scanner input = new Scanner(System.in);
         boolean isRunning = true;
         do {
@@ -138,6 +139,7 @@ public class CommandParser {
                     System.out.println(e.getMessage());
                 }
             }
+            fileManager.save(taskList);
         } while (isRunning);
         input.close();
     }

@@ -15,7 +15,7 @@ public class Duke {
 
         Ui.printWelcome();
         try {
-            parser.getInput();
+            parser.getInput(fileManager);
             fileManager.save(taskList);
             Ui.printExit();
         } catch (DukeException e) {
