@@ -91,7 +91,7 @@ public class TaskManager {
         Input input = new Input();
         Clock clock = new Clock();
         clock.startWork();
-        System.out.println("Press Enter ONCE to START a break, or type 'cancel' to stop the timer: ");
+        System.out.println("Press Enter ONCE to START a break, or type 'cancel' to stop either timers: ");
         while (true) {
             String line = input.readInput();
             if (line.equals("cancel")) {
