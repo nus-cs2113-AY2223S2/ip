@@ -30,7 +30,7 @@ public class Task {
      * Marks a task as not completed.
      *
      */
-    public void unMarkDone() {
+    public void unmarkDone() {
         this.isDone = false;
     }
 
