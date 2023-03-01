@@ -110,7 +110,7 @@ public class Duke {
                 tasklist.printTasks();
 
             } else if (Objects.equals(parser.getInputType(), "mark")) {
-                    if(parser.getOrderMark(input) - 1 >= count) {
+                    if (parser.getOrderMark(input) - 1 >= count) {
                         ui.showMarkTaskWarning();
                     } else {
                         Task task = listOfTask.get(parser.getOrderMark(input) - 1);
@@ -121,7 +121,7 @@ public class Duke {
                         inputUi.showMarkedTask();
                     }
             } else if (Objects.equals(parser.getInputType(), "unmark")) {
-                    if(parser.getOrderUnmark(input) - 1 >= count) {
+                    if (parser.getOrderUnmark(input) - 1 >= count) {
                         ui.showUnmarkTaskWarning();
                     } else {
                         Task task = listOfTask.get(parser.getOrderUnmark(input) - 1);
@@ -132,7 +132,7 @@ public class Duke {
                         inputUi.showUnmarkedTask();
                     }
             } else if (Objects.equals(parser.getInputType(), "delete")) {
-                if(parser.getOrderDelete(input) - 1 >= count) {
+                if (parser.getOrderDelete(input) - 1 >= count) {
                     ui.showDeleteTaskWarning();
                 } else {
                     InputUi inputUi = new InputUi(listOfTask.get(parser.getOrderDelete(input) - 1), count - 1);
@@ -142,6 +142,9 @@ public class Duke {
                     count--;
                     inputUi.showRemainingTasks();
                 }
+            } else if (Objects.equals(parser.getInputType(), "find")) {
+                String findInfo = parser.getFindKeyWord(input);
+                tasklist.printFoundTasks(findInfo);
             } else {
                 if (Objects.equals(parser.getInputType(), "todo")) {
                     Todo task = new Todo(parser.getTodoInfo(input));
