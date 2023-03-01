@@ -20,29 +20,24 @@ import task.Deadline;
 import task.Event;
 
 /**
- * The Storage class provides functionality to read from and write to a file containing a list of tasks.
- * * Tasks are represented by the Task class and its subclasses.
+ * The Storage class provides methods for saving and loading a list of tasks to and from a file.
  */
 public class Storage {
-    final static String CONFIG_FILE_PATH = "src/config.properties";
+
+    final static String GENESIS_STORE_DIR_PATH = "./store";
+    final static String GENESIS_STORE_FILE_PATH = "./store/genesis.txt";
+
 
     /**
-     * Saves the specified TaskList to the file specified in the configuration file.
+     * Saves the given list of tasks to the store file.
      *
-     * @param tasks the TaskList to save to the file
-     * @throws IOException if there is an I/O error
+     * @param tasks the list of tasks to be saved
+     * @throws IOException if an I/O error occurs while writing to the store file
      */
     public static void saveToFile(TaskList tasks) throws IOException {
 
-        FileInputStream propsInput = new FileInputStream(CONFIG_FILE_PATH);
-        Properties prop = new Properties();
-        prop.load(propsInput);
-
-        String filePath = prop.getProperty("GENESIS_STORE_FILE_PATH");
-        String dirPath = prop.getProperty("GENESIS_STORE_DIR_PATH");
-
-        Files.createDirectories(Paths.get(dirPath));
-        File file = new File(filePath);
+        Files.createDirectories(Paths.get(GENESIS_STORE_DIR_PATH));
+        File file = new File(GENESIS_STORE_FILE_PATH);
         FileWriter fw = new FileWriter(file);
 
         for (Task task : tasks.getTasks()) {
@@ -51,28 +46,21 @@ public class Storage {
 
         fw.flush();
         fw.close();
-        propsInput.close();
     }
 
     /**
-     * Loads a list of tasks from the file specified in the configuration file.
+     * Loads the list of tasks from the store file.
      *
-     * @return an ArrayList of Task objects
-     * @throws IOException               if there is an I/O error
-     * @throws IndexOutOfBoundsException if the file is empty or has an invalid format
-     * @throws CorruptedStoreException   if the file is corrupted and cannot be read
+     * @return the list of tasks loaded from the store file
+     * @throws IOException               if an I/O error occurs while reading from the store file
+     * @throws IndexOutOfBoundsException if the content of the store file is not formatted correctly
+     * @throws CorruptedStoreException   if the store file is corrupted and cannot be loaded
      */
     public static ArrayList<Task> loadFromFile() throws IOException, IndexOutOfBoundsException, CorruptedStoreException {
 
         ArrayList<Task> tasks = new ArrayList<>();
 
-        FileInputStream propsInput = new FileInputStream(CONFIG_FILE_PATH);
-        Properties prop = new Properties();
-        prop.load(propsInput);
-
-        String filePath = prop.getProperty("GENESIS_STORE_FILE_PATH");
-
-        File file = new File(filePath);
+        File file = new File(GENESIS_STORE_FILE_PATH);
         Scanner sc = new Scanner(file);
         sc.useDelimiter("\n");
 
@@ -98,7 +86,6 @@ public class Storage {
         }
 
         sc.close();
-        propsInput.close();
 
         return tasks;
     }
