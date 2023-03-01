@@ -4,10 +4,13 @@ import Tasks.Event;
 import Tasks.Task;
 import java.util.ArrayList;
 import static Commands.Text.line;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class command {
 
     public static void printList(ArrayList<Task> taskList) {
+        //checks if list is empty first
         if (taskList.isEmpty()) {
             error.listIsEmpty();
             error.invalidCommand();
@@ -23,6 +26,7 @@ public class command {
 
     public static void deleteItem(String userInput, ArrayList<Task> taskList) {
         int itemNumber = Integer.parseInt(userInput.replaceAll("[^0-9]", "")) - 1;
+        //to check if an item is within the index of the list
         if (itemNumber >= taskList.size()) {
             error.indexNotFound();
         } else {
@@ -37,6 +41,7 @@ public class command {
 
     public static void markItem(String userInput, ArrayList<Task> taskList) {
         int itemNumber = Integer.parseInt(userInput.replaceAll("[^0-9]", "")) - 1;
+        //to check if an item is within the index of the list
         if (itemNumber >= taskList.size()){
             error.indexNotFound();
         } else {
@@ -48,6 +53,7 @@ public class command {
 
     public static void unMarkItem(String userInput, ArrayList<Task> taskList) {
         int itemNumber = Integer.parseInt(userInput.replaceAll("[^0-9]", "")) - 1;
+        //to check if an item is within the index of the list
         if (itemNumber >= taskList.size()) {
             error.indexNotFound();
         } else {
@@ -59,7 +65,7 @@ public class command {
     }
 
     public static void createEvent(String userInput, ArrayList<Task> taskList){
-        String userInputParts[];
+        String[] userInputParts;
         userInput = userInput.replace("event","");
         userInputParts = userInput.split("/");
         Event event = new Event(userInputParts[0], userInputParts[1], userInputParts[2]);
@@ -69,8 +75,9 @@ public class command {
         System.out.println("Now you have " + taskList.size() + " tasks in the list. ");
         System.out.println(line);
     }
+
     public static void createDeadline(String userInput, ArrayList<Task> taskList){
-        String userInputParts[];
+        String[] userInputParts;
         userInput = userInput.replace("deadline","");
         userInputParts = userInput.split("/");
         Deadline deadline = new Deadline(userInputParts[0], userInputParts[1]);
@@ -83,6 +90,7 @@ public class command {
     public static void createToDo(String userInput, ArrayList<Task> taskList){
         userInput = userInput.replace("todo ","");
         String dummy = userInput.replace(" ","");
+        //checks if description is empty and throws warning back to user
         if (dummy.isEmpty()){
             error.emptyDescription();
         } else {
