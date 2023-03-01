@@ -4,7 +4,7 @@ import io.github.haoyangw.rica.exception.RicaException;
 import io.github.haoyangw.rica.task.Task;
 
 import java.io.PrintStream;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class TextUi {
@@ -76,13 +76,18 @@ public class TextUi {
     /**
      * Prints a list of Tasks remembered by Rica in Rica's unique output format.
      *
-     * @param tasks ArrayList of Tasks to show the user
+     * @param tasks List of Tasks to print on the user's screen
      */
-    public void printTasks(ArrayList<Task> tasks) {
+    public void printTasks(List<Task> tasks) {
+        this.printTasks(tasks, " I think you have these tasks:",
+                " Hope I'm not amnesiac, but I don't remember any tasks?");
+    }
+
+    public void printTasks(List<Task> tasks, String messageToUser, String noTasksMessageToUser) {
         if (tasks.isEmpty()) {
-            this.printlnWithIndent(" Hope I'm not amnesiac, but I don't remember any tasks?");
+            this.printlnWithIndent(noTasksMessageToUser);
         } else {
-            this.printlnWithIndent(" I think you have these tasks:");
+            this.printlnWithIndent(messageToUser);
             for (int i = 1; i <= tasks.size(); i += 1) {
                 this.printlnWithIndent(" " + i + "." + tasks.get(i - 1));
             }
