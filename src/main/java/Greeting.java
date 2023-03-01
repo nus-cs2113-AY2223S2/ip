@@ -88,6 +88,15 @@ public class Greeting {
     }
 
     /**
+    * Method to print the message informing users that file may be corrupted
+    */
+    public static void printReadFileError() {
+        printSeperator();
+        System.out.println("\tError with reading in tasks to list. Is your file corrupted?");
+        printSeperator();
+    }
+
+    /**
     * Method to print goodbye message
     */
     public static void printGoodbye() {
