@@ -1,0 +1,10 @@
+[T][ ] yummy
+[D][ ] poop (by: 5pm)
+[E][ ] poopoo (from: 5pm to: 7pm)
+[E][ ] BRUH (from: 888 to: 888)
+[T][ ] food
+[D][ ] LOL (by: 5pm)
+[E][X] KEKW (from: 5pm to: 6pm)
+[T][ ] food
+[D][X] feed (by: 5pm)
+[E][ ] farm (from: t to: y)
