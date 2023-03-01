@@ -56,8 +56,13 @@ public class Parser {
 
     /** Prints list of all tasks */
     public static void getList(ArrayList<Task> tasks) {
-        for (int i = 0; i < tasks.size(); i++) {
-            System.out.println((i + 1) + "." + Ui.printTask(tasks.get(i)));
+        if (tasks.size() > 0) {
+            System.out.println("Here are your current tasks:");
+            for (int i = 0; i < tasks.size(); i++) {
+                System.out.println((i + 1) + "." + Ui.printTask(tasks.get(i)));
+            }
+        } else {
+            System.out.println("There are no current tasks (yay!)");
         }
     }
 

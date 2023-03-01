@@ -4,12 +4,13 @@ public class Ui {
 
     /** Display message when loading previously saved tasks */
     static void loadDataMessage() {
-        System.out.println(("Loading previous save data..."));
+        System.out.println("Loading previously saved data...");
+        System.out.println();
     }
 
     static void welcomeMessage() {
-        System.out.println("Hi, I'm bob");
-        System.out.println("What's up");
+        System.out.println("Hi, I'm Duke!");
+        System.out.println("What's up?");
     }
 
     static void goodbyeMessage() {
