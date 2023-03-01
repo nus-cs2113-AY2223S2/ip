@@ -17,6 +17,7 @@ public class StartPikaDuke {
     private static final String MARK_COMMAND = "mark";
     private static final String UNMARK_COMMAND = "unmark";
     private static final String DELETE_COMMAND = "delete";
+    private static final String FIND_COMMAND = "find";
     static ArrayList<Task> listOfTasks = new ArrayList<>();
 
     public void startPikaDuke() {
@@ -30,6 +31,7 @@ public class StartPikaDuke {
         TaskDeleter taskDeleter = new TaskDeleter();
         TaskAdder taskAdder = new TaskAdder();
         Storage storageManager = new Storage();
+        Finder finder = new Finder();
         while (true) {
             try {
                 String input = newScanner.nextLine();
@@ -54,6 +56,9 @@ public class StartPikaDuke {
                     break;
                 case DELETE_COMMAND:
                     taskDeleter.handleDeleteAction(listOfTasks, input);
+                    break;
+                case FIND_COMMAND:
+                    finder.findTaskFromList(listOfTasks, input);
                     break;
                 default:
                     throw new DukeException(errMsgs.provideWrongCommandText());

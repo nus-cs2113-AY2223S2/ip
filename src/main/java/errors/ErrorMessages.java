@@ -1,5 +1,7 @@
 package errors;
 
+
+
 public class ErrorMessages {
 
     //The following are meant for Tasks
@@ -89,7 +91,10 @@ public class ErrorMessages {
         return "Pikapi is unable to find that command, please type in a correct command";
     }
 
-
+    //The following are meant for find task errors
+    public String provideNoTaskKeywordInput(){
+        return "Pikapi is unable to find a keyword to search the list for you, please add a word after the word \"find\"";
+    }
 
 
 }
