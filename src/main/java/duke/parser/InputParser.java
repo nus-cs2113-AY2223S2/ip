@@ -24,6 +24,7 @@ public class InputParser {
     private static final String COMMAND_EVENT = "event";
     private static final String COMMAND_EXIT = "exit";
     private static final String COMMAND_FIND = "find";
+    private static final String COMMAND_HELP = "help";
     private static final String COMMAND_LIST = "list";
     private static final String COMMAND_MARK = "mark";
     private static final String COMMAND_TODO = "todo";
@@ -119,6 +120,9 @@ public class InputParser {
             break;
         case COMMAND_FIND:
             result = new FindCommand(scanner.nextLine());
+            break;
+        case COMMAND_HELP:
+            result = new HelpCommand();
             break;
         case COMMAND_LIST:
             result = new ListCommand();

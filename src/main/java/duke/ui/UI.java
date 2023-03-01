@@ -16,7 +16,10 @@ public class UI {
     private static final String MESSAGE_EXIT = "Bye. Hope to see you again soon!";
     private static final String MESSAGE_GREET = "Hello! I'm Duke\nWhat can I do for you?";
     private static final String MESSAGE_HELP = "Welcome to Duke." + System.lineSeparator()
-            + "Duke is a ";
+            + "Duke is a task managing application optimised for the Command-Line Interface." + System.lineSeparator()
+            + "Commands: bye, deadline, event, exit, find, help, list, mark, todo, unmark" + System.lineSeparator()
+            + "To learn more about each command and view the full user guide, "
+            + "visit https://jinxuan-owyong.github.io/ip/" + System.lineSeparator();
     private static final String MESSAGE_LOGO = "Hello from";
 
     public void greet() {
@@ -39,6 +42,11 @@ public class UI {
 
     public void printExit() {
         print(MESSAGE_EXIT);
+        printLine();
+    }
+
+    public void printHelp() {
+        print(MESSAGE_HELP);
         printLine();
     }
 
@@ -86,6 +94,7 @@ public class UI {
 
     /**
      * Prints the message when there are matches for the query by the user.
+     *
      * @param query The keyword or regex queried by the user
      * @param tasks The matching tasks
      */
