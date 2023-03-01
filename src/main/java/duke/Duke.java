@@ -16,17 +16,6 @@ public class Duke {
     private static ArrayList<Tasks> listOfTasks = new ArrayList<Tasks>();
     private static int counter = 0;
 
-    public static void greet_user() {
-        System.out.println("Hello! I'm Duke \n");
-        String logo = " ____        _        \n"
-                + "|  _ \\ _   _| | _____ \n"
-                + "| | | | | | | |/ / _ \\\n"
-                + "| |_| | |_| |   <  __/\n"
-                + "|____/ \\__,_|_|\\_\\___|\n";
-        System.out.println(logo);
-        System.out.println("How can i help u? \n");
-    }
-
     public static void print_action() {
         System.out.println("\n");
         System.out.println("I have added this task: ");
@@ -36,10 +25,14 @@ public class Duke {
     }
 
     public static void Todo(String description) {
-        Tasks t = new ToDo(description);
-        listOfTasks.add(t);
-        counter++;
-        print_action();
+        try {
+            Tasks t = new ToDo(description);
+            listOfTasks.add(t);
+            counter++;
+            print_action();
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println(":( There is an error (Index is out of bounds/negative)");
+        }
     }
 
     public static void Deadline(String description, String by) {
@@ -116,7 +109,8 @@ public class Duke {
     }
 
     public static void main(String[] args) {
-        greet_user();
+        Ui ui = new Ui();
+        ui.greet_user();
         findFile();
 
         Scanner scan = new Scanner(System.in);
@@ -126,11 +120,7 @@ public class Duke {
         while (!"bye".equals(input)) {
             switch (command[0]) {
                 case "todo":
-                    try {
-                        Todo(command[1]);
-                    } catch (IndexOutOfBoundsException e) {
-                        System.out.println(":( There is an error (Index is out of bounds/negative)");
-                    }
+                    Todo(command[1]);
                     break;
                 case "deadline":
                     try {
