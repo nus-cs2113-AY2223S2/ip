@@ -1,5 +1,7 @@
 package duke.commands;
 
+import duke.exception.EmptyCommandException;
+import duke.exception.EmptyIndexException;
 import duke.exception.InvalidIndexException;
 import duke.tasks.TaskList;
 import duke.ui.Ui;
@@ -14,12 +16,17 @@ public class MarkTaskCommand extends Command{
     /**
      * Constructs a command to set the completion status of a task to be done.
      *
-     * @param input The index of a task in the task list to be marked as done.
+     * @param cases An array of string that contains the command and the index.
      * @param taskList The task list to be referenced from for the marking of the task.
      *                 Checks for whether the index is out of bounds.
      * @throws InvalidIndexException The exception thrown when user enters an invalid index.
+     * @throws EmptyCommandException The exception thrown when user did not input the index.
      */
-    public MarkTaskCommand (String input, TaskList taskList) throws InvalidIndexException {
+    public MarkTaskCommand (String[] cases, TaskList taskList) throws InvalidIndexException, EmptyIndexException {
+        if (cases.length == 1){
+            throw new EmptyIndexException();
+        }
+        String input = cases[1];
         index = Integer.parseInt(input) - 1;
         if (index >= taskList.listCount()) {
             throw new InvalidIndexException();

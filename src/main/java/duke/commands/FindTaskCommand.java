@@ -1,5 +1,7 @@
 package duke.commands;
 
+import duke.exception.EmptyFilterException;
+import duke.exception.EmptyIndexException;
 import duke.tasks.TaskList;
 import duke.ui.Ui;
 
@@ -12,9 +14,14 @@ public class FindTaskCommand extends Command{
     /**
      * Constructs a command that will display tasks containing the specified string.
      *
-     * @param substring The specified string by the user to find tasks which contain similar string.
+     * @param cases An array of string that contains the command and the keyword used to filter.
+     * @throws EmptyFilterException Exception thrown when user did not enter any keyword to filter.
      */
-    FindTaskCommand(String substring){
+    FindTaskCommand(String[] cases) throws EmptyFilterException {
+        if (cases.length == 1){
+            throw new EmptyFilterException();
+        }
+        String substring = cases[1];
         filter = substring;
     }
 

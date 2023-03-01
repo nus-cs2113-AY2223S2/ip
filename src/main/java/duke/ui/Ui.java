@@ -132,4 +132,18 @@ public class Ui {
     public static void printInvalidIndexMessage() {
         System.out.println("No such task exist! Try again.");
     }
+
+    /**
+     * Displays an error message when user did not enter the index after a command that needs an index.
+     */
+    public static void printEmptyIndexMessage(){
+        System.out.println("Index of the command cannot be empty!");
+    }
+
+    /**
+     * Displays an error message when user did not enter a keyword for the find command.
+     */
+    public static void printEmptyFilterMessage(){
+        System.out.println("Please enter a keyword. The keyword cannot be left empty");
+    }
 }

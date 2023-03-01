@@ -2,6 +2,7 @@ package duke;
 
 import duke.commands.Command;
 import duke.commands.Parser;
+import duke.exception.DukeException;
 import duke.tasks.TaskList;
 import duke.ui.Ui;
 
@@ -26,9 +27,13 @@ public class Duke {
         while (isRunning) {
             String userInput = in.nextLine();
             Command command = Parser.handleUserInputs(userInput, taskList);
+            if (command == null) {
+                Ui.printLine();
+                continue;
+            }
             command.execute(taskList);
             Ui.printLine();
             isRunning = !command.isExit();
-            }
         }
+    }
 }
