@@ -68,7 +68,7 @@ public class Storage {
                 try {
                     writeToFile("T:"+taskStatusBinary+":"+taskName);
                 } catch (IOException e){
-                    System.out.println(e);
+                    Greeting.printReadFileError();
                 }
                 break;
             case "D":
@@ -76,7 +76,7 @@ public class Storage {
                 try {
                     writeToFile("D:"+taskStatusBinary+":"+taskName+":"+deadlineDay);
                 } catch (IOException e){
-                    System.out.println(e);
+                    Greeting.printReadFileError();
                 }
                 break;
             case "E":
@@ -85,7 +85,7 @@ public class Storage {
                 try {
                     writeToFile("E:"+taskStatusBinary+":"+taskName+":"+eventTo+":"+eventFrom);
                 } catch (IOException e){
-                    System.out.println(e);
+                    Greeting.printReadFileError();
                 }
                 break;
             default:

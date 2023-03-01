@@ -88,7 +88,7 @@ public class Duke {
         try {
             Storage.clearFile();
         } catch (IOException e){
-            System.out.println(e);
+            Greeting.printReadFileError();
         }
         Storage.updateFile(tasks);
     }
