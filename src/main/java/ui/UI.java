@@ -14,7 +14,7 @@ public class UI {
         System.out.println(LINE);
     }
 
-    public static void welcome() {
+    public static void start() {
         System.out.println(LINE);
         System.out.println("What can I do for you?");
         System.out.println(LINE);
