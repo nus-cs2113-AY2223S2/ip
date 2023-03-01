@@ -29,7 +29,7 @@ public class Event extends Task{
     /**
     * Method to get day that event is from
     *
-    * @return from
+    * @return from, the day that event is from
     */
     @Override
     public String getFrom() {
@@ -39,7 +39,7 @@ public class Event extends Task{
     /**
     * Method to get day that event is up to
     *
-    * @return to
+    * @return to, the day that event is up to
     */
     @Override
     public String getTo() {
