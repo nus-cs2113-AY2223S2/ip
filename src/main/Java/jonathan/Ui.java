@@ -66,24 +66,12 @@ public class Ui {
         }
     }
 
-    public void showWrongInput() {
-        System.out.println("    Wrong input, please type it correctly!");
-    }
-
     public void showWrongFormat() {
         System.out.println("    Please type with he following format:\n");
         System.out.println("    - todo <description>");
         System.out.println("    - deadline <description> /by <time>");
         System.out.println("    - event <descripton> /from <time> /to <time>\n");
         System.out.println("    note: without the angle bracket");
-    }
-
-    public void showTaskNotFound() {
-        System.out.println("    The task doesn't exist, please type it correctly!");
-    }
-
-    public void showLoadingError() {
-        System.out.println("    Unfortunately, file can't be found!");
     }
 
     public void showError(String message) {
