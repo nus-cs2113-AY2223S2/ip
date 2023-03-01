@@ -13,18 +13,17 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 import static java.nio.file.Files.createDirectories;
 
 public class Storage {
-    private final String dirPath = "." + File.separator + "data";
-    private final String filePath = dirPath + File.separator + "duke.txt";
+    private final String DIR_PATH = "." + File.separator + "data";
+    private final String FILE_PATH = DIR_PATH + File.separator + "duke.txt";
 
     public void loadData(Ui ui, TaskList taskList) {
         try {
-            File file = new File(filePath);
+            File file = new File(FILE_PATH);
             if (!file.exists()) {
                 Path dirPath = Paths.get("./data");
                 createDirectories(dirPath);
@@ -77,7 +76,7 @@ public class Storage {
             content.append(task.getDataSummary());
             content.append("\n");
         }
-        FileWriter fileWriter = new FileWriter(filePath, false);
+        FileWriter fileWriter = new FileWriter(FILE_PATH, false);
         fileWriter.write(content.toString());
         fileWriter.close();
     }

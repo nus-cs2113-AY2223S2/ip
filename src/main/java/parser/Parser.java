@@ -14,7 +14,9 @@ public class Parser {
         case "list":
             break;
         case "mark":
+            // Fallthrough
         case "unmark":
+            // Fallthrough
         case "delete":
             try {
                 commands.add(inputs[1]);
