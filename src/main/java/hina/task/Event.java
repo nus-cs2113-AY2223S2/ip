@@ -1,7 +1,5 @@
 package hina.task;
 
-import hina.task.Task;
-
 public class Event extends Task {
     private String from;
     private String to;
