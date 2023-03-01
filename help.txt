@@ -1,0 +1,22 @@
+There are some commands used in Duke:
+
+Adding tasks
+    todo task_description                                           Add a todo task
+    deadline task_description /by time                              Add a deadline task
+    event task_description /from starting_time /to ending_time      Add an event task
+
+Listing all tasks
+    list                                                            List all existing tasks
+
+Deleting tasks
+    delete task_index                                               Delete task specified by the index
+
+Marking/Unmarking tasks
+    mark task_index                                                 Mark task as done by the index
+    unmark task_index                                               Unmark task as done by the index
+
+Finding tasks
+    find keyword                                                    Find and display all tasks containing the keyword
+
+Existing Duke
+    bye                                                             Exit the Duke programme
