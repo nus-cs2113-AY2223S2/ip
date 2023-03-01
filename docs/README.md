@@ -32,11 +32,12 @@ Thank you for using Duke. Duke is a command-line interface, personal assistant b
    1. This step is important as it ensures that the saved tasks file will be saved in the same directory. Otherwise, the file will be stored in the current working directory.
 7. Use the command `java -jar ip.jar` to launch Duke. If done correctly, you will see something like this on your first start up:
    ![startup.png](images/startup.png)
-8. When you are done using the app, enter `bye` to shut the application down. This ensures that Duke will save your data.
+8. When you are done using the app, enter `bye` to shut the application down. This ensures that Duke will save your data, as saving data is only done during the shut-down process. 
 
 # Quick Notes about Formatting and Inputs
 1. All words in `UPPER_CASE` are parameters, and all words in `this formatting` are instructions that you can copy directly.
 2. There are **no optional parameters**, so each parameter must have an input. Any mistakes will throw an error message to inform you that there has been a mistake, and what the correct format is. 
+   1. Do read the user guide carefully as the inclusion of additional parameters may cause Duke to crash. 
 3. All command words, such as `deadline` or `unmark`, are case-insensitive: any combination of capitalized and non-capitalized characters will still call the correct command, as long as it is spelt correctly.
 4. `DATE TIME` inputs for deadline and event tasks, ie. using the commands `/by`, `/from` and `/to`, will use the format `YYYY-MM-DD HH:MM`, in 24-hour time, such as entering `2023-01-23 23:59` to represent 23 Jan 2023, 11:59pm.
    1. You are required to have both the date and time. Omitting either will cause Duke to throw an error.
@@ -58,7 +59,6 @@ If the input method is correct, you will see something like this:
 
 ![todoCorrect.png](images/todoCorrect.png)
 
-
 ### Deadline
 Deadlines consist of a description and a date by which the task has to be completed. 
 
@@ -78,7 +78,7 @@ If the input method is correct, you will see something like this:
 ![eventCorrect.png](images/eventCorrect.png)
 
 ## List
-If you want to see all the tasks that Duke has helped you store, you can do so with the command `list`. This is a single word command which has no additional parameters.
+If you want to see all the tasks that Duke has helped you store, you can do so with the command `list`. This is a single word command which has no additional parameters. Any other parameters will be ignored Duke - for example, if you put 'list 1234', Duke will still process the command as 'list' and ignore '1234'.
 
 Your tasks will be printed out by Duke in the same order that you input them, with its index. There are three main sections when your tasks are printed, as shown below:
 
@@ -88,6 +88,8 @@ The first section shows the type of task, with 'T' for todo, 'D' for deadline, a
 
 ## Marking Tasks
 Duke comes with an in-built task tracker, allowing you to mark tasks as completed and uncompleted. By default, tasks are added to the list as incomplete.
+
+For both marking and unmarking tasks, the inclusion of non-integer parameters will cause Duke to crash. 
 
 To obtain figure out the index of your code, you can use the command [`list`](#list).
 
@@ -108,7 +110,7 @@ If the input method is correct, you will see something like this:
 ## Delete
 Currently, there Duke does not have the ability to edit tasks. If you make a mistake, or want to delete a task, you can do so with this feature. 
 
-The command usage is `delete INDEX`, ie. `delete 1`.
+The command usage is `delete INDEX`, ie. `delete 1`. Using any non-integers as a parameter will cause Duke to crash. 
 
 If the input method is correct, you will see something like this:
 
@@ -117,7 +119,7 @@ If the input method is correct, you will see something like this:
 ## Find
 If you wish to find tasks which contain specific words, you can do so with this feature.
 
-The command usage is `find DESCRIPTION`. Currently, Duke is unable to search by time. If you were to try searching for tasks due on `2023-11-23`, Duke will not be able to print out tasks for you, unless it is part of the tasks' description. 
+The command usage is `find DESCRIPTION`. Currently, Duke is unable to search by time. If you were to try searching for tasks due on `2023-11-23`, Duke will not be able to print out tasks for you, unless it is part of the task's description. 
 
 If the input method is correct, you will see something like this:
 
