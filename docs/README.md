@@ -21,12 +21,15 @@ Duke is a command-line (CLI) chatbot application that helps you keep track of yo
 ## Quick Start
 
 1. Ensure that you have Java 11 installed in your computer. To check your java version, open your terminal and type the following command `java --version` and the following should show up:
+
 ```
 C:\Users\example>java --version
 java 11.0.17 2022-10-18 LTS
 ```
+
 2. Download the latest `.jar` file from [here](https://github.com/ong-ck/ip/releases). You may move it to a directory of your choice in your computer.
 3. Open the terminal in the directory that the `.jar` file is stored and type the following command `java -jar ip.jar`. A welcome message should pop up as follows:
+
 ```
 C:\Users\example>java -jar ip.jar
 ____________________________________________________________
@@ -41,7 +44,8 @@ Hello! I'm Duke
 What can I do for you?
 ____________________________________________________________
 ```
-4. You may start using Duke following the instructions in this user guide!
+
+4.You may start using Duke following the instructions in this user guide!
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 <div id="features"></div>
@@ -84,11 +88,13 @@ Your list of tasks are saved regularly at every update and after exiting the pro
 You can add tasks, of three different types - todo, deadline and event - into your list to keep track of them.
 
 Format:
+
 - `todo NAME_OF_TASK`
 - `deadline NAME_OF_TASK /by DEADLINE_OF_TASK`
 - `event NAME_OF_EVENT /from EVENT_START /to EVENT_END`
 
 Example of usage:
+
 - `todo TaskA`
 - `deadline TaskB /by 8 May 2023 6pm`
 - `deadline TaskC /by 2023-01-01`
@@ -284,6 +290,7 @@ You can exit the application.
 Format: `bye`
 
 Example of usage and expected outcome:
+
 ```
 ____________________________________________________________
 bye
@@ -296,14 +303,52 @@ ____________________________________________________________
 <div id="command-summary"></div>
 
 ## Command Summary
-| Action | Format                                                                                                                 | Example(s)                                                                                                            |
-|--------|------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------|
-| Add    | `todo NAME_OF_TASK` `deadline NAME_OF_TASK /by DEADLINE_OF_TASK` `event NAME_OF_EVENT /from EVENT_START /to EVENT_END` | `todo TaskA` `deadline TaskB /by 8 May 2023 6pm` `deadline TaskC /by 2023-01-01` `event EventD /from 1 May /to 2 May` |
-| List   | `list`                                                                                                                 | -                                                                                                                     |
-| Mark   | `mark INDEX`                                                                                                           | `mark 1`                                                                                                              |
-| Unmark | `unmark INDEX`                                                                                                         | `unmark 1`                                                                                                            |
-| Find   | `find KEYWORD`                                                                                                         | `find book` `find Task`                                                                                               |
-| Delete | `delete INDEX`                                                                                                         | `delete 1`                                                                                                            |
-| Exit   | `bye`                                                                                                                  | -                                                                                                                     |
+
+<table>
+<thead>
+  <tr>
+    <th>Action</th>
+    <th>Format</th>
+    <th>Example(s)</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td>Add</td>
+    <td>`todo NAME_OF_TASK`<br>`deadline NAME_OF_TASK /by DEADLINE_OF_TASK`<br>`event NAME_OF_EVENT /from EVENT_START /to EVENT_END`</td>
+    <td>`todo TaskA`<br>`deadline TaskB /by 8 May 2023 6pm`<br>`deadline TaskC /by 2023-01-01`<br>`event EventD /from 1 May /to 2 May`</td>
+  </tr>
+  <tr>
+    <td>List</td>
+    <td>`list`</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>Mark</td>
+    <td>`mark INDEX`</td>
+    <td>`mark 1`</td>
+  </tr>
+  <tr>
+    <td>Unmark</td>
+    <td>`unmark INDEX`</td>
+    <td>`unmark 1`</td>
+  </tr>
+  <tr>
+    <td>Find</td>
+    <td>`find KEYWORD`</td>
+    <td>`find book`<br>`find Task`</td>
+  </tr>
+  <tr>
+    <td>Delete</td>
+    <td>`delete INDEX`</td>
+    <td>`delete 1`</td>
+  </tr>
+  <tr>
+    <td>Exit</td>
+    <td>`bye`</td>
+    <td>-</td>
+  </tr>
+</tbody>
+</table>                                                                                                              | -                                                                                                                     |
 
 <p align="right">(<a href="#top">back to top</a>)</p>
