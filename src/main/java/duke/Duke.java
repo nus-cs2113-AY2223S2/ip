@@ -10,9 +10,48 @@ import java.io.File;
 public class Duke {
 
 
-    private static void printFileContents(String filePath) throws FileNotFoundException {
-        File f = new File(filePath); // create a File for the given file path
-        Scanner s = new Scanner(f); // create a Scanner using the File as the source
+    private Storage store;
+    private Ui ui;
+    private TaskList arrayLL;
+    private Parser parser;
+
+    public Duke() {
+        this.store = new Storage();
+        this.ui = new Ui();
+        this.arrayLL = new TaskList();
+        this.parser = new Parser(ui, store, arrayLL);
+    }
+
+    public static void main(String[] args) throws IOException {
+
+        List<String> arrayList = new ArrayList<String>();
+        List<Task> arrayL = new ArrayList<Task>();
+        String userText;
+
+        Task[] tasks = new Task[100];
+        Duke duke = new Duke();
+        duke.ui.printStart();
+        Scanner sc = new Scanner(System.in);
+        while (true) {
+            System.out.println("Please enter items you want to add to the list, if you want to quit enter bye");
+            System.out.println("");
+            System.out.print("Enter Your command: ");
+            userText = sc.nextLine();
+            System.out.println("");
+            if (userText.equals("bye") || userText.equals("Bye")) {
+                System.out.println("Exiting chatbot! Hope to see you again");
+                break;
+            }
+
+            duke.parser.checkText(userText);
+        }
+    }
+}
+
+
+    /*private static void printFileContents(String filePath) throws FileNotFoundException {
+        File f = new File(filePath);
+        Scanner s = new Scanner(f);
         while (s.hasNext()) {
             System.out.println(s.nextLine());
         }
@@ -25,11 +64,28 @@ public class Duke {
     }
 
     private static void appendToFile(String filePath, String textToAppend) throws IOException {
-        FileWriter fw = new FileWriter(filePath, true); // create a FileWriter in append mode
+        FileWriter fw = new FileWriter(filePath, true);
         fw.write(textToAppend + "\n");
         fw.close();
     }
-    public static void main(String[] args) throws IOException{
+
+    private static void editToFile(String filePath, List tasks) throws IOException{
+        for (int i = 0; i < tasks.size(); i++) {
+            String todoList = tasks.get(i).toString();
+            if(i == 0){
+                FileWriter fw = new FileWriter(filePath);
+                fw.write(todoList + "\n");
+                fw.close();
+            }else{
+                FileWriter fw = new FileWriter(filePath, true);
+                fw.write(todoList + "\n");
+                fw.close();
+            }
+        }
+    }
+     */
+
+ /*   public static void main(String[] args) throws IOException {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
                 + "| | | | | | | |/ / _ \\\n"
@@ -50,7 +106,7 @@ public class Duke {
         }
 
         String line;
-        List<Task> tasks = new ArrayList<Task>();
+        List<Task> tasks = new ArrayList<>();
         Scanner in = new Scanner(System.in);
         line = in.nextLine();
 
@@ -59,20 +115,13 @@ public class Duke {
 
             if (line.equals("list") && !tasks.isEmpty()) {
                 System.out.println("Here are the tasks in your list: \n ");
-                /*for (int i = 0; i < tasks.size(); i++) {
-                    Task todoList = tasks.get(i);
-                    System.out.println("\t" + (i + 1) + ". " + todoList.toString());
-                }
-                 */
                 printFileContents(f.getAbsolutePath());
                 System.out.println("____________________________________________________________\n");
             }
-<<<<<<< HEAD
-=======
 
             if (line.contains("delete") && !tasks.isEmpty()){
                 int index = line.indexOf(" ");
-                if (line.length() > 7) {
+                if (!line.equals("delete")) {
                     String str = line.substring(index + 1);
                     int pos = Integer.parseInt(str);
                     System.out.println("Noted! The task has been removed \n");
@@ -80,13 +129,12 @@ public class Duke {
                     tasks.remove(pos - 1);
                     System.out.println("You have " + tasks.size() + " number of tasks in you list.");
                     System.out.println("____________________________________________________________\n");
+                    editToFile(f.getAbsolutePath(), tasks);
                 }
-            }
->>>>>>> branch-Level-6
 
-            else if (line.contains("unmark")) {
+            }else if (line.contains("unmark")) {
                 int index = line.indexOf(" ");
-                if (line.length() > 7){
+                if (!line.equals("unmark")){
                     String str = line.substring(index + 1);
                     int pos = Integer.parseInt(str);
                     Task taskUnmarked = tasks.get(pos - 1);
@@ -94,16 +142,17 @@ public class Duke {
                     System.out.printf("" + "Okay, I've marked this task as not done yet:\n" + "\t" + " " + "[" +
                             taskUnmarked.getStatusIcon() + "]" + " " + taskUnmarked.description + "\n");
                     System.out.println("____________________________________________________________\n");
-                }
-                else{
-                    System.out.println("🤪Sorry please drink some coffee and enter valid unmark command");
+                    editToFile(f.getAbsolutePath(), tasks);
+
+
+                } else{
+                    System.out.println(":(( Sorry please drink some coffee and enter valid unmark command");
                     System.out.println("____________________________________________________________\n");
                 }
-            }
 
-            else if (line.contains("mark")) {
+            } else if (line.contains("mark")) {
                 int index = line.indexOf(" ");
-                if (line.length() > 5){
+                if (!line.equals("mark")){
                     String str = line.substring(index + 1);
                     int pos = Integer.parseInt(str);
                     Task taskMarked = tasks.get(pos - 1);
@@ -111,75 +160,72 @@ public class Duke {
                     System.out.printf(" " + "Nice! I've marked this task as done:\n" + "\t" + " " + "[" +
                             taskMarked.getStatusIcon() + "]" + " " + taskMarked.description + "\n");
                     System.out.println("____________________________________________________________\n");
-                }
-                else{
-                    System.out.println("🤪Sorry please drink some coffee and enter valid mark command");
+                    editToFile(f.getAbsolutePath(), tasks);
+
+                }else{
+                    System.out.println(":(( Sorry please drink some coffee and enter valid mark command");
                     System.out.println("____________________________________________________________\n");
                 }
-            }
 
-            else if (line.contains("todo")) {
-                if (line.length() > 5){
+            } else if (line.contains("todo")) {
+                if (!line.equals("todo")){
                     int index = line.indexOf(" ");
                     String activity = line.substring(index, line.length());
                     Todo toDo = new Todo(activity);
                     tasks.add(toDo);
-                    System.out.println("Added: " + "\n" + toDo.toString() + "\n");
+                    System.out.println("Added: " + "\n" + toDo + "\n");
                     System.out.println("You have " + tasks.size() + " number of tasks in you list.");
                     System.out.println("____________________________________________________________\n");
-                    appendToFile(f.getAbsolutePath(), toDo.toString() + "\n");
-                }
-                else {
-                    System.out.println("🤪Drink coffee and enter a valid todo command");
+                    appendToFile(f.getAbsolutePath(), toDo + "\n");
+
+                } else {
+                    System.out.println(":(( Drink coffee and enter a valid todo command");
                     System.out.println("____________________________________________________________\n");
                 }
-            }
 
-            else if (line.contains("deadline")) {
-                if (line.length() > 9 && line.contains("/")){
+            } else if (line.contains("deadline")) {
+                if (!line.equals("deadline") && line.contains("/")){
                     int index = line.indexOf(" ");
                     int pos = line.indexOf("/");
                     String activity = line.substring(index, pos - 1);
                     String dueDate = line.substring(pos + 3, line.length());
-                    Deadline deadline = new Deadline(activity, dueDate);
+                    Deadline deadline = new Deadline(activity, dueDate.trim());
                     tasks.add(deadline);
-                    System.out.println("Added: " + "\n" + deadline.toString() + "\n");
+                    System.out.println("Added: " + "\n" + deadline + "\n");
                     System.out.println("You have " + tasks.size() + " number of tasks in you list.");
                     System.out.println("____________________________________________________________\n");
-                    appendToFile(f.getAbsolutePath(), deadline.toString() + "\n");
-                }
-                else{
-                    System.out.println("🤪Drink coffee and enter a valid deadline command");
+                    appendToFile(f.getAbsolutePath(), deadline + "\n");
+
+                }else{
+                    System.out.println(":(( Drink coffee and enter a valid deadline command");
                     System.out.println("____________________________________________________________\n");
                 }
-            }
 
-            else if (line.contains("event")) {
-                if (line.length() > 6 && line.contains("/")){
+            } else if (line.contains("event")) {
+                if (!line.equals("event") && line.contains("/")){
                     int index = line.indexOf(" ");
-                    int startDate = line.indexOf("/");
-                    String activity = line.substring(index, startDate);
-                    String timeFrame = line.substring(startDate + 3, line.length());
-                    Event event = new Event(activity, timeFrame);
+                    int slash = line.indexOf("/");
+                    String activity = line.substring(index, slash);
+                    String timeFrame = line.substring(slash + 3, line.length());
+                    String startDate = timeFrame.substring(0, 11);
+                    String endDate = timeFrame.substring(11, timeFrame.length());
+                    Event event = new Event(activity, startDate.trim(), endDate.trim());
                     tasks.add(event);
-                    System.out.println("Added: " + "\n" + event.toString() + "\n");
+                    System.out.println("Added: " + "\n" + event + "\n");
                     System.out.println("You have " + tasks.size() + " number of tasks in you list.");
                     System.out.println("____________________________________________________________\n");
-                    appendToFile(f.getAbsolutePath(), event.toString() + "\n");
-                }
-                else{
-                    System.out.println("🤪Drink coffee and enter a valid event command");
+                    appendToFile(f.getAbsolutePath(), event + "\n");
+                }else{
+                    System.out.println(":(( Drink coffee and enter a valid event command");
                     System.out.println("____________________________________________________________\n");
                 }
-            }
 
-            else if(tasks.isEmpty()){
-                System.out.println("🤪The list is empty. Do something in order to have tasks in your list");
+            }else if(tasks.isEmpty()){
+                System.out.println(":(( The list is empty. Do something in order to have tasks in your list");
                 System.out.println("____________________________________________________________\n");
-            }
 
-            else if (!line.equals("list")){
-                System.out.println("🤪Sorry enter a valid Duke command");
+            } else if (!line.equals("list")){
+                System.out.println(":(( Sorry enter a valid Duke command");
                 System.out.println("____________________________________________________________\n");
             }
             line = in.nextLine();
@@ -189,3 +235,4 @@ public class Duke {
                 "____________________________________________________________\n");
     }
 }
+*/
