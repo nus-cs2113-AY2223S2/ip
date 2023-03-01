@@ -4,6 +4,7 @@ import dude.commands.Io;
 import dude.commands.Parser;
 import dude.exception.DudeException;
 import dude.exception.InvalidDeleteException;
+import dude.exception.InvalidFindException;
 import dude.exception.InvalidMarkException;
 import dude.exception.InvalidUnmarkException;
 
@@ -102,5 +103,26 @@ public class ListManager {
         } catch (NumberFormatException e) {
             throw new InvalidDeleteException();
         }
+    }
+
+    public static void findTask(String input) throws InvalidFindException {
+        if(input.equals("")) {
+            throw new InvalidFindException();
+        }
+        Boolean isFound = false;
+        //System.out.println(Io.LINE + "\n" + "Here are the matching tasks in your list:" + "\n");
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getDescription().contains(input.toLowerCase())) {
+                if(isFound == false) {
+                    System.out.println(Io.LINE + "\n" + "Here are the matching tasks in your list:" + "\n");
+                }
+                System.out.println((i + 1) + "." + list.get(i));
+                isFound = true;
+            }
+        }
+        if(isFound == false) {
+            System.out.println("No task found with keyword: " + input);
+        }
+        System.out.println(Io.LINE);
     }
 }
