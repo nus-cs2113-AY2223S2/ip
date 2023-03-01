@@ -23,6 +23,9 @@ public class Storage {
      * @param filepath the filepath of the storage.
      */
     Storage(String filepath) {
+        String dirname = filepath.substring(0, filepath.lastIndexOf("/"));
+        File dir = new File(dirname);
+        dir.mkdirs();
         this.file = new File(filepath);
     }
 
@@ -88,7 +91,7 @@ public class Storage {
             reader.close();
 
         } catch (FileNotFoundException e) {
-            throw new JonathanException("Unfortunately, file can't be found!");
+            throw new JonathanException("Unfortunately, file can't be found. I'll make a new one!");
         }
 
         return tasks;
