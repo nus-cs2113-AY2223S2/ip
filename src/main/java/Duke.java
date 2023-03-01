@@ -8,16 +8,17 @@ public class Duke {
     public static final int ARRAY_LENGTH = 100;
 
     public static void main(String[] args) {
+        Task[] tasks = new Task[ARRAY_LENGTH];
+        Scanner in = new Scanner(System.in);
+        String filePath = "test11.txt";
+
         greeting();
         System.out.println("Attempting to retrieve your files..." + System.lineSeparator());
         try {
-            printFileContents("test11.txt");
+            printFileContents(filePath, tasks);
         } catch (FileNotFoundException e) {
             System.out.println("File is not found. Creating a new file now...");
         }
-
-        Task[] tasks = new Task[ARRAY_LENGTH];
-        Scanner in = new Scanner(System.in);
 
         boolean isExit = false;
         while (!isExit) {
@@ -188,14 +189,16 @@ public class Duke {
 
     // Adapted from CS2113 Week 6 documentation
     // If there are saved tasks, print them out.
-    private static void printFileContents(String filePath) throws FileNotFoundException {
+    private static void printFileContents(String filePath, Task[] tasks) throws FileNotFoundException {
         File f = new File(filePath);
         Scanner s = new Scanner(f);
         if (s.hasNext()) {
             System.out.println("Your previously saved tasks:");
             horizontalLine();
             while (s.hasNext()) {
-                System.out.println(s.nextLine());
+                String lineInFile = s.nextLine();
+                System.out.println(lineInFile);
+                copyToList(lineInFile, tasks, filePath);
             }
             horizontalLine();
         } else {
@@ -203,6 +206,35 @@ public class Duke {
             System.out.println("Add your first task :)");
             horizontalLine();
         }
+    }
+
+    // Copying text file contents over to tasks list
+    private static void copyToList(String line, Task[] tasks, String filePath) {
+        switch(line.substring(0,1)) {
+        case "T":
+            copyTodoToList("T", line.substring(2), tasks);
+            break;
+        default:
+            System.out.println("Unknown task type detected...");
+            System.out.println("Skipping task...");
+        }
+    }
+
+    //Does creation of ToDo and copying to tasks
+    private static void copyTodoToList(String taskType, String taskInfo, Task[] tasks) {
+        // Parse line to split task status and task info
+        String[] messageComponents = taskInfo.split("/", 2);
+        // Create new todo with task info
+        ToDo newToDo = new ToDo(messageComponents[1]);
+        // Store todo in list of tasks
+        int currentIndexInTaskStorage = Task.getNumberOfTasks();
+        tasks[currentIndexInTaskStorage] = newToDo;
+        // Mark task as done if task status was stored as 1
+        if (messageComponents[0] == "1") {
+            Task currentTask = tasks[currentIndexInTaskStorage];
+            currentTask.markAsDone();
+        }
+
 
     }
 
