@@ -49,6 +49,7 @@ public class Parser {
             commandParamsList = getDeadlineCommandParmasList(commandParams);
             String todoString = commandParamsList[0];
             String deadlineString = commandParamsList[1].substring(3);
+
             return new DeadlineCommand(todoString,deadlineString);
         } catch (ArrayIndexOutOfBoundsException e) {
             ui.showDeadlineParmsFormat();
