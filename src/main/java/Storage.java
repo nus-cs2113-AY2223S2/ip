@@ -93,11 +93,11 @@ public class Storage {
                     }
                     tasks.add(task);
                 }
-                for (int i = 0; i < tasks.size(); i += 1) {
-                    System.out.println(i + 1 + ": " + tasks.get(i));
-                }
                 if (tasks.size() > 0) {
                     Ui.showWelcomeBackMessage();
+                }
+                for (int i = 0; i < tasks.size(); i += 1) {
+                    System.out.println(i + 1 + ": " + tasks.get(i));
                 }
                 return tasks.toArray(new Task[0]);
             } else {
