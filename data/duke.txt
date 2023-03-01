@@ -1,8 +1,2 @@
-<<<<<<< HEAD
-	  1. [D][X]	return book (by: by Sunday)
-=======
-	  1. [T][ ]	assd
-	  2. [T][ ]	asd2
-	  3. [T][ ]	book1
-	  4. [T][ ]	book2
->>>>>>> master
+	  1. [D][ ]	tP Meeting (by: Friday 16.00pm)
+	  2. [E][ ]	CS2113 tP Meeting (from: Friday 16.00pm to: 18.00pm)
