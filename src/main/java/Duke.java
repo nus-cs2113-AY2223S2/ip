@@ -1,92 +1,90 @@
-import java.util.Scanner;
-
 public class Duke {
+
     public static final String COMMAND_BYE = "bye";
     public static final String COMMAND_LIST = "list";
     public static final String COMMAND_MARK = "mark";
     public static final String COMMAND_UNMARK = "unmark";
     public static final String COMMAND_DELETE = "delete";
+    public static final String COMMAND_ADD_TODO = "add todo";
+    public static final String COMMAND_ADD_DEADLINE = "add deadline";
+    public static final String COMMAND_ADD_EVENT = "add event";
 
     private static TaskList taskList;
-    private static UI ui;
-    private static Parser parser;
 
     public static void main(String[] args) {
         taskList = new TaskList();
-        ui = new UI();
-        parser = new Parser();
+        UI.greetUser();
 
         while(true){
-            executeCommand(getUserCommand());
+            executeCommand();
         }
     }
 
-    public static void exitProgram(){
-        ui.printBye();
-        System.exit(0);
-    }
+    public static void executeCommand(){
+        Command command = Parser.getCommand();
 
-    public static String getUserCommand(){
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("[User] ");
-        return scanner.nextLine();
-    }
-
-    public static void executeCommand(String command){
-        String[] commandsSplited = command.split(" ");
-        switch(commandsSplited[0]){
+        switch(command.getType()){
             case COMMAND_BYE:
                 exitProgram(); break;
             case COMMAND_LIST:
                 list(); break;
             case COMMAND_MARK:
-                mark(commandsSplited[1]); break;
+                mark(command); break;
             case COMMAND_UNMARK:
-                unmark(commandsSplited[1]); break;
+                unmark(command); break;
             case COMMAND_DELETE:
-                delete(commandsSplited[1]); break;
+                delete(command); break;
+            case COMMAND_ADD_TODO:
+                add(command); break;
+            case COMMAND_ADD_DEADLINE:
+                add(command); break;
+            case COMMAND_ADD_EVENT:
+                add(command); break;
             default:
-                add(command);
+                UI.printInputErrorComment();
         }
     }
 
-    public static void add(String userInput){
-        if (taskList.addTask(userInput)) {
+    public static void exitProgram(){
+        UI.printBye();
+        System.exit(0);
+    }
+
+    public static void add(Command command){
+        if (taskList.addTask(command)) {
             int totalTaskNum = taskList.getTotalTaskNum();
-            ui.printAddComment(taskList.getTask(totalTaskNum), totalTaskNum);
+            UI.printAddComment(taskList.getTask(totalTaskNum), totalTaskNum);
         } else {
-            ui.printInputErrorComment();
+            UI.printInputErrorComment();
         }
     }
 
     public static void list(){
-        ui.printTaskList(taskList);
+        UI.printTaskList(taskList);
     }
 
-    public static void mark(String taskNum){
-        int taskNumInt = Integer.parseInt(taskNum);
-        taskList.markTask(taskNumInt);
-        ui.printMarkComment(taskList.getTask(taskNumInt));
+    public static void mark(Command command){
+        taskList.markTask(command.getTargetTaskIndex());
+        UI.printMarkComment(taskList.getTask(command.getTargetTaskIndex()));
     }
 
-    public static void unmark(String taskNum) {
-        int taskNumInt = Integer.parseInt(taskNum);
-        taskList.unmarkTask(taskNumInt);
-        ui.printUnmarkComment(taskList.getTask(taskNumInt));
+    public static void unmark(Command command) {
+        taskList.unmarkTask(command.getTargetTaskIndex());
+        UI.printUnmarkComment(taskList.getTask(command.getTargetTaskIndex()));
     }
 
-    public static void delete(String taskNum){
-        int taskNumInt = Integer.parseInt(taskNum);
+    public static void delete(Command command){
+        int taskNumInt = command.getTargetTaskIndex();
         if(taskNumInt > taskList.getTotalTaskNum() || taskNumInt <= 0){
-            ui.printNotFoundErrorComment();
+            UI.printNotFoundErrorComment();
             return;
         }
 
-        Task targetTask = taskList.getTaskArray().get(taskNumInt-1);
+        Task targetTask = taskList.getTask(command.getTargetTaskIndex());
         if(taskList.delete(taskNumInt)) {
-            ui.printDeleteComment(targetTask, taskList.getTotalTaskNum());
+            UI.printDeleteComment(targetTask, taskList.getTotalTaskNum());
         } else{
-            ui.printInputErrorComment();
+            UI.printInputErrorComment();
         }
     }
 

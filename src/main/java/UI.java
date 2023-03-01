@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class UI {
     public static String HORIZONTAL_LINE = "____________________________________________________________";
 
@@ -5,7 +7,7 @@ public class UI {
         greetUser();
     }
 
-    public void greetUser(){
+    public static void greetUser(){
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
                 + "| | | | | | | |/ / _ \\\n"
@@ -19,13 +21,13 @@ public class UI {
         System.out.println(HORIZONTAL_LINE);
     }
 
-    public void printBye(){
+    public static  void printBye(){
         System.out.println(HORIZONTAL_LINE);
         System.out.println("[DUKE] Bye. Hope to see you again soon!");
         System.out.print(HORIZONTAL_LINE);
     }
 
-    public void printAvailableInput(){
+    public static void printAvailableInput(){
         System.out.println("These are what You can do:");
         System.out.println("* |Add todo| ex) todo individual project" );
         System.out.println("* |Add deadline| ex) deadline do coursemology /by Tuesday");
@@ -37,7 +39,7 @@ public class UI {
         System.out.println("* |Exit| ex) bye");
     }
 
-    public void printAddComment(Task targetTask, int totalTaskNum){
+    public static void printAddComment(Task targetTask, int totalTaskNum){
         System.out.println(HORIZONTAL_LINE);
         System.out.println("[DUKE] Okay:) You've got one more task added: ");
         System.out.println("       "+ targetTask);
@@ -45,7 +47,7 @@ public class UI {
         System.out.println(HORIZONTAL_LINE);
     }
 
-    public void printDeleteComment(Task targetTask, int totalTaskNum){
+    public static void printDeleteComment(Task targetTask, int totalTaskNum){
         System.out.println(HORIZONTAL_LINE);
         System.out.println("[DUKE] OK, I removed this task from the list: ");
         System.out.println("       "+ targetTask);
@@ -53,34 +55,34 @@ public class UI {
         System.out.println(HORIZONTAL_LINE);
     }
 
-    public void printMarkComment(Task targetTask){
+    public static void printMarkComment(Task targetTask){
         System.out.println(HORIZONTAL_LINE);
         System.out.println("[DUKE] Good job! I marked this task as done: ");
         System.out.println(targetTask);
         System.out.println(HORIZONTAL_LINE);
     }
 
-    public void printUnmarkComment(Task targetTask){
+    public static void printUnmarkComment(Task targetTask){
         System.out.println(HORIZONTAL_LINE);
         System.out.println("[DUKE] OK, I've marked this task as not done yet: ");
         System.out.println(targetTask);
         System.out.println(HORIZONTAL_LINE);
     }
 
-    public void printTaskList(TaskList taskList){
+    public static void printTaskList(TaskList taskList){
         System.out.println(HORIZONTAL_LINE);
         System.out.println("[DUKE] Here are the tasks in your list: ");
         System.out.print(taskList);
         System.out.println(HORIZONTAL_LINE);
     }
 
-    public void printInputErrorComment(){
+    public static void printInputErrorComment(){
         System.out.println("[DUKE] Uh oh! Wrong Input :( I Cannot Understand you. Please check input format.");
         printAvailableInput();
         System.out.println(HORIZONTAL_LINE);
     }
 
-    public void printNotFoundErrorComment(){
+    public static void printNotFoundErrorComment(){
         System.out.println("[Duke] ☹ OOPS!!! I cannot find the task");
         printAvailableInput();
         System.out.println(HORIZONTAL_LINE);
@@ -104,5 +106,11 @@ public class UI {
 
     public static void printFileLoadingErrorComment(){
         System.out.println("[Duke] Uh oh! I cannot load file :< Please check again.");
+    }
+
+    public static String getUserCommand(){
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("[User] ");
+        return scanner.nextLine();
     }
 }

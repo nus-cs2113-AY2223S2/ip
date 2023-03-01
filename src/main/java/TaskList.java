@@ -18,43 +18,43 @@ public class TaskList {
         }
     }
 
-    public void loadData(ArrayList<String> existingTasks){
+    public void loadData(ArrayList<String> existingTasks) throws IOException{
         for(String taskInfo : existingTasks){
-            String taskState = taskInfo.substring(0,1);
-            String[] taskContent = taskInfo.substring(3).split("/");
-            switch(taskContent.length){
-                case 1:
-                    addTodo(taskContent);
-                    break;
-                case 2:
-                    addDeadline(taskContent);
-                    break;
-                case 3:
-                    addEvent(taskContent);
-                    break;
+
+            if(taskInfo.contains("[T]")){
+                taskInfo = "todo " + taskInfo.substring(9);
+            }else if(taskInfo.contains("[D]")){
+                taskInfo = "deadline " + taskInfo.substring(9);
+            }else if(taskInfo.contains("[E]")){
+                taskInfo = "event " + taskInfo.substring(9);
             }
-            if(taskState.equals("O")) markTask(getTotalTaskNum());
+
+            Command command = Parser.getCommand(taskInfo);
+
+            if(!addTask(command)){
+                UI.printFileLoadingErrorComment();
+            }
+
+            if(taskInfo.contains("[O]")) markTask(getTotalTaskNum());
         }
     }
 
-    public boolean addTask(String userInput){
-        String[] userInputSplited = userInput.split("/");
-        String[] userCommand = userInputSplited[0].split(" ");
-        switch(userCommand[0]){
-            case "todo":
-                return addTodo(userInputSplited);
-            case "deadline":
-                return addDeadline(userInputSplited);
-            case "event":
-                return addEvent(userInputSplited);
+    public boolean addTask(Command command){
+        switch(command.getType()){
+            case "add todo":
+                return addTodo(command);
+            case "add deadline":
+                return addDeadline(command);
+            case "add event":
+                return addEvent(command);
             default:
                 return false;
         }
     }
 
-    public boolean addTodo(String[] userInputSplited){
+    public boolean addTodo(Command command){
         try{
-            String contents = userInputSplited[0].replace("todo ", "");
+            String contents = command.getContent();
             Todo newTodo = new Todo(contents);
             taskArray.add(newTodo);
             totalTaskNum++;
@@ -66,11 +66,11 @@ public class TaskList {
         return true;
     }
 
-    public boolean addDeadline(String[] userInputSplited){
+    public boolean addDeadline(Command command){
         try{
-            String contents = userInputSplited[0].replace("deadline ", "");
-            String end = userInputSplited[1].replace("by: ", "");
-            Deadline newDeadline = new Deadline (contents, end);
+            String contents = command.getContent();
+            String by = command.getBy();
+            Deadline newDeadline = new Deadline (contents, by);
             taskArray.add(newDeadline);
             totalTaskNum++;
         } catch(Exception e){
@@ -81,12 +81,12 @@ public class TaskList {
         return true;
     }
 
-    public boolean addEvent(String[] userInputSplited){
+    public boolean addEvent(Command command){
         try{
-            String contents = userInputSplited[0].replace("event ", "");
-            String start = userInputSplited[1].replace("from: ", "");
-            String end = userInputSplited[2].replace("to: ", "");
-            Event newEvent = new Event(contents, start, end);
+            String contents = command.getContent();
+            String from = command.getFrom();
+            String to = command.getTo();
+            Event newEvent = new Event(contents, from, to);
             taskArray.add(newEvent);
             totalTaskNum++;
         } catch(Exception e){
@@ -109,7 +109,6 @@ public class TaskList {
         return true;
     }
 
-
     public boolean delete(int taskNumInt){
         try{
             taskArray.remove(taskNumInt-1);
@@ -131,10 +130,6 @@ public class TaskList {
             str = str.concat(i + "." + taskArray.get(i-1) + "\n");
         }
         return str;
-    }
-
-    public ArrayList<Task> getTaskArray(){
-        return taskArray;
     }
 
     public int getTotalTaskNum(){
