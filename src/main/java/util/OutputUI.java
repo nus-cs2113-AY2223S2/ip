@@ -9,9 +9,6 @@ import java.util.ArrayList;
 
 public class OutputUI {
 
-    static final String SHOWING_LIST_PIKACHU_LOGO = "";
-
-
     private static void printLine() {
         System.out.println("  ____________________________________________________________");
     }
@@ -68,4 +65,14 @@ public class OutputUI {
     public void printByeByeMessage() {
         System.out.println("Pikapi is surprised to see you go, see you soon friend\n");
     }
+
+    public void printTaskListWithKeyword(ArrayList<Task> output){
+        System.out.println("Pikapi has found  list of things pertaining to your keyword");
+        printList(output, output.size());
+    }
+
+    public void printNoTaskWithKeyword(){
+        System.out.println("No tasks with descriptions containing the keyword is found, Pikapi tried his best");
+    }
+
 }

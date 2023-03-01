@@ -26,19 +26,14 @@ _¶¶ƒƒ¶ƒƒƒƒ¶¶ƒƒƒƒƒƒƒƒƒƒƒƒ¥¥¥¥ƒƒƒƒƒƒƒƒƒƒƒƒ�
 Please let Pikapi write you a lists
 Data file does not exist, creating a new one
 Created a new listData file
-
 Pikapi's list is completely empty, please add some tasks!
   ____________________________________________________________
-
-Pikapi add this task:
+Pikapi add this task: 
   [T][ ] check 1
 Pikapi sees that now you have 1 tasks in the list
   ____________________________________________________________
-
-Pikapi add this task:
+Pikapi add this task: 
   [T][ ] check 2
 Pikapi sees that now you have 2 tasks in the list
-
-
-Pikapi is surprised to see you go, see you soon fwen
+Pikapi is surprised to see you go, see you soon friend
 
