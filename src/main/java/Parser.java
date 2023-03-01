@@ -9,6 +9,7 @@ public class Parser {
      * @return c The parsed command from user input
      */
     public static Command parseInput(String action) {
+
         Command c = new Command(action.split(" ", 2));
 
         return c;

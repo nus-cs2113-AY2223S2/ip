@@ -27,8 +27,10 @@ public class Duke {
      * and storage to store information in duke.txt file.
      */
     public Duke() {
+
         ui = new Ui();
         storage = new Storage(DIR_PATH, FILE_PATH);
+
         try {
             taskList = storage.load(ui);
             ui.showLoadingSuccess();

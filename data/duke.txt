@@ -1,4 +1,4 @@
-T | 0 | join sports club
+T | 1 | join sports club
 T | 0 | borrow book
 D | 1 | return book /by Sunday
 E | 0 | project meeting /from Mon 2pm /to 4pm

@@ -25,6 +25,7 @@ public class Storage {
      * @param ui Ui class for interaction with user.
      */
     public void save(TaskList taskList, Ui ui) {
+
         try {
             saveTasks(taskList.tasks, filePath);
         } catch (IOException e) {
@@ -40,10 +41,14 @@ public class Storage {
      * @throws IOException If file is not writable.
      */
     private void saveTasks(ArrayList<Task> tasks, String filePath) throws IOException {
+
         FileWriter fw = new FileWriter(filePath);
 
         for (int i = 0; i<tasks.size(); i++) {
-            fw.write(tasks.get(i).getTypeOfTask() + " | " + (tasks.get(i).isDone? "1" : "0") + " | " + tasks.get(i).getDetailsToSave() + System.lineSeparator());
+            fw.write(tasks.get(i).getTypeOfTask()
+                        + " | " + (tasks.get(i).isDone? "1" : "0")
+                        + " | " + tasks.get(i).getDetailsToSave()
+                        + System.lineSeparator());
         }
         fw.close();
     }
@@ -55,8 +60,10 @@ public class Storage {
      * @return TaskList Class containing the list of tasks.
      */
     public TaskList load(Ui ui) throws DukeException {
+
         TaskList taskList = new TaskList();
         taskList.isSilent = true;
+
         try {
             taskList = loadTasks(taskList, filePath, ui);
         } catch (FileNotFoundException e) {
@@ -73,6 +80,7 @@ public class Storage {
             }
 
         }
+
         taskList.isSilent = false;
         return taskList;
     }
@@ -86,8 +94,10 @@ public class Storage {
      * @return TaskList Class containing the list of tasks.
      */
     private TaskList loadTasks(TaskList taskList , String filePath, Ui ui) throws FileNotFoundException {
+
         File f = new File(filePath);
         Scanner s = new Scanner(f); // create a Scanner using the File as the source
+
         while (s.hasNext()) {
             String line = s.nextLine();
             String[] args = line.split(" \\| ");
@@ -96,31 +106,31 @@ public class Storage {
             case "T":
                 try {
                     taskList.addTodo(args[2], ui);
-                    if(args[1].equals("1")) {
+                    if (args[1].equals("1")) {
                         taskList.markTask(taskList.tasks.size(), ui);
                     }
                 } catch (DukeException e) {
-                    // will not fail
+                    ui.println(e.getMessage());
                 }
                 break;
             case "D":
                 try {
                     taskList.addDeadline(args[2], ui);
-                    if(args[1].equals("1")) {
+                    if (args[1].equals("1")) {
                         taskList.markTask(taskList.tasks.size(), ui);
                     }
                 } catch (DukeException e) {
-                    // will not fail
+                    ui.println(e.getMessage());
                 }
                 break;
             case "E":
                 try {
                    taskList.addEvent(args[2], ui);
-                    if(args[1].equals("1")) {
+                    if (args[1].equals("1")) {
                         taskList.markTask(taskList.tasks.size(), ui);
                     }
                 } catch (DukeException e) {
-                    // will not fail
+                    ui.println(e.getMessage());
                 }
                 break;
             default:

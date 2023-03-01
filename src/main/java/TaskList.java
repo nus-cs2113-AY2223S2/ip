@@ -19,6 +19,13 @@ public class TaskList {
      * Lists all tasks.
      */
     public void listTask(Ui ui) {
+
+        if (tasks.size() == 0) {
+            ui.printSmallSpace();
+            ui.println("You have no tasks in your list.");
+            return;
+        }
+
         ui.printSmallSpace();
         ui.println("Here are the tasks in your list:\n");
         for (int i = 0; i < tasks.size(); i = i + 1) {
@@ -41,13 +48,13 @@ public class TaskList {
 
         int ind = taskNumber - 1;
 
-        if(ind >= tasks.size() || ind < 0) {
+        if (ind >= tasks.size() || ind < 0) {
             throw new DukeException("Task " + (ind + 1) + " does not exist.");
         }
 
         tasks.get(ind).mark();
 
-        if(isSilent) return;
+        if (isSilent) return;
 
         ui.printSmallSpace();
         ui.println("Nice! I've marked this task as done:\n");
@@ -64,7 +71,9 @@ public class TaskList {
      * @throws DukeException If taskNumber is out of bounds.
      */
     public void markTask(String taskNumber, Ui ui) throws DukeException {
+
         int ind;
+
         try {
             ind = Integer.parseInt(taskNumber) - 1;
         } catch (NumberFormatException e) {
@@ -72,13 +81,13 @@ public class TaskList {
         }
 
 
-        if(ind >= tasks.size() || ind < 0) {
+        if (ind >= tasks.size() || ind < 0) {
             throw new DukeException("Task " + (ind + 1) + " does not exist.");
         }
 
         tasks.get(ind).mark();
 
-        if(isSilent) return;
+        if (isSilent) return;
 
         ui.printSmallSpace();
         ui.println("Nice! I've marked this task as done:\n");
@@ -97,6 +106,7 @@ public class TaskList {
     public void unmarkTask(String taskNumber, Ui ui) throws DukeException {
 
         int ind;
+
         try {
             ind = Integer.parseInt(taskNumber) - 1;
         } catch (NumberFormatException e) {
@@ -151,7 +161,7 @@ public class TaskList {
         String[] taskAndDeadline = todoTask.split(" /by ");
 
         if (taskAndDeadline.length < 2) {
-            throw new DukeException("The due date/time cannot be empty.");
+            throw new DukeException("The description and due date/time cannot be empty.");
         }
 
         String theTask = taskAndDeadline[0];
@@ -181,7 +191,7 @@ public class TaskList {
         String[] taskAndDeadline = todoTask.split(" /from ");
 
         if (taskAndDeadline.length < 2) {
-            throw new DukeException("The start date/time cannot be empty.");
+            throw new DukeException("The description and start date/time cannot be empty.");
         }
 
         String theTask = taskAndDeadline[0];
@@ -215,14 +225,16 @@ public class TaskList {
      * @throws DukeException If incorrect arguments are provided or task index is out of bounds.
      */
     public void deleteTask(String input, Ui ui) throws DukeException {
+
         int val;
+
         try {
             val = Integer.parseInt(input) - 1;
         } catch (NumberFormatException e) {
             throw new DukeException("Description must be a number.");
         }
 
-        if(val >= tasks.size() || val < 0) {
+        if (val >= tasks.size() || val < 0) {
             throw new DukeException("Task " + (val + 1) + " does not exist.");
         }
 
@@ -246,16 +258,28 @@ public class TaskList {
      * @param ui Ui class for interaction with user.
      */
     public void find(String keyword, Ui ui) throws DukeException {
-        System.out.println("     Here are the matching tasks in your list:");
+
+        String output = "";
+
         for (int i = 0; i< tasks.size(); i++) {
             if (tasks.get(i).getDescription().contains(keyword)) {
-                ui.printSmallSpace();
-                ui.println((i+1) +  ".[" + tasks.get(i).getTypeOfTask()
+                output += ui.SMALL_SPACE;
+                output += ((i+1) +  ".[" + tasks.get(i).getTypeOfTask()
                         + "][" + tasks.get(i).getStatusIcon()
                         + "] " + tasks.get(i).getDescription());
+                output += System.lineSeparator();
             }
         }
 
+        if (output.equals("")) {
+            ui.printSmallSpace();
+            ui.println("There are no matching tasks in your list.");
+            return;
+        }
+
+        ui.printSmallSpace();
+        ui.println("Here are the matching tasks in your list:");
+        ui.print(output);
     }
 
 }
