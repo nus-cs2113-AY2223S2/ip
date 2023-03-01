@@ -34,8 +34,8 @@ public class IndexCommand extends Command {
                 UI.printMarkMessage(tasks, taskNum);
                 break;
             case "delete":
-                tasks.removeTask(taskNum);
                 UI.printDeleteMessage(tasks, taskNum);
+                tasks.removeTask(taskNum);
                 break;
         }
         Storage.updateFile(tasks);

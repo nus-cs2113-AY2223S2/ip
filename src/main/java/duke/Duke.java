@@ -19,19 +19,10 @@ public class Duke {
     private static TaskList tasks;
 
     /**
-     * Loads the text file and executes the program
-     * @throws FileNotFoundException if error occurs during the checking of file access
-     * @throws IOException if error occurs during the file load
+     * Initialise the storage, load the data from the text file and executes the program
      */
     public Duke(){
-        try {
-            Storage.checkFileAccess();
-            tasks = new TaskList(Storage.load());
-        } catch (FileNotFoundException err) {
-            System.out.println("File not Found");
-        } catch (IOException err) {
-            System.out.println("Something went wrong: " + err.getMessage());
-        }
+        tasks = new TaskList(Storage.storageInit());
         String input;
         Scanner in = new Scanner(System.in);
         UI.showWelcomeMessage();
