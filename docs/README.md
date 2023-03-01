@@ -37,19 +37,19 @@ Task Manager is a <strong>Command Line Interface(CLI) task manager application t
 <li>
 Words in <strong>UPPER_CASE</strong> are the parameters to be supplied by the user.
     
-    e.g. in `todo DESCRIPTION`, `DESCRIPTION` is a parameter which can be used as `todo readbook`.
+e.g. in <code class="language-plaintext highlighter-rouge">todo DESCRIPTION</code>, <code class="language-plaintext highlighter-rouge">DESCRIPTION</code> is a parameter which can be used as <code class="language-plaintext highlighter-rouge">todo readbook</code>.
 </li>    
 <li>
 <strong>Extraneous parameters</strong> for commands that do not take in parameters (such as <code class="language-plaintext highlighter-rouge">bye</code> and <code class="language-plaintext highlighter-rouge">list</code>) <strong>will be ignored</strong>.
-    
-    e.g. if the command specifies `bye 123`, it will be interpreted as `bye`.
+
+e.g. if the command specifies <code class="language-plaintext highlighter-rouge">bye 123</code>, it will be interpreted as <code class="language-plaintext highlighter-rouge">bye</code>.
 </li>
 </ol>
 <h2 id="adding-a-task-todo"> Adding a task: <code class="language-plaintext highlighter-rouge">todo</code></h2>
 
-Add a task to the task manager.
-**Format**: `todo DESCRIPTION`
-**Constraints**: `DESCRIPTION` must be a non-empty string.
+Add a task to the task manager.<br>
+**Format**: `todo DESCRIPTION`<br>
+**Constraints**: `DESCRIPTION` must be a non-empty string.<br>
 **Example**: 
 ```
 ____________________________________________________________
@@ -62,11 +62,11 @@ ____________________________________________________________
 
 <h2 id="adding-a-task-deadline"> Adding a deadline: <code class="language-plaintext highlighter-rouge">deadline</code></h2>
 
-Add a deadline to the task manager.
-**Format**: `deadline DESCRIPTION /by DATE`
-**Constraints**: `DESCRIPTION` must be a non-empty string. `DATE` can be in the format of `YYYY-MM-DD`. 
-If the `DATE` is in the format of `YYYY-MM-DD`, the manager will automatically convert it to `MMM DD YYYY`. 
-If the `DATE` is not in the format of `YYYY-MM-DD`, the manager still accepts it but will not convert it.
+Add a deadline to the task manager.<br>
+**Format**: `deadline DESCRIPTION /by DATE`<br>
+**Constraints**: `DESCRIPTION` must be a non-empty string. `DATE` can be in the format of `YYYY-MM-DD`. <br>
+If the `DATE` is in the format of `YYYY-MM-DD`, the manager will automatically convert it to `MMM DD YYYY`. <br>
+If the `DATE` is not in the format of `YYYY-MM-DD`, the manager still accepts it but will not convert it. <br>
 **Example**: 
 ```
 ____________________________________________________________
@@ -84,11 +84,11 @@ ____________________________________________________________
 
 <h2 id="adding-a-task-event"> Adding an event: <code class="language-plaintext highlighter-rouge">event</code></h2>
 
-Add an event to the task manager.
-**Format**: `event DESCRIPTION /from START_DATE /to END_DATE`
-**Constraints**: `DESCRIPTION` must be a non-empty string. `START_DATE` and `END_DATE` can be in the format of `YYYY-MM-DD`.
-If the `START_DATE` and `END_DATE` are in the format of `YYYY-MM-DD`, the manager will automatically convert it to `MMM DD YYYY`.
-If the `START_DATE` and `END_DATE` are not in the format of `YYYY-MM-DD`, the manager still accepts it but will not convert it.
+Add an event to the task manager.<br>
+**Format**: `event DESCRIPTION /from START_DATE /to END_DATE`<br>
+**Constraints**: `DESCRIPTION` must be a non-empty string. `START_DATE` and `END_DATE` can be in the format of `YYYY-MM-DD`.<br>
+If the `START_DATE` and `END_DATE` are in the format of `YYYY-MM-DD`, the manager will automatically convert it to `MMM DD YYYY`.<br>
+If the `START_DATE` and `END_DATE` are not in the format of `YYYY-MM-DD`, the manager still accepts it but will not convert it.<br>
 **Example**: 
 ```
 ____________________________________________________________
@@ -106,8 +106,8 @@ ____________________________________________________________
 
 <h2 id="listing-all-tasks-list"> Listing all tasks: <code class="language-plaintext highlighter-rouge">list</code></h2>
 
-List all the tasks in the task manager.
-**Format**: `list`
+List all the tasks in the task manager.<br>
+**Format**: `list`<br>
 **Example**: 
 ```
 ____________________________________________________________
@@ -122,11 +122,11 @@ ____________________________________________________________
 
 <h2 id="marking-a-task-as-done-mark"> Marking a task as done: <code class="language-plaintext highlighter-rouge">mark</code></h2>
 
-Mark a task as done.
-**Format**: `mark INDEX`
-**Constraints**: `INDEX` must be a positive integer and must be within the range of the task list. 
-If the `INDEX` is out of range, an error message will be shown. 
-If the task is already marked as done, an warning message will be shown.
+Mark a task as done.<br>
+**Format**: `mark INDEX`<br>
+**Constraints**: `INDEX` must be a positive integer and must be within the range of the task list. <br>
+If the `INDEX` is out of range, an error message will be shown. <br>
+If the task is already marked as done, an warning message will be shown.<br>
 **Example**: 
 ```
 ____________________________________________________________
@@ -145,11 +145,11 @@ ____________________________________________________________
 ```
 <h2 id="unmarking-a-task-as-done-unmark"> Unmarking a task as done: <code class="language-plaintext highlighter-rouge">unmark</code></h2>
 
-When a task is marked as done, you can unmark it as done.
-**Format**: `unmark INDEX`
-**Constraints**: `INDEX` must be a positive integer and must be within the range of the task list. 
-If the `INDEX` is out of range, an error message will be shown. 
-If the task is not marked as done, an warning message will be shown.
+When a task is marked as done, you can unmark it as done.<br>
+**Format**: `unmark INDEX`<br>
+**Constraints**: `INDEX` must be a positive integer and must be within the range of the task list. <br>
+If the `INDEX` is out of range, an error message will be shown. <br>
+If the task is not marked as done, an warning message will be shown.<br>
 **Example**: 
 ```
 ____________________________________________________________
@@ -169,9 +169,9 @@ ____________________________________________________________
 
 <h2 id="finding-a-task-find"> Finding a task: <code class="language-plaintext highlighter-rouge">find</code></h2>
 
-Find all the tasks that contain the keyword.
-**Format**: `find KEYWORD`
-**Constraints**: `KEYWORD` must be a non-empty string.
+Find all the tasks that contain the keyword.<br>
+**Format**: `find KEYWORD`<br>
+**Constraints**: `KEYWORD` must be a non-empty string.<br>
 **Example**: 
 ```
 ____________________________________________________________
@@ -185,8 +185,8 @@ ____________________________________________________________
 <h2 id="deleting-a-task-delete"> Deleting a task: <code class="language-plaintext highlighter-rouge">delete</code></h2>
 Delete a task from the task manager by its index.
 
-**Format**: `delete INDEX`
-**Constraints**: `INDEX` must be a positive integer and must be within the range of the task list. If the `INDEX` is out of range, an error message will be shown.
+**Format**: `delete INDEX`<br>
+**Constraints**: `INDEX` must be a positive integer and must be within the range of the task list. If the `INDEX` is out of range, an error message will be shown.<br>
 **Example**: 
 ```
 ____________________________________________________________
@@ -202,9 +202,9 @@ ____________________________________________________________
 
 <h2 id="searching-a-task-by-date-date"> Searching a task by date: <code class="language-plaintext highlighter-rouge">date</code></h2>
 
-Search all the tasks that are on the date.
-**Format**: `date DATE`
-**Constraints**: `DATE` must be in the format of `YYYY-MM-DD`.
+Search all the tasks that are on the date.<br>
+**Format**: `date DATE`<br>
+**Constraints**: `DATE` must be in the format of `YYYY-MM-DD`.<br>
 **Example**: 
 ```
 ____________________________________________________________
@@ -218,8 +218,8 @@ ____________________________________________________________
 
 <h2 id="exiting-the-program-bye"> Exiting the program: <code class="language-plaintext highlighter-rouge">bye</code></h2>
 
-Exit the program.
-**Format**: `bye`
+Exit the program.<br>
+**Format**: `bye`<br>
 **Example**: 
 ```
 bye
