@@ -2,11 +2,19 @@ package com.ethanyidong.bunny.cmd;
 
 import java.util.HashMap;
 
+/**
+ * Represents an input String split into specific command tokens
+ * Provides the command name, the positional argument (if any), and the flag arguments (if any)
+ */
 public class TokenizedCommand {
     private final String command;
     private String positionalArgument;
     private HashMap<String, String> flagArguments;
 
+    /**
+     * Parses a String command into its tokens (name, positional argument, flag arguments)
+     * @param command the String representation of the command to parse
+     */
     public TokenizedCommand(String command) {
         String[] commandAndArguments = command.split(" ", 2);
         this.command = extractCommand(commandAndArguments[0]);
@@ -47,14 +55,24 @@ public class TokenizedCommand {
         return ret;
     }
 
+    /**
+     * @return the command name of the parsed command
+     */
     public String getCommand() {
         return command;
     }
 
+    /**
+     * @return the positional argument of the parsed command
+     */
     public String getPositionalArgument() {
         return positionalArgument;
     }
 
+    /**
+     * @param flag the name of the flag to return the corresponding value for
+     * @return the flag argument value of the passed flag
+     */
     public String getFlagArgument(String flag) {
         return this.flagArguments.get(flag);
     }
