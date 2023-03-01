@@ -4,10 +4,14 @@ import tasks.Event;
 import tasks.Tasks;
 import tasks.Todo;
 import ui.Ui;
-
 import java.io.IOException;
 import java.util.Scanner;
 
+/**
+ * Entry point of the Duke program.
+ * Initialises the application and
+ * starts the interaction with the user via the Command Line Interface (CLI).
+ */
 public class Duke {
 	public static final String LIST_COMMAND = "list";
 	public static final String HELP_COMMAND = "help";
@@ -25,6 +29,7 @@ public class Duke {
 	public static final String TO_DEMARCATION = "/to";
 	public static final int BY_DESCRIPTION = 1;
 	public static final String BY_DEMARCATION = "/by";
+	public static final int START_INDEX = 1;
 	private Ui ui;
 	private Storage storage;
 	private Tasks list;
@@ -35,22 +40,25 @@ public class Duke {
 		list = Storage.loadSave();
 	}
 	
+	/**
+	 * Runs program till it is exited.
+	 */
 	public void run() {
 		Ui.greet();
 		readCommandLine(list);
 		Ui.exit();
 	}
+	
 	public static void main(String[] args) {
 		new Duke().run();
 	}
 	
-	public static void greet() {
-		String greet = Ui.DIVIDER +
-				Ui.GREET_MESSAGE +
-				Ui.DIVIDER;
-		System.out.println(greet);
-	}
-	
+	/**
+	 * Reads in the input from the command line and executes the command accordingly.
+	 * Each time a command is executed, save.txt file is updated with the latest task list.
+	 *
+	 * @param list List of tasks for the user
+	 */
 	private static void readCommandLine(Tasks list) {
 		Scanner in = new Scanner(System.in);
 		String line = in.nextLine();
@@ -61,6 +69,8 @@ public class Duke {
 			runCommand(list, line);
 			System.out.println(Ui.DIVIDER);
 			line = in.nextLine();
+			
+			// save the list into the save.txt file
 			try {
 				Storage.saveTasks(list);
 			} catch (IOException e) {
@@ -71,6 +81,11 @@ public class Duke {
 		}
 	}
 	
+	/**
+	 * Process the line and executes the correct command based on extracting the line.
+	 * @param list List of tasks for the user.
+	 * @param line Command line read fom the Command Line, contains the command and arguments to execute in the program.
+	 */
 	private static void runCommand(Tasks list, String line) {
 		String[] commandAndArg = splitCommandAndArgs(line);
 		String command = commandAndArg[0];
@@ -110,15 +125,28 @@ public class Duke {
 		}
 	}
 	
+	/**
+	 * Splits line into 2 strings: command and combined string of its arguments (if any).
+	 * @param line String to be split.
+	 * @return commandAndArgs An array of size 2 with: command and arguments (if any).
+	 * Should there be no arguments, empty string in index 1.
+	 */
 	private static String[] splitCommandAndArgs(String line) {
 		final String[] splitStrings = line.split(" ", 2);
-		return splitStrings.length == 2 ? splitStrings : new String[]{splitStrings[0], ""};
+		String[] commandAndArgs = splitStrings.length == 2 ? splitStrings : new String[]{splitStrings[0], ""};
+		return commandAndArgs;
 	}
 	
+	/**
+	 * Extracts the arguments required to mark the selected task as done.
+	 * Also checks if the argument placed is valid.
+	 * @param list List of tasks of the user.
+	 * @param arg String of arguments inputted by the user.
+	 */
 	private static void runMark(Tasks list, String arg) {
 		try {
 			int taskNumber = Integer.parseInt(arg);
-			if (taskNumber <= list.getTasksCount()) {
+			if (taskNumber >= START_INDEX && taskNumber <= list.getTasksCount()) { // check if taskNumber within the range of list
 				list.markTaskDone(taskNumber);
 			} else {
 				System.out.println(Ui.ERROR_TASK_NUMBER_OUT_OF_RANGE_MESSAGE);
@@ -128,10 +156,16 @@ public class Duke {
 		}
 	}
 	
+	/**
+	 * Extracts the arguments required to mark the selected task as not done.
+	 * Also checks if the argument placed is valid.
+	 * @param list List of tasks of the user.
+	 * @param arg String of arguments inputted by the user.
+	 */
 	private static void runUnmark(Tasks list, String arg) {
 		try {
 			int taskNumber = Integer.parseInt(arg);
-			if (taskNumber <= list.getTasksCount()) {
+			if (taskNumber >= START_INDEX && taskNumber <= list.getTasksCount()) { // check if taskNumber within the range of list
 				list.markTaskUndone(taskNumber);
 			} else {
 				System.out.println(Ui.ERROR_TASK_NUMBER_OUT_OF_RANGE_MESSAGE);
@@ -141,8 +175,15 @@ public class Duke {
 		}
 	}
 	
+	/**
+	 * Extracts the arguments required to add a todo task into list.
+	 * Also checks if the argument placed is valid.
+	 * @param list List of tasks of the user.
+	 * @param arg String of arguments inputted by the user.
+	 */
 	private static void addTodo(Tasks list, String arg) {
-		if (arg.isBlank()) {
+		String description = arg;
+		if (description.isBlank()) { // check if there is a description
 			System.out.println(Ui.ERROR_EMPTY_TODO_DESCRIPTION_MESSAGE);
 			Ui.printHelpTodo();
 		} else {
@@ -151,13 +192,19 @@ public class Duke {
 		}
 	}
 	
+	/**
+	 * Extracts the arguments required to add an event into list.
+	 * Also checks if the argument placed is valid.
+	 * @param list List of tasks of the user.
+	 * @param arg String of arguments inputted by the user.
+	 */
 	private static void addEvent(Tasks list, String arg) {
 		String[] descriptionFromAndTo = splitEventArg(arg);
 		String description = descriptionFromAndTo[INDEX_DESCRIPTION];
 		String from = descriptionFromAndTo[INDEX_FROM];
 		String to = descriptionFromAndTo[INDEX_TO];
 		
-		if (description.isBlank() || from.isBlank() || to.isBlank()) {
+		if (description.isBlank() || from.isBlank() || to.isBlank()) { // check if there is a description, from and to
 			System.out.println(Ui.ERROR_EMPTY_EVENT_DESCRIPTION_MESSAGE);
 			Ui.printHelpEvent();
 		} else {
@@ -166,18 +213,33 @@ public class Duke {
 		}
 	}
 	
+	/**
+	 * Splits the arg string into an array of strings of: description, from and to in that order.
+	 * Used specifically to split the argument of addEvent.
+	 * @param arg String which contains the combined arguments of description, from and to from the user.
+	 * @return descriptionFromAndTo Array of String of size 3 containing=
+	 * description, from and to respectively.
+	 * should any be missing, index would be blank.
+	 */
 	private static String[] splitEventArg(String arg) {
 		String[] splitDescription = arg.split(FROM_DEMARCATION, 2); // separate the argument into description and fromAndTo
 		String[] splitFromAndTo = splitDescription[1].split(TO_DEMARCATION, 2); // separate fromAndTo into from and to
-		return new String[]{splitDescription[0].trim(), splitFromAndTo[0].trim(), splitFromAndTo[1].trim()};
+		String[] descriptionFromAndTo = new String[]{splitDescription[0].trim(), splitFromAndTo[0].trim(), splitFromAndTo[1].trim()};
+		return descriptionFromAndTo;
 	}
 	
+	/**
+	 * Extracts the arguments required to add deadline into list.
+	 * Also checks if the argument placed is valid.
+	 * @param list List of tasks of the user.
+	 * @param arg String of arguments inputted by the user.
+	 */
 	private static void addDeadline(Tasks list, String arg) {
 		String[] descriptionAndBy = splitDeadlineArg(arg);
 		String description = descriptionAndBy[INDEX_DESCRIPTION];
 		String by = descriptionAndBy[BY_DESCRIPTION];
 		
-		if (description.isBlank() || by.isBlank()) {
+		if (description.isBlank() || by.isBlank()) { // check if there is a description and by
 			System.out.println(Ui.ERROR_EMPTY_DEADLINE_DESCRIPTION);
 			Ui.printHelpDeadline();
 		} else {
@@ -186,15 +248,30 @@ public class Duke {
 		}
 	}
 	
+	/**
+	 * Splits the arg string into an array of strings of: description and by in that order.
+	 * Used specifically to split the argument of addDeadline.
+	 * @param arg String which contains the combined arguments of description and by from the user.
+	 * @return descriptionAndBy Array of String of size 2 containing
+	 * description, from and to respectively.
+	 * should any be missing, index would be blank.
+	 */
 	private static String[] splitDeadlineArg(String arg) {
 		String[] splitDescriptionAndBy = arg.split(BY_DEMARCATION, 2);
-		return new String[]{splitDescriptionAndBy[0].trim(), splitDescriptionAndBy[1].trim()};
+		String[] descriptionAndBy = new String[]{splitDescriptionAndBy[0].trim(), splitDescriptionAndBy[1].trim()};
+		return descriptionAndBy;
 	}
 	
+	/**
+	 * Extracts the arguments required to delete the selected task from list.
+	 * Also checks if the argument placed is valid.
+	 * @param list List of tasks of the user.
+	 * @param arg String of arguments inputted by the user.
+	 */
 	private static void runDelete(Tasks list, String arg) {
 		try {
 			int taskNumber = Integer.parseInt(arg);
-			if (taskNumber <= list.getTasksCount()) {
+			if (taskNumber >= START_INDEX && taskNumber <= list.getTasksCount()) { // check if it is within the range of list
 				list.deleteTask(taskNumber);
 			} else {
 				System.out.println(Ui.ERROR_TASK_NUMBER_OUT_OF_RANGE_MESSAGE);
@@ -204,11 +281,12 @@ public class Duke {
 		}
 	}
 	
+	/**
+	 * Executes clear on list and notifies after list has been cleared.
+	 * @param list List of tasks of the user.
+	 */
 	private static void runClear(Tasks list) {
 		list.clear();
 		System.out.println(Ui.RUN_CLEAR_COMPLETE_MESSAGE);
 	}
-	
-	
-	
 }

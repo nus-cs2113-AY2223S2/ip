@@ -1,16 +1,13 @@
 package storage;
 
 import tasks.Tasks;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 
-// how to import the tasks ah i stupid
-
 /**
- * To create save file, and saves the list to be used upon future use of the program
+ * To create save file, and saves the list to be used upon future use of the program.
  */
 public class Storage {
 	public static final String DEFAULT_SAVE_FILE_PATH = "data/save.txt";
@@ -35,6 +32,11 @@ public class Storage {
 		return list;
 	}
 	
+	/**
+	 * Saves list of tasks into the saveFile.
+	 * @param list List of tasks of the user.
+	 * @throws IOException when saveFile cannot be written into.
+	 */
 	public static void saveTasks(Tasks list) throws IOException {
 		ListEncoder.saveList(list, saveFile);
 	}
@@ -42,7 +44,6 @@ public class Storage {
 	/**
 	 * checks if save directory is already present
 	 * if save directory is missing, creates new one
-	 *
 	 * @param dir location of save directory to be checked
 	 */
 	private static void checkSaveDir(File dir) {
@@ -56,7 +57,6 @@ public class Storage {
 	/**
 	 * checks if save file is already present
 	 * if save file is missing, creates new save file
-	 *
 	 * @param file location of save file to be checked
 	 */
 	private static void checkSaveFile(File file) {
@@ -69,9 +69,8 @@ public class Storage {
 	
 	/**
 	 * looks through the save file and loads it onto the program's task list
-	 *
 	 * @param file path of the save file
-	 * @throws FileNotFoundException
+	 * @throws FileNotFoundException when file does not actually have the file
 	 */
 	private static void readSaveFile(File file, Tasks list) throws FileNotFoundException {
 		Scanner s = new Scanner(file);
