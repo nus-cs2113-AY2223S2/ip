@@ -1,5 +1,6 @@
 package duke.util;
 
+import duke.command.*;
 import duke.exception.DukeException;
 import duke.task.Deadline;
 import duke.task.Event;
@@ -40,33 +41,27 @@ public class Parser {
      * Calls different functions based on the given commands.
      *
      * @param line String containing user input
-     * @param taskList List to store all tasks listed.
      * @throws DukeException If no keywords are found.
      */
-    public static void processInput(String line, TaskList taskList) throws DukeException {
-        try {
-                String[] words = line.split(" ");
-                if (line.startsWith("todo")) {
-                    registerTodo(taskList.lists, line);
-                } else if (line.startsWith("deadline")) {
-                    registerDeadline(taskList.lists, line);
-                } else if (line.startsWith("event")) {
-                    registerEvent(taskList.lists, line);
-                } else if (line.startsWith("list")) {
-                    taskList.listTasks();
-                } else if (line.startsWith("mark") || line.startsWith("unmark") || line.startsWith("delete")) {
-                    taskList.markOrDeleteTask(words, line);
-                } else if (line.startsWith("find")) {
-                    taskList.searchForTask(line);
-                } else if (line.equals("bye")) {
-                    ui.printExiting();
-                    isExit = true;
-                } else {
-                    throw new DukeException();
-                }
-                Storage.saveDataFromInput(taskList.lists);
-        } catch (DukeException e){
-            System.out.println("I am not a chat bot, please do not chat to me.");
+    public static Command processInput(String line, TaskList taskList) {
+        if (line.startsWith("todo")) {
+            return(new CreateTodoCommand(line));
+        } else if (line.startsWith("deadline")) {
+            return(new CreateDeadlineCommand(line));
+        } else if (line.startsWith("event")) {
+            return(new CreateEventCommand(line));
+        } else if (line.startsWith("list")) {
+            return(new ListTaskCommand());
+        } else if (line.startsWith("mark") || line.startsWith("unmark")) {
+            return(new MarkTaskCommand(line, taskList));
+        } else if (line.startsWith("delete")) {
+            return(new DeleteTaskCommand(line));
+        }else if (line.startsWith("find")) {
+            return(new SearchCommand(line));
+        } else if (line.equals("bye")) {
+            return(new ExitCommand());
+        } else {
+            return (new InvalidCommand());
         }
     }
 
@@ -98,66 +93,6 @@ public class Parser {
             lists.get(lists.size() - 1).markAsDone();
         }
         return lists;
-    }
-
-    /**
-     * Register a to-do task.
-     *
-     * @param lists List to store all tasks.
-     * @param line String containing task description.
-     */
-    public static void registerTodo(ArrayList<Task> lists, String line){
-        String[] inputLine = line.split(" ", 2);
-        Task item = new Todo(inputLine[1]);
-        lists.add(item);
-        ui.printAddTask(item);
-        ui.printListSize(lists.size());
-    }
-
-    /**
-     * Register a deadline task.
-     *
-     * @param lists List to store all tasks.
-     * @param line String containing task description.
-     * @throws IndexOutOfBoundsException If no deadline is provided after description.
-     */
-    public static void registerDeadline(ArrayList<Task> lists, String line) throws IndexOutOfBoundsException {
-        try {
-            String[] inputLines = line.split(" ", 2);
-            inputLines = inputLines[1].split(" /by ");
-            String description = inputLines[0];
-            String deadline = inputLines[1];
-            Task item = new Deadline(description, deadline);
-            lists.add(item);
-            ui.printAddTask(item);
-            ui.printListSize(lists.size());
-        } catch (IndexOutOfBoundsException e) {
-            System.out.println("Your deadline must be of the following format: deadline (deadline name) /by (date)");
-        }
-    }
-
-    /**
-     * Register an event task.
-     *
-     * @param lists List to store all tasks.
-     * @param line String containing task description.
-     * @throws IndexOutOfBoundsException If no event start and/or end date is provided after description.
-     */
-    public static void registerEvent(ArrayList<Task> lists, String line) throws IndexOutOfBoundsException {
-        try {
-            String[] inputLines = line.split(" ", 2);
-            inputLines = inputLines[1].split(" /from ");
-            String description = inputLines[0];
-            inputLines = inputLines[1].split(" /to ");
-            String start = inputLines[0];
-            String end = inputLines[1];
-            Task item = new Event(description, start, end);
-            lists.add(item);
-            ui.printAddTask(item);
-            ui.printListSize(lists.size());
-        } catch (IndexOutOfBoundsException e) {
-            System.out.println("Your deadline must be of the following format: deadline (deadline name) /by (date)");
-        }
     }
 
     public static boolean toExit() {

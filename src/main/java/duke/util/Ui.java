@@ -23,7 +23,7 @@ public class Ui {
     }
 
     public static void printRemoveTask(Task item) {
-        System.out.println("Got it. I've added this task: " + item.getTypeIcon()
+        System.out.println("Got it. I've removed this task: " + item.getTypeIcon()
                 + item.getStatusIcon() + item.description);
     }
 

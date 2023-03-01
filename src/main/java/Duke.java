@@ -4,6 +4,7 @@ import duke.util.Ui;
 import duke.util.Storage;
 import duke.util.Parser;
 import duke.task.Task;
+import duke.command.Command;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
@@ -38,8 +39,10 @@ public class Duke {
         while (!isExit) {
             String fullCommand = parser.getInput();
             ui.printLine(); // show the divider line ("_______")
-            parser.processInput(fullCommand, tasks);
-            isExit = Parser.toExit();
+            Command c = parser.processInput(fullCommand, tasks);
+            c.run(tasks);
+            storage.saveDataFromInput(tasks.lists);
+            isExit = c.toExit();
             ui.printLine();
         }
     }
