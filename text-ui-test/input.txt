@@ -23,4 +23,7 @@ event without to /from today
 todo
 delete 1
 list
+deadline q /by 2023-03-01
+event r /from 2023-03-01 /to 2023-03-02
+list
 bye
