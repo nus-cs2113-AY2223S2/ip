@@ -37,3 +37,16 @@ weight: 11
    ```
    {{< /hint >}}
 6. Refer to the [Features](../features) page for the list of commands available.
+
+{{< hint danger >}}
+__Startup__
+
+If the application is unable to process the saved data, you will receive a warning message as shown:
+```
+    Warning: Save data is corrupted.
+    All data will be overwritten after the next command is entered.
+    Corrupt data: {"name":"buy mangoes","isCompleted"false,"type":"TODO"}
+```
+
+If you wish to preserve the saved data, close the application __immediately__.
+{{< /hint >}}
