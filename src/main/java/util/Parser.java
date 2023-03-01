@@ -1,11 +1,7 @@
 package util;
 
-import java.util.ArrayList;
-import java.util.Scanner;
-
 import errors.DukeException;
 import errors.ErrorMessages;
-import tasks.Task;
 
 
 /**
@@ -27,55 +23,39 @@ public class Parser {
 
 
     /**
-    * Stores the list of tasks
-    * */
-    private static ArrayList<Task> listOfTasks = new ArrayList<>();
-    /**
      * Starts the main function
      * */
-    public void Parser() {
-        Storage storage = new Storage();
-        storage.loadData(listOfTasks);
-
-        Scanner newScanner = new Scanner(System.in);
+    public void Parser( TaskList taskListHandler) {
+        Ui ui = new Ui();
         OutputUI outPutUI = new OutputUI();
         ErrorMessages errMsgs = new ErrorMessages();
-        Marker marker = new Marker();
-        TaskDeleter taskDeleter = new TaskDeleter();
-        TaskAdder taskAdder = new TaskAdder();
-        Storage storageManager = new Storage();
-        Finder finder = new Finder();
         while (true) {
             try {
-                String input = newScanner.nextLine();
+                String input = ui.getInput();
                 String firstWord = input.split(CHAR_SPACE)[0];
                 switch (firstWord) {
                 case LIST_COMMAND:
-                    outPutUI.printList(listOfTasks, listOfTasks.size());
+                    taskListHandler.printList();
                     break;
                 case EXIT_COMMAND:
                     outPutUI.printByeByeMessage();
-                    newScanner.close();
-                    storageManager.saveList(listOfTasks);
+                    taskListHandler.saveData();
                     System.exit((0));
                     break;
                 case TODO_COMMAND:
                 case DEADLINE_COMMAND:
                 case EVENT_COMMAND:
-                    //
-                    taskAdder.addTaskToList(listOfTasks, input, NOT_FROM_SAVE_DATA);
+                    taskListHandler.addNewTask(input, NOT_FROM_SAVE_DATA);
                     break;
                 case MARK_COMMAND:
                 case UNMARK_COMMAND:
-                    //
-                    marker.markOrUnamrkTask(listOfTasks, input, NOT_FROM_SAVE_DATA);
+                    taskListHandler.handleMarkUnmarkAction(input, NOT_FROM_SAVE_DATA);
                     break;
                 case DELETE_COMMAND:
-                    //
-                    taskDeleter.attemptToDeleteTask(listOfTasks, input);
+                    taskListHandler.handleDeleteAction(input);
                     break;
                 case FIND_COMMAND:
-                    finder.findTaskFromList(listOfTasks, input);
+                    taskListHandler.handleFindTaskAction(input);
                     break;
                 default:
                     throw new DukeException(errMsgs.errorWrongCommandText());

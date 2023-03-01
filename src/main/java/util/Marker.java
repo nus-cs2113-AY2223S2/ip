@@ -26,7 +26,7 @@ public class Marker extends ErrorMessages {
      *                         Otherwise we print output as per normal
      */
 
-    public void handleMarkUnmarkAction(ArrayList<Task> taskList, String input, boolean loadFromSaveData) {
+    public void markOrUnamrkTask(ArrayList<Task> taskList, String input, boolean loadFromSaveData) {
         String[] markActions = (input.split(BLANK, 2));
         try {
             if (markActions.length != 2) {

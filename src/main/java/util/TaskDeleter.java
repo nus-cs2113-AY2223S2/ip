@@ -16,7 +16,7 @@ public class TaskDeleter extends ErrorMessages {
     * Takes in input for a delete command and deletes accordingly
     * Handles index out of taskList bounds or incorrect input (e.g. input as String)
     * */
-    public void handleDeleteAction(ArrayList<Task> listOfTasks, String input) {
+    public void attemptToDeleteTask(ArrayList<Task> listOfTasks, String input) {
         String[] deleteActions = (input.split(BLANK, 2));
         try {
             if (listOfTasks.size() <= 0) {
@@ -26,6 +26,12 @@ public class TaskDeleter extends ErrorMessages {
                 throw new DeleteTaskError(errorNoNumberText());
             }
             int indexToDelete = Integer.parseInt(deleteActions[1]);
+            if (indexToDelete > listOfTasks.size()){
+                throw new DeleteTaskError((errorExceedListLengthText(listOfTasks.size())));
+            }
+            else if (indexToDelete <= 0){
+                throw new DeleteTaskError(errorInvalidNumberText());
+            }
             OutputUI outputUI = new OutputUI();
             outputUI.printDeleteTaskMessage(listOfTasks.get(indexToDelete - 1), listOfTasks.size() - 1);
             deleteTask(listOfTasks, indexToDelete);

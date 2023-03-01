@@ -53,7 +53,7 @@ public class Storage {
                 taskAdder.addTaskToList(taskList, currentTaskInput[1], LOAD_FROM_SAVE_DATA);
                 try {
                     if (Integer.parseInt(currentTaskInput[0]) == 1) {
-                        marker.handleMarkUnmarkAction(taskList, MARK + (taskList.size()), LOAD_FROM_SAVE_DATA);
+                        marker.markOrUnamrkTask(taskList, MARK + (taskList.size()), LOAD_FROM_SAVE_DATA);
                     }
                 } catch (NumberFormatException e) {
                     System.out.println(ErrorMessages.errorCorruptDataErrorText());
