@@ -4,8 +4,12 @@ import com.ethanyidong.bunny.BunnySession;
 import com.ethanyidong.bunny.fmt.Formatter;
 import com.ethanyidong.bunny.task.Task;
 
+/**
+ * An intermediate implementation of <code>ExecutableCommand</code> which all commands
+ * that create a new <code>Task</code> inherit from
+ */
 public abstract class AddTaskCommand extends ExecutableCommand {
-    private String name;
+    protected String name;
 
     @Override
     protected void parseArguments(BunnySession bunny, TokenizedCommand command) {
@@ -22,6 +26,10 @@ public abstract class AddTaskCommand extends ExecutableCommand {
 
     protected abstract Task generateTask();
 
+    /**
+     * Adds the <code>Task</code> represented by the command to the current task list
+     * @param bunny the current Bunny session
+     */
     public void execute(BunnySession bunny) {
         addTask(bunny, generateTask());
     }

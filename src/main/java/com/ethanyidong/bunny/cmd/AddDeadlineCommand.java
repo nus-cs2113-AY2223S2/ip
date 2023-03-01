@@ -8,12 +8,17 @@ import com.ethanyidong.bunny.arg.PositionalArgumentCommandValidator;
 import com.ethanyidong.bunny.task.Deadline;
 import com.ethanyidong.bunny.task.Task;
 
+/**
+ * An implementation of <code>ExecutableCommand</code> to represent the 'deadline' command
+ */
 public class AddDeadlineCommand extends AddTaskCommand {
-    private String name;
     private String by;
 
+    /**
+     * @return Validators checking that the name (positional argument) and /by (flag argument) are both not empty
+     */
     @Override
-    public CommandValidator[] validators() {
+    protected CommandValidator[] validators() {
         CommandValidator deadlineNameValidator =
                 new PositionalArgumentCommandValidator(new NotEmptyArgumentValidator());
         CommandValidator byValidator =

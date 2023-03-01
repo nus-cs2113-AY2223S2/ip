@@ -8,13 +8,18 @@ import com.ethanyidong.bunny.arg.PositionalArgumentCommandValidator;
 import com.ethanyidong.bunny.task.Event;
 import com.ethanyidong.bunny.task.Task;
 
+/**
+ * An implementation of <code>ExecutableCommand</code> to represent the 'event' command
+ */
 public class AddEventCommand extends AddTaskCommand {
-    private String name;
     private String from;
     private String to;
 
+    /**
+     * @return Validators checking that the name (positional argument) and /from, /to (flag arguments) are not empty
+     */
     @Override
-    public CommandValidator[] validators() {
+    protected CommandValidator[] validators() {
         CommandValidator eventNameValidator =
                 new PositionalArgumentCommandValidator(new NotEmptyArgumentValidator());
         CommandValidator fromValidator =
