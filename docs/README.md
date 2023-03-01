@@ -215,7 +215,7 @@ Here are the matching tasks in your list:
 ____________________________________________________________
 ```
 
-### `exit` - Exit Genesis
+### `bye` - Exit Genesis
 
 Exit the application
 
