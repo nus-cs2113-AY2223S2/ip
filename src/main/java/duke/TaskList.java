@@ -53,7 +53,7 @@ public class TaskList implements java.io.Serializable {
      * @throws InvalidCommandException If the deadline is of an invalid format.
      */
     public void addDeadline(String taskDetails) throws InvalidCommandException {
-        int byIndex = taskDetails.indexOf(" /by ");
+        int byIndex = taskDetails.toLowerCase().indexOf(" /by ");
         if (byIndex == -1) {
             throw new InvalidCommandException();
         }
@@ -69,8 +69,8 @@ public class TaskList implements java.io.Serializable {
      * @throws InvalidCommandException If the event is of an invalid format.
      */
     public void addEvent(String taskDetails) throws InvalidCommandException {
-        int fromIndex = taskDetails.indexOf(" /from ");
-        int toIndex = taskDetails.indexOf(" /to ");
+        int fromIndex = taskDetails.toLowerCase().indexOf(" /from ");
+        int toIndex = taskDetails.toLowerCase().indexOf(" /to ");
         if (fromIndex == -1 || toIndex == -1) {
             throw new InvalidCommandException();
         }

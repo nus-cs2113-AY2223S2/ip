@@ -45,7 +45,7 @@ public class Parser {
 
     private static void parseAddCommand(String sentence, TaskList taskList) throws InvalidCommandException {
         String[] words = sentence.split(" ", 2); // split sentence only on first occurrence of space
-        String taskType = words[0];
+        String taskType = words[0].toLowerCase();
 
         switch (taskType) {
         case "todo":
