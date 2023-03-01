@@ -4,25 +4,25 @@
 
 ### Tracking Tasks
 
-Bunny can track a list of Todos, Deadlines, and Events for you. You can add and delete tasks from a list.
+Bunny can track a list of Todos, Deadlines, and Events for you. You can add and [delete](#delete---remove-task-from-the-list) tasks from a list.
 
-Todos are basic tasks with a name.
+[Todos](#todo---create-a-new-todo) are basic tasks with a name.
 
-Deadlines are tasks with a name and a due date.
+[Deadlines](#deadline---create-a-new-deadline) are tasks with a name and a due date.
 
-Events are tasks with a name as well as start and end dates.
+[Events](#event---create-a-new-event) are tasks with a name as well as start and end dates.
 
 ### Marking
 
-Bunny can mark any of your tasks as done or not done.
+Bunny can mark any of your tasks as [done](#mark---set-task-as-done) or [not done](#unmark---set-task-as-not-done).
 
 ### List
 
-Bunny can display a list of all your tasks.
+Bunny can display a [list](#list---list-tasks) of all your tasks.
 
 ### Find
 
-Bunny can display a list of your tasks whose names contain a certain keyword.
+Bunny can display a [list](#find---list-tasks-with-a-specific-keyword) of your tasks whose names contain a certain keyword.
 
 ### Save File
 
