@@ -5,8 +5,6 @@ import tasklist.TaskList;
 import parser.Parser;
 import ui.Ui;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.Scanner;
 import java.io.FileNotFoundException;
@@ -106,16 +104,6 @@ public class Duke extends TaskList {
                 case "find":
                     taskList.findTask(userInput);
                     break;
-                case "help":
-                    try (BufferedReader br = new BufferedReader(new FileReader("./help.txt"))) {
-                        String line;
-                        while ((line = br.readLine()) != null) {
-                            System.out.println(line);
-                        }
-                    } catch (FileNotFoundException e) {
-                        throw new RuntimeException(e);
-                    }
-                    break;
                 default:
                     throw new TaskTypeException();
                 }
@@ -125,7 +113,7 @@ public class Duke extends TaskList {
                 ui.showNumberFormatError();
             } catch (EventTimingException e) {
                 e.printError();
-            } catch (IndexOutOfBoundsException | IOException e) {
+            } catch (IndexOutOfBoundsException e) {
                 ui.showInsufficientInputError();
             }
             saveTasks();

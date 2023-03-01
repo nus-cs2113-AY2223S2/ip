@@ -160,25 +160,6 @@ Here are the matching tasks in your list:
 ________________________________________________________________
 ```
 
-### `help` - Show help page.
-
-Quick display of the help page containing commands you can use in Duke.
-
-**Example usage:**
-
-`help`
-
-**Example outcome:**
-```
-There are some commands used in Duke:
-
-Adding tasks
-    todo task_description                                           Add a todo task
-    deadline task_description /by time                              Add a deadline task
-    event task_description /from starting_time /to ending_time      Add an event task
-...
-```
-
 ### `bye` - Exist Duke.
 
 **Expected usage:**
