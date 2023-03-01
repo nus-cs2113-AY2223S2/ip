@@ -25,7 +25,7 @@ weight: 11
         ____________________________________________________________
    ```
 5. To perform an operation, type the required command and press <kbd>Enter</kbd>. 
-   
+   {{< hint info >}} 
    Example:
    ```
     todo buy mangoes
@@ -35,4 +35,5 @@ weight: 11
     Now you have 5 tasks in the list
     ____________________________________________________________
    ```
+   {{< /hint >}}
 6. Refer to the [Features](../features) page for the list of commands available.
