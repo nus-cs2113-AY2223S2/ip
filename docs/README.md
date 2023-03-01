@@ -188,6 +188,8 @@ Expected outcome:
 
 List all tasks in the tracker with its respective status and type.
 
+Any additional arguments after the command `list` will be **ignored**.
+
 Syntax: ``list``
 
 Example of usage: ``list``
