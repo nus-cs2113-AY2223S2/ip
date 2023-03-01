@@ -6,10 +6,14 @@ import duke.common.CommandReply;
 import java.util.List;
 import java.util.ArrayList;
 
+/**
+ * Finds tasks that contains a keyword from the task list.
+ */
 public class FindCommand extends Command {
     public static final String COMMAND_WORD = "find";
     public static final String COMMAND_USAGE =  COMMAND_WORD
-            + ": find a task by searching for a keyword";
+            + ": find a task by searching for a keyword "
+            + "Example: find book";
     public static final String FIND_HEADER = "Here are the matching tasks in your list:\n";
 
     private final String keyword;

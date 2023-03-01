@@ -7,10 +7,14 @@ import duke.data.exception.DuplicateTaskException;
 import duke.data.task.Task;
 import duke.data.task.Deadline;
 
+/**
+ * Adds a deadline task to the task list.
+ */
 public class DeadlineCommand extends Command {
     public static final String COMMAND_WORD = "deadline";
     public static final String COMMAND_USAGE = COMMAND_WORD
-            + ": add a deadline task with by time";
+            + ": add a deadline task with by time "
+            + "Example: deadline eat lunch /by 2023-01-01";
 
     private final String content;
     private final LocalDate byTime;

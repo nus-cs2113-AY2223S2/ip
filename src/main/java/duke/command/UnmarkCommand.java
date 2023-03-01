@@ -7,7 +7,9 @@ import java.util.List;
 import duke.common.CommandReply;
 import duke.data.exception.DuplicateMarkException;
 
-
+/**
+ * Unmarks a task to be not done yet using its index.
+ */
 public class UnmarkCommand extends Command {
     public static final String COMMAND_WORD = "unmark";
     public static final String COMMAND_USAGE = COMMAND_WORD

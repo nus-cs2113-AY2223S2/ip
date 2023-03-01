@@ -7,6 +7,9 @@ import java.util.List;
 import duke.common.CommandReply;
 import duke.data.exception.DuplicateMarkException;
 
+/**
+ * Marks a task to be done using its index.
+ */
 public class MarkCommand extends Command{
     public static final String COMMAND_WORD = "mark";
     public static final String COMMAND_USAGE = COMMAND_WORD

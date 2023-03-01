@@ -6,10 +6,14 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * Deletes a task from the task list using its index.
+ */
 public class DeleteCommand extends Command {
     public static final String COMMAND_WORD = "delete";
     public static final String COMMAND_USAGE = COMMAND_WORD
-            + ": delete a task from the task list";
+            + ": delete a task from the task list "
+            + "Example: delete 1 2 3";
 
     private final List<Integer> toDeleteList = new ArrayList<>();
 

@@ -1,5 +1,8 @@
 package duke.common;
 
+/**
+ * Keeps some common strings and formatted strings for replaying commands.
+ */
 public class CommandReply {
     public static final String ADD_TASK_HEADER = "Got it. I've added this task: \n";
     public static final String ADD_TASK_TAIL_F = "Now you have %d tasks in the list.";

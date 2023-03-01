@@ -11,6 +11,10 @@ import duke.storage.StorageFile;
 import duke.data.TaskList;
 import duke.ui.TextUi;
 
+/**
+ * Entry point of the Duke Application.
+ * Initializes the application and interacts with the user.
+ */
 public class Main {
     private static final String VERSION = "0.2";
     private TextUi ui;
@@ -21,12 +25,21 @@ public class Main {
         new Main().run(args);
     }
 
+    /**
+     * Runs the program until exits.
+     * @param args: init arguments
+     */
     private void run(String... args) {
         init();
         loopUntilExit();
         finish();
     }
 
+    /**
+     * Initializes the required objects, loads data from the disk,
+     * and print welcome messages
+     * @param args: init arguments
+     */
     private void init(String... args) {
         try {
             this.ui = new TextUi();
@@ -34,7 +47,7 @@ public class Main {
             this.storageFile = new StorageFile();
 
             try {
-                int lines = storageFile.loadCsvLoad(taskList);
+                int lines = storageFile.loadCsv(taskList);
                 ui.printMessage(String.format("Load %d task(es) from file '%s'", lines, storageFile.getPath()));
             } catch (FileNotFoundException e) {
                 storageFile.initCsv();
@@ -51,6 +64,9 @@ public class Main {
         }
     }
 
+    /**
+     * Reads user input command and executes it until user inputs an exit command.
+     */
     private void loopUntilExit() {
         Command command;
         do {
@@ -68,17 +84,24 @@ public class Main {
         } while (!ExitCommand.isExitCommand(command));
     }
 
+    /**
+     * Prints a goodbye message and writes data to the disk.
+     */
     private void finish() {
         try {
             storageFile.writeCsv(taskList);
             ui.printMessage(String.format("Data has been written to '%s'", storageFile.getPath()));
         } catch (IOException e) {
-            ui.printMessage("Failed to save task list!");
+            ui.printMultiMessage("Failed to save task list!", e.getMessage());
         }
         ui.printGoodByeMsg();
         System.exit(0);
     }
 
+    /**
+     * Prepares data that will be used by the command.
+     * @param command command to prepare data for.
+     */
     private void prepareData(Command command) {
         try {
             command.setTaskList(taskList);
@@ -87,6 +110,11 @@ public class Main {
         }
     }
 
+    /**
+     * Executes the command.
+     * @param command command to be executed.
+     * @return command execution result.
+     */
     private CommandResult executeCommand(Command command) {
         try {
             prepareData(command);

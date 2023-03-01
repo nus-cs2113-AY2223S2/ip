@@ -3,6 +3,9 @@ package duke.command;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Displays help information.
+ */
 public class HelpCommand extends Command{
     public static final String COMMAND_WORD = "help";
     public static final String COMMAND_USAGE = COMMAND_WORD

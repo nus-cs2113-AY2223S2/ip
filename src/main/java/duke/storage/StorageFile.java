@@ -14,10 +14,17 @@ import duke.data.exception.DuplicateTaskException;
 import duke.parser.CsvParser;
 
 
-public class StorageFile {
+/**
+ * Represents the file used to store user data (task list).
+ */
+public final class StorageFile {
+    /** Default file directory used to store user data. */
     private static final String DEFAULT_DIR = "data";
+    /** Default file name used to store user data. */
     private static final String DEFAULT_FILE = "duke.csv";
+    /** Default file path (dir + file name) used to  store user data. */
     private static final String DEFAULT_FILE_PATH = DEFAULT_DIR + "/" + DEFAULT_FILE;
+    /** Path used for storing user data.*/
     private final Path path;
 
     public StorageFile() {
@@ -32,6 +39,11 @@ public class StorageFile {
         return path.toString();
     }
 
+    /**
+     * Writes the task list to a CSV file.
+     * @param taskList task list to be written.
+     * @throws IOException when the storage file cannot be found or opened.
+     */
     public void writeCsv(TaskList taskList) throws IOException {
         FileWriter fw = new FileWriter(path.toFile());
         for (Task task : taskList) {
@@ -40,19 +52,34 @@ public class StorageFile {
         fw.close();
     }
 
+    /**
+     * Initializes the CSV file used for storing task list, creates one if there does not exist.
+     */
     public void initCsv() {
         File directory = new File(DEFAULT_DIR);
-        directory.mkdir();
+        try {
+            assert directory.mkdir();
+        } catch (AssertionError ae) {
+            System.err.println("Directory already exists.");
+        }
         File file = new File(DEFAULT_DIR + "/" + DEFAULT_FILE);
         try {
-            file.createNewFile();
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-            e.printStackTrace();
+            assert file.createNewFile();
+        } catch (IOException ioe) {
+            System.err.println(ioe.getMessage());
+            ioe.printStackTrace();
+        } catch (AssertionError ae){
+            System.err.println("File already exists.");
         }
     }
 
-    public int loadCsvLoad(TaskList taskList) throws FileNotFoundException {
+    /**
+     * Loads task list from CSV file.
+     * @param taskList task list to be loaded.
+     * @return number of lines successfully loaded.
+     * @throws FileNotFoundException if the csv file is empty.
+     */
+    public int loadCsv(TaskList taskList) throws FileNotFoundException {
         File file = new File(path.toFile().toURI());
         if (!file.exists()) {
             throw new FileNotFoundException();
