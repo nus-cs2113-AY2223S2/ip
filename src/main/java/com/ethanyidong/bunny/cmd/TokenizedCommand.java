@@ -38,6 +38,9 @@ public class TokenizedCommand {
     }
 
     private static String extractPositionalArgument(String[] positionalAndFlagArgument) {
+        if (positionalAndFlagArgument.length == 0) {
+            return null;
+        }
         return positionalAndFlagArgument[0].trim();
     }
 

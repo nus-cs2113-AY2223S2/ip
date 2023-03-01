@@ -98,6 +98,7 @@ public class BunnyStorage {
         }
         try {
             this.saveWriter.write(saveData + "\n");
+            this.saveWriter.flush();
         } catch (Exception e) {
             this.saveEnabled = false;
             System.out.println(bunny.getUI().SAVE_ERROR_MESSAGE);
