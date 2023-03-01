@@ -5,6 +5,9 @@ import duke.data.task.Task;
 
 import java.util.ArrayList;
 
+/**
+ * Lists all tasks in the task list.
+ */
 public class ListCommand extends Command {
     public static final String COMMAND_WORD = "list";
     public static final String COMMAND_USAGE = COMMAND_WORD

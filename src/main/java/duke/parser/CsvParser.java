@@ -12,10 +12,13 @@ import duke.data.task.Event;
 import duke.data.task.Task;
 import duke.data.task.Todo;
 
-
+/**
+ * Parses a csv line to a Task object.
+ */
 public class CsvParser {
     private static final String OTHER_THAN_QUOTE_REGEX = " [^\"] ";
     private static final String QUOTED_STRING_REGEX = String.format(" \" %s* \" ", OTHER_THAN_QUOTE_REGEX);
+    /** Regex to extract content between quotes. (e.g. extract hello from "hello") */
     private static final String BETWEEN_QUOTES_REGEX = String.format("(?x) " // enable comments, ignore white spaces
                     + ",                         " // match a comma
                     + "(?=                       " // start positive look ahead
@@ -30,6 +33,11 @@ public class CsvParser {
 
     public CsvParser() {}
 
+    /**
+     * Parses a line of CSV file to a Task object/
+     * @param line a CSV line (line seperated by comma).
+     * @return a Task object/
+     */
     public Task parseLine(String line) {
         String[] args = splitCsvLine(line);
         switch (args[0]) {

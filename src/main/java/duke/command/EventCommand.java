@@ -7,10 +7,14 @@ import duke.data.task.Task;
 import duke.data.task.Event;
 import duke.common.CommandReply;
 
+/**
+ * Adds an event task to the task list.
+ */
 public class EventCommand extends Command {
     public static final String COMMAND_WORD = "event";
     public static final String COMMAND_USAGE = COMMAND_WORD
-            + ": add an event task with start and to time";
+            + ": add an event task with start and to time "
+            + "Example: event eat dinner /from 2023-01-01 /to 2024-01-01";
     private final String content;
     private final LocalDate fromTime;
     private final LocalDate toTime;

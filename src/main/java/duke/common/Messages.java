@@ -1,5 +1,8 @@
 package duke.common;
 
+/**
+ * Keeps messages to be shown to users.
+ */
 public class Messages {
     public static final String SPACER = "\t ";
     public static final String LOGO = SPACER + " ____        _        \n"
