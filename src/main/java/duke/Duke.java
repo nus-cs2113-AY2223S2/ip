@@ -1,6 +1,7 @@
 package duke;
 
 import duke.command.Command;
+import duke.exceptions.CorruptSaveDataException;
 import duke.parser.InputParser;
 import duke.tasklist.TaskList;
 import duke.storage.Storage;
@@ -16,8 +17,15 @@ public class Duke {
     public static void main(String[] args) {
         UI ui = new UI();
         Storage storage = new Storage();
-        TaskList tasks = new TaskList(storage.read());
         InputParser inputParser = new InputParser();
+        TaskList tasks;
+        try {
+            String json = storage.read();
+            tasks = new TaskList(json);
+        } catch (CorruptSaveDataException e) {
+            ui.print(e.getMessage());
+            tasks = new TaskList();
+        }
 
         Scanner scan = new Scanner(System.in);
         ui.printLogo();

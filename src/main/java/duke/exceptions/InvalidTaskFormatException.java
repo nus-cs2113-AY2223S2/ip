@@ -1,6 +1,6 @@
 package duke.exceptions;
 
-import duke.parser.DateTimeParser;
+import duke.parser.datetime.DateTimeParser;
 import duke.tasks.TaskEnum;
 
 /**

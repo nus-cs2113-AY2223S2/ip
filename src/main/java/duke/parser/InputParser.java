@@ -5,6 +5,9 @@ import duke.exceptions.InvalidCommandException;
 import duke.exceptions.InvalidDateTimeException;
 import duke.exceptions.InvalidInputIDException;
 import duke.exceptions.InvalidTaskFormatException;
+import duke.parser.tasks.DeadlineParser;
+import duke.parser.tasks.EventParser;
+import duke.parser.tasks.ToDoParser;
 import duke.tasks.Task;
 import duke.tasks.TaskEnum;
 

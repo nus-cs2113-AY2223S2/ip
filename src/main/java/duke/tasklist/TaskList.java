@@ -1,7 +1,9 @@
 package duke.tasklist;
 
+import duke.exceptions.CorruptSaveDataException;
 import duke.exceptions.InvalidInputIDException;
 import duke.exceptions.NoTaskException;
+import duke.parser.json.JsonParser;
 import duke.tasks.Task;
 
 import java.util.ArrayList;
@@ -17,12 +19,16 @@ public class TaskList {
     private static final String MESSAGE_TASKS_UNMARKED = "OK, I've marked this task as not done yet:";
     private static ArrayList<Task> tasks = new ArrayList<>();
 
+    public TaskList() {
+        this.tasks = new ArrayList<>();
+    }
+
     /**
      * Initialise the object using JSON string.
      *
      * @param json String to be deserialized
      */
-    public TaskList(String json) {
+    public TaskList(String json) throws CorruptSaveDataException {
         tasks = JsonParser.fromJson(json);
     }
 

@@ -1,4 +1,4 @@
-package duke.parser;
+package duke.parser.datetime;
 
 import duke.exceptions.InvalidDateTimeException;
 
