@@ -17,6 +17,7 @@ public class Duke {
      */
     public Duke(String folderPath, String filePath) {
         ui = new UI();
+        ui.printHelloMessage();
         storage = new Storage(folderPath, filePath);
         try {
             listOfTasks = new TaskList(storage.initialiseDuke());
@@ -29,14 +30,13 @@ public class Duke {
      * Starts ChatBot and reads in user input
      */
     public void run() {
-        UI.printHelloMessage();
         String input;
         do {
             ui.printHorizontalLine();
             Scanner in = new Scanner(System.in);
             input = in.nextLine();
             ui.printHorizontalLine();
-            Parser.checkInput(input, listOfTasks.getTaskList());
+            Parser.checkInput(input, listOfTasks.getTaskList(), storage);
         } while (!input.equals("bye"));
     }
 
@@ -44,11 +44,6 @@ public class Duke {
      * Exits ChatBot and saves user's inputted task into a local file
      */
     public void exit() {
-        try {
-            storage.saveTasks(listOfTasks.getTaskList());
-        } catch (IOException e) {
-            System.out.println("File not found");
-        }
         ui.printGoodbyeMessage();
         ui.printHorizontalLine();
     }

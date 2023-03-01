@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -11,7 +12,7 @@ public class Parser {
      * @param input the user input.
      * @param listOfTasks the list of tasks that is currently in the ChatBot.
      */
-    public static void checkInput(String input, ArrayList<Task> listOfTasks) {
+    public static void checkInput(String input, ArrayList<Task> listOfTasks, Storage storage) {
         String[] inputs = input.split(" ");
         switch (inputs[0]) {
         case "bye":
@@ -39,8 +40,11 @@ public class Parser {
         default:
             try {
                 Parser.checkTaskType(input, listOfTasks);
+                storage.saveTasks(listOfTasks.get((listOfTasks.size() - 1)));
                 break;
             } catch (InvalidTaskTypeException e) {
+                System.out.println(e);
+            } catch (IOException e) {
                 System.out.println(e);
             }
         }
@@ -72,5 +76,37 @@ public class Parser {
         default:
             throw new InvalidTaskTypeException("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
         }
+    }
+
+    public static void loadSavedTasks(String input, ArrayList<Task> listOfTasks) throws InvalidTaskTypeException {
+        String taskType = input;
+        String[] savedData = input.split("/", 0);
+        boolean isCompleted;
+        if (savedData[1].equals("1")) {
+            isCompleted = true;
+        } else {
+            isCompleted = false;
+        }
+        String name = savedData[2];
+        switch (savedData[0]) {
+        case "T":
+            Task todo = new Todo(name, isCompleted);
+            listOfTasks.add(todo);
+            break;
+        case "D":
+            String dueDate = savedData[3];
+            Task deadline = new Deadline(name, isCompleted, dueDate);
+            listOfTasks.add(deadline);
+            break;
+        case"E":
+            String startDate = savedData[3];
+            String endDate = savedData[4];
+            Task event = new Event(name, isCompleted, startDate, endDate);
+            listOfTasks.add(event);
+            break;
+        default:
+            throw new InvalidTaskTypeException("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
+        }
+
     }
 }

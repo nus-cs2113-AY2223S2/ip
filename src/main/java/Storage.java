@@ -53,14 +53,16 @@ public class Storage {
      */
     public void loadSavedData(File dukeDataFile, ArrayList<Task> savedTaskList) throws IOException {
         Scanner dukeData = new Scanner(dukeDataFile);
+        int numberOfSavedTasks = 0;
         while (dukeData.hasNextLine()) {
             try {
-                Parser.checkTaskType(dukeData.nextLine(), savedTaskList);
-                UI.printHorizontalLine();
+                Parser.loadSavedTasks(dukeData.nextLine(), savedTaskList);
             } catch (InvalidTaskTypeException e) {
                 System.out.println(e);
             }
+            numberOfSavedTasks += 1;
         }
+        UI.printLoadSavedDataMessage(numberOfSavedTasks);
     }
 
     /**
@@ -69,11 +71,9 @@ public class Storage {
      * @param listOfTasks
      * @throws IOException
      */
-    public void saveTasks(ArrayList<Task> listOfTasks) throws IOException {
+    public void saveTasks(Task task) throws IOException {
         String content = "";
-        for (Task task : listOfTasks) {
-            content += formatContentToBeSaved(task);
-        }
+        content += formatContentToBeSaved(task);
         FileWriter fileToWriteTo = new FileWriter(getFilePath());
         fileToWriteTo.write(content);
         fileToWriteTo.close();
@@ -88,16 +88,23 @@ public class Storage {
     public static String formatContentToBeSaved (Task task) {
         String content = "";
         String type;
-        if (task instanceof Todo) {
-            type = "todo";
-            content = type + " " + task.getName();
-        } else if (task instanceof Deadline) {
-            type = "deadline";
-            content = type + " " + task.getName() + " /by " + ((Deadline) task).getBy();
+        String completed;
+        boolean isCompleted = task.getStatus();
+        if (isCompleted) {
+            completed = "1";
         } else {
-            type = "event";
-            content = type + " " + task.getName() + " /from " + ((Event) task).getStart()
-                    + " /to " + ((Event) task).getEnd();
+            completed = "0";
+        }
+        if (task instanceof Todo) {
+            type = "T";
+            content = type + "/" + completed + "/" + task.getName();
+        } else if (task instanceof Deadline) {
+            type = "D";
+            content = type + "/" + completed + "/" + task.getName() + "/" + ((Deadline) task).getBy();
+        } else {
+            type = "E";
+            content = type + "/" + completed + "/" + task.getName() + "/" + ((Event) task).getStart()
+                    + "/" + ((Event) task).getEnd();
         }
         return content + "\n";
     }

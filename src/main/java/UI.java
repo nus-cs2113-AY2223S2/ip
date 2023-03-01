@@ -18,7 +18,6 @@ public class UI {
         System.out.println("Hello from\n" + logo);
         printHorizontalLine();
         System.out.println("Hello! I'm Duke");
-        System.out.println("All saved data has been loaded. What can I for you today?");
     }
 
     public static void printUpdateStatusMessage(boolean isDone, Task currentTask) {
@@ -49,5 +48,13 @@ public class UI {
     public static void printFindTaskMessage(int index, Task task) {
         System.out.println("Here are the matching tasks in your list:");
         System.out.println(index + ". " + task);
+    }
+
+    public static void printLoadSavedDataMessage (int numberOfSavedMessages) {
+        if (numberOfSavedMessages == 0) {
+            System.out.println("There are no saved tasks. Welcome new user!");
+        } else {
+            System.out.println("Welcome back! " + numberOfSavedMessages + " saved tasks have been loaded");
+        }
     }
 }
