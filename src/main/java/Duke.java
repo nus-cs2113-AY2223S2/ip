@@ -69,6 +69,8 @@ public class Duke {
                     tasks.printNewTask(tasks.getSize());
                 } catch (IllegalInputException e){
                     Greeting.printEmptyTask();
+                } catch (WrongCommandOrderException e) {
+                    Greeting.printEmptyCommand();
                 } catch (MissingCommandException e) {
                     Greeting.printEmptyCommand();
                 } catch (IllegalDayException e) {

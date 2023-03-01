@@ -177,10 +177,13 @@ public class TaskList {
     *
     * @param userInput the user input
     */
-    public void addEvent(String userInput) throws IllegalInputException, MissingCommandException, IllegalDayException {
+    public void addEvent(String userInput) throws WrongCommandOrderException, IllegalInputException, MissingCommandException, IllegalDayException {
 
         if ((userInput.indexOf("/from") < 0 ) || (userInput.indexOf("/to") < 0 )){
             throw new MissingCommandException();
+        }
+        if ((userInput.indexOf("/from")) > (userInput.indexOf("/to"))){
+            throw new WrongCommandOrderException();
         }
         String eventTask = userInput.substring(5, userInput.indexOf("/")).trim();
         if (eventTask == "") {
