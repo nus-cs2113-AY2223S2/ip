@@ -122,8 +122,8 @@ public class Ui {
         System.out.println("Given index is not a number!");
     }
 
-    public static void printNoValidSaveIOException() {
-        System.out.println("IOException caught, no valid save file detected. Starting with " +
+    public static void printNoValidSave() {
+        System.out.println("No valid save file detected. Starting with " +
                 "empty list.");
     }
 
