@@ -1,7 +1,14 @@
 package task;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
 public class Event extends Task {
     String from;
+    String to;
+    LocalDate fromDate;
+    LocalDate toDate;
 
     public String getFrom() {
         return from;
@@ -11,7 +18,11 @@ public class Event extends Task {
         return to;
     }
 
-    String to;
+    public LocalDate getByDate(String dateString){
+        LocalDate date = LocalDate.parse(dateString);
+        return date;
+    }
+
     public Event(String description, String from, String to){
         super(description);
         this.from = from;
@@ -26,8 +37,17 @@ public class Event extends Task {
 
     @Override
     public String toString(){
-        return "[E]" + super.toString()
-                + "(" + "from " + from + " to " + to + ")";
+        try{
+            String fromDateString = getByDate(from).format(DateTimeFormatter.ofPattern("MMM d yyyy"));
+            String toDateString = getByDate(to).format(DateTimeFormatter.ofPattern("MMM d yyyy"));
+
+            return "[E]" + super.toString()
+                    + "(" + "Date: " + fromDateString + " ~ " + toDateString + ")";
+        }catch (DateTimeParseException e){
+            return "[E]" + super.toString()
+                    + "(" + "" + from + " ~ " + to + ")";
+        }
+
     }
 
     @Override
