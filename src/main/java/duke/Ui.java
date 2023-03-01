@@ -1,5 +1,6 @@
 package duke;
 
+import duke.exceptions.EmptyListException;
 import duke.exceptions.ExcessInputsException;
 import duke.task.Task;
 
@@ -19,7 +20,8 @@ public class Ui {
             "     Enter \"delete 'task-index'\" to delete a task from the list.\n" +
             "     Enter \"list\" to obtain a list of all your tasks!.\n" +
             "     Enter \"find 'string'\" to obtain a list of tasks containing the string you input.\n" +
-            "     Enter \"help\" to view this list of instruction again.\n";
+            "     Enter \"help\" to view this list of instruction again.\n" +
+            "     Enter \"bye\" to exit the program. (Your program will also be saved whenever a change is made.)\n";
 
     public static final String LOGO =
             "     |  _ \\ _   _| | _____ \n"
@@ -52,9 +54,12 @@ public class Ui {
                 LINE);
     }
 
-    public static void printList(ArrayList<Task> tasks, String[] words) throws ExcessInputsException {
+    public static void printList(ArrayList<Task> tasks, String[] words) throws ExcessInputsException, EmptyListException {
         if (words.length > 1) {
             throw new ExcessInputsException();
+        }
+        if (tasks.size() < 1) {
+            throw new EmptyListException();
         }
         System.out.println(LINE + "    Here are the tasks in your list:");
         for (int i = 1; i <= tasks.size(); i++) {
@@ -63,7 +68,10 @@ public class Ui {
         System.out.print(LINE);
     }
 
-    public static void printMatchingList(ArrayList<Task> tasks) {
+    public static void printMatchingList(ArrayList<Task> tasks) throws EmptyListException {
+        if (tasks.size() < 1) {
+            throw new EmptyListException();
+        }
         System.out.println(LINE + "    Here are the matching tasks in your list:");
         for (int i = 1; i <= tasks.size(); i++) {
             System.out.println("    " + i + "." + tasks.get(i-1).toString());

@@ -1,5 +1,6 @@
 package duke;
 
+import duke.exceptions.EmptyListException;
 import duke.exceptions.ExcessInputsException;
 import duke.exceptions.MissingDescriptionException;
 import duke.task.Task;
@@ -68,6 +69,8 @@ public class Duke {
             } catch (MissingDescriptionException e) {
                 System.out.println(LINE + "Missing task description details.\n" +
                     "Type 'help' to view list of command formats.\n" + LINE);
+            } catch (EmptyListException e) {
+                System.out.println(LINE + "Oops there is nothing in your list yet, try adding a task item first. :)\n" + LINE);
             }
             line = Ui.readInput();
             storage.saveChanges(tasks);

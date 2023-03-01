@@ -1,5 +1,6 @@
 package duke;
 
+import duke.exceptions.EmptyListException;
 import duke.exceptions.ExcessInputsException;
 import duke.exceptions.MissingDescriptionException;
 import duke.task.Deadline;
@@ -22,7 +23,7 @@ public class TaskList {
      * @param words the input command of the user, the first element is the string "find",
      *              the second element is the string the user wants to find.
      */
-    public static void findString (ArrayList<Task> tasks, String[] words) {
+    public static void findString (ArrayList<Task> tasks, String[] words) throws EmptyListException {
         String toFind = words[1];
         ArrayList<Task> matchingTasks = new ArrayList<>();
         for (Task x : tasks) {
