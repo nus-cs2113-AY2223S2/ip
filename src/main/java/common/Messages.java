@@ -6,17 +6,9 @@ package common;
 public class Messages {
     public static final String LINE = "________________________________________________________________\n";
     public static final String MESSAGE_WELCOME = LINE +
-            "Hello! I'm Duke.\n" +
-            "You can specify the type of tasks by using " +
-            "'todo' / 'deadline' / 'event' keyword before the task description.\n" +
-            "You can keep track of deadlines by typing 'deadline' " +
-            "followed by task description + '/by' to specify the time of the deadline.\n" +
-            "You can also add events to the list by typing 'event' " +
-            "followed by task description + '/from' + starting time of event + '/to' ending time of event.\n" +
-            "Type 'list' to view the current todo list.\n" +
-            "Type 'mark' and task event index to mark the task as done " +
-            "and type 'unmark' and index to undo the task.\n" +
-            "Type 'bye' to exit Duke.\n" +
+            "Hello! I'm Duke, your to-do list manager.\n" +
+            "You can add tasks to your to-do list, mark them as done, view your entire to-do list and many more!\n" +
+            "To get started, key in 'help' to check out all the functions and how to use them.\n" +
             LINE;
     public static final String MESSAGE_GOODBYE = "Thank you for using Duke. Hope to see you soon!";
     public static final String PRINT_TASK_HEADING = LINE + "Here are the tasks in your list:";

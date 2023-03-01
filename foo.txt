@@ -1,0 +1,6 @@
+print
+this
+file
+as
+user
+guide
