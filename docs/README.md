@@ -63,7 +63,7 @@ Use `/from` to indicate the start time and `/to` to indicate end time
 
 Example of usage:
 
-`deadline CS1231s Assignment 1 /from 2pm /to 6pm`
+`event CS1231s Assignment 1 /from 2pm /to 6pm`
 
 ### `mark` - checks task as completed
 
