@@ -12,7 +12,7 @@ import java.nio.file.StandardOpenOption;
  * Handles loading and saving from a save file
  */
 public class BunnyStorage {
-    private final boolean saveEnabled;
+    private boolean saveEnabled;
     private final Path savePath;
     private BufferedWriter saveWriter = null;
 
@@ -58,18 +58,30 @@ public class BunnyStorage {
     }
 
     /**
+     * Disables this class from writing to the save file.
+     */
+    public void disableSave() {
+        this.saveEnabled = false;
+    }
+
+    /**
      * Opens the save file for writing. Must be called before calling <code>save()</code>.
      *
      * @throws IOException if there is an error opening the file at savePath for writing
      */
-    public void beginSave() throws IOException {
+    public void beginSave(BunnySession bunny) {
         if (!saveEnabled) {
             return;
         }
-        this.saveWriter = Files.newBufferedWriter(
-                this.savePath,
-                StandardCharsets.UTF_8,
-                new StandardOpenOption[]{StandardOpenOption.APPEND, StandardOpenOption.CREATE});
+        try {
+            this.saveWriter = Files.newBufferedWriter(
+                    this.savePath,
+                    StandardCharsets.UTF_8,
+                    new StandardOpenOption[]{StandardOpenOption.APPEND, StandardOpenOption.CREATE});
+        } catch (Exception e) {
+            this.saveEnabled = false;
+            System.out.println(bunny.getUI().SAVE_ERROR_MESSAGE);
+        }
     }
 
     /**
@@ -79,11 +91,16 @@ public class BunnyStorage {
      * @throws IOException if the save file is not opened using <code>beginSave()</code>, or if other errors occured
      *                     while writing to the save file
      */
-    public void save(String saveData) throws IOException {
+    public void save(BunnySession bunny, String saveData) {
         if (!saveEnabled) {
             return;
         }
-        this.saveWriter.write(saveData + "\n");
+        try {
+            this.saveWriter.write(saveData + "\n");
+        } catch (Exception e) {
+            this.saveEnabled = false;
+            System.out.println(bunny.getUI().SAVE_ERROR_MESSAGE);
+        }
     }
 
     /**
@@ -91,10 +108,15 @@ public class BunnyStorage {
      *
      * @throws IOException if errors occured while flushing the buffer to the save file
      */
-    public void endSave() throws IOException {
+    public void endSave(BunnySession bunny) {
         if (!saveEnabled) {
             return;
         }
-        this.saveWriter.close();
+        try {
+            this.saveWriter.close();
+        } catch (Exception e) {
+            this.saveEnabled = false;
+            System.out.println(bunny.getUI().SAVE_ERROR_MESSAGE);
+        }
     }
 }

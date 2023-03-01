@@ -18,7 +18,8 @@ public class BunnyUI {
     public final static String MARK_MESSAGE_FORMAT = "%s:\n\t%s";
 
     public final static String LOAD_ERROR_MESSAGE = "Error reading save file! Continuing...";
-    public final static String SAVE_ERROR_MESSAGE = "Error writing save file! Quitting...";
+    public final static String SAVE_ERROR_MESSAGE =
+            "Error writing save file! Ensure you have permission to write ~/bunny.aof. Disabling save...";
     public final static String INVALID_COMMAND_ERROR_FORMAT = "Invalid command: %s %s";
     public final static String POSITIONAL_ARGUMENT_ERROR = "positional argument";
     public final static String FLAG_ARGUMENT_ERROR_FORMAT = "/%s argument";

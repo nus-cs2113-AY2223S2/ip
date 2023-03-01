@@ -96,17 +96,13 @@ public class BunnySession {
 
         this.ui.printMessage(this.ui.WELCOME_MESSAGE);
 
-        try {
-            this.storage.beginSave();
-            while (!this.isQuit()) {
-                String input = this.ui.getNextCommandString();
-                this.storage.save(input);
-                this.runCommandString(input);
-            }
-            this.ui.printMessage(this.ui.EXIT_MESSAGE);
-            this.storage.endSave();
-        } catch (Exception e) {
-            System.out.println(this.ui.SAVE_ERROR_MESSAGE);
+        this.storage.beginSave(this);
+        while (!this.isQuit()) {
+            String input = this.ui.getNextCommandString();
+            this.storage.save(this, input);
+            this.runCommandString(input);
         }
+        this.ui.printMessage(this.ui.EXIT_MESSAGE);
+        this.storage.endSave(this);
     }
 }
