@@ -6,12 +6,14 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 
 /**
  * Handles loading and saving from a save file
  */
 public class BunnyStorage {
+    private final static String SAVE_PATH_STRING = "bunny.aof";
     private boolean saveEnabled;
     private final Path savePath;
     private BufferedWriter saveWriter = null;
@@ -19,11 +21,10 @@ public class BunnyStorage {
     /**
      * @param saveEnabled whether saving is enabled.
      *                    If set to <code>false</code>, other methods will do nothing.
-     * @param savePath    the path to the save file
      */
-    public BunnyStorage(boolean saveEnabled, Path savePath) {
+    public BunnyStorage(boolean saveEnabled) {
         this.saveEnabled = saveEnabled;
-        this.savePath = savePath;
+        this.savePath = Paths.get(SAVE_PATH_STRING);
     }
 
     /**

@@ -4,8 +4,6 @@ import com.ethanyidong.bunny.arg.InvalidCommandException;
 import com.ethanyidong.bunny.cmd.ExecutableCommand;
 import com.ethanyidong.bunny.cmd.TokenizedCommand;
 
-import java.nio.file.Paths;
-
 /**
  * Handles control flow of the Bunny app.
  */
@@ -21,11 +19,9 @@ public class BunnySession {
      * @param saveEnabled whether to load and save commands to a save file (disabled for testing purposes)
      */
     public BunnySession(boolean saveEnabled) {
-        String home = System.getProperty("user.home");
-
         this.tasks = new BunnyTaskList();
         this.ui = new BunnyUI();
-        this.storage = new BunnyStorage(saveEnabled, Paths.get(home, "bunny.aof"));
+        this.storage = new BunnyStorage(saveEnabled);
         this.isQuit = false;
         this.isSuppressed = false;
     }
