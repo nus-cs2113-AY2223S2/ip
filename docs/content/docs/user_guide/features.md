@@ -108,9 +108,9 @@ Format: `delete <id>`
 Example: `delete 1` - Deletes the first task in the list.
 {{< /hint >}}
 
-## Exiting the program `bye`
+## Exiting the program `bye`/`exit`
 
-Format: `bye`
+Format: `bye`/`exit`
 
 Exits the application. 
 
