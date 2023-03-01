@@ -36,6 +36,7 @@ public class UI {
         System.out.println("* |Mark a task as Done| ex) mark 2");
         System.out.println("* |Unmark a task as Undone| ex) unmark 2");
         System.out.println("* |Delete| ex) delete 3");
+        System.out.println("* |Find| ex) find project");
         System.out.println("* |Exit| ex) bye");
     }
 
@@ -72,6 +73,13 @@ public class UI {
     public static void printTaskList(TaskList taskList){
         System.out.println(HORIZONTAL_LINE);
         System.out.println("[DUKE] Here are the tasks in your list: ");
+        System.out.print(taskList);
+        System.out.println(HORIZONTAL_LINE);
+    }
+
+    public static void printTargetTaskList(TaskList taskList){
+        System.out.println(HORIZONTAL_LINE);
+        System.out.println("[DUKE] Here are the matching tasks in your list: ");
         System.out.print(taskList);
         System.out.println(HORIZONTAL_LINE);
     }
