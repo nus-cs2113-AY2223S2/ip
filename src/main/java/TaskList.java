@@ -20,6 +20,10 @@ public class TaskList {
 
     public void loadData(ArrayList<String> existingTasks) throws IOException{
         for(String taskInfo : existingTasks){
+            Boolean isTaskDone = false;
+            if(taskInfo.contains("[O]")){
+                isTaskDone = true;
+            }
 
             if(taskInfo.contains("[T]")){
                 taskInfo = "todo " + taskInfo.substring(9);
@@ -28,14 +32,14 @@ public class TaskList {
             }else if(taskInfo.contains("[E]")){
                 taskInfo = "event " + taskInfo.substring(9);
             }
-
             Command command = Parser.getCommand(taskInfo);
-
             if(!addTask(command)){
                 UI.printFileLoadingErrorComment();
             }
 
-            if(taskInfo.contains("[O]")) markTask(getTotalTaskNum());
+            if(isTaskDone) {
+                markTask(getTotalTaskNum());
+            }
         }
     }
 

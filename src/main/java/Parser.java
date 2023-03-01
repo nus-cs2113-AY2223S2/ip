@@ -9,9 +9,9 @@ public class Parser {
 
         if(userInput.startsWith("todo")){
             return new AddTodoCommand(userInput);
-        }else if(userInput.startsWith("deadline")){
+        }else if(userInput.startsWith("deadline") && isValidDeadline(userInput)){
             return new AddDeadlineCommand(userInput);
-        }else if(userInput.startsWith("event")){
+        }else if(userInput.startsWith("event") && isValidEvent(userInput)){
             return new AddEventCommand(userInput);
         }else if(userInput.startsWith("list")){
             return new ListCommand();
@@ -23,11 +23,24 @@ public class Parser {
             return new DeleteCommand(userInput);
         }else if(userInput.startsWith("bye")){
             return new ByeCommand();
-        }else{
-            UI.printInputErrorComment();
-            return null;
         }
+
+        UI.printInputErrorComment();
+        return null;
     }
 
+    public static boolean isValidDeadline(String userInput){
+        if(userInput.contains("by")){
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean isValidEvent(String userInput){
+        if(userInput.contains("from") && userInput.contains("to")){
+            return true;
+        }
+        return false;
+    }
 
 }
