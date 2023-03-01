@@ -1,12 +1,10 @@
 import java.util.Scanner;
 import java.util.ArrayList;
 
-// camelCase used as a coding standard
-// indented according to Java coding standards
+
 
 public class Buddy {
 
-    static final int TOTAL_TASKS = 100;
 
     public static void main(String[] args) {
         String greeting = "Hello there! I'm Buddy\n"
@@ -21,7 +19,6 @@ public class Buddy {
         System.out.println(divider);
 
         ArrayList<Task> listOfThings = new ArrayList<>();
-        //Task[] listOfThings = new Task[TOTAL_TASKS];
         int currentPosition = 0;
         String command;
         Scanner in = new Scanner(System.in);

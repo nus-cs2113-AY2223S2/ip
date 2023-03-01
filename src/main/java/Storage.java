@@ -1,11 +1,8 @@
-package Storage;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.ArrayList;
-
 
 
 public class Storage {
@@ -36,6 +33,8 @@ public class Storage {
     }
 
     public void loadData(){
+
+
 
     }
 
