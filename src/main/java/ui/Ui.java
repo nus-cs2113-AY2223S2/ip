@@ -2,6 +2,9 @@ package ui;
 
 import common.Messages;
 
+/**
+ * UI to print messages.
+ */
 public class Ui {
     public void showWelcomeMessage() {
         showToUser(Messages.MESSAGE_WELCOME);

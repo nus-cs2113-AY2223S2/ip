@@ -1,8 +1,3 @@
-T | X | running
-T | X | A todo
-T | X | buying
-T |   | dlskfj
-D |   | rtlkjs | hdjf
-T |   | reading books
-T |   | watching a movie called birds
-T |   | reading
+T |   | likst
+T |   | lksdjf
+T |   | finish ip

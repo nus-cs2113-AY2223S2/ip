@@ -18,17 +18,23 @@ public class Storage {
     protected File f;
     protected ArrayList<Task> tasks = new ArrayList<>();
 
+    /**
+     * Constructor for Storage/
+     *
+     * @param filePath where the file is saved in String
+     */
     public Storage(String filePath) {
         this.filePath = filePath;
     }
 
+    /**
+     * Create txt file that stores task list if it has not been created.
+     */
     public void createFile() {
         try {
             f = new File(filePath);
             if (f.createNewFile()) {
                 System.out.println("File created: " + f.getName());
-            } else {
-                System.out.println("File already exists");
             }
         } catch (IOException e) {
             System.out.println("An error occurred while creating file.");
@@ -36,6 +42,11 @@ public class Storage {
         }
     }
 
+    /**
+     * Initialise tasks array list using tasks stored in the file. Retrieve history.
+     *
+     * @throws FileNotFoundException if no file can be found.
+     */
     public void readTasksFromFile() throws FileNotFoundException {
         Scanner s = new Scanner(f);
         while (s.hasNext()) {
@@ -62,11 +73,16 @@ public class Storage {
         }
     }
 
+    /**
+     * Save newly added tasks to file based on different task type.
+     *
+     * @throws IOException if saving failed.
+     */
     public void saveTasksToFile() throws IOException {
         FileWriter fw = new FileWriter(filePath, false);
         for (Task t : tasks) {
             String completeTaskDescription = t.printTask();
-            String taskType = completeTaskDescription.substring(1, 2);
+            String taskType = completeTaskDescription.substring(1, 2); // task description starts with [TaskType]
             switch (taskType) {
             case "T":
                 fw.write(taskType + " | " + t.getStatusIcon() + " | " + t.getDescription() +
@@ -86,7 +102,12 @@ public class Storage {
         fw.close();
     }
 
-    public ArrayList<Task> initialiseTaskList() {
+    /**
+     * Getter for the arraylist of task list initialised.
+     *
+     * @return tasks as ArrayList of Task.
+     */
+    public ArrayList<Task> getTasks() {
         return tasks;
     }
 }

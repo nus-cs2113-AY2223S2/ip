@@ -1,10 +1,12 @@
 package common;
 
+/**
+ * Define output messages to readers as constants.
+ */
 public class Messages {
     public static final String LINE = "________________________________________________________________\n";
     public static final String MESSAGE_WELCOME = LINE +
             "Hello! I'm Duke.\n" +
-            "To add general tasks to the todo list, simply type in the task and press enter.\n" +
             "You can specify the type of tasks by using " +
             "'todo' / 'deadline' / 'event' keyword before the task description.\n" +
             "You can keep track of deadlines by typing 'deadline' " +

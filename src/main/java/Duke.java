@@ -9,8 +9,6 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.io.FileNotFoundException;
 
-//TODO: specify error: empty description vs event/ddl timing not found
-//TODO: check print new line for printtask
 
 public class Duke extends TaskList {
     private Storage storage;
@@ -19,24 +17,38 @@ public class Duke extends TaskList {
     private Parser parser;
 
 
+    /**
+     * Constructor for Duke with file path specified. Initialise tasks array list from storage.
+     *
+     * @param filePath path for the txt file that stores the task list
+     */
     public Duke(String filePath) {
         super();
         try {
             ui = new Ui();
             initialiseStorage(filePath);
-            taskList = new TaskList(storage.initialiseTaskList());
+            taskList = new TaskList(storage.getTasks());
             parser = new Parser();
         } catch (FileNotFoundException e) {
             System.out.println("File not found.");
         }
     }
 
+    /**
+     * Create file if not found before reading in existing tasks to store in an array list.
+     *
+     * @param filePath path for the txt file that stores the task list
+     * @throws FileNotFoundException is no file containing the task list is found
+     */
     private void initialiseStorage(String filePath) throws FileNotFoundException {
         storage = new Storage(filePath);
         storage.createFile();
         storage.readTasksFromFile();
     }
 
+    /**
+     * Save modified task list to the task_list txt file.
+     */
     private void saveTasks() {
         try {
             storage.saveTasksToFile();
@@ -47,6 +59,9 @@ public class Duke extends TaskList {
         }
     }
 
+    /**
+     * Launch and run Duke.
+     */
     private void run() {
         ui.showWelcomeMessage();
 
@@ -105,10 +120,8 @@ public class Duke extends TaskList {
         }
     }
 
-
     public static void main(String[] args) {
         new Duke("./task_list.txt").run();
     }
-
 }
 
