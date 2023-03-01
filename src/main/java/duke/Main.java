@@ -52,12 +52,12 @@ public class Main {
             } catch (FileNotFoundException e) {
                 storageFile.initCsv();
                 ui.printMessage(String.format("Create new data file '%s'", storageFile.getPath()));
+            } finally {
+                ui.printWelcomeMsg(VERSION);
+                ui.printDivider();
+                ui.printIntroMsg();
+                ui.printDivider();
             }
-
-            ui.printWelcomeMsg(VERSION);
-            ui.printDivider();
-            ui.printIntroMsg();
-            ui.printDivider();
         } catch (Exception e) {
             ui.printMessage("init failed!");
             throw new RuntimeException();
@@ -93,8 +93,9 @@ public class Main {
             ui.printMessage(String.format("Data has been written to '%s'", storageFile.getPath()));
         } catch (IOException e) {
             ui.printMultiMessage("Failed to save task list!", e.getMessage());
+        } finally {
+            ui.printGoodByeMsg();
         }
-        ui.printGoodByeMsg();
         System.exit(0);
     }
 
