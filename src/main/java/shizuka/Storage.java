@@ -12,7 +12,7 @@ public class Storage {
      * Saves the current list of tasks to a file.
      *
      * @param filePath The path of the file to save to.
-     * @param text The list of tasks to save.
+     * @param text     The list of tasks to save.
      * @throws IOException If the file cannot be created.
      */
     static void save(String filePath, String[] text) throws IOException {
@@ -33,7 +33,7 @@ public class Storage {
      * Loads the list of tasks from a file.
      *
      * @param filePath The path of the file to load from.
-     * @param list The list of tasks to load into.
+     * @param list     The list of tasks to load into.
      * @throws IOException If the file cannot be found.
      */
     static void load(String filePath, TodoList list) throws IOException {
