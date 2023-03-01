@@ -65,7 +65,7 @@ public class Storage {
 
     }
 
-    public static void loadDeadlineTask(ArrayList<Task> tasks, String taskInformation, String taskType) {
+    public static void loadDeadlineTask (ArrayList<Task> tasks, String taskInformation, String taskType) {
         String taskName;
         taskName = taskInformation.split(LOADING_FRONT_PARENTHESIS_DELIMITER, 2)[0];
         String deadlineBy = taskInformation.split(": ", 2)[1].replace(")","");

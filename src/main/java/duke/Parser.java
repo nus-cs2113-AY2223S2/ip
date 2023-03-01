@@ -31,6 +31,9 @@ public class Parser {
         case "deadline":
             informationNeededForPerformingUserRequest = parseTaskAdditionRequest(command, taskInformation, userInput);
             break;
+        case "find":
+            informationNeededForPerformingUserRequest = parseFindRequest(userInput, command);
+            break;
         default:
             informationNeededForPerformingUserRequest[0] = "invalid command";
             break;
@@ -74,6 +77,13 @@ public class Parser {
         } catch (IndexOutOfBoundsException e) {
             informationNeededForPerformingUserRequest[0] = "error with information provided";
         }
+        return informationNeededForPerformingUserRequest;
+    }
+
+    public static String[] parseFindRequest(String userInput, String command) {
+        String[] informationNeededForPerformingUserRequest = {"", "", "", ""};
+        informationNeededForPerformingUserRequest[0] = command;
+        informationNeededForPerformingUserRequest[1] = userInput.split(SPACE_DELIMITER,2)[1];
         return informationNeededForPerformingUserRequest;
     }
 }
