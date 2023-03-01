@@ -13,10 +13,22 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+
+/**
+ * The IOFile class reads and writes
+ * onto a .txt file to save the tasks listed
+ */
 public class IOFile {
 
     public static final String FILEPATH = "data/tasklist.txt";
 
+    /**
+     * This method reads the tasks saved
+     * onto the .txt file
+     *
+     * @param storedUserTasks ArrayList containing listed Tasks
+     * @throws FileNotFoundException FileNotFoundException has occurred
+     */
     public static void readData(ArrayList<Task> storedUserTasks) throws FileNotFoundException {
         String originalString, description, by, from, to;
         int indexOfBy, indexOfFrom, indexOfTo;
@@ -58,6 +70,13 @@ public class IOFile {
         }
     }
 
+    /**
+     * This method writes the tasks saved
+     * onto the .txt file
+     *
+     * @param storedUserTasks ArrayList containing listed Tasks
+     * @throws IOException IOException has occurred
+     */
     public static void writeData(ArrayList<Task> storedUserTasks) throws IOException {
         FileWriter fw = new FileWriter(FILEPATH);
         for(int i=0; i<Duke.userTextCount; i++) {
