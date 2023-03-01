@@ -31,7 +31,9 @@ Thank you for using Duke. Duke is a command-line interface, personal assistant b
 6. In the terminal, navigate to the location of the folder by doing `cd FILE_PATH`
    1. This step is important as it ensures that the saved tasks file will be saved in the same directory. Otherwise, the file will be stored in the current working directory.
 7. Use the command `java -jar ip.jar` to launch Duke. If done correctly, you will see something like this on your first start up:
+
    ![startup.png](images/startup.png)
+
 8. When you are done using the app, enter `bye` to shut the application down. This ensures that Duke will save your data, as saving data is only done during the shut-down process. 
 
 # Quick Notes about Formatting and Inputs
@@ -89,8 +91,6 @@ The first section shows the type of task, with 'T' for todo, 'D' for deadline, a
 ## Marking Tasks
 Duke comes with an in-built task tracker, allowing you to mark tasks as completed and uncompleted. By default, tasks are added to the list as incomplete.
 
-For both marking and unmarking tasks, the inclusion of non-integer parameters will cause Duke to crash. 
-
 To obtain figure out the index of your code, you can use the command [`list`](#list).
 
 ### Mark Tasks
@@ -110,7 +110,7 @@ If the input method is correct, you will see something like this:
 ## Delete
 Currently, there Duke does not have the ability to edit tasks. If you make a mistake, or want to delete a task, you can do so with this feature. 
 
-The command usage is `delete INDEX`, ie. `delete 1`. Using any non-integers as a parameter will cause Duke to crash. 
+The command usage is `delete INDEX`, ie. `delete 1`. 
 
 If the input method is correct, you will see something like this:
 
@@ -149,4 +149,4 @@ This section will give the full list of features that Duke has. If you want to s
 | Find              | `find DESCRIPTION`               | `find book`                                                         |
 
 # Conclusion
-Thank you for your interest in Duke! If you have any issues, please reach out to me via email, [natashatan.yt@gmail.com](mailto:natashatan.yt@gmail.com)
+Thank you for your interest in Duke! If you have any issues, please reach out to me on Github!
