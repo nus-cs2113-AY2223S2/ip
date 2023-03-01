@@ -26,7 +26,7 @@ public class Deadline extends Task{
     /**
     * Method to get day that deadline is by
     *
-    * @return day
+    * @return day, day that deadline is by
     */
     @Override
     public String getBy() {
