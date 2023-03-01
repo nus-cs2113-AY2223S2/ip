@@ -41,6 +41,7 @@ public class Duke {
                 System.out.println("Bye. Hope to see you again soon!");
                 return;
             } else {
+                System.out.println("Command does not exist");
                 continue;
             }
         }
@@ -124,6 +125,7 @@ public class Duke {
         String endDate = regexOutput[2];
         Deadline deadline = new Event(eventName, list.size(), startDate, endDate);
         list.add(deadline);
+        System.out.println("event added");
     }
     public static void dukeCommandDeadline(String nextLine, List<Task> list) {
 //        System.out.println(nextLine);
@@ -138,9 +140,9 @@ public class Duke {
             return;
         }
         String deadlineName = regexOutput[0];
-        String deadlineDate = regexOutput[1];
-        Deadline deadline = new Deadline(deadlineName, list.size(), deadlineDate);
+        String deadlineDate = regexOutput[1];Deadline deadline = new Deadline(deadlineName, list.size(), deadlineDate);
         list.add(deadline);
+        System.out.println("deadline added");
     }
     public static void dukeCommandToDo(String nextLine, List<Task> list) {
         String lineWithoutCommand;
