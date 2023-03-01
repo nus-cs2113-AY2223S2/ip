@@ -8,12 +8,17 @@ public class Ui {
 	public static final String UNKNOWN_COMMAND_MESSAGE = "Error: Unknown command detected, please type help for the list of commands available";
 	public static final String EXIT_MESSAGE = "Bye. Hope to see you again soon!\n";
 	public static final String GREET_MESSAGE = "Hello! I'm Bob\n" + "What can I do for you?\n";
+	public static final String NO_MATCHING_TASK_MESSAGE = "Oops! There are no matching tasks in your list!";
+	public static final String FIND_TASK_MESSAGE = "Here are the matching tasks in your list and its index:";
 	public static final String BYE_COMMAND = "bye";
 	public static final String ERROR_EMPTY_TODO_DESCRIPTION_MESSAGE = "Error: The description of Todo cannot be empty";
 	public static final String ERROR_EMPTY_EVENT_DESCRIPTION_MESSAGE = "Error: The description, from or to cannot be empty";
 	public static final String ERROR_EMPTY_DEADLINE_DESCRIPTION = "Error: The description or by cannot be empty";
 	public static final String ERROR_TASK_NUMBER_OUT_OF_RANGE_MESSAGE = "Error: task number given out of range";
 	public static final String ERROR_TASK_NUMBER_NOT_INT_MESSAGE = "Error: Task Number given empty/not a number!";
+	public static final String ERROR_NO_KEYWORD_MESSAGE = "Error: keyword not inputted!";
+	public static final String ERROR_UNABLE_TO_SAVE_CHANGES_MESSAGE = "Error: Unable to save changes";
+	public static final String ERROR_FILE_NOT_DETECTED_MESSAGE = "Error: Nothing detected in save file";
 	public static final String PRINT_HELP_INSTRUCTIONS_MESSAGE = "The following are the commands available and their arguments:";
 	public static final String HELP_TODO_FORMAT = "Todo [description]";
 	public static final String HELP_TODO_DESCRIPTION = "Creates Todo task. Requires a description text.";
@@ -34,8 +39,6 @@ public class Ui {
 	public static final String HELP_DELETE_DESCRIPTION = "Deletes selected task from the list";
 	public static final String HELP_CLEAR_FORMAT = "clear";
 	public static final String HELP_CLEAR_DESCRIPTION = "Empties the list";
-	public static final String ERROR_UNABLE_TO_SAVE_CHANGES_MESSAGE = "Error: Unable to save changes";
-	public static final String ERROR_FILE_NOT_DETECTED_MESSAGE = "Error: Nothing detected in save file";
 	
 	/**
 	 * Generates and prints greeting upon the opening of the program.

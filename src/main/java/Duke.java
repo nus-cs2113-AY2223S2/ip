@@ -5,6 +5,7 @@ import tasks.Tasks;
 import tasks.Todo;
 import ui.Ui;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -29,6 +30,7 @@ public class Duke {
 	public static final String TO_DEMARCATION = "/to";
 	public static final int BY_DESCRIPTION = 1;
 	public static final String BY_DEMARCATION = "/by";
+	public static final String FIND_COMMAND = "find";
 	public static final int START_INDEX = 1;
 	private Ui ui;
 	private Storage storage;
@@ -112,6 +114,9 @@ public class Duke {
 			break;
 		case DEADLINE_COMMAND:
 			addDeadline(list, arg);
+			break;
+		case FIND_COMMAND:
+			runFind(list, arg);
 			break;
 		case DELETE_COMMAND:
 			runDelete(list, arg);
@@ -263,6 +268,31 @@ public class Duke {
 	}
 	
 	/**
+	 * Extracts the argument required to find for the keyword within the  list of tasks.
+	 * Should there be no matching tasks containing the keyword there would be a message informing the user.
+	 * @param list List of tasks of user.
+	 * @param arg String of argument inputted by the user.
+	 */
+	private static void runFind(Tasks list, String arg) {
+		String keyword = arg;
+		
+		// check if keyword is empty
+		if (keyword.isBlank()) {
+			System.out.println(Ui.ERROR_NO_KEYWORD_MESSAGE);
+			return;
+		}
+		
+		ArrayList<Integer> findTasksIndex = list.findTasks(keyword);
+		int findTasksCount = findTasksIndex.size();
+		if (findTasksCount == 0) {
+			System.out.println(Ui.NO_MATCHING_TASK_MESSAGE);
+		} else {
+			System.out.println(Ui.FIND_TASK_MESSAGE);
+			findTasksIndex.forEach((i) -> list.printTask(i));
+		}
+	}
+	
+  /**
 	 * Extracts the arguments required to delete the selected task from list.
 	 * Also checks if the argument placed is valid.
 	 * @param list List of tasks of the user.

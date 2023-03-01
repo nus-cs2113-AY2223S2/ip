@@ -108,6 +108,36 @@ public class Tasks {
     }
     
     /**
+     * Searches through the list of tasks for the keyword and
+     * returns an ArrayList of list's indexes that contain the keyword.
+     * @param keyword String that is being searched for
+     * @return ArrayList of integers containing the indexes from list of tasks that contains the keyword
+     */
+    public ArrayList<Integer> findTasks(String keyword) {
+        ArrayList<Integer> findTasksIndex = new ArrayList<>();
+        for (int i = 1; i <= tasksCount; i++) {
+            findTask(findTasksIndex, i, keyword);
+        }
+        return findTasksIndex;
+    }
+    
+    /**
+     * Search the particular task corresponding to index and checking if it contains keyword.
+     * If keyword is found in task, add index onto findTasksIndex.
+     * @param findTasksIndex ArrayList of integers containing the indexes from list of tasks that contains the keyword.
+     * @param index Index of task from list of tasks being searched on.
+     * @param keyword String that is being searched for.
+     */
+    private void findTask(ArrayList<Integer> findTasksIndex, int index, String keyword) {
+        Task task = tasks.get(index);
+        String description = task.getDescription();
+        
+        if (description.contains(keyword)) {
+            findTasksIndex.add(index);
+        }
+    }
+
+    /*
      * Deletes task of index taskNumber from the list
      * @param taskNumber Index of task.
      */
