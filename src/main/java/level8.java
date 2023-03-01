@@ -86,7 +86,7 @@ public class level8 {
         }
         return timestr2;
     }
-    
+
     public static void DateTime(ArrayList<LocalDateTime> dates_and_times, String str, DateTimeFormatter formatter) {
         String datestr;
         String timestr;
