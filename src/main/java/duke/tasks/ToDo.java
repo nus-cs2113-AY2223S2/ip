@@ -1,3 +1,11 @@
+/**
+ * Contains methods to build up a complete Task
+ *
+ * @param description A string that details the description of the task
+ * @param isDone boolean variable that identifies whether the task is completed
+ * @param toDo A string that identifies the Task as a Todo task
+ */
+
 package duke.tasks;
 
 import duke.Task;

@@ -1,3 +1,10 @@
+/**
+ * Splits user input into two parts, firstWord and remainingWord
+ * Returns String array wordList that contains the two parts
+ *
+ * @param command A string input from the user
+ */
+
 package duke;
 
 public class Parser {

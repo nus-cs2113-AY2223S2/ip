@@ -1,3 +1,11 @@
+/**
+ * Reads and writes list of Tasks to and from a text file called Duke.
+ * If Duke text file does not exist, storageList remains an empty ArrayList
+ *
+ * @param fileList an ArrayList used to store lines of strings read from Duke
+ * @param storageList an ArrayList that is filled up with Tasks
+ */
+
 package duke;
 
 import duke.tasks.Deadline;
