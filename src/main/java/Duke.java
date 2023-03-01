@@ -17,7 +17,7 @@ public class Duke {
     }
 
     public void run() {
-        welcome();
+        start();
         String input, command;
         boolean isRunning = true;
         while (isRunning) {
