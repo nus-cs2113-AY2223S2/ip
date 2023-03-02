@@ -1,5 +1,8 @@
 package tusky.commands;
 
+/**
+ * Enum for the different types of commands.
+ */
 public enum CommandType {
         BYE("bye"),
         LIST("list"),

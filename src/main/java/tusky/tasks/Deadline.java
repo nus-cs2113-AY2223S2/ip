@@ -4,9 +4,12 @@ import tusky.constants.DateTime;
 import tusky.exceptions.EmptyDescriptionException;
 
 import java.time.LocalDate;
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Class that represents a deadline task.
+ * A deadline task has a "by" field to indicate when it should be completed by.
+ */
 public class Deadline extends Task {
 
     protected LocalDate by;
