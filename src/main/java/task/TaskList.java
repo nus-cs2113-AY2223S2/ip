@@ -187,13 +187,10 @@ public class TaskList {
         }
     }
 
-<<<<<<< HEAD
-=======
     /**
      * This method prints out the found tasks in the list to show the user
      * which tasks were found from their find input.
      */
->>>>>>> branch-A-JavaDoc
     private static void printFoundList(ArrayList<Task> foundTasks) {
         System.out.println(LINE);
         int numTask = foundTasks.size();
@@ -209,13 +206,10 @@ public class TaskList {
         }
     }
 
-<<<<<<< HEAD
-=======
     /**
      * Stores the task containing the input keyed by the user into a list.
      * @param input
      */
->>>>>>> branch-A-JavaDoc
     public static void findTask(String input) {
         ArrayList<Task> foundTasks = new ArrayList<>();
         for(Task t : list) {
