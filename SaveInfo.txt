@@ -1,2 +1,3 @@
-todo heya! How u doing!!! | 1
-deadline respond /by Friday | 1
+todoread book | 0
+deadlinereturn book /bynull | 0
+eventset project /from 3 /at4 | 0

@@ -1,6 +1,7 @@
 package IPChat;
 
 import ipchatExceptions.IPChatExceptions;
+import java.util.Arrays;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.nio.file.Files;
@@ -90,20 +91,20 @@ public class IPChat {
 
     // Create a list of the task
     public static void listTasks(String statements) throws IPChatExceptions {
-        if (statements.length() == 4) {
-            if (tasksCount > 0) {
-                System.out.println("------------------------------------------");
-                System.out.println("Here is the list of tasks for the day! All the best :) \n");
-                for (int i = 0; i < tasksCount; i += 1) {
-                    System.out.println((i + 1) + "." + "[" + tasks.get(i).getStatusIcon() + "] " + tasks.get(i).toString());
-                }
-                System.out.println("------------------------------------------");
+        if (tasksCount == 0) {
+            throw new IPChatExceptions("Please give an input");
+        } else {
+            System.out.println("------------------------------------------");
+            System.out.println("Here is the list of tasks for the day! All the best :) \n");
+            for (int i = 0; i < tasksCount; i += 1) {
+                System.out.println((i + 1) + ". " + "[" + tasks.get(i).getStatusIcon() + "] " + tasks.get(i).toString());
             }
+            System.out.println("------------------------------------------");
         }
     }
 
     // Marks a task as done
-    public static void markDone(String statements) throws IPChatExceptions {
+    public static void markDone (String statements) throws IPChatExceptions {
         if (tasksCount != 0) {
             try {
                 int taskIndex = Integer.parseInt(statements.substring(statements.length() - 1)) - 1; // changed index to taskIndex
@@ -119,7 +120,7 @@ public class IPChat {
     }
 
     // tasks to do
-    public static void toDoTasks(String statements) {
+    public static void toDoTasks (String statements) {
         if (statements.length() == 4) {
             System.out.println("Please continue");
         } else {
@@ -193,6 +194,27 @@ public class IPChat {
         }
     }
 
+    public static void findTasks (String statements) {
+        String[] contents = statements.split(" ", 2);
+        String mainWord = contents[1];
+        int matchCount = 0;
+
+        ArrayList<String> neededTasks = new ArrayList<>();
+        for (Task currentTasks: tasks) {
+            if (currentTasks.toString().contains(mainWord)) {
+                neededTasks.add(currentTasks.toString());
+                matchCount += 1;
+            }
+        }
+
+        if (matchCount != 0) {
+            System.out.println("Here are the matching tasks as requested");
+            System.out.println("------------------------------------------");
+            for (int i = 0 ; i < neededTasks.size(); i += 1) {
+                System.out.println((i + 1) + ". " + neededTasks.get(i) + "\n");
+            }
+        }
+    }
     // Compilation
     public static void mySequence() throws IPChatExceptions, IOException{
         while (checkInput == 0) {
@@ -226,6 +248,9 @@ public class IPChat {
                 deleteTasks(statements);
                 saveContent(tasks);
                 break;
+            case "find":
+                findTasks(statements);
+                break; 
             default:
                 System.out.println("------------------------------------------");
                 System.out.println("Please provide accurate readings");
