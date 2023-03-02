@@ -100,14 +100,14 @@ public class Storage {
         }
         if (task instanceof Todo) {
             type = "T";
-            content = type + "/" + completed + "/" + task.getName();
+            content = type + "|" + completed + "|" + task.getName();
         } else if (task instanceof Deadline) {
             type = "D";
-            content = type + "/" + completed + "/" + task.getName() + "/" + ((Deadline) task).getBy();
+            content = type + "|" + completed + "|" + task.getName() + "|" + ((Deadline) task).getBy();
         } else {
             type = "E";
-            content = type + "/" + completed + "/" + task.getName() + "/" + ((Event) task).getStart()
-                    + "/" + ((Event) task).getEnd();
+            content = type + "|" + completed + "|" + task.getName() + "|" + ((Event) task).getStart()
+                    + "|" + ((Event) task).getEnd();
         }
         return content + "\n";
     }
@@ -115,17 +115,19 @@ public class Storage {
     public void updateStatusOfSavedTask (Task task, boolean isCompleted) {
         String data = "";
         String line;
+        boolean isUpdated = false;
         try {
             File savedDataFile = new File(getFilePath());
             FileReader readSavedData = new FileReader(savedDataFile);
             BufferedReader oldSavedData = new BufferedReader(readSavedData);
             while ((line = oldSavedData.readLine()) != null) {
-                if (line.contains(task.getName())) {
+                if (line.contains(task.getName()) && !isUpdated) {
                     if (isCompleted) {
                         line = line.replace("0", "1");
                     } else {
                         line = line.replace("1", "0");
                     }
+                    isUpdated = true;
                 }
                 data += line + "\n";
             }
@@ -144,13 +146,15 @@ public class Storage {
 
     public void deleteSavedTask (Task task) {
         String data = "";
-        String line;
+        String line = "";
+        boolean isDeleted = false;
         try {
             File savedDataFile = new File(getFilePath());
             FileReader readSavedData = new FileReader(savedDataFile);
             BufferedReader oldSavedData = new BufferedReader(readSavedData);
             while ((line = oldSavedData.readLine()) != null) {
-                if (line.contains(task.getName())) {
+                if (line.contains(task.getName()) && !isDeleted) {
+                    isDeleted = true;
                     continue;
                 }
                 data += line + "\n";

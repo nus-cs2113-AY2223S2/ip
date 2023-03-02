@@ -83,14 +83,8 @@ public class Parser {
     }
 
     public static void loadSavedTasks(String input, ArrayList<Task> listOfTasks) throws InvalidTaskTypeException {
-        String taskType = input;
-        String[] savedData = input.split("/", 0);
-        boolean isCompleted;
-        if (savedData[1].equals("1")) {
-            isCompleted = true;
-        } else {
-            isCompleted = false;
-        }
+        String[] savedData = input.split("\\|", 0);
+        boolean isCompleted = savedData[1].equals("1");
         String name = savedData[2];
         switch (savedData[0]) {
         case "T":
