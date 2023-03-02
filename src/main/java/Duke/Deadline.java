@@ -43,6 +43,10 @@ public class Deadline extends Task {
         return "deadline";
     }
 
+    boolean contains(String keyword) {
+        return (this.content.contains(keyword) | this.dueDate.contains(keyword));
+    }
+
     @Override
     public String toString() {
         return "[D]" + super.toString() + " (by: " + this.dueDate + ")";

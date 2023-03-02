@@ -1,4 +1,3 @@
-todo 6 /done notdone
-todo 3 /done notdone
-todo asdadsad /done done
-event asdasda /from asd /to aslkdja /done done
+todo eat /done done
+deadline exam /by saturday /done done
+event weekend /from sat /to sun /done done
