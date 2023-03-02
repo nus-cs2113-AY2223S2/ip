@@ -10,11 +10,6 @@ public class DukeException extends Exception {
         this.description = description;
     }
 
-    /**
-     * Returns the error message
-     * 
-     * @return The error message
-     */
     public String getDescription() {
         return this.description;
     }
