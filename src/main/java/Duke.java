@@ -1,72 +1,131 @@
 import java.util.Scanner;
-
 public class Duke {
-    public static void main(String[] args) {
-        String logo = " ____        _        \n"
-                + "|  _ \\ _   _| | _____ \n"
-                + "| | | | | | | |/ / _ \\\n"
-                + "| |_| | |_| |   <  __/\n"
-                + "|____/ \\__,_|_|\\_\\___|\n";
-        System.out.println("____________________________________________________________\nHola! I'm Duke\n" + logo);
-        System.out.println("How can I help you today?\n____________________________________________________________");
+    public static void printDash() {
+        System.out.println("____________________________________________________________");
+    }
+    public static void listTask(int num, Task[] todos) {
+        printDash();
+        System.out.println("Tasks in list:");
+        int k;
+        for (k = 1; num >= k; k += 1) {
+            System.out.println(k + "." + todos[k - 1]);
+        }
+        printDash();
+    }
 
-        // store in array
-        Task[] todos = new Task[100];
-        // num of items in list
+    public static void addTask(String cmd, Task[] todos, int num) {
+        Task command;
+        command = new Task(cmd);
+        todos[num] = command;
+        printDash();
+        System.out.println("added: " + command.description);
+        printDash();
+    }
+
+    public static void unmarkTask(int k,Task[] todos, String[] list) {
+        int pt;
+        pt = Integer.parseInt(list[k]);
+        Task command;
+        command = todos[pt - 1];
+        command.markNotDone();
+        printDash();
+        System.out.println("Marking task as undone:\n" + command);
+        printDash();
+    }
+
+    public static void markTask(int k, Task[] todos, String[] list) {
+        int pt;
+        pt = Integer.parseInt(list[k]);
+        Task command;
+        command = todos[pt - 1];
+        command.markAsDone();
+        printDash();
+        System.out.println("Marking task as done:\n" + command);
+        printDash();
+    }
+    public static void makeDeadline(String[] list, Task[] todos, int num, int k, int j) {
+        Task command;
+        command = new Deadline(list[k], list[j]);
+        todos[num] = command;
+        num += 1;
+        printDash();
+        System.out.println("Adding this task:\n" + command);
+        System.out.println("You currently have " + num + " task(s)");
+        printDash();
+    }
+
+    public static void makeToDo(Task[] todos, int num, String[] list, int k) {
+        Task command;
+        command = new Todo(list[k]);
+        todos[num] = command;
+        num += 1;
+        printDash();
+        System.out.println("Adding this task:\n" + command);
+        System.out.println("You currently have " + num + " task(s)");
+        printDash();
+    }
+    public static void makeEvent(Task[] todos, String[] beg, String[] end, int num, int k, int j, int l) {
+        Task command = new Event(beg[k], end[j], end[l]);
+        todos[num] = command;
+        num += 1;
+        printDash();
+        System.out.println("Adding this task:\n" + command);
+        System.out.println("You currently have " + num + " task(s)");
+        printDash();
+    }
+    public static void main(String[] args) {
+        printDash();
+        System.out.println("Hola! I'm Duke");
+        System.out.println("Let me know your tasks for the day!");
+        printDash();
+
+        Scanner in = new Scanner(System.in);
+
         int num;
         num = 0;
 
-        // take in input
         String cmd;
-        Scanner in = new Scanner(System.in);
-        cmd = in.nextLine();
+        cmd = in .nextLine();
 
-        // if input is bye
+        Task[] todos;
+        todos = new Task[100];
+
         while (!(cmd.equals("bye"))) {
             if (cmd.equals("list")) {
-                System.out.println("____________________________________________________________");
-
-                // store in list
-                for (int i = 1; num >= i; i += 1) {
-                    System.out.println(i + "." + "[" + todos[i-1].getStatusIcon() + "] " + todos[i - 1].description);
-                }
-
-                System.out.println("____________________________________________________________");
+                listTask(num, todos);
             } else {
-                String list[] = cmd.split(" ",2);
+                String[] list = cmd.split(" ", 2);
 
-                if (list[0].equals("unmark")) {
-                    int pt;
-                    pt = Integer.parseInt(list[1]);
-                    Task command = todos[pt-1];
-                    command.unmarkTask();
-                    System.out.println("____________________________________________________________");
-                    System.out.println("This task is marked as undone:");
-                    System.out.println("[" + command.getStatusIcon() + "] " + command.description);
-                    System.out.println("____________________________________________________________");
-                } else if (list[0].equals("mark")) {
-                    int pt;
-                    pt = Integer.parseInt(list[1]);
-                    Task command = todos[pt-1];
-                    command.markTask();
-                    System.out.println("____________________________________________________________");
-                    System.out.println("This task is marked as done:");
-                    System.out.println("[" + command.getStatusIcon() + "] " + command.description);
-                    System.out.println("____________________________________________________________");
-                } else {
-                    Task command = new Task(cmd);
-                    todos[num] = command;
+                if (list[0].equals("mark")) {
+                    markTask(1, todos, list);
+                } else if (list[0].equals("unmark")) {
+                    unmarkTask(1, todos, list);
+                } else if (list[0].equals("todo")) {
+                    makeToDo(todos, num, list, 1);
                     num += 1;
-                    System.out.println("____________________________________________________________");
-                    System.out.println("added: " + command.description);
-                    System.out.println("____________________________________________________________");
+                } else if (list[0].equals("event")) {
+                    String[] beg;
+                    beg = list[1].split("/from ", 2);
+                    String[] end;
+                    end = beg[1].split("/to ", 2);
+                    makeEvent(todos, beg, end, num,0, 0, 1);
+                    num += 1;
+                } else if (list[0].equals("deadline")) {
+                    String[] due;
+                    due = list[1].split("/by ", 2);
+                    makeDeadline(due, todos, num, 0, 1);
+                    num += 1;
+                } else {
+                    addTask(cmd, todos, num);
+                    num += 1;
                 }
             }
-            // read next command
             cmd = in.nextLine();
         }
 
-        System.out.println("____________________________________________________________\nBye! See you soon!");
-        System.out.println("____________________________________________________________");
+        // exit
+        printDash();
+        System.out.println("Bye, cya soon!");
+        printDash();
     }
 }
