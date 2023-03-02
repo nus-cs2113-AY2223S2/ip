@@ -9,6 +9,7 @@ import Commands.FileCommands;
 
 import java.io.IOException;
 
+import Exceptions.InvalidFindStringException;
 import Exceptions.InvalidTaskDescription;
 import Exceptions.InvalidTaskNumberException;
 import Exceptions.MissingDescriptionException;
@@ -16,7 +17,17 @@ import Exceptions.NullCommandException;
 import Tasks.Task;
 
 public class Duke {
-    public static void main(String[] args) throws NullCommandException, InvalidTaskDescription, IOException {
+    /**
+     * Main method to take in User Input and execute the user's commands
+     * 
+     * @param args
+     * @throws NullCommandException
+     * @throws InvalidTaskDescription
+     * @throws IOException
+     * @throws InvalidFindStringException
+     */
+    public static void main(String[] args)
+            throws NullCommandException, InvalidTaskDescription, IOException, InvalidFindStringException {
 
         PrintCommands.printWelcomeMessage();
 
@@ -26,7 +37,7 @@ public class Duke {
 
         Scanner scan = new Scanner(System.in);
 
-        FileCommands.readFileData(taskList); //read past task data
+        FileCommands.readFileData(taskList); // read past task data
 
         while (!isExit) {
             try {
@@ -75,9 +86,9 @@ public class Duke {
                         TaskCommand.deleteTask(taskList, command, TaskCommand.getTaskIndex(command, taskList));
                         break;
 
-                    case "find" :
+                    case "find":
                         TaskCommand.findTask(taskList, command);
-                    break;
+                        break;
 
                     default:
                         throw new NullCommandException(
@@ -91,6 +102,9 @@ public class Duke {
                 System.out.println("The number you entered is out of range! Please try again");
             } catch (MissingDescriptionException mde) {
                 System.err.println("Task description is missing. Try again.");
+            } catch (InvalidFindStringException ifse) {
+                System.out.println(
+                        "Uh oh! The task you are looking for does not exist, or there were some issues. Please try again.");
             }
         }
         scan.close();

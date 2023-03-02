@@ -2,10 +2,14 @@ package Commands;
 
 import java.util.ArrayList;
 
+import Exceptions.InvalidFindStringException;
 import Tasks.Task;
 
 public class PrintCommands {
 
+    /**
+     * Prints the welcome message for the user
+     */
     public static void printWelcomeMessage() {
         String logo = "\t ____   _              __    __ \n"
                 + "\t/  __\\ | |     _____  |   \\/   |\n"
@@ -24,12 +28,20 @@ public class PrintCommands {
         System.out.println("\t==========================================");
     }
 
+    /**
+     * Prints the exit message when user closes the application
+     */
     public static void printExitMessage() {
         printLine();
         System.out.print("\tBye. Hope to see you again soon!\n");
         printLine();
     }
 
+    /**
+     * Prints the taskList line by line
+     * 
+     * @param taskList
+     */
     public static void printList(ArrayList<Task> taskList) {
         printLine();
         if (taskList.size() == 0) {
@@ -43,6 +55,11 @@ public class PrintCommands {
         printLine();
     }
 
+    /**
+     * Prints the number of tasks in the task list
+     * 
+     * @param taskList
+     */
     public static void printNumberOfTasks(ArrayList<Task> taskList) {
         if (taskList.size() == 1) {
             System.out.println("\tYou have a total of " + taskList.size() + " task in the list");
@@ -51,6 +68,12 @@ public class PrintCommands {
         }
     }
 
+    /**
+     * Prints the relevant message for tasks of type "todo"
+     * 
+     * @param taskList
+     * @param todoDescription
+     */
     public static void printTodoMessage(ArrayList<Task> taskList, String todoDescription) {
         printLine();
         System.out.println("\tGot it. I've added this task: ");
@@ -59,6 +82,12 @@ public class PrintCommands {
         printLine();
     }
 
+    /**
+     * Prints the relevant message for tasks of type "deadline"
+     * 
+     * @param taskList
+     * @param deadlineDescription
+     */
     public static void printDeadlineMessage(ArrayList<Task> taskList, String deadlineDescription) {
         printLine();
         System.out.println("\tGot it. I've added this task: ");
@@ -67,6 +96,12 @@ public class PrintCommands {
         printLine();
     }
 
+    /**
+     * Prints the relevant message for tasks of type "event"
+     * 
+     * @param taskList
+     * @param eventDescription
+     */
     public static void printEventMessage(ArrayList<Task> taskList, String eventDescription) {
         printLine();
         System.out.println("\tGot it. I've added this task: ");
@@ -81,6 +116,12 @@ public class PrintCommands {
         printLine();
     }
 
+    /**
+     * Prints the relevant message after deleting a task from the task list
+     * 
+     * @param taskList
+     * @param taskIndex
+     */
     public static void printDeleteMessage(ArrayList<Task> taskList, int taskIndex) {
         printLine();
         System.out.println("\tWoosh! This task is now gone: ");
@@ -90,27 +131,38 @@ public class PrintCommands {
         printLine();
     }
 
-    public static void printFindMessage(ArrayList<Task> taskList, String[] command) {
-        printLine();
-        System.out.println("Here's what I found :");
+    /**
+     * Prints the tasks that contain the keyword which the user had specified
+     * 
+     * @param taskList
+     * @param command
+     * @throws InvalidFindStringException
+     */
+    public static void printFindMessage(ArrayList<Task> taskList, String[] command) throws InvalidFindStringException {
 
-        int i = 1;
+        printLine();
+        int taskNumber = 1;
+        System.out.println("Here's what I found :");
         for (Task task : taskList) {
             if (task.getDescription().contains(command[1])) {
+                
                 switch (task.getType()) {
                     case "[T]":
-                        System.out.println("\t" + i + ". " + task.getDescription());
+                        System.out.println("\t" + taskNumber + ". " + task.getDescription());
                         break;
 
                     case "[D]":
-                        System.out.println("\t" + i + ". " + task.getDescription());
+                        System.out.println("\t" + taskNumber + ". " + task.getDescription());
                         break;
-                        
+
                     case "[E]":
-                        System.out.println("\t" + i + ". " + task.getDescription());
+                        System.out.println("\t" + taskNumber + ". " + task.getDescription());
                         break;
                 }
-                i++;
+                taskNumber++;
+            } else {
+                throw new InvalidFindStringException(
+                        "Uh oh! The task you are looking for does not exist, or there were some issues. Please try again.");
             }
         }
         printLine();

@@ -16,6 +16,11 @@ public class FileCommands {
 
     public static File dukeFile = new File("duke.txt");
 
+    /**
+     * Reads the existing file data of the user's tasks, and loads the data into the current task list
+     * @param taskList the ArrayList of the user's tasks
+     * @throws IOException
+     */
     public static void readFileData(ArrayList<Task> taskList) throws IOException {
         // Check if duke.txt file exists, and creates a new one if it does not, e.g.
         // First time user
@@ -61,6 +66,12 @@ public class FileCommands {
         scan.close();
     }
 
+    /**
+     * Saves the user's tasks into the duke.txt file 
+     * 
+     * @param taskList the ArrayList of the user's tasks
+     * @throws IOException
+     */
     public static void saveFile(ArrayList<Task> taskList) throws IOException {
         try {
             FileWriter fw = new FileWriter("duke.txt");

@@ -1,6 +1,8 @@
 package Commands;
+
 import java.util.ArrayList;
 
+import Exceptions.InvalidFindStringException;
 import Exceptions.InvalidTaskDescription;
 import Exceptions.InvalidTaskNumberException;
 import Exceptions.MissingDescriptionException;
@@ -11,6 +13,14 @@ import Tasks.Todo;
 
 public class TaskCommand {
 
+    /**
+     * Marks the task at taskIndex as done
+     * 
+     * @param taskList  the ArrayList of the user's tasks
+     * @param command   String[] of the user's input
+     * @param taskIndex index of the task to be marked as done
+     * @throws InvalidTaskNumberException
+     */
     public static void markTask(ArrayList<Task> taskList, String[] command, int taskIndex)
             throws InvalidTaskNumberException {
         // mark task as done
@@ -27,6 +37,14 @@ public class TaskCommand {
         PrintCommands.printLine();
     }
 
+    /**
+     * Marks the task at taskIndex as not done
+     * 
+     * @param taskList  the ArrayList of the user's tasks
+     * @param command   String[] of the user's input
+     * @param taskIndex index of the task to be marked as not done
+     * @throws InvalidTaskNumberException
+     */
     public static void unmarkTask(ArrayList<Task> taskList, String[] command, int taskIndex)
             throws InvalidTaskNumberException {
 
@@ -43,6 +61,14 @@ public class TaskCommand {
         PrintCommands.printLine();
     }
 
+    /**
+     * Adds a new task to the ArrayList, of type "todo"
+     * 
+     * @param taskList the ArrayList of the user's tasks
+     * @param command  String[] of the user's input
+     * @throws MissingDescriptionException
+     * @throws InvalidTaskDescription
+     */
     public static void todoTask(ArrayList<Task> taskList, String[] command)
             throws MissingDescriptionException, InvalidTaskDescription {
         if (!isValidTodo(command)) {
@@ -53,19 +79,35 @@ public class TaskCommand {
         PrintCommands.printTodoMessage(taskList, todoDescription);
     }
 
+    /**
+     * Adds a new task to the ArrayList, of type "deadline"
+     * 
+     * @param taskList the ArrayList of the user's tasks
+     * @param command  String[] of the user's input
+     * @throws MissingDescriptionException
+     * @throws InvalidTaskDescription
+     */
     public static void deadlineTask(ArrayList<Task> taskList, String[] command)
             throws MissingDescriptionException, InvalidTaskDescription {
         if (!isValidDeadline(command)) {
             throw new MissingDescriptionException(null);
         }
         String[] deadlineCommand = command[1].split(" /by", 2);
-        
+
         String deadlineDescription = deadlineCommand[0]; // Get description of the user input
         String byDate = deadlineCommand[1]; // Deadline of the user input
         taskList.add(new Deadline(deadlineDescription, byDate)); // Add the new deadline to the arraylist
         PrintCommands.printDeadlineMessage(taskList, deadlineDescription);
     }
 
+    /**
+     * Adds a new task to the ArrayList, of type "event"
+     * 
+     * @param taskList the ArrayList of the user's tasks
+     * @param command  String[] of the user's input
+     * @throws MissingDescriptionException
+     * @throws InvalidTaskDescription
+     */
     public static void eventTask(ArrayList<Task> taskList, String[] command)
             throws MissingDescriptionException, InvalidTaskDescription {
         if (!isValidEvent(command)) {
@@ -80,6 +122,15 @@ public class TaskCommand {
         PrintCommands.printEventMessage(taskList, eventDescription);
     }
 
+    /**
+     * Retrives the index of the Task from the user input, for various purposes
+     * 
+     * @param taskList the ArrayList of the user's tasks
+     * @param command  String[] of the user's input
+     * @return the index of the task for various commands
+     * @throws InvalidTaskNumberException
+     * @throws NumberFormatException
+     */
     public static int getTaskIndex(String[] command, ArrayList<Task> taskList)
             throws InvalidTaskNumberException, NumberFormatException {
 
@@ -97,6 +148,12 @@ public class TaskCommand {
         }
     }
 
+    /**
+     * Checks if a todo command is valid
+     * 
+     * @param command
+     * @return true if the command is a valid todo
+     */
     public static boolean isValidTodo(String[] command) {
         boolean isValidTodo = true;
         if (command.length < 2) {
@@ -105,6 +162,13 @@ public class TaskCommand {
         return isValidTodo;
     }
 
+    /**
+     * Checks if a deadine command is valid, and in the correct format with all
+     * required parameters
+     * 
+     * @param command
+     * @return true if the command is a valid deadline
+     */
     public static boolean isValidDeadline(String[] command) {
         boolean hasDate = false;
 
@@ -116,6 +180,13 @@ public class TaskCommand {
         return hasDate;
     }
 
+    /**
+     * Checks if an event command is valid, and in the correct format with all
+     * required parameters
+     * 
+     * @param command
+     * @return true if the command is a valid event
+     */
     public static boolean isValidEvent(String[] command) {
         boolean hasFromDate = false;
         boolean hasToDate = false;
@@ -131,6 +202,14 @@ public class TaskCommand {
         return hasFromDate && hasToDate;
     }
 
+    /**
+     * Deletes the task at the taskIndex index from the ArrayList taskList
+     * 
+     * @param taskList
+     * @param command
+     * @param taskIndex
+     * @throws InvalidTaskNumberException
+     */
     public static void deleteTask(ArrayList<Task> taskList, String[] command, int taskIndex)
             throws InvalidTaskNumberException {
 
@@ -143,7 +222,18 @@ public class TaskCommand {
 
     }
 
-    public static void findTask(ArrayList<Task> taskList, String[] command) {
+    /**
+     * Finds the tasks that the user specified
+     * 
+     * @param taskList
+     * @param command
+     * @throws InvalidFindStringException
+     */
+    public static void findTask(ArrayList<Task> taskList, String[] command) throws InvalidFindStringException{
+        try {
         PrintCommands.printFindMessage(taskList, command);
+        } catch (InvalidFindStringException ifne) {
+            System.out.println("Uh oh! The task you are looking for does not exist, or there were some issues. Please try again.");
+        }
     }
 }
