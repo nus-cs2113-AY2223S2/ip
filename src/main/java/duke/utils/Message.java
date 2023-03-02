@@ -26,8 +26,8 @@ public enum Message {
     ERROR_EVENT_MISSING_PARAMETER("Parameters contain missing fields. Example: event to eat /from 2pm /to 4pm"),
     ERROR_FIND_MISSING_PARAMETER("Please specify your keyword. Example: find eat"),
 
-    SUCCESS_LOADED_FILE("Data file has been loaded successfully."),
-    WARNING_MISSING_FILE("Could not locate data file. Using an empty list..."),
+    SUCCESS_LOADED_FILE("Data file " + FileAction.FILE_NAME + " has been loaded successfully."),
+    WARNING_MISSING_FILE("Could not locate data file " + FileAction.FILE_NAME + ". Using an empty list..."),
     ERROR_FILE_INPUT("Could not open data file!" + System.lineSeparator() +
         "Duke application will be terminated."),
     ERROR_FILE_OUTPUT("Could not save data file!" + System.lineSeparator() +
