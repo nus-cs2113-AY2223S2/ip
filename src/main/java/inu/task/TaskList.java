@@ -49,7 +49,7 @@ public class TaskList {
     }
 
     /**
-     * Create a new task list containing tasks that occur on a specified date.
+     * Creates a new task list containing tasks that occur on a specified date.
      *
      * @param date the date to query.
      * @return a new task list with the filtered tasks.
@@ -74,7 +74,7 @@ public class TaskList {
     }
 
     /**
-     * Create a new task list containing tasks that contain a specific key word.
+     * Creates a new task list containing tasks that contain a specific key word.
      *
      * @param keyWord the key word to query.
      * @return a new task list with the filtered tasks.
