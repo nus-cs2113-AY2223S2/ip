@@ -35,27 +35,27 @@ your to-do list from the `data.txt` file if there is one.
 ### Add a todo task: `todo`
 Adds a new todo task to your to-do list.
 
-Format: `todo <description>`
+Format: `todo <task name>`
 
-Example: `todo buy calculator` creates a todo task with the description `buy calculator`.
+Example: `todo buy calculator` creates a todo task with the task name `buy calculator`.
 
 ### Add a deadline task: `deadline`
 Adds a new deadline task to your to-do list.
 
-Format: `deadline <description> /by <date and time>`
+Format: `deadline <task name> /by <date and time>`
 
 - The `<date and time>` must be given in `dd/mm/yyyy tttt` format, where `tttt` is the time in 24-hour clock. 
 
-Example: `deadline CS2113 IP /by 12/02/2009 1000` creates a deadline task with the description `CS2113 IP` and deadline
+Example: `deadline CS2113 IP /by 12/02/2009 1000` creates a deadline task with the task name `CS2113 IP` and deadline
 `12/02/2009 1800`.
 
 
 ### Add an event task: `event`
 Adds a new event task to your to-do list.
 
-Format: `event <description> /from <start time> /to <end time>`
+Format: `event <task name> /from <start time> /to <end time>`
 
-Example: `event CG2023 AS1 /from Thursday 2pm /to 6pm` creates an event task with the description `CG2023 AS1`, with 
+Example: `event CG2023 AS1 /from Thursday 2pm /to 6pm` creates an event task with the task name `CG2023 AS1`, with 
 start time `Thursday 2pm` and end time `6pm`.
 
 ### List all tasks: `list`
@@ -87,13 +87,13 @@ Format: `delete <index>`
 Example: `delete 3` deletes the task at index 3 of the to-do list.
 
 ### Find tasks with keywords: `find`
-Displays all tasks currently in the to-do list whose description contain the given keywords.
+Displays all tasks currently in the to-do list whose task name contain the given keywords.
 
 Format: `find <keywords string>`
 - The search is case-sensitive. e.g. `CS2113` will not match `cs2113`
 - Tasks matching the keyword string will be listed. e.g. `CS2113` will make Duke list tasks `CS2113 IP` and `CS2113 TP`.
 
-Example: `find CS2113` lists all tasks with `CS2113` in their description.
+Example: `find CS2113` lists all tasks with `CS2113` in their task name.
 
 
 ### Exit the program: `bye`
