@@ -47,7 +47,7 @@ public class TaskList {
     }
 
     /**
-     * Unmarks a task as not completed.
+     * Marks a task as not completed.
      *
      * @param taskNumToUnmark The number of the task in the list to unmark.
      */
