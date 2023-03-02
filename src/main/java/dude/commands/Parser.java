@@ -48,6 +48,9 @@ public class Parser {
             case "delete":
                 ListManager.deleteTask(nextCommand);
                 break;
+            case "find":
+                ListManager.findTask(nextCommand);
+                break;
             default:
                 throw new EmptyInputException();
             }
