@@ -1,3 +1,5 @@
+package duke;
+
 import constants.Command;
 import constants.ErrorMessage;
 import controller.TaskController;
@@ -8,10 +10,27 @@ import ui.Ui;
 import java.util.HashMap;
 
 public class Duke {
+  protected static Duke instance;
+
+  protected Duke() {
+  }
+
+  /**
+   * The function that is used to return the instance of the
+   * Duke.
+   *
+   * @return The Duke instance
+   */
+  public static Duke getInstance() {
+    if (instance == null) {
+      instance = new Duke();
+    }
+    return instance;
+  }
 
   private static final TaskController controller = new TaskController();
   private static final Parser parser = new Parser();
-  private static final Ui ui = new Ui();
+  private static final Ui ui = Ui.getInstance();
   private static boolean isRunning = true;
 
   private static void terminate() {

@@ -8,16 +8,14 @@ import java.util.HashMap;
 import java.util.regex.PatternSyntaxException;
 
 public class Parser {
-
     protected final String COMMAND = "command";
     protected final String DESCRIPTION = "description";
     protected final String DEADLINE = "deadline";
     protected final String BY = " /by ";
-    protected final String KEYWORD = "keyword";
-    protected final Ui ui = new Ui();
+    protected final Ui ui = Ui.getInstance();
 
     protected HashMap<String, String> handleTodo(String text) {
-        HashMap<String, String> dictionary = new HashMap<String, String>();
+        HashMap<String, String> dictionary = new HashMap<>();
         dictionary.put(COMMAND, Command.TODO);
         dictionary.put(DESCRIPTION, text.trim());
         return dictionary;
@@ -25,7 +23,7 @@ public class Parser {
 
     protected HashMap<String, String> handleDeadline(String text) throws DukeException {
         try {
-            HashMap<String, String> dictionary = new HashMap<String, String>();
+            HashMap<String, String> dictionary = new HashMap<>();
             String[] words = text.split(BY);
             if (words.length == 1) {
                 throw new DukeException("No description has been provided");
@@ -43,20 +41,20 @@ public class Parser {
     }
 
     protected HashMap<String, String> handleMarkAndDelete(String text, String command) {
-        HashMap<String, String> dictionary = new HashMap<String, String>();
+        HashMap<String, String> dictionary = new HashMap<>();
         dictionary.put(COMMAND, command);
         dictionary.put("index", text);
         return dictionary;
     }
 
     protected HashMap<String, String> handleOthers(String command) {
-        HashMap<String, String> dictionary = new HashMap<String, String>();
+        HashMap<String, String> dictionary = new HashMap<>();
         dictionary.put(COMMAND, command);
         return dictionary;
     }
 
     protected HashMap<String, String> handleEvent(String text) throws DukeException {
-        HashMap<String, String> dictionary = new HashMap<String, String>();
+        HashMap<String, String> dictionary = new HashMap<>();
         dictionary.put(COMMAND, Command.EVENT);
         String[] words = text.split("/");
         if (words.length != 3) {
@@ -87,10 +85,10 @@ public class Parser {
 
         for (int i = 0; i < 3; ++i) {
             if (words[i].startsWith("to ")) {
-                words[i] = words[i].substring("to ".length(), words[i].length()).trim();
+                words[i] = words[i].substring("to ".length()).trim();
                 end = words[i];
             } else if (words[i].startsWith("from ")) {
-                words[i] = words[i].substring("from ".length(), words[i].length()).trim();
+                words[i] = words[i].substring("from ".length()).trim();
                 start = words[i];
             } else {
                 description = words[i].trim();
@@ -105,7 +103,7 @@ public class Parser {
 
 
     protected HashMap<String, String> handleFind(String keyword) {
-        HashMap<String, String> dictionary = new HashMap<String, String>();
+        HashMap<String, String> dictionary = new HashMap<>();
         keyword = keyword.trim();
         dictionary.put(COMMAND, "find");
         dictionary.put("keyword", keyword);

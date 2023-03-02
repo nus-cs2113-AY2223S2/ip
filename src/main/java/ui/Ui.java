@@ -5,9 +5,22 @@ import constants.Message;
 import java.util.Scanner;
 
 /**
- * A class that deals with the user interaction.
+ * The UI class is used to render the User Interaction onto the screen.
+ * The Singleton pattern is used here so that we will only create one
+ * instance of the class throughout the whole application.
  */
 public class Ui {
+  protected static Ui instance;
+
+  protected Ui() {
+  }
+
+  public static Ui getInstance() {
+    if (instance == null) {
+      instance = new Ui();
+    }
+    return instance;
+  }
 
   protected final Scanner scanner = new Scanner(System.in);
 
@@ -22,7 +35,7 @@ public class Ui {
    * Prints the goodbye message upon termination.
    */
   public void printGoodbyeMessage() {
-    System.out.println(Message.GOODBYE.message);
+    System.out.println(Message.GOODBYE);
   }
 
   /**

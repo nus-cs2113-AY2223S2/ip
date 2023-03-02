@@ -13,12 +13,12 @@ public class TaskController {
 
   protected TaskView view = new TaskView();
   protected TaskList db = TaskList.getInstance();
-  protected Ui ui = new Ui();
+  protected Ui ui = Ui.getInstance();
 
   private void printDescription(Task model) {
-    ui.printMessage(Message.TASK_ADDED.message);
+    ui.printMessage(Message.TASK_ADDED);
     view.printTaskDescriptionText(model);
-    ui.printf(Message.LIST_NUMBER.message, db.getSize());
+    ui.printf(Message.LIST_NUMBER, db.getSize());
   }
 
   /**
@@ -28,7 +28,7 @@ public class TaskController {
    *                   fetching the data from the database.
    */
   public void listTasks() throws Exception {
-    ui.printMessage(Message.LIST_TASKS.message);
+    ui.printMessage(Message.LIST_TASKS);
     int numberOfEntries = db.getSize();
     for (int i = 0; i < numberOfEntries; i += 1) {
       Task model = db.read(i);
@@ -44,7 +44,7 @@ public class TaskController {
    * @throws Exception An exception if there is an issue with
    *                   adding the data from the database.
    */
-  public void addTodoTask(String taskDescription) throws Exception {
+  public void addTodoTask(String taskDescription) {
     Todo model = new Todo(taskDescription);
     db.create(model);
     printDescription(model);
@@ -63,7 +63,7 @@ public class TaskController {
     Task model = db.read(index);
     ui.printf(
       "%s\n",
-      isMark ? Message.MARKED.message : Message.UNMARKED.message
+            isMark ? Message.MARKED : Message.UNMARKED
     );
     view.printTaskDescriptionText(model);
   }
@@ -87,8 +87,7 @@ public class TaskController {
    * @param taskDescription A string after removing the
    *                        command
    */
-  public void addEventTask(String taskDescription, String start, String end)
-    throws Exception {
+  public void addEventTask(String taskDescription, String start, String end) {
     Event model = new Event(taskDescription, start, end);
     db.create(model);
     printDescription(model);
@@ -108,7 +107,7 @@ public class TaskController {
 
   /**
    * Deletes the task from the task list
-   * 
+   *
    * @param index The index of the task to be deleted
    * @throws Exception When the index is out of bounds
    */
@@ -116,10 +115,18 @@ public class TaskController {
     db.delete(index);
   }
 
+  /**
+   * This function is used to help search for the tasks that contains the
+   * keywords in the description, and then prints out the corresponding
+   * description.
+   *
+   * @param keyword The keyword provided by the user.
+   * @throws Exception When the index provided is out of bounds.
+   */
   public void findTask(String keyword) throws Exception {
     int numberOfEntries = db.getSize();
     int counter = 1;
-    ui.printMessage("Here are the matching tasks in your list:");
+    ui.printMessage(Message.FIND_TASK);
     for (int i = 0; i < numberOfEntries; i += 1) {
       Task model = db.read(i);
       String taskName = model.getDescriptionText();

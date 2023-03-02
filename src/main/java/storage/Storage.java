@@ -10,12 +10,7 @@ import model.task.Task;
 import model.task.Todo;
 import ui.Ui;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
+import java.io.*;
 import java.util.ArrayList;
 
 public class Storage {
@@ -25,7 +20,7 @@ public class Storage {
   protected static final TaskController taskController = new TaskController();
   protected static final Gson gson = new Gson();
   protected static File file = new File(FILE_NAME);
-  protected static Ui ui = new Ui();
+  protected static Ui ui = Ui.getInstance();
 
   /**
    * This function is used to create a file if it does not exist. This helps
