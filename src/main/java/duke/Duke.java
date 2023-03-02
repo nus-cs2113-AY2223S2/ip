@@ -10,7 +10,12 @@ import duke.ui.Ui;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+/**
+ * Duke class that contains the main method. Provides a way for users
+ * to keep track of the different type of tasks in their daily lives
+ */
 public class Duke {
+
     public static void main(String[] args) throws IOException{
         Storage storage = new Storage("data", "data/Duke.txt");
         Ui ui = new Ui();

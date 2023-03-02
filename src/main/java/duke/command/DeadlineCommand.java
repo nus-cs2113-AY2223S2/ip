@@ -4,7 +4,10 @@ import duke.ui.Ui;
 import duke.task.Dateline;
 import duke.task.TaskList;
 import duke.task.Tasks;
-
+/**
+ * <code>DeadlineCommand</code> object represents a command that executes
+ * the adding of a new Deadline Task to the TaskList
+ */
 public class DeadlineCommand extends Command{
     String item;
     public DeadlineCommand(String item) {

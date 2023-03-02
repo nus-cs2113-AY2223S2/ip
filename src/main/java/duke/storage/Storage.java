@@ -9,6 +9,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
+/**
+ * Storage object that handles loading and saving of user data
+ */
 public class Storage {
     private final String filePath;
     private final String folderName;
@@ -16,6 +19,12 @@ public class Storage {
         this.filePath = filePath;
         this.folderName = folderName;
     }
+
+    /**
+     * Loads user data
+     * @throws FolderNotFoundException if folder is not found
+     * @throws FileNotFoundException if file is not found
+     */
     public void load() throws FolderNotFoundException, FileNotFoundException {
         File folder = new File(folderName);
         if (!folder.exists()) {
@@ -63,6 +72,11 @@ public class Storage {
             }
         }
     }
+
+    /**
+     * Saves user data
+     * @throws IOException if trouble accessing files
+     */
     public void save() throws IOException {
         FileWriter fw = new FileWriter(filePath);
         for (int num = 1; num <= TaskList.getNumberOfTasks(); ++num) {
@@ -72,7 +86,6 @@ public class Storage {
         }
         fw.close();
     }
-
     public void createNewFile() throws IOException {
         File f = new File(filePath);
         if (f.createNewFile()) {
