@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 public class Parser {
     protected static String splittedCommand[];
@@ -69,6 +70,9 @@ public class Parser {
 
         try {
             String splittedDiscription[] = splitTime(tasktype);
+            if (splittedDiscription.length == 1 || splittedDiscription[1].equals("")) {
+                throw new LackOfTaskDetail("    > wrong task format!" + System.lineSeparator() + ": ");
+            }
             String tasktime[] = splittedDiscription[1].split(" ");
 
             if (tasktime.length > 1) {
@@ -143,9 +147,11 @@ public class Parser {
         case "deadline":
         case "event": {
             try {
-                tasks.addTaskWithTime(getTaskDetail(commandType), getTaskTime(commandType),
-                        commandType);
+                tasks.addTaskWithTime(getTaskDetail(commandType), getTaskTime(commandType), commandType);
                 Ui.showAddTask(tasks.latesttask(), tasks.getSize());
+            } catch (DateTimeParseException e) {
+                System.out.println("Time format wrong!");
+                System.out.println("correct format is yyyy-MM-dd hh:mm (time can be ommitted)");
             } catch (LackOfTaskDetail e) {
                 System.out.print(e.getMessage());
             }
