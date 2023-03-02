@@ -1,4 +1,5 @@
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -10,13 +11,10 @@ public class TaskList {
      * Read the file and convert to taskList
      * @param filePath the filepath of the data location
      */
-    public TaskList(String filePath){
+    public TaskList(String filePath) throws IOException{
+        list=new ArrayList<>();
+        File myObj = new File(filePath);
         try {
-            list=new ArrayList<>();
-            File myObj = new File(filePath);
-            if(myObj.createNewFile()){
-                return;
-            }
             Scanner myReader = new Scanner(myObj);
             while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
@@ -42,8 +40,9 @@ public class TaskList {
                 list.add(t);
             }
             myReader.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            myObj.createNewFile();
+
         }
     }
     public static void taskListAdd(Task t) {

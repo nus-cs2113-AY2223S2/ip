@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Parser {
@@ -7,7 +8,7 @@ public class Parser {
      * Parse the user command and store to the taskList if applicable
      * @param command the user input
      */
-    public void parse(String command) {
+    public void parse(String command) throws IOException {
         if (command.equalsIgnoreCase("list")) {
             System.out.println("Here are the tasks in your list:");
             for (int i = 0; i < TaskList.list.size(); i++) {
