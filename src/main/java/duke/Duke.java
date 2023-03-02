@@ -9,7 +9,6 @@ import duke.parser.Parser;
 
 import java.io.IOException;
 
-
 public class Duke {
 
 	private Storage storage;
@@ -31,10 +30,11 @@ public class Duke {
 
 	/**
 	 * This part of the code is taken from the module website
+	 *
 	 * The code is to show welcome message and continuously loop to read in user input, until user input is "exit"
 	 * Read in user command and use Parser to parse the command and create a command object
 	 * Execute the command based on the user command
-	 * Update the task list before exit the programme.
+	 * Write the task list to file before exit the programme.
 	 */
 	public void startDuke() {
 		ui.showWelcome();
@@ -46,7 +46,7 @@ public class Duke {
 				String fullCommand = ui.readCommand();
 				ui.printDivider();
 				Command c = Parser.parse(fullCommand);
-				c.execute(tasksList, ui, storage);
+				c.execute(tasksList, ui);
 				shouldExit = c.shouldExit();
 				if (!shouldExit) {
 					try {
@@ -63,6 +63,9 @@ public class Duke {
 		}
 	}
 
+	/**
+	 * Create a Duke object and create / find the data file and start the Duke
+	 */
 	public static void main(String[] args) {
 		new Duke("./data/tasks.txt").startDuke();
 	}

@@ -1,20 +1,37 @@
 package duke.command;
 
 import duke.exceptions.CommandFormatException;
-import duke.storage.Storage;
-import duke.tasks.Deadline;
-import duke.tasks.Event;
 import duke.tasks.TaskList;
-import duke.tasks.Todo;
 import duke.ui.Ui;
 
+/**
+ * Represent an Add command and add the task in the list
+ */
 public class AddCommand extends Command {
+	/**
+	 * Constructor
+	 *
+	 * @param userInput user input
+	 */
 	public AddCommand(String userInput) {
 		super(userInput);
 	}
 
+	/**
+	 * Add the task according to the command line
+	 * Check the starting word of the command and parser the command accordingly to obtain the details
+	 * <p>
+	 * If the command starts with to do, add to do task
+	 * If the command starts with deadline, add deadline task
+	 * If the command starts with event, add event task
+	 * If the command does not match either of the key word, it will throw CommandFormat Exception
+	 *
+	 * @param taskList TaskList
+	 * @param ui       Ui
+	 * @throws CommandFormatException if the command line is incorrect
+	 */
 	@Override
-	public void execute(TaskList taskList, Ui ui, Storage storage) throws CommandFormatException {
+	public void execute(TaskList taskList, Ui ui) throws CommandFormatException {
 
 		if (userInput.trim().split(" ").length == 1) {
 			throw new CommandFormatException();

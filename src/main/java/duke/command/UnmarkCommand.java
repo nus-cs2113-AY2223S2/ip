@@ -4,17 +4,34 @@ import duke.exceptions.CommandFormatException;
 import duke.exceptions.TaskException;
 import duke.exceptions.TaskOutOfBoundsException;
 import duke.exceptions.TaskUndoneException;
-import duke.storage.Storage;
 import duke.tasks.TaskList;
 import duke.ui.Ui;
 
+/**
+ * Represents an unmark command
+ * Change the task to undone according to the index number
+ */
 public class UnmarkCommand extends Command {
+	/**
+	 * Constructor
+	 */
 	public UnmarkCommand(String userInput) {
 		super(userInput);
 	}
 
+	/**
+	 * Execute the command as below
+	 * Check the command format and unmark the task according to the task number
+	 *
+	 * @param taskList a TaskList object
+	 * @param ui       a Ui object
+	 * @throws TaskOutOfBoundsException if the task number is out of bound
+	 * @throws TaskUndoneException      if the user wants to unmark the undone task
+	 * @throws TaskException            if the task list is empty
+	 * @throws CommandFormatException   if the command is in incorrect format
+	 */
 	@Override
-	public void execute(TaskList taskList, Ui ui, Storage storage) throws TaskOutOfBoundsException,
+	public void execute(TaskList taskList, Ui ui) throws TaskOutOfBoundsException,
 			TaskUndoneException, TaskException, CommandFormatException {
 		String[] messages = userInput.trim().replace("unmark ", "").split(" ");
 		if (messages.length < 1) {

@@ -2,7 +2,6 @@ package duke.command;
 
 import duke.exceptions.CommandFormatException;
 import duke.exceptions.TaskMatchException;
-import duke.storage.Storage;
 import duke.tasks.Task;
 import duke.tasks.TaskList;
 import duke.ui.Ui;
@@ -10,13 +9,27 @@ import duke.ui.Ui;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Represents a find command
+ * Finds and displays the tasks according to the keywords
+ */
 public class FindCommand extends Command {
 	public FindCommand(String userInput) {
 		super(userInput);
 	}
 
+	/**
+	 * Execute the command as below
+	 * Check the command whether it is correct
+	 * Find the tasks that matches the keywords in the command
+	 *
+	 * @param taskList a TaskList object
+	 * @param ui       a Ui object
+	 * @throws CommandFormatException if the command format is wrong
+	 * @throws TaskMatchException     if there is no mask matching the keyword
+	 */
 	@Override
-	public void execute(TaskList taskList, Ui ui, Storage storage) throws CommandFormatException, TaskMatchException {
+	public void execute(TaskList taskList, Ui ui) throws CommandFormatException, TaskMatchException {
 		String[] messages = userInput.split(" ");
 		if (messages.length < 2) {
 			throw new CommandFormatException();
