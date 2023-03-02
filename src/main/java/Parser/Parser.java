@@ -28,6 +28,8 @@ public class Parser {
                 dukeCommandList(list);
             } else if (nextLine.split(" ", 0)[0].equals("mark")) {
                 dukeCommandMark(nextLine, list);
+            } else if (nextLine.split(" ", 0)[0].equals("find")) {
+                dukeCommandFind(nextLine, list);
             } else if (nextLine.split(" ", 0)[0].equals("deadline")) {
                 dukeCommandDeadline(nextLine, list);
             } else if (nextLine.split(" ", 0)[0].equals("todo")) {
@@ -46,13 +48,32 @@ public class Parser {
             }
         }
     }
-
-    public static void dukeSaveList(ArrayList<Task> list) {
+    private static void dukeCommandFind(String nextLine, ArrayList<Task> list) {
+        String[] inputArray = nextLine.split(" ", 0);
+        if (inputArray.length != 2) {
+            return;
+        }
+        String key = inputArray[1];
+        ArrayList<Task> containsSubstring = new ArrayList<Task>();
+        for (Task task: list) {
+            String taskName = task.getTaskName();
+            if (taskName.contains(key)) {
+                containsSubstring.add(task);
+            }
+        }
+        if (containsSubstring.isEmpty()) {
+            System.out.println("No task names found with " + key);
+            return;
+        }
+        System.out.println("Here are the following Tasks that have names containing your keyword:");
+        dukeCommandList(containsSubstring);
+    }
+    private static void dukeSaveList(ArrayList<Task> list) {
         String home = System.getProperty("user.dir");
         java.nio.file.Path path = java.nio.file.Paths.get(home, "src", "main", "savefile");
         boolean directoryExists = java.nio.file.Files.exists(path);
         if (!directoryExists) {
-            // https://docs.oracle.com/javase/7/docs/api/java/nio/file/Files.html
+            // from https://docs.oracle.com/javase/7/docs/api/java/nio/file/Files.html
             try {
                 Files.createFile(path);
             } catch (IOException e) {
@@ -114,7 +135,7 @@ public class Parser {
     }
 
 
-    public static void dukeCommandDelete(String nextLine, List<Task> list) {
+    private static void dukeCommandDelete(String nextLine, List<Task> list) {
         String[] inputArray = nextLine.split(" ", 0);
         if (inputArray.length != 2) {
             return;
@@ -136,7 +157,7 @@ public class Parser {
         System.out.println("Removed task at " + index);
     }
 
-    public static void dukeCommandList (List<Task> list) {
+    private static void dukeCommandList (List<Task> list) {
         for (int i = 0; i < list.size(); i++ ) {
             Task task = list.get(i);
             if (task instanceof Event) {
@@ -177,7 +198,7 @@ public class Parser {
         }
     }
 
-    public static void dukeCommandMark(String nextLine, List<Task> list) {
+    private static void dukeCommandMark(String nextLine, List<Task> list) {
         String[] inputArray = nextLine.split(" ", 0);
         if (inputArray.length != 2) {
             return;
@@ -197,7 +218,7 @@ public class Parser {
         }
     }
 
-    public static void dukeCommandEvent(String nextLine, List<Task> list) {
+    private static void dukeCommandEvent(String nextLine, List<Task> list) {
         String lineWithoutCommand;
         try {
             lineWithoutCommand = nextLine.split(" ", 2)[1];
@@ -215,7 +236,7 @@ public class Parser {
         list.add(deadline);
         System.out.println("event added");
     }
-    public static void dukeCommandDeadline(String nextLine, List<Task> list) {
+    private static void dukeCommandDeadline(String nextLine, List<Task> list) {
 //        System.out.println(nextLine);
         String lineWithoutCommand;
         try {
@@ -233,7 +254,7 @@ public class Parser {
         list.add(deadline);
         System.out.println("deadline added");
     }
-    public static void dukeCommandToDo(String nextLine, List<Task> list) {
+    private static void dukeCommandToDo(String nextLine, List<Task> list) {
         String lineWithoutCommand;
         try {
             lineWithoutCommand = nextLine.split(" ", 2)[1];
