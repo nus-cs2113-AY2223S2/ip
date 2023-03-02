@@ -4,6 +4,7 @@ import Onandon.storage.Storage;
 import Onandon.module.*;
 import Onandon.ui.Ui;
 
+// This class is for executing parsed command
 public class Command {
     protected String commandType;
     protected String description;
@@ -23,6 +24,7 @@ public class Command {
         this.find = find;
     }
 
+    // Executing command by the case of the tasks
     public Boolean execute(TaskList tasks) {
         int num;
         Boolean exit = false;

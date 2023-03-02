@@ -7,6 +7,7 @@ import Onandon.exception.OnandonUnknownException;
 
 import java.util.Scanner;
 
+// Class for maintaining UI of the chatbot.
 public class Ui {
     public static final String underline = "\t____________________________________________________________";
     public static final String todo = "\t Got it. I've added this task:";
@@ -18,13 +19,16 @@ public class Ui {
     public static final String find = "\tHere are the matching tasks in your list:";
 
 
+    // Prints underline : ----------------------------
     public static void printUnderline(){
         System.out.println(underline);
     }
+
     public static void printFormAbove(){
         printUnderline();
         System.out.println(todo);
     }
+
     public static void printCnt(int cnt){
         System.out.println("\t Now you have " + cnt + " tasks in the list.");
         printUnderline();
@@ -45,21 +49,28 @@ public class Ui {
         printUnderline();
         System.out.println(delete);
     }
+
     public static void printFind(){
         printUnderline();
         System.out.println(find);
     }
+
+    // Greeting
     public static void printGreet(){
         printUnderline();
         System.out.println("\t Hello! I'm onandon");
         System.out.println("\t What can I do for you?");
         printUnderline();
     }
+
+    // Say bye
     public static void printBye(){
         printUnderline();
         System.out.println("\t Bye. Hope to see you again soon!");
         printUnderline();
     }
+
+    // Prints exception message.
     public static void printException(OnandonException e){
         if(e instanceof OnandonUnknownException){
             printUnderline();
@@ -75,6 +86,8 @@ public class Ui {
             printUnderline();
         }
     }
+
+    // Read command from the users.
     public static String readCommand(){
         Scanner in = new Scanner(System.in);
         return in.nextLine();

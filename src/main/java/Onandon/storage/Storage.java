@@ -5,10 +5,12 @@ import Onandon.module.*;
 
 import java.util.ArrayList;
 
+// This class is for storing and loading current state of the tasks.
 public class Storage {
     protected static final String PATH = System.getProperty("user.dir");
     protected static final String CHECKPOINT = "/checkpoint.txt";
 
+    // storing current state of the tasks in a 'checkpoint.txt' file.
     public static void storeCheckpoint(TaskList tasks){
         String store = "";
 
@@ -34,6 +36,7 @@ public class Storage {
         }
     }
 
+    // loading current state of the tasks from 'checkpoint.txt' file.
     public static TaskList recallCheckpoint() {
         ArrayList<Task> taskArray = new ArrayList<Task>(100);
         TaskList tasks = new TaskList(taskArray, 0);

@@ -1,7 +1,7 @@
 package Onandon.module;
-
 import java.time.LocalDate;
 
+// Task class for the all of the commands.
 public class Task {
     protected String description;
     protected boolean isDone;

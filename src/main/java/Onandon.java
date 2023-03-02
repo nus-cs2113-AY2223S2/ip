@@ -5,6 +5,7 @@ import Onandon.module.*;
 import Onandon.ui.Ui;
 import Onandon.storage.Storage;
 
+// This is main class of the chatbot.
 public class Onandon {
     private TaskList tasks;
     private ExceptionChecker error;
@@ -14,6 +15,7 @@ public class Onandon {
         error = new ExceptionChecker();
     }
 
+    // runs the chatbot.
     public void run(){
         Ui.printGreet();
         String fullCommand;

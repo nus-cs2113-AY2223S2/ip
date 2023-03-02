@@ -1,5 +1,6 @@
 package Onandon.exception;
 
+// This class is for maintaining and checking the exceptions which occur during executing the program.
 public class ExceptionChecker {
     protected Boolean isNotTodo;
     protected Boolean isNotDeadline;
@@ -11,6 +12,7 @@ public class ExceptionChecker {
     protected Boolean isNotExit;
     protected Boolean isNotFind;
 
+    // checks whether there would be exception, and throws the exception.
     public void checkException(String inputText) throws OnandonEmptyException, OnandonUnknownException, OnandonNotaskException {
         String[] split = inputText.split(" ");
         String tgt = inputText.split(" ")[0];

@@ -3,6 +3,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+// Class for the 'deadline' command.
 public class Deadline extends Task {
     protected LocalDate by;
     protected String dateFormat = "yyyy-MM-dd";

@@ -1,8 +1,9 @@
 package Onandon.module;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+
+// Class for the 'event' command.
 public class Event extends Task {
 
     protected LocalDateTime to;
