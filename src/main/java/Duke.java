@@ -1,5 +1,5 @@
 import duke.storage.DataManager;
-import duke.storage.FileManager;
+import duke.storage.Storage;
 import duke.utils.DukeException;
 import duke.utils.Parser;
 import duke.utils.TaskList;
@@ -11,12 +11,12 @@ public class Duke {
     public TaskList taskList;
     public Ui ui;
     public Parser parser;
-    public FileManager originalFile;
+    public Storage originalFile;
     public Duke () {
         this.taskList = new TaskList();
         this.ui = new Ui();
         this.parser = new Parser(this.taskList, this.ui);
-        this.originalFile = new FileManager(FILE_LOCATION);
+        this.originalFile = new Storage(FILE_LOCATION);
     }
     public static Scanner input = new Scanner(System.in);
     public static String FILE_LOCATION = "./data/duke.txt";

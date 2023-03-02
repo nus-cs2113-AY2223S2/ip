@@ -15,13 +15,13 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
-public class FileManager {
+public class Storage {
 
     private File dataFile;
     protected final String filePath;
     protected ArrayList<Task> tasks;
 
-    public FileManager(String filePath) {
+    public Storage(String filePath) {
         this.filePath = filePath;
         this.dataFile = new File(this.filePath);
         this.tasks = new ArrayList<>();
