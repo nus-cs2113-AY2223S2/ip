@@ -21,7 +21,7 @@ public class Task {
         String dateFrom = Task.dateTimeFrom.get(i) == null ? "" : Task.dateTimeFrom.get(i).format(DateTimeFormatter.ofPattern("MMM dd yyyy HH:mm"));
         String dateTo = Task.dateTimeTo.get(i) == null ? "" : Task.dateTimeTo.get(i).format(DateTimeFormatter.ofPattern("MMM dd yyyy HH:mm"));
 
-        String dateOut = "";
+        String dateOut = ""; // output of string decided by the presence and absence of dateFrom and dateTo
         if (dateFrom.equals("") && dateTo.equals("")) {
             dateOut = "";
         } else if (dateFrom.equals("") && !dateTo.equals("")) {
@@ -36,7 +36,7 @@ public class Task {
     public void setDone(String input) { //set task as done
         String[] strArray = input.split(" ");
         int num = Integer.parseInt(strArray[1]);
-        if (num > items.size()) {
+        if (num > items.size()) { //sanity check
             System.out.println("There is no task " + num + "!");
             return;
         }
@@ -47,7 +47,7 @@ public class Task {
     public void setNotDone(String input) { //set task as not done
         String[] strArray = input.split(" ");
         int num = Integer.parseInt(strArray[1]);
-        if (num > items.size()) {
+        if (num > items.size()) { //sanity check
             System.out.println("There is no task " + num + "!");
             return;
         }
@@ -58,7 +58,7 @@ public class Task {
     
     //getters
     public void getItems() { //get all items
-        if (items.size() == 0) {
+        if (items.size() == 0) { //sanity check
             System.out.println("No tasks yet!");
             return;
         }
@@ -79,7 +79,7 @@ public class Task {
         System.out.println("Due Before "  + dateTime.format(DateTimeFormatter.ofPattern("MMM dd yyy HH:mm")) + ":");
         int count = 1;
         for (int i = 0; i < items.size(); i++) {
-            if (dateTimeTo.get(i) == null) {
+            if (dateTimeTo.get(i) == null) { //sanity check
                 continue;
             }
             String dateOut = formatDateOut(i);
@@ -93,7 +93,7 @@ public class Task {
         }
         count = 1;
         System.out.println("\n" + "Due After " + dateTime.format(DateTimeFormatter.ofPattern("MMM dd yyy HH:mm")) + ":");
-        for (int i = 0; i < items.size(); i++) {
+        for (int i = 0; i < items.size(); i++) { //sanity check
             if (dateTimeTo.get(i) == null) {
                 continue;
             }
@@ -110,7 +110,7 @@ public class Task {
     }
 
     public void find(String input) { // find items containing a certain string
-        if (items.size() == 0) {
+        if (items.size() == 0) { //sanity check
             System.out.println("There are no tasks yet!");
             return;
         }
