@@ -44,7 +44,7 @@ public class Duke {
         UserCommandManager commandManager = new UserCommandManager();
         while (true) {
             try {
-                String[] userCommand = ReadUserInput.readInput();
+                String[] userCommand = ui.readInput();
                 commandManager.handleCommands(userCommand, storage, tasks, ui);
                 ui.showLine();
             } catch (DukeException e) {

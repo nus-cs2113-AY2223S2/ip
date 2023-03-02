@@ -8,11 +8,14 @@ import duke.task.Event;
 import duke.task.Task;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  * Handles all ui outputs to the user.
  */
 public class Ui {
+
+    private Scanner input;
 
     private static final String SEPARATOR = "===================";
     private static final String BAD_SEPARATOR = "XXXXXXXXXXXXXXXXX";
@@ -23,6 +26,29 @@ public class Ui {
             "| |  _| |___.' / | || |   \\ `--' /   | || |  _| |  \\ \\_  | || |  _| |___/ |  | |\n" +
             "| | |________.'  | || |    `.__.'    | || | |____||____| | || | |_________|  | |\n" +
             " '----------------'  '----------------'  '----------------'  '----------------' ";
+
+    /**
+     * Constructs a new Ui class
+     */
+    public Ui() {
+        input = new Scanner(System.in);
+    }
+
+    /**
+     * Scans for new user input and parse into String array containing.
+     * command and command arguments.
+     *
+     * @return String array containing command and its arguments.
+     */
+    public String[] readInput() {
+        String[] userCommand = new String[2];
+        userCommand[0] = input.next().toLowerCase();
+        if (userCommand[0].equals("bye")) {
+            return userCommand;
+        }
+        userCommand[1] = input.nextLine();
+        return userCommand;
+    }
 
     /**
      * Prints out the greeting message to the user.
