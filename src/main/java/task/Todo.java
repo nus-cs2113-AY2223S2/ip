@@ -4,7 +4,7 @@ public class Todo extends Task {
 
     // Constructor
     public Todo(String description, int taskNumber) {
-        super(description, taskNumber);
+        super(description);
     }
 
     // Return [T][ ] task

@@ -10,13 +10,11 @@ import io.Storage;
 public abstract class Task {
     protected String description;
     protected boolean isDone;
-    protected int taskNumber;
 
     // Constructor
-    public Task(String description, int taskNumber) {
+    public Task(String description) {
         this.description = description;
         this.isDone = false;
-        this.taskNumber = taskNumber;
     }
 
     // To be used to list out the task.
@@ -28,10 +26,6 @@ public abstract class Task {
     // return a string to indicate done or not done.
     private String getDoneIcon() {
         return (this.isDone ? "[X]" : "[ ]"); // mark done task with X
-    }
-
-    protected String getTaskNumber() {
-        return (this.taskNumber + ".");
     }
 
     // use "mark" to mark done

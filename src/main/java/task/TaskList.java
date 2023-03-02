@@ -1,21 +1,49 @@
 package task;
 
 import java.util.ArrayList;
+
+import io.DukeException;
 import io.Storage;
 
 import io.Ui;
 
 public class TaskList {
-    private static final ArrayList<Task> tasks = new ArrayList<Task>();
-    private static int numberOfTasks = 0;
+    private ArrayList<Task> tasks;
+    private int numberOfTasks;
+
+    /**
+     * Constructor to use with saved file. Populates task list.
+     * @param listOfTasks Tasks from save file (handled by {@link io.Storage}).
+     */
+    public TaskList(ArrayList<String[]> listOfTasks) throws DukeException {
+        tasks = new ArrayList<Task>();
+        for (String[] strings : listOfTasks) {
+            try {
+                tasks.add(createTaskFromFile(strings));
+            } catch (DukeException e) {
+                System.out.println("Error trying to add a task from save file.");
+                throw new DukeException();
+            }
+        }
+
+        numberOfTasks = tasks.size();
+    }
+    /**
+     * Constructor for BRAND NEW TaskList.
+     */
+    public TaskList() {
+        tasks = new ArrayList<Task>();
+        numberOfTasks = 0;
+    }
 
     /**
      * Print the contents of Task List
      */
-    public static String getTaskListString() {
-        String output = "Your Tasks: \n";
-        for (Task task : tasks) {
-            output += task.getTaskNumber() + task.toString() + '\n';
+    public String getTaskListString() {
+        String output = "Your Tasks: ";
+        for (int i = 0; i < tasks.size(); i++) {
+            // i + 1 is to one-index it.
+            output += String.format("\n %d. %s", i + 1, tasks.get(i).toString());
         }
         return output;
     }
@@ -24,38 +52,47 @@ public class TaskList {
      * Adds a Task to the list of Tasks.
      * @param task {@link Task} object.
      */
-    public static void addTask(Task task) {
+    public void addTask(Task task) {
         tasks.add(task);
         numberOfTasks++;
     }
 
-    public static void addTaskFromFile(String[] input) {
+    /**
+     * Reads a line of strings from save file and returns a Task.
+     * @param input Strings describing the task.
+     * @return The Task, marked as done or not.
+     * @throws DukeException When there is an error in the file describing the task.
+     */
+    private Task createTaskFromFile(String[] input) throws DukeException {
+        Task newTask;
         switch(input[0]) {
         case "T":
-            Todo newTodo = new Todo(input[2], getNextTaskNumber());
-            addTask(newTodo); //problem cos tasks is not instantiated/static.
+            newTask = new Todo(input[2], getNextTaskNumber());
             break;
         case "D":
-            Deadline newDeadline = new Deadline(input[2], getNextTaskNumber(), input[3]);
-            addTask(newDeadline);
+            newTask = new Deadline(input[2], getNextTaskNumber(), input[3]);
             break;
         case "E":
-            Event newEvent = new Event(input[2], getNextTaskNumber(), input[3], input[4]);
-            addTask(newEvent);
+            newTask = new Event(input[2], getNextTaskNumber(), input[3], input[4]);
             break;
+        default:
+            // When there is error in reading the file.
+            throw new DukeException();
         }
 
-        // mark as done
+        // Set it as done.
         if (input[1].equals("1")) {
-            tasks.get(getNumberOfTasks() - 1).markAsDone();
+            newTask.markAsDone();
         }
+
+        return newTask;
     }
 
     /**
      * Deletes a task from the task list and decrement number of tasks.
      * @param taskNumber 1-indexed task index.
      */
-    public static Task deleteTask(int taskNumber) {
+    public Task deleteTask(int taskNumber) {
         Task deletedTask = tasks.get(taskNumber - 1);
         tasks.remove(taskNumber - 1);
         numberOfTasks--;
@@ -68,7 +105,7 @@ public class TaskList {
      * @param commandArgs Should be an int corresponding to the task number (1-index)
      * @return Feedback string: "Task marked: ____"
      */
-    public static String executeMarkUnmark(String command, String commandArgs) {
+    public String executeMarkUnmark(String command, String commandArgs) {
         int taskNumber;
         // Check is Integer
         try {
@@ -92,16 +129,16 @@ public class TaskList {
     }
 
     // Getter for number of task
-    public static int getNumberOfTasks() {
+    public int getNumberOfTasks() {
         return numberOfTasks;
     }
 
     // A bit unoptimised, but this is to get the next number for numbering purposes.
-    public static int getNextTaskNumber() {
+    public int getNextTaskNumber() {
         return numberOfTasks + 1;
     }
 
-    public static void writeAllToFile(Storage storage) {
+    public void writeAllToFile(Storage storage) {
         String output = "";
         for (Task task : tasks) {
             if (task != null) {

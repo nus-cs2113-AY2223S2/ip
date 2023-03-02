@@ -16,7 +16,7 @@ public class Event extends Task {
      * @param timeEnd
      */
     public Event(String description, int taskNumber, String timeStart, String timeEnd) {
-        super(description, taskNumber);
+        super(description);
         this.timeStart = timeStart;
         this.timeEnd = timeEnd;
     }
