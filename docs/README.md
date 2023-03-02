@@ -8,7 +8,7 @@ Duke is an application that uses a command-line interface(CLI) to interact with 
 2. Download the latest [duke.jar](https://github.com/matthew-liu-zhenjie/ip/releases).
 3. Transfer the duke.jar file to a preferred location.
 4. Launch the terminal on your computer and navigate to the folder holding the duke.jar file.
-5. Type the command ```Java -jar duke.jar``` to launch the Duke application.
+5. Type the command `Java -jar duke.jar` to launch the Duke application.
 
 ## Features 
 
@@ -16,7 +16,7 @@ Duke is an application that uses a command-line interface(CLI) to interact with 
 
 Add a task into the task list.
 
- Delete Tasks
+### Delete Tasks
 
 Delete specific task within the task list.
 
@@ -39,9 +39,9 @@ Loads the task list from a file.
 
 ## Usage
 
-### `Keyword` - Describe action
+### `todo` - Add a todo task to the task list
 
-Describe the action and its outcome.
+Adds a _Task_ of type _ToDo_ to the task list. The task description is provided through user input. 
 
 Example of usage: 
 
