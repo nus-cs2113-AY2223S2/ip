@@ -54,9 +54,6 @@ public class Duke {
   }
 
   private static void processDictionary(HashMap<String, String> dictionary, String command) throws Exception {
-    int position;
-    String index;
-    String description;
     switch (command) {
     case Command.DELETE:
       handleDelete(dictionary);
@@ -68,47 +65,67 @@ public class Duke {
       terminate();
       break;
     case Command.TODO:
-      description = dictionary.get(Keyword.DESCRIPTION);
-      controller.addTodoTask(description);
+      handleTodo(dictionary);
       break;
     case Command.MARK:
     case Command.UNMARK:
-      index = dictionary.get(Keyword.INDEX);
-      position = Integer.parseInt(index) - 1;
-      boolean isMark = command.equals(Command.MARK);
-      controller.toggleMark(isMark, position);
+      handleMarkOrUnmark(dictionary, command);
       break;
     case Command.DEADLINE:
-      description = dictionary.get(Keyword.DESCRIPTION);
-      String deadline = dictionary.get(Keyword.DEADLINE);
-      controller.addDeadlineTask(description, deadline);
+      handleDeadline(dictionary);
       break;
     case Command.EVENT:
-      description = dictionary.get(Keyword.DESCRIPTION);
-      String start = dictionary.get("start");
-      String end = dictionary.get("end");
-      controller.addEventTask(description, start, end);
+      handleEvent(dictionary);
       break;
     case Command.FIND:
-      String keyword = dictionary.get(Keyword.KEYWORD);
-      controller.findTask(keyword);
+      handleFind(dictionary);
       break;
     default:
       throw new DukeException(ErrorMessage.INVALID_COMMAND);
     }
   }
 
+  private static void handleFind(HashMap<String, String> dictionary) throws Exception {
+    String keyword = dictionary.get(Keyword.KEYWORD);
+    controller.findTask(keyword);
+  }
+
+  private static void handleTodo(HashMap<String, String> dictionary) {
+    String description;
+    description = dictionary.get(Keyword.DESCRIPTION);
+    controller.addTodoTask(description);
+  }
+
+  private static void handleDeadline(HashMap<String, String> dictionary) {
+    String description = dictionary.get(Keyword.DESCRIPTION);
+    String deadline = dictionary.get(Keyword.DEADLINE);
+    controller.addDeadlineTask(description, deadline);
+  }
+
+  private static void handleEvent(HashMap<String, String> dictionary) {
+    String description = dictionary.get(Keyword.DESCRIPTION);
+    String start = dictionary.get(Keyword.START);
+    String end = dictionary.get(Keyword.END);
+    controller.addEventTask(description, start, end);
+  }
+
+  private static void handleMarkOrUnmark(HashMap<String, String> dictionary, String command) throws Exception {
+    String index = dictionary.get(Keyword.INDEX);
+    int position = Integer.parseInt(index) - 1;
+    boolean isMark = command.equals(Command.MARK);
+    controller.toggleMark(isMark, position);
+  }
+
   private static void handleDelete(HashMap<String, String> dictionary) throws Exception {
-    String index;
-    int position;
-    index = dictionary.get(Keyword.INDEX);
-    position = Integer.parseInt(index) - 1;
+    String index = dictionary.get(Keyword.INDEX);
+    int position = Integer.parseInt(index) - 1;
     controller.deleteTask(position);
     ui.printMessage(Message.TASK_DELETED);
   }
 
   /**
-   * Running the chatbot with all the commands
+   * This function is where the bot will run and when we can do whatever we
+   * want with it.
    */
   public void run() {
     ui.printWelcomeMessage();
