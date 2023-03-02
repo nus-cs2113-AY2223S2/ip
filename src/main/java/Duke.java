@@ -5,8 +5,6 @@ import task.TaskList;
 import task.Todo;
 import task.Task;
 
-import java.nio.file.InvalidPathException;
-import java.nio.file.Paths;
 import java.util.Scanner;
 
 public class Duke {
@@ -39,27 +37,11 @@ public class Duke {
      * @param args First arg should be directory.
      */
     public static void main(String[] args) {
-        if (isValidPath(args[0])) {
+        if (Parser.isValidPath(args[0])) {
             new Duke(args[0]).run();
         } else {
             new Duke().run();
         }
-    }
-
-    /**
-     * Credit to Stackoverflow
-     * https://stackoverflow.com/questions/468789/is-there-a-way-in-java-to-determine-if-a-path-is-valid-without-attempting-to-cre
-     * @param path path name for saving file
-     * @return true if path is valid path
-     */
-    private static boolean isValidPath(String path) {
-        try {
-            Paths.get(path);
-        } catch (InvalidPathException
-                | NullPointerException e) {
-            return false;
-        }
-        return true;
     }
 
     private void run() {
