@@ -34,7 +34,7 @@ public class Storage {
    */
   protected static void createFileIfNotExist() {
     try {
-      if (!file.createNewFile()) {
+      if (file.createNewFile()) {
         FileWriter writer = new FileWriter(FILE_NAME);
         writer.write("[]");
         writer.close();
