@@ -40,20 +40,18 @@ Description of the outcome.
 ```
 expected output
 ```
-### `find` - Describe action
-
-Describe the action and its outcome.
+### `find` - Give users a way to find a task by searching for a keyword.
 
 Example of usage:
 
-`keyword (optional arguments)`
+`find book`
 
 Expected outcome:
 
-Description of the outcome.
-
 ```
-expected output
+Here are the matching tasks in your list:
+     1.[T][X] read book
+     2.[D][X] return book (by: June 6th)
 ```
 
 ### `todo` - tasks without any date/time attached to it
