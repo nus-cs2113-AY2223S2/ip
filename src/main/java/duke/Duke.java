@@ -105,6 +105,20 @@ public class Duke {
                     UI.printer("delete", taskList.getTaskArray(), taskIndex);
                 }
                 break;
+            case "find":
+                String keyWord = wordList[1];
+                int checker = 0;
+                for(int i = 0; i < taskIndex; i++) {
+                    String description = taskList.getTaskArray().get(i).getDescription();
+                    if (description.contains(keyWord)) {
+                        UI.taskPrinter(taskList.getTaskArray(), i);
+                        checker++;
+                    }
+                }
+                if (checker == 0) {
+                    UI.printer("notInList", taskList.getTaskArray(), taskIndex);
+                }
+                break;
             //throws IllegalCommandException if the input is not one of the above cases
             default:
                 try {
