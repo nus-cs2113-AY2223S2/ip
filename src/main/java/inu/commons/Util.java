@@ -16,21 +16,22 @@ import java.time.format.DateTimeFormatter;
 public class Util {
 
     public static final int INDEX_BEGIN = 0;
-
     public static final int INDEX_OFFSET_IN_COMMAND = 1;
-
     public static final int INDEX_OFFSET_IN_BY_COMMAND = 5;
-
     public static final int INDEX_OFFSET_IN_FROM_COMMAND = 7;
-
     public static final int INDEX_OFFSET_IN_TO_COMMAND = 5;
-
     public static final String DELIMITER_DEADLINE_BY = " /by ";
-
     public static final String DELIMITER_EVENT_FROM = " /from ";
-
     public static final String DELIMITER_EVENT_TO = " /to ";
 
+    /**
+     * Reads in a string of numerical value and converts it into a task list index as an integer.
+     * Checks if index provided is within the range of the number of tasks.
+     *
+     * @param taskList the task list the index accesses
+     * @param userString the index input in the form of a String to be converted into the task list index
+     * @return task index as an integer converted from the given String
+     */
     public static int fetchIndexFromString(TaskList taskList, String userString)
             throws EmptyStringException, IndexOutOfBoundsException {
         ExceptionManager.checkEmptyString(userString);
@@ -43,6 +44,13 @@ public class Util {
         }
     }
 
+    /**
+     * Fetches the task description before the delimiter as a string
+     *
+     * @param userString the String containing full task details
+     * @param delimiter the String delimiter that the task description appears before
+     * @return task description as a String
+     */
     public static String fetchTask(String userString, String delimiter) throws EmptyStringException {
         int indexOfFirstSlash = userString.indexOf(delimiter);
         String task = userString.substring(INDEX_BEGIN, indexOfFirstSlash);
@@ -50,6 +58,12 @@ public class Util {
         return task;
     }
 
+    /**
+     * Fetches the deadline due date from the full task description
+     *
+     * @param userString the String containing full task details
+     * @return the deadline due date as a String
+     */
     public static String fetchBy(String userString) throws EmptyStringException {
         int firstSlashEntry = userString.indexOf(DELIMITER_DEADLINE_BY);
         String by = userString.substring(firstSlashEntry + INDEX_OFFSET_IN_BY_COMMAND);
@@ -57,6 +71,12 @@ public class Util {
         return by;
     }
 
+    /**
+     * Fetches the event start date from the full task description
+     *
+     * @param userString the String containing full task details
+     * @return the event start date as a String
+     */
     public static String fetchFrom(String userString) throws EmptyStringException {
         int firstSlashEntry = userString.indexOf(DELIMITER_EVENT_FROM);
         int secondSlashEntry = userString.indexOf(DELIMITER_EVENT_TO);
@@ -65,6 +85,12 @@ public class Util {
         return from;
     }
 
+    /**
+     * Fetches the event end date from the full task description
+     *
+     * @param userString the String containing full task details
+     * @return the event end date as a String
+     */
     public static String fetchTo(String userString) throws EmptyStringException {
         int secondSlashEntry = userString.indexOf(DELIMITER_EVENT_TO);
         String to = userString.substring(secondSlashEntry + INDEX_OFFSET_IN_TO_COMMAND);
