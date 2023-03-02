@@ -40,7 +40,7 @@ public class Storage {
      * Creates a new file according to the file path.
      * If the directory in the file path does not exist, creates one.
      *
-     *  @throws IOException If I/O errors occur when creating file.
+     * @throws IOException If I/O errors occur when creating file.
      */
     public void createFile() throws IOException {
         File file = new File(this.filePath);
