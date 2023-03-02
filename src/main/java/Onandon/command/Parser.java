@@ -1,6 +1,10 @@
 package Onandon.command;
 
+// This class is for parsing command string.
 public class Parser {
+
+    // Parses command and extracts necessary data from the string.
+    // Returns Command class
     public static Command parse(String fullCommand){
         String commandType = fullCommand.split(" ")[0];
         String description = "";

@@ -1,5 +1,6 @@
 package Onandon.module;
 
+// Task class for the all of the commands.
 public class Task {
     protected String description;
     protected boolean isDone;

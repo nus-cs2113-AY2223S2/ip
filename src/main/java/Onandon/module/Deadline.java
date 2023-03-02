@@ -1,5 +1,6 @@
 package Onandon.module;
 
+// Class for the 'deadline' command.
 public class Deadline extends Task {
 
     protected String by;

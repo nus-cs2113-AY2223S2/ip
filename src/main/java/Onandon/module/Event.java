@@ -1,5 +1,6 @@
 package Onandon.module;
 
+// Class for the 'event' command.
 public class Event extends Task {
 
     protected String to;
