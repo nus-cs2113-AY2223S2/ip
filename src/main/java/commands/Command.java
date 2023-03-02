@@ -34,21 +34,27 @@ public class Command {
                 break;
             case "mark":
                 Tasklist.markTask(Tasklist.retrieveMarkIndex(userInputArray));
+                FileManager.saveFile();
                 break;
             case "unmark":
                 Tasklist.unmarkTask(Tasklist.retrieveMarkIndex(userInputArray));
+                FileManager.saveFile();
                 break;
             case "delete":
                 Tasklist.deleteTask(Tasklist.retrieveMarkIndex(userInputArray));
+                FileManager.saveFile();
                 break;    
             case "todo":
                 Tasklist.addTodo(userInputArray);
+                FileManager.saveFile();
                 break;
             case "deadline":
                 Tasklist.addDeadline(userInputArray);
+                FileManager.saveFile();
                 break;
             case "event":
                 Tasklist.addEvent(userInputArray);
+                FileManager.saveFile();
                 break;
             case "find":
                 Tasklist.findTask(userInputArray);

@@ -12,7 +12,7 @@
   * #### Unmark task: `unmark`
   * #### Delete task: `delete`
   * #### Find task: `find`
-  * #### Save/ Exit Duke: `bye`
+  * #### Exit Duke: `bye`
 
 <br>
 
@@ -135,11 +135,11 @@
 <br>
 <br>
 
-## Save/ Exit Duke: `bye`
+## Exit Duke: `bye`
 
 <br>
 
-#### Saves tasks and exits the program.
+#### Exits the program.
 #### Format: `bye` 
 
 <br>
