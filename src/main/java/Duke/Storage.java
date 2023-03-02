@@ -42,6 +42,9 @@ public class Storage {
                     } else {
                         System.out.println("There's unexpected content in your file.");
                     }
+                    if (line.substring(0, 7).contains("X")) {
+                        lists[count].isDone=true;
+                    }
                     count++;
                 }
             }
