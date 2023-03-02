@@ -37,6 +37,9 @@ public class Duke {
      * @param args First arg should be directory.
      */
     public static void main(String[] args) {
+        if (args.length < 1) {
+            new Duke().run();
+        }
         if (Parser.isValidPath(args[0])) {
             new Duke(args[0]).run();
         } else {
@@ -46,7 +49,6 @@ public class Duke {
 
     private void run() {
         Ui.printGreeting();
-        Ui.printHLine();
 
         // Input variables initialised.
         Scanner myScanner = new Scanner(System.in);

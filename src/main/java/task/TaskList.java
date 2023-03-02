@@ -40,9 +40,10 @@ public class TaskList {
      * Print the contents of Task List
      */
     public String getTaskListString() {
-        String output = "Your Tasks: \n";
-        for (Task task : tasks) {
-            output += task.getTaskNumber() + task.toString() + '\n';
+        String output = "Your Tasks: ";
+        for (int i = 0; i < tasks.size(); i++) {
+            // i + 1 is to one-index it.
+            output += String.format("\n %d. %s", i + 1, tasks.get(i).toString());
         }
         return output;
     }
