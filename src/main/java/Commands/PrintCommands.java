@@ -1,4 +1,5 @@
 package Commands;
+
 import java.util.ArrayList;
 
 import Tasks.Task;
@@ -80,7 +81,16 @@ public class PrintCommands {
         printLine();
     }
 
-    public static void printDeleteMessage() {
+    public static void printDeleteMessage(ArrayList<Task> taskList, int taskIndex) {
+        printLine();
+        System.out.println("\tWoosh! This task is now gone: ");
+        System.out.println(
+                "\t" + taskList.get(taskIndex).getType() + taskList.get(taskIndex).getStatusIcon()
+                        + taskList.get(taskIndex).description);
+        printLine();
+    }
+
+    public static void printFindMessage() {
         printLine();
         System.out.println();
         printLine();

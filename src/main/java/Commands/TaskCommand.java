@@ -137,14 +137,8 @@ public class TaskCommand {
         if (taskList == null || taskIndex < 0 || taskIndex >= taskList.size() || taskList.get(taskIndex) == null) {
             throw new InvalidTaskNumberException("Invalid task index");
         }
-
-        PrintCommands.printLine();
-        System.out.println("\tWoosh! This task is now gone: ");
-        System.out.println(
-                "\t" + taskList.get(taskIndex).getType() + taskList.get(taskIndex).getStatusIcon()
-                        + taskList.get(taskIndex).description);
-        PrintCommands.printLine();
-
+        PrintCommands.printDeleteMessage(taskList, taskIndex);
+        PrintCommands.printNumberOfTasks(taskList);
         taskList.remove(taskIndex); // delete the specified task number
 
     }
