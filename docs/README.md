@@ -163,13 +163,13 @@ Example of usage:
 
 `unmark 3`
 
-Expected outcome: Task Number 3 is marked as done.  
+Expected outcome: Task Number 3 is marked as not done.  
 
 Description of the outcome.
 
 ```
         ==========================================
-        Nice! I've marked this task as done:      
+        OK, I've marked this task as not done yet:
         [E][ ] Celebrate holidays
         ==========================================
 ```
