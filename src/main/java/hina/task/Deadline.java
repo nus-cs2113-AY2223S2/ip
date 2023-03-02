@@ -1,11 +1,7 @@
 package hina.task;
 
-import java.time.DateTimeException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
-
-import hina.helper.Ui;
 
 public class Deadline extends Task {
     private LocalDateTime by;
