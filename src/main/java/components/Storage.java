@@ -9,6 +9,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
+/**
+ * Deals with loading tasks from the file and saving tasks in the file.
+ */
 public class Storage {
     public String filePath;
 
@@ -16,8 +19,14 @@ public class Storage {
         this.filePath = filePath;
     }
 
-    public ArrayList<Task> load() throws IOException, ClassNotFoundException {
-
+    /**
+     * Load data from previous file and put it in an arraylist.
+     *
+     * @return ArrayList.
+     * @throws IOException  If file is not found
+     * @throws ClassNotFoundException If there is error in loading the ArrayList object from the file
+     */
+    public ArrayList<Task> load() throws IOException, ClassNotFoundException{
         FileInputStream readData = new FileInputStream(this.filePath);
         ObjectInputStream readStream = new ObjectInputStream(readData);
         ArrayList<Task> data = (ArrayList<Task>) readStream.readObject();
@@ -25,6 +34,12 @@ public class Storage {
         return data;
     }
 
+    /**
+     * Write ArrayList to file.
+     *
+     * @param tasks ArrayList of tasks.
+     * @param filePath Name of file.
+     */
     public void writeToFile(ArrayList<Task> tasks, String filePath) {
         try {
             FileOutputStream writeData = new FileOutputStream(filePath);
@@ -37,22 +52,4 @@ public class Storage {
             e.printStackTrace();
         }
     }
-
-//    public void ArrayList<Task> readFromFile(ArrayList<Task> tasks, String filePath) {
-//        File file = new File("duke.txt");
-//        if (file.exists()) {
-//            try {
-//                FileInputStream readData = new FileInputStream(filePath);
-//                ObjectInputStream readStream = new ObjectInputStream(readData);
-//                tasks = (ArrayList<Task>) readStream.readObject();
-//                readStream.close();
-//            } catch (Exception e) {
-//                System.out.println("Error in file");
-//            }
-//        }
-//        else {
-//            tasks = new ArrayList<>();
-//        }
-//        return tasks;
-//    }
 }

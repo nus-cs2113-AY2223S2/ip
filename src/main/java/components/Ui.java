@@ -4,8 +4,11 @@ import task.Task;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Ui {
-    public Ui() {
+/**
+ * Deals with interactions with the user.
+ */
+public class UI {
+    public UI() {
     }
 
     private static final String LOGO =
@@ -49,14 +52,14 @@ public class Ui {
     }
 
     public void taskAdded(ArrayList<Task> tasks) {
-        boolean lessThanOne = (tasks.size() <= 1);
-        System.out.println("Got it. I've added this task:\n" + tasks.get(tasks.size() - 1));
-        System.out.println("Now you have " + tasks.size() + (lessThanOne ? " task" : " tasks") + " in the list");
+        boolean isLessThanOne = (tasks.size() <= 1);
+        System.out.println("Got it. I've added this task:\n" + tasks.get(tasks.size() - 1) +
+                "Now you have " + tasks.size() + (isLessThanOne ? " task" : " tasks") + " in the list");
     }
 
     public void taskRemoved(ArrayList<Task> tasks, Task t) {
         boolean isLessThanOne = (tasks.size() <= 1);
-        System.out.println("Got it. I've removed this task:\n" + t.toString());
-        System.out.println("Now you have " + tasks.size() + (isLessThanOne ? " task" : " tasks") + " in the list\n");
+        System.out.println("Got it. I've removed this task:\n" + t.toString() +
+                "Now you have " + tasks.size() + (isLessThanOne ? " task" : " tasks") + " in the list\n");
     }
 }
