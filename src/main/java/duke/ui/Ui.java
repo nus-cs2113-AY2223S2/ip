@@ -208,7 +208,7 @@ public class Ui {
     public void searchResults(ArrayList<Task> tasks){
         out.println(SEARCH_HEADER);
         for (int i = 0; i < tasks.size(); i++){
-            out.println("   "+ i + ". "+ tasks.get(i).toString());
+            out.println("   "+ (i+1) + ". "+ tasks.get(i).toString());
         }
         out.println(DIVIDER);
     }
