@@ -64,9 +64,9 @@ public class TaskList {
             throw new DukeException();
         } else {
             if (shouldMarkAsDone) {
-                list.get(posOfMark).markAsDone();
+                list.get(posOfMark).printSetDoneMessage();
             } else {
-                list.get(posOfMark).markAsUndone();
+                list.get(posOfMark).printSetUndoneMessage();
             }
         }
     }
