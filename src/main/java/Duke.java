@@ -1,9 +1,11 @@
 import java.util.Scanner;
-import java.util.ArrayList;
+import java.io.FileWriter;
+import java.io.IOException;
 
 
 
 public class Duke {
+    
     public enum TaskType {
         TODO, DEADLINE, EVENT
     }
@@ -20,6 +22,12 @@ public class Duke {
         String input;
 
         Task task = new Task();
+        try {
+            task.readFile("data/duke.txt");
+        }
+        catch(Exception e) {
+            System.out.println("Something went wrong: " + e.getMessage());
+        }
         
         while((input = in.nextLine()) != "") {
             try {
@@ -53,6 +61,10 @@ public class Duke {
                 else if (input.startsWith("delete ")) {
                     
                     task.delete(input);
+                }
+                else if (input.equalsIgnoreCase("save")) {
+                    
+                    task.save();
                 }
                 else {
                     throw new InvalidInputException();
