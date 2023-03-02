@@ -30,4 +30,11 @@ public class Task {
     public void unmark() {
         isDone = false;
     }
+
+    public String showTask(){
+        if (isDone) {
+            return "[O] " + contents;
+        }
+        return "[ ] " + contents;
+    }
 }

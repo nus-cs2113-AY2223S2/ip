@@ -1,9 +1,11 @@
+import java.time.LocalDate;
+
 abstract public class Command {
     protected String type = " ";
     protected String content = " ";
-    protected String by = " ";
-    protected String from = " ";
-    protected String to = " ";
+    protected LocalDate by;
+    protected LocalDate from;
+    protected LocalDate to;
     protected int targetTaskIndex = -1;
     protected String targetWord = " ";
 
@@ -19,15 +21,15 @@ abstract public class Command {
         return content;
     }
 
-    public String getBy(){
+    public LocalDate getBy(){
         return by;
     }
 
-    public String getFrom(){
+    public LocalDate getFrom(){
         return from;
     }
 
-    public String getTo(){
+    public LocalDate getTo(){
         return to;
     }
 

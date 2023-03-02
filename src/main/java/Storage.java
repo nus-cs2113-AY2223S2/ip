@@ -42,4 +42,42 @@ public class Storage {
         }
     }
 
+    public void writeDeadlineToFile(Deadline deadline){
+        try {
+            File file = new File(FILEPATH);
+            FileWriter fw = new FileWriter(file, true);
+            String textAdded = "[D]";
+            if(deadline.getIsDone()){
+                textAdded += "[O]";
+            }else{
+                textAdded += "[ ]";
+            }
+            textAdded = textAdded + deadline.getContents() + " by " + deadline.getBy();
+            fw.write(textAdded);
+            fw.close();
+        } catch (IOException e){
+            UI.printSaveErrorComment();
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void writeEventToFile(Event event){
+        try {
+            File file = new File(FILEPATH);
+            FileWriter fw = new FileWriter(file, true);
+            String textAdded = "[D]";
+            if(event.getIsDone()){
+                textAdded += "[O]";
+            }else{
+                textAdded += "[ ]";
+            }
+            textAdded = textAdded + event.getContents() + " from " + event.getFrom() + " to " + event.getTo();
+            fw.write(textAdded);
+            fw.close();
+        } catch (IOException e){
+            UI.printSaveErrorComment();
+            System.out.println(e.getMessage());
+        }
+    }
+
 }
