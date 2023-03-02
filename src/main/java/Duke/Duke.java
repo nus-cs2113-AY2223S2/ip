@@ -75,6 +75,10 @@ public class Duke {
                         TaskCommand.deleteTask(taskList, command, TaskCommand.getTaskIndex(command, taskList));
                         break;
 
+                    case "find" :
+                        TaskCommand.findTask(taskList, command);
+                    break;
+
                     default:
                         throw new NullCommandException(
                                 "Unrecognised command. Type 'help' for a list of recognised commands");

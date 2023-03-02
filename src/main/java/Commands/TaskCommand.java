@@ -142,4 +142,8 @@ public class TaskCommand {
         taskList.remove(taskIndex); // delete the specified task number
 
     }
+
+    public static void findTask(ArrayList<Task> taskList, String[] command) {
+        PrintCommands.printFindMessage(taskList, command);
+    }
 }

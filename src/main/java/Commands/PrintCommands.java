@@ -90,9 +90,29 @@ public class PrintCommands {
         printLine();
     }
 
-    public static void printFindMessage() {
+    public static void printFindMessage(ArrayList<Task> taskList, String[] command) {
         printLine();
-        System.out.println();
+        System.out.println("Here's what I found :");
+
+        int i = 1;
+        for (Task task : taskList) {
+            if (task.getDescription().contains(command[1])) {
+                switch (task.getType()) {
+                    case "[T]":
+                        System.out.println("\t" + i + ". " + task.getDescription());
+                        break;
+
+                    case "[D]":
+                        System.out.println("\t" + i + ". " + task.getDescription());
+                        break;
+                        
+                    case "[E]":
+                        System.out.println("\t" + i + ". " + task.getDescription());
+                        break;
+                }
+                i++;
+            }
+        }
         printLine();
     }
 }
