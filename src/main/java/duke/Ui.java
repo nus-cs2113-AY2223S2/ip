@@ -39,7 +39,27 @@ public class Ui {
                 System.out.println(Integer.toString(i + 1) + "." + tasks.getTask(i));
             } catch (IncorrectIndexException e) {
                 //Shouldn't happen since i is alway within valid limits due to for loop constraints
-                System.out.println("Unexpected Error While Listing.");
+                throw new RuntimeException ("Unexpected Error While Listing.");
+            }
+        }
+        System.out.println(LINE);
+    }
+
+    public void printMatches(TaskList tasks, String keyword) {
+        System.out.println(LINE);
+        System.out.println("Here are the matching tasks in your list:");
+        for (int i = 0; i < tasks.length(); i++) {
+            Task task;
+            
+            try {
+                task = tasks.getTask(i);
+            } catch (IncorrectIndexException e) {
+                //Shouldn't happen since i is alway within valid limits due to for loop constraints
+                throw new RuntimeException ("Unexpected Error While Listing.");
+            }
+
+            if(task.matchesKeyword(keyword)) {
+                System.out.println(Integer.toString(i + 1) + "." + task);
             }
         }
         System.out.println(LINE);

@@ -15,6 +15,15 @@ public class Deadline extends Task {
     }
 
     @Override
+    public boolean matchesKeyword (String keyword) {
+        if (description.contains(keyword) || by.contains(keyword)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
     /**
      * Overrides string representation for deadlines, with a [D] to
      * indicate deadline class and including by field.
