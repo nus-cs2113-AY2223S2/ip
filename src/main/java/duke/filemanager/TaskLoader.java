@@ -19,16 +19,16 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 /**
- * Loads the tasks from json file to an ArrayList
+ * Loads the tasks from json file to an ArrayList.
  */
 public class TaskLoader {
 
     /**
-     * Reads the json file and processes it into an ArrayList of tasks
+     * Reads the json file and processes it into an ArrayList of tasks.
      *
-     * @param filePath json file containing all tasks
-     * @return ArrayList of tasks from previous session
-     * @throws DukeException occurs when there is a read error i.e. invalid json format
+     * @param filePath json file containing all tasks.
+     * @return ArrayList of tasks from previous session.
+     * @throws DukeException Occurs when there is a read error i.e. invalid json format.
      */
     public ArrayList<Task> setClasses(String filePath) throws DukeException {
         ArrayList<Task> tasks = new ArrayList<Task>();

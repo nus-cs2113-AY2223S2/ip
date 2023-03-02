@@ -3,7 +3,7 @@ package duke.task;
 import java.time.LocalDateTime;
 
 /**
- * Task with a start and end date
+ * Task with a start and end date.
  */
 public class Event extends Task {
     protected String startString;
@@ -11,12 +11,12 @@ public class Event extends Task {
     protected LocalDateTime startTime;
 
     /**
-     * Constructor to set an event without a given datetime
-     * defaults to current time
+     * Constructs an event without a given datetime
+     * defaults to current time.
      *
-     * @param task        description of event
-     * @param startString starting duration description
-     * @param endString   ending duration description
+     * @param task        Description of event.
+     * @param startString Starting duration description.
+     * @param endString   Ending duration description.
      */
     public Event(String task, String startString, String endString) {
         super(task);
@@ -28,13 +28,13 @@ public class Event extends Task {
     }
 
     /**
-     * Constructor to set an event with given datetime
+     * Constructs an event with given datetime.
      *
-     * @param task        description of event
-     * @param startString starting duration description
-     * @param endString   ending duration description
-     * @param startTime   datetime of start date
-     * @param endTime     datetime of the due date
+     * @param task        Description of event.
+     * @param startString Starting duration description.
+     * @param endString   Ending duration description.
+     * @param startTime   Datetime of start date.
+     * @param endTime     Datetime of the due date.
      */
     public Event(String task, String startString, String endString, LocalDateTime startTime, LocalDateTime endTime) {
         super(task);
@@ -46,18 +46,18 @@ public class Event extends Task {
     }
 
     /**
-     * gets the duration of the event
+     * Gets the duration of the event.
      *
-     * @return the formatted string of the event duration
+     * @return The formatted string of the event duration.
      */
     public String getDuration() {
         return " (from: " + startString + " to: " + endString + ")";
     }
 
     /**
-     * gets the end time of event
+     * Gets the end time of event.
      *
-     * @return LocalDateTime of dueDate
+     * @return LocalDateTime of dueDate.
      */
     @Override
     public LocalDateTime getEndTime() {
@@ -65,9 +65,9 @@ public class Event extends Task {
     }
 
     /**
-     * gets the type of task (event type)
+     * Gets the type of task (event type).
      *
-     * @return letter representing type of task
+     * @return Letter representing type of task.
      */
     @Override
     public String getTaskType() {
@@ -75,9 +75,9 @@ public class Event extends Task {
     }
 
     /**
-     * Shows the full event status and description
+     * Shows the full event status and description.
      *
-     * @return event status and description
+     * @return Event status and description.
      */
     @Override
     public String getTaskStatus() {

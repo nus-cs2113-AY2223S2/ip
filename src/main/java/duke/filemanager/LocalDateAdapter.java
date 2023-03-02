@@ -15,17 +15,17 @@ import java.time.format.DateTimeFormatter;
 
 
 /**
- * Custom gson serializer for LocalDateTime
+ * Custom gson serializer for LocalDateTime.
  */
 class LocalDateAdapter implements JsonSerializer<LocalDateTime>, JsonDeserializer<LocalDateTime> {
 
     /**
-     * Deserializes the formatted LocalDateTime from json file
+     * Deserializes the formatted LocalDateTime from json file.
      *
-     * @param jsonElement                the json element to deserialize
-     * @param jsonDeserializationContext context for deserialization
-     * @return the LocalDateTime parsed from json element
-     * @throws JsonParseException occurs when invalid json format is given
+     * @param jsonElement                The json element to deserialize.
+     * @param jsonDeserializationContext Context for deserialization.
+     * @return The LocalDateTime parsed from json element.
+     * @throws JsonParseException Occurs when invalid json format is given.
      */
     @Override
     public LocalDateTime deserialize(JsonElement jsonElement,
@@ -35,8 +35,10 @@ class LocalDateAdapter implements JsonSerializer<LocalDateTime>, JsonDeserialize
     }
 
     /**
-     * @param localDateTime the localDateTime to be serialized
-     * @return the serialized json element from localDateTime
+     * Serializes the LocalDateTime to ISO_LOCAL_DATE_TIME format.
+     *
+     * @param localDateTime The localDateTime to be serialized.
+     * @return The serialized json element from localDateTime.
      */
     @Override
     public JsonElement serialize(LocalDateTime localDateTime, Type type, JsonSerializationContext jsonSerializationContext) {

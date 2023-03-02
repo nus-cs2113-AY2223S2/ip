@@ -8,13 +8,12 @@ import duke.ui.Ui;
 public class UserCommandManager {
 
     /**
-     * Handles the command (i.e. type of task) by user
-     * and parse the arguments to add to task list
+     * Handles the command (i.e. type of task) by user and parse the arguments to add to task list.
      *
-     * @param userCommands parsed userInput containing command, and arguments
-     * @param storage      handler for writing to json file
-     * @param tasks        taskList of tasks
-     * @param ui           handler for printing text to the screen
+     * @param userCommands Parsed userInput containing command, and arguments
+     * @param storage      Handler for writing to json file
+     * @param tasks        TaskList of tasks
+     * @param ui           Handler for printing text to the screen
      */
     public void handleCommands(String[] userCommands, Storage storage, TaskList tasks, Ui ui) throws DukeException {
 
@@ -25,17 +24,17 @@ public class UserCommandManager {
             break;
         case "list":
         case "ls":
-            command = new ListTasks();
+            command = new ListTasksCommand();
             break;
         case "list-sorted":
         case "ls-s":
-            command = new PrintSortedTasks();
+            command = new PrintSortedTasksCommand();
             break;
         case "find":
-            command = new FindTask(userCommands[1]);
+            command = new FindTaskCommand(userCommands[1]);
             break;
         case "sort":
-            command = new SortTasks();
+            command = new SortTasksCommand();
             break;
         case "mark":
             command = new MarkCommand(userCommands[1]);
@@ -44,16 +43,16 @@ public class UserCommandManager {
             command = new UnmarkCommand(userCommands[1]);
             break;
         case "todo":
-            command = new AddTodoToList(userCommands[1]);
+            command = new AddTodoToListCommand(userCommands[1]);
             break;
         case "deadline":
-            command = new AddDeadlineToList(userCommands[1]);
+            command = new AddDeadlineToListCommand(userCommands[1]);
             break;
         case "event":
-            command = new AddEventToList(userCommands[1]);
+            command = new AddEventToListCommand(userCommands[1]);
             break;
         case "delete":
-            command = new DeleteFromList(userCommands[1]);
+            command = new DeleteFromListCommand(userCommands[1]);
             break;
         default:
             throw new DukeException("Unknown input");

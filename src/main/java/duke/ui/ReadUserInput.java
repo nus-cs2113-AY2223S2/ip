@@ -3,15 +3,15 @@ package duke.ui;
 import java.util.Scanner;
 
 /**
- * To handle the reading of userInput from the command line
+ * Handles the reading of userInput from the command line.
  */
 public class ReadUserInput {
 
     /**
-     * Scans for new user input and parse into String array containing
-     * command and command arguments
+     * Scans for new user input and parse into String array containing.
+     * command and command arguments.
      *
-     * @return String array containing command and its arguments
+     * @return String array containing command and its arguments.
      */
     public static String[] readInput() {
         Scanner input = new Scanner(System.in);
@@ -20,5 +20,5 @@ public class ReadUserInput {
         userCommand[1] = input.nextLine();
         return userCommand;
     }
-    
+
 }

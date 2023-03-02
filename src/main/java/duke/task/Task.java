@@ -12,11 +12,11 @@ public class Task {
     protected LocalDateTime endTime;
 
     /**
-     * Constructor to a new todo task with default date
+     * Constructs a new todo task with default date
      * of 1/1/0000 0000 so that it will be placed at the top when
-     * sorted
+     * sorted.
      *
-     * @param task description of task
+     * @param task Description of task.
      */
     public Task(String task) {
         this.task = task;
@@ -26,27 +26,27 @@ public class Task {
     }
 
     /**
-     * getter of task description
+     * Returns the task description.
      *
-     * @return string containing task description
+     * @return String containing task description.
      */
     public String getDescription() {
         return this.task;
     }
 
     /**
-     * getter of endTime
+     * Returns the endTime of task.
      *
-     * @return LocalDateTime object of endTime
+     * @return LocalDateTime object of endTime.
      */
     public LocalDateTime getEndTime() {
         return this.endTime;
     }
 
     /**
-     * sets the current task to be marked as done
+     * Sets the current task to be marked as done.
      *
-     * @return the String of the marked task
+     * @return The String of the marked task
      */
     public String setAsDone() {
         this.isDone = true;
@@ -54,9 +54,9 @@ public class Task {
     }
 
     /**
-     * sets the current task to be marked as not done
+     * Sets the current task to be marked as not done.
      *
-     * @return the String of the marked task
+     * @return The String of the marked task.
      */
     public String setAsUndone() {
         this.isDone = false;
@@ -64,31 +64,31 @@ public class Task {
     }
 
     /**
-     * checks if the task is done, if done will return a tick,
-     * however, if not done will return an empty space
+     * Checks if the task is done, if done will return a tick,
+     * however, if not done will return an empty space.
      *
-     * @return the String indicating the status of the task
+     * @return The String indicating the status of the task.
      */
     public String getStatusIcon() {
         return (this.isDone ? "X" : " ");
     }
 
     /**
-     * gets the type of task (todo type)
+     * Gets the type of task (todo type).
      *
-     * @return letter representing type of task
+     * @return Letter representing type of task.
      */
     public String getTaskType() {
         return "[T]";
     }
 
     /**
-     * Shows the full task status and description
+     * Shows the full task status and description.
      *
-     * @return task status and description
+     * @return Task status and description.
      */
     public String getTaskStatus() {
         return "[T]" + "[" + getStatusIcon() + "] " + task;
     }
-    
+
 }

@@ -1,14 +1,14 @@
 package duke.exceptions;
 
 /**
- * Class that creates new custom duke error
+ * Class that creates new custom duke error.
  */
 public class DukeException extends Exception {
 
     /**
-     * Constructor to create a custom duke error
+     * Constructor to create a custom duke error.
      *
-     * @param error error message of the error
+     * @param error Error message of the error.
      */
     public DukeException(String error) {
         super(error);

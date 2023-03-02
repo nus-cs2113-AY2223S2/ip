@@ -3,17 +3,17 @@ package duke.task;
 import java.time.LocalDateTime;
 
 /**
- * Task with a deadline
+ * Task with a deadline.
  */
 public class Deadline extends Task {
     protected String dueBy;
 
     /**
-     * Constructor to set a deadline when with no given datetime
-     * sets default to current datetime
+     * Constructs a deadline when with no given datetime
+     * sets default to current datetime.
      *
-     * @param task  description of the deadline
-     * @param dueBy due description
+     * @param task  Description of the deadline.
+     * @param dueBy Due description.
      */
     public Deadline(String task, String dueBy) {
         super(task);
@@ -23,11 +23,11 @@ public class Deadline extends Task {
     }
 
     /**
-     * Constructor to set a deadline with given datetime
+     * Constructs a deadline with given datetime.
      *
-     * @param task    description of deadline
-     * @param dueBy   due description
-     * @param endTime time of the due date
+     * @param task    Description of deadline.
+     * @param dueBy   Due description.
+     * @param endTime Time of the due date.
      */
     public Deadline(String task, String dueBy, LocalDateTime endTime) {
         super(task);
@@ -37,18 +37,18 @@ public class Deadline extends Task {
     }
 
     /**
-     * gets the due description of the deadline
+     * Gets the due description of the deadline.
      *
-     * @return formatted string of due description
+     * @return Formatted string of due description.
      */
     public String getDueBy() {
         return "(by: " + dueBy + ")";
     }
 
     /**
-     * gets the end time of deadline
+     * Gets the end time of deadline.
      *
-     * @return LocalDateTime of dueDate
+     * @return LocalDateTime of dueDate.
      */
     @Override
     public LocalDateTime getEndTime() {
@@ -56,9 +56,9 @@ public class Deadline extends Task {
     }
 
     /**
-     * gets the type of task (deadline type)
+     * Gets the type of task (deadline type).
      *
-     * @return letter representing type of task
+     * @return Letter representing type of task.
      */
     @Override
     public String getTaskType() {
@@ -66,9 +66,9 @@ public class Deadline extends Task {
     }
 
     /**
-     * Shows the full deadline status and description
+     * Shows the full deadline status and description.
      *
-     * @return deadline status and description
+     * @return Deadline status and description.
      */
     @Override
     public String getTaskStatus() {

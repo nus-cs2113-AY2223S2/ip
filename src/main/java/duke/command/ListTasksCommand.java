@@ -1,23 +1,23 @@
 package duke.command;
 
 import duke.data.TaskList;
-import duke.exceptions.DukeException;
 import duke.filemanager.Storage;
 import duke.ui.Ui;
 
 /**
- * Handles the various user commands.
+ * Handles the listing of tasks command.
  */
-public abstract class Command {
+public class ListTasksCommand extends Command {
+
     /**
-     * Abstract method to execute the commands.
+     * Executes the command to list task.
      *
      * @param tasks   TaskList of tasks currently stored.
      * @param storage Handler to read write to json.
      * @param ui      Handler to print text to user.
-     * @throws DukeException
      */
-
-    public abstract void executeCommand(TaskList tasks, Storage storage, Ui ui) throws DukeException;
-
+    @Override
+    public void executeCommand(TaskList tasks, Storage storage, Ui ui) {
+        ui.printTasks(tasks);
+    }
 }

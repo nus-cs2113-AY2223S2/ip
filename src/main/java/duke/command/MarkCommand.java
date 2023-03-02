@@ -8,17 +8,17 @@ import duke.task.Task;
 import duke.ui.Ui;
 
 /**
- * Marks a task as completed
+ * Marks a task as completed.
  */
 public class MarkCommand extends Command {
     private int taskIndex;
 
     /**
      * Constructor which further processes the userInput to remove whitespace to
-     * set taskIndex
+     * set taskIndex.
      *
-     * @param userInput raw input containing taskIndex
-     * @throws DukeException Occurs when there is an invalid input
+     * @param userInput Raw input containing taskIndex.
+     * @throws DukeException Occurs when there is an invalid input.
      */
 
     public MarkCommand(String userInput) throws DukeException {
@@ -32,12 +32,12 @@ public class MarkCommand extends Command {
     }
 
     /**
-     * Executes the command to mark a task as completed
+     * Executes the command to mark a task as completed.
      *
-     * @param tasks   TaskList of tasks currently stored
-     * @param storage Handler to read write to json
-     * @param ui      Handler to print text to user
-     * @throws DukeException Occurs when there is a write error or format error
+     * @param tasks   TaskList of tasks currently stored.
+     * @param storage Handler to read write to json.
+     * @param ui      Handler to print text to user.
+     * @throws DukeException Occurs when there is a write error or format error.
      */
     @Override
     public void executeCommand(TaskList tasks, Storage storage, Ui ui) throws DukeException {
@@ -50,9 +50,9 @@ public class MarkCommand extends Command {
     }
 
     /**
-     * Sets the taskIndex of the task to be marked
+     * Sets the taskIndex of the task to be marked.
      *
-     * @param taskIndex Index of task to be marked
+     * @param taskIndex Index of task to be marked.
      */
     public void setMarkTask(int taskIndex) {
         this.taskIndex = taskIndex;

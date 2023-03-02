@@ -10,7 +10,6 @@ import duke.ui.Ui;
 
 /**
  * Main class to handle duke operations
- * Last Modified: 20.2.23 2353
  */
 public class Duke {
     private Ui ui;
@@ -19,9 +18,9 @@ public class Duke {
 
 
     /**
-     * Constructor to create new Ui and storage handler and sets the tasklist from memory
+     * Constructs the new Ui and storage handler and sets the tasklist from memory.
      *
-     * @param filePath file directory where json file is stored
+     * @param filePath File directory where json file is stored.
      */
     public Duke(String filePath) {
         ui = new Ui();
@@ -35,7 +34,7 @@ public class Duke {
     }
 
     /**
-     * Executes the program to poll for userInput and handles them
+     * Executes the program to poll for userInput and handles them.
      */
     @SuppressWarnings("InfiniteLoopStatement")
     public void run() {
@@ -54,9 +53,9 @@ public class Duke {
     }
 
     /**
-     * Start the program
+     * Start the program.
      *
-     * @param args None taken
+     * @param args None taken.
      */
     public static void main(String[] args) {
         new Duke("duke.json").run();

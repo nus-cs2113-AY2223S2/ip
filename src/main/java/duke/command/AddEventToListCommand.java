@@ -14,18 +14,18 @@ import java.time.format.DateTimeParseException;
 import java.util.NoSuchElementException;
 
 /**
- * Handles the event command to add a new event to the list
+ * Handles the event command to add a new event to the list.
  */
-public class AddEventToList extends Command {
+public class AddEventToListCommand extends Command {
     private Event newTask;
 
     /**
-     * pre-processes the raw user input into array
+     * Pre-processes the raw user input into array.
      *
-     * @param userInput raw user input string
-     * @throws DukeException occurs when invalid input is found i.e missing /from
+     * @param userInput Raw user input string.
+     * @throws DukeException Occurs when invalid input is found i.e. missing /from.
      */
-    public AddEventToList(String userInput) throws DukeException {
+    public AddEventToListCommand(String userInput) throws DukeException {
         try {
             final String[] userInputArray = userInput.trim().split(" /from | /to ");
             setTasks(userInputArray);
@@ -35,9 +35,9 @@ public class AddEventToList extends Command {
     }
 
     /**
-     * Adds a new event to the list
+     * Adds a new event to the list.
      *
-     * @param tasks arrayList containing all tasks
+     * @param tasks ArrayList containing all tasks.
      */
     @Override
     public void executeCommand(TaskList tasks, Storage storage, Ui ui) throws DukeException {
@@ -46,10 +46,10 @@ public class AddEventToList extends Command {
     }
 
     /**
-     * Takes the processed userInput and creates a new event object
+     * Processes the given userInput and creates a new event object.
      *
-     * @param userInputArray processed userInput
-     * @throws DukeException occurs when an invalid input is found
+     * @param userInputArray Processed userInput.
+     * @throws DukeException Occurs when an invalid input is found.
      */
     public void setTasks(String[] userInputArray) throws DukeException {
         try {
@@ -58,6 +58,7 @@ public class AddEventToList extends Command {
             String endString = userInputArray[2];
             DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HHmm");
             try {
+                //secondary try-catch to catch if input is a date
                 LocalDateTime startTime = LocalDateTime.parse(startString, dateTimeFormatter);
                 LocalDateTime endTime = LocalDateTime.parse(endString, dateTimeFormatter);
                 if (endTime.isBefore(startTime)) {

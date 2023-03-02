@@ -15,18 +15,18 @@ import java.time.format.DateTimeFormatter;
 
 
 /**
- * Handles the deadline command to add a new deadline to the list
+ * Handles the deadline command to add a new deadline to the list.
  */
-public class AddDeadlineToList extends Command {
+public class AddDeadlineToListCommand extends Command {
     private Deadline newTask;
 
     /**
-     * preprocess userInput to create new deadline object
+     * Preprocess userInput to create new deadline object.
      *
-     * @param userInput raw string containing deadline details
-     * @throws DukeException occurs when input is invalid i.e /by not found
+     * @param userInput Raw string containing deadline details.
+     * @throws DukeException Occurs when input is invalid i.e /by not found.
      */
-    public AddDeadlineToList(String userInput) throws DukeException {
+    public AddDeadlineToListCommand(String userInput) throws DukeException {
         try {
             Scanner scanner = new Scanner(userInput);
             String[] userInputArray = scanner.nextLine().trim().split("/by");
@@ -37,9 +37,9 @@ public class AddDeadlineToList extends Command {
     }
 
     /**
-     * Adds the new deadline into the arrayList
+     * Adds the new deadline into the arrayList.
      *
-     * @param tasks arrayList containing all tasks
+     * @param tasks ArrayList containing all tasks.
      */
     @Override
     public void executeCommand(TaskList tasks, Storage storage, Ui ui) throws DukeException {
@@ -48,16 +48,17 @@ public class AddDeadlineToList extends Command {
     }
 
     /**
-     * Creates a new deadline object with the processed userInput
+     * Creates a new deadline object with the processed userInput.
      *
-     * @param userInputArray userInput classified to the deadline parameters
-     * @throws DukeException occurs when input is partial or invalid
+     * @param userInputArray User Input classified to the deadline parameters.
+     * @throws DukeException Occurs when input is partial or invalid.
      */
     public void setTasks(String[] userInputArray) throws DukeException {
         try {
             String description = userInputArray[0];
             String dueBy = userInputArray[1].replaceFirst(" ", "");
             try {
+                //secondary try catch to check if input is a date.
                 DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HHmm");
                 newTask = new Deadline(description, dueBy, LocalDateTime.parse(dueBy, dateTimeFormatter));
             } catch (DateTimeParseException ex) {

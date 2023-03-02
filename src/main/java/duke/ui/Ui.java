@@ -10,12 +10,12 @@ import duke.task.Task;
 import java.util.ArrayList;
 
 /**
- * Class to handle all ui outputs to the user
+ * Handles all ui outputs to the user.
  */
 public class Ui {
 
     /**
-     * Prints out the greeting message to the user
+     * Prints out the greeting message to the user.
      */
     public static void greetUser() {
         String logo = " .----------------.  .----------------.  .----------------.  .----------------. \n" +
@@ -33,14 +33,14 @@ public class Ui {
     }
 
     /**
-     * Prints a separator line
+     * Prints a separator line.
      */
     public void showLine() {
         System.out.println("===================");
     }
 
     /**
-     * Prints an error separator line with error message
+     * Prints an error separator line with error message.
      */
     public void errorMessage(String errorText) {
         System.out.println(errorText);
@@ -48,10 +48,10 @@ public class Ui {
     }
 
     /**
-     * Prints the details of added task deadline
+     * Prints the details of added task deadline.
      *
-     * @param deadline newly added deadline task
-     * @param tasks    taskList of all tasks
+     * @param deadline Newly added deadline task.
+     * @param tasks    TaskList of all tasks.
      */
     public void printTaskDeadline(Deadline deadline, TaskList tasks) {
         System.out.println("Got it! Added \n"
@@ -61,10 +61,10 @@ public class Ui {
     }
 
     /**
-     * Prints the details of added task event
+     * Prints the details of added task event.
      *
-     * @param event newly added event task
-     * @param tasks taskList of all tasks
+     * @param event Newly added event task.
+     * @param tasks TaskList of all tasks.
      */
     public void printTaskEvent(Event event, TaskList tasks) {
         System.out.println("Got it! Added \n"
@@ -74,10 +74,10 @@ public class Ui {
     }
 
     /**
-     * Prints the details of added task
+     * Prints the details of added task.
      *
-     * @param task  newly added task
-     * @param tasks taskList of all tasks
+     * @param task  Newly added task.
+     * @param tasks TaskList of all tasks.
      */
     public void printTaskTodo(Task task, TaskList tasks) {
         System.out.println("Got it! Added \n"
@@ -87,10 +87,10 @@ public class Ui {
     }
 
     /**
-     * Prints the details of deleted task
+     * Prints the details of deleted task.
      *
-     * @param task  deleted task
-     * @param tasks taskList of all tasks
+     * @param task  Deleted task.
+     * @param tasks TaskList of all tasks.
      */
     public void printDeletedTask(Task task, TaskList tasks) {
         System.out.println("Noted sir, I have removed \n"
@@ -100,9 +100,9 @@ public class Ui {
     }
 
     /**
-     * Prints the details of marked task
+     * Prints the details of marked task.
      *
-     * @param task task that has been marked
+     * @param task Task that has been marked.
      */
     public void printMarkedTask(Task task) {
         System.out.println("Noted sir, I have marked \n"
@@ -111,9 +111,9 @@ public class Ui {
     }
 
     /**
-     * Prints the details of the unmarked task
+     * Prints the details of the unmarked task.
      *
-     * @param task task that has been unmarked
+     * @param task Task that has been unmarked.
      */
     public void printUnmarkedTask(Task task) {
         System.out.println("Noted sir, I have marked \n"
@@ -122,9 +122,9 @@ public class Ui {
     }
 
     /**
-     * Prints all current tasks in taskList
+     * Prints all current tasks in taskList.
      *
-     * @param tasks taskList of all current tasks
+     * @param tasks TaskList of all current tasks.
      */
     public void printTasks(TaskList tasks) {
         System.out.println("Here are the tasks in your list:");
@@ -142,10 +142,10 @@ public class Ui {
     }
 
     /**
-     * Prints the sorted version of the taskList according to endTime
+     * Prints the sorted version of the taskList according to endTime.
      *
-     * @param storage handler to read write to json
-     * @throws DukeException occurs when there is a read or write error
+     * @param storage Handler to read write to json.
+     * @throws DukeException Occurs when there is a read or write error.
      */
     public void printSorted(Storage storage) throws DukeException {
         System.out.println("Sorting the list for you...");
@@ -155,11 +155,11 @@ public class Ui {
     }
 
     /**
-     * Sorts and saves the taskList which is printed to user
+     * Sorts and saves the taskList which is printed to user.
      *
-     * @param tasks   taskList of all current tasks
-     * @param storage handler to read write to json
-     * @throws DukeException occurs when there is a read or write error
+     * @param tasks   TaskList of all current tasks.
+     * @param storage Handler to read write to json.
+     * @throws DukeException Occurs when there is a read or write error.
      */
     public void sortTasks(TaskList tasks, Storage storage) throws DukeException {
         System.out.println("Sorting and saving the list for you...");
@@ -170,10 +170,10 @@ public class Ui {
 
     /**
      * Finds the tasks in taskList which their description contains query string and
-     * prints out to the user
+     * prints out to the user.
      *
-     * @param tasks taskList of all current tasks
-     * @param query query string to search for
+     * @param tasks TaskList of all current tasks.
+     * @param query Query string to search for.
      */
     public void findQueryTasks(TaskList tasks, String query) {
         ArrayList<Task> readableList = tasks.getReadableList();

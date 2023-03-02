@@ -5,16 +5,16 @@ import duke.filemanager.Storage;
 import duke.ui.Ui;
 
 /**
- * Exits the program when exit command is entered
+ * Exits the program when exit command is entered.
  */
 public class ExitCommand extends Command {
 
     /**
-     * Executes the exit command
+     * Executes the exit command.
      *
-     * @param tasks   TaskList of tasks currently stored
-     * @param storage Handler to read write to json
-     * @param ui      Handler to print text to user
+     * @param tasks   TaskList of tasks currently stored.
+     * @param storage Handler to read write to json.
+     * @param ui      Handler to print text to user.
      */
     @Override
     public void executeCommand(TaskList tasks, Storage storage, Ui ui) {
@@ -22,8 +22,8 @@ public class ExitCommand extends Command {
     }
 
     /**
-     * Prints out the exit message to the user
-     * and exits with status 0
+     * Prints out the exit message to the user.
+     * and exits with status 0.
      */
     public static void exitProgram() {
         String exitMessage = "Bye. Hope to see you again soon!";
