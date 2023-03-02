@@ -4,8 +4,5 @@ import java.util.zip.DataFormatException;
 
 
 public abstract class Command {
-    public void executeCommand(ArrayList<Task> taskList, String input){
-
-    }
-
+    public abstract void executeCommand(TaskList taskList, String input); // executes the commands differently based on the various types of commands
 }
