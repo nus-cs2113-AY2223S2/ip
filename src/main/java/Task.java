@@ -36,4 +36,27 @@ public class Task {
     public String toString() {
         return "[" + this.getStatusIcon() + "] " + this.description;
     }
+
+    public void printAfterAddingTask(){
+        if (Buddy.taskCount == 1){
+            System.out.println("Got it! I have added this task!: \n" + this + "\n" + "Now you have " + Buddy.taskCount + " task remaining! Almost there, buddy!");
+        }
+        else{
+            System.out.println("Got it! I have added this task! \n" + this + "\n" + "Now you have " + Buddy.taskCount + " tasks remaining! Let's finish them faster and relax!");
+
+        }
+
+    }
+
+    public void printAfterDeletingTask() {
+        if (Buddy.taskCount == 0) {
+            System.out.println( "OK I have deleted this task!: \n" + this + "\n" + "CONGRATS BUDDY ON FINISHING ALL YOUR TASKS! TIME TO RELAX WITH YOUR FRIENDS AND FAMILY! :)");
+        } else if (Buddy.taskCount == 1) {
+            System.out.println("YAY ONE LESS TO GO! I have deleted this task!:  \n" + this + "\n" + "Now you have JUST " + Buddy.taskCount + " task remaining! CHOP CHOP FINISH IT");
+        } else{
+            System.out.println("YAY ONE LESS TO GO! I have deleted this task!:  \n" + this + "\n" + "Now you have " + Buddy.taskCount + " tasks remaining! Type list to see remaining tasks");
+
+        }
+    }
+
 }

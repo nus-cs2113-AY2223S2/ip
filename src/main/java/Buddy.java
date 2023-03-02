@@ -10,11 +10,12 @@ import static java.util.stream.Collectors.toList;
 
 public class Buddy {
     public static int taskCount = 0;
+    public static String divider = "________________________________________________________________________________";
 
     public static void main(String[] args) {
-        ArrayList<Task> listOfThings = new ArrayList<>();
+        TaskList taskList = new TaskList();
         try {
-            Storage.loadFile(listOfThings);
+            Storage.loadFile(taskList);
 
         } catch (FileNotFoundException e) {
             System.out.println("File not found");
@@ -26,7 +27,7 @@ public class Buddy {
                 + "How may I assist you?";
         String listOfCommands = "Here are the commands you can use: todo, deadline, event,  list, mark, unmark, bye";
         String exitMessage = "Hope I was of help to you! Have a great day and see you again, Buddy :)";
-        String divider = "________________________________________________________________________________";
+
 
         System.out.println(divider);
         System.out.println(greeting);
@@ -34,26 +35,26 @@ public class Buddy {
         System.out.println(divider);
 
 
-        String command;
+        String input;
         Scanner in = new Scanner(System.in);
-        command = in.nextLine();
+        input = in.nextLine();
 
 
-        while (!command.equals("bye")) {
+        while (!input.equals("bye")) {
 
             int index = 1;
-            if (command.equals("list")) {
+            if (input.equals("list")) {
                 for (int i = 0; i < taskCount; i++) { // while not null
-                    System.out.println(index + "." + listOfThings.get(index - 1));
+                    System.out.println(index + "." + taskList.get(index - 1));
                     index++;
                 }
-            } else if (command.startsWith("mark")) {
+            } else if (input.startsWith("mark")) {
                 int taskNumberIndexMark = 5;
-                int taskNumber = Integer.parseInt(command.substring(taskNumberIndexMark));
+                int taskNumber = Integer.parseInt(input.substring(taskNumberIndexMark));
 
 
                 try {
-                    Task currentTask = listOfThings.get(taskNumber - 1);
+                    Task currentTask = taskList.get(taskNumber - 1);
                     currentTask.setDone(true);
                     System.out.println(divider);
                     System.out.println("Great work on completing this task! Marked as done! :)");
@@ -63,12 +64,12 @@ public class Buddy {
                     System.out.println("That is not a valid task to mark! Please check your list again and input a valid task");
 
                 }
-            } else if (command.startsWith("unmark")) {
+            } else if (input.startsWith("unmark")) {
                 int taskNumberIndexUnmark = 7;
-                int taskNumber = Integer.parseInt(command.substring(taskNumberIndexUnmark));
+                int taskNumber = Integer.parseInt(input.substring(taskNumberIndexUnmark));
 
                 try {
-                    Task currentTask = listOfThings.get(taskNumber - 1);
+                    Task currentTask = taskList.get(taskNumber - 1);
 
                     currentTask.setDone(false);
                     System.out.println(divider);
@@ -79,34 +80,29 @@ public class Buddy {
                     System.out.println("That is not a valid task to unmark! Please check your list again and input a valid task");
 
                 }
-            } else if (command.startsWith("todo") || command.startsWith("deadline") || command.startsWith("event") || command.startsWith("delete") || command.startsWith("find")) { //todo or deadline or event or delete--> put together so don't have to repeat the same code thrice
-                System.out.println(divider);
-                System.out.println("Got it! I have added this task: ");
-                if (command.startsWith("todo")) {
+            } else if (input.startsWith("todo") || input.startsWith("deadline") || input.startsWith("event") || input.startsWith("delete") || input.startsWith("find")) {
+
+                if (input.startsWith("todo")) {
                     int todoStartingIndex = 5;
 
-                    Todo todoBeingAdded = new Todo(command.substring(todoStartingIndex));
-                    listOfThings.add(todoBeingAdded);
+                    Todo todoBeingAdded = new Todo(input.substring(todoStartingIndex));
+                    taskList.addTask(todoBeingAdded);
 
-                    System.out.println(todoBeingAdded);
-                    taskCount++;
-
-                } else if (command.startsWith("deadline")) {
+                } else if (input.startsWith("deadline")) {
                     int deadlineStartingIndex = 9;
-                    Task taskBeingAdded = new Task(command.substring(deadlineStartingIndex)); // task + date + slash (Description)
+                    Task taskBeingAdded = new Task(input.substring(deadlineStartingIndex)); // task + date + slash (Description)
                     // filter the description and date
                     String taskWithDate = taskBeingAdded.description;
                     int indexOfSlash = taskWithDate.indexOf('/');
                     String taskDescription = taskWithDate.substring(0, (indexOfSlash - 1));   // substring goes to the one before the second index!!!!
                     String date = taskWithDate.substring(indexOfSlash + 4);
                     Deadline deadlineBeingAdded = new Deadline(taskDescription, date);
-                    listOfThings.add(deadlineBeingAdded);
-                    System.out.println(deadlineBeingAdded);
-                    taskCount++;
+                    taskList.addTask(deadlineBeingAdded);
 
-                } else if (command.startsWith("event")) {
+
+                } else if (input.startsWith("event")) {
                     int eventStartingIndex = 6;
-                    Task taskBeingAdded = new Task(command.substring(eventStartingIndex));
+                    Task taskBeingAdded = new Task(input.substring(eventStartingIndex));
                     // filter the description, from and to
                     String wholeLine = taskBeingAdded.description;
                     int indexOfFirstSlash = wholeLine.indexOf('/');
@@ -115,20 +111,18 @@ public class Buddy {
                     String from = wholeLine.substring((indexOfFirstSlash + 6), (indexOfSecondSlash));
                     String to = wholeLine.substring(indexOfSecondSlash + 4);
                     Event eventBeingAdded = new Event(taskDescription, from, to);
-                    listOfThings.add(eventBeingAdded);
-                    System.out.println(eventBeingAdded);
-                    taskCount++;
+                    taskList.addTask(eventBeingAdded);
 
-                } else if (command.startsWith("delete")) {
+
+                } else if (input.startsWith("delete")) {
                     int indexOfTaskNumber = 7;
-                    int taskNumberToBeDeleted = Integer.parseInt(command.substring(indexOfTaskNumber));
-                    listOfThings.remove(taskNumberToBeDeleted - 1);
-                    taskCount--;
-                    System.out.print("OK! Task deleted :) Type list to see remaining tasks!");
-                } else if (command.startsWith("find")){
-                    String keyword = command.split(" ")[1].trim().toLowerCase();
+                    int taskNumberToBeDeleted = Integer.parseInt(input.substring(indexOfTaskNumber));
+                    taskList.deleteTask(taskNumberToBeDeleted - 1);
+
+                } else if (input.startsWith("find")){
+                    String keyword = input.split(" ")[1].trim().toLowerCase();
                     ArrayList <Task> matchedTasks = new ArrayList<>();
-                    matchedTasks = (ArrayList<Task>) listOfThings.stream() // casts list to ArrayList
+                    matchedTasks = (ArrayList<Task>) taskList.stream() // casts list to ArrayList
                             .filter(t -> t.getTaskName().trim().toLowerCase().contains(keyword)).collect(toList());
                     if (!matchedTasks.isEmpty()){
                         System.out.println("Well, I found these matching tasks in your list!");
@@ -142,25 +136,16 @@ public class Buddy {
                         System.out.println("Oops, there are no tasks matching the keyword! Try again with another keyword");
                     }
 
-
-
-
-
                 }
-                System.out.print("You currently have " + taskCount);
-                if (taskCount == 1) {
-                    System.out.println(" task remaining! Let's finish it quickly!");
-                } else {
-                    System.out.println(" tasks remaining! You got this, buddy!");  // all these same for all four subtasks so put at the bottom
-                }
+
             } else {
-                System.out.println("This command does not exist! Please type a valid command!");
+                System.out.println("This input does not exist! Please type a valid input!");
             }
-            command = in.nextLine();
+            input = in.nextLine();
 
         }
         try {
-            Storage.updateFile(listOfThings);
+            Storage.updateFile(taskList);
 
         } catch (IOException e) {
             System.out.println("Error occurred");
