@@ -30,6 +30,12 @@ public class Deadline extends Task {
     }
 
     @Override
+    /**
+     * Overrides matchesKeyword in Task. Searches through description and by field for a keyword.
+     *
+     * @param keyword Keyword to search for.
+     * @return True if Deadline matches the keyword, False otherwise.
+     */
     public boolean matchesKeyword (String keyword) {
         if (description.contains(keyword) || by.contains(keyword)) {
             return true;

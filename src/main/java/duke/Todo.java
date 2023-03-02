@@ -26,6 +26,12 @@ public class Todo extends Task {
     }
 
     @Override
+    /**
+     * Overrides matchesKeyword in Task. Searches through description for a keyword.
+     *
+     * @param keyword Keyword to search for.
+     * @return True if Todo matches the keyword, False otherwise.
+     */
     public boolean matchesKeyword(String keyword) {
         if (description.contains(keyword)) {
             return true;

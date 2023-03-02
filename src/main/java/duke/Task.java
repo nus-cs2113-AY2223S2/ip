@@ -70,5 +70,11 @@ public abstract class Task {
         return this.getStatusIcon() + " " + this.description;
     }
 
+    /**
+     * Abstract method extended in Task, Event, and Todo classes. Checks whether Task matches with a keyword.
+     *
+     * @param keyword Keyword to search for.
+     * @return True if Task matches the keyword, False otherwise.
+     */
     public abstract boolean matchesKeyword (String keyword);
 }

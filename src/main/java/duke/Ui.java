@@ -64,6 +64,12 @@ public class Ui {
         System.out.println(LINE);
     }
 
+    /**
+     * Searches through TaskList for any Tasks that match with keyword and prints only those Tasks.
+     *
+     * @param tasks TaskList to search through.
+     * @param keyword Keyword to search for.
+     */
     public void printMatches(TaskList tasks, String keyword) {
         System.out.println(LINE);
         System.out.println("Here are the matching tasks in your list:");

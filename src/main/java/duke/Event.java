@@ -32,6 +32,12 @@ public class Event extends Task {
     }
 
     @Override
+    /**
+     * Overrides matchesKeyword in Task. Searches through description, from, and to fields for a keyword.
+     *
+     * @param keyword Keyword to search for.
+     * @return True if Event matches the keyword, False otherwise.
+     */
     public boolean matchesKeyword (String keyword) {
         if (description.contains(keyword) || from.contains(keyword) || to.contains(keyword)) {
             return true;
