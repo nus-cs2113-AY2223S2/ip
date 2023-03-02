@@ -22,13 +22,13 @@ public enum Message {
     ERROR_MARK_INVALID_PARAMETER("Please specify an integer."),
     ERROR_MARK_OUT_OF_BOUNDS("Invalid item."),
     ERROR_TODO_MISSING_PARAMETER("Parameters contain missing fields. Example: todo to eat"),
-    ERROR_DEADLINE_MISSING_PARAMETER("Parameters contain missing fields. Example: deadline to eat /by tomorrow"),
-    ERROR_EVENT_MISSING_PARAMETER("Parameters contain missing fields. Example: event to eat /from 2pm /to 4pm"),
+    ERROR_DEADLINE_MISSING_PARAMETER("Parameters contain missing fields. Example: deadline to eat /by 20-10-2020 18:00"),
+    ERROR_EVENT_MISSING_PARAMETER("Parameters contain missing fields. Example: event to eat /from 20-10-2020 12:00 /to 20-10-2020 15:00"),
     ERROR_FIND_MISSING_PARAMETER("Please specify your keyword. Example: find eat"),
 
-    SUCCESS_LOADED_FILE("Data file " + FileAction.FILE_NAME + " has been loaded successfully."),
-    WARNING_MISSING_FILE("Could not locate data file " + FileAction.FILE_NAME + ". Using an empty list..."),
-    ERROR_FILE_INPUT("Could not open data file!" + System.lineSeparator() +
+    SUCCESS_LOADED_FILE("Data file " + Constants.FILE_NAME + " has been loaded successfully."),
+    WARNING_MISSING_FILE("Could not locate data file " + Constants.FILE_NAME + ". Using an empty list..."),
+    ERROR_FILE_INPUT("Could not open data file! Perhaps, did you modify the file?" + System.lineSeparator() +
         "Duke application will be terminated."),
     ERROR_FILE_OUTPUT("Could not save data file!" + System.lineSeparator() +
         "Duke application will be terminated.");

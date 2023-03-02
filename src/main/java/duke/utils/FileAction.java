@@ -6,10 +6,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import duke.deadline.Deadline;
-import duke.event.Event;
 import duke.item.Item;
-import duke.todo.Todo;
 import duke.exceptions.FileException;
 
 import com.google.gson.Gson;
@@ -17,7 +14,6 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 public class FileAction {
-    public static final String FILE_NAME = "items.txt";
 
     /**
      * Imports the file and put into the list.
@@ -25,19 +21,14 @@ public class FileAction {
      * @throws FileException When file is missing or cannot be opened.
      */
     public static ArrayList<Item> importItems() throws FileException {
-        File file = new File(FILE_NAME);
+        File file = new File(Constants.FILE_NAME.toString());
         if (!file.exists()) {
             System.out.println(Message.WARNING_MISSING_FILE);
             return new ArrayList<Item>();
         }
 
         try(FileReader fileReader = new FileReader(file)) {
-            RuntimeTypeAdapterFactory<Item> itemAdapterFactory = RuntimeTypeAdapterFactory.of(Item.class, "type")
-                .registerSubtype(Todo.class)
-                .registerSubtype(Deadline.class)
-                .registerSubtype(Event.class);
-
-            Gson gson = new GsonBuilder().registerTypeAdapterFactory(itemAdapterFactory).create();
+            Gson gson = new GsonBuilder().registerTypeAdapterFactory(new ItemAdapterFactory()).create();
             ArrayList<Item> items = gson.fromJson(fileReader, new TypeToken<ArrayList<Item>>(){}.getType());
             fileReader.close();
 
@@ -56,8 +47,9 @@ public class FileAction {
      */
     public static void exportItems(ArrayList<Item> items) throws FileException {
         try {
-            Gson gson = new Gson();
-            FileWriter fw = new FileWriter("items.txt");
+            Gson gson = new GsonBuilder().registerTypeAdapterFactory(new ItemAdapterFactory()).create();
+
+            FileWriter fw = new FileWriter(Constants.FILE_NAME.toString());
             String jsonString = gson.toJson(items);
             fw.write(jsonString);
             fw.flush();
