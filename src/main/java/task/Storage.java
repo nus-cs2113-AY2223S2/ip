@@ -32,22 +32,26 @@ public class Storage {
             while(data.hasNext()) {
                 String existingData = data.nextLine();
                 char typeOfTask = existingData.charAt(0);
-                switch (typeOfTask) {
-                case 'T':
-                    Parser.parseExistingTodo(existingData);
-                    break;
-                case 'D':
-                    Parser.parseExistingDeadline(existingData);
-                    break;
-                case 'E':
-                    Parser.parseExistingEvent(existingData);
-                    break;
-                default:
-                    Ui.showError(Ui.UNRECOGNISED_TASKTYPE);
-                }
+                parseExistingData(existingData, typeOfTask);
             }
         } catch (IOException e) {
             Ui.showError(Ui.FILE_ACCESS_ERROR);
+        }
+    }
+
+    private static void parseExistingData(String existingData, char typeOfTask) {
+        switch (typeOfTask) {
+        case 'T':
+            Parser.parseExistingTodo(existingData);
+            break;
+        case 'D':
+            Parser.parseExistingDeadline(existingData);
+            break;
+        case 'E':
+            Parser.parseExistingEvent(existingData);
+            break;
+        default:
+            Ui.showError(Ui.UNRECOGNISED_TASKTYPE);
         }
     }
 
