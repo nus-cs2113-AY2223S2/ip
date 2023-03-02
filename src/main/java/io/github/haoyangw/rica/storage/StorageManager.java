@@ -45,7 +45,7 @@ public class StorageManager {
      * @param dataPathString Path to desired data file
      * @return String specifying any errors encountered during the process
      */
-    private static void createDataFile(String dataPathString) {
+    private static void createDataFile(String dataPathString) throws RicaStorageException {
         Path dataPath = Paths.get(dataPathString);
         Path parentDirPath = dataPath.getParent();
         if (parentDirPath == null) {

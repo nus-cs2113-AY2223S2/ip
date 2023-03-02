@@ -39,7 +39,7 @@ public class TaskManager {
         try {
             tasks = storageManager.getSavedTasks();
         } catch (RicaStorageException exception) {
-            textUi.printErrorMessage(exception);
+            textUi.printImportantErrorMessage(exception);
             tasks = new ArrayList<>();
         }
     }
