@@ -1,4 +1,13 @@
+package Duke;
+
+import java.util.ArrayList;
 import java.util.Scanner;
+
+import Commands.PrintCommands;
+import Commands.TaskCommand;
+import Commands.FileCommands;
+
+import java.io.IOException;
 
 import Exceptions.InvalidTaskDescription;
 import Exceptions.InvalidTaskNumberException;
@@ -7,55 +16,63 @@ import Exceptions.NullCommandException;
 import Tasks.Task;
 
 public class Duke {
-    public static void main(String[] args) throws NullCommandException, InvalidTaskDescription {
+    public static void main(String[] args) throws NullCommandException, InvalidTaskDescription, IOException {
 
         PrintCommands.printWelcomeMessage();
 
-        int counter = 0; // number of items in the list
         boolean isExit = false;
 
-        Task t[] = new Task[100]; // task list
+        ArrayList<Task> taskList = new ArrayList<Task>(); // Array of lists
+
+        Scanner scan = new Scanner(System.in);
+
+        FileCommands.readFileData(taskList); //read past task data
 
         while (!isExit) {
-            try (Scanner scan = new Scanner(System.in)) {
+            try {
                 String input = scan.nextLine();
                 String[] command = input.split(" ", 2); // split the input into an array of strings
 
                 switch (command[0]) {
 
                     case "bye":
-                        // terminate clom, print goodbye message
+                        // terminate clom, print goodbye message, save tasks
                         isExit = true;
+                        FileCommands.saveFile(taskList);
                         PrintCommands.printExitMessage();
                         System.exit(0);
 
                     case "list":
                         // Display list of tasks
-                        PrintCommands.printList(t, counter);
+                        PrintCommands.printList(taskList);
                         break;
 
                     case "mark":
-                        TaskCommand.markTask(counter, t, command, TaskCommand.getTaskIndex(command, counter));
+                        TaskCommand.markTask(taskList, command, TaskCommand.getTaskIndex(command, taskList));
                         break;
 
                     case "unmark":
-                        TaskCommand.unmarkTask(counter, t, command, TaskCommand.getTaskIndex(command, counter));
+                        TaskCommand.unmarkTask(taskList, command, TaskCommand.getTaskIndex(command, taskList));
                         break;
 
                     case "todo":
-                        counter = TaskCommand.todoTask(counter, t, command);
+                        TaskCommand.todoTask(taskList, command);
                         break;
 
                     case "deadline":
-                        counter = TaskCommand.deadlineTask(counter, t, command);
+                        TaskCommand.deadlineTask(taskList, command);
                         break;
 
                     case "event":
-                        counter = TaskCommand.eventTask(counter, t, command);
+                        TaskCommand.eventTask(taskList, command);
                         break;
 
                     case "help":
                         PrintCommands.printHelp();
+                        break;
+
+                    case "delete":
+                        TaskCommand.deleteTask(taskList, command, TaskCommand.getTaskIndex(command, taskList));
                         break;
 
                     default:
@@ -68,13 +85,10 @@ public class Duke {
             } catch (InvalidTaskNumberException itne) {
                 // mark/unmark is followed by an integer which is either too small or too large
                 System.out.println("The number you entered is out of range! Please try again");
-                // } catch (InvalidTaskDescription itd) {
-                // // Command is valid but does not follow the proper format
-                // System.out.println("Please follow the proper format for adding tasks. Type
-                // HELP for help");
             } catch (MissingDescriptionException mde) {
                 System.err.println("Task description is missing. Try again.");
             }
         }
+        scan.close();
     }
 }

@@ -30,4 +30,15 @@ public class Task {
         return type;
     }
 
+    public String formatTask() {
+        String status; 
+        if (this.isDone) {
+            status = "1"; // Task is marked as done
+        } else {
+            status = "0"; //Task marked as not done
+        }
+        String formatOutput = status + "|" + description;
+
+        return formatOutput;
+    }
 }

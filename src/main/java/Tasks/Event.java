@@ -20,4 +20,9 @@ public class Event extends Task {
     public String getDescription() {
         return "[E]" + getStatusIcon() + super.getDescription() + " (from: " + from + " to:" + to + ")";
     }
+    @Override
+    public String formatTask() {
+        String saveString = "E" + "|" + super.formatTask() + "|" + from + "|" + to;
+        return saveString;
+    }
 }
