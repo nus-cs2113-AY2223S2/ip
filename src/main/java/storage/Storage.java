@@ -3,6 +3,7 @@ package storage;
 import com.google.gson.Gson;
 import constants.Command;
 import constants.ErrorMessage;
+import constants.Keyword;
 import controller.TaskController;
 import model.storage.JsonStorage;
 import model.task.Deadline;
@@ -11,13 +12,18 @@ import model.task.Task;
 import model.task.Todo;
 import ui.Ui;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Storage {
 
   protected static Storage instance = null;
-  protected static final String FILE_NAME = "./data.json";
+  protected static final String FILE_NAME = Keyword.FILE_NAME;
   protected static final TaskController taskController = new TaskController();
   protected static final Gson gson = new Gson();
   protected static File file = new File(FILE_NAME);
@@ -32,11 +38,11 @@ public class Storage {
     try {
       if (file.createNewFile()) {
         FileWriter writer = new FileWriter(FILE_NAME);
-        writer.write("[]");
+        writer.write(Keyword.EMPTY_ARRAY);
         writer.close();
       }
     } catch (IOException e) {
-      ui.printMessage("An IO Exception occurred");
+      ui.printMessage(ErrorMessage.IO_EXCEPTION_ERROR);
       e.printStackTrace();
     }
   }
@@ -51,42 +57,43 @@ public class Storage {
       createFileIfNotExist();
       BufferedReader br = new BufferedReader(new FileReader(FILE_NAME));
       JsonStorage[] x = gson.fromJson(br, JsonStorage[].class);
-      boolean isMarked;
 
       for (JsonStorage item : x) {
         String type = item.getType();
-        switch (type) {
-        case Command.TODO:
-            Todo todo = new Todo(item.getDescription());
-            isMarked = item.isMarked();
-            todo.setDone(isMarked);
-            taskController.manuallyAdd(todo);
-            break;
-        case Command.EVENT:
-            Event event = new Event(
-              item.getDescription(),
-              item.getStart(),
-              item.getEnd()
-            );
-            isMarked = item.isMarked();
-            event.setDone(isMarked);
-            taskController.manuallyAdd(event);
-            break;
-          default:
-            Deadline deadline = new Deadline(
-              item.getDescription(),
-              item.getEnd()
-            );
-            isMarked = item.isMarked();
-            deadline.setDone(isMarked);
-            taskController.manuallyAdd(deadline);
-            break;
-        }
+        addTaskToTaskList(item, type);
       }
     } catch (FileNotFoundException e) {
       ui.printMessage(ErrorMessage.FOUND_NOT_FOUND_EXCEPTION);
     } catch (Exception e) {
       ui.printMessage(e.getMessage());
+    }
+  }
+
+  private static void addTaskToTaskList(JsonStorage item, String type) {
+    switch (type) {
+    case Command.TODO:
+        Todo todo = new Todo(item.getDescription());
+        todo.setDone(item.isMarked());
+        taskController.manuallyAdd(todo);
+        break;
+    case Command.EVENT:
+        Event event = new Event(
+          item.getDescription(),
+          item.getStart(),
+          item.getEnd()
+        );
+        event.setDone(item.isMarked());
+        taskController.manuallyAdd(event);
+        break;
+      default:
+        Deadline deadline = new Deadline(
+          item.getDescription(),
+          item.getEnd()
+        );
+
+        deadline.setDone(item.isMarked());
+        taskController.manuallyAdd(deadline);
+        break;
     }
   }
 
@@ -97,6 +104,19 @@ public class Storage {
    */
   public void updateFile(ArrayList<Task> tasks) {
     ArrayList<JsonStorage> items = new ArrayList<>();
+    saveItemToItemsList(tasks, items);
+    String json = gson.toJson(items);
+
+    try {
+      FileWriter writer = new FileWriter(FILE_NAME);
+      writer.write(json);
+      writer.close();
+    } catch (IOException e) {
+      ui.printMessage(ErrorMessage.IO_EXCEPTION_ERROR);
+    }
+  }
+
+  private static void saveItemToItemsList(ArrayList<Task> tasks, ArrayList<JsonStorage> items) {
     for (Task task : tasks) {
       JsonStorage item = new JsonStorage();
 
@@ -121,15 +141,6 @@ public class Storage {
         item.setType(Command.EVENT);
       }
       items.add(item);
-    }
-    String json = gson.toJson(items);
-
-    try {
-      FileWriter writer = new FileWriter(FILE_NAME);
-      writer.write(json);
-      writer.close();
-    } catch (IOException e) {
-      ui.printMessage(ErrorMessage.IO_EXCEPTION_ERROR);
     }
   }
 
