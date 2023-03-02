@@ -32,4 +32,17 @@ public class Ui {
     public void printErrorMessage(String errorMessage) {
         System.out.println(errorMessage);
     }
+    public void printGuide() {
+        System.out.println(
+                "User Guide" + System.lineSeparator()
+                        + "list: get the list of all tasks" + System.lineSeparator()
+                        + "todo: add a task a task without duration or deadline to the list" + System.lineSeparator()
+                        + "deadline: add a task with deadline to the list" + System.lineSeparator()
+                        + "event: add a task with both starting and ending time" + System.lineSeparator()
+                        + "mark: mark a task as 'done'" + System.lineSeparator()
+                        + "unmark: mark a task as 'not done'" + System.lineSeparator()
+                        + "delete: delete a task from the list" + System.lineSeparator()
+                        + "find: find tasks from the list that match the keyword" + System.lineSeparator()
+        );
+    }
 }

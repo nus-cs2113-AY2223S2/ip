@@ -41,7 +41,9 @@ public class Parser {
             taskList.deleteTask(content);
             break;
         case "find":
+            break;
         case "guide":
+            ui.printGuide();
             break;
         default:
             ui.printErrorMessage(GENERAL_ERROR_MESSAGE);
