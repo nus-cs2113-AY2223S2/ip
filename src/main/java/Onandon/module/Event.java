@@ -7,7 +7,8 @@ public class Event extends Task {
 
     protected LocalDateTime to;
     protected LocalDateTime from;
-    protected String dateFormat = "dd,MM,yyyy HHmm";
+    protected String dateFormat = "yyyy-MM-dd";
+    protected String printDateFormat = "MMM dd yyyy";
 
     public Event(String description, String to, String from) {
         super(description);
@@ -27,8 +28,8 @@ public class Event extends Task {
 
     @Override
     public String toString() {
-        String printTo = to.format(DateTimeFormatter.ofPattern(dateFormat));
-        String printFrom = from.format(DateTimeFormatter.ofPattern(dateFormat));
+        String printTo = to.format(DateTimeFormatter.ofPattern(printDateFormat));
+        String printFrom = from.format(DateTimeFormatter.ofPattern(printDateFormat));
         return "[E]" + super.toString() + " " + description + " (from: " + printFrom + " to: " + printTo + ")";
     }
 }
