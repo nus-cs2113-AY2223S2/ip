@@ -4,30 +4,25 @@ import java.io.FileReader;
 import java.io.FileNotFoundException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 
 public class Storage {
-    public static void appendToFile(String filePath, String textToAppend) throws IOException {
-        FileWriter fw = new FileWriter(filePath, true); // create a FileWriter in append mode
-        fw.write(textToAppend);
-        fw.close();
-    }
-    public static void writeToFile(String filePath, String textToAdd) throws IOException {
+    public static void writeToFile(String filePath, String textToAdd) throws IOException { //overwrites file
         FileWriter fw = new FileWriter(filePath);
         fw.write(textToAdd);
         fw.close();
     }
-    public static void readFile(String filePath) throws FileNotFoundException{
+    public static void readFile(String filePath) throws FileNotFoundException{ //reads file
         try {
                 FileReader fr = new FileReader(filePath);
                 String saved_text = "";
             
             int i;
             while ((i = fr.read()) != -1) {
-                if ((char) i == '\n') {
-                    String[] strArray = saved_text.split(" \\| ");
-                    if (strArray[0].equals("TODO")) {
+                if ((char) i == '\n') { //if end of line
+                    String[] strArray = saved_text.split(" \\| "); // splits string into their respective parts in the array
+                    if (strArray[0].equals("TODO")) { // store task type
                         Task.tasks.add(Task.TaskType.TODO);              
                     }
                     else if (strArray[0].equals("DEADLINE")) {
@@ -36,29 +31,29 @@ public class Storage {
                     else if (strArray[0].equals("EVENT")) {
                         Task.tasks.add(Task.TaskType.EVENT);
                     }
-                    if (strArray[1].equals("1")) {
+                    if (strArray[1].equals("1")) { // store task status(1 = done, 0 = not done)
                         Task.marked.add(true);
                     }
                     else if (strArray[1].equals("0")) {
                             Task.marked.add(false);
                     }
-                    Task.items.add(strArray[2]);
-                    if (strArray[3] == null || strArray[3].equals("null")) {
+                    Task.items.add(strArray[2]); // store task description
+                    if (strArray[3] == null || strArray[3].equals("null")) { // store date and time
                         Task.dateTimeFrom.add(null);
                     }
                     else {
-                        Task.dateTimeFrom.add(LocalDate.parse(strArray[3]));
+                        Task.dateTimeFrom.add(LocalDateTime.parse(strArray[3]));
                     }
                     if (strArray[4] == null || strArray[4].equals("null")) {
                         Task.dateTimeTo.add(null);
                     }
                     else {
-                        Task.dateTimeTo.add(LocalDate.parse(strArray[4]));
+                        Task.dateTimeTo.add(LocalDateTime.parse(strArray[4]));
                     }
-                    saved_text = "";
+                    saved_text = ""; //resets string
                 }
                 else {
-                    saved_text += (char) i;
+                    saved_text += (char) i; //adds to string until "\n"
                 }
             } 
             fr.close();
@@ -68,7 +63,7 @@ public class Storage {
             System.out.println("Something went wrong: " + e.getMessage());
         }
     }
-    public static void save() {
+    public static void save() { //saves file
         try {
             Files.createDirectories(Paths.get("data"));
             writeToFile("data/duke.txt", "");
