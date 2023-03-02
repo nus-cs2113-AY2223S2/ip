@@ -90,7 +90,7 @@ Example: `delete 3` deletes the task at index 3 of the to-do list.
 Displays all tasks currently in the to-do list whose description contain the given keywords.
 
 Format: `find <keywords string>`
-- The search is case-sensitive. e.g `CS2113` will not match `cs2113`
+- The search is case-sensitive. e.g. `CS2113` will not match `cs2113`
 - Tasks matching the keyword string will be listed. e.g. `CS2113` will make Duke list tasks `CS2113 IP` and `CS2113 TP`.
 
 Example: `find CS2113` lists all tasks with `CS2113` in their description.
