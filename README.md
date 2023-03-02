@@ -1,24 +1,93 @@
-# Duke project template
+# Duke assistant
 
-This is a project template for a greenfield Java project. It's named after the Java mascot _Duke_. Given below are instructions on how to use it.
+This is an assistant named Duke that can help you manage your tasks!
 
-## Setting up in Intellij
+## Install
 
-Prerequisites: JDK 11, update Intellij to the most recent version.
+Go to [Release Page](https://github.com/Zemdalk/ip/releases) and download the latest version of JAR file. Then you can run Duke assistant by running `java -jar Duke.jar`!
 
-1. Open Intellij (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project first)
-1. Open the project into Intellij as follows:
-   1. Click `Open`.
-   1. Select the project directory, and click `OK`.
-   1. If there are any further prompts, accept the defaults.
-1. Configure the project to use **JDK 11** (not other versions) as explained in [here](https://www.jetbrains.com/help/idea/sdk.html#set-up-jdk).<br>
-   In the same dialog, set the **Project language level** field to the `SDK default` option.
-3. After that, locate the `src/main/java/Duke.java` file, right-click it, and choose `Run Duke.main()` (if the code editor is showing compile errors, try restarting the IDE). If the setup is correct, you should see something like the below as the output:
-   ```
-   Hello from
-    ____        _        
-   |  _ \ _   _| | _____ 
-   | | | | | | | |/ / _ \
-   | |_| | |_| |   <  __/
-   |____/ \__,_|_|\_\___|
-   ```
+## Usage
+
+You can add, mark, unmark, delete tasks in Duke! Generally, there are three types of tasks that Duke can process: `todo`(no start time and end time), `deadline`(no start time but has a deadline) and `event`(has both start time and end time).
+
+### Add a task
+
+- You can add a `todo` task by entering:
+
+``` shell
+todo <task description>
+```
+
+E.g. `todo Return books`.
+
+- You can add a `deadline` task by entering:
+
+``` shell
+deadline <task description> /by <end time>
+```
+
+We recommend you to write time in format of "yyyy/MM/dd HH:mm" so Duke can understand the time, e.g. `deadline Return books /by 2023/03/31 18:00`.
+
+- You can add an `event` task by entering:
+
+``` shell
+event <task description> /from <start time> /to <end time>
+```
+
+E.g. `event CS2113 class /from 2023/03/03 16:00 /to 2023/03/03 18:00`.
+
+### Show all tasks
+
+Use `list` to show all tasks.
+
+### Mark a task as done
+
+You can mark a task as done by entering:
+
+``` shell
+mark <number of the task>
+```
+
+Here "number of the task" is the index number of the task you want to mark when you run `list` command.
+
+### Mark a task as not done
+
+You can mark a task as not done by entering:
+
+``` shell
+unmark <number of the task>
+```
+
+### Find a task
+
+- You can find tasks that has certain pattern string in their description by entering:
+
+``` shell
+find <pattern>
+```
+
+For example, use `find class` to find all tasks with the word "class" in their description.
+
+- You can find tasks that end before certain date/time by entering:
+
+``` shell
+find /by <time>
+```
+
+Here time can be either form of `yyyy/MM/dd` or `yyyy/MM/dd HH:mm`.
+
+For example, use `find /by 2023/03/31` to find all tasks ending before March 31, 2023 and use `find /by 2023/03/31 20:00` to find all tasks ending before March 31, 2023 8pm.
+
+### Delete a task
+
+You can delete a task by entering:
+
+``` shell
+delete <number of the task>
+```
+
+### Exit the program
+
+Use `bye` to exit the program.
+
+Your tasks will be recorded and will not lose. So next time you run Duke assistant, all tasks will be restored!
