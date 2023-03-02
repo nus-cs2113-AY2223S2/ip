@@ -2,6 +2,9 @@ package duke.ui;
 
 import java.util.Scanner;
 
+/**
+ * Represents a Ui system that prints messages for the user
+ */
 public class Ui {
 	private static final String LOGO =
 			" ____        _        \n"
@@ -27,64 +30,104 @@ public class Ui {
 	private final String TASK_UNDONE =
 			"Okay! I've unmarked this task: ";
 	private final String FIND_LINE = "Here are the matching tasks in your list: \n";
-	private static final String HELP = "    todo {description} --add todo" + System.lineSeparator()
-			+ "    deadline {description} /by {deadline} --add deadline" + System.lineSeparator()
-			+ "    event {description} /from {startTime} /to {endTime}  --add event" + System.lineSeparator()
-			+ "    mark {task serial number} --mark the task as done" + System.lineSeparator()
-			+ "    unmark {task serial number} --mark the task as undone" + System.lineSeparator()
+	private static final String HELP = "    todo {description} --add todo" + "\n"
+			+ "    deadline {description} /by {deadline} --add deadline" + "\n"
+			+ "    event {description} /from {startTime} /to {endTime}  --add event" + "\n"
+			+ "    mark {task index number} --mark the task as done" + "\n"
+			+ "    unmark {task index number} --mark the task as undone" + "\n"
+			+ "    delete {task index number} --delete the task" + "\n"
 			+ "    list --to show the current task list";
 
+	/**
+	 * Constructor
+	 */
 	public Ui() {
 	}
 
+
+	/** Displays the welcome message */
 	public void showWelcome() {
 		System.out.println("Hello from\n" + LOGO);
 		printDivider();
 		printOpeningLine();
 	}
 
+	/**
+	 * Read the user command
+	 * @return next line message
+	 */
 	public String readCommand() {
 		Scanner sc = new Scanner(System.in);
 		return sc.nextLine();
 	}
 
+	/**
+	 * Print the opening message
+	 */
 	public void printOpeningLine() {
 		System.out.println(OPENING_LINE);
 	}
 
+	/**
+	 * Print the exit message
+	 */
 	public void printExitLine() {
 		System.out.println(EXIT_LINE);
 	}
 
+	/**
+	 * Print the divider line
+	 */
 	public void printDivider() {
 		System.out.println(DIVIDER);
 	}
 
+	/**
+	 * Print the error message
+	 * @param message the error message
+	 */
 	public void showError(String message) {
 		System.out.println(message);
 	}
 
+	/**
+	 * Print help messages
+	 */
 	public void printHelp() {
 		System.out.println(HELP);
 	}
 
+	/**
+	 * Print add task message
+	 */
 	public void printAddingLine() {
 		System.out.println(TASK_ADDED);
 	}
 
+	/**
+	 * Print delete task message
+	 */
 	public void printDeletingLine() {
 		System.out.println(TASK_DELETED);
 	}
 
-
+	/**
+	 * Print mark task message
+	 */
 	public void printTaskDoneLine() {
 		System.out.println(TASK_DONE);
 	}
 
+	/**
+	 * Print unmark task message
+	 */
 	public void printTaskUndoneLine() {
 		System.out.println(TASK_UNDONE);
 	}
 
+	/**
+	 * Print find message
+	 */
 	public void printFindLine() {
 		System.out.println(FIND_LINE);
 	}

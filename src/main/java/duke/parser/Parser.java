@@ -8,11 +8,20 @@ import duke.command.FindCommand;
 import duke.command.HelpCommand;
 import duke.command.ListCommand;
 import duke.command.MarkCommand;
-import duke.command.AddCommand;
 import duke.command.UnmarkCommand;
 import duke.exceptions.CommandFormatException;
 
 public class Parser {
+	/**
+	 * This part of code is inspired by
+	 * https://github.com/se-edu/addressbook-level2/blob/master/src/seedu/addressbook/parser/Parser.java
+	 *
+	 * Parser the user input and create a Command object
+	 *
+	 * @param command full user input string
+	 * @return Command object based on the user input
+	 * @throws CommandFormatException if the command format is wrong
+	 */
 
 	public static Command parse(String command) throws CommandFormatException {
 		String fullCommand = command.trim();
@@ -33,22 +42,10 @@ public class Parser {
 			return new HelpCommand(fullCommand);
 		} else if (fullCommand.matches("exit")) {
 			return new ExitCommand(fullCommand);
-		}else if (fullCommand.startsWith("find")) {
+		} else if (fullCommand.startsWith("find")) {
 			return new FindCommand(fullCommand);
 		} else {
 			throw new CommandFormatException();
 		}
 	}
 }
-
-//	} else if (userMessage.equalsIgnoreCase("exit")) {
-//		try {
-//			writeToFile(taskList);
-//		} catch (IOException e){
-//			System.out.println("Unable to write to file");
-//		}
-//		shouldExit = true;
-//		dukeGreeting.printExitLine();
-//	} else {
-//		dukeGreeting.printErrorMessage();
-//	}
