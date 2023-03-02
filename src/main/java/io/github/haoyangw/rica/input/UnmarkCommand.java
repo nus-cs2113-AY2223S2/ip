@@ -15,7 +15,8 @@ public class UnmarkCommand extends Command {
     @Override
     public void run() {
         String[] params = super.getCommand().split(Command.CMD_SEPARATOR);
-        int indexOfTodo = Integer.parseInt(params[1]) - 1;
+        int SECOND_PARAM = 1;
+        int indexOfTodo = Integer.parseInt(params[SECOND_PARAM]) - 1;
         super.getTaskManager().unmarkDone(indexOfTodo);
     }
 

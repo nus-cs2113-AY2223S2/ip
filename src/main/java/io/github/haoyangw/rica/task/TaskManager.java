@@ -115,7 +115,8 @@ public class TaskManager {
     }
 
     private Task rmTask(int indexOfTask) throws RicaTaskException {
-        boolean isNegativeIndex = indexOfTask < 0;
+        int FIRST_VALID_INDEX = 0;
+        boolean isNegativeIndex = indexOfTask < FIRST_VALID_INDEX;
         boolean isIndexTooLarge = indexOfTask >= this.getTasks().size();
         if (isNegativeIndex || isIndexTooLarge) {
             throw new RicaTaskException(TaskManager.BAD_TASK_INDEX_ERROR);
@@ -132,14 +133,16 @@ public class TaskManager {
      */
     public void createTaskFrom(String command) {
         String[] parameters = command.split(" ");
-        String typeOfTask = parameters[0];
+        int FIRST_PARAM = 0;
+        String typeOfTask = parameters[FIRST_PARAM];
         this.createTask(typeOfTask, command);
         this.getStorageManager().saveTasks(this.getTasks());
         int howManyTasks = this.getTasks().size();
-        if (howManyTasks > 1) {
+        int ONLY_ONE_TASK = 1;
+        if (howManyTasks > ONLY_ONE_TASK) {
             this.getTextUi().printlnWithIndent(String.format(TaskManager.TASK_ADDED_PHRASE,
                     this.getTasks().size()));
-        } else if (howManyTasks == 1) {
+        } else if (howManyTasks == ONLY_ONE_TASK) {
             this.getTextUi().printlnWithIndent(String.format(TaskManager.SINGLE_TASK_ADDED_PHRASE,
                     this.getTasks().size()));
         }
@@ -177,7 +180,8 @@ public class TaskManager {
      *   be marked done
      */
     public Todo markDone(int indexOfTask) throws RicaTaskException {
-        boolean isNegativeIndex = indexOfTask < 0;
+        int FIRST_VALID_INDEX = 0;
+        boolean isNegativeIndex = indexOfTask < FIRST_VALID_INDEX;
         boolean isIndexTooLarge = indexOfTask >= this.getTasks().size();
         if (isNegativeIndex || isIndexTooLarge) {
             throw new RicaTaskException(TaskManager.INVALID_TASK_INDEX_ERROR);
@@ -221,7 +225,8 @@ public class TaskManager {
      */
     public void rmTask(String command) throws RicaTaskException {
         String[] parameters = command.split(" ");
-        if (!parameters[0].equals(TaskManager.DELETE_CMD)) {
+        int FIRST_PARAM = 0;
+        if (!parameters[FIRST_PARAM].equals(TaskManager.DELETE_CMD)) {
             String cmdType = "deleting a task";
             throw new RicaTaskException(String.format(TaskManager.WRONG_CMD_ERROR, cmdType));
         }
@@ -229,8 +234,9 @@ public class TaskManager {
             throw new RicaTaskException(TaskManager.NO_TASKS_TO_DELETE_ERROR);
         }
         int givenIndex;
+        int SECOND_PARAM = 1;
         try {
-            givenIndex = Integer.parseInt(parameters[1]);
+            givenIndex = Integer.parseInt(parameters[SECOND_PARAM]);
         } catch (NumberFormatException exception) {
             throw new RicaTaskException(TaskManager.NOT_A_TASK_INDEX_ERROR);
         }
@@ -256,7 +262,8 @@ public class TaskManager {
      * null if not an instance of rica.Todo
      */
     public Todo unmarkDone(int indexOfTask) throws RicaTaskException {
-        boolean isIndexNegative = indexOfTask < 0;
+        int FIRST_VALID_INDEX = 0;
+        boolean isIndexNegative = indexOfTask < FIRST_VALID_INDEX;
         boolean isIndexTooLarge = indexOfTask >= this.getTasks().size();
         if (isIndexNegative || isIndexTooLarge) {
             throw new RicaTaskException(TaskManager.INVALID_TASK_INDEX_ERROR);

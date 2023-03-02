@@ -45,7 +45,8 @@ public class Event extends Todo {
             if (parameters[i].equals(Event.START_KEYWORD)) {
                 break;
             }
-            if (i != 1) {
+            int FIRST_WORD_OF_DESCRIPTION = 1;
+            if (i != FIRST_WORD_OF_DESCRIPTION) {
                 descBuilder.append(" ");
             }
             descBuilder.append(parameters[i]);
@@ -129,7 +130,8 @@ public class Event extends Todo {
     public static Event create(String command) throws RicaTaskException {
         String[] parameters = command.trim().split(" ");
         // Wrong command for adding an event
-        if (!parameters[0].equals(Event.COMMAND)) {
+        int FIRST_PARAM = 0;
+        if (!parameters[FIRST_PARAM].equals(Event.COMMAND)) {
             throw new RicaTaskException(Event.WRONG_CMD_ERROR);
         }
         String description = Event.getDescriptionOf(command);
@@ -152,13 +154,18 @@ public class Event extends Todo {
         if (variables.length < Event.NUM_OF_SERIALIZED_DATA) {
             throw new RicaSerializationException(Task.INCOMPLETE_SERIALIZED_OBJECT_STRING);
         }
-        if (!variables[0].equals(Event.TYPE)) {
+        int FIRST_SAVED_DATA = 0;
+        if (!variables[FIRST_SAVED_DATA].equals(Event.TYPE)) {
             throw new RicaSerializationException(Task.WRONG_SERIALIZED_OBJECT_TYPE);
         }
-        String description = variables[1];
-        boolean isDone = Boolean.parseBoolean(variables[2]);
-        String startTime = variables[3];
-        String endTime = variables[4];
+        int SECOND_SAVED_DATA = 1;
+        String description = variables[SECOND_SAVED_DATA];
+        int THIRD_SAVED_DATA = 2;
+        boolean isDone = Boolean.parseBoolean(variables[THIRD_SAVED_DATA]);
+        int FORTH_SAVED_DATA = 3;
+        String startTime = variables[FORTH_SAVED_DATA];
+        int FIFTH_SAVED_DATA = 4;
+        String endTime = variables[FIFTH_SAVED_DATA];
         return new Event(description, isDone, startTime, endTime);
     }
 

@@ -59,7 +59,8 @@ public class CommandManager {
     public static Command parse(String command, TaskManager taskManager)
             throws RicaCommandException {
         String[] params = command.split(" ");
-        String keyword = params[0];
+        int FIRST_PARAM = 0;
+        String keyword = params[FIRST_PARAM];
         switch (keyword) {
         case BYE_CMD:
             return new ByeCommand(command, taskManager);

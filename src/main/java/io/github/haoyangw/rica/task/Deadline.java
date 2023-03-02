@@ -43,12 +43,14 @@ public class Deadline extends Todo {
         StringBuilder descBuilder = new StringBuilder();
         for (int i = 1; i < parameters.length; i += 1) {
             if (parameters[i].equals(Deadline.DEADLINE_KEYWORD)) {
-                if (i == 1) {
+                int DESCRIPTION_INDEX = 1;
+                if (i == DESCRIPTION_INDEX) {
                     throw new RicaTaskException(Deadline.MISSING_DESCRIPTION_ERROR);
                 }
                 break;
             }
-            if (i != 1) {
+            int FIRST_WORD_OF_DESCRIPTION = 1;
+            if (i != FIRST_WORD_OF_DESCRIPTION) {
                 descBuilder.append(" ");
             }
             descBuilder.append(parameters[i]);
@@ -92,7 +94,8 @@ public class Deadline extends Todo {
     public static Deadline create(String command) throws RicaTaskException {
         String[] parameters = command.split(" ");
         // Wrong command for adding a deadline
-        if (!parameters[0].equals(Deadline.COMMAND)) {
+        int FIRST_PARAM = 0;
+        if (!parameters[FIRST_PARAM].equals(Deadline.COMMAND)) {
             throw new RicaTaskException(Deadline.WRONG_CREATE_CMD_ERROR);
         }
         String description = Deadline.getDescriptionOf(command);
@@ -116,12 +119,16 @@ public class Deadline extends Todo {
         if (variables.length < Deadline.NUM_OF_SERIALIZED_DATA) {
             throw new RicaSerializationException(Task.INCOMPLETE_SERIALIZED_OBJECT_STRING);
         }
-        if (!variables[0].equals(Deadline.TYPE)) {
+        int FIRST_SAVED_DATA = 0;
+        if (!variables[FIRST_SAVED_DATA].equals(Deadline.TYPE)) {
             throw new RicaSerializationException(Task.WRONG_SERIALIZED_OBJECT_TYPE);
         }
-        String description = variables[1];
-        boolean isDone = Boolean.parseBoolean(variables[2]);
-        String deadline = variables[3];
+        int SECOND_SAVED_DATA = 1;
+        String description = variables[SECOND_SAVED_DATA];
+        int THIRD_SAVED_DATA = 2;
+        boolean isDone = Boolean.parseBoolean(variables[THIRD_SAVED_DATA]);
+        int FORTH_SAVED_DATA = 3;
+        String deadline = variables[FORTH_SAVED_DATA];
         return new Deadline(description, isDone, deadline);
     }
 

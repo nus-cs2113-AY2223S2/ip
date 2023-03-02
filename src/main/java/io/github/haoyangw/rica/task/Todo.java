@@ -22,7 +22,8 @@ public class Todo extends Task {
         String[] parameters = command.split(" ");
         StringBuilder descriptionBuilder = new StringBuilder();
         for (int i = 1; i < parameters.length; i += 1) {
-            if (i != 1) {
+            int FIRST_WORD_OF_DESCRIPTION = 1;
+            if (i != FIRST_WORD_OF_DESCRIPTION) {
                 descriptionBuilder.append(" ");
             }
             descriptionBuilder.append(parameters[i]);
@@ -55,8 +56,10 @@ public class Todo extends Task {
         if (!variables[0].equals(Todo.TYPE)) {
             throw new RicaSerializationException(Task.WRONG_SERIALIZED_OBJECT_TYPE);
         }
-        String description = variables[1];
-        boolean isDone = Boolean.parseBoolean(variables[2]);
+        int SECOND_SAVED_DATA = 1;
+        String description = variables[SECOND_SAVED_DATA];
+        int THIRD_SAVED_DATA = 2;
+        boolean isDone = Boolean.parseBoolean(variables[THIRD_SAVED_DATA]);
         return new Todo(description, isDone);
     }
 

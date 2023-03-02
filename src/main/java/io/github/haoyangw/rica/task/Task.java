@@ -45,7 +45,8 @@ public class Task implements Serializable {
         if (variables.length < Task.NUM_OF_SERIALIZED_DATA) {
             throw new RicaSerializationException(Task.INCOMPLETE_SERIALIZED_OBJECT_STRING);
         }
-        String taskType = variables[0];
+        int FIRST_PARAM = 0;
+        String taskType = variables[FIRST_PARAM];
         switch (taskType) {
         case Deadline.TYPE:
             return Deadline.deserializeObject(objectData);
@@ -61,7 +62,8 @@ public class Task implements Serializable {
         }
         // We only reach this point when the number of variables match Task's, so
         //   we're dealing with a serialized Task String
-        String description = variables[1];
+        int SECOND_PARAM = 1;
+        String description = variables[SECOND_PARAM];
         return new Task(description);
     }
     /**
