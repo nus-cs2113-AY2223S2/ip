@@ -4,6 +4,7 @@ import duke.task.TaskList;
 import duke.task.Tasks;
 
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 public class Ui {
     private String userInput;
@@ -58,6 +59,20 @@ public class Ui {
 
     }
 
+    public static void displayFind(String item) {
+        int totalNumberOfTasks = TaskList.getNumberOfTasks();
+        int num2 = 0;
+        System.out.println(DIVIDER + "\n\t Here are the matching tasks in your list:");
+        for (int num = 1; num <= totalNumberOfTasks; ++num) {
+            Tasks thisTask = TaskList.getTaskList().get(num - 1);
+            if (Pattern.compile(Pattern.quote(item), Pattern.CASE_INSENSITIVE).matcher(String.valueOf(thisTask)).find()) {
+                ++num2;
+                System.out.println("\t  " + num2 + ". " + thisTask);
+            }
+        }
+        System.out.println(DIVIDER);
+    }
+
     public static void displayDelete(Tasks task) {
         System.out.println(DIVIDER + "\n\t Got it. I've deleted this task:\n\t  "
                 + task);
@@ -71,15 +86,18 @@ public class Ui {
         this.userInput = in.nextLine();
     }
 
-    public static void displayErrorFileNotFoundException()  {
+    public static void displayErrorFileNotFoundException() {
         System.out.println("Duke.txt file does not exist in /data. Creating one for you...");
     }
+
     public static void displayErrorFolderNotFoundException() {
         System.out.println("data folder does not exist. Creating one for you...");
     }
+
     public static void displayErrorNoKeyException() {
         System.out.println("Missing Keyword");
     }
+
     public static void displayErrorIOException() {
         System.out.println("Trouble accessing files");
     }

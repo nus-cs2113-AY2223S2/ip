@@ -4,6 +4,11 @@ import duke.command.*;
 import duke.exception.NoKeyException;
 
 public class Parser {
+    /**
+     * Parses the input from user
+     * @param userInput Description of task entered by user
+     * @throws NoKeyException If keywords are missing from user input
+     */
     public static void parseCommand(String userInput) throws NoKeyException {
         String key;
         String item;
