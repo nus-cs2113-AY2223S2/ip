@@ -13,8 +13,6 @@ Things to do:
 
 - copy refactored functions into created classes
 
-- Create proper parser
-
 - Setup text file reading at startup
     -use Scanner to read in text file
     -use .nextline to read in each line
@@ -22,6 +20,7 @@ Things to do:
 
 
 public class Duke {
+
     public static void main(String[] args) throws FileNotFoundException {
 
         printGreetingMessage();
@@ -33,15 +32,28 @@ public class Duke {
         ArrayList<Todo> tasks = new ArrayList<>();
         int counter = 0;
 
+
         //setup of exit flag
         boolean exit = false;
 
+        counter = initializeList(tasks, counter);
+
+
         while (!exit) {
+            String taskType;
+            String task = null;
+
             inputString = getInputString();
-            int descriptionPosition = inputString.indexOf("~");
-            int endPosition = inputString.length();
-            String taskType = inputString.substring(0, descriptionPosition);
-            String task = inputString.substring(descriptionPosition + 1, endPosition);
+
+            int descriptionPosition = inputString.indexOf(" ");
+            if(descriptionPosition == -1) {
+                taskType = inputString;
+            } else {
+                int endPosition = inputString.length();
+                taskType = inputString.substring(0, descriptionPosition);
+                task = inputString.substring(descriptionPosition + 1, endPosition);
+            }
+
 
 
             //switch cases for all specified input types
@@ -52,19 +64,17 @@ public class Duke {
 
             case "list":
                 System.out.println("    _________________________________________");
-                printListContents(tasks, counter);
+                printListContents(tasks, tasks.size());
                 break;
 
             case "mark":
-                System.out.println("    Please specify task number: ");
-                int taskNumber = getTaskNumber();
+                int taskNumber = getTaskNumber(task);
                 markAsDone(tasks, taskNumber);
                 printMarkedAcknowledgement(tasks, taskNumber);
                 break;
 
             case "unmark":
-                System.out.println("    Please specify task number: ");
-                taskNumber = getTaskNumber();
+                taskNumber = getTaskNumber(task);
                 tasks.get(taskNumber - 1).setDone(false);
                 printUnmarkedAcknowledgement(tasks, taskNumber);
                 break;
@@ -99,8 +109,7 @@ public class Duke {
                 break;
 
             case "delete":
-                System.out.println("    Please specify task number: ");
-                taskNumber = getTaskNumber() - 1;
+                taskNumber = getTaskNumber(task) - 1;
                 System.out.println("    _________________________________________");
                 tasks.get(taskNumber).printInList();
                 System.out.println("    _________________________________________");
@@ -122,10 +131,18 @@ public class Duke {
 
         PrintWriter fw = new PrintWriter("out\\list.txt");
         for (int i = 0; i < counter; i++) {
-            fw.println(tasks.get(i).getClass() + " | " + tasks.get(i).getDescription() + " | " + tasks.get(i).isDone + " | " + tasks.get(i).getBy() + " | " + tasks.get(i).getEnd());
+            String classType = String.valueOf(tasks.get(i).getClass());
+            if(classType.equalsIgnoreCase("Class Duke.Todo")) {
+                fw.println("todo " + tasks.get(i).getDescription());
+            } else if (classType.equalsIgnoreCase("Class Duke.Event")) {
+                fw.println("event " + tasks.get(i).getDescription() + "/" + tasks.get(i).getBy() + "|" + tasks.get(i).getEnd());
+            } else if (classType.equalsIgnoreCase("Class Duke.Deadline")) {
+                fw.println("deadline " + tasks.get(i).getDescription() + "/" + tasks.get(i).getBy());
+            }
+
+
         }
         fw.close();
-
     }
 
     /**
@@ -138,23 +155,83 @@ public class Duke {
         tasks.get(taskNumber - 1).setDone(true);
     }
 
-    /**
-     * Prints greeting message when application is launched.
-     */
-    private static void printGreetingMessage() {
-        String logo = " ____        _        \n"
-                + "|  _ \\ _   _| | _____ \n"
-                + "| | | | | | | |/ / _ \\\n"
-                + "| |_| | |_| |   <  __/\n"
-                + "|____/ \\__,_|_|\\_\\___|\n";
 
-        System.out.println("    Hello from\n" + logo);
-        System.out.println("    _________________________________________");
+        /**
+         * Prints greeting message when application is launched.
+         */
+        private static void printGreetingMessage() {
+            String logo = " ____        _        \n"
+                    + "|  _ \\ _   _| | _____ \n"
+                    + "| | | | | | | |/ / _ \\\n"
+                    + "| |_| | |_| |   <  __/\n"
+                    + "|____/ \\__,_|_|\\_\\___|\n";
 
-        System.out.println("    Hello! I'm Duke");
-        System.out.println("    What can I do for you?");
-        System.out.println("    _________________________________________");
-        System.out.println("     ");
+            System.out.println("    Hello from\n" + logo);
+            System.out.println("    _________________________________________");
+
+            System.out.println("    Hello! I'm Duke");
+            System.out.println("    What can I do for you?");
+            System.out.println("    _________________________________________");
+            System.out.println("     ");
+        }
+
+
+
+
+
+    private static int initializeList(ArrayList<Todo> tasks, int counter) throws FileNotFoundException {
+        String inputString;
+        String task = null;
+        String taskType;
+        Scanner scanner = new Scanner(new File("out\\list.txt"));
+        Scanner in = new Scanner(System.in);
+
+
+        while (scanner.hasNextLine()) {
+            inputString = scanner.nextLine();
+            int descriptionPosition = inputString.indexOf(" ");
+            if(descriptionPosition == -1) {
+                taskType = inputString;
+            } else {
+                int endPosition = inputString.length();
+                taskType = inputString.substring(0, descriptionPosition);
+                task = inputString.substring(descriptionPosition + 1, endPosition);
+            }
+
+            switch (taskType) {
+            case "todo":
+                tasks.add(new Todo(task));
+                tasks.get(counter).print();
+                counter++;
+                break;
+
+            case "deadline":
+                int deadlinePosition = task.indexOf("/");
+                int endOfLine = task.length();
+                String taskName = task.substring(0, deadlinePosition);
+                String deadline = task.substring(deadlinePosition + 1, endOfLine);
+                tasks.add(new Deadline(taskName, deadline));
+                tasks.get(counter).print();
+                counter++;
+                break;
+
+            case "event":
+                int deadlineStartPosition = task.indexOf("/");
+                int deadlineEndPosition = task.indexOf("|");
+                endOfLine = task.length();
+                taskName = task.substring(0, deadlineStartPosition);
+                String deadlineStart = task.substring(deadlineStartPosition + 1, deadlineEndPosition);
+                String deadlineEnd = task.substring(deadlineEndPosition + 1, endOfLine);
+                tasks.add(new Event(taskName, deadlineStart, deadlineEnd));
+                tasks.get(counter).print();
+                counter++;
+                break;
+            }
+
+        }
+
+            scanner.close();
+        return counter;
     }
 
     /**
@@ -162,9 +239,9 @@ public class Duke {
      *
      * @return input string.
      */
-    private static String getInputString(){
-        Scanner in;
+    private static String getInputString() {
         String inputString;
+        Scanner in;
         in = new Scanner(System.in);
         inputString = in.nextLine();
         return inputString;
@@ -199,9 +276,8 @@ public class Duke {
      *
      * @return task number.
      */
-    private static int getTaskNumber() {
-        String inputString = getInputString();
-        return Integer.parseInt(inputString);
+    private static int getTaskNumber(String task) {
+        return Integer.parseInt(task);
     }
 
     /**
