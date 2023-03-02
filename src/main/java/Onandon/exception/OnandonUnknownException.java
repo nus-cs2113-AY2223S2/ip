@@ -1,4 +1,4 @@
 package Onandon.exception;
 
-public class OnandonUnknownException extends Exception{
+public class OnandonUnknownException extends OnandonException{
 }

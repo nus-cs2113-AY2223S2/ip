@@ -11,10 +11,10 @@ public class Checkpoint {
     protected static final String PATH = System.getProperty("user.dir");
     protected static final String CHECKPOINT = "/checkpoint.txt";
 
-    public static void storeCheckpoint(ArrayList<Task> tasks, int cnt){
+    public static void storeCheckpoint(TaskList tasks){
         String store = "";
 
-        for(int i=0; i<cnt; i++){
+        for(int i=0; i<tasks.getNum(); i++){
             if(tasks.get(i) instanceof Todo){
                 store += ("T/" + tasks.get(i).getStatusIcon() + "/" + tasks.get(i).getDescription() + "\n");
             } else if (tasks.get(i) instanceof Deadline) {
@@ -36,8 +36,9 @@ public class Checkpoint {
         }
     }
 
-    public static List<Object> recallCheckpoint() {
-        ArrayList<Task> tasks = new ArrayList<Task>(100);
+    public static TaskList recallCheckpoint() {
+        ArrayList<Task> taskArray = new ArrayList<Task>(100);
+        TaskList tasks = new TaskList(taskArray, 0);
         String checkpoint = "";
         String[] checkpointArray;
         String[] sen;
@@ -48,7 +49,7 @@ public class Checkpoint {
             File file = new File(PATH + CHECKPOINT);
 
             if(!file.exists())
-                return Arrays.asList(tasks, cnt);
+                return tasks;
 
             FileReader file_reader = new FileReader(file);
 
@@ -94,6 +95,8 @@ public class Checkpoint {
             e.getStackTrace();
         }
 
-        return Arrays.asList(tasks, cnt);
+        tasks.setNum(cnt);
+
+        return tasks;
     }
 }

@@ -1,6 +1,13 @@
-package Onandon.print;
+package Onandon.ui;
 
-public class Print {
+import Onandon.exception.OnandonEmptyException;
+import Onandon.exception.OnandonException;
+import Onandon.exception.OnandonNotaskException;
+import Onandon.exception.OnandonUnknownException;
+
+import java.util.Scanner;
+
+public class Ui {
     public static final String underline = "\t____________________________________________________________";
     public static final String todo = "\t Got it. I've added this task:";
 
@@ -47,5 +54,24 @@ public class Print {
         printUnderline();
         System.out.println("\t Bye. Hope to see you again soon!");
         printUnderline();
+    }
+    public static void printException(OnandonException e){
+        if(e instanceof OnandonUnknownException){
+            printUnderline();
+            System.out.println("\t ☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
+            printUnderline();
+        }else if(e instanceof OnandonEmptyException){
+            printUnderline();
+            System.out.println("\t ☹ OOPS!!! The input cannot be empty.");
+            printUnderline();
+        }else if(e instanceof OnandonNotaskException){
+            printUnderline();
+            System.out.println("\t ☹ OOPS!!! There is no task on input!");
+            printUnderline();
+        }
+    }
+    public static String readCommand(){
+        Scanner in = new Scanner(System.in);
+        return in.nextLine();
     }
 }
