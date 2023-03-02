@@ -1,11 +1,8 @@
-import java.io.File;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
-import java.util.ArrayList;
-import java.io.FileWriter;
-import java.util.stream.Collectors;
-import static java.util.stream.Collectors.toList;
+
 
 
 public class Buddy {
