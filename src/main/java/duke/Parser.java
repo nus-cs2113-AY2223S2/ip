@@ -5,6 +5,11 @@ public class Parser {
     Ui ui;
     TaskList tasks;
 
+    /**
+     * Initializes Parser class
+     *
+     * @param tasks Pointer to TaskList storing all tasks currently in the list.
+     */
     public Parser(TaskList tasks) {
         ui = new Ui();
         this.tasks = tasks;
@@ -15,7 +20,14 @@ public class Parser {
         DEADLINE,
         EVENT
     }
-
+    
+    /**
+     * Adds a new task to the TaskList and calls methods to print the appropriate output.
+     *
+     * @param type Enum type representing either a TODO, EVENT, or DEADLINE.
+     * @param argsSplit, String array of length 2 with command in first index and arguments in second index.
+     * @throws InsufficientParametersException If not enough parameters are passed in for a respective command.
+     */
     private void handleAddTask(taskType type, String[] argsSplit) throws InsufficientParametersException {
         if (argsSplit.length < 2) {
             throw new InsufficientParametersException();
@@ -53,7 +65,12 @@ public class Parser {
         ui.printAddTaskConfirmation(task, tasks.length());
     }
 
-
+    /**
+     * Parses an input string, printing the appropriate output and handling any exceptions.
+     *
+     * @param input Line of input from the user.
+     * @return True if more input is expected, false if user sent "bye" command.
+     */
     public boolean parseInput(String input) {
         // Splits into only two sections, one for command name and one for arguments
         try {

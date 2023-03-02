@@ -9,10 +9,21 @@ public class Storage {
 
     String fileName;
 
+    /**
+     * Initializes Storage class.
+     *
+     * @param fileName name of file where task list is stored on memory.
+     */
     public Storage (String fileName) {
         this.fileName = fileName;
     }
 
+    /**
+     * Reads TaskList from stored memory based on standardized task storage format.
+     * 
+     * @return Initial TaskList.
+     * @throws IOException If there is an issue reading from the file.
+     */
     public TaskList readFromStorage () throws IOException {
         File f = new File(fileName);
 
@@ -54,6 +65,12 @@ public class Storage {
         return tasks;
     }
 
+    /**
+     * Writes TaskList to storage so it can be retrieved when the program is ran later.
+     *
+     * @param tasks TaskList to be written.
+     * @throws IOException If there is an issue writing to the file.
+     */
     public void writeToFile (TaskList tasks) throws IOException {
         new FileWriter(fileName).close(); // reset output file
         FileWriter fw = new FileWriter(fileName, true);
