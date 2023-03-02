@@ -26,10 +26,18 @@ public class Task {
 
     public void markAsDone(){
         this.isDone = true;
+        System.out.println(Buddy.divider);
+        System.out.println("Great work on completing this task! Marked as done! :)");
+        System.out.println(this);
+        System.out.println(Buddy.divider);
     }
 
     public void markAsUndone(){
         this.isDone = false;
+        System.out.println(Buddy.divider);
+        System.out.println("Come on, don't procrastinate! Marked as undone!");
+        System.out.println(this);
+        System.out.println(Buddy.divider);
     }
 
     @Override

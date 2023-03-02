@@ -1,6 +1,6 @@
 
 
-public class addTodoCommand extends Command{
+public class AddTodoCommand extends Command{
     @Override
     public void executeCommand(TaskList taskList, String input) {
         String[] todoSplit = input.split(" ", 2);
