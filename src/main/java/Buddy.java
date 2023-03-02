@@ -26,7 +26,7 @@ public class Buddy {
 
 
         System.out.println(Messages.DIVIDER);
-
+        System.out.println(Messages.GREETING);
         System.out.println(Messages.INTRODUCTION);
         System.out.println(Messages.DIVIDER);
 
