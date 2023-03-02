@@ -147,6 +147,7 @@ This section will give the full list of features that Duke has. If you want to s
 | Unmark Tasks      | `unmark INDEX`                   | `unmark 1`                                                          |
 | Delete            | `delete INDEX`                   | `delete 1`                                                          |
 | Find              | `find DESCRIPTION`               | `find book`                                                         |
+| Bye               | `bye`                            | `bye`                                                               |
 
 # Conclusion
 Thank you for your interest in Duke! If you have any issues, please reach out to me on Github!
