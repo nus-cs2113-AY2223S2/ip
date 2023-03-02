@@ -8,11 +8,12 @@ public class Duke {
     public static final String COMMAND_ADD_TODO = "add todo";
     public static final String COMMAND_ADD_DEADLINE = "add deadline";
     public static final String COMMAND_ADD_EVENT = "add event";
+    public static final String COMMAND_FIND = "find";
 
     private static TaskList taskList;
 
     public static void main(String[] args) {
-        taskList = new TaskList();
+        taskList = new TaskList(true);
         UI.greetUser();
 
         while(true){
@@ -42,6 +43,8 @@ public class Duke {
                 add(command); break;
             case COMMAND_ADD_EVENT:
                 add(command); break;
+            case COMMAND_FIND:
+                find(command); break;
             default:
                 UI.printInputErrorComment();
         }
@@ -88,6 +91,19 @@ public class Duke {
         } else{
             UI.printInputErrorComment();
         }
+    }
+
+    public static void find(Command command){
+        String targetWord = command.getTargetWord();
+        TaskList targetTaskList = new TaskList(false);
+
+        for(Task task : taskList.getTaskArray()){
+            if (task.getContents().contains(targetWord)){
+               targetTaskList.addTask(task);
+            }
+        }
+
+        UI.printTargetTaskList(targetTaskList);
     }
 
 }

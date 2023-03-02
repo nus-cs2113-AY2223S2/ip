@@ -7,6 +7,7 @@ abstract public class Command {
     protected LocalDate from;
     protected LocalDate to;
     protected int targetTaskIndex = -1;
+    protected String targetWord = " ";
 
     public Command(String type){
         this.type = type;
@@ -34,5 +35,9 @@ abstract public class Command {
 
     public int getTargetTaskIndex(){
         return targetTaskIndex;
+    }
+
+    public String getTargetWord(){
+        return targetWord;
     }
 }
