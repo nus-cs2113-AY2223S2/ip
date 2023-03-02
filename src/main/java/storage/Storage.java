@@ -41,7 +41,7 @@ public class Storage {
     public static ArrayList<String> encodeTasksToString(ArrayList<Task> taskList) {
         ArrayList<String> dataToStore = new ArrayList<>();
         String type, status, description, by, from, to, index;
-        String temp = "";
+        String newTaskInString = "";
         Deadline thisDeadline;
         Event thisEvent;
         dataToStore.add("Tasks List");
@@ -52,24 +52,24 @@ public class Storage {
             case "T" :
                 status = taskList.get(i).getStatusFileIcon();
                 description = taskList.get(i).getDescription();
-                temp = index + SEPARATOR  + type + SEPARATOR + status + SEPARATOR + description;
+                newTaskInString = index + SEPARATOR  + type + SEPARATOR + status + SEPARATOR + description;
                 break;
             case "D" :
                 thisDeadline = (Deadline) taskList.get(i);
                 status = thisDeadline.getStatusFileIcon();
                 description = thisDeadline.getDescription();
                 by = thisDeadline.getBy();
-                temp = index + SEPARATOR + type + SEPARATOR + status + SEPARATOR + description + SEPARATOR + by;
+                newTaskInString = index + SEPARATOR + type + SEPARATOR + status + SEPARATOR + description + SEPARATOR + by;
                 break;
             case "E" :
                 thisEvent = (Event) taskList.get(i);
                 status = thisEvent.getStatusFileIcon();
                 description = thisEvent.getDescription();
-                from = thisEvent.getStartDateTime();
-                to = thisEvent.getEndDateTime();
-                temp = index + SEPARATOR + type + SEPARATOR + status + SEPARATOR + description + SEPARATOR + from + SEPARATOR + to;
+                from = thisEvent.getStart();
+                to = thisEvent.getEnd();
+                newTaskInString = index + SEPARATOR + type + SEPARATOR + status + SEPARATOR + description + SEPARATOR + from + SEPARATOR + to;
             }
-            dataToStore.add(temp);
+            dataToStore.add(newTaskInString);
         }
         return dataToStore;
     }

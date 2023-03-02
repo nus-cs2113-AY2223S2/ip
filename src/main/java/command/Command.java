@@ -99,8 +99,8 @@ public class Command {
                     throw new IncompleteInputException("The index of " + type + " cannot be empty.\n");
                 }
                 taskListIndex = Integer.parseInt(fullDescription);
+                Ui.showTaskDeleted(taskList.getTaskFromList(taskListIndex), taskList.getCurrTaskNumber() - 1);
                 taskList.deleteTask(taskListIndex);
-                Ui.showTaskDeleted(taskList.getNewestTask(), taskList.getCurrTaskNumber());
             } catch (Exception e) {
                 Ui.showDeletingTaskErrorMessage(e, type);
             }
