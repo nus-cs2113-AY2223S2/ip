@@ -1,5 +1,6 @@
 package tasklist;
 
+import constants.ErrorMessage;
 import model.task.Task;
 import storage.Storage;
 
@@ -54,7 +55,7 @@ public class TaskList {
   public Task read(int index) throws Exception {
     int size = tasks.size();
     if (index >= size || index < 0) {
-      throw new Exception("Invalid index provided.");
+      throw new Exception(ErrorMessage.INVALID_INDEX);
     }
     return tasks.get(index);
   }
@@ -69,7 +70,7 @@ public class TaskList {
   public void update(int index, boolean value) throws Exception {
     int size = tasks.size();
     if (index >= size || index < 0) {
-      throw new Exception("Invalid index provided.");
+      throw new Exception(ErrorMessage.INVALID_INDEX);
     }
     Task model = tasks.get(index);
     model.setDone(value);
@@ -87,7 +88,7 @@ public class TaskList {
   public void delete(int index) throws Exception {
     int size = tasks.size();
     if (index >= size || index < 0) {
-      throw new Exception("Invalid index provided.");
+      throw new Exception(ErrorMessage.INVALID_INDEX);
     }
     tasks.remove(index);
     storage.updateFile(tasks);
