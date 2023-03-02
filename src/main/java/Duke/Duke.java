@@ -7,7 +7,7 @@ public class Duke {
     private final static String GREETING = "Hello! I'm Duke\n  What can I do for you?";
     private final static String EXITING = "Bye. Hope to see you again soon!";
     private final static String ERR_MESSAGE = "☹ OOPS!!! I'm sorry, but I don't know what that means :-(";
-    private final static Tasks tasks = new Tasks();
+    private final static Tasks tasks = Tasks.loadTasks();
 
     public static void main(String[] args) {
 
@@ -24,7 +24,7 @@ public class Duke {
                 running = false;
                 break;
             case ("list"):
-                speak(tasks.listTasks());
+                speak(tasks.listTasks("list"));
                 break;
             case ("mark"):
                 speak(tasks.mark(Integer.parseInt(commandByWord[1])));
@@ -39,6 +39,9 @@ public class Duke {
                 break;
             case ("delete"):
                 speak(tasks.deleteTask(commandByWord));
+                break;
+            case ("find"):
+                speak(tasks.findTask(commandByWord));
                 break;
             default:
                 speak(ERR_MESSAGE);

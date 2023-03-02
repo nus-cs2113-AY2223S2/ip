@@ -26,6 +26,10 @@ public class ToDo extends Task {
         return "todo";
     }
 
+    boolean contains(String keyword) {
+        return (this.content.contains(keyword));
+    }
+
     @Override
     public String toString() {
         return "[T]" + super.toString();

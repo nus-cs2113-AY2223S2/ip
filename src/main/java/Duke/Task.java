@@ -1,7 +1,7 @@
 package Duke;
 
 public abstract class Task {
-    private String content;
+    protected String content;
     private boolean isCompleted;
 
     Task(String content) {
@@ -22,6 +22,8 @@ public abstract class Task {
         this.isCompleted = false;
         return this;
     }
+
+    abstract boolean contains(String keyword);
 
     abstract String getType();
 

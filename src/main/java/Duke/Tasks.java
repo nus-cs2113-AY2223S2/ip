@@ -6,10 +6,15 @@ import java.util.LinkedList;
 
 
 public class Tasks {
-    private final LinkedList<Task> taskList;
+    private LinkedList<Task> taskList;
 
     Tasks() {
-        this.taskList = TaskSaver.loadTasks();
+        this.taskList = new LinkedList<Task>();
+    }
+    static Tasks loadTasks() {
+        Tasks newTasks = new Tasks();
+        newTasks.taskList = TaskSaver.loadTasks();
+        return newTasks;
     }
 
     String addTask(String[] commandByWord) {
@@ -29,6 +34,10 @@ public class Tasks {
                     "\n  Use the command /by for deadlines, and /from, /to for events!" +
                     "\n  Please try again.";
         }
+    }
+
+    private void addTaskClass(Task task) {
+        this.taskList.add(task);
     }
 
     String deleteTask(String[] commandByWord) {
@@ -56,7 +65,8 @@ public class Tasks {
             Task newTask = taskList.get(index - 1).markAsComplete();
             this.taskList.set(index - 1, newTask);
             TaskSaver.updateTask(this.toStringList());
-            return "Nice! I've marked this task as done:\n  " + taskList.get(index - 1).toString();
+            return "Nice! I've marked this task as done:\n  "
+                    + taskList.get(index - 1).toString();
         } catch (IndexOutOfBoundsException e) {
             return "☹ OOPS!!! The task number is invalid!" +
                     "\n  Please try again.";
@@ -68,16 +78,18 @@ public class Tasks {
             Task newTask = taskList.get(index - 1).markAsIncomplete();
             this.taskList.set(index - 1, newTask);
             TaskSaver.updateTask(this.toStringList());
-            return "OK, I've marked this task as not done yet:\n  " + taskList.get(index - 1).toString();
+            return "OK, I've marked this task as not done yet:\n  "
+                    + taskList.get(index - 1).toString();
         } catch (IndexOutOfBoundsException e) {
             return "☹ OOPS!!! The task number is invalid!" +
                     "\n  Please try again.";
         }
     }
 
-    String listTasks() {
+    String listTasks(String type) {
 
-        String list = "Here are the tasks in your list:\n";
+        String list = (type.equals("list")) ? "Here are the tasks in your list:\n"
+                : "Here are the matching tasks in your list:\n";
         int counter = 1;
         for (Task task : taskList) {
             list += "  " + Integer.toString(counter) + ". ";
@@ -87,6 +99,19 @@ public class Tasks {
         }
         return list;
     }
+
+
+
+    String findTask(String[] commandByWord) {
+        if (commandByWord.length > 2) return "☹ OOPS!!! Please enter a single keyword\n";
+        Tasks tasksWithKeyword = new Tasks();
+        for (Task task : this.taskList) {
+            if (task.contains(commandByWord[1])) {
+                tasksWithKeyword.addTaskClass(task);
+            }
+        }
+        return tasksWithKeyword.listTasks("find");
+    };
 
     String toStringList() {
         String TaskListAsString = "";

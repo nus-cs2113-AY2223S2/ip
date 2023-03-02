@@ -11,7 +11,8 @@ public class Event extends Task {
         this.endDate = endDate;
     }
 
-    static Event createEvent(String[] commandByWord) throws IllegalArgumentException, ArrayIndexOutOfBoundsException {
+    static Event createEvent(String[] commandByWord)
+            throws IllegalArgumentException, ArrayIndexOutOfBoundsException {
 
         if (commandByWord.length < 2) {
             throw new IllegalArgumentException();
@@ -59,8 +60,16 @@ public class Event extends Task {
         return "event";
     }
 
+    boolean contains(String keyword) {
+        return (this.content.contains(keyword)
+                | this.startDate.contains(keyword)
+                | this.endDate.contains(keyword));
+    }
+
     @Override
     public String toString() {
-        return "[E]" + super.toString() + " (from: " + this.startDate + " to: " + this.endDate + ")";
+        return "[E]" + super.toString()
+                + " (from: " + this.startDate
+                + " to: " + this.endDate + ")";
     }
 }
