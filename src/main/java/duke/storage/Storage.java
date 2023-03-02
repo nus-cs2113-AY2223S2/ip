@@ -11,18 +11,31 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
+/**
+ * Class saves, deletes, and updates tasks in a file.
+ */
 public class Storage {
 
     private String filePath;
     private TaskList tasks;
 
+    /**
+     * Initializes filePath and tasks.
+     *
+     * @param filePath Location of file containing saved tasks.
+     * @param tasks List of all tasks.
+     */
     public Storage(String filePath, TaskList tasks) {
         this.filePath = filePath;
         this.tasks = tasks;
     }
 
+    /**
+     * Create file that will store tasks.
+     */
     public void createSavedTasksFile() {
         File savedTasks = new File(filePath);
+        // check if file already exists
         if (!savedTasks.exists()) {
             try {
                 savedTasks.createNewFile();
@@ -32,6 +45,11 @@ public class Storage {
         }
     }
 
+    /**
+     * Loads the tasks saved in file into tasks list.
+     *
+     * @throws FileNotFoundException If file does not exist.
+     */
     public void loadSavedTasks() throws FileNotFoundException {
         File savedTasks = new File(filePath);
         if (savedTasks.exists()) {
@@ -44,7 +62,7 @@ public class Storage {
         }
     }
 
-    public void addSavedTasksToList(String[] splitTask) {
+    private void addSavedTasksToList(String[] splitTask) {
         String taskType = splitTask[0];
         boolean isDone = Boolean.parseBoolean(splitTask[1]);
         if (taskType.equals("T") || taskType.equals("D") || taskType.equals("E")) {
@@ -62,13 +80,18 @@ public class Storage {
         }
     }
 
+    /**
+     * Saves a task in the tasks list to the file.
+     *
+     * @throws IOException If unable to write to the file.
+     */
     public void saveTaskToFile() throws IOException {
         FileWriter writer = new FileWriter(filePath);
         writer.write(formatTask());
         writer.close();
     }
 
-    public String formatTask() {
+    private String formatTask() {
         String formattedTask = "";
         for (int i = 1; i <= tasks.getNumTasks(); i++) {
             Task task = tasks.getTasks().get(i);

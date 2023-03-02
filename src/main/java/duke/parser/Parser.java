@@ -3,6 +3,9 @@ package duke.parser;
 import duke.DukeException;
 import duke.tasks.TaskList;
 
+/**
+ * Class parses commands inputted by user and organizes them accordingly.
+ */
 public class Parser {
 
     private final String DEADLINE = "deadline";
@@ -15,7 +18,13 @@ public class Parser {
     private final String DELETE = "delete";
     private boolean isUserDone;
 
-    // parse task inputted by user
+    /**
+     * Parses the user input and executes the methods associated
+     * with the inputted task or command.
+     *
+     * @param input User input broken up into an array.
+     * @param tasks List of all tasks.
+     */
     public void parseInput(String[] input, TaskList tasks) {
         String taskType = input[0];
         try{
@@ -32,7 +41,7 @@ public class Parser {
                 tasks.unmarkTask(taskNumToUnmark);
             // create a task
             } else if (taskType.equals(DEADLINE) || taskType.equals(TODO) || taskType.equals(EVENT)) {
-                String taskDescription = String.join(" ", input).substring(taskType.length() + 1);
+                String taskDescription = String.join(" ", input).substring(taskType.length());
                 if (taskType.equals(DEADLINE)) {
                     tasks.addDeadline(taskDescription, false);
                 } else if (taskType.equals(TODO)) {
@@ -56,6 +65,11 @@ public class Parser {
 
     }
 
+    /**
+     * Returns whether user inputted "bye" to exit app.
+     *
+     * @return True if user inputted "bye" and false otherwise.
+     */
     public boolean getIsUserDone() {
         return isUserDone;
     }
