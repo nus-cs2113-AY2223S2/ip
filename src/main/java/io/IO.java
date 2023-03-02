@@ -73,39 +73,6 @@ public final class IO {
     public static final String FILE_DELIMITER = "|";
 
     /**
-     * Open the saved tasks file upon startup of PAPA.<br>
-     * Checks if the directory and text file exist, and writes to the file.
-     */
-    public static void openFile() {
-        File dir = new File(DIRECTORY_PATH);
-        // Check if directory exists
-        if (!dir.exists()) {
-            // Make directory.
-            if (dir.mkdir()) {
-                System.out.println("Successfully created directory in " + dir.getAbsolutePath());
-            } else {
-                // Unable to create directory.
-                System.out.println("Sorry, I had trouble creating directory.");
-            }
-        }
-        // Now create the text file to input/output.
-        File f = new File(FILE_PATH);
-        // Check if file exists.
-        if (!f.exists()) {
-            try {
-                f.createNewFile();
-            } catch (IOException e) {
-                System.out.println("An error occurred in creating a new file.");
-            }
-            System.out.println("New file created in " + f.getAbsolutePath());
-        } else {
-            System.out.println("Loaded your saved tasks.");
-        }
-
-        readFile(FILE_PATH);
-    }
-
-    /**
      * Appends input text to the save file.
      * @param textToAdd The String to append to the file.
      * @throws IOException Unable to write successfully.

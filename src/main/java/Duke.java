@@ -14,7 +14,7 @@ public class Duke {
 
     public static void main(String[] args) {
         Ui.printGreeting();
-        IO.openFile();
+        Storage.openFile();
         Ui.printHLine();
 
         // Input variables initialised.
