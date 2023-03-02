@@ -17,7 +17,7 @@ public class Duke {
 
         while (!isEnd) {
             String command = in.nextLine();
-            isEnd = Parser.ParseCommand(command, tasks, path);
+            isEnd = Parser.parseOriginalCommand(command, tasks, path);
         }
 
         Ui.printBye();
