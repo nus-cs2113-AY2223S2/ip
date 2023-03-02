@@ -74,10 +74,10 @@ public class PrintCommands {
      * @param taskList
      * @param todoDescription
      */
-    public static void printTodoMessage(ArrayList<Task> taskList, String todoDescription) {
+    public static void printTodoMessage(ArrayList<Task> taskList) {
         printLine();
         System.out.println("\tGot it. I've added this task: ");
-        System.out.println("\t" + todoDescription);
+        System.out.println(("\t" + taskList.get(taskList.size() - 1).getDescription()));
         printNumberOfTasks(taskList);
         printLine();
     }
@@ -88,10 +88,10 @@ public class PrintCommands {
      * @param taskList
      * @param deadlineDescription
      */
-    public static void printDeadlineMessage(ArrayList<Task> taskList, String deadlineDescription) {
+    public static void printDeadlineMessage(ArrayList<Task> taskList) {
         printLine();
         System.out.println("\tGot it. I've added this task: ");
-        System.out.println("\t" + deadlineDescription);
+        System.out.println(("\t" + taskList.get(taskList.size() - 1).getDescription()));
         printNumberOfTasks(taskList);
         printLine();
     }
@@ -102,10 +102,10 @@ public class PrintCommands {
      * @param taskList
      * @param eventDescription
      */
-    public static void printEventMessage(ArrayList<Task> taskList, String eventDescription) {
+    public static void printEventMessage(ArrayList<Task> taskList) {
         printLine();
         System.out.println("\tGot it. I've added this task: ");
-        System.out.println("\t" + eventDescription);
+        System.out.println(("\t" + taskList.get(taskList.size() - 1).getDescription()));
         printNumberOfTasks(taskList);
         printLine();
     }
@@ -144,7 +144,7 @@ public class PrintCommands {
         System.out.println("\tHere's what I found :");
         for (Task task : taskList) {
             if (task.getDescription().contains(command[1])) {
-                
+
                 switch (task.getType()) {
                     case "[T]":
                         System.out.println("\t" + taskNumber + ". " + task.getDescription());

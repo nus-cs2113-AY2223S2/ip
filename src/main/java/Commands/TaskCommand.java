@@ -76,7 +76,7 @@ public class TaskCommand {
         }
         String todoDescription = command[1]; // Get the description of the task from the user input
         taskList.add(new Todo(todoDescription)); // Add the new todo task to the arraylist
-        PrintCommands.printTodoMessage(taskList, todoDescription);
+        PrintCommands.printTodoMessage(taskList);
     }
 
     /**
@@ -97,7 +97,7 @@ public class TaskCommand {
         String deadlineDescription = deadlineCommand[0]; // Get description of the user input
         String byDate = deadlineCommand[1]; // Deadline of the user input
         taskList.add(new Deadline(deadlineDescription, byDate)); // Add the new deadline to the arraylist
-        PrintCommands.printDeadlineMessage(taskList, deadlineDescription);
+        PrintCommands.printDeadlineMessage(taskList);
     }
 
     /**
@@ -119,7 +119,7 @@ public class TaskCommand {
         String eventFromDate = eventCommand[1]; // Get event from date
         String eventToDate = eventCommand[2]; // Get event to date
         taskList.add(new Event(eventDescription, eventFromDate, eventToDate)); // Add the new event to the arraylist
-        PrintCommands.printEventMessage(taskList, eventDescription);
+        PrintCommands.printEventMessage(taskList);
     }
 
     /**
@@ -142,8 +142,6 @@ public class TaskCommand {
         if (TaskIndex < 0 || TaskIndex > taskList.size()) {
             throw new InvalidTaskNumberException(null);
         } else {
-            // System.out.println("Task Index : " + TaskIndex);
-            // System.out.println("Counter : " + taskList.size());
             return TaskIndex;
         }
     }

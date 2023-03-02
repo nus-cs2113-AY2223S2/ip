@@ -105,6 +105,8 @@ public class Duke {
             } catch (InvalidFindStringException ifse) {
                 System.out.println(
                         "Uh oh! The task you are looking for does not exist, or there were some issues. Please try again.");
+            } catch (NullCommandException nce) {
+                System.out.println("Unrecognised command. Type 'help' for a list of recognised commands");
             }
         }
         scan.close();
