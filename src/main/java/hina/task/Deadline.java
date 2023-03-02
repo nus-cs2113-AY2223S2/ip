@@ -1,12 +1,19 @@
 package hina.task;
 
-import hina.task.Task;
+import java.time.DateTimeException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+
+import hina.helper.Ui;
 
 public class Deadline extends Task {
-    private String by;
-    public Deadline(String description, String by) {
+    private LocalDateTime by;
+    String byString;
+    public Deadline(String description, LocalDateTime by) {
         super(description);
-        this.by = by;
+            this.by = by;
+            this.byString = this.by.format(DateTimeFormatter.ofPattern("dd-MMM-yyyy HH:mm"));
     }
 
     public String toString() {
@@ -16,10 +23,10 @@ public class Deadline extends Task {
         } else {
             mark = " ";
         }
-        return String.format("[D][%s] %s (by: %s)", mark, super.getDescription(), by);
+        return String.format("[D][%s] %s (by: %s)", mark, super.getDescription(), byString);
     }
 
     public String toSave() {
-        return String.format("D / %s / %s / %s", isDone? "1" : "0", description, by);
+        return String.format("D / %s / %s / %s", isDone? "1" : "0", description, byString);
     }
 }
