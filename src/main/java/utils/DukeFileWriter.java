@@ -2,20 +2,18 @@ package utils;
 
 import task.*;
 
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
-/*
-* File format:
-* T | 1 | read book
-* D | 0 | return book | June 6th
-* E | 0 | project meeting | Aug 6th | 2-4pm
-* T | 1 | join sports club
-* A | 0 | eat eat eat
-* */
-
+/**
+ * A tool for writing the task list to the local file.
+ * The Format of the local file:
+ * Normal task:   A | isDone | [description]
+ * Todo task:     T | isDone | [description]
+ * Deadline task: D | isDone | [description] | [Deadline]
+ * Event task:    E | isDone | [description] | [from] | [to]
+ */
 public class DukeFileWriter {
     protected static String filePath;
 
@@ -23,21 +21,27 @@ public class DukeFileWriter {
         this.filePath = filePath;
     }
 
-
     private static void addLineToFile(String line) throws IOException {
         FileWriter fw = new FileWriter(filePath,true);
         fw.write(line);
         fw.close();
     }
 
-    /* called when adding a todo / deadline / event object. Input: new task object */
+    /**
+     * Called when adding a todo / deadline / event object. Input: new task object
+     * @param newObject The new task object the user added.
+     * @throws IOException
+     */
     public static void addNewObjectToFile(Task newObject) throws IOException {
         String line = getObjectLineString(newObject);
         addLineToFile(line);
     }
 
-
-    /* Receive a Todo / Deadline / Event Object and turn it into a new LineString in the file. */
+    /**
+     * Receive a Todo / Deadline / Event Object and turn it into a new LineString in the file.
+     * @param newObject A task object to write to local files.
+     * @return The line string of the object in the file.
+     */
     private static String getObjectLineString(Task newObject){
         String line = null;
         String lineType = newObject.getClass().getTypeName();
@@ -63,7 +67,11 @@ public class DukeFileWriter {
         return line;
     }
 
-    /* rewrite the whole tasksList in the memory to the disk */
+    /**
+     * Rewrite the whole task list in the memory to the disk.
+     * @param tasks The whole task list.
+     * @throws IOException
+     */
     public void rewriteAllToFile(TaskList tasks) throws IOException {
         ArrayList<Task> tasksList = tasks.getTasks();
         FileWriter fw = new FileWriter(filePath, false);fw.close();

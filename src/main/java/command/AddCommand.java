@@ -5,8 +5,10 @@ import task.TaskList;
 import ui.Ui;
 import utils.Storage;
 
-import java.io.IOException;
-
+/**
+ *  Command for adding a normal task.
+ *  Format: add [description]
+ */
 public class AddCommand extends Command{
     protected String newTaskString;
 
@@ -14,6 +16,13 @@ public class AddCommand extends Command{
         this.newTaskString = newTaskString;
     }
 
+    /**
+     * Execute the add command. Add a new normal object to the task list,
+     * and write it to the disk.
+     * @param tasks The task list.
+     * @param ui The ui module to show messages.
+     * @param storage The reading and writing tool.
+     */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage){
         Task newTaskObject = new Task(newTaskString);
@@ -21,7 +30,7 @@ public class AddCommand extends Command{
 
         storage.addNewObjectToFile(newTaskObject, ui);
 
-        ui.showAddTask(newTaskObject,tasks);
+        ui.showAddTaskDone(newTaskObject,tasks);
     }
 
 

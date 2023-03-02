@@ -4,6 +4,9 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
+/**
+ * Object of a event task, includes: a description, a 'from' time and a 'to' time.
+ */
 public class Event extends Task {
     protected String from;
     protected String to;

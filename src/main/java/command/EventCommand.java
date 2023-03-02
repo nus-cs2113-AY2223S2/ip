@@ -1,14 +1,14 @@
 package command;
 
-import exceptions.EventParamsFormatException;
 import task.Event;
 import task.TaskList;
 import ui.Ui;
 import utils.Storage;
 
-import java.io.FileWriter;
-import java.io.IOException;
-
+/**
+ *  Command for adding an event task.
+ *  Format: event [description] /from [time] /to [time]
+ */
 public class EventCommand extends Command{
     protected String eventString;
     protected String fromString;
@@ -23,6 +23,14 @@ public class EventCommand extends Command{
 
     }
 
+    /**
+     * Execute the event command. Add a new event object to the task list,
+     * and write it to the disk.
+     * @param tasks The task list.
+     * @param ui The ui module to show messages.
+     * @param storage The reading and writing tool.
+     */
+    @Override
     public void execute(TaskList tasks, Ui ui, Storage storage){
 
         Event newEventObject = new Event(eventString, fromString, toString);

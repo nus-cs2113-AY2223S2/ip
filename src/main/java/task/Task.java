@@ -1,5 +1,8 @@
 package task;
 
+/**
+ * Object of a normal task, includes: a description.
+ */
 public class Task {
     protected String description;
     protected boolean isDone;
