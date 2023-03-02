@@ -11,10 +11,26 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-/**
- * A tool for reading local file into the task list.
- */
+
+
+
 public class DukeFileReader {
+    /**
+     * The LINE_LENGTH of each objects depends on the Format of the local file:
+     * Todo task:     T | isDone | [description]
+     * Deadline task: D | isDone | [description] | [Deadline]
+     * Event task:    E | isDone | [description] | [from] | [to]
+     */
+    static final int TODO_LINE_LENGTH = 3;
+    static final int DEADLINE_LINE_LENGTH = 4;
+    static final int EVENT_LINE_LENGTH = 5;
+    static final int BY_INDEX = 3;
+    static final int FROM_INDEX = 3;
+    static final int TO_INDEX = 4;
+    static final int LINE_TYPE_INDEX = 0;
+    static final int DESCRIPTION_INDEX = 2;
+    static final int ISDONE_INDEX = 1;
+
     private String filePath;
     public DukeFileReader(String filePath){
         this.filePath = filePath;
@@ -50,13 +66,13 @@ public class DukeFileReader {
         //[have not done] : magic numbers
         String[] words = fileLine.split("\\|");
 
-        if(words.length < 3 || words.length > 5){
+        if(words.length < TODO_LINE_LENGTH || words.length > EVENT_LINE_LENGTH){
             throw new FileLineParseException();
         }
 
-        String lineType = words[0].trim();
-        String description = words[2].trim();
-        boolean isDone = (Integer.parseInt(words[1].trim()) == 1);
+        String lineType = words[LINE_TYPE_INDEX].trim();
+        String description = words[DESCRIPTION_INDEX].trim();
+        boolean isDone = (Integer.parseInt(words[ISDONE_INDEX].trim()) == ISDONE_INDEX);
 
         switch (lineType){
             case("A"):{
@@ -64,17 +80,17 @@ public class DukeFileReader {
             } case("T"):{
                 return new Todo(description,isDone);
             } case("D"):{
-                if(words.length < 4){
+                if(words.length < DEADLINE_LINE_LENGTH){
                     throw new FileLineParseException();
                 }
-                String by = words[3].trim();
+                String by = words[BY_INDEX].trim();
                 return new Deadline(description,isDone,by);
             } case("E"):{
-                if(words.length < 5){
+                if(words.length < EVENT_LINE_LENGTH){
                     throw new FileLineParseException();
                 }
-                String from = words[3].trim();
-                String to = words[4].trim();
+                String from = words[FROM_INDEX].trim();
+                String to = words[TO_INDEX].trim();
                 return new Event(description,isDone,from,to);
             } default:{
                 throw new FileLineParseException();

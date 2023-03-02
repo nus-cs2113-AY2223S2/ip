@@ -12,6 +12,23 @@ import java.util.Arrays;
  */
 public class Parser {
     /**
+     * The LENGTH and INDEX below depends on the Format of the command:
+     * Todo:     todo [description]
+     * Deadline: deadline [description] /by [time]
+     * Event:    event [description] /from [time] /to [time]
+     */
+    static final int DEADLINE_PARAMS_LENGTH = 2;
+    static final int DEADLINE_BY_INDEX = 1;
+    static final int DEADLINE_DESCRIPTION_INDEX = 0;
+    static final int DEADLINE_TIME_INDEX = 1;
+    static final int DEADLINE_TIME_START_AT_NUM = 3;
+    static final int EVENT_PARAMS_LENGTH = 3;
+    static final int EVENT_FROM_INDEX = 1;
+    static final int EVENT_TO_INDEX = 2;
+    static final int EVENT_DESCRIPTION_INDEX = 0;
+    static final int EVENT_FROM_START_AT_NUM = 5;
+    static final int EVENT_TO_START_AT_NUM = 3;
+    /**
      * Parse user's command into type and params.
      * @param userCommand users' command (including all different types of commands)
      * @return type and params of the command
@@ -37,6 +54,8 @@ public class Parser {
     private static String[] getDeadlineCommandParmasList(String commandParams)
             throws DeadlineParamsFormatException {
 
+
+
         /* Exception 1: No '/' found */
         if(commandParams.indexOf('/') == -1){
             throw new NullPointerException();
@@ -44,12 +63,12 @@ public class Parser {
 
         /* Exception 2: Multiple '/' found */
         String[] commandParamsList = commandParams.split("/");
-        if(commandParamsList.length != 2){
+        if(commandParamsList.length != DEADLINE_PARAMS_LENGTH){
             throw new ArrayIndexOutOfBoundsException();
         }
 
         /* Exception 3: no 'by' keyword found */
-        if(!commandParamsList[1].startsWith("by ")){
+        if(!commandParamsList[DEADLINE_BY_INDEX].startsWith("by ")){
             throw new DeadlineParamsFormatException();
         }
         return commandParamsList;
@@ -67,8 +86,9 @@ public class Parser {
         String[] commandParamsList = new String[0];
         try {
             commandParamsList = getDeadlineCommandParmasList(commandParams);
-            String todoString = commandParamsList[0];
-            String deadlineString = commandParamsList[1].substring(3);
+            String todoString = commandParamsList[DEADLINE_DESCRIPTION_INDEX];
+            String deadlineString = commandParamsList[DEADLINE_TIME_INDEX]
+                    .substring(DEADLINE_TIME_START_AT_NUM);
 
             return new DeadlineCommand(todoString,deadlineString);
         } catch (ArrayIndexOutOfBoundsException e) {
@@ -89,6 +109,7 @@ public class Parser {
      */
     private static String[] getEventCommandParamsList(String commandParams)
             throws EventParamsFormatException {
+
         /* Exception 1: No '/' found */
         if (commandParams.indexOf('/') == -1) {
             throw new NullPointerException();
@@ -96,13 +117,13 @@ public class Parser {
 
         /* Exception 2: Less than 2 '/' or Multiple '/' found */
         String[] commandParamsList = commandParams.split("/");
-        if (commandParamsList.length != 3) {
+        if (commandParamsList.length != EVENT_PARAMS_LENGTH) {
             throw new ArrayIndexOutOfBoundsException();
         }
 
         /* Exception 3: No 'from' or 'to' found */
-        if (!(commandParamsList[1].startsWith("from ")
-                && commandParamsList[2].startsWith("to "))) {
+        if (!(commandParamsList[EVENT_FROM_INDEX].startsWith("from ")
+                && commandParamsList[EVENT_TO_INDEX].startsWith("to "))) {
             throw new EventParamsFormatException();
         }
 
@@ -116,13 +137,16 @@ public class Parser {
      * @return An event command object.
      */
     private static Command prepareEventCommand(String commandParams){
+
         Ui ui = new Ui();
         String[] commandParamsList = new String[0];
         try {
             commandParamsList = getEventCommandParamsList(commandParams);
-            String eventString = commandParamsList[0].trim();
-            String fromString = commandParamsList[1].substring(5).trim();   //magic number
-            String toString = commandParamsList[2].substring(3).trim();
+            String eventString = commandParamsList[EVENT_DESCRIPTION_INDEX].trim();
+            String fromString = commandParamsList[EVENT_FROM_INDEX]
+                    .substring(EVENT_FROM_START_AT_NUM).trim();   //magic number
+            String toString = commandParamsList[EVENT_TO_INDEX]
+                    .substring(EVENT_TO_START_AT_NUM).trim();
 
             return new EventCommand(eventString, fromString, toString);
         } catch (EventParamsFormatException e) {
