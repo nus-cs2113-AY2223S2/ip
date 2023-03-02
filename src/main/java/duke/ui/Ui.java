@@ -200,6 +200,11 @@ public class Ui {
         }
         out.println(DIVIDER);
     }
+
+    /**
+     * Prints the array list of tasks of results found.
+     * @param tasks This is the array list of tasks matching the search description.
+     */
     public void searchResults(ArrayList<Task> tasks){
         out.println(SEARCH_HEADER);
         for (int i = 0; i < tasks.size(); i++){

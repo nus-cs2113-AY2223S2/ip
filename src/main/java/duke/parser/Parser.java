@@ -2,6 +2,7 @@ package duke.parser;
 
 import duke.task.TaskList;
 import duke.exception.EmptyTaskException;
+import duke.exception.IllegalCommandException;
 import duke.ui.Ui;
 
 /**
@@ -51,7 +52,7 @@ public class Parser {
         String remainder = userInput.substring(userInput.indexOf(" ")+1);
         if (userInput.equalsIgnoreCase("list")){
             taskList.listTasks();
-        } else if (userInput.equalsIgnoreCase("helo")){
+        } else if (userInput.equalsIgnoreCase("help")){
             ui.printHelp();
         }else if (isMarkCommand(userInput, commandLine[0])){
             parseMarkCommand(remainder, taskList);
@@ -84,6 +85,8 @@ public class Parser {
             taskList.generateEvent(remainder);
         } catch(EmptyTaskException e){
             ui.showException("EmptyTaskException");
+        } catch(IllegalCommandException e){
+            ui.showException("Invalid Deadline or Event");
         }
     }
 
