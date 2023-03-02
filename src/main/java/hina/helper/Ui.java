@@ -26,4 +26,7 @@ public class Ui {
     public static void taskNotFoundMessage() {
         System.out.println("Hina could not find anything about that in master's list...");
     }
+    public static void showDateTimeError() {
+        System.out.println("Please use dd-MMM-yyyy HH:mm format!");
+    }
 }

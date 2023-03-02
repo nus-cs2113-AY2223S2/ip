@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -34,12 +36,16 @@ public class Storage {
                 savedList.add(savedTask);
                 break;
             case "D":
-                Deadline savedDeadline = new Deadline(taskDetails[2], taskDetails[3]);
-                savedDeadline.setDone(!taskDetails[1].equals("0"));
-                savedList.add(savedDeadline);
+                try {
+                    Deadline savedDeadline = new Deadline(taskDetails[2], LocalDateTime.parse(taskDetails[3], TaskList.formatter));
+                    savedDeadline.setDone(!taskDetails[1].equals("0"));
+                    savedList.add(savedDeadline);
+                } catch (DateTimeParseException e) {
+                    System.out.println(e.getMessage());
+                }
                 break;
             case "E":
-                Event savedEvent = new Event(taskDetails[2], taskDetails[3], taskDetails[4]);
+                Event savedEvent = new Event(taskDetails[2], LocalDateTime.parse(taskDetails[3], TaskList.formatter), LocalDateTime.parse(taskDetails[4], TaskList.formatter));
                 savedEvent.setDone(!taskDetails[1].equals("0"));
                 savedList.add(savedEvent);
                 break;
