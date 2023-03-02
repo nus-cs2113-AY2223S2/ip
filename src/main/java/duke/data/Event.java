@@ -1,5 +1,8 @@
 package duke.data;
 
+/**
+ * the event class with from time and to time
+ */
 public class Event extends Task{
     public String getFrom() {
         return from;

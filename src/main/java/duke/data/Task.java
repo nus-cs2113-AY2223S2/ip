@@ -1,5 +1,8 @@
 package duke.data;
 
+/**
+ * the class with some common methods of all tasks
+ */
 public class Task {
     public String getDescription() {
         return description;

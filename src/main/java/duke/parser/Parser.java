@@ -2,7 +2,15 @@ package duke.parser;
 
 import duke.commands.*;
 
+/**
+ * Parses user input.
+ */
 public class Parser {
+    /**
+     * Parses user input into command for execution.
+     * @param userInput full user input string
+     * @return the command based on the user input
+     */
     public Command parseCommand(String userInput) {
         String[] words = userInput.trim().split(" ", 2);//split the input into command and arguments
 
@@ -43,10 +51,20 @@ public class Parser {
         }
     }
 
+    /**
+     * Parses arguments in the context of the add todo command.
+     * @param args full command string
+     * @return the prepared command
+     */
     private Command prepareAddTodoCommand(String args) {
         return new AddTodoCommand(args);
     }
 
+    /**
+     * Parses arguments in the context of the add deadline command.
+     * @param args full command string
+     * @return the prepared command
+     */
     private Command prepareAddDeadlineCommand(String args) {
         String[] parts = args.split("/by");
         // Validate arg string format
@@ -63,6 +81,11 @@ public class Parser {
         }
     }
 
+    /**
+     * Parses arguments in the context of the add event command.
+     * @param args full command string
+     * @return the prepared command
+     */
     private Command prepareAddEventCommand(String args) {
         String[] parts = args.split("/from|/to");
         // Validate arg string format
@@ -80,6 +103,12 @@ public class Parser {
         }
     }
 
+    /**
+     * Parses arguments in the context of the delete of a task command.
+     *
+     * @param args full command args string
+     * @return the prepared command
+     */
     private Command prepareDeleteCommand(String args) {
         try {
             final int targetIndex = Integer.parseInt(args) - 1;
@@ -89,10 +118,19 @@ public class Parser {
         }
     }
 
+    /**
+     * Parses the list command.
+     * @return the prepared command
+     */
     private Command prepareListCommand() {
         return new ListCommand();
     }
 
+    /**
+     * Parses arguments in the context of marking a task command.
+     * @param args full command args string
+     * @return the prepared command
+     */
     private Command prepareMarkCommand(String args) {
         try {
             final int targetIndex = Integer.parseInt(args) - 1;
@@ -102,6 +140,11 @@ public class Parser {
         }
     }
 
+    /**
+     * Parses arguments in the context of unmarking a task command.
+     * @param args full command args string
+     * @return the prepared command
+     */
     private Command prepareUnmarkCommand(String args) {
         try {
             final int targetIndex = Integer.parseInt(args) - 1;
@@ -111,6 +154,11 @@ public class Parser {
         }
     }
 
+    /**
+     * Parses arguments in the context of the find of a task command.
+     * @param args full command args string
+     * @return the prepared command
+     */
     private Command prepareFindCommand(String args) {
         try {
             return new FindCommand(args);
