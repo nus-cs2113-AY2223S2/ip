@@ -7,7 +7,7 @@ import utils.Storage;
 import java.io.IOException;
 
 public class DeleteCommand extends Command{
-    int index;
+    protected int index;
     public boolean isExit(){
         return false;
     }
@@ -21,7 +21,7 @@ public class DeleteCommand extends Command{
 
     }
 
-    void checkIndex(TaskList tasks){
+    private void checkIndex(TaskList tasks){
         if(index < 0 || index >= tasks.size()) {
             throw new IndexOutOfBoundsException();
         }

@@ -5,7 +5,7 @@ import ui.Ui;
 import utils.Storage;
 
 public class UnknownCommand extends Command{
-    String userCommand;
+    protected String userCommand;
     public UnknownCommand(String userCommand){
         this.userCommand = userCommand;
     }

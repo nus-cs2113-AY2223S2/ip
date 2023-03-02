@@ -17,14 +17,14 @@ import java.util.ArrayList;
 * */
 
 public class DukeFileWriter {
-    static String filePath;
+    protected static String filePath;
 
     public DukeFileWriter(String filePath){
         this.filePath = filePath;
     }
 
 
-    public static void addLineToFile(String line) throws IOException {
+    private static void addLineToFile(String line) throws IOException {
         FileWriter fw = new FileWriter(filePath,true);
         fw.write(line);
         fw.close();
@@ -38,7 +38,7 @@ public class DukeFileWriter {
 
 
     /* Receive a Todo / Deadline / Event Object and turn it into a new LineString in the file. */
-    public static String getObjectLineString(Task newObject){
+    private static String getObjectLineString(Task newObject){
         String line = null;
         String lineType = newObject.getClass().getTypeName();
         switch (lineType) {
@@ -71,7 +71,5 @@ public class DukeFileWriter {
             addNewObjectToFile(task);
         }
     }
-    public static void changeMarkToFile(int index, boolean isMarkDone){
 
-    }
 }

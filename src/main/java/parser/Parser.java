@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.Arrays;
 
 public class Parser {
-    public static String[] getCommandTypeAndParams(String userCommand){
+    private static String[] getCommandTypeAndParams(String userCommand){
         String[] userCommandWords = userCommand.split(" ");
         String commandType = userCommandWords[0];
         String commandParams = null;
@@ -21,7 +21,7 @@ public class Parser {
         return commandTypeAndParams;
     }
 
-    public static String[] getDeadlineCommandParmasList(String commandParams) throws DeadlineParamsFormatException {
+    private static String[] getDeadlineCommandParmasList(String commandParams) throws DeadlineParamsFormatException {
 
         //input: String /by [ddl]        [have not done]: String /by ddl or /by ddl String
         //Exception 1: No '/'
@@ -42,7 +42,7 @@ public class Parser {
         return commandParamsList;
     }
 
-    public static Command prepareDeadlineCommand(String commandParams){
+    private static Command prepareDeadlineCommand(String commandParams){
         Ui ui = new Ui();
         String[] commandParamsList = new String[0];
         try {
@@ -61,7 +61,7 @@ public class Parser {
         return new UnknownCommand(commandParams);
     }
 
-    public static String[] getEventCommandParamsList(String commandParams) throws EventParamsFormatException {
+    private static String[] getEventCommandParamsList(String commandParams) throws EventParamsFormatException {
         //input: String /from [startTime] /to [endTime]        [haven't done]: process case like /to /from
         //Exception 1: No '/'
         if (commandParams.indexOf('/') == -1) {
@@ -82,7 +82,7 @@ public class Parser {
         return commandParamsList;
     }
 
-    public static Command prepareEventCommand(String commandParams){
+    private static Command prepareEventCommand(String commandParams){
         Ui ui = new Ui();
         String[] commandParamsList = new String[0];
         try {
@@ -102,7 +102,7 @@ public class Parser {
         return new UnknownCommand(commandParams);
     }
 
-    public static Command prepareFindCommand(String commandParams) {
+    private static Command prepareFindCommand(String commandParams) {
         if(commandParams == null) {
             return new UnknownCommand(commandParams);
         }

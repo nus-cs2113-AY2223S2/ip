@@ -9,9 +9,9 @@ import utils.Storage;
 import java.io.IOException;
 
 public class MarkCommand extends Command{
-    String taskToMarkIndexString;
-    int index;
-    boolean isMarkAsDone;
+    protected String taskToMarkIndexString;
+    protected int index;
+    protected boolean isMarkAsDone;
 
     public MarkCommand(String taskToMarkIndexString, boolean isMarkAsDone){
         this.taskToMarkIndexString = taskToMarkIndexString;

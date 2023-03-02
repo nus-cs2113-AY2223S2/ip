@@ -24,7 +24,7 @@ public class Duke {
     private TaskList tasks;
     private Storage storage;
 
-    public Duke(String filePath){
+    private Duke(String filePath){
         ui = new Ui();
         storage = new Storage(filePath);
         try{
@@ -38,7 +38,7 @@ public class Duke {
         }
     }
 
-    public void run(){
+    private void run(){
         ui.showWelcome();
         boolean isExit = false;
         while(!isExit){

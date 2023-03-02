@@ -11,8 +11,8 @@ import java.io.IOException;
 
 
 public class DeadlineCommand extends Command{
-    String todoString;
-    String deadlineString;
+    protected String todoString;
+    protected String deadlineString;
 
 
 

@@ -3,7 +3,7 @@ package task;
 import java.util.ArrayList;
 
 public class TaskList extends ArrayList<Task>{
-    ArrayList<Task> tasks = new ArrayList<>();
+    protected ArrayList<Task> tasks = new ArrayList<>();
     public TaskList(){
         return;
     }

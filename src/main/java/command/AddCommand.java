@@ -8,7 +8,7 @@ import utils.Storage;
 import java.io.IOException;
 
 public class AddCommand extends Command{
-    String newTaskString;
+    protected String newTaskString;
 
     public AddCommand(String newTaskString){
         this.newTaskString = newTaskString;

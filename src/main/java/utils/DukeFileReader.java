@@ -23,7 +23,9 @@ public class DukeFileReader {
 
         ArrayList<Task>tasksList = new ArrayList<>();
         while(s.hasNext()){
-            tasksList.add(parseLineToTask(s.nextLine()));
+            Task taskAdd = parseLineToTask(s.nextLine());
+            //System.out.println("New task = "+ taskAdd.toString());
+            tasksList.add(taskAdd);
         }
         return tasksList;
     }
@@ -36,7 +38,7 @@ public class DukeFileReader {
     * E | isDone | [description] | [from] | [to]
     * */
 
-    public Task parseLineToTask(String fileLine) throws FileLineParseException {
+    private Task parseLineToTask(String fileLine) throws FileLineParseException {
         //[have not done] : magic numbers
         String[] words = fileLine.split("\\|");
 
@@ -46,7 +48,7 @@ public class DukeFileReader {
 
         String lineType = words[0].trim();
         String description = words[2].trim();
-        boolean isDone = Boolean.parseBoolean(words[1].trim());
+        boolean isDone = (Integer.parseInt(words[1].trim()) == 1);
 
         switch (lineType){
             case("A"):{

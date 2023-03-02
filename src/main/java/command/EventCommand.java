@@ -10,9 +10,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class EventCommand extends Command{
-    String eventString;
-    String fromString;
-    String toString;
+    protected String eventString;
+    protected String fromString;
+    protected String toString;
 
 
 

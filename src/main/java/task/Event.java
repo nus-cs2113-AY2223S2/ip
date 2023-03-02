@@ -5,10 +5,10 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
 public class Event extends Task {
-    String from;
-    String to;
-    LocalDate fromDate;
-    LocalDate toDate;
+    protected String from;
+    protected String to;
+    protected LocalDate fromDate;
+    protected LocalDate toDate;
 
     public String getFrom() {
         return from;

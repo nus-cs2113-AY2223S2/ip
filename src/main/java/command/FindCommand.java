@@ -9,7 +9,7 @@ import utils.Storage;
 import java.util.ArrayList;
 
 public class FindCommand extends Command{
-    String key;
+    protected String key;
     public FindCommand(String key){
         this.key = key;
     }

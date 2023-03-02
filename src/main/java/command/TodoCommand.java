@@ -8,7 +8,7 @@ import utils.Storage;
 import java.io.IOException;
 
 public class TodoCommand extends Command{
-    String todoString;
+    protected String todoString;
     public TodoCommand(String todoString){
         this.todoString = todoString;
     }
