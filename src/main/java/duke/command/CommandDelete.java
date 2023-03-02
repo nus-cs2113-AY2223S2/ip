@@ -14,7 +14,7 @@ public class CommandDelete {
         System.out.println(Ui.LINE);
         System.out.println("\t  " + TaskList.tasks.get(taskNum - 1));
         System.out.println("\t" + "Task removed!");
-        System.out.println("\t" + "Now you have " + (Duke.taskCount - 1) + " pending tasks.");
+        System.out.println("\t" + "Now you have this " + (Duke.taskCount - 1) + " pending tasks.");
         TaskList.tasks.remove(taskNum - 1);
         System.out.println(Ui.LINE);
         Duke.taskCount--;

@@ -79,6 +79,7 @@ public class Storage {
      * @throws FileNotFoundException if file not found
      */
     public static void extractData(File fileName) throws FileNotFoundException {
+
         Scanner s = new Scanner(fileName);
         int count = 1;
         while (s.hasNext()) {

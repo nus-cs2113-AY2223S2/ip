@@ -20,7 +20,7 @@ public class Duke {
 
         Ui.printGreetMessage();
         String userCommand;
-
+//create exception
         do {
             userCommand = Ui.getUserInput();
             TaskList.handleUserCommand(userCommand);
