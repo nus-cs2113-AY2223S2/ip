@@ -1,24 +1,24 @@
 package duke.addable;
 import duke.exception.ArgumentBlankException;
-
+import java.time.LocalDate;
 public class Event extends Task {
 
-    protected String startTime;
-    protected String endTime;
+    protected LocalDate startTime;
+    protected LocalDate endTime;
 
-    public String getStartTime() {
+    public LocalDate getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(String startTime) {
+    public void setStartTime(LocalDate startTime) {
         this.startTime = startTime;
     }
 
-    public String getEndTime() {
+    public LocalDate getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(String endTime) {
+    public void setEndTime(LocalDate endTime) {
         this.endTime = endTime;
     }
 
@@ -36,16 +36,16 @@ public class Event extends Task {
 
     public Event(String description, String startTime, String endTime, boolean isDone) throws ArgumentBlankException {
         super(description, isDone);
-        this.startTime = startTime;
-        this.endTime = endTime;
+        this.startTime = LocalDate.parse(startTime.strip());
+        this.endTime = LocalDate.parse(endTime.strip());
     }
 
     public String[] getExtraArguments() {
-        String[] extraArguments = {this.startTime, this.endTime};
+        String[] extraArguments = {this.startTime.toString(), this.endTime.toString()};
         return extraArguments;
     }
     @Override
     public String toString() {
-        return "[E]" + super.toString() + " (from: " + startTime + " to:" + endTime + ")";
+        return "[E]" + super.toString() + " (from: " + getDateString(startTime) + " to: " + getDateString(endTime) + ")";
     }
 }

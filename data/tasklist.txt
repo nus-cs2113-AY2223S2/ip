@@ -1,4 +1,2 @@
-E|1|kill | 3 | 5|
-D|0|survive | 66|
-T|0|something else|
-D|1|whatever | 444|
+D|1|do something |2019-10-04|
+E|0|finish |2019-11-14|2020-11-13|

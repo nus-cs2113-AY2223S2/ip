@@ -1,15 +1,17 @@
 package duke.addable;
 import duke.exception.ArgumentBlankException;
+
+import java.time.DateTimeException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 public class Deadline extends Task {
 
-    protected String by;
+    protected LocalDate by;
     protected final String commandString = "deadline";
     public Deadline(String description, String by, boolean isDone) throws ArgumentBlankException {
         super(description, isDone);
-        if (by.isBlank()) {
-            throw new ArgumentBlankException("deadline", "by");
-        }
-        this.by = by;
+        this.by = LocalDate.parse(by.strip());
     }
 
     @Override
@@ -18,7 +20,7 @@ public class Deadline extends Task {
     }
 
     public String[] getExtraArguments() {
-        String[] extraArguments = {this.by};
+        String[] extraArguments = {this.by.toString()};
         return extraArguments;
     }
 
@@ -28,6 +30,6 @@ public class Deadline extends Task {
     }
     @Override
     public String toString() {
-        return "[D]" + super.toString() + " (by: " + by + ")";
+        return "[D]" + super.toString() + " (by: " + getDateString(by) + ")";
     }
 }

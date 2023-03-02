@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.io.File;
 import java.util.Scanner;
-
+import java.time.LocalDate;
 public class Storage {
     private static final String FILE_PATH = "./data/tasklist.txt";
     private static final String[] FILE_ERROR_MESSAGE = {
@@ -40,11 +40,9 @@ public class Storage {
 
     public void addTaskFromLine(String line) {
         String[] fields = line.split("\\|");
-        System.out.println(line);
         try {
             switch (fields[0]) {
             case "T":
-                System.out.println("\\");
                 tasks.add(new ToDo(
                         fields[2],
                         fields[1].equals("0") ? false : true
@@ -69,7 +67,6 @@ public class Storage {
         } catch (ArgumentBlankException e) {
             ui.printMessage(FILE_ERROR_MESSAGE);
         }
-        System.out.println(tasks);
 
 
     }
@@ -77,7 +74,6 @@ public class Storage {
         try {
             Scanner s = new Scanner(f);
             while (s.hasNext()) {
-                System.out.println("has next");
                 addTaskFromLine(s.nextLine());
             }
         } catch (IOException e) {

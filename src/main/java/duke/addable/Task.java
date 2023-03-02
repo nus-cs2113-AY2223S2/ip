@@ -1,8 +1,11 @@
 package duke.addable;
 import duke.exception.ArgumentBlankException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public abstract class Task {
     private String description;
+    private static String dateTimePattern = "MMM dd yyyy";
     private boolean isDone;
     protected final String commandString = "task";
 
@@ -26,6 +29,9 @@ public abstract class Task {
         return commandString;
     }
 
+    public String getDateString(LocalDate localDate) {
+        return localDate.format(DateTimeFormatter.ofPattern(dateTimePattern));
+    }
     public String getLetter() {
         return "A";
     }

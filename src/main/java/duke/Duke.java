@@ -1,18 +1,15 @@
 package duke;
 import duke.addable.*;
 import duke.exception.*;
-
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.Arrays;
-
+import java.time.LocalDate;
 public class Duke {
     private static TaskList taskList = new TaskList();
     private static Ui ui = new Ui();
     private static Storage storage = new Storage(ui);
 
     public static void main(String[] args) {
-        System.out.println(storage.getTasks());
         taskList.setTasks(storage.getTasks());
         ui.printIntro();
         list();
