@@ -1,15 +1,10 @@
-import io.DukeException;
-import io.IO;
-import io.Storage;
-import io.Ui;
+import io.*;
 import task.Deadline;
 import task.Event;
 import task.TaskList;
 import task.Todo;
 import task.Task;
 
-import java.nio.file.InvalidPathException;
-import java.nio.file.Paths;
 import java.util.Scanner;
 
 public class Duke {
@@ -42,27 +37,11 @@ public class Duke {
      * @param args First arg should be directory.
      */
     public static void main(String[] args) {
-        if (isValidPath(args[0])) {
+        if (Parser.isValidPath(args[0])) {
             new Duke(args[0]).run();
         } else {
             new Duke().run();
         }
-    }
-
-    /**
-     * Credit to Stackoverflow
-     * https://stackoverflow.com/questions/468789/is-there-a-way-in-java-to-determine-if-a-path-is-valid-without-attempting-to-cre
-     * @param path path name for saving file
-     * @return true if path is valid path
-     */
-    private static boolean isValidPath(String path) {
-        try {
-            Paths.get(path);
-        } catch (InvalidPathException
-                | NullPointerException e) {
-            return false;
-        }
-        return true;
     }
 
     private void run() {
@@ -92,7 +71,7 @@ public class Duke {
      * @return Feedback string or error string
      */
     public static String executeCommand(String inputLine) {
-        final String[] commandTypeAndArgs = IO.splitCommandAndArgs(inputLine);
+        final String[] commandTypeAndArgs = Parser.splitCommandAndArgs(inputLine);
         final String command = commandTypeAndArgs[0];
         final String commandArgs = commandTypeAndArgs[1];
 
@@ -134,7 +113,7 @@ public class Duke {
      */
     private static String handleAddTaskTodo(String commandArgs) {
         try {
-            Todo newTask = new Todo(IO.processTaskTodo(commandArgs), TaskList.getNextTaskNumber());
+            Todo newTask = new Todo(Parser.processTaskTodo(commandArgs), TaskList.getNextTaskNumber());
             tasks.addTask(newTask);
             return Ui.feedbackTaskAdded(newTask);
         } catch (DukeException e) {
@@ -144,7 +123,7 @@ public class Duke {
 
     private static String handleAddTaskDeadline(String commandArgs) {
         try {
-            String[] deadlineArgs = IO.processTaskDeadline(commandArgs);
+            String[] deadlineArgs = Parser.processTaskDeadline(commandArgs);
             Deadline newTask =
                     new Deadline(deadlineArgs[0], TaskList.getNextTaskNumber(), deadlineArgs[1]);
             tasks.addTask(newTask);
@@ -156,7 +135,7 @@ public class Duke {
 
     private static String handleAddTaskEvent(String commandArgs) {
         try {
-            String[] eventArgs = IO.processTaskEvent(commandArgs);
+            String[] eventArgs = Parser.processTaskEvent(commandArgs);
             Event newTask =
                     new Event(eventArgs[0], TaskList.getNextTaskNumber(),
                             eventArgs[1], eventArgs[2]);

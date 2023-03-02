@@ -1,12 +1,13 @@
 package io;
 
+import java.nio.file.InvalidPathException;
+import java.nio.file.Paths;
+
 /**
- * This class manages Input and Output for Duke.<br>
- * Includes Input validation, processing arguments, and also file writing I/O.<br>
- * Credits to Contacts in Week 4 for input processing/handling methods.
- * @author Choong Zhan Hong
+ * Utility class, no need to instantiate.
+ * Use static methods to parse and process input.
  */
-public final class IO {
+public class Parser {
 
     /**
      * Split input into 1st arg and subsequent line.
@@ -60,4 +61,18 @@ public final class IO {
         return eventArgs;
     }
 
+    /**
+     * Credit to <a href="https://stackoverflow.com/questions/468789/is-there-a-way-in-java-to-determine-if-a-path-is-valid-without-attempting-to-cre">StackOverflow</a>
+     * @param path path name for saving file
+     * @return true if path is valid path
+     */
+    public static boolean isValidPath(String path) {
+        try {
+            Paths.get(path);
+        } catch (InvalidPathException
+                 | NullPointerException e) {
+            return false;
+        }
+        return true;
+    }
 }
