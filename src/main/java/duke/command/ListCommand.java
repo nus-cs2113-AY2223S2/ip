@@ -4,7 +4,6 @@ import duke.TaskList;
 import duke.UI;
 import duke.Storage;
 
-
 public class ListCommand extends Command {
     public ListCommand() {
 

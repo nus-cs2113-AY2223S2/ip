@@ -23,12 +23,20 @@ public class Duke implements Serializable {
 
         while (isRunning) {
             input = in.nextLine();
-            Command command = Parser.parse(input, ui);
-            command.execute(tasks, storage, ui);
+           // Command command = Parser.parse(input, ui);
+            try {
+                Command command = Parser.getCommand(input, ui);
+                command.execute(tasks, storage, ui);
 
-            if (command instanceof ByeCommand) {
-                isRunning = false;
+                if (command instanceof ByeCommand) {
+                    isRunning = false;
+                }
+
+            } catch (NullPointerException e) {
+                System.out.println("Command could not be executed IN DUKE.");
             }
+
+
         }
     }
 

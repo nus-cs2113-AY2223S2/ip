@@ -1,4 +1,5 @@
 package duke.command;
+
 import duke.Storage;
 import duke.TaskList;
 import duke.UI;
@@ -9,13 +10,13 @@ import java.io.IOException;
 
 public class MarkTaskCommand extends Command {
     private int taskNumber;
+
     public MarkTaskCommand(int taskNumber) {
         this.taskNumber = taskNumber;
     }
 
     @Override
     public void execute(TaskList tasks, Storage storage, UI ui) {
-
         try {
             Task task = tasks.getTask(taskNumber);
             task.markAsDone();
@@ -35,7 +36,5 @@ public class MarkTaskCommand extends Command {
         } catch (IOException e) {
             System.out.println("Unable to save.");
         }
-
-
     }
 }

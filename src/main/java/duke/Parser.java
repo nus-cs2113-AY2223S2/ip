@@ -1,105 +1,122 @@
 package duke;
 
 import duke.command.*;
+import duke.exception.EmptyDescriptionException;
 
 public class Parser {
+    public static Command getCommand(String input, UI ui) {
+        String[] taskDetails = input.split(" ", 2);
 
-    public static Command parse(String input, UI ui) {
-        String[] command = input.split(" ", 2);
+        try {
+            return parseTaskDetails(taskDetails[0], taskDetails, ui);
+        } catch (EmptyDescriptionException e) {
+            System.out.println("Please specify more details about the task");
+        }
 
-        switch (command[0]) {
-        case "bye":
-            return new ByeCommand();
+        return null;
+    }
 
+
+    public static Command parseTaskDetails(String keyword, String[] taskDetails, UI ui) throws EmptyDescriptionException {
+        switch (keyword) {
         case "list":
             return new ListCommand();
-
+        case "bye":
+            return new ByeCommand();
+        }
+        if (taskDetails.length != 2) {
+            throw new EmptyDescriptionException();
+        }
+        switch (keyword) {
         case "mark":
-            try {
-                int taskNumber = Integer.parseInt(command[1]);
-                return new MarkTaskCommand((taskNumber));
-
-            } catch (ArrayIndexOutOfBoundsException e) {
-                System.out.println("Please indicate the task number to be marked.");
-            }
-            break;
         case "unmark":
-            try {
-                int taskNumber = Integer.parseInt(command[1]);
-                return new UnmarkTaskCommand((taskNumber));
-            } catch (ArrayIndexOutOfBoundsException e) {
-                System.out.println("Please indicate the task number to be unmarked.");
-            }
-            break;
+                return parseMarkTaskStatus(taskDetails[1], keyword);
         case "delete":
-            try {
-                int taskNumber = Integer.parseInt(command[1]);
-                return new DeleteCommand(taskNumber);
-
-            } catch (ArrayIndexOutOfBoundsException e) {
-                System.out.println("Please indicate the task number to be deleted.");
-            }
-            break;
-
+             return parseDeleteTask(taskDetails[1]);
         case "todo":
-            try {
-                //AddTodoCommand todoCommand = new AddTodoCommand(command[1]);
-                return new AddTodoCommand(command[1]);
-            } catch (ArrayIndexOutOfBoundsException e) {
-                System.out.println("OOPS!!! The description of a todo cannot be empty.");
-                //throw new DukeException("OOPS!!! The description of a todo cannot be empty.");
-            }
-
-            break;
+            return parseTodo(taskDetails[1]);
         case "deadline":
-            try {
-
-                if (command[1].contains("/by")) {
-                    String[] components = command[1].split(" /by");
-                    //AddDeadlineCommand deadlineCommand = new AddDeadlineCommand(components[0], components[1]);
-                    return new AddDeadlineCommand(components[0], components[1]);
-                }
-
-                else {
-                    System.out.println("Invalid format. Remember to use '/by' to indicate the time.");
-                }
-
-
-            } catch (ArrayIndexOutOfBoundsException e) {
-                System.out.println("OOPS!!! The description of a deadline cannot be empty.");
-                //throw new DukeException("OOPS!!! The description of a todo cannot be empty.");
-            } /*catch (ArrayIndexOutOfBoundsException e) {
-                System.out.println("Please specify a time for the deadline.");
-            }
-            */
-            break;
+        return parseDeadline(taskDetails[1]);
         case "event":
-            try {
-                if (command[1].matches("(.*)" + "/from" + "(.*)" + "/to" + "(.*)")) {
-                    try {
-                        String[] components = command[1].split(" /from | /to "); //split string using "/from" and "/to"
-                        //AddEventCommand eventCommand = new AddEventCommand(components[0], components[1], components[2]);
-                        return new AddEventCommand(components[0], components[1], components[2]);
-                    } catch (ArrayIndexOutOfBoundsException e) {
-                        System.out.println("Please specify both the starting and ending time of the event");
-                    }
-                } else {
-                    System.out.println("Incorrect format. Specify events in the format 'event A /from B to /C'");
-                }
-            } catch (ArrayIndexOutOfBoundsException e) {
-                System.out.println("OOPS!!! The description of an event cannot be empty.");
-            }
-            break;
+           return parseEvent(taskDetails[1]);
         case "find":
-            try {
-                return new FindCommand(command[1]);
-            } catch (ArrayIndexOutOfBoundsException e) {
-                System.out.println("Please specify the keyword to be searched.");
-            }
-
+            return parseFind(taskDetails[1]);
         default:
             ui.printInvalidMessage();
         }
-        return new Command();
+        return null;
     }
+
+    public static Command parseMarkTaskStatus(String taskDetail, String keyword) {
+        try {
+            int taskNumber = Integer.parseInt(taskDetail);
+            if (keyword.equals("mark")) {
+                return new MarkTaskCommand((taskNumber));
+            }
+
+            else if (keyword.equals("unmark")) {
+                return new UnmarkTaskCommand((taskNumber));
+            }
+        } catch (NumberFormatException e) { //add error for marking OOB number
+            System.out.println("Please indicate the task number to be marked as done IN PTD.");
+
+        }
+        return null;
+    }
+
+    public static DeleteCommand parseDeleteTask(String taskDetail) {
+        try {
+            int taskNumberToDelete = Integer.parseInt(taskDetail);
+            return new DeleteCommand((taskNumberToDelete));
+        } catch (NumberFormatException e) {
+            System.out.println("Please indicate the task number to be deleted.");
+            return null;
+        }
+
+    }
+
+    public static AddTodoCommand parseTodo(String taskTodo) {
+        String taskTodoTrimmed = taskTodo.trim();
+        if (taskTodoTrimmed.isEmpty()) {
+            System.out.println("The description of a todo cannot be empty.");
+        }
+        else {
+            return new AddTodoCommand((taskTodoTrimmed));
+        }
+        return null;
+    }
+
+    public static AddDeadlineCommand parseDeadline(String details) {
+            try {
+                String[] components = details.split(" /by");
+                return new AddDeadlineCommand(components[0], components[1]);
+            } catch (ArrayIndexOutOfBoundsException e){ //might not even be needed
+                System.out.println( "Invalid format. Remember to use '/by' to indicate the time.");
+                return null;
+            }
+    }
+
+    public static AddEventCommand parseEvent(String details) {
+           try {
+               String[] components = details.split(" /from | /to ");
+               return new AddEventCommand(components[0], components[1], components[2]);
+
+           } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Incorrect format. Specify events in the format 'EVENT /from A /to B'");
+            return null;
+        }
+
+    }
+    public static FindCommand parseFind(String details) {
+        String wordToFind = details.trim();
+
+        if (!wordToFind.isEmpty()) {
+            return new FindCommand(wordToFind);
+
+        }
+
+        System.out.println("Please specify the word to be found");
+        return null;
+    }
+
 }

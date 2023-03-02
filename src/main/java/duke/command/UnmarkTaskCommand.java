@@ -1,4 +1,5 @@
 package duke.command;
+
 import duke.Storage;
 import duke.TaskList;
 import duke.UI;
@@ -9,19 +10,18 @@ import java.io.IOException;
 
 public class UnmarkTaskCommand extends Command {
     private int taskNumber;
+
     public UnmarkTaskCommand(int taskNumber) {
         this.taskNumber = taskNumber;
     }
 
     @Override
     public void execute(TaskList tasks, Storage storage, UI ui) {
-
         try {
             Task task = tasks.getTask(taskNumber);
             task.unmarkAsDone();
             ui.printMarkNotDone();
             ui.printTask(task);
-
         } catch (IndexOutOfBoundsException e) {
             System.out.println("The given task number does not exist. ):");
         } catch (NumberFormatException e) {
@@ -35,7 +35,5 @@ public class UnmarkTaskCommand extends Command {
         } catch (IOException e) {
             System.out.println("Unable to save.");
         }
-
-
     }
 }

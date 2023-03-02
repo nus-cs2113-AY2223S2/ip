@@ -1,6 +1,10 @@
 package duke;
 
-import com.google.gson.*;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonIOException;
+
 import duke.task.Deadline;
 import duke.task.Event;
 import duke.task.Task;
@@ -14,14 +18,13 @@ import java.util.Scanner;
 
 public class Storage {
     private Gson gson;
-
     private static String folder = "data";
     private static String filePath = "data/tasks.json";
 
-    //adapted from https://www.tutorialspoint.com/how-to-add-insert-additional-property-to-json-string-using-gson-in-java#:~:text=We%20can%20use%20the%20toJsonTree,get%20the%20element%20as%20JsonObject.
-    public Storage () {
+    public Storage() {
         this.gson = new Gson();
     }
+
     public void saveData(TaskList tasks) throws IOException {
         File file = new File(filePath);
 
@@ -30,9 +33,10 @@ public class Storage {
         }
 
         file.createNewFile();
-        taskToJSON(tasks, file);
+        taskToJson(tasks, file);
     }
-    public void taskToJSON(TaskList tasks, File file) {
+
+    public void taskToJson(TaskList tasks, File file) {
         JsonArray jsonArray = new JsonArray();
         try {
             FileWriter input = new FileWriter(file);
@@ -41,22 +45,15 @@ public class Storage {
                 JsonElement jsonElement = gson.toJsonTree(task);
                 jsonElement.getAsJsonObject().addProperty("type", task.getClass().getSimpleName());
                 jsonArray.add(jsonElement);
-
             }
-
             gson.toJson(jsonArray, input);
             input.close();
-
-        } catch (IOException e) {
-            System.out.println("Error saving file");
-        } catch (JsonIOException e) {
+        } catch (IOException | JsonIOException e) {
             System.out.println("Error saving file");
         }
-
     }
 
     public void loadData(TaskList tasks, UI ui) throws IOException {
-
         File directory = new File(folder);
 
         if (!(directory.isDirectory() && directory.exists())) {
@@ -73,7 +70,10 @@ public class Storage {
         FileReader fileReader = new FileReader(filePath);
         Gson gson = new Gson();
         JsonArray tempList = gson.fromJson(fileReader, JsonArray.class);
+        jsonToTask(tasks, tempList, ui);
+    }
 
+    public void jsonToTask(TaskList tasks, JsonArray tempList, UI ui) {
         try {
             for (JsonElement element : tempList) {
                 String type = element.getAsJsonObject().get("type").getAsString();
@@ -94,7 +94,7 @@ public class Storage {
                 tasks.addTask(taskToAdd);
             }
         } catch (NullPointerException e) {
-            System.out.println("No tasks to load");
+            System.out.println("There are no tasks to load");
         }
     }
 }

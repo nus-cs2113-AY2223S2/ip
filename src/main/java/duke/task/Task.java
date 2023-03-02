@@ -1,4 +1,5 @@
 package duke.task;
+
 import duke.exception.DukeException;
 
 public class Task {
@@ -15,23 +16,17 @@ public class Task {
     }
 
     public void markAsDone() throws DukeException {
-
         if (this.isDone == true) {
-            //throw new DukeException("Task is already marked as done.");
             throw new DukeException();
         }
         this.isDone = true;
-        //return "X";
     }
 
     public void unmarkAsDone() throws DukeException {
         if (this.isDone == false) {
             throw new DukeException();
-
         }
-
         this.isDone = false;
-       // return " ";
     }
 
     public boolean isFound(String keyword) {

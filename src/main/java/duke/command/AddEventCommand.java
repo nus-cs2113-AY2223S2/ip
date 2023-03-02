@@ -1,9 +1,11 @@
 package duke.command;
+
 import duke.Storage;
 import duke.TaskList;
 import duke.UI;
 import duke.task.Event;
 import duke.task.Task;
+
 import java.io.IOException;
 
 public class AddEventCommand extends Command {
@@ -15,12 +17,10 @@ public class AddEventCommand extends Command {
         this.description = description;
         this.from = from;
         this.to = to;
-
     }
 
-    @ Override
+    @Override
     public void execute(TaskList tasks, Storage storage, UI ui) {
-
         try {
             Task task = new Event(description, from, to);
             tasks.addTask(task);
@@ -29,7 +29,6 @@ public class AddEventCommand extends Command {
             ui.printTask(task);
             ui.printNoOfTasks(tasks.getSize());
             storage.saveData(tasks);
-
         } catch (IOException e) {
             System.out.println("Unable to save.");
         }
