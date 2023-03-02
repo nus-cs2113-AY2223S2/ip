@@ -19,6 +19,10 @@ public class Duke {
         ui.printExit();
     }
 
+    /**
+     * Main loop for program, gets input, parses input, and executes user's commands
+     * @return nothing
+     */
     public static void mainLoop() {
         Scanner in = new Scanner(System.in);
         Parser parser = new Parser();
@@ -70,7 +74,13 @@ public class Duke {
             currentInput = in.nextLine();
         }
     }
+
     // COMMAND HANDLERS
+    /**
+     * Handles "find" command: finds and prints all tasks in list that contain a certain substring
+     * @param parameters Parameters passed by user
+     * @return nothing
+     */
     public static void find(String[] parameters) {
         String toFind = String.join(" ", parameters);
         ArrayList<Task> foundTasks = new ArrayList<>();
@@ -85,6 +95,12 @@ public class Duke {
             ui.printMessage(ui.getFormattedList("Here are the matching tasks in your list:", foundTasks));
         }
     }
+    /**
+     * Handles "delete" command: deletes task at a certain index in list
+     * @param parameters Parameters passed by user
+     * @return nothing
+     * @throws MarkNonexistentTaskException If user tries to delete a task at an index which is out of range of the list
+     */
     public static void delete(String[] parameters) throws MarkNonexistentTaskException {
         int taskIndex = getTaskIndex(parameters[0]);
         String[] taskDeletedMessage = {
@@ -95,10 +111,19 @@ public class Duke {
         taskList.remove(taskIndex);
         ui.printMessage(taskDeletedMessage);
     }
+    /**
+     * Handles "list" command: lists all tasks in list in desired format
+     */
     public static void list() {
         ui.printMessage(ui.getFormattedList("Here are the tasks in your list:", taskList.getTasks()));
     }
 
+    /**
+     * Gets index as integer from index as string and checks if index is in range
+     * @param index String of index to parse
+     * @return index as integer
+     * @throws MarkNonexistentTaskException If user tries to access a task at an index which is out of range of the list
+     */
     public static int getTaskIndex(String index) throws MarkNonexistentTaskException {
         int taskIndex = Integer.parseInt(index) - 1;
         if (taskIndex > taskList.getLength() - 1 || taskIndex < 0) {
@@ -106,6 +131,13 @@ public class Duke {
         }
         return taskIndex;
     }
+
+    /**
+     * Handles "mark" command: marks task at a certain index in list as done and prints message accordingly
+     * @param parameters Parameters passed by user
+     * @return nothing
+     * @throws MarkNonexistentTaskException If user tries to mark a task at an index which is out of range of the list
+     */
     public static void mark(String[] parameters) throws MarkNonexistentTaskException {
         int taskIndex = getTaskIndex(parameters[0]);
         taskList.get(taskIndex).setDone(true);
@@ -116,6 +148,12 @@ public class Duke {
         ui.printMessage(message);
     }
 
+    /**
+     * Handles "unmark" command: unmarks task at a certain index in list as done and prints message accordingly
+     * @param parameters Parameters passed by user
+     * @return nothing
+     * @throws MarkNonexistentTaskException If user tries to unmark a task at an index which is out of range of the list
+     */
     public static void unmark(String[] parameters) throws MarkNonexistentTaskException {
         int taskIndex = getTaskIndex(parameters[0]);
         taskList.get(taskIndex).setDone(false);
@@ -125,6 +163,13 @@ public class Duke {
         };
         ui.printMessage(message);
     }
+
+    /**
+     * Handles "todo", "deadline", and "event" command: adds task to list and prints message accordingly
+     * @param input Words input by user
+     * @param command enum indicating which command was input by user
+     * @return nothing
+     */
     public static void handleAddTask(String input, Command command) {
         Task addedTask = null;
         try {
@@ -144,7 +189,14 @@ public class Duke {
         }
         ui.printAddTaskMessage(addedTask, taskList.getLength());
     }
-
+    /**
+     * Creates and returns task to add based on user input
+     * @param input Words input by user
+     * @param command enum indicating which command was input by user
+     * @return Task to add
+     * @throws ArgumentBlankException If one of the required arguments for a command is not provided
+     * @throws UnknownCommandException If the command provided is not one of the accepted commands
+     */
     public static Task addTask(String input, Command command) throws ArgumentBlankException, UnknownCommandException {
         String[] inputSections = input.split("/");
         String[] firstSectionArguments = inputSections[0].split(" ", 2);
@@ -171,6 +223,13 @@ public class Duke {
         taskList.add(taskToAdd);
         return taskToAdd;
     }
+    /**
+     * Creates and returns new Deadline task
+     * @param taskDescription Description of deadline
+     * @param inputSections Sections of user's input
+     * @return new Deadline task
+     * @throws ArgumentBlankException If one of the required arguments for a deadline is not provided (e.g. due date)
+     */
     public static Deadline getNewDeadline(String taskDescription, String[] inputSections) throws ArgumentBlankException {
         String date = inputSections[1].replaceFirst("by", "");
         return new Deadline(
@@ -179,6 +238,14 @@ public class Duke {
                 false
         );
     }
+
+    /**
+     * Creates and returns new Event task
+     * @param taskDescription Description of event
+     * @param inputSections Sections of user's input
+     * @return new Event task
+     * @throws ArgumentBlankException If one of the required arguments for an event is not provided (e.g. start time)
+     */
     public static Event getNewEvent(String taskDescription, String[] inputSections) throws ArgumentBlankException {
         return new Event(
                 taskDescription,
@@ -187,6 +254,13 @@ public class Duke {
                 false
         );
     }
+
+    /**
+     * Creates and returns new Todo task
+     * @param taskDescription Description of deadline
+     * @return new Todo
+     * @throws ArgumentBlankException If one of the required arguments for a todo is not provided (e.g. description)
+     */
     public static ToDo getNewTodo(String taskDescription) throws ArgumentBlankException {
         return new ToDo(taskDescription, false);
     }

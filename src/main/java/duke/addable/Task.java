@@ -29,9 +29,19 @@ public abstract class Task {
         return commandString;
     }
 
+    /**
+     * Returns a date in the common format (based on dateTimePattern)
+     * @param localDate Date to reformat
+     * @returns localDate reformatted into the common format
+     */
     public String getDateString(LocalDate localDate) {
         return localDate.format(DateTimeFormatter.ofPattern(dateTimePattern));
     }
+
+    /**
+     * Returns letter for this kind of task (for display)
+     * @returns letter corresponding to this task type
+     */
     public String getLetter() {
         return "A";
     }

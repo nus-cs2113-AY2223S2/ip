@@ -1,9 +1,14 @@
 package duke;
 
 import duke.addable.Task;
+import duke.exception.UnknownCommandException;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * Class to print output to user
+ */
 public class Ui {
     public Ui() {
         return;
@@ -21,18 +26,36 @@ public class Ui {
     };
     private static final String INDENT = "      ";
 
+    /**
+     * Prints message saying that input is invalid and giving a list of valid inputs
+     * @return nothing
+     */
     public static void printInvalidInputMessage() {
         printMessage(INVALID_INPUT_MESSAGE);
     }
+
+    /**
+     * Prints message saying that input is invalid, why input is invalid, and giving a list of valid inputs
+     * @param extraClarification Explanation as to why input is invalid
+     * @return nothing
+     */
     public static void printInvalidInputMessage(String extraClarification) {
         String[] message = Arrays.copyOf(INVALID_INPUT_MESSAGE, INVALID_INPUT_MESSAGE.length);
         message[0] = extraClarification;
         printMessage(message);
     }
-    public static String getFormattedTask(Task task, int number) {
+
+    private static String getFormattedTask(Task task, int number) {
         return number + ". " + task.toString();
     }
 
+    /**
+     * Constructs formatted list of tasks with a heading
+     *
+     * @param heading Heading for list
+     * @param tasks List of tasks to format
+     * @return formatted list of tasks with heading
+     */
     public static String[] getFormattedList(String heading, ArrayList<Task> tasks) {
         int numTasks = tasks.size();
         String[] formattedList = new String[numTasks + 1];
@@ -43,23 +66,39 @@ public class Ui {
         return formattedList;
     }
 
+    /**
+     * Prints the introductory statement for the program
+     * @return nothing
+     */
     public static void printIntro() {
         String[] intro = {"Hello! I'm Tom", "What can I do for you?\n Loading tasks from hard disk..."};
         printMessage(intro);
 
     }
 
+    /**
+     * Prints the final statement for the program
+     * @return nothing
+     */
     public static void printExit() {
         printMessage("Bye. Hope to see you again soon!");
     }
-
+    /**
+     * Prints formatted message (indented and surrounded by lines above and below)
+     * @param message String to print
+     * @return nothing
+     */
     public static void printMessage(String message) {
         printSeparator();
         printIndent();
         System.out.print(message + "\n");
         printSeparator();
     }
-
+    /**
+     * Prints formatted message (indented and surrounded by lines above and below) from ArrayList of strings
+     * @param message ArrayList of strings to print
+     * @return nothing
+     */
     public static void printMessage(String[] message) {
         printSeparator();
         for (String line : message) {
@@ -71,18 +110,24 @@ public class Ui {
         printSeparator();
     }
 
-    public static void printIndent() {
+    private static void printIndent() {
         System.out.print(INDENT);
     }
 
-    public static void printSeparator() {
+    private static void printSeparator() {
         System.out.print("   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
     }
 
+    /**
+     * Prints formatted message for when task is added
+     * @param addedTask Task that has been added
+     * @param numTasks Current number of tasks in task list
+     * @return nothing
+     */
     public static void printAddTaskMessage(Task addedTask, int numTasks) {
         printMessage(getAddTaskMessage(addedTask, numTasks));
     }
-    public static String[] getAddTaskMessage(Task addedTask, int numTasks) {
+    private static String[] getAddTaskMessage(Task addedTask, int numTasks) {
         String[] message = {
                 "Got it. I've added this task:",
                 INDENT + addedTask.toString(),

@@ -9,6 +9,10 @@ import java.util.ArrayList;
 import java.io.File;
 import java.util.Scanner;
 import java.time.LocalDate;
+
+/**
+ * Class to store and load task list in file on hard disk
+ */
 public class Storage {
     private static final String FILE_PATH = "./data/tasklist.txt";
     private static final String[] FILE_ERROR_MESSAGE = {
@@ -38,7 +42,7 @@ public class Storage {
         this.tasks = tasks;
     }
 
-    public void addTaskFromLine(String line) {
+    private void addTaskFromLine(String line) {
         String[] fields = line.split("\\|");
         try {
             switch (fields[0]) {
@@ -70,7 +74,7 @@ public class Storage {
 
 
     }
-    public void readCurrentTaskList() {
+    private void readCurrentTaskList() {
         try {
             Scanner s = new Scanner(f);
             while (s.hasNext()) {
@@ -80,6 +84,11 @@ public class Storage {
             System.out.println(FILE_ERROR_MESSAGE);
         }
     }
+
+    /**
+     * Saves current task list to file
+     * @return nothing
+     */
     public void saveCurrentTaskList() {
         try {
             fw = new FileWriter(FILE_PATH);
@@ -93,7 +102,7 @@ public class Storage {
         }
     }
 
-    public String getFormattedTaskLine(Task task) {
+    private String getFormattedTaskLine(Task task) {
         String line = "";
         line += task.getLetter() + "|";
         line += (task.isDone() ? "1" : "0") + "|";
