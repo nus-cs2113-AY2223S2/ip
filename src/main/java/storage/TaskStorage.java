@@ -10,7 +10,9 @@ import static storage.DataParser.*;
 import static task.TaskList.*;
 import static ui.UI.*;
 
-
+/**
+ * This class manages the save file that stores tasks data into the computer disk
+ */
 public class TaskStorage {
     public static String dataPath;
     private static FileWriter dataFile;

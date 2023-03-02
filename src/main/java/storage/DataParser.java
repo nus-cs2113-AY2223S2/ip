@@ -2,6 +2,10 @@ package storage;
 
 import static task.TaskList.*;
 
+/**
+ * This class parses all the data retrieved from the save file and
+ * add the retrieved tasks into DUKE.
+ */
 public class DataParser {
     public static void parseTodo(String data) {
         String task = data.split("|",5)[4];
