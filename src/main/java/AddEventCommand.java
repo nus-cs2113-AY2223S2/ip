@@ -1,3 +1,5 @@
+import java.time.LocalDate;
+
 public class AddEventCommand extends Command{
     public AddEventCommand(String userInput){
         super("add event");
@@ -9,7 +11,13 @@ public class AddEventCommand extends Command{
         int toBeginIndex = originalInput.indexOf("to");
 
         content = originalInput.substring(0, fromBeginIndex).strip();
-        from = originalInput.substring(fromBeginIndex, toBeginIndex).replace("from", "").trim();
-        to = originalInput.substring(toBeginIndex).replace("to", "").trim();
+
+        try{
+            super.from = LocalDate.parse(originalInput.substring(fromBeginIndex, toBeginIndex).replace("from", "").trim());
+            super.to = LocalDate.parse(originalInput.substring(toBeginIndex).replace("to", "").trim());
+
+        } catch(Exception e){
+            UI.printDateFormatErrorComment();
+        }
     }
 }
