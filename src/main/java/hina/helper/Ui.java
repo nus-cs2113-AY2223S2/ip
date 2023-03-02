@@ -20,5 +20,7 @@ public class Ui {
     public static void couldNotSaveMessage() {
         System.out.println("Something went wrong, could not save!");
     }
-
+    public static void showDateTimeError() {
+        System.out.println("Please use dd-MMM-yyyy HH:mm format!");
+    }
 }

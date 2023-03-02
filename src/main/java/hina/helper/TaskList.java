@@ -4,10 +4,14 @@ import hina.task.Deadline;
 import hina.task.Event;
 import hina.task.Task;
 
+import java.time.DateTimeException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class TaskList {
     private static ArrayList<Task> taskList;
+    public static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MMM-yyyy HH:mm");
     public TaskList(ArrayList<Task> savedList) {
         taskList = savedList;
     }
@@ -42,11 +46,17 @@ public class TaskList {
         if (details.length < 2) {
             System.out.println("Hina needs to know the deadline for this task!");
         } else {
-            Deadline newDeadline = new Deadline(details[0], details[1]);
-            taskList.add(newDeadline);
-            System.out.println("Noted! This task has been added:");
-            System.out.println(newDeadline.toString());
-            getTaskCount();
+            try {
+                LocalDateTime by = LocalDateTime.parse(details[1].trim(), formatter);
+                Deadline newDeadline = new Deadline(details[0], by);
+                taskList.add(newDeadline);
+                System.out.println("Noted! This task has been added:");
+                System.out.println(newDeadline);
+                getTaskCount();
+
+            } catch (DateTimeException exception) {
+                Ui.showDateTimeError();
+            }
         }
     }
     public static void addEvent(String event) {
@@ -57,11 +67,19 @@ public class TaskList {
             if (details[1].split("/to").length < 2) {
                 System.out.println("Please tell Hina when this event ends!");
             } else {
-                Event newEvent = new Event(details[0], details[1].split("/to")[0].trim(), details[1].split("/to")[1].trim());
-                taskList.add(newEvent);
-                System.out.println("Noted! This task has been added:");
-                System.out.println(newEvent.toString());
-                getTaskCount();
+                try {
+                    LocalDateTime from = LocalDateTime.parse(details[1].split("/to")[0].trim(), formatter);
+                    LocalDateTime to = LocalDateTime.parse(details[1].split("/to")[1].trim(), formatter);
+                    Event newEvent = new Event(details[0], from, to);
+                    taskList.add(newEvent);
+                    System.out.println("Noted! This task has been added:");
+                    System.out.println(newEvent);
+                    getTaskCount();
+
+                } catch (DateTimeException exception) {
+                    Ui.showDateTimeError();
+                }
+
             }
         }
     }
