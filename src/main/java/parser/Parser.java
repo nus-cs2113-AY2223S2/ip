@@ -14,9 +14,13 @@ public class Parser {
 
     protected HashMap<String, String> handleTodo(String text) {
         HashMap<String, String> dictionary = new HashMap<>();
+        putTodoPromptInDictionary(text, dictionary);
+        return dictionary;
+    }
+
+    private static void putTodoPromptInDictionary(String text, HashMap<String, String> dictionary) {
         dictionary.put(Keyword.COMMAND, Command.TODO);
         dictionary.put(Keyword.DESCRIPTION, text.trim());
-        return dictionary;
     }
 
     protected HashMap<String, String> handleDeadline(String text) throws DukeException {
@@ -26,16 +30,24 @@ public class Parser {
             if (words.length == 1) {
                 throw new DukeException(ErrorMessage.INVALID_INPUT);
             }
-            dictionary.put(Keyword.COMMAND, Command.DEADLINE);
             String description = words[0].trim();
             String deadline = words[1].trim();
-            dictionary.put(Keyword.DESCRIPTION, description);
-            dictionary.put(Keyword.DEADLINE, deadline);
+            putDeadlinePromptsInDictionary(dictionary, description, deadline);
             return dictionary;
         } catch (PatternSyntaxException e) {
             ui.printMessage(ErrorMessage.NO_DEADLINE_PROVIDED);
             return null;
         }
+    }
+
+    private static void putDeadlinePromptsInDictionary(
+            HashMap<String, String> dictionary,
+            String description,
+            String deadline
+    ) {
+        dictionary.put(Keyword.COMMAND, Command.DEADLINE);
+        dictionary.put(Keyword.DESCRIPTION, description);
+        dictionary.put(Keyword.DEADLINE, deadline);
     }
 
     protected HashMap<String, String> handleMarkAndDelete(String text, String command) {
@@ -53,50 +65,66 @@ public class Parser {
 
     protected HashMap<String, String> handleEvent(String text) throws DukeException {
         HashMap<String, String> dictionary = new HashMap<>();
-        dictionary.put(Keyword.COMMAND, Command.EVENT);
-        String[] words = text.split("/");
-        if (words.length != 3) {
-            throw new DukeException(ErrorMessage.INVALID_INPUT);
-        }
+        String[] words = splitInput(text);
+        validateStartAndEnd(words);
 
         String start = "";
         String end = "";
         String description = "";
-
-        int numOfStart = 0;
-        int numOfEnd = 0;
-        for (String word: words) {
-            if (word.startsWith("to ")) {
-                numOfEnd++;
-            } else if (word.startsWith("from ")) {
-                numOfStart++;
-            }
-        }
-
-        if (numOfEnd == 0 && numOfStart == 0) {
-            throw new DukeException("No start or end provided");
-        }
-
-        if (numOfEnd > 1 || numOfStart > 1) {
-            throw new DukeException(ErrorMessage.NO_DESCRIPTION_PROVIDED);
-        }
-
         for (int i = 0; i < 3; ++i) {
-            if (words[i].startsWith("to ")) {
-                words[i] = words[i].substring("to ".length()).trim();
+            if (words[i].startsWith(Keyword.TO)) {
+                words[i] = words[i].substring(Keyword.TO.length()).trim();
                 end = words[i];
-            } else if (words[i].startsWith("from ")) {
-                words[i] = words[i].substring("from ".length()).trim();
+            } else if (words[i].startsWith(Keyword.FROM)) {
+                words[i] = words[i].substring(Keyword.FROM.length()).trim();
                 start = words[i];
             } else {
                 description = words[i].trim();
             }
         }
 
+        putEventPromptInDictionary(dictionary, start, end, description);
+        return dictionary;
+    }
+
+    private static String[] splitInput(String text) throws DukeException {
+        String[] words = text.split(Keyword.SLASH);
+        if (words.length != 3) {
+            throw new DukeException(ErrorMessage.INVALID_INPUT);
+        }
+        return words;
+    }
+
+    private static void putEventPromptInDictionary(
+            HashMap<String, String> dictionary,
+            String start,
+            String end,
+            String description
+    ) {
+        dictionary.put(Keyword.COMMAND, Command.EVENT);
         dictionary.put(Keyword.START, start);
         dictionary.put(Keyword.END, end);
         dictionary.put(Keyword.DESCRIPTION, description);
-        return dictionary;
+    }
+
+    private static void validateStartAndEnd(String[] words) throws DukeException {
+        int numOfStart = 0;
+        int numOfEnd = 0;
+        for (String word : words) {
+            if (word.startsWith(Keyword.TO)) {
+                numOfEnd++;
+            } else if (word.startsWith(Keyword.FROM)) {
+                numOfStart++;
+            }
+        }
+
+        if (numOfEnd == 0 && numOfStart == 0) {
+            throw new DukeException(ErrorMessage.NO_START_OR_END);
+        }
+
+        if (numOfEnd > 1 || numOfStart > 1) {
+            throw new DukeException(ErrorMessage.NO_DESCRIPTION_PROVIDED);
+        }
     }
 
 
@@ -110,9 +138,8 @@ public class Parser {
 
     public HashMap<String, String> parse(String input) throws DukeException {
         input = input.trim();
-        String[] words = input.split(" ", 2);
+        String[] words = input.split(Keyword.SPACE, 2);
         String command = words[0];
-
 
         switch (command) {
         case Command.FIND:
