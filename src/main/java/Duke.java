@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.io.File;
 
 public class Duke {
+
     private static final String DIVIDER  = "______________________________";
 
     //Commands
@@ -17,6 +18,7 @@ public class Duke {
     static final String COMMAND_DEADLINE = "deadline";
     static final String COMMAND_EVENT = "event";
     static final String COMMAND_DELETE = "delete";
+    static final String COMMAND_FIND = "find";
 
     static final String COMMAND_BY = "/by";
     static final String COMMAND_FROM = "/from";
@@ -27,29 +29,6 @@ public class Duke {
 
     //Data
     static ArrayList<Task> list = new ArrayList<>();
-
-    private static void printLogo() {
-        String logoMessage = "Hello from\n" +
-                " ____        _        \n" +
-                "|  _ \\ _   _| | _____ \n" +
-                "| | | | | | | |/ / _ \\\n" +
-                "| |_| | |_| |   <  __/\n" +
-                "|____/ \\__,_|_|\\_\\___|";
-        System.out.println(logoMessage);
-    }
-
-    private static void greetUser() {
-         String greeting = DIVIDER + System.lineSeparator() + "Hello! I'm Jarvis!"
-                 + System.lineSeparator() + "What can I do for you?"
-                 + System.lineSeparator() + DIVIDER + System.lineSeparator();
-         System.out.println(greeting);
-    }
-
-    private static void sayByeToUser() {
-        String bye = DIVIDER + System.lineSeparator() + "Bye. Hope to see you again soon!"
-                + System.lineSeparator() + DIVIDER + System.lineSeparator();
-        System.out.println(bye);
-    }
 
     private static void printList() {
         String listMessage = DIVIDER + System.lineSeparator() + "Here are the tasks in your list:";
@@ -219,14 +198,12 @@ public class Duke {
                     }
                     markTask(taskNum);
                 } catch (EmptyDescriptionException e) {
-                    e.emptyDescriptionNumber();
+                    Ui.emptyDescriptionNumber();
                 } catch (ArrayIndexOutOfBoundsException e) {
                     System.out.println(DIVIDER + System.lineSeparator()
                             + "Unable to mark task as task does not exist!" + System.lineSeparator() + DIVIDER);
                 } catch (NumberFormatException e) {
-                    System.out.println(DIVIDER + System.lineSeparator()
-                            + "You did not key in a task number. Please key in a valid task number to mark!"
-                            + System.lineSeparator() + DIVIDER);
+                    Ui.invalidTaskNumberError();
                 }
                 break;
             case COMMAND_UNMARK:
@@ -240,14 +217,12 @@ public class Duke {
                     }
                     unmarkTask(taskNum);
                 } catch (EmptyDescriptionException e) {
-                    e.emptyDescriptionNumber();
+                    Ui.emptyDescriptionNumber();
                 } catch (ArrayIndexOutOfBoundsException e) {
                     System.out.println(DIVIDER + System.lineSeparator()
                             + "Unable to unmark task as task does not exist!" + System.lineSeparator() + DIVIDER);
                 } catch (NumberFormatException e) {
-                    System.out.println(DIVIDER + System.lineSeparator()
-                            + "You did not key in a task number. Please key in a valid task number to unmark!"
-                            + System.lineSeparator() + DIVIDER);
+                    Ui.invalidTaskNumberError();
                 }
                 break;
             case COMMAND_TODO:
@@ -258,7 +233,7 @@ public class Duke {
                     list.add(new Todo(taskDesc));
                     acknowledgementMessage();
                 } catch (EmptyDescriptionException e) {
-                    e.emptyDescriptionTodo();
+                    Ui.emptyDescriptionTodo();
                 }
                 break;
             case COMMAND_EVENT:
@@ -277,7 +252,7 @@ public class Duke {
                     list.add(new Event(eventTaskDesc, eventStart, eventEnd));
                     acknowledgementMessage();
                 } catch (EmptyDescriptionException e) {
-                    e.emptyDescriptionEvent();
+                    Ui.emptyDescriptionEvent();
                 } catch (ArrayIndexOutOfBoundsException e) {
                     System.out.println(DIVIDER + System.lineSeparator()
                             + "The event you keyed in was invalid!" + System.lineSeparator()
@@ -297,7 +272,7 @@ public class Duke {
                     list.add(new Deadline(deadlineTaskDesc, deadlineDuration));
                     acknowledgementMessage();
                 } catch (EmptyDescriptionException e) {
-                    e.emptyDescriptionDeadline();
+                    Ui.emptyDescriptionDeadline();
                 } catch (ArrayIndexOutOfBoundsException e) {
                     System.out.println(DIVIDER + System.lineSeparator()
                             + "The deadline you keyed in was invalid!" + System.lineSeparator()
@@ -315,20 +290,21 @@ public class Duke {
                     }
                     deleteTask(taskNum);
                 } catch (EmptyDescriptionException e) {
-                    e.emptyDescriptionNumber();
+                    Ui.emptyDescriptionNumber();
                 } catch (ArrayIndexOutOfBoundsException e) {
                     System.out.println(DIVIDER + System.lineSeparator()
                             + "Unable to delete task as task does not exist!" + System.lineSeparator() + DIVIDER);
                 } catch (NumberFormatException e) {
-                    System.out.println(DIVIDER  + System.lineSeparator()
-                    + "You did not key in a task number. Please key in a valid task number to delete!"
-                            + System.lineSeparator() + DIVIDER);
+                    Ui.invalidTaskNumberError();
                 }
                 break;
+            case COMMAND_FIND:
+                //add in find function.
+                //use indexOf to find.
+
+                break;
             default:
-                System.out.println(DIVIDER + System.lineSeparator()
-                        + "☹ OOPS!!! I'm sorry, but I don't know what that means :-("
-                        + System.lineSeparator() + DIVIDER);
+                Ui.unknownTaskError();
                 break;
             }
         }
@@ -349,9 +325,9 @@ public class Duke {
             System.out.println("File not found!");
         }
 
-        printLogo();
-        greetUser();
+        Ui.printLogo();
+        Ui.greetUser();
         taskManager();
-        sayByeToUser();
+        Ui.sayByeToUser();
     }
 }

@@ -2,3 +2,6 @@ T:0: read book
 T:1: check 1
 T:0: cehck 2
 T:1: play game
+T:0: play game
+T:1: hshshs
+T:1: cehkc
