@@ -3,9 +3,7 @@ package utility;
 
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.Properties;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
