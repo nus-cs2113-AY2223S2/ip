@@ -1,6 +1,7 @@
 package inu.parser;
 
 import inu.commands.Command;
+import inu.commands.HelpCommand;
 import inu.commands.TodoCommand;
 import inu.commands.DeadlineCommand;
 import inu.commands.EventCommand;
@@ -67,6 +68,8 @@ public class Parser {
         String command = userString[INDEX_COMMAND];
 
         switch (command) {
+        case HelpCommand.COMMAND_WORD:
+            return new HelpCommand();
         case TodoCommand.COMMAND_WORD:
             return runTodo();
         case DeadlineCommand.COMMAND_WORD:
