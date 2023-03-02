@@ -30,7 +30,6 @@ public class Onandon {
             if(c.execute(tasks))
                 break;
         }
-        Storage.storeCheckpoint(tasks);
         Ui.printBye();
     }
 

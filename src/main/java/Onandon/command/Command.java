@@ -59,6 +59,7 @@ public class Command {
             System.out.println("\t\t[" + tasks.get(this.index).getStatusIcon() + "] " +
                     tasks.get(this.index).getDescription());
             Ui.printUnderline();
+            Storage.storeCheckpoint(tasks);
             break;
         case "unmark":
             Ui.printUnmark();
@@ -66,6 +67,7 @@ public class Command {
             System.out.println("\t\t[" + tasks.get(this.index).getStatusIcon() + "] " +
                     tasks.get(this.index).getDescription());
             Ui.printUnderline();
+            Storage.storeCheckpoint(tasks);
             break;
         case "delete":
             Ui.printDelete();
@@ -74,6 +76,7 @@ public class Command {
             tasks.substractNum();
             System.out.println("\t Now you have " + tasks.getNum() + " tasks in the list.");
             Ui.printUnderline();
+            Storage.storeCheckpoint(tasks);
             break;
         case "list":
             Ui.printList();
@@ -81,9 +84,11 @@ public class Command {
                 System.out.println("\t " + (i+1) + ". " + tasks.get(i).toString());
             }
             Ui.printUnderline();
+            Storage.storeCheckpoint(tasks);
             break;
         case "exit":
             exit = true;
+            Storage.storeCheckpoint(tasks);
             break;
         }
         return exit;
