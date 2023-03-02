@@ -1,6 +1,7 @@
 package tasklist;
 
 import constants.ErrorMessage;
+import exception.DukeException;
 import model.task.Task;
 import storage.Storage;
 
@@ -8,14 +9,14 @@ import java.util.ArrayList;
 
 /**
  * Database is a class that is used to mock a real life database. It contains
- * the basic CRUD operations in the modern database. It adheres to the
- * Singleton design pattern which will be taught later.
+ * the basic CRUD operations in the modern database. The Singleton Design
+ * pattern is used here.
  */
 public class TaskList {
 
   protected static TaskList instance = null;
 
-  protected final ArrayList<Task> tasks = new ArrayList<Task>();
+  protected final ArrayList<Task> tasks = new ArrayList<>();
 
   protected final static Storage storage = Storage.getInstance();
 
@@ -50,27 +51,29 @@ public class TaskList {
    *
    * @param index The index of the task to be read.
    * @return The task at the index.
-   * @throws Exception An exception if an invalid index is provided.
+   * @throws DukeException An exception if an invalid index is provided.
    */
-  public Task read(int index) throws Exception {
+  public Task read(int index) throws DukeException {
     int size = tasks.size();
     if (index >= size || index < 0) {
-      throw new Exception(ErrorMessage.INVALID_INDEX);
+      throw new DukeException(ErrorMessage.INVALID_INDEX);
     }
     return tasks.get(index);
   }
 
   /**
-   * A simple function to mimic the database UPDATE functionality.
+   * The user will provide the index and the value that they would like to
+   * update it with. Following which, we will read the model from the task
+   * list and update it.
    *
    * @param index The index of the task to be updated.
-   * @param task  The new state of the task.
-   * @throws Exception An exception if the index is invalid.
+   * @param value The new state of the task.
+   * @throws DukeException An exception if the index is invalid.
    */
-  public void update(int index, boolean value) throws Exception {
+  public void update(int index, boolean value) throws DukeException {
     int size = tasks.size();
     if (index >= size || index < 0) {
-      throw new Exception(ErrorMessage.INVALID_INDEX);
+      throw new DukeException(ErrorMessage.INVALID_INDEX);
     }
     Task model = tasks.get(index);
     model.setDone(value);
@@ -82,13 +85,12 @@ public class TaskList {
    * A simple function to mimic the database DELETE functionality.
    *
    * @param index The index of the task to be updated.
-   * @param task  The new state of the task.
-   * @throws Exception An exception if the index is invalid.
+   * @throws DukeException An exception if the index is invalid.
    */
-  public void delete(int index) throws Exception {
+  public void delete(int index) throws DukeException {
     int size = tasks.size();
     if (index >= size || index < 0) {
-      throw new Exception(ErrorMessage.INVALID_INDEX);
+      throw new DukeException(ErrorMessage.INVALID_INDEX);
     }
     tasks.remove(index);
     storage.updateFile(tasks);
