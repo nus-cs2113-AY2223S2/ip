@@ -86,6 +86,7 @@ public class StorageManager {
         }
         if (!dataFile.exists()) {
             this.getTextUi().printImportantMessage(StorageManager.DATA_FILE_NOT_FOUND_ERROR);
+            this.getTextUi().printFooter();
             /*
              * createDataFile() will throw RicaStorageException if data file cannot
              *   be created
