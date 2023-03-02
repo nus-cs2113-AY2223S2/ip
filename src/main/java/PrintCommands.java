@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 import Tasks.Task;
 
 public class PrintCommands {
@@ -26,50 +28,60 @@ public class PrintCommands {
         printLine();
     }
 
-    public static void printList(Task t[], int counter) {
+    public static void printList(ArrayList<Task> taskList) {
         printLine();
-        System.out.println("\tHere are the tasks in your list:");
-        for (int i = 0; i < counter; i++) { // 0-base
-            System.out.println("\t" + (i + 1) + "." + t[i].getDescription());
-        }
-        printLine();
-    }
-
-    public static void printNumberOfTasks(int counter) {
-        if (counter == 1) {
-            System.out.println("\tYou have a total of " + counter + " task in the list");
+        if (taskList.size() == 0) {
+            System.out.println("You don't have any tasks added.");
         } else {
-            System.out.println("\tYou have a total of " + counter + " tasks in the list");
+            System.out.println("\tHere are the tasks in your list:");
+            for (int i = 0; i < taskList.size(); i++) { // 0-base
+                System.out.println("\t" + (i + 1) + "." + taskList.get(i).getDescription());
+            }
+        }
+        printLine();
+    }
+
+    public static void printNumberOfTasks(ArrayList<Task> taskList) {
+        if (taskList.size() == 1) {
+            System.out.println("\tYou have a total of " + taskList.size() + " task in the list");
+        } else {
+            System.out.println("\tYou have a total of " + taskList.size() + " tasks in the list");
         }
     }
 
-    public static void printTodoMessage(Task t, String tododescription, int counter) {
+    public static void printTodoMessage(ArrayList<Task> taskList, String todoDescription) {
         printLine();
         System.out.println("\tGot it. I've added this task: ");
-        System.out.println("\t" + t.getDescription());
-        printNumberOfTasks(counter);
+        System.out.println("\t" + todoDescription);
+        printNumberOfTasks(taskList);
         printLine();
     }
 
-    public static void printDeadlineMessage(Task t, String deadlineDescription, int counter) {
+    public static void printDeadlineMessage(ArrayList<Task> taskList, String deadlineDescription) {
         printLine();
         System.out.println("\tGot it. I've added this task: ");
-        System.out.println("\t" + t.getDescription());
-        printNumberOfTasks(counter);
+        System.out.println("\t" + deadlineDescription);
+        printNumberOfTasks(taskList);
         printLine();
     }
 
-    public static void printEventMessage(Task t, String eventDescription, int counter) {
+    public static void printEventMessage(ArrayList<Task> taskList, String eventDescription) {
         printLine();
         System.out.println("\tGot it. I've added this task: ");
-        System.out.println("\t" + t.getDescription());
-        printNumberOfTasks(counter);
+        System.out.println("\t" + eventDescription);
+        printNumberOfTasks(taskList);
         printLine();
     }
 
     public static void printHelp() {
         printLine();
-            System.out.println("Will Implement Soon!");
+        System.out.println("Will Implement Soon!");
+        printLine();
+    }
+
+    public static void printDeleteMessage() {
+        printLine();
+        System.out.println();
         printLine();
     }
 }

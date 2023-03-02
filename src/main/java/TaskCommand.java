@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 import Exceptions.InvalidTaskDescription;
 import Exceptions.InvalidTaskNumberException;
 import Exceptions.MissingDescriptionException;
@@ -8,74 +10,76 @@ import Tasks.Todo;
 
 public class TaskCommand {
 
-    public static void markTask(int counter, Task[] t, String[] command, int TaskIndex)
+    public static void markTask(ArrayList<Task> taskList, String[] command, int taskIndex)
             throws InvalidTaskNumberException {
         // mark task as done
 
-        if (t == null || TaskIndex < 0 || TaskIndex >= t.length || t[TaskIndex] == null) {
+        if (taskList == null || taskIndex < 0 || taskIndex >= taskList.size() || taskList.get(taskIndex) == null) {
             throw new InvalidTaskNumberException("Invalid task index");
         }
 
         PrintCommands.printLine();
         System.out.println("\tNice! I've marked this task as done:");
-        t[TaskIndex].markAsDone();
-        System.out.println("\t" + t[TaskIndex].getType() + t[TaskIndex].getStatusIcon() + t[TaskIndex].description);
+        taskList.get(taskIndex).markAsDone();
+        System.out.println("\t" + taskList.get(taskIndex).getType() + taskList.get(taskIndex).getStatusIcon()
+                + taskList.get(taskIndex).description);
         PrintCommands.printLine();
     }
 
-    public static void unmarkTask(int counter, Task[] t, String[] command, int TaskIndex)
+    public static void unmarkTask(ArrayList<Task> taskList, String[] command, int taskIndex)
             throws InvalidTaskNumberException {
 
-        if (t == null || TaskIndex < 0 || TaskIndex >= t.length || t[TaskIndex] == null) {
+        if (taskList == null || taskIndex < 0 || taskIndex >= taskList.size() || taskList.get(taskIndex) == null) {
             throw new InvalidTaskNumberException("Invalid task index");
         }
 
         PrintCommands.printLine();
         System.out.println("\tOK, I've marked this task as not done yet:");
-        t[TaskIndex].markAsNotDone();
+        taskList.get(taskIndex).markAsNotDone();
         System.out.println(
-                "\t" + t[TaskIndex].getType() + t[TaskIndex].getStatusIcon() + t[TaskIndex].description);
+                "\t" + taskList.get(taskIndex).getType() + taskList.get(taskIndex).getStatusIcon()
+                        + taskList.get(taskIndex).description);
         PrintCommands.printLine();
     }
 
-    public static int todoTask(int counter, Task[] t, String[] command) throws MissingDescriptionException, InvalidTaskDescription {
+    public static void todoTask(ArrayList<Task> taskList, String[] command)
+            throws MissingDescriptionException, InvalidTaskDescription {
         if (!isValidTodo(command)) {
             throw new MissingDescriptionException(null);
-        } 
-        String todoDescription = command[1];
-        t[counter] = new Todo(todoDescription);
-        PrintCommands.printTodoMessage(t[counter], todoDescription, counter + 1);
-        counter++;
-        return counter;
+        }
+        String todoDescription = command[1]; // Get the description of the task from the user input
+        taskList.add(new Todo(todoDescription)); // Add the new todo task to the arraylist
+        PrintCommands.printTodoMessage(taskList, todoDescription);
     }
-    public static int deadlineTask(int counter, Task[] t, String[] command) throws MissingDescriptionException, InvalidTaskDescription {
+
+    public static void deadlineTask(ArrayList<Task> taskList, String[] command)
+            throws MissingDescriptionException, InvalidTaskDescription {
         if (!isValidDeadline(command)) {
             throw new MissingDescriptionException(null);
-        } 
+        }
         String[] deadlineCommand = command[1].split(" /by", 2);
-        String deadlineDescription = deadlineCommand[0];
-        String byDate = deadlineCommand[1];
-        t[counter] = new Deadline(deadlineDescription, byDate);
-        PrintCommands.printDeadlineMessage(t[counter], deadlineDescription, counter + 1);
-        counter++;
-        return counter;
+
+        String deadlineDescription = deadlineCommand[0]; // Get description of the user input
+        String byDate = deadlineCommand[1]; // Deadline of the user input
+        taskList.add(new Deadline(deadlineDescription, byDate)); // Add the new deadline to the arraylist
+        PrintCommands.printDeadlineMessage(taskList, deadlineDescription);
     }
 
-    public static int eventTask(int counter, Task[] t, String[] command) throws MissingDescriptionException, InvalidTaskDescription {
+    public static void eventTask(ArrayList<Task> taskList, String[] command)
+            throws MissingDescriptionException, InvalidTaskDescription {
         if (!isValidEvent(command)) {
             throw new MissingDescriptionException(null);
-        } 
+        }
         String[] eventCommand = command[1].split(" /from | /to");
-        String eventDescription = eventCommand[0];
-        String eventFromDate = eventCommand[1];
-        String eventToDate = eventCommand[2];
-        t[counter] = new Event(eventDescription, eventFromDate, eventToDate);
-        PrintCommands.printEventMessage(t[counter], eventDescription, counter + 1);
-        counter++;
-        return counter;
+
+        String eventDescription = eventCommand[0]; // Get event description from user input
+        String eventFromDate = eventCommand[1]; // Get event from date
+        String eventToDate = eventCommand[2]; // Get event to date
+        taskList.add(new Event(eventDescription, eventFromDate, eventToDate)); // Add the new event to the arraylist
+        PrintCommands.printEventMessage(taskList, eventDescription);
     }
 
-    public static int getTaskIndex(String[] command, int counter)
+    public static int getTaskIndex(String[] command, ArrayList<Task> taskList)
             throws InvalidTaskNumberException, NumberFormatException {
 
         if (command.length < 2) {
@@ -83,11 +87,11 @@ public class TaskCommand {
         }
         int TaskIndex = Integer.parseInt(command[1]) - 1; // 0-base
 
-        if (TaskIndex < 0 || TaskIndex > counter) {
+        if (TaskIndex < 0 || TaskIndex > taskList.size()) {
             throw new InvalidTaskNumberException(null);
         } else {
-            System.out.println("Task Index : " + TaskIndex);
-            System.out.println("Counter : " + counter);
+            // System.out.println("Task Index : " + TaskIndex);
+            // System.out.println("Counter : " + taskList.size());
             return TaskIndex;
         }
     }
@@ -96,7 +100,7 @@ public class TaskCommand {
         boolean isValidTodo = true;
         if (command.length < 2) {
             isValidTodo = false;
-        } 
+        }
         return isValidTodo;
     }
 
@@ -114,7 +118,7 @@ public class TaskCommand {
     public static boolean isValidEvent(String[] command) {
         boolean hasFromDate = false;
         boolean hasToDate = false;
-        
+
         for (String s : command) {
             if (s.contains("/from")) {
                 hasFromDate = true;
@@ -124,5 +128,23 @@ public class TaskCommand {
             }
         }
         return hasFromDate && hasToDate;
+    }
+
+    public static void deleteTask(ArrayList<Task> taskList, String[] command, int taskIndex)
+            throws InvalidTaskNumberException {
+
+        if (taskList == null || taskIndex < 0 || taskIndex >= taskList.size() || taskList.get(taskIndex) == null) {
+            throw new InvalidTaskNumberException("Invalid task index");
+        }
+
+        PrintCommands.printLine();
+        System.out.println("\tWoosh! This task is now gone: ");
+        System.out.println(
+                "\t" + taskList.get(taskIndex).getType() + taskList.get(taskIndex).getStatusIcon()
+                        + taskList.get(taskIndex).description);
+        PrintCommands.printLine();
+
+        taskList.remove(taskIndex); // delete the specified task number
+
     }
 }
