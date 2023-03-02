@@ -66,24 +66,41 @@ public class Ui {
             + "─────────────██──────────────\n";
 
 
-
+    /**
+     * Print the logo and a message to welcome the user
+     */
     public static void showWelcome() {
         System.out.println(LOGO);
         System.out.println("Hello! I'm Jigsaw\n");
         System.out.println("What can I do for you?\n");
     }
 
+    /**
+     * Print the symbol and a message to greet bye to the user
+     */
     public static void showBye() {
         System.out.println("Bye. Hope to see you again soon!\n");
         System.out.println(SYMBOL);
     }
 
+    /**
+     * Prints a message and the added task to inform the user that the task has been added to the list
+     *
+     * @param details the description of the task
+     * @param size the current size of the list
+     */
     public static void printTask(String details, Integer size) {
         System.out.println("Got it I have added this task:");
         System.out.println("  " + details);
         System.out.println("Now you have " + size + " tasks in the list.");
     }
 
+    /**
+     * Prints a message and the task deleted to inform the user that the task has been deleted from the list
+     *
+     * @param details the description of the task
+     * @param size the current size of the list
+     */
     public static void printRemoval(String details, Integer size) {
         System.out.println("Noted. I've removed this task:");
         System.out.println("  " + details);
