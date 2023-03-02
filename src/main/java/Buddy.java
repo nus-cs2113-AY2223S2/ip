@@ -12,7 +12,7 @@ public class Buddy {
     public static int taskCount = 0;
     public static String divider = "________________________________________________________________________________";
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         TaskList taskList = new TaskList();
         try {
             Storage.loadFile(taskList);
@@ -38,11 +38,13 @@ public class Buddy {
         String input;
         Scanner in = new Scanner(System.in);
         input = in.nextLine();
+        Parser processAllCommands = new Parser();
+
+        while (! processAllCommands.isExit(input)) {
+            processAllCommands.executeLine(taskList, input);
 
 
-        while (!input.equals("bye")) {
-
-            int index = 1;
+            /*int index = 1;
             if (input.equals("list")) {
                 Command list = new ListCommand();
                 list.executeCommand(taskList, input);
@@ -60,7 +62,7 @@ public class Buddy {
                 } catch (IndexOutOfBoundsException a) {
                     System.out.println("That is not a valid task to mark! Please check your list again and input a valid task");
 
-                }*/
+                }
 
             } else if (input.startsWith("unmark")) {
                 Command unmark = new UnmarkTaskCommand();
@@ -77,7 +79,7 @@ public class Buddy {
                 } catch (IndexOutOfBoundsException a) {
                     System.out.println("That is not a valid task to unmark! Please check your list again and input a valid task");
 
-                }*/
+                }
             } else if (input.startsWith("todo") || input.startsWith("deadline") || input.startsWith("event") || input.startsWith("delete") || input.startsWith("find")) {
 
                 if (input.startsWith("todo")) {
@@ -100,11 +102,8 @@ public class Buddy {
                     Command find = new FindTaskCommand();
                     find.executeCommand(taskList, input);
 
-                }
+                }*/
 
-            } else {
-                System.out.println("This input does not exist! Please type a valid input!");
-            }
             input = in.nextLine();
 
         }
