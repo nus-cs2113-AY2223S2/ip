@@ -12,6 +12,7 @@ public interface ErrorMessage {
   String INVALID_INPUT = "A valid command has been provided but the input format is incorrect";
   String NO_DEADLINE_PROVIDED = "No deadline provided";
   String NO_DESCRIPTION_PROVIDED = "No description has been provided";
+  String NO_START_OR_END = "No start or end provided";
   String PARSE_INT_ERROR = "You have provided a non-number index\n";
   String UNKNOWN_COMMAND = "An unknown command has been provided";
 }
