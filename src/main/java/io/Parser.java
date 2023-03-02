@@ -1,12 +1,10 @@
 package io;
 
 /**
- * This class manages Input and Output for Duke.<br>
- * Includes Input validation, processing arguments, and also file writing I/O.<br>
- * Credits to Contacts in Week 4 for input processing/handling methods.
- * @author Choong Zhan Hong
+ * Utility class, no need to instantiate.
+ * Use static methods to parse and process input.
  */
-public final class IO {
+public class Parser {
 
     /**
      * Split input into 1st arg and subsequent line.
@@ -59,5 +57,4 @@ public final class IO {
         }
         return eventArgs;
     }
-
 }

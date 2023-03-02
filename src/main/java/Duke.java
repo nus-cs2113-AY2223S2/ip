@@ -1,7 +1,4 @@
-import io.DukeException;
-import io.IO;
-import io.Storage;
-import io.Ui;
+import io.*;
 import task.Deadline;
 import task.Event;
 import task.TaskList;
@@ -92,7 +89,7 @@ public class Duke {
      * @return Feedback string or error string
      */
     public static String executeCommand(String inputLine) {
-        final String[] commandTypeAndArgs = IO.splitCommandAndArgs(inputLine);
+        final String[] commandTypeAndArgs = Parser.splitCommandAndArgs(inputLine);
         final String command = commandTypeAndArgs[0];
         final String commandArgs = commandTypeAndArgs[1];
 
@@ -134,7 +131,7 @@ public class Duke {
      */
     private static String handleAddTaskTodo(String commandArgs) {
         try {
-            Todo newTask = new Todo(IO.processTaskTodo(commandArgs), TaskList.getNextTaskNumber());
+            Todo newTask = new Todo(Parser.processTaskTodo(commandArgs), TaskList.getNextTaskNumber());
             tasks.addTask(newTask);
             return Ui.feedbackTaskAdded(newTask);
         } catch (DukeException e) {
@@ -144,7 +141,7 @@ public class Duke {
 
     private static String handleAddTaskDeadline(String commandArgs) {
         try {
-            String[] deadlineArgs = IO.processTaskDeadline(commandArgs);
+            String[] deadlineArgs = Parser.processTaskDeadline(commandArgs);
             Deadline newTask =
                     new Deadline(deadlineArgs[0], TaskList.getNextTaskNumber(), deadlineArgs[1]);
             tasks.addTask(newTask);
@@ -156,7 +153,7 @@ public class Duke {
 
     private static String handleAddTaskEvent(String commandArgs) {
         try {
-            String[] eventArgs = IO.processTaskEvent(commandArgs);
+            String[] eventArgs = Parser.processTaskEvent(commandArgs);
             Event newTask =
                     new Event(eventArgs[0], TaskList.getNextTaskNumber(),
                             eventArgs[1], eventArgs[2]);
