@@ -3,12 +3,13 @@ package duke;
 import duke.commands.Command;
 import duke.commands.CommandResult;
 
-import java.io.IOException;
+/**
+ * Adapted from nus-cs2113-AY2223S2/personbook
+ */
 
 public class Duke {
 
     private Ui ui;
-
     private FileProcessor fileProcessor;
     private TaskList taskList = new TaskList();
 

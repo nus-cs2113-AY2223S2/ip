@@ -7,10 +7,19 @@ import duke.commands.task.ToDo;
 import java.io.*;
 import java.util.ArrayList;
 
+/**
+ * Handles the reading, writing and creation of the "duke.txt" file which contains user data.
+ */
+
 public class FileProcessor {
 
     public File dukeTextFile;
 
+    /**
+     * Read from an existing file the user data and adds each task to the task list provided
+     * Creates a file if file does not exist
+     * @param taskList task list to be operated on if file exists and is not empty
+     */
     public FileProcessor(ArrayList<Task> taskList) {
         this.dukeTextFile = new File("duke.txt");
         try {
@@ -32,6 +41,12 @@ public class FileProcessor {
         }
     }
 
+    /**
+     * Adds a task specified by the parameters to the task list provided
+     * @param taskList task list to be operated on
+     * @param parameters contains task details
+     */
+
     public void addToList(ArrayList<Task> taskList, String[] parameters) {
         switch (parameters[0]) {
         case ("[T]"):
@@ -45,6 +60,11 @@ public class FileProcessor {
             break;
         }
     }
+
+    /**
+     * Writes all task in the task list provided in a standardised format into the open file "duke.txt"
+     * @param taskList contains the tasks to be written
+     */
 
     public void writeFile(ArrayList<Task> taskList) {
         try {
