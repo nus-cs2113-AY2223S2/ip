@@ -14,16 +14,18 @@ import java.io.FileNotFoundException;
 
 public class Duke {
     public static void main(String[] args) {
+        Ui ui = new Ui();
         ArrayList<Task> tasks = new ArrayList<>();
         Scanner in = new Scanner(System.in);
         String filePath = "savedTasks.txt";
 
-        greeting();
-        System.out.println("Attempting to retrieve your files..." + System.lineSeparator());
+        ui.showWelcomeMessage();
+        ui.showSavedTasksRetrievalMessage();
         try {
             printFileContents(filePath, tasks);
         } catch (FileNotFoundException e) {
-            System.out.println("File is not found. Created a new file!");
+            ui.showFileNotFoundMessage();
+            ui.showNewFileCreationMessage();
         }
 
         boolean isExit = false;
@@ -47,11 +49,9 @@ public class Duke {
                     throw new DukeException();
                 }
             } catch (IndexOutOfBoundsException e) {
-                System.out.println("Hmm... some details appear to be missing. Please try again.");
-                horizontalLine();
+                ui.showMissingAttributesMessage();
             } catch (DukeException e) {
-                System.out.println("I'm sorry, but I don't know what that means");
-                horizontalLine();
+                ui.showIncorrectCommandWarning();
             }
         }
     }
@@ -76,16 +76,18 @@ public class Duke {
     }
 
     public static void addToList(Task newTask, ArrayList<Task> tasks) {
-        horizontalLine();
-        System.out.println("Sure, I've added this task: ");
+        Ui ui = new Ui();
+        ui.horizontalLine();
+        ui.showTaskAddedMessage();
         displayTask(newTask);
         tasks.add(newTask);
         printNumberOfTasks(tasks.size());
-        horizontalLine();
+        ui.horizontalLine();
     }
 
     public static void deleteFromList(String messageFromUser, ArrayList<Task> tasks) {
-        horizontalLine();
+        Ui ui = new Ui();
+        ui.horizontalLine();
         // messageFromUser is in the format delete INDEX
         String[] splitMessage = messageFromUser.split(" ");
         int indexToDelete = Integer.parseInt(splitMessage[1]);
@@ -93,13 +95,14 @@ public class Duke {
         indexToDelete--;
         Task taskToDelete = tasks.get(indexToDelete);
         tasks.remove(indexToDelete);
-        System.out.println("Alright, I have removed this task: ");
+        ui.showTaskRemovedMessage();
         displayTask(taskToDelete);
         printNumberOfTasks(tasks.size());
-        horizontalLine();
+        ui.horizontalLine();
     }
 
     public static void changeTaskStatus(String sentence, ArrayList<Task> tasks) {
+        Ui ui = new Ui();
         String[] words = sentence.split(" ");
         int taskNumber = Integer.parseInt(words[1]);
         // Decrement 1 as ArrayList is index 0 based
@@ -110,22 +113,23 @@ public class Duke {
         } else {
             currentTask.markAsUndone();
         }
-        horizontalLine();
+        ui.horizontalLine();
     }
 
     public static void displayList(ArrayList<Task> tasks) {
+        Ui ui = new Ui();
         int totalNumberOfTasks = tasks.size();
         if (totalNumberOfTasks > 0) {
-            System.out.println("Here are the tasks in your list: ");
+            ui.showDisplayListHeaderMessage();
             for (int index = 0; index < totalNumberOfTasks; index += 1) {
                 Task currentTask = tasks.get(index);
                 System.out.print(index + 1 + ". ");
                 displayTask(currentTask);
             }
         } else {
-            System.out.println("There are no tasks to display.");
+            ui.showNoTasksToDisplayMessage();
         }
-        horizontalLine();
+        ui.horizontalLine();
     }
 
     public static void displayTask(Task currentTask) {
@@ -190,40 +194,29 @@ public class Duke {
         return newEvent;
     }
 
-    public static void greeting() {
-        horizontalLine();
-        System.out.println("Hello! I'm Duke");
-        System.out.println("What can I do for you?");
-        horizontalLine();
-    }
 
     public static void exitGreeting(ArrayList<Task> tasks, String filePath) {
+        Ui ui = new Ui();
         initialiseWritingToFile(tasks, filePath);
-        System.out.println("Bye. Hope to see you again soon!");
-        horizontalLine();
+        ui.showGoodbyeMessage();
     }
 
-    public static void horizontalLine() {
-        System.out.println("________________________________________");
-    }
-
-    // Adapted from CS2113 Week 6 documentation
     // If there are saved tasks, print them out.
     private static void printFileContents(String filePath, ArrayList<Task> tasks) throws FileNotFoundException {
+        Ui ui = new Ui();
         File f = new File(filePath);
         Scanner s = new Scanner(f);
         if (s.hasNext()) {
-            horizontalLine();
+            ui.horizontalLine();
             while (s.hasNext()) {
                 String lineInFile = s.nextLine();
                 copyToList(lineInFile, tasks, filePath);
             }
             displayList(tasks);
-            horizontalLine();
+            ui.horizontalLine();
         } else {
-            System.out.println("There are no saved tasks.");
-            System.out.println("Add your first task :)");
-            horizontalLine();
+            ui.showNoTasksToDisplayMessage();
+            ui.horizontalLine();
         }
     }
 
