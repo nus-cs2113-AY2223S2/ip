@@ -3,24 +3,75 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class Duke {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         Scanner input = dukeStart();
         ArrayList<Task> list = dukeReadFromFile();
         dukeAddList(input, list);
     }
-    public static ArrayList<Task> dukeReadFromFile() {
+    public static ArrayList<Task> dukeReadFromFile() throws Exception {
         //Frome https://www.sghill.net/2014/how-do-i-make-cross-platform-file-paths-in-java/
         String home = System.getProperty("user.dir");
 //        System.out.println(home);
         java.nio.file.Path path = java.nio.file.Paths.get(home, "src", "main", "savefile");
 //        System.out.println(path);
+        byte[] tasksInByteForm = new byte[1000000];
+        ArrayList<Task> list = new ArrayList<Task>();
+        if (Files.exists(path)) {
+            try {
+                tasksInByteForm = Files.readAllBytes(path);
+            } catch (IOException e) {
+                //TODO error catching
+            }
+            String tasksInStringForm = new String(tasksInByteForm);
+            String[] arrayOfTasks = tasksInStringForm.split("\n");
 
-        return new ArrayList<>();
+            System.out.println(arrayOfTasks);
+            for (String task : arrayOfTasks) {
+                Task recreatedTask = createTaskFromString(task);
+                list.add(recreatedTask);
+            }
+        }
+        return list;
+    }
+    private static Task createTaskFromString(String string) throws Exception {
+        String[] attributes = string.split("\\|");
+        if (attributes.length < 1) {
+            System.out.println("Wrong format for task");
+        }
+        String taskType = attributes[0];
+        boolean bool;
+        String taskName;
+        String boolString;
+        String deadline;
+        String start;
+        switch(taskType) {
+            case ("class Task"):
+                taskName = attributes[1];
+                boolString = attributes[2];
+                bool = boolString.equals("true");
+                return new Task(taskName, bool, 0);
+            case ("class Deadline"):
+                taskName = attributes[1];
+                boolString = attributes[2];
+                deadline = attributes[3];
+                bool = boolString.equals("true");
+                return new Deadline(taskName, bool, 0, deadline);
+            case ("class Event"):
+                taskName = attributes[1];
+                boolString = attributes[2];
+                deadline = attributes[3];
+                start = attributes[4];
+                bool = boolString.equals("true");
+                return new Event(taskName, bool, 0, start, deadline);
+            default:
+                throw new Exception("Wasn't a task, deadline, or event.");
+        }
     }
     // Printing the startup code
     public static Scanner dukeStart() {
@@ -37,6 +88,7 @@ public class Duke {
 
     // The bulk of the logic (should change name soon)
     public static void dukeAddList(Scanner inputScanner, ArrayList<Task> list) {
+        List tasksToWrite = new ArrayList<Task>();
         while (true) {
             String nextLine = inputScanner.nextLine();
             if (nextLine.equals("list")) {
@@ -73,25 +125,32 @@ public class Duke {
                 //complete
             }
         }
+        try {
+            Files.deleteIfExists(path);
+            Files.createFile(path);
+        } catch (IOException e) {
+            //TODO error catching
+        }
         for (Task task: list) {
             String taskType = String.valueOf(task.getClass());
             ArrayList<String> attributesToStore = new ArrayList<String>();
             String taskInLineForm = "";
+
             switch (taskType) {
-                case ("Task"):
+                case ("class Task"):
                     attributesToStore.add(taskType);
                     attributesToStore.add(task.getTaskName());
                     attributesToStore.add(String.valueOf(task.isDone()));
                     taskInLineForm = deliminterAdder(attributesToStore);
                     break;
-                case ("Deadline"):
+                case ("class Deadline"):
                     attributesToStore.add(taskType);
                     attributesToStore.add(task.getTaskName());
                     attributesToStore.add(String.valueOf(task.isDone()));
                     attributesToStore.add(((Deadline) task).getDeadline());
                     taskInLineForm = deliminterAdder(attributesToStore);
                     break;
-                case ("Event"):
+                case ("class Event"):
                     attributesToStore.add(taskType);
                     attributesToStore.add(task.getTaskName());
                     attributesToStore.add(String.valueOf(task.isDone()));
@@ -101,9 +160,10 @@ public class Duke {
                 default:
                     break;
             }
-
+            taskInLineForm = taskInLineForm.concat("\n");
+            System.out.println(taskInLineForm);
             try {
-                Files.write(path, taskInLineForm.getBytes(StandardCharsets.UTF_8));
+                Files.write(path, taskInLineForm.getBytes(StandardCharsets.UTF_8), StandardOpenOption.APPEND);
             } catch (IOException e) {
                 //TODO error catching still needed
             }
@@ -113,8 +173,9 @@ public class Duke {
     private static String deliminterAdder(ArrayList<String> items) {
         String taskInStringForm = "";
         for (String item : items) {
-            taskInStringForm = taskInStringForm.concat("|" + item);
+            taskInStringForm = taskInStringForm.concat(item + "|");
         }
+        System.out.println(taskInStringForm);
         return taskInStringForm;
     }
 
@@ -216,7 +277,7 @@ public class Duke {
         String eventName = regexOutput[0];
         String startDate = regexOutput[1];
         String endDate = regexOutput[2];
-        Deadline deadline = new Event(eventName, list.size(), startDate, endDate);
+        Deadline deadline = new Event(eventName, false, list.size(), startDate, endDate);
         list.add(deadline);
     }
     public static void dukeCommandDeadline(String nextLine, List<Task> list) {
@@ -233,7 +294,7 @@ public class Duke {
         }
         String deadlineName = regexOutput[0];
         String deadlineDate = regexOutput[1];
-        Deadline deadline = new Deadline(deadlineName, list.size(), deadlineDate);
+        Deadline deadline = new Deadline(deadlineName, false, list.size(), deadlineDate);
         list.add(deadline);
     }
     public static void dukeCommandToDo(String nextLine, List<Task> list) {
