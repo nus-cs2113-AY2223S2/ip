@@ -1,29 +1,29 @@
-# User Guide
+# Duke - A chatbot to keep track of tasks
+## Description
+Duke is a command line chatbot which keeps track of your todos, events, and deadlines
 
-## Features 
+## Accepted commands
+### `list`
+Lists current tasks
 
-### Feature-ABC
+### `mark [TASK NUMBER]`
+Marks task at index [TASK NUMBER] as done
 
-Description of the feature.
+### `unmark [TASK NUMBER]`
+Marks task at index [TASK NUMBER] as not done
 
-### Feature-XYZ
+### `todo [DESCRIPTION]`
+Adds a todo to the task list with the description [DESCRIPTION]
 
-Description of the feature.
+### `deadline [DESCRIPTION] /by [DUE DATE]`
+Adds a deadline to the task list with the description [DESCRIPTION] and the due date [DUE DATE]
 
-## Usage
+### `event [DESCRIPTION] /from [START DATE] /to [END DATE]`
+Adds an event to the task list with the description [DESCRIPTION], start date [START DATE] and end date [END DATE]
 
-### `Keyword` - Describe action
+### `delete [TASK NUMBER]`
+Deletes task at index [TASK NUMBER]
 
-Describe the action and its outcome.
+### `find [STRING]`
+Prints list of tasks which contain the substring [STRING]
 
-Example of usage: 
-
-`keyword (optional arguments)`
-
-Expected outcome:
-
-Description of the outcome.
-
-```
-expected output
-```

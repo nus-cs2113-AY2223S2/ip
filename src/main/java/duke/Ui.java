@@ -22,7 +22,8 @@ public class Ui {
             "- todo [TASK DESCRIPTION]",
             "- event [EVENT DESCRIPTION] /from [START DATE] /to [END DATE]",
             "- deadline [DEADLINE DESCRIPTION] /by [DUE DATE]",
-            "- delete [TASK NUMBER]"
+            "- delete [TASK NUMBER]",
+            "- find [STRING]"
     };
     private static final String INDENT = "      ";
 
@@ -71,7 +72,7 @@ public class Ui {
      * @return nothing
      */
     public static void printIntro() {
-        String[] intro = {"Hello! I'm Tom", "What can I do for you?\n Loading tasks from hard disk..."};
+        String[] intro = {"Hello! I'm Duke", "What can I do for you?\n Loading tasks from hard disk..."};
         printMessage(intro);
 
     }
