@@ -4,6 +4,10 @@ import duke.commands.CommandResult;
 
 import java.util.Scanner;
 
+/**
+ * Handles the interactions with the user.
+ * Adapted from nus-cs2113-AY2223S2/personbook
+ */
 public class Ui {
 
     public static final int DISPLAYED_INDEX_OFFSET = 1;
@@ -11,6 +15,11 @@ public class Ui {
     private static final String LS = System.lineSeparator();
     static final String DIVIDER = "____________________________________________________________";
 
+    /**
+     * Formats the feedback message to the user
+     * @param message contains feedback messages of execution
+     * Taken from nus-cs2113-AY2223S2/personbook
+     */
     public void showToUser(String... message) {
         for (String m : message) {
             System.out.println(m.replace("\n", LS));
@@ -46,6 +55,11 @@ public class Ui {
         return userInput;
     }
 
+    /**
+     * Formats output message to the user
+     * Taken from nus-cs2113-AY2223S2/personbook
+     * @param result contains result of the execution of a command
+     */
     public void showResultToUser(CommandResult result) {
         showToUser(result.outputToUser, DIVIDER);
     }

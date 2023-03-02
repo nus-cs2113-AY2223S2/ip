@@ -4,6 +4,10 @@ import duke.commands.task.Task;
 
 import static duke.Ui.DISPLAYED_INDEX_OFFSET;
 
+/**
+ * Deletes a task from the task list.
+ */
+
 public class DeleteCommand extends Command {
 
     public static final String COMMAND_WORD = "delete";
@@ -13,6 +17,11 @@ public class DeleteCommand extends Command {
     public DeleteCommand(int targetIndex) {
         super(targetIndex);
     }
+
+    /**
+     * Deletes a task if index given is valid
+     * @return CommandResult object containing feedback message
+     */
 
     public CommandResult execute() {
         int taskNumber = targetIndex + DISPLAYED_INDEX_OFFSET;

@@ -4,6 +4,11 @@ import duke.commands.task.Task;
 
 import java.util.List;
 
+/**
+ * Represent the result of an executed command.
+ * Adapted from nus-cs2113-AY2223S2/personbook
+ */
+
 public class CommandResult {
     public final String outputToUser;
     private final List<Task> taskList;
