@@ -10,13 +10,21 @@ import duke.util.Ui;
  */
 public class CreateTodoCommand extends Command {
     private String description;
+    private boolean isInvalid = false;
 
+    /**
+     * Creates parameters for to-do task.
+     *
+     * @param line Input line from user containing task details.
+     * @throws IndexOutOfBoundsException if user does not provide either a description.
+     */
     public CreateTodoCommand(String line) throws IndexOutOfBoundsException {
         try {
             String[] inputLines = line.split(" ", 2);
             description = inputLines[1];
         } catch (IndexOutOfBoundsException e) {
-            System.out.println("Your deadline must be of the following format: deadline (deadline name) /by (date)");
+            System.out.println("You must have a task description.");
+            isInvalid = true;
         }
     }
 
@@ -28,9 +36,11 @@ public class CreateTodoCommand extends Command {
      */
     @Override
     public void run(TaskList taskList) {
-        Task item = new Todo(description);
-        taskList.lists.add(item);
-        Ui.printAddTask(item);
-        Ui.printListSize(taskList.lists.size());
+        if (!isInvalid) {
+            Task item = new Todo(description);
+            taskList.lists.add(item);
+            Ui.printAddTask(item);
+            Ui.printListSize(taskList.lists.size());
+        }
     }
 }
