@@ -166,7 +166,7 @@ All matching tasks have been listed!
 ```
 
 ### Exit
-This commands allows you to exit the application. Your tasklist will be automatically saved in a file named `"duke.txt"` and auto-loaded the next time you run the duke application.
+This commands allows you to exit the application. Your task-list will be automatically saved in a file named `"duke.txt"` and auto-loaded the next time you run the duke application.
 
 Command:
 ```
@@ -178,8 +178,8 @@ Bye. Hope to see you again soon!
 ```
 
 ## Summary of Commands
-| Command | Format | Example |
-|---------|--------|---------|
+| Command | Format | Example | 
+|---------|--------|---------| 
 | `todo` | todo <task_description> | todo read book |
 | `deadline` | deadline <task_description> /by <date/time> | deadline book review /by tues 2359 |
 | `event` | event <task_description> /from <date/time> /to <date/time> | event book fair /from fri 3pm /to fri 5pm
