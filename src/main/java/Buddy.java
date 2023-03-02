@@ -9,6 +9,7 @@ import java.util.zip.DataFormatException;
 
 
 public class Buddy {
+    
     public static int taskCount = 0;
 
     public static void main(String[] args) {
