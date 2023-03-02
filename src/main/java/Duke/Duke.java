@@ -2,6 +2,11 @@ package Duke;
 
 import java.util.Scanner;
 
+/**
+ * Main class that represents the UI of the chatbot.
+ * Responsible for communicating with the user via the command line.
+ * This class is responsible for the IO of the chatbot.
+ */
 public class Duke {
     private final static String LINE_BREAK = " ____________________________________________________________";
     private final static String GREETING = "Hello! I'm Duke\n  What can I do for you?";
@@ -46,6 +51,11 @@ public class Duke {
         }
     }
 
+    /**
+     * Void method responsible for generating System.out messages to the command line.
+     *
+     * @param message Message that has to be communicated to the user.
+     */
     static void speak(String message) {
         System.out.println(LINE_BREAK);
         System.out.println("  " + message);

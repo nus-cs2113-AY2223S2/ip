@@ -1,6 +1,15 @@
 package Duke;
 
+/**
+ * Responsible for converting tasks to string form.
+ */
 public class TaskToStringConverter {
+    /**
+     * Converts task to string command.
+     *
+     * @param task Task that is to be converted into a string.
+     * @return A string command that represents the input task.
+     */
     static String convertTaskToCommandString(Task task) {
         String[] info = task.toString().split(" ");
         for (int i = 0; i < info.length; ++i) {
@@ -27,11 +36,4 @@ public class TaskToStringConverter {
         return command;
     }
 
-    static String removeCompletionStatusFromStr(String taskInStr) {
-        int counter = taskInStr.length() - 1;
-        while (taskInStr.charAt(counter) != '/') {
-            counter--;
-        }
-        return taskInStr.substring(0, counter - 1);
-    }
 }
