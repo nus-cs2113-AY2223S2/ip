@@ -1,13 +1,11 @@
-package Onandon.checkpoint;
+package Onandon.storage;
 
 import java.io.*;
 import Onandon.module.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
-public class Checkpoint {
+public class Storage {
     protected static final String PATH = System.getProperty("user.dir");
     protected static final String CHECKPOINT = "/checkpoint.txt";
 

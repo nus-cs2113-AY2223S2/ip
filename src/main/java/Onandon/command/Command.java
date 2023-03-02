@@ -1,6 +1,6 @@
 package Onandon.command;
 
-import Onandon.checkpoint.Checkpoint;
+import Onandon.storage.Storage;
 import Onandon.module.*;
 import Onandon.ui.Ui;
 
@@ -33,7 +33,7 @@ public class Command {
             System.out.println("\t\t" + tasks.get(num).toString());
             tasks.addNum();
             Ui.printCnt(tasks.getNum());
-            Checkpoint.storeCheckpoint(tasks);
+            Storage.storeCheckpoint(tasks);
             break;
         case "deadline":
             Ui.printFormAbove();
@@ -42,7 +42,7 @@ public class Command {
             System.out.println("\t\t" + tasks.get(num).toString());
             tasks.addNum();
             Ui.printCnt(tasks.getNum());
-            Checkpoint.storeCheckpoint(tasks);
+            Storage.storeCheckpoint(tasks);
             break;
         case "event":
             Ui.printFormAbove();
@@ -51,7 +51,7 @@ public class Command {
             System.out.println("\t\t" + tasks.get(num).toString());
             tasks.addNum();
             Ui.printCnt(num);
-            Checkpoint.storeCheckpoint(tasks);
+            Storage.storeCheckpoint(tasks);
             break;
         case "mark":
             Ui.printMark();

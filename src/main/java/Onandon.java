@@ -3,15 +3,14 @@ import Onandon.command.*;
 import Onandon.exception.*;
 import Onandon.module.*;
 import Onandon.ui.Ui;
-import Onandon.checkpoint.Checkpoint;
-import java.util.Scanner;
+import Onandon.storage.Storage;
 
 public class Onandon {
     private TaskList tasks;
     private ExceptionChecker error;
 
     public Onandon(){
-        tasks = Checkpoint.recallCheckpoint();
+        tasks = Storage.recallCheckpoint();
         error = new ExceptionChecker();
     }
 
@@ -31,7 +30,7 @@ public class Onandon {
             if(c.execute(tasks))
                 break;
         }
-        Checkpoint.storeCheckpoint(tasks);
+        Storage.storeCheckpoint(tasks);
         Ui.printBye();
     }
 

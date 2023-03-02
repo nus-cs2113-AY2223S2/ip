@@ -1,7 +1,5 @@
 package Onandon.command;
 
-import Onandon.checkpoint.Checkpoint;
-
 public class Parser {
     public static Command parse(String fullCommand){
         String commandType = fullCommand.split(" ")[0];
