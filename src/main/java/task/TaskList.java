@@ -5,8 +5,7 @@ import exceptions.DukeException;
 
 public class TaskList {
     private static final String LINE = "____________________________________________________________";
-    private static final String errorMessage = "☹ OOPS!!! I'm sorry, but I don't know what that means :-(";
-    private static final String todoError = "☹ OOPS!!! The description of a todo cannot be empty.";
+    private static final String TODO_ERROR = "☹ OOPS!!! The description of a todo cannot be empty.";
     public static ArrayList<Task> list;
 
     public TaskList() {
@@ -14,7 +13,7 @@ public class TaskList {
     }
 
     /**
-     * Delete the task from the list indicated by the index argument from the user input. The index argument is
+     * Delete the task from the list indicated by the index argument from the user input. The index parameter is
      * the index of the task in the list.
      * @param index
      */
@@ -28,30 +27,30 @@ public class TaskList {
     }
 
     /**
-     * Mark the indicated task to be done in the list. The index argument is the index of the task in the list.
+     * Mark the indicated task to be done in the list. The index parameter is the index of the task in the list.
      * @param index
      */
     public static void markTask(int index) {
         System.out.println(LINE);
         list.get(index).markDone();
         System.out.println("Awesome! I've mark this task as done:");
-        System.out.println("[" + list.get(index).getStatusIcon() + "] " + list.get(index).description);
+        System.out.println("[" + list.get(index).getStatusIcon() + "] " + list.get(index).description.split(" ", 2)[1]);
     }
 
     /**
-     * Mark the indicated task to be not done in the list. The index argument is the index of the task in the list.
+     * Mark the indicated task to be not done in the list. The index parameter is the index of the task in the list.
      * @param index
      */
     public static void unmarkTask(int index) {
         System.out.println(LINE);
         list.get(index).markUndone();
         System.out.println("What!?!? OK, I've marked this task as not done yet:");
-        System.out.println("[" + list.get(index).getStatusIcon() + "] " + list.get(index).description);
+        System.out.println("[" + list.get(index).getStatusIcon() + "] " + list.get(index).description.split(" ", 2)[1]);
     }
 
     /**
      * Create and add a TodoTask into the list. Print the confirmation of the added task.
-     * The input argument is the TodoTask description typed by the user.
+     * The input parameter is the TodoTask description typed by the user.
      * @param input
      * @throws DukeException if length of task description less than 2
      */
@@ -61,7 +60,7 @@ public class TaskList {
             task.setTaskType("T");
             list.add(task);
             if (task.description.split(" ").length < 2) {
-                throw new DukeException(todoError);
+                throw new DukeException(TODO_ERROR);
             } else {
                 System.out.println(LINE);
                 System.out.println("Roger! The Todo task has been added: \n" + task.toString());
@@ -75,7 +74,7 @@ public class TaskList {
 
     /**
      * Create and add a Deadline Task into the list. Print the confirmation of the added task.
-     * The input argument is the Deadline Task description.
+     * The input parameter is the Deadline Task description.
      * @param input
      */
     public static void addDeadline(String input) {
@@ -90,7 +89,7 @@ public class TaskList {
 
     /**
      * Create and add a Event Task into the list. Print the confirmation of the added task.
-     * The input argument is the Event Task description.
+     * The input parameter is the Event Task description.
      * @param input
      */
     public static void addEvent(String input) {
@@ -170,7 +169,8 @@ public class TaskList {
     }
 
     /**
-     *
+     * This method prints out the previous tasks stored in the save file to show the
+     * user what they had saved from their previous usage of Duke.
      */
     public static void loadSaveList() {
         System.out.println(LINE);
@@ -185,6 +185,40 @@ public class TaskList {
             }
             System.out.println(LINE);
         }
+    }
+
+    /**
+     * This method prints out the found tasks in the list to show the user
+     * which tasks were found from their find input.
+     */
+    private static void printFoundList(ArrayList<Task> foundTasks) {
+        System.out.println(LINE);
+        int numTask = foundTasks.size();
+        if (numTask == 0) {
+            System.out.println("No task found");
+            System.out.println(LINE);
+        } else {
+            System.out.println("Here are the matching tasks in your save list:");
+            for (int i = 0; i < foundTasks.size(); i++) {
+                System.out.println((i+1) + "." + foundTasks.get(i).toString());
+            }
+            System.out.println(LINE);
+        }
+    }
+
+    /**
+     * Stores the task containing the input keyed by the user into a list.
+     * @param input
+     */
+    public static void findTask(String input) {
+        ArrayList<Task> foundTasks = new ArrayList<>();
+        for(Task t : list) {
+            String task = t.description;
+            if (task.contains(input)) {
+                foundTasks.add(t);
+            }
+        }
+        printFoundList(foundTasks);
     }
 
     public static void printError(DukeException e) {

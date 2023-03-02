@@ -1,11 +1,11 @@
 import java.util.Scanner;
-import commandParser.ParseCommand;
+import commandProcessor.CommandProcessor;
 import exceptions.DukeException;
 import storage.TaskStorage;
 import task.*;
 import static task.TaskList.*;
 import static ui.UI.*;
-import static commandParser.ParseCommand.*;
+import static commandProcessor.CommandProcessor.*;
 
 public class Duke {
     private static TaskList tasks;
@@ -30,12 +30,11 @@ public class Duke {
             input = in.nextLine();
             command = input.split(" ")[0];
             try {
-                ParseCommand.runCommand(input, command, tasks);
-                isRunning = getisRunningStatus();
+                CommandProcessor.runCommand(input, command, tasks);
+                isRunning = getIsRunningStatus();
             } catch (DukeException e) {
                 printError(e);
             }
-
         }
     }
 
