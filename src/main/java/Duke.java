@@ -21,14 +21,11 @@ public class Duke {
     public static Scanner input = new Scanner(System.in);
     public static String FILE_LOCATION = "./data/duke.txt";
 
-    public void runCommands() {
-
-    }
     public static void main(String[] args) throws DukeException, IOException {
         Duke ashy = new Duke();
         ashy.ui.printGreetingMessage();
         ashy.taskList.list = ashy.originalFile.loadData();
-        ashy.taskList.currentTaskNum = ashy.taskList.list.size();
+        ashy.taskList.matchingTasksNum = ashy.taskList.list.size();
 
         String userInput = input.nextLine();
         while (!userInput.equals("bye")) {

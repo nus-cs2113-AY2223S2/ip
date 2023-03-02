@@ -22,7 +22,7 @@ public class Parser {
             break;
         case "list":
             ui.printListTasksMessage();
-            taskList.printList(taskList.currentTaskNum);
+            taskList.printAllTasks(taskList.matchingTasksNum);
             break;
         case "todo":
             taskList.addTodo(content);
@@ -41,6 +41,8 @@ public class Parser {
             taskList.deleteTask(content);
             break;
         case "find":
+            taskList.findMatchingTasks(content);
+            taskList.printMatchingTasks();
         case "guide":
             break;
         default:
