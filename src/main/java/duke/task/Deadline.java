@@ -8,6 +8,9 @@ import java.time.LocalDateTime;
 public class Deadline extends Task {
     protected String dueBy;
 
+    private static final String TASK_ICON = "[D]";
+    private static final String TASK_TYPE = "Deadline";
+
     /**
      * Constructs a deadline when with no given datetime
      * sets default to current datetime.
@@ -18,7 +21,7 @@ public class Deadline extends Task {
     public Deadline(String task, String dueBy) {
         super(task);
         this.dueBy = dueBy;
-        this.type = "Deadline";
+        this.type = TASK_TYPE;
         this.endTime = LocalDateTime.now();
     }
 
@@ -32,7 +35,7 @@ public class Deadline extends Task {
     public Deadline(String task, String dueBy, LocalDateTime endTime) {
         super(task);
         this.dueBy = dueBy;
-        this.type = "Deadline";
+        this.type = TASK_TYPE;
         this.endTime = endTime;
     }
 
@@ -62,7 +65,7 @@ public class Deadline extends Task {
      */
     @Override
     public String getTaskType() {
-        return "[D]";
+        return TASK_ICON;
     }
 
     /**
@@ -72,7 +75,7 @@ public class Deadline extends Task {
      */
     @Override
     public String getTaskStatus() {
-        return "[D]" + "[" + getStatusIcon() + "] " + task + getDueBy();
+        return TASK_ICON + "[" + getStatusIcon() + "] " + task + getDueBy();
     }
 
 }

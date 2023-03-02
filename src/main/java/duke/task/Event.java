@@ -9,6 +9,8 @@ public class Event extends Task {
     protected String startString;
     protected String endString;
     protected LocalDateTime startTime;
+    private static final String TASK_ICON = "[E]";
+    private static final String TASK_TYPE = "Event";
 
     /**
      * Constructs an event without a given datetime
@@ -22,7 +24,7 @@ public class Event extends Task {
         super(task);
         this.startString = startString;
         this.endString = endString;
-        this.type = "Event";
+        this.type = TASK_TYPE;
         this.startTime = LocalDateTime.now();
         this.endTime = LocalDateTime.now();
     }
@@ -40,7 +42,7 @@ public class Event extends Task {
         super(task);
         this.startString = startString;
         this.endString = endString;
-        this.type = "Event";
+        this.type = TASK_TYPE;
         this.startTime = startTime;
         this.endTime = endTime;
     }
@@ -71,7 +73,7 @@ public class Event extends Task {
      */
     @Override
     public String getTaskType() {
-        return "[E]";
+        return TASK_ICON;
     }
 
     /**
@@ -81,7 +83,7 @@ public class Event extends Task {
      */
     @Override
     public String getTaskStatus() {
-        return "[E]" + "[" + getStatusIcon() + "] " + task + getDuration();
+        return TASK_ICON + "[" + getStatusIcon() + "] " + task + getDuration();
     }
 
 }

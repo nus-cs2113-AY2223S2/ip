@@ -10,6 +10,11 @@ public class Task {
     protected String task;
     private boolean isDone;
     protected LocalDateTime endTime;
+    private static final String TASK_ICON = "[T]";
+    private static final String TASK_TYPE = "todo";
+    private static final String MARKED_ICON = "X";
+    private static final String UNMARKED_ICON = " ";
+    private static final LocalDateTime DEFAULT_TIME = LocalDateTime.of(0, 1, 1, 0, 0);
 
     /**
      * Constructs a new todo task with default date
@@ -21,8 +26,8 @@ public class Task {
     public Task(String task) {
         this.task = task;
         this.isDone = false;
-        this.type = "todo";
-        this.endTime = LocalDateTime.of(0, 1, 1, 0, 0);
+        this.type = TASK_TYPE;
+        this.endTime = DEFAULT_TIME;
     }
 
     /**
@@ -70,7 +75,7 @@ public class Task {
      * @return The String indicating the status of the task.
      */
     public String getStatusIcon() {
-        return (this.isDone ? "X" : " ");
+        return (this.isDone ? MARKED_ICON : UNMARKED_ICON);
     }
 
     /**
@@ -79,7 +84,7 @@ public class Task {
      * @return Letter representing type of task.
      */
     public String getTaskType() {
-        return "[T]";
+        return TASK_ICON;
     }
 
     /**
@@ -88,7 +93,7 @@ public class Task {
      * @return Task status and description.
      */
     public String getTaskStatus() {
-        return "[T]" + "[" + getStatusIcon() + "] " + task;
+        return TASK_ICON + "[" + getStatusIcon() + "] " + task;
     }
 
 }
