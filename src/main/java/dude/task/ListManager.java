@@ -142,6 +142,12 @@ public class ListManager {
         }
     }
 
+    /**
+     * Function to find task from list with keyword.
+     *
+     * @param input keyword to be found
+     * @throws InvalidFindException If index is invalid.
+     */
     public static void findTask(String input) throws InvalidFindException {
         if(input.equals("")) {
             throw new InvalidFindException();
