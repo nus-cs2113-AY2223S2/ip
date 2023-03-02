@@ -1,18 +1,32 @@
 package duke.deadline;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import duke.item.Item;
 
 public class Deadline extends Item {
-    private String datemark;
+    private static String format = "dd MMM yyyy hh:mm a";
+    private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
     
-    public Deadline(String description, String datemark) {
+    private LocalDateTime datemark;
+    
+    public Deadline(String description, LocalDateTime datemark) {
         super(description);
         this.datemark = datemark;
-        type = "Deadline";
+    }
+
+    public Deadline(String description, LocalDateTime datemark, boolean isDone) {
+        super(description, isDone);
+        this.datemark = datemark;
+    }
+
+    public String getDate() {
+        return this.datemark.toString();
     }
 
     @Override
     public String toString() {
-        return "[D]" + super.toString() + " (by: " + datemark + ")";
+        return "[D]" + super.toString() + " (by: " + datemark.format(formatter) + ")";
     }
 }

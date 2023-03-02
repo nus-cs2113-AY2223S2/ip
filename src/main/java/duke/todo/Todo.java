@@ -5,7 +5,10 @@ import duke.item.Item;
 public class Todo extends Item {
     public Todo(String description) {
         super(description);
-        type = "Todo";
+    }
+
+    public Todo(String description, Boolean isDone) {
+        super(description, isDone);
     }
 
     @Override

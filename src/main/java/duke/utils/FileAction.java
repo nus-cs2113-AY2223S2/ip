@@ -6,10 +6,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import duke.deadline.Deadline;
-import duke.event.Event;
 import duke.item.Item;
-import duke.todo.Todo;
 import duke.exceptions.FileException;
 
 import com.google.gson.Gson;
@@ -32,12 +29,7 @@ public class FileAction {
         }
 
         try(FileReader fileReader = new FileReader(file)) {
-            RuntimeTypeAdapterFactory<Item> itemAdapterFactory = RuntimeTypeAdapterFactory.of(Item.class, "type")
-                .registerSubtype(Todo.class)
-                .registerSubtype(Deadline.class)
-                .registerSubtype(Event.class);
-
-            Gson gson = new GsonBuilder().registerTypeAdapterFactory(itemAdapterFactory).create();
+            Gson gson = new GsonBuilder().registerTypeAdapterFactory(new ItemAdapterFactory()).create();
             ArrayList<Item> items = gson.fromJson(fileReader, new TypeToken<ArrayList<Item>>(){}.getType());
             fileReader.close();
 
@@ -56,7 +48,8 @@ public class FileAction {
      */
     public static void exportItems(ArrayList<Item> items) throws FileException {
         try {
-            Gson gson = new Gson();
+            Gson gson = new GsonBuilder().registerTypeAdapterFactory(new ItemAdapterFactory()).create();
+
             FileWriter fw = new FileWriter("items.txt");
             String jsonString = gson.toJson(items);
             fw.write(jsonString);
