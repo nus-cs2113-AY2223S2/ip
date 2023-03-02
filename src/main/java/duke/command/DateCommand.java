@@ -18,8 +18,8 @@ public class DateCommand extends Command {
     /**
      * Initialises the class with the given date to shortlist for.
      *
-     * @param dateString User input of the date from the CLI, should be in format {@code yyyy-MM-dd}
-     * @throws InvalidDateTime If the input date does not fit the above format
+     * @param dateString User input of the date, should be in format {@code yyyy-MM-dd}.
+     * @throws InvalidDateTime If the input date does not fit the above format.
      */
     public DateCommand (String dateString) throws InvalidDateTime {
         try {
@@ -32,8 +32,8 @@ public class DateCommand extends Command {
     /**
      * Shortlists and prints Tasks from the TaskList that occur during the given date.
      *
-     * @param tasks The existing TaskList
-     * @param ui Prints shortlisted Tasks to user
+     * @param tasks The existing TaskList.
+     * @param ui Prints shortlisted Tasks to user.
      */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {

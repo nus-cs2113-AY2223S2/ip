@@ -4,8 +4,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 /**
- * Abstract class Task is the parent of all types of Tasks.
- * Contains the Task's description and status
+ * Parent class of all types of Tasks.
+ * Contains the Task's description and status.
  */
 public abstract class Task {
 
@@ -19,7 +19,7 @@ public abstract class Task {
     /**
      * Initialises the Task with its description sets its status as not done.
      *
-     * @param description String describing the Task
+     * @param description String describing the Task.
      */
     public Task(String description) {
         this.description = description;
@@ -29,7 +29,7 @@ public abstract class Task {
     /**
      * Get a String describing the type of the Task.
      *
-     * @return String describing the type of Task
+     * @return String describing the type of Task.
      */
     public String getType() {
         return "task";
@@ -38,7 +38,7 @@ public abstract class Task {
     /**
      * Get a String describing the Task.
      *
-     * @return String describing the Task
+     * @return String describing the Task.
      */
     public String getDescription() {
         return description;

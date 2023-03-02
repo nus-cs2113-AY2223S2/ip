@@ -13,7 +13,7 @@ public class FindCommand extends Command {
     /**
      * Initialises the class with the given keyword to shortlist for.
      *
-     * @param keyword User input of the keyword from the CLI
+     * @param keyword User input of the keyword.
      */
     public FindCommand(String keyword) {
         this.keyword = keyword;
@@ -22,8 +22,8 @@ public class FindCommand extends Command {
     /**
      * Shortlists and prints Tasks from the TaskList that contain the given keyword.
      *
-     * @param tasks The existing TaskList
-     * @param ui Prints shortlisted Tasks to user
+     * @param tasks The existing TaskList.
+     * @param ui Prints shortlisted Tasks to user.
      */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {

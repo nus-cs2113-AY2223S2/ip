@@ -12,7 +12,7 @@ public class HelpCommand extends Command {
     /**
      * Prints list of all available Commands and their abilities.
      *
-     * @param ui Prints list of Commands to user
+     * @param ui Prints list of Commands to user.
      */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {

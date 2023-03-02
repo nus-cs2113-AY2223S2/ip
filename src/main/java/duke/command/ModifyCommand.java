@@ -23,10 +23,10 @@ public class ModifyCommand extends Command {
     /**
      * Initialises the class with the type and description of the task given in the command.
      *
-     * @param command Type of modification command being executed (mark, unmark, delete)
-     * @param param Contains the index of the task to be modified
-     * @param size Current number of tasks in TaskList
-     * @throws NumberFormatException If idx cannot be parsed, or is outside the current range of tasks
+     * @param command Type of modification command being executed (mark, unmark, delete).
+     * @param param Contains the index of the task to be modified.
+     * @param size Current number of tasks in TaskList.
+     * @throws NumberFormatException If idx cannot be parsed, or is outside the current range of tasks.
      */
     public ModifyCommand(String command, String param, int size) throws NumberFormatException {
         int idx = Integer.parseInt(param) - 1;
@@ -40,10 +40,10 @@ public class ModifyCommand extends Command {
     /**
      * Executes the modification of a Task in the TaskList tasks based on data in the class.
      *
-     * @param tasks The TaskList of existing Tasks
-     * @param ui Prints success or error message to user
-     * @param storage Gets updated after the TaskList has been modified
-     * @throws UnexpectedException If the command stored is not recognised
+     * @param tasks The TaskList of existing Tasks.
+     * @param ui Prints success or error message to user.
+     * @param storage Gets updated after the TaskList has been modified.
+     * @throws UnexpectedException If the command stored is not recognised.
      */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws UnexpectedException {

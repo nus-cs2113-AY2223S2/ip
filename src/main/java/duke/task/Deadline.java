@@ -21,8 +21,8 @@ public class Deadline extends Task {
      * Initialises as in Task, with added parsing for due date.
      * If parsing is not possible, save due date as String.
      *
-     * @param description String describing the Task
-     * @param byString String describing the due date
+     * @param description String describing the Task.
+     * @param byString String describing the due date.
      */
     public Deadline(String description, String byString) {
         super(description);
@@ -36,8 +36,8 @@ public class Deadline extends Task {
     /**
      * Get a String describing the due date of the Deadline.
      *
-     * @param pattern Desired format for String after parsing
-     * @return Parsed due date
+     * @param pattern Desired format for String after parsing.
+     * @return Parsed due date.
      */
     public String getBy(DateTimeFormatter pattern) {
         return Parser.parseDateTime(by, byString, pattern);

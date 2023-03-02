@@ -17,10 +17,9 @@ public class Duke {
     private static Ui ui;
 
     /**
-     * Initialises Duke by loading in data from save file.
-     * Sets up Ui, Storage, and TaskList.
+     * Initialises Ui, Storage, and TaskList.
      *
-     * @param filePath location of the local save file
+     * @param filePath Location of the local save file.
      */
     public Duke(String filePath) {
         ui = new Ui();
@@ -35,9 +34,10 @@ public class Duke {
     }
 
     /**
-     * Continuously reads, executes, and prints outputs of user commands until ExitCommand is called.
+     * Reads, executes, and prints outputs of user commands continually.
+     * Stops after ExitCommand is called.
      *
-     * @throws UnexpectedException If command cannot be executed for an unexpected reason
+     * @throws UnexpectedException If command cannot be executed for an unexpected reason.
      */
     public void run() throws UnexpectedException {
         boolean isExit = false;
@@ -54,7 +54,7 @@ public class Duke {
     }
 
     /**
-     * Main method. Initialises and runs Duke
+     * Initialises and runs Duke.
      */
     public static void main(String[] args) {
         try {

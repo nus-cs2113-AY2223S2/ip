@@ -30,10 +30,10 @@ public class AddCommand extends Command {
     /**
      * Initialises the class with the type and description of the task given in the command.
      *
-     * @param type Type of task being added (ToDo, Deadline, or Event)
-     * @param param Description of task given by user (including date(s) for Deadline, Event)
-     * @throws InvalidDeadline If the Deadline being added has the wrong format
-     * @throws InvalidEvent If the Event being added has the wrong format
+     * @param type Type of task being added (ToDo, Deadline, or Event).
+     * @param param Description of task given by user (including date(s) for Deadline, Event).
+     * @throws InvalidDeadline If the Deadline being added has the wrong format.
+     * @throws InvalidEvent If the Event being added has the wrong format.
      */
     public AddCommand(String type, String param) throws InvalidDeadline, InvalidEvent {
         this.type = type;
@@ -57,10 +57,10 @@ public class AddCommand extends Command {
     /**
      * Executes the adding of a Task to the TaskList tasks based on data in the class.
      *
-     * @param tasks The TaskList to be added to
-     * @param ui Prints success or error message to user
-     * @param storage Gets updated after the Task has been added
-     * @throws UnexpectedException If the command stored is not recognised
+     * @param tasks The TaskList to be added to.
+     * @param ui Prints success or error message to user.
+     * @param storage Gets updated after the Task has been added.
+     * @throws UnexpectedException If the command stored is not recognised.
      */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws UnexpectedException {

@@ -37,12 +37,12 @@ public class Parser {
     public static final String COMMAND_EVENT_WORD = "event";
 
     /**
-     * Reads in user input and returns a different type of Command based on that.
+     * Returns the corresponding Command to the user input.
      *
-     * @param userCommand Command line input from user
-     * @param ui Prints out error messages if command cannot be parsed
-     * @param size Number of tasks saved in TaskList
-     * @return Corresponding Command class to user input
+     * @param userCommand Command line input from user.
+     * @param ui Prints out error messages if command cannot be parsed.
+     * @param size Number of tasks saved in TaskList.
+     * @return Corresponding Command class to user input.
      */
     public static Command getCommand(String userCommand, Ui ui, int size) {
         final String[] split = userCommand.trim().split("\\s+", 2);
@@ -67,19 +67,18 @@ public class Parser {
     }
 
     /**
-     * Takes data from the user input and puts it into the relevant Command class that is returned.
+     * Adds data from user input into the corresponding Command class that is returned.
      *
-     * @param split Truncated part of user input containing other instructions
-     * @param command Truncated part of user input containing command
-     * @param size Number of tasks saved in TaskList
-     * @return Command class with data input
-     * @throws InvalidDateTime If the input format for a date and time is wrong
-     * @throws EmptyKeywordException If keyword is left empty (for Find command)
-     * @throws NumberFormatException If the index is left empty (for Mark, Delete commands)
-     * @throws EmptyTaskDescException If task description is left empty (for Add command)
-     * @throws InvalidDeadline If the input format for adding a deadline is wrong
-     * @throws InvalidEvent If the input format for adding an event is wrong
-     * @throws IllegalCommandException If an unknown command is input by the user
+     * @param split Parsed user input split into command and parameter.
+     * @param size Number of tasks saved in TaskList.
+     * @return Command class with data from user input.
+     * @throws InvalidDateTime If the input format for a date and time is wrong.
+     * @throws EmptyKeywordException If keyword is left empty (for Find command).
+     * @throws NumberFormatException If the index is left empty (for Mark, Delete commands).
+     * @throws EmptyTaskDescException If task description is left empty (for Add command).
+     * @throws InvalidDeadline If the input format for adding a deadline is wrong.
+     * @throws InvalidEvent If the input format for adding an event is wrong.
+     * @throws IllegalCommandException If an unknown command is input by the user.
      */
     private static Command parseCommand(String[] split, int size)
             throws InvalidDateTime, EmptyKeywordException, EmptyTaskDescException, InvalidDeadline, InvalidEvent,
@@ -122,15 +121,22 @@ public class Parser {
     }
 
     /**
-     * Parses the input date and time, returns it as a String according to the given pattern.
+     * Checks if the user's input parameter is empty.
      *
-     * @param date Input date and time in the form of LocalDateTime
-     * @param dateString Input date and time in the form of a String
-     * @param pattern Format that the input date and time should be parsed into
-     * @return String with parsed date and time
+     * @param split Parsed user input split into command and parameter.
+     * @return {@code true} if the input parameter is empty, {@code false} otherwise.
+     */
     private static Boolean isEmptyParam(String[] split) {
         return (split.length != 2);
     }
+
+    /**
+     * Parses LocalDateTime into a String according to the given pattern.
+     *
+     * @param date Date and time with LocalDateTime data type.
+     * @param dateString Date and time with String data type.
+     * @param pattern Desired pattern to format String.
+     * @return Parsed date and time in a String.
      */
     public static String parseDateTime(LocalDateTime date, String dateString, DateTimeFormatter pattern) {
         if (date != null) {
@@ -140,11 +146,11 @@ public class Parser {
     }
 
     /**
-     * Separates the user input for a Deadline into the Deadline's description and its due date.
+     * Separates a Deadline's input data into its description, and due date.
      *
-     * @param param CLI user input after "deadline"
-     * @return String array consisting separated description and due date of the deadline
-     * @throws InvalidDeadline If the user did not input the due date in the right format
+     * @param param User input data describing the Deadline.
+     * @return Parsed user input split into description and due date.
+     * @throws InvalidDeadline If the user did not input the due date in the right format.
      */
     public static String[] parseDeadline(String param) throws InvalidDeadline {
         String[] split = param.trim().split("\\s/by\\s", 2);
@@ -155,11 +161,11 @@ public class Parser {
     }
 
     /**
-     * Separates the user input for a Deadline into the Event's description and its start and end date.
+     * Separates an Event's input data into its description, start date, and end date.
      *
-     * @param param CLI user input after "event"
-     * @return String array consisting separated description, start date, and end date of the event
-     * @throws InvalidEvent If the user did not input the start or end date in the right format
+     * @param param User input data describing the Event.
+     * @return Parsed user input split into description, start date, and end date.
+     * @throws InvalidEvent If the user did not input the start or end date in the right format.
      */
     public static String[] parseEvent(String param) throws InvalidEvent {
         String[] split = param.trim().split("\\s/from\\s|\\s/to\\s", 3);

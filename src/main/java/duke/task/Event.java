@@ -23,10 +23,10 @@ public class Event extends Task {
      * Initialises as in Task, with added parsing for start and end dates.
      * If parsing is not possible, save date(s) as String(s).
      *
-     * @param description String describing the Task
-     * @param fromString String describing the start date
-     * @param toString String describing the end date
-     * @throws DateOrderException If the end date occurs before the start date
+     * @param description String describing the Task.
+     * @param fromString String describing the start date.
+     * @param toString String describing the end date.
+     * @throws DateOrderException If the end date occurs before the start date.
      */
     public Event(String description, String fromString, String toString) throws DateOrderException {
         super(description);
@@ -50,8 +50,8 @@ public class Event extends Task {
     /**
      * Get a String describing the start date of the Event.
      *
-     * @param pattern Desired format for String after parsing
-     * @return Parsed start date
+     * @param pattern Desired format for String after parsing.
+     * @return Parsed start date.
      */
     public String getFrom(DateTimeFormatter pattern) {
         return Parser.parseDateTime(from, fromString, pattern);
@@ -60,8 +60,8 @@ public class Event extends Task {
     /**
      * Get a String describing the end date of the Event.
      *
-     * @param pattern Desired format for String after parsing
-     * @return Parsed end date
+     * @param pattern Desired format for String after parsing.
+     * @return Parsed end date.
      */
     public String getTo(DateTimeFormatter pattern) {
         return Parser.parseDateTime(to, toString, pattern);

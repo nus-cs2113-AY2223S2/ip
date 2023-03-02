@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
- * User Interface class that deals with inputs from and outputs to the user
+ * User Interface class that deals with inputs from and outputs to the user.
  */
 public class Ui {
 
@@ -19,7 +19,7 @@ public class Ui {
     /**
      * Get user input from CLI.
      *
-     * @return String containing the CLI input
+     * @return String containing the CLI input.
      */
     public String readCommand() {
         return in.nextLine();
@@ -72,7 +72,7 @@ public class Ui {
      * For {@code list} command.
      * Prints all Tasks within the ArrayList given.
      *
-     * @param allTasks ArrayList of Tasks
+     * @param allTasks ArrayList of Tasks.
      */
     public void printList(ArrayList<Task> allTasks) {
         if (allTasks.size() == 0) {
@@ -89,7 +89,7 @@ public class Ui {
      * For {@code todo}, {@code deadline}, and {@code event} commands.
      * Prints out message for successful adding of Task.
      *
-     * @param newTask Task that has just been added
+     * @param newTask Task that has just been added.
      */
     public void printAddMessage(Task newTask) {
         System.out.println("Got it. I've added this " + newTask.getType() + ":\n" +
@@ -100,7 +100,7 @@ public class Ui {
      * For {@code mark} command.
      * Prints out message for successful marking of Task as done.
      *
-     * @param doneTask Task that has just been marked as done
+     * @param doneTask Task that has just been marked as done.
      */
     public void printMarkDone(Task doneTask) {
         System.out.println("Nice!, I've marked this task as done:\n" +
@@ -111,7 +111,7 @@ public class Ui {
      * For {@code unmark} command.
      * Prints out message for successful marking of Task as not done.
      *
-     * @param notDoneTask Task that has just been marked as not done
+     * @param notDoneTask Task that has just been marked as not done.
      */
     public void printMarkNotDone(Task notDoneTask) {
         System.out.println("OK, I've marked this task as not done yet:\n" +
@@ -122,8 +122,8 @@ public class Ui {
      * For {@code delete} command.
      * Prints out message for successful deletion of Task.
      *
-     * @param deletedTask Task that will be deleted
-     * @param size        Number of tasks left in the list after deletion
+     * @param deletedTask Task that will be deleted.
+     * @param size Number of tasks left in the list after deletion.
      */
     public void printDeleted(Task deletedTask, int size) {
         System.out.println("Noted, I've removed this task:\n" +
@@ -135,7 +135,7 @@ public class Ui {
      * For {@code find} command.
      * Prints all Tasks within the ArrayList given, all containing a certain keyword.
      *
-     * @param foundTasks ArrayList of Tasks containing a keyword
+     * @param foundTasks ArrayList of Tasks containing a keyword.
      */
     public void printFoundList(ArrayList<Task> foundTasks) {
         if (foundTasks.size() == 0) {
@@ -152,8 +152,8 @@ public class Ui {
      * For {@code date} command.
      * Prints all Tasks within the ArrayList given, all happening on a certain date.
      *
-     * @param happeningTasks ArrayList of Tasks happening on a date
-     * @param date Date that was used to shortlist the tasks
+     * @param happeningTasks ArrayList of Tasks happening on a date.
+     * @param date Date that was used to shortlist the tasks.
      */
     public void printDateList(ArrayList<Task> happeningTasks, LocalDate date) {
         String dateString = date.format(DateTimeFormatter.ofPattern("MMM dd yyyy"));
@@ -179,7 +179,7 @@ public class Ui {
     /**
      * Prints error message if the index entered does not fit the format.
      *
-     * @param size Number of tasks within the current TaskList
+     * @param size Number of tasks within the current TaskList.
      */
     public void printErrorForIdx(int size) {
         boolean isEmptyTaskList = (size == 0);
@@ -237,8 +237,8 @@ public class Ui {
     /**
      * Prints error message if there is corrupted data in the save file when initially reading from it.
      *
-     * @param counter Index of the line of the save file that is corrupted
-     * @param filePath The location at which the save file is stored
+     * @param counter Index of the line of the save file that is corrupted.
+     * @param filePath The location at which the save file is stored.
      */
     public void printInvalidSaveFile(int counter, String filePath) {
         showLine();
@@ -249,14 +249,14 @@ public class Ui {
     }
 
     /**
-     * Prints error message if the user does not specify the description of a task
+     * Prints error message if the user does not specify the description of a task.
      */
     public void printEmptyDescription() {
         System.out.println("Oops! The description of a task cannot be empty.");
     }
 
     /**
-     * Prints error message if the user does not specify the keyword of a search
+     * Prints error message if the user does not specify the keyword of a search.
      */
     public void printEmptyKeyword() {
         System.out.println("Please specify a keyword to do the search with!");
@@ -272,7 +272,7 @@ public class Ui {
     /**
      * Prints error message if an unexpected error occurs.
      *
-     * @param exception Contains detail message saying where error occurred
+     * @param exception Contains detail message saying where error occurred.
      */
     public void printUnexpectedException(UnexpectedException exception) {
         System.out.println("Oh no... Something went wrong while doing the following:  " + exception.getMessage() +

@@ -46,17 +46,17 @@ public class Storage {
     /**
      * Initialise Storage class, set filePath.
      *
-     * @param filePath The filePath declared in Duke to be the location of the save file
+     * @param filePath Location of the local save file.
      */
     public Storage(String filePath) {
         Storage.filePath = filePath;
     }
 
     /**
-     * Overwrites the existing save file based on the current ArrayList of Tasks allTasks.
+     * Overwrites the existing save file based on the current TaskList.
      *
-     * @param tasks Contains all tasks that are currently stored in the TaskList
-     * @throws IOException If something goes wrong during the overwriting process
+     * @param tasks Contains all stored tasks.
+     * @throws IOException If something goes wrong during the overwriting process.
      */
     public void update(TaskList tasks) throws IOException {
         FileWriter overwrite = new FileWriter(filePath);
@@ -85,12 +85,12 @@ public class Storage {
     }
 
     /**
-     * Loads data from the save file and initialises it into a new ArrayList.
-     * If save file is not found, create a new save file and return an empty ArrayList.
+     * Loads data from the save file into a new ArrayList of Tasks.
+     * If save file is not found, creates a new save file and returns an empty ArrayList.
      *
-     * @param ui Prints error messages to user
-     * @return ArrayList of Tasks (either containing data in save file or empty)
-     * @throws IOException If save file is not found, and a new one cannot be created
+     * @param ui Prints out error messages to user.
+     * @return ArrayList of Tasks (containing data from save file / empty).
+     * @throws IOException If save file is not found, and a new one cannot be created.
      */
     public ArrayList<Task> load(Ui ui) throws IOException {
         ArrayList<Task> newAllTasks = new ArrayList<>();
@@ -106,11 +106,11 @@ public class Storage {
     }
 
     /**
-     * Using a Scanner, read each line of the save file and initialise them as Tasks in a new ArrayList.
+     * Reads all lines in the save file, initialises them as an ArrayList of Tasks.
      *
-     * @param save Save file
-     * @return ArrayList of Tasks based on data written in the save file
-     * @throws FileNotFoundException If the save file cannot be found at filePath
+     * @param save Save file.
+     * @return ArrayList of initialised Tasks based on uncorrupted data in save file.
+     * @throws FileNotFoundException If the save file cannot be found at filePath.
      */
     private static ArrayList<Task> readFileContents(File save, Ui ui) throws FileNotFoundException {
         Scanner s = new Scanner(save);
@@ -128,11 +128,11 @@ public class Storage {
     }
 
     /**
-     * Takes a line from the save file, interprets it, and returns it as a new Task.
+     * Interprets a line from the save file, returns it as a new Task.
      *
-     * @param text Line from the save file
-     * @return Corresponding Task class based on data from text
-     * @throws InvalidSaveFile If any line in the input data is not of the right format
+     * @param text Line from the save file.
+     * @return Corresponding Task to data stored in {@code text}.
+     * @throws InvalidSaveFile If any line in the input data is not of the right format.
      */
     private static Task newTask(String text) throws InvalidSaveFile {
         char type = getType(text);
