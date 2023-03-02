@@ -12,7 +12,6 @@ public class Todo extends Task {
         tasks.add(TaskType.TODO);
         dateTimeFrom.add(null);
         dateTimeTo.add(null);
-        System.out.println(dateTimeFrom.size());
         this.print();
     }
     
