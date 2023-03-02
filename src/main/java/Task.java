@@ -2,7 +2,6 @@ import java.util.ArrayList;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-
 public class Task {
     public static enum TaskType {
         TODO, DEADLINE, EVENT
@@ -15,10 +14,13 @@ public class Task {
 
     
     public Task() {
+
     }
+
     private String formatDateOut(int i) { //helper function to format date output string for printing
         String dateFrom = Task.dateTimeFrom.get(i) == null ? "" : Task.dateTimeFrom.get(i).format(DateTimeFormatter.ofPattern("MMM dd yyyy HH:mm"));
         String dateTo = Task.dateTimeTo.get(i) == null ? "" : Task.dateTimeTo.get(i).format(DateTimeFormatter.ofPattern("MMM dd yyyy HH:mm"));
+
         String dateOut = "";
         if (dateFrom.equals("") && dateTo.equals("")) {
             dateOut = "";
@@ -111,7 +113,9 @@ public class Task {
         dateTimeFrom.remove(num-1);
         dateTimeTo.remove(num-1);
     }
+
     public void print() { // print out item added after add command
+
         int size = items.size() - 1;
         System.out.println(items.size());
         for (int i = 0; i < items.size(); i++) {
