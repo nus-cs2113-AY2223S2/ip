@@ -15,12 +15,12 @@ public abstract class Task {
 
     void markAsComplete() {
         this.isCompleted = true;
-        TaskUpdater.updateTask(this);
+        TaskSaver.updateTask(this);
     }
 
     void markAsIncomplete() {
         this.isCompleted = false;
-        TaskUpdater.updateTask(this);
+        TaskSaver.updateTask(this);
     }
 
     abstract String getType();

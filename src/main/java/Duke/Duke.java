@@ -17,24 +17,30 @@ public class Duke {
         while (running) {
             String command = scanner.nextLine();
             String[] commandByWord = command.split(" ");
-            if (command.equals("bye")) {
+
+            switch (commandByWord[0]) {
+            case ("bye"):
                 speak(EXITING);
                 running = false;
-            } else if (command.equals("list")) {
+                break;
+            case ("list"):
                 speak(tasks.listTasks());
-            } else if (commandByWord[0].equals("mark")) {
+                break;
+            case ("mark"):
                 speak(tasks.mark(Integer.parseInt(commandByWord[1])));
-            } else if (commandByWord[0].equals("unmark")) {
+                break;
+            case ("unmark"):
                 speak(tasks.unmark(Integer.parseInt(commandByWord[1])));
-            } else if (commandByWord[0].equals("deadline")) {
+                break;
+            case ("deadline"):
+            case ("event"):
+            case ("todo"):
                 speak(tasks.addTask(commandByWord));
-            } else if (commandByWord[0].equals("event")) {
-                speak(tasks.addTask(commandByWord));
-            } else if (commandByWord[0].equals("todo")) {
-                speak(tasks.addTask(commandByWord));
-            } else if (commandByWord[0].equals("delete")) {
+                break;
+            case ("delete"):
                 speak(tasks.deleteTask(commandByWord));
-            } else {
+                break;
+            default:
                 speak(ERR_MESSAGE);
             }
         }

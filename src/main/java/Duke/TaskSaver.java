@@ -4,33 +4,23 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-public class TaskUpdater {
-    static File txtFile = new File("data/duke.txt");
+public class TaskSaver {
+    static File txtFile = new File("duke.txt");
     static FileWriter FW;
     static Scanner SC;
 
     static void setUpReadWrite() {
         try {
-            if (!txtFile.exists()) createDirectory();
-            txtFile = new File("data/duke.txt");
+            txtFile = new File("duke.txt");
             FW = new FileWriter(txtFile, true);
             SC = new Scanner(txtFile);
         } catch (IOException e) {
             System.out.println("Error Occurred");
-            e.printStackTrace();
-        }
-    }
-
-    static void createDirectory() {
-        try {
-            Files.createDirectories(Paths.get("data"));
-        } catch (IOException e){
             e.printStackTrace();
         }
     }
@@ -49,7 +39,7 @@ public class TaskUpdater {
     static void addTask(Task newTask) {
         try {
             String command = convertTaskToCommandString(newTask);
-            FW = new FileWriter("data/duke.txt", true);
+            FW = new FileWriter("duke.txt", true);
             FW.append(command + '\n');
             FW.close();
         } catch (IOException e) {
@@ -78,7 +68,7 @@ public class TaskUpdater {
             String task = convertTaskToCommandString(newTask);
             String taskWithoutCompletionStatus = removeCompletionStatusFromStr(task);
 
-            File file = new File("data/duke.txt");
+            File file = new File("duke.txt");
             List<String> lines = Files.lines(file.toPath())
                     .map(line ->
                             line.contains(taskWithoutCompletionStatus) ?

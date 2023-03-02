@@ -7,7 +7,7 @@ public class Tasks {
     private final LinkedList<Task> taskList;
 
     Tasks() {
-        this.taskList = TaskUpdater.loadTasks();
+        this.taskList = TaskSaver.loadTasks();
     }
 
     String addTask(String[] commandByWord) {
@@ -15,7 +15,7 @@ public class Tasks {
         try {
             Task task = TaskCreator.createNewTask(commandByWord);
             taskList.add(task);
-            TaskUpdater.addTask(task);
+            TaskSaver.addTask(task);
             return "Got it. I've added this task:\n    " +
                     task + "\n" +
                     "  Now you have " + taskList.size() + " tasks in the list.";
@@ -38,7 +38,7 @@ public class Tasks {
                 int index = Integer.parseInt(commandByWord[1]) - 1;
                 Task removedTask = taskList.get(index);
                 taskList.remove(index);
-                TaskUpdater.deleteTask(removedTask);
+                TaskSaver.deleteTask(removedTask);
                 return "Noted. I've removed this task:\n    " +
                         removedTask.toString() + "\n  " +
                         "Now you have " + taskList.size() + " tasks in the list.";
