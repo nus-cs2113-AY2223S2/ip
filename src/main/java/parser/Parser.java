@@ -206,7 +206,7 @@ public class Parser {
             } case("help"):{
                 return new HelpCommand();
             } default: {
-                return new UnknownCommand(commandParams);
+                return new UnknownCommand(userCommand);
             }
         }
     }
