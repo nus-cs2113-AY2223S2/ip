@@ -56,6 +56,9 @@ public class Parser{
                 Command find = new FindTaskCommand();
                 find.executeCommand(taskList, input);
                 break;
+            case "help":
+                Command help = new HelpCommand();
+                help.executeCommand(taskList, input);
 
             default:
         }
