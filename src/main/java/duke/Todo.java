@@ -12,6 +12,15 @@ public class Todo extends Task {
     }
 
     @Override
+    public boolean matchesKeyword(String keyword) {
+        if (description.contains(keyword)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
     /**
      * Overrides string representation for todos, with a [T] to indicate todo class.
      *

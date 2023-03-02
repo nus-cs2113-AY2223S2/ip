@@ -100,6 +100,13 @@ public class Parser {
             case "event":
                 handleAddTask(taskType.EVENT, splitIntoArgs);
                 break;
+            case "find":
+                if (splitIntoArgs.length < 2) {
+                    throw new InsufficientParametersException();
+                }
+                String keyword = splitIntoArgs[1];
+                ui.printMatches(tasks, keyword);
+                break;
             default:
                 throw new UnknownCommandException();
             }
