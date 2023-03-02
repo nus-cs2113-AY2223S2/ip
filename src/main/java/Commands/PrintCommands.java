@@ -128,7 +128,6 @@ public class PrintCommands {
         System.out.println(
                 "\t" + taskList.get(taskIndex).getType() + taskList.get(taskIndex).getStatusIcon()
                         + taskList.get(taskIndex).description);
-        printLine();
     }
 
     /**
@@ -142,7 +141,7 @@ public class PrintCommands {
 
         printLine();
         int taskNumber = 1;
-        System.out.println("Here's what I found :");
+        System.out.println("\tHere's what I found :");
         for (Task task : taskList) {
             if (task.getDescription().contains(command[1])) {
                 
@@ -162,7 +161,7 @@ public class PrintCommands {
                 taskNumber++;
             } else {
                 throw new InvalidFindStringException(
-                        "Uh oh! The task you are looking for does not exist, or there were some issues. Please try again.");
+                        "\tUh oh! The task you are looking for does not exist, or there were some issues. Please try again.");
             }
         }
         printLine();

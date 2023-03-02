@@ -218,8 +218,8 @@ public class TaskCommand {
         }
         PrintCommands.printDeleteMessage(taskList, taskIndex);
         PrintCommands.printNumberOfTasks(taskList);
+        PrintCommands.printLine();
         taskList.remove(taskIndex); // delete the specified task number
-
     }
 
     /**
@@ -233,7 +233,7 @@ public class TaskCommand {
         try {
         PrintCommands.printFindMessage(taskList, command);
         } catch (InvalidFindStringException ifne) {
-            System.out.println("Uh oh! The task you are looking for does not exist, or there were some issues. Please try again.");
+            //System.out.println("Uh oh! The task you are looking for does not exist, or there were some issues. Please try again.");
         }
     }
 }
