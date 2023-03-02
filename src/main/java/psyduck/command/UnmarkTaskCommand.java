@@ -5,8 +5,19 @@ import psyduck.tasklist.TaskList;
 import psyduck.ui.ErrorMessage;
 import psyduck.ui.Ui;
 
+/**
+ * Represents the command to unmark a task.
+ */
 public class UnmarkTaskCommand extends Command{
 
+    /**
+     * Executes the command to unmark a specific task in the list.
+     *
+     * @param input the string array containing the target position
+     *              of the task to be unmarked.
+     * @param tasks the list containing the task to be unmarked.
+     * @param ui the user interface that interact with the user.
+     */
     @Override
     public void executeCommand(String[] input, TaskList tasks, Ui ui) {
         try {
@@ -15,11 +26,11 @@ public class UnmarkTaskCommand extends Command{
             TaskList.getTask(taskNum).unmarkDone();
             Ui.printTaskMarked(task, tasks);
         } catch (NullPointerException e) {
-            ErrorMessage.printMarkTaskErrorMessage();
+            ErrorMessage.printUnmarkTaskErrorMessage();
         } catch (NumberFormatException e) {
-            ErrorMessage.printMarkTaskErrorMessage();
+            ErrorMessage.printUnmarkTaskErrorMessage();
         } catch (IndexOutOfBoundsException e) {
-            ErrorMessage.printMarkTaskErrorMessage();
+            ErrorMessage.printUnmarkTaskErrorMessage();
         }
     }
 

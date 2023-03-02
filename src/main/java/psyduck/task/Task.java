@@ -1,5 +1,8 @@
 package psyduck.task;
 
+/**
+ * Represents a task in a to-do list.
+ */
 public class Task {
     protected String description;
     protected boolean isDone;
