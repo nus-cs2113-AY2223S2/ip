@@ -12,12 +12,12 @@ public class Ui {
 					+ "| | | | | | | |/ / _ \\\n"
 					+ "| |_| | |_| |   <  __/\n"
 					+ "|____/ \\__,_|_|\\_\\___|\n";
-	private static final String OPENING_LINE = "Hello! I'm duke.Duke"
+	private static final String OPENING_LINE = "Hello! I'm Duke!"
 			+ System.lineSeparator()
-			+ "What can I do for you? Type 'help' for the command list";
+			+ "Type 'help' to see what you can do!";
 
 	private static final String EXIT_LINE =
-			"Bye. Hope to see you again soon!";
+			"Bye. Hope to see you again soon! I will be missing you:(";
 	private static final String DIVIDER =
 			"______________________________";
 
@@ -26,9 +26,9 @@ public class Ui {
 	private final String TASK_DELETED =
 			"Got it. I've removed this task: ";
 	private final String TASK_DONE =
-			"Nice! I've marked this task as done: ";
+			"Nice! I've marked this task as done:) ";
 	private final String TASK_UNDONE =
-			"Okay! I've unmarked this task: ";
+			"Okay! I've unmarked this task:P ";
 	private final String FIND_LINE = "Here are the matching tasks in your list: \n";
 	private static final String HELP = "    todo {description} --add todo" + "\n"
 			+ "    deadline {description} /by {deadline} --add deadline" + "\n"
