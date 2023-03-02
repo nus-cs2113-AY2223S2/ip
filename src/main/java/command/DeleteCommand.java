@@ -12,6 +12,11 @@ public class DeleteCommand extends Command {
         super(commands);
     }
 
+    /**
+     * Delete a specific task from Duke's TaskList.
+     *
+     * @return The message indicating the successful deletion of the task.
+     */
     @Override
     public String doCommand(TaskList taskList) throws DukeException {
         try {

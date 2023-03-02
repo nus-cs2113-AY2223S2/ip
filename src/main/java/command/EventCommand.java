@@ -15,6 +15,11 @@ public class EventCommand extends Command {
         super(commands);
     }
 
+    /**
+     * Add an Event Task to Duke's TaskList.
+     *
+     * @return The message indicating the addition of an Event Task into Duke's TaskList.
+     */
     @Override
     public String doCommand(TaskList taskList) {
         StringBuilder result = new StringBuilder();

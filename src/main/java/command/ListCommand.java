@@ -9,6 +9,11 @@ public class ListCommand extends Command {
         super(commands);
     }
 
+    /**
+     * List all Duke's tasks and their properties.
+     *
+     * @return The list of Duke's tasks and their properties.
+     */
     @Override
     public String doCommand(TaskList taskList) {
         StringBuilder result = new StringBuilder();

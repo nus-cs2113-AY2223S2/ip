@@ -15,6 +15,9 @@ import ui.Ui;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * Represent a Personal Assistant Chatbot named Duke that helps a person to keep track of various things.
+ */
 public class Duke {
     private static Ui ui;
     private static Storage storage;
@@ -23,6 +26,12 @@ public class Duke {
     private static final int COMMAND_INDEX = 0;
     private static final int EXIT_SUCCESS = 0;
 
+
+    /**
+     * Creates a Duke object and calls its run method.
+     *
+     * @param args Unused.
+     */
     public static void main(String[] args) {
         startDuke();
         runDuke();
@@ -87,6 +96,10 @@ public class Duke {
         ui.printErrorMessage(errorMessage);
     }
 
+    /**
+     * Repeatedly read user input and execute the command.
+     * Method stops upon user input "bye".
+     */
     private static void runDuke() {
         while (!isDone) {
             try {

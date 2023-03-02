@@ -12,6 +12,11 @@ public class MarkCommand extends Command {
         super(commands);
     }
 
+    /**
+     * Mark a task as done.
+     *
+     * @return The message indicating the successful marking of a task as done.
+     */
     @Override
     public String doCommand(TaskList taskList) throws DukeException {
         try {

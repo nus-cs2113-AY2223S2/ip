@@ -1,5 +1,8 @@
 package task;
 
+/**
+ * Represent a Deadline task.
+ */
 public class Deadline extends Task {
     private final String due;
 
@@ -12,6 +15,11 @@ public class Deadline extends Task {
         this.due = due;
     }
 
+    /**
+     * Get the character representing the type "Deadline".
+     *
+     * @return "D"
+     */
     public String getTaskType() {
         return "D";
     }

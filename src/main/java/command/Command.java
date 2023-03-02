@@ -5,6 +5,9 @@ import taskList.TaskList;
 
 import java.util.ArrayList;
 
+/**
+ * Represent a command.
+ */
 public abstract class Command {
     private final ArrayList<String> COMMANDS;
 
@@ -12,10 +15,20 @@ public abstract class Command {
         this.COMMANDS = commands;
     }
 
+    /**
+     * Retrieve the command and its arguments.
+     *
+     * @return The command and its arguments as an ArrayList of String.
+     */
     public ArrayList<String> getCommands() {
         return COMMANDS;
     }
 
+    /**
+     * Execute the command using its arguments.
+     *
+     * @return The result from executing the command as a string.
+     */
     public abstract String doCommand(TaskList taskList) throws DukeException;
 }
 

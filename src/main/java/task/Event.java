@@ -1,5 +1,8 @@
 package task;
 
+/**
+ * Represent an Event task.
+ */
 public class Event extends Task {
     private final String start;
     private final String end;
@@ -18,6 +21,11 @@ public class Event extends Task {
         this.end = end;
     }
 
+    /**
+     * Get the character representing the type "Event".
+     *
+     * @return "E"
+     */
     public String getTaskType() {
         return "E";
     }
