@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 /**
  * Represents Duke, the personal assistant chatbot
- * that can help keep track of things.
+ * that can help keep track of tasks.
  */
 public class Duke {
 
@@ -20,11 +20,6 @@ public class Duke {
      */
     public static void main(String[] args) {
         Ui.printGreet();
-//        try {
-//            Storage.load();
-//        } catch (RuntimeException e) {
-//            System.out.println("Unable to load due to runtime exception :(");
-//        }
         Storage.load();
         Parser.getCommand();
         Ui.printBye();

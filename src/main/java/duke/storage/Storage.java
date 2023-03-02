@@ -8,14 +8,12 @@ import java.io.IOException;
  * the file and saving tasks into the file.
  */
 public class Storage {
-    private static FileReading fileReading;
-
     /**
      * Gets list of tasks from existing txt file.
      */
     public static void load() {
         try {
-            fileReading.getFileContents();
+            FileReading.getFileContents();
         } catch (FileNotFoundException e) {
             System.out.println("I can't find what you want :(");
         }
@@ -26,7 +24,7 @@ public class Storage {
      */
     public static void write() {
         try {
-            fileReading.writeToFile();
+            FileReading.writeToFile();
         } catch (IOException e) {
             System.out.println("This is out of my ability to execute...");
         }

@@ -3,17 +3,14 @@ package duke.tasklist;
 import duke.DukeException;
 import duke.ui.Ui;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Represents the list of tasks that are stored and saved.
- * There are three types of tasks - Todo, Deadline, and Event.
+ * There are three types of tasks - To-do, Deadline, and Event.
  */
 public class TaskList {
-    private static final String line = "__________________________________________________________";
-
     /**
      * The list of tasks.
      */
@@ -29,7 +26,7 @@ public class TaskList {
      * @param tasks An ArrayList storing tasks.
      */
     public TaskList(ArrayList<Task> tasks) {
-        this.tasks = tasks;
+        TaskList.tasks = tasks;
     }
 
     /**
@@ -61,11 +58,14 @@ public class TaskList {
      * Checks if a new task to be added into the list is of a correct format.
      * @param userInput Command given by user to execute.
      *                  Should include the type of task and task description.
-     * @throws IndexOutOfBoundsException
+     * @throws IndexOutOfBoundsException if user input is out of range.
      */
     public static void validTask(String[] userInput) throws IndexOutOfBoundsException{
-        if (userInput.length < 2 && (userInput[0].equals("todo") ||
-                userInput[0].equals("event") || userInput[0].equals("deadline"))) {
+        boolean isLongInput = userInput.length >= 2;
+        boolean isTodo = userInput[0].equals("todo");
+        boolean isEvent = userInput[0].equals("event");
+        if (!isLongInput && (isTodo ||
+                isEvent || userInput[0].equals("deadline"))) {
             throw new IndexOutOfBoundsException();
         }
     }
@@ -74,15 +74,15 @@ public class TaskList {
      * Mark a task as done or unmark a task upon checking if the user input is valid.
      * @param userInput Command given by user to execute.
      *                  Should include action and task index.
-     * @throws IndexOutOfBoundsException
+     * @throws IndexOutOfBoundsException if task to be marked is out of bounds.
      */
     public static void markValidTask(String[] userInput) throws IndexOutOfBoundsException {
         try {
-            int x = Integer.parseInt(userInput[1]);
-            if (tasks.get(x-1) == null || tasks.size() == 0) {
+            int taskNum = Integer.parseInt(userInput[1]);
+            if (tasks.get(taskNum - 1) == null || tasks.size() == 0) {
                 throw new IndexOutOfBoundsException();
             }
-            tasks.get(x - 1).markAsDone(userInput[0]);
+            tasks.get(taskNum - 1).markAsDone(userInput[0]);
         } catch (NumberFormatException e) {
             System.out.println("This is not a valid index... unable to mark the task for you.");
         }
@@ -95,25 +95,32 @@ public class TaskList {
      */
     public static void readTask(List<String> taskList) throws IndexOutOfBoundsException {
         for(String task: taskList) {
-            Task t;
-            String type = task.substring(1,2); //type of task
+            Task newTask;
+            String type = task.substring(1,2);
             String status = task.substring(4,5); //"X" or " "
-            if (type.equals("T")) {
+            switch (type) {
+            case "T": {
                 String descriptor = task.substring(7);
-                t = new Todo(descriptor);
-            } else if (type.equals("D")) {
+                newTask = new Todo(descriptor);
+                break;
+            }
+            case "D": {
                 String descriptor = task.substring(7, task.indexOf("(by: "));
-                String by = task.substring(task.indexOf("(by: ")+5, task.indexOf(")"));
-                t = new Deadline(descriptor,by);
-            } else if (type.equals("E")) {
+                String by = task.substring(task.indexOf("(by: ") + 5, task.indexOf(")"));
+                newTask = new Deadline(descriptor, by);
+                break;
+            }
+            case "E": {
                 String descriptor = task.substring(7, task.indexOf("(from: "));
-                String from = task.substring(task.indexOf("(from: ")+7, task.indexOf("to: "));
-                String to = task.substring(task.indexOf("to: ")+4, task.indexOf(")"));
-                t = new Event(descriptor, from, to);
-            } else {
+                String from = task.substring(task.indexOf("(from: ") + 7, task.indexOf("to: "));
+                String to = task.substring(task.indexOf("to: ") + 4, task.indexOf(")"));
+                newTask = new Event(descriptor, from, to);
+                break;
+            }
+            default:
                 throw new IndexOutOfBoundsException();
             }
-            tasks.add(t);
+            tasks.add(newTask);
             tasks.get(tasks.size()-1).addIsDone(status);
         }
         numTasks = tasks.size();
@@ -125,31 +132,35 @@ public class TaskList {
      * @param userInput Command given by user to execute.
      *                  Should include the type of task and
      *                  task description in the correct format.
-     * @throws DukeException
+     * @throws DukeException if the user input to add task is invalid.
      */
     public static void addTask(String userInput) throws DukeException {
-        Task t;
+        Task task;
         String[] words = userInput.split(" ");
         validTask(words);
-        String descriptor = userInput.substring(userInput.indexOf(words[1]), userInput.length());
-        if (words[0].equals("todo")) {
-            t = new Todo(descriptor);
-            Ui.printMessage(t, Ui.CommandType.TODO);
-        } else if (words[0].equals("deadline")) {
+        String descriptor = userInput.substring(userInput.indexOf(words[1]));
+        switch (words[0]) {
+        case "todo":
+            task = new Todo(descriptor);
+            Ui.printMessage(task, Ui.CommandType.TODO);
+            break;
+        case "deadline":
             String by = descriptor.split("/by ")[1];
             descriptor = descriptor.split("/by ")[0];
-            t = new Deadline(descriptor, by);
-            Ui.printMessage(t, Ui.CommandType.DEADLINE);
-        } else if (words[0].equals("event")) {
+            task = new Deadline(descriptor, by);
+            Ui.printMessage(task, Ui.CommandType.DEADLINE);
+            break;
+        case "event":
             String to = descriptor.split("/to ")[1];
             String from = descriptor.split(" /")[1];
             descriptor = descriptor.split("/")[0];
-            t = new Event(descriptor, from, to);
-            Ui.printMessage(t, Ui.CommandType.EVENT);
-        } else {
-            throw new IndexOutOfBoundsException();
+            task = new Event(descriptor, from, to);
+            Ui.printMessage(task, Ui.CommandType.EVENT);
+            break;
+        default:
+            throw new DukeException();
         }
-        tasks.add(t);
+        tasks.add(task);
         numTasks = tasks.size();
     }
 
@@ -157,28 +168,32 @@ public class TaskList {
      * Delete a task from the list using its index.
      * @param userInput Command by user to execute.
      *                  Should include the index of the task.
-     * @throws DukeException
+     * @throws IndexOutOfBoundsException if index of task user puts is out of bounds.
      */
-    public static void deleteTask(String userInput) throws DukeException {
+    public static void deleteTask(String userInput) throws IndexOutOfBoundsException {
         String taskNum = userInput.substring(userInput.length()-1);
-        int x = Integer.parseInt(taskNum);
-        if (tasks.get(x-1) == null || tasks.size() == 0) {
-            throw new DukeException();
+        int taskNumber = Integer.parseInt(taskNum);
+        if (tasks.get(taskNumber-1) == null || tasks.size() == 0) {
+            throw new IndexOutOfBoundsException();
         }
-        Task temp = tasks.get(x-1);
-        tasks.remove(x-1);
+        Task temp = tasks.get(taskNumber-1);
+        tasks.remove(taskNumber-1);
         numTasks = tasks.size();
         Ui.printMessage(temp, Ui.CommandType.DELETE);
     }
 
+    /**
+     * Finds tasks using keywords that the user inputs.
+     * @param query The keywords that the user wants to search for.
+     * @throws IndexOutOfBoundsException if the list of tasks is empty.
+     */
     public static void findTasks(String query) throws IndexOutOfBoundsException {
         if (tasks.isEmpty()) {
             throw new IndexOutOfBoundsException();
         }
-        //System.out.println("testing to for loop?");
-        for (Task t : tasks) {
-            if (t.description.contains(query)) {
-                System.out.println(t.toString());
+        for (Task task : tasks) {
+            if (task.description.contains(query)) {
+                System.out.println(task);
             }
         }
     }

@@ -2,6 +2,7 @@ package duke.storage;
 
 import duke.tasklist.Task;
 import duke.tasklist.TaskList;
+import duke.ui.Ui;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -11,18 +12,12 @@ import java.nio.file.Path;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 /**
  * Represents a txt file storing information.
  */
 public class FileReading {
     private static final String filePath = "data/Duke.txt";
-
-    /**
-     * The list of tasks.
-     */
-    private static ArrayList<Task> tasks;
 
     /**
      * Creates a new txt file using the specified file path.
@@ -37,12 +32,13 @@ public class FileReading {
             newFolder.createNewFile();
         }
         newFolder.mkdirs();
-        File file = new File("data/duke.txt");
-        if (!file.exists()) {
-            file.createNewFile();
+
+        File newFile = new File(filePath);
+        if (!newFile.exists()) {
+            newFile.createNewFile();
         } else {
-            file.delete();
-            file.createNewFile();
+            newFile.delete();
+            newFile.createNewFile();
         }
     }
 
@@ -51,34 +47,31 @@ public class FileReading {
      * @throws FileNotFoundException if file does not exist.
      */
     public static void getFileContents() throws FileNotFoundException {
-        File f = new File(filePath);
-        if (!f.exists()) {
+        File file = new File(filePath);
+        if (!file.exists()) {
             throw new FileNotFoundException();
         }
-        Scanner s = new Scanner(f);
 
         try {
             List<String> taskList = Files.readAllLines(Path.of(filePath));
             TaskList.readTask(taskList);
         } catch (NullPointerException e) {
-            System.out.println("Can't remember what was saved :(");
+            Ui.printMessage(Ui.CommandType.NULLPOINTER);
         } catch (IOException e) {
-            System.out.println("IOException :(");
-            //throw new RuntimeException(e);
+            Ui.printMessage(Ui.CommandType.IOEXCEPTION);
         } catch (IndexOutOfBoundsException e) {
-            System.out.println("There is something wrong.");
+            Ui.printMessage(Ui.CommandType.INDEXOUTOFBOUNDS);
         }
     }
 
     /**
      * Delete all content from the txt file and create a new file.
      * @param filePath The path of the txt file.
-     * @throws IOException if stream to file cannot be written to.
      */
-    public static void deleteFileContents(String filePath) throws IOException {
-        File f = new File(filePath);
+    public static void deleteFileContents(String filePath) {
+        File file = new File(filePath);
         try {
-            f.delete();
+            file.delete();
             createFile();
         } catch (IOException e) {
             System.out.println("An error has occurred :( ");
@@ -90,12 +83,13 @@ public class FileReading {
      * @throws IOException if stream to file cannot be written to.
      */
     public static void writeToFile() throws IOException {
-        FileWriter fw = new FileWriter(filePath);
+        FileWriter fileWriter = new FileWriter(filePath);
         deleteFileContents(filePath);
-        tasks = TaskList.getTasks();
-        for (Task t : tasks) {
-            fw.write(t.toString() + "\n");
+
+        ArrayList<Task> tasks = TaskList.getTasks();
+        for (Task task : tasks) {
+            fileWriter.write(task.toString() + "\n");
         }
-        fw.close();
+        fileWriter.close();
     }
 }
