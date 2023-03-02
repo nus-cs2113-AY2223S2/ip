@@ -109,6 +109,10 @@ public class Duke {
             String eventToFormatted = eventToTime.format(outputFormatter);
 
             addTask(new Event(line.substring(0, line.indexOf(" /")), eventFromFormatted, eventToFormatted));
+        } else if (line.contains("find")) {
+            line = line.replace("find ", "");
+            String keyword = line;
+            keywordSearch(keyword);
         } else {
 //            tasks[taskCount] = new Task(line);
             throw new DukeException();
@@ -128,7 +132,7 @@ public class Duke {
                     System.out.println(count + ". " + line);
                 }
             }
-            if(count == 0){
+            if (count == 0) {
                 System.out.println("Sorry, there is no matching task in your list.");
             }
             System.out.println(dividingLine);
