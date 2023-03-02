@@ -85,7 +85,7 @@ public class StorageManager {
             throw new RicaStorageException(StorageManager.INVALID_DATA_PATH_GIVEN_ERROR);
         }
         if (!dataFile.exists()) {
-            this.getTextUi().printlnWithIndent(StorageManager.DATA_FILE_NOT_FOUND_ERROR);
+            this.getTextUi().printImportantMessage(StorageManager.DATA_FILE_NOT_FOUND_ERROR);
             /*
              * createDataFile() will throw RicaStorageException if data file cannot
              *   be created
