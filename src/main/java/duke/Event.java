@@ -4,6 +4,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.text.DateFormat;
 
+/**
+ * The class represent a todo item in the task list.
+ * It contains a Date from and a Date to, indicating when does the event start and end.
+ */
 public class Event extends Task {
 
     protected Date from;

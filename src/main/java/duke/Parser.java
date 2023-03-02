@@ -9,6 +9,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+/**
+ * A class for parsing user command into proper format for duke to implement the functinos.
+ */
 public class Parser {
     static ArrayList<SimpleDateFormat> knownPatterns = new ArrayList<SimpleDateFormat>();
 

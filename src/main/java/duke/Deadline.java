@@ -4,6 +4,10 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * The class represent a deadline item in the task list.
+ * It contains a Date by, indicating when should the deadline be finished by.
+ */
 public class Deadline extends Task {
 
     protected Date by;

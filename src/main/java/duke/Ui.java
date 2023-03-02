@@ -3,6 +3,10 @@ package duke;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * A class containing different methods which interact with the user.
+ * The methods show different kind of message for different situations.
+ */
 public class Ui {
     /**
      * Show a brief user guide to the users.

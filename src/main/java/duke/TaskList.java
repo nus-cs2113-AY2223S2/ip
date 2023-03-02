@@ -5,10 +5,10 @@ import duke.exceptions.NoDescriptionException;
 
 import java.util.ArrayList;
 
+/**
+ * The TaskList class deals with modifying the task list, including add task or deleting task.
+ */
 public class TaskList {
-    public static void printLine() {
-        System.out.println("____________________________________________________________");
-    }
 
     /**
      * Add a new task to the list.
@@ -39,7 +39,7 @@ public class TaskList {
         }
         System.out.println("I've deleted this task ∪･ω･∪:");
         System.out.println(tasks.get(deleteId));
-        printLine();
+        Ui.printLine();
         tasks.remove(deleteId);
     }
 }

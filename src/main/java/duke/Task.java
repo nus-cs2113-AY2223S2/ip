@@ -1,5 +1,8 @@
 package duke;
 
+/**
+ * The class of general task, which has three inheritors, event, todo, and deadline.
+ */
 public class Task {
     protected String description;
     protected boolean isDone;

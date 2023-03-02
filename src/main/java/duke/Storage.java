@@ -8,6 +8,10 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * The storage class deals with things related to data storage,
+ * including writing to file and write the date from file to the list.
+ */
 public class Storage {
     public static final String DEFAULT_STORAGE_FILEPATH = "data.txt";
     private static Command command = new Command();

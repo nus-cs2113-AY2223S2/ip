@@ -7,6 +7,11 @@ import duke.exceptions.NoDescriptionException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
+
+/**
+ * The command class handles different types of commands.
+ * Including add todo, add deadline, add event, mark, unmark, and find task.
+ */
 public class Command {
     /**
      * The function will check for the command entered by the user and chexk whether it is valid.

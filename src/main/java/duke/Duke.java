@@ -4,6 +4,9 @@ import duke.exceptions.InvalidCommandException;
 import java.util.Scanner;
 import java.util.ArrayList;
 
+/**
+ * Main class of Duke program, where the program start and end.
+ */
 public class Duke {
     private Ui ui;
     private Storage storage;
