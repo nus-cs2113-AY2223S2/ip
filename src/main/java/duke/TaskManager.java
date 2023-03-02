@@ -109,7 +109,7 @@ public class TaskManager {
      * @param id The index of the task to be deleted.
      */
     public void deleteTask(int id) {
-        System.out.println("This item has been removed!");
+        System.out.println("This item has been deleted!");
         System.out.println("[ ] " + tasks.get(id).getName());
         tasks.remove(id);
     }
