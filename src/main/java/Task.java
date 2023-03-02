@@ -5,7 +5,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-
 public class Task {
     public void appendToFile(String filePath, String textToAppend) throws IOException {
         FileWriter fw = new FileWriter(filePath, true); // create a FileWriter in append mode
@@ -28,12 +27,14 @@ public class Task {
 
     
     public Task() {
+
     }
     public void setDone(String input) {
         String[] strArray = input.split(" ");
         int num = Integer.parseInt(strArray[1]);
         marked.set(num-1, true);
         System.out.println("Nice! I've marked this  as done:\n" + "[" + tasks.get(num-1).toString().charAt(0) + "]" + "[X] " + items.get(num-1));
+
     }
     public void setNotDone(String input) {
         String[] strArray = input.split(" ");
@@ -108,6 +109,30 @@ public class Task {
         tasks.remove(num-1);
         dateTimeFrom.remove(num-1);
         dateTimeTo.remove(num-1);
+    }
+
+    public void delete(String input){
+        String[] strArray = input.split(" ");
+        int num = Integer.parseInt(strArray[1]);
+        System.out.println("Noted. I've removed this task:\n" + "[" + tasks.get(num-1).toString().charAt(0) + "]" + "[" + (marked.get(num-1) ? "X" : "") + "] " + items.get(num-1));
+        items.remove(num-1);
+        System.out.println("Now you have " + items.size() + " tasks in the list.");
+        marked.remove(num-1);
+        tasks.remove(num-1);
+    }
+    public void save() {
+        try {
+            Files.createDirectories(Paths.get("data"));
+            writeToFile("data/duke.txt", "");
+            String file = "";
+            for (int i = 0; i < items.size(); i++) {
+                file = (file  + tasks.get(i).toString() + " | " + (marked.get(i) ? "1" : "0") + " | " + items.get(i) + "\n");
+            }
+            writeToFile("data/duke.txt", file);
+        } catch (IOException e) {
+            System.out.println("Something went wrong: " + e.getMessage());
+        }
+
     }
     public void print() {
         int size = items.size() - 1;
