@@ -11,14 +11,12 @@ import java.util.zip.DataFormatException;
 public class Buddy {
     public static int taskCount = 0;
 
-
-
     public static void main(String[] args) {
         ArrayList<Task> listOfThings = new ArrayList<>();
-        try{
+        try {
             Storage.loadFile(listOfThings);
 
-        } catch (FileNotFoundException e){
+        } catch (FileNotFoundException e) {
             System.out.println("File not found");
             Storage.createFile();
 
@@ -36,11 +34,9 @@ public class Buddy {
         System.out.println(divider);
 
 
-
         String command;
         Scanner in = new Scanner(System.in);
         command = in.nextLine();
-
 
 
         while (!command.equals("bye")) {
@@ -142,10 +138,10 @@ public class Buddy {
             command = in.nextLine();
 
         }
-        try{
+        try {
             Storage.updateFile(listOfThings);
 
-        } catch(IOException e){
+        } catch (IOException e) {
             System.out.println("Error occurred");
         }
 
