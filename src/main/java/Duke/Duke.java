@@ -86,8 +86,7 @@ public class Duke {
             int taskNum = Integer.parseInt(line.substring(5)) - 1;
             tasks.get(taskNum).markAsDone();
             System.out.println(dividingLine + "Nice! I've marked this task as done:");
-            System.out.println("[" + tasks.get(taskNum).getStatusIcon() + "] " + tasks.get(taskNum).description
-                    + dividingLine);
+            System.out.println(tasks.get(taskNum).toString() + dividingLine);
         } else if (line.contains("delete")) {
             if (line.length() == 6) {
                 throw new MarkIndexException();
@@ -108,8 +107,7 @@ public class Duke {
             int unmarkNum = Integer.parseInt(line.substring(7)) - 1;
             tasks.get(unmarkNum).unmarkAsDone();
             System.out.println(dividingLine + "OK, I've marked this task as not done yet:");
-            System.out.println("[" + tasks.get(unmarkNum).getStatusIcon() + "] " + tasks.get(unmarkNum).description
-                    + dividingLine);
+            System.out.println(tasks.get(unmarkNum).toString() + dividingLine);
         } else if (line.contains("todo")) {
             addTask(new Todo(line.substring(5)));
         } else if (line.contains("deadline")) {
