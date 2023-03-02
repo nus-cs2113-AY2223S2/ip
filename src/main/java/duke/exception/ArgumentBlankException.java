@@ -1,4 +1,5 @@
 package duke.exception;
+import duke.Command;
 public class ArgumentBlankException extends Exception {
     public String argumentType;
     public String commandType;

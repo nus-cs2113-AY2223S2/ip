@@ -1,33 +1,32 @@
 package duke;
 import duke.addable.*;
 import duke.exception.ArgumentBlankException;
+import duke.Ui;
 
-
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.io.File;
 import java.util.Scanner;
-import java.util.HashMap;
-public class FileManager {
-    private static final String FILE_PATH = "data/tasklist.txt";
+
+public class Storage {
+    private static final String FILE_PATH = "./data/tasklist.txt";
     private static final String[] FILE_ERROR_MESSAGE = {
             "Something went wrong when opening the saved tasks file"
     };
     private FileWriter fw;
+    private Ui ui;
     private File f;
     private ArrayList<Task> tasks = new ArrayList<>();
-    public FileManager() {
+    public Storage(Ui ui) {
         try {
+            this.ui = ui;
             f = new File(FILE_PATH);
             f.getParentFile().mkdirs();
             f.createNewFile();
             readCurrentTaskList();
-            saveCurrentTaskList();
         } catch (IOException e) {
-            e.printStackTrace();
-//            System.out.println("Couldn't find required file \'data/tasklist.txt\'");
+            System.out.println("Couldn't find required file " + FILE_PATH);
         }
     }
 
@@ -41,9 +40,11 @@ public class FileManager {
 
     public void addTaskFromLine(String line) {
         String[] fields = line.split("\\|");
+        System.out.println(line);
         try {
             switch (fields[0]) {
             case "T":
+                System.out.println("\\");
                 tasks.add(new ToDo(
                         fields[2],
                         fields[1].equals("0") ? false : true
@@ -66,8 +67,9 @@ public class FileManager {
                 break;
             }
         } catch (ArgumentBlankException e) {
-            Duke.printMessage(FILE_ERROR_MESSAGE);
+            ui.printMessage(FILE_ERROR_MESSAGE);
         }
+        System.out.println(tasks);
 
 
     }
@@ -75,6 +77,7 @@ public class FileManager {
         try {
             Scanner s = new Scanner(f);
             while (s.hasNext()) {
+                System.out.println("has next");
                 addTaskFromLine(s.nextLine());
             }
         } catch (IOException e) {

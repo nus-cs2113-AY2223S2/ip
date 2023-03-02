@@ -2,172 +2,156 @@ package duke;
 import duke.addable.*;
 import duke.exception.*;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Arrays;
-import java.util.ArrayList;
+
 public class Duke {
-    private static final String[] INVALID_INPUT_MESSAGE = {
-            "Invalid input format",
-            "Please see below for a list of valid commands",
-            "- list",
-            "- mark [TASK NUMBER]",
-            "- unmark [TASK NUMBER]",
-            "- todo [TASK DESCRIPTION]",
-            "- event [EVENT DESCRIPTION] /from [START DATE] /to [END DATE]",
-            "- deadline [DEADLINE DESCRIPTION] /by [DUE DATE]",
-            "- delete [TASK NUMBER]"
-    };
-    private static final String INDENT = "      ";
-    private static ArrayList<Task> tasks = new ArrayList<>();
-    private static FileManager fm;
+    private static TaskList taskList = new TaskList();
+    private static Ui ui = new Ui();
+    private static Storage storage = new Storage(ui);
 
     public static void main(String[] args) {
-        fm = new FileManager();
-        tasks = fm.getTasks();
-        printIntro();
-        printMessage("Loading tasks from hard disk...");
+        System.out.println(storage.getTasks());
+        taskList.setTasks(storage.getTasks());
+        ui.printIntro();
         list();
         mainLoop();
-        printExit();
+        ui.printExit();
     }
 
     public static void mainLoop() {
         Scanner in = new Scanner(System.in);
+        Parser parser = new Parser();
         String currentInput = in.nextLine();
-        while (!currentInput.equals("bye")) {
-            String[] words = currentInput.split(" ");
+        Command command = null;
+        String[] parameters = null;
+        while (command != Command.BYE) {
             try {
-                switch (words[0]) {
-                case "deadline":
-                case "todo":
-                case "event":
-                    handleAddTask(currentInput);
+                parameters = parser.getParameters(currentInput);
+                command = parser.getCommand(currentInput);
+                switch (command) {
+                case TODO:
+                case DEADLINE:
+                case EVENT:
+                    handleAddTask(currentInput, command);
                     break;
-                case "delete":
-                    delete(words);
+                case DELETE:
+                    delete(parameters);
                     break;
-                case "list":
+                case LIST:
                     list();
                     break;
-                case "mark":
-                    mark(words);
+                case MARK:
+                    mark(parameters);
                     break;
-                case "unmark":
-                    unmark(words);
+                case UNMARK:
+                    unmark(parameters);
                     break;
+                case BYE:
+                    return;
                 default:
-                    throw new UnknownCommandException(words[0]);
+                    throw new UnknownCommandException("Blank");
                 }
-                fm.saveCurrentTaskList();
+                storage.saveCurrentTaskList();
             } catch (MarkNonexistentTaskException e) {
-                printInvalidInputMessage("task " + e.taskIndex + " does not currently exist.");
+                ui.printInvalidInputMessage("task " + e.taskIndex + " does not currently exist.");
             } catch (ArrayIndexOutOfBoundsException e) {
-                printInvalidInputMessage("Unknown command");
+                ui.printInvalidInputMessage("Unknown command");
             } catch (UnknownCommandException e) {
-                printInvalidInputMessage("Unknown command \'" + e.unknownCommand + "\'");
+                ui.printInvalidInputMessage("Unknown command \'" + e.unknownCommand + "\'");
             } catch (NumberFormatException e) {
-                printInvalidInputMessage("Argument for mark/unmark/delete must be an integer");
+                ui.printInvalidInputMessage("Argument for mark/unmark/delete must be an integer");
             }
             currentInput = in.nextLine();
         }
     }
     // COMMAND HANDLERS
 
-    public static void delete(String[] words) throws MarkNonexistentTaskException {
-        int taskIndex = getTaskIndex(words[1]);
+    public static void delete(String[] parameters) throws MarkNonexistentTaskException {
+        int taskIndex = getTaskIndex(parameters[0]);
         String[] taskDeletedMessage = {
                 "Noted. I've removed this task:",
-                tasks.get(taskIndex).toString(),
-                "Now you have " + (tasks.size() - 1) + " tasks in the list."
+                taskList.get(taskIndex).toString(),
+                "Now you have " + (taskList.getLength() - 1) + " tasks in the list."
         };
-        tasks.remove(taskIndex );
-        printMessage(taskDeletedMessage);
+        taskList.remove(taskIndex);
+        ui.printMessage(taskDeletedMessage);
     }
     public static void list() {
-        printMessage(getFormattedList());
+        ui.printMessage(ui.getFormattedList(taskList));
     }
 
     public static int getTaskIndex(String index) throws MarkNonexistentTaskException {
         int taskIndex = Integer.parseInt(index) - 1;
-        if (taskIndex > tasks.size() - 1) {
+        if (taskIndex > taskList.getLength() - 1 || taskIndex < 0) {
             throw new MarkNonexistentTaskException(taskIndex + 1);
         }
         return taskIndex;
     }
-    public static void mark(String[] words) throws MarkNonexistentTaskException {
-        int taskIndex = getTaskIndex(words[1]);
-        tasks.get(taskIndex).setDone(true);
+    public static void mark(String[] parameters) throws MarkNonexistentTaskException {
+        int taskIndex = getTaskIndex(parameters[0]);
+        taskList.get(taskIndex).setDone(true);
         String[] message = {
                 "Cool! I've marked this task as done:",
-                tasks.get(taskIndex).toString()
+                taskList.get(taskIndex).toString()
         };
-        printMessage(message);
+        ui.printMessage(message);
     }
 
-    public static void unmark(String[] words) throws MarkNonexistentTaskException {
-        int taskIndex = getTaskIndex(words[1]);
-        tasks.get(taskIndex).setDone(false);
+    public static void unmark(String[] parameters) throws MarkNonexistentTaskException {
+        int taskIndex = getTaskIndex(parameters[0]);
+        taskList.get(taskIndex).setDone(false);
         String[] message = {
                 "Ok, I've marked this task as not done yet:",
-                tasks.get(taskIndex).toString()
+                taskList.get(taskIndex).toString()
         };
-        printMessage(message);
+        ui.printMessage(message);
     }
-    public static void handleAddTask(String input) {
+    public static void handleAddTask(String input, Command command) {
         Task addedTask = null;
         try {
-            addedTask = addTask(input);
+            addedTask = addTask(input, command);
         } catch (ArrayIndexOutOfBoundsException e) {
-            printInvalidInputMessage();
+            ui.printInvalidInputMessage();
         } catch (ArgumentBlankException e) {
-            printInvalidInputMessage(
+            ui.printInvalidInputMessage(
                     "Argument \'" + e.argumentType + "\' cannot be blank for command \'" +
                             e.commandType + "\'"
                     );
         } catch (UnknownCommandException e) {
-            printInvalidInputMessage("Unknown command \'" + e.unknownCommand + "\'");
+            ui.printInvalidInputMessage("Unknown command \'" + e.unknownCommand + "\'");
         }
         if (addedTask == null) {
             return;
         }
-        String[] message = getAddTaskMessage(addedTask);
-        printMessage(message);
+        ui.printAddTaskMessage(addedTask, taskList.getLength());
     }
-    public static String[] getAddTaskMessage(Task addedTask) {
-        String[] message = {
-                "Got it. I've added this task:",
-                INDENT + addedTask.toString(),
-                "Now you have " + (tasks.size()) + " tasks in the list."
-        };
-        return message;
-    }
-    public static Task addTask(String input) throws ArgumentBlankException, UnknownCommandException {
+
+    public static Task addTask(String input, Command command) throws ArgumentBlankException, UnknownCommandException {
         String[] inputSections = input.split("/");
         String[] firstSectionArguments = inputSections[0].split(" ", 2);
-        String taskType = firstSectionArguments[0];
         if (firstSectionArguments.length < 2) {
-            throw new ArgumentBlankException(taskType, "description");
+            throw new ArgumentBlankException(command.toString(), "description");
         }
         String taskDescription = firstSectionArguments[1];
 
         Task taskToAdd;
 
-        switch (taskType) {
-        case "deadline":
+        switch (command) {
+        case DEADLINE:
             taskToAdd = getNewDeadline(taskDescription, inputSections);
             break;
-        case "event":
+        case EVENT:
             taskToAdd = getNewEvent(taskDescription, inputSections);
             break;
-        case "todo":
+        case TODO:
             taskToAdd = getNewTodo(taskDescription);
             break;
         default:
-            throw new UnknownCommandException(taskType);
+            throw new UnknownCommandException(command.toString());
         }
-        tasks.add(taskToAdd);
+        taskList.add(taskToAdd);
         return taskToAdd;
     }
     public static Deadline getNewDeadline(String taskDescription, String[] inputSections) throws ArgumentBlankException {
@@ -188,63 +172,5 @@ public class Duke {
     }
     public static ToDo getNewTodo(String taskDescription) throws ArgumentBlankException {
         return new ToDo(taskDescription, false);
-    }
-
-    // PRINTING UTILITIES
-
-    public static void printInvalidInputMessage() {
-        printMessage(INVALID_INPUT_MESSAGE);
-    }
-    public static void printInvalidInputMessage(String extraClarification) {
-        String[] message = Arrays.copyOf(INVALID_INPUT_MESSAGE, INVALID_INPUT_MESSAGE.length);
-        message[0] = extraClarification;
-        printMessage(message);
-    }
-    public static String getFormattedTask(Task task, int number) {
-        return number + ". " + task.toString();
-    }
-
-    public static String[] getFormattedList() {
-        String[] formattedList = new String[tasks.size() + 1];
-        formattedList[0] = "Here are the tasks in your list:";
-        for (int i = 0; i < tasks.size(); i++) {
-            formattedList[i + 1] = getFormattedTask(tasks.get(i), i + 1);
-        }
-        return formattedList;
-    }
-
-    public static void printIntro() {
-        String[] intro = {"Hello! I'm Tom", "What can I do for you?"};
-        printMessage(intro);
-    }
-
-    public static void printExit() {
-        printMessage("Bye. Hope to see you again soon!");
-    }
-
-    public static void printMessage(String message) {
-        printSeparator();
-        printIndent();
-        System.out.print(message + "\n");
-        printSeparator();
-    }
-
-    public static void printMessage(String[] message) {
-        printSeparator();
-        for (String line : message) {
-            if (!line.equals("")) {
-                printIndent();
-                System.out.print(line + "\n");
-            }
-        }
-        printSeparator();
-    }
-
-    public static void printIndent() {
-        System.out.print(INDENT);
-    }
-
-    public static void printSeparator() {
-        System.out.print("   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
     }
 }

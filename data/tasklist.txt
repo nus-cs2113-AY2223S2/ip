@@ -1,3 +1,4 @@
-E|0|potato | 4 jan | 6 jan|
-D|1|zebi | yo mama|
-T|0|tomato |
+E|1|kill | 3 | 5|
+D|0|survive | 66|
+T|0|something else|
+D|1|whatever | 444|
