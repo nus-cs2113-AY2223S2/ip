@@ -1,29 +1,126 @@
 # User Guide
 
-## Features 
+## `Introduction`
 
-### Feature-ABC
+This is Duke, a chatbot. He is here to assist you in compiling a task list that you can reference to.
 
-Description of the feature.
+## `Features` 
 
-### Feature-XYZ
+1) Add a Task
+2) List all Tasks
+3) Mark/Unmark a Task
+4) Find a Task
+5) Delete a Task
+6) Exit
 
-Description of the feature.
+### 1.1) Add a Task (To Do)
 
-## Usage
+Add a "To Do" Task to the list. 
 
-### `Keyword` - Describe action
+`Format`: todo {description} 
 
-Describe the action and its outcome.
+*Sample Input Command*: `todo Fly a Kite`
 
-Example of usage: 
-
-`keyword (optional arguments)`
-
-Expected outcome:
-
-Description of the outcome.
-
+*Output*:
 ```
-expected output
+Got it. I've added this task:
+[T][ ] Fly a Kite
+Now you have 1 tasks in the list.
+```
+
+### 1.2) Add a Task (Deadline)
+
+Add a "Deadline" Task to the list.
+
+**`Format`**: deadline {description} /by {time/date}
+
+*Sample Input Command*: **`deadline Finish My Homework /by Today`**
+
+*Output*:
+```
+Got it. I've added this task:
+[D][ ] Finish My Homework (by: Today)
+Now you have 2 tasks in the list.
+```
+
+### 1.3) Add a Task (Event)
+
+Add a "Event" Task to the list.
+
+**`Format`**: event {description} /from {time/date} /to {time/date}
+
+*Sample Input Command*: **`event Play Video Games /from Today 12pm /to Today Night`**
+
+*Output*:
+```
+Got it. I've added this task:
+[E][ ] Play Video Games (from: Today 12pm to: Today Night)
+Now you have 3 tasks in the list.
+```
+
+### 2) List all Tasks
+
+Lists every Task you currently have in your list.
+
+**`Format`**: list
+
+*Output*:
+```
+1) [T][ ] Fly a Kite
+2) [D][ ] Finish My Homework (by: Today)
+3) [E][ ] Play Video Games (from: Today 12pm to: Today Night)
+```
+
+### 3) Mark/Unmark a Task
+
+Mark or unmark a Task to note if you have completed the Task through the tasknumber.
+
+**`Format`**: mark {tasknumber}
+
+*Sample Input Command*: **`mark 1`**
+
+*Output*:
+```
+Done!
+[T][X] Fly a Kite
+```
+
+### 4) Find a Task
+
+Find a task through a search criteria.
+
+**`Format`**: find {search criteria}
+
+*Sample Input Command*: **`find Play`**
+
+*Output*:
+```
+3) [E][ ] Play Video Games (from: Today 12pm to: Today Night)
+Done!
+```
+
+### 5) Delete a Task
+
+Delete a task that you no longer need through the tasknumber.
+
+**`Format`**: delete {tasknumber}
+
+*Sample Input Command*: **`delete 1`**
+
+*Output*:
+```
+Got it. I've removed this task
+[T][X] Fly a Kite
+Now you have 2 tasks in the list.
+```
+
+### 6) Exit
+
+Exit from the program.
+
+**`Format`**: bye
+
+*Output*:
+```
+That's all from me! Goodbye!
 ```
