@@ -77,7 +77,11 @@ public class Ui {
         System.out.println(DIVIDER + "\n\t Got it. I've deleted this task:\n\t  "
                 + task);
         System.out.println("\t Now you have " + (TaskList.getNumberOfTasks() - 1) + " item(s) in your list.\n"
-                + DIVIDER);
+                + DIVIDER + '\n');
+    }
+    public static void displayHelp() {
+        System.out.println(DIVIDER + "\n\t Please read the User Guide in docs/README.md for more help.\n" +
+                DIVIDER + '\n');
     }
 
     public void readUserInput() {

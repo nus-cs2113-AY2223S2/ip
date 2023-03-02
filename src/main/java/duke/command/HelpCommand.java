@@ -10,6 +10,6 @@ public class HelpCommand extends Command{
     public HelpCommand() {
     }
     public void execute() {
-        Ui.sayHi();
+        Ui.displayHelp();
     }
 }

@@ -13,7 +13,7 @@ public class Parser {
         String key;
         String item;
         Boolean hasKeyword = false;
-        String[] keyWords = {"/find", "/list", "/bye", "/mark", "/unmark", "/todo", "/event", "/deadline", "/help" };
+        String[] keyWords = {"delete", "/find", "/list", "/bye", "/mark", "/unmark", "/todo", "/event", "/deadline", "/help"};
         for (String keyWord : keyWords) {
             if (userInput.contains(keyWord)) {
                 hasKeyword = true;
@@ -23,7 +23,7 @@ public class Parser {
         if (!hasKeyword) {
             throw new NoKeyException();
         }
-        if ((userInput.contains("/list") | userInput.contains("/bye"))) {
+        if (userInput.contains("/list") | userInput.contains("/bye") | userInput.contains("/help")) {
             key = userInput;
             item = null;
         } else {
