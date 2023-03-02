@@ -1,4 +1,4 @@
-TODO | 0 | yes
-TODO | 1 | no
-TODO | 0 | yope
-TODO | 0 | gay
+
+EVENT | 0 | event study  | 2022-12-01 | 2022-12-07
+DEADLINE | 0 | somthing  | null | 2022-12-02
+
