@@ -1,4 +1,5 @@
 import duke.Deadline;
+import duke.DukeException;
 import duke.Event;
 import duke.Todo;
 
@@ -22,11 +23,11 @@ Things to do:
 
 public class Duke {
     public static void main(String[] args) throws FileNotFoundException {
+
         printGreetingMessage();
 
         //Read in input from user
         String inputString;
-        Scanner in;
 
         //Set up list to store user inputs
         ArrayList<Todo> tasks = new ArrayList<>();
@@ -36,11 +37,15 @@ public class Duke {
         boolean exit = false;
 
         while (!exit) {
-            in = new Scanner(System.in);
-            inputString = in.nextLine();
+            inputString = getInputString();
+            int descriptionPosition = inputString.indexOf("~");
+            int endPosition = inputString.length();
+            String taskType = inputString.substring(0, descriptionPosition);
+            String task = inputString.substring(descriptionPosition + 1, endPosition);
+
 
             //switch cases for all specified input types
-            switch (inputString) {
+            switch (taskType) {
             case "bye":
                 exit = true;
                 break;
@@ -65,45 +70,29 @@ public class Duke {
                 break;
 
             case "todo":
-                System.out.println("    _________________________________________");
-                System.out.println("    Please specify task: ");
-                inputString = getInputString();
-                if (inputString.equals("")) {
-                    System.out.println("☹ OOPS!!! The description of a todo cannot be empty.");
-                    break;
-                } else {
-                    tasks.add(new Todo(inputString));
-                    tasks.get(counter).print();
-                    counter++;
-                    System.out.println("    Now you have " + counter + " tasks in your list!");
-                    break;
-                }
+                tasks.add(new Todo(task));
+                tasks.get(counter).print();
+                counter++;
+                System.out.println("    Now you have " + counter + " tasks in your list!");
+                break;
 
             case "deadline":
-                System.out.println("    _________________________________________");
-                System.out.println("    Please specify task: ");
-                inputString = getInputString();
-                inputString += '\0';
-                int deadlinePosition = inputString.indexOf("/");
-                int endPosition = inputString.indexOf("\0");
-                String taskName = inputString.substring(0, deadlinePosition);
-                String deadline = inputString.substring(deadlinePosition + 1, endPosition);
+                int deadlinePosition = task.indexOf("/");
+                int endOfLine = task.length();
+                String taskName = task.substring(0, deadlinePosition);
+                String deadline = task.substring(deadlinePosition + 1, endOfLine);
                 tasks.add(new Deadline(taskName, deadline));
                 tasks.get(counter).print();
                 counter++;
                 break;
 
             case "event":
-                System.out.println("    _________________________________________");
-                System.out.println("    Please specify task: ");
-                inputString = getInputString();
-                inputString += '\0';
-                int deadlineStartPosition = inputString.indexOf("/");
-                int deadlineEndPosition = inputString.indexOf("|");
-                endPosition = inputString.indexOf("\0");
-                taskName = inputString.substring(0, deadlineStartPosition);
-                String deadlineStart = inputString.substring(deadlineStartPosition + 1, deadlineEndPosition);
-                String deadlineEnd = inputString.substring(deadlineEndPosition + 1, endPosition);
+                int deadlineStartPosition = task.indexOf("/");
+                int deadlineEndPosition = task.indexOf("|");
+                endOfLine = task.length();
+                taskName = task.substring(0, deadlineStartPosition);
+                String deadlineStart = task.substring(deadlineStartPosition + 1, deadlineEndPosition);
+                String deadlineEnd = task.substring(deadlineEndPosition + 1, endOfLine);
                 tasks.add(new Event(taskName, deadlineStart, deadlineEnd));
                 tasks.get(counter).print();
                 counter++;
@@ -139,10 +128,19 @@ public class Duke {
 
     }
 
+    /**
+     * Marks a task as done.
+     *
+     * @param tasks list of tasks already added.
+     * @param taskNumber number assigned to task in the list.
+     */
     private static void markAsDone(ArrayList<Todo> tasks, int taskNumber) {
         tasks.get(taskNumber - 1).setDone(true);
     }
 
+    /**
+     * Prints greeting message when application is launched.
+     */
     private static void printGreetingMessage() {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -159,8 +157,12 @@ public class Duke {
         System.out.println("     ");
     }
 
-
-    private static String getInputString() {
+    /**
+     * Returns user input as a string.
+     *
+     * @return input string.
+     */
+    private static String getInputString(){
         Scanner in;
         String inputString;
         in = new Scanner(System.in);
@@ -168,23 +170,46 @@ public class Duke {
         return inputString;
     }
 
+    /**
+     * Prints acknowledgement message when task is marked as not done.
+     *
+     * @param tasks list of tasks already added.
+     * @param taskNumber number assigned to task in the list.
+     */
     private static void printUnmarkedAcknowledgement(ArrayList<Todo> tasks, int taskNumber) {
         System.out.println("    _________________________________________");
         System.out.println("    " + taskNumber + "." + "[ ] " + tasks.get(taskNumber - 1).getDescription());
         System.out.println("    _________________________________________");
     }
 
+    /**
+     * Prints acknowledgement message when task is marked as done.
+     *
+     * @param tasks list of tasks already added.
+     * @param taskNumber number assigned to task in the list.
+     */
     private static void printMarkedAcknowledgement(ArrayList<Todo> tasks, int taskNumber) {
         System.out.println("    _________________________________________");
         System.out.println("    " + taskNumber + "." + "[X] " + tasks.get(taskNumber - 1).getDescription());
         System.out.println("    _________________________________________");
     }
 
+    /**
+     * Returns task number.
+     *
+     * @return task number.
+     */
     private static int getTaskNumber() {
         String inputString = getInputString();
         return Integer.parseInt(inputString);
     }
 
+    /**
+     * Prints list contents.
+     *
+     * @param tasks list of tasks already added.
+     * @param counter number of tasks in the list.
+     */
     private static void printListContents(ArrayList<Todo> tasks, int counter) {
         for (int i = 0; i < counter; ++i) {
             if (tasks.get(i).isDone) {

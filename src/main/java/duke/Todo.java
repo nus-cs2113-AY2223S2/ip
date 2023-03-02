@@ -1,5 +1,7 @@
 package duke;
 
+import java.util.Scanner;
+
 public class Todo extends Task {
     public boolean isDone;
     public Todo(String description) {
