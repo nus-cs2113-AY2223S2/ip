@@ -21,7 +21,7 @@ public class Event extends Task{
     @Override
     public String getTask() {
         return taskTypeIcon() + isDoneIcon() + " " + getDescription() + System.lineSeparator()
-                + "Start: " + getStartDate() + System.lineSeparator()
-                + "End: " + getEndDate();
+                + "    Start: " + getStartDate() + System.lineSeparator()
+                + "    End: " + getEndDate();
     }
 }

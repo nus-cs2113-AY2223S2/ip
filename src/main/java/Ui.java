@@ -1,3 +1,4 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Ui {
@@ -23,12 +24,37 @@ public class Ui {
         Scanner in = new Scanner(System.in);
         String description;
         try {
-            description = userInput.split(" ", 2)[DESCRIPTION_INDEX];
+            description = userInput.split(" ", 3)[DESCRIPTION_INDEX];
         } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("What are you referring to?");
             description = in.nextLine().trim();
         }
         return description;
+    }
+
+    public static int getItemNumber(String userInput) {
+        Scanner in = new Scanner(System.in);
+        int itemNumber;
+        try {
+            itemNumber = Integer.parseInt(userInput.split(" ", 2)[1]);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            TaskList.viewList();
+            System.out.println("What is the number of the item in the list?");
+            try {
+                itemNumber = in.nextInt();
+            } catch (InputMismatchException i){
+                System.out.println("Please enter a number");
+                itemNumber = getItemNumber(userInput);
+            }
+        } catch (NumberFormatException n) {
+            //Search for the item and spit out the index?
+            itemNumber = getItemNumber(userInput);
+        }
+        return itemNumber;
+    }
+
+    public static int getItemIndex(String userInput) {
+        return getItemNumber(userInput) - 1;
     }
 
     public static String getDueDate(String userInput) {
