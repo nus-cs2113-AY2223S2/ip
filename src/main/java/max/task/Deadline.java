@@ -1,6 +1,6 @@
 package max.task;
 
-import max.Ui.Ui;
+import max.ui.Ui;
 
 /**
  * Deadline is a subclass of Task

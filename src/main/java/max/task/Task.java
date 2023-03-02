@@ -1,9 +1,7 @@
 package max.task;
 
 
-import max.Ui.Ui;
-
-import javax.print.DocFlavor;
+import max.ui.Ui;
 
 /**
  * Task is the parent class of all types of Tasks.

@@ -1,6 +1,6 @@
 package max.task;
 
-import max.Ui.Ui;
+import max.ui.Ui;
 
 /**
  * Todo is a subclass of Task

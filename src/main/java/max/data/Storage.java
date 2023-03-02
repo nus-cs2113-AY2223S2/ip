@@ -1,6 +1,6 @@
 package max.data;
 
-import max.Ui.Ui;
+import max.ui.Ui;
 import max.task.*;
 
 import java.io.File;

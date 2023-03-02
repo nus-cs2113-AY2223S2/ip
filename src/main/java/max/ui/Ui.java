@@ -1,4 +1,4 @@
-package max.Ui;
+package max.ui;
 
 /**
  * Ui helps with the console output formatting for MAX

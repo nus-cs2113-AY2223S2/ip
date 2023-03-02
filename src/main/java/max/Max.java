@@ -1,6 +1,6 @@
 package max;
 
-import max.Ui.Ui;
+import max.ui.Ui;
 import max.command.Command;
 import max.command.CommandParser;
 import max.command.CommandValidator;
