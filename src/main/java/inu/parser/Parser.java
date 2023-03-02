@@ -7,7 +7,7 @@ import inu.commands.DeadlineCommand;
 import inu.commands.EventCommand;
 import inu.commands.DeleteCommand;
 import inu.commands.MarkCommand;
-import inu.commands.UnMarkCommand;
+import inu.commands.UnmarkCommand;
 import inu.commands.ListWithDateCommand;
 import inu.commands.ListDefaultCommand;
 import inu.commands.FindCommand;
@@ -84,7 +84,7 @@ public class Parser {
             return runFindCommand();
         case MarkCommand.COMMAND_WORD:
             return runMark(taskList);
-        case UnMarkCommand.COMMAND_WORD:
+        case UnmarkCommand.COMMAND_WORD:
             return runUnmark(taskList);
         case ExitCommand.COMMAND_WORD:
             return new ExitCommand();
@@ -199,7 +199,7 @@ public class Parser {
         try {
             String description = userString[INDEX_ENTRY].trim();
             int targetIndex = Util.fetchIndexFromString(taskList, description);
-            return new UnMarkCommand(targetIndex);
+            return new UnmarkCommand(targetIndex);
         } catch (IndexOutOfBoundsException | EmptyStringException | NumberFormatException e) {
             return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_UNMARK);
         }

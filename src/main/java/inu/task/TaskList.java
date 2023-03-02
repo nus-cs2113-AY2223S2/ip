@@ -100,7 +100,7 @@ public class TaskList {
         taskList.get(index).setDone();
     }
 
-    public void unMarkTask(int index) {
+    public void unmarkTask(int index) {
         taskList.get(index).resetDone();
     }
 

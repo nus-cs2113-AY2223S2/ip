@@ -1,6 +1,7 @@
 package inu.commands;
 
 import inu.commons.Messages;
+import inu.storage.StorageFile;
 import inu.task.TaskList;
 
 /**
@@ -25,6 +26,7 @@ public class DeleteCommand extends Command {
     public CommandResult execute(TaskList taskList) {
         String deletedTask = taskList.getTask(targetIndex).toString();
         taskList.deleteTask(targetIndex);
+        StorageFile.saveTaskListToFile(taskList);
         return new CommandResult(Messages.MESSAGE_DELETE_TASK + "\n" + deletedTask);
     }
 

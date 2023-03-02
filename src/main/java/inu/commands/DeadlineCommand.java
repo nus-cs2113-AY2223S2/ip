@@ -2,6 +2,7 @@ package inu.commands;
 
 import inu.exceptionhandling.ExceptionManager;
 import inu.exceptionhandling.InvalidDate;
+import inu.storage.StorageFile;
 import inu.task.DeadLine;
 import inu.task.TaskList;
 
@@ -32,10 +33,11 @@ public class DeadlineCommand extends Command {
 
     @Override
     public CommandResult execute(TaskList taskList) {
-            DeadLine deadLineTask = new DeadLine(deadlineDescription, deadlineBy);
-            taskList.addTask(deadLineTask);
-            return new CommandResult("added: " + taskList.getLastTask().toString() + "\n"
-                    + "Now you have " + taskList.getTaskListSize() + " tasks in your list.");
+        DeadLine deadLineTask = new DeadLine(deadlineDescription, deadlineBy);
+        taskList.addTask(deadLineTask);
+        StorageFile.saveTaskListToFile(taskList);
+        return new CommandResult("added: " + taskList.getLastTask().toString() + "\n"
+                + "Now you have " + taskList.getTaskListSize() + " tasks in your list.");
     }
 
 }

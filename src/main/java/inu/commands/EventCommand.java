@@ -3,6 +3,7 @@ package inu.commands;
 import inu.exceptionhandling.ExceptionManager;
 import inu.exceptionhandling.InvalidDate;
 import inu.exceptionhandling.InvalidEventFromAndToDate;
+import inu.storage.StorageFile;
 import inu.task.Event;
 import inu.task.TaskList;
 
@@ -40,6 +41,7 @@ public class EventCommand extends Command {
     public CommandResult execute(TaskList taskList) {
         Event eventTask = new Event(eventDescription, eventFrom, eventTo);
         taskList.addTask(eventTask);
+        StorageFile.saveTaskListToFile(taskList);
         return new CommandResult("added: " + taskList.getLastTask().toString() + "\n"
                 + "Now you have " + taskList.getTaskListSize() + " tasks in your list.");
     }

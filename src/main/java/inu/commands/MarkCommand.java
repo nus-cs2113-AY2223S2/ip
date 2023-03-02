@@ -1,6 +1,7 @@
 package inu.commands;
 
 import inu.commons.Messages;
+import inu.storage.StorageFile;
 import inu.task.TaskList;
 
 /**
@@ -23,6 +24,7 @@ public class MarkCommand extends Command {
 
     public CommandResult execute(TaskList taskList) {
         taskList.markTask(targetIndex);
+        StorageFile.saveTaskListToFile(taskList);
         return new CommandResult(Messages.MESSAGE_MARK_TASK + "\n" + taskList.getTask(targetIndex).toString());
     }
 

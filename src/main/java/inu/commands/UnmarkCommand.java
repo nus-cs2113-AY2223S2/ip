@@ -1,12 +1,13 @@
 package inu.commands;
 
 import inu.commons.Messages;
+import inu.storage.StorageFile;
 import inu.task.TaskList;
 
 /**
  * Marks a task in the task list as not done.
  */
-public class UnMarkCommand extends Command {
+public class UnmarkCommand extends Command {
 
     public static final String COMMAND_WORD = "unmark";
 
@@ -17,12 +18,13 @@ public class UnMarkCommand extends Command {
      *
      * @param targetIndex index of the task to be marked.
      */
-    public UnMarkCommand(int targetIndex) {
+    public UnmarkCommand(int targetIndex) {
         this.targetIndex = targetIndex;
     }
 
     public CommandResult execute(TaskList taskList) {
-        taskList.unMarkTask(targetIndex);
+        taskList.unmarkTask(targetIndex);
+        StorageFile.saveTaskListToFile(taskList);
         return new CommandResult(Messages.MESSAGE_UNMARK_TASK + "\n" + taskList.getTask(targetIndex).toString());
     }
 

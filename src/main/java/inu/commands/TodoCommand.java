@@ -1,5 +1,6 @@
 package inu.commands;
 
+import inu.storage.StorageFile;
 import inu.task.TaskList;
 import inu.task.Todo;
 
@@ -25,6 +26,7 @@ public class TodoCommand extends Command {
     public CommandResult execute(TaskList taskList) {
         Todo todoTask = new Todo(todoDescription);
         taskList.addTask(todoTask);
+        StorageFile.saveTaskListToFile(taskList);
         return new CommandResult("added: " + taskList.getLastTask().toString() + "\n"
                 + "Now you have " + taskList.getTaskListSize() + " tasks in your list.");
 

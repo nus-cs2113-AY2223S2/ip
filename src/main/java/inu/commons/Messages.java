@@ -118,7 +118,7 @@ public class Messages {
             "    Format: bye\n" + MESSAGE_DIVIDER +
             "\n" +
             " 11. Saving the data\n" +
-            "    Inu data are saved in the hard disk automatically after exiting the application." + "\n" +
+            "    Inu data are saved in the hard disk automatically after each successful command." + "\n" +
             "    There is no need to save manually.";
 
 }
