@@ -11,6 +11,7 @@ public class TextUi {
     private final Scanner cmdLineIn;
     private final PrintStream cmdLineOut;
     private static final String BYE_PHRASE = " Leaving so soon? Come back anytime, I'll be happy to help!";
+    private static final String IMPORTANT_MESSAGE_MARKER = "***";
     private static final String INDENT = "    ";
     private static final String LINE = "____________________________________________________________";
 
@@ -61,6 +62,16 @@ public class TextUi {
      */
     public void printHeader() {
         this.printlnWithIndent(TextUi.LINE);
+    }
+
+    /**
+     *
+     */
+    public void printImportantErrorMessage(RicaException exception) {
+        String SUBSTITUTE_FOR_MESSAGE = "%s";
+        String messageFormat = TextUi.IMPORTANT_MESSAGE_MARKER + TextUi.INDENT
+                + SUBSTITUTE_FOR_MESSAGE + TextUi.INDENT + TextUi.IMPORTANT_MESSAGE_MARKER;
+        this.getCmdLineOut().printf(messageFormat, exception.getMessage());
     }
 
     /**
