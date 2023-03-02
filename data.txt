@@ -1,0 +1,7 @@
+T- -movie
+D- -watch movie-10pm
+E- -watch movie antman -from 5pm -to10pm
+E-X-soc movie night -from 7pm thursday -to10pm
+T- -my math homework
+D- -my math homework -toonight 2359
+E- -my math homework -from 8pm -to 11pm
