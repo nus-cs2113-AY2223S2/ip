@@ -24,6 +24,12 @@
 
 ## Features
 
+### Viewing help: ```help```
+
+Shows the list of all available commands.
+
+Format: ```help```
+
 ### Adding a Todo: ```todo```
 
 Adds a todo to the task list.
