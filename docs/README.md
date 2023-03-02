@@ -15,7 +15,8 @@ Thank you for using Duke. Duke is a command-line interface, personal assistant b
       2. [Unmark Tasks](#unmark-tasks) 
    4. [Delete](#delete)
    5. [Find](#find)
-   6. [Saving Files](#saving-files)
+   6. [Bye](#bye)
+   7. [Saving Files](#saving-files)
 4. [Command Summary](#command-summary)
 
 # Installation
@@ -124,6 +125,13 @@ The command usage is `find DESCRIPTION`. Currently, Duke is unable to search by 
 If the input method is correct, you will see something like this:
 
 ![find.png](images/find.png)
+
+## Bye
+This command is used when you are done using Duke. It is important to send the command as it ensures that Duke will save the current list.
+
+The command usage is `bye`. 
+
+![bye.png](images/bye.png)
 
 ## Saving Files
 On the first creation of Duke, the file will be created in the current working directory. As mentioned, it is recommended to put the `.jar` file in the same directory as the save file for your reference, if needed.
