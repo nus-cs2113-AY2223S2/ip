@@ -2,7 +2,8 @@ package model.storage;
 
 /**
  * Uses the following model to store the data in the format inside the JSON file.
- * The builder design pattern is used here.
+ * The builder design pattern is used here to grant flexibility when creating a
+ * JSON Storage object.
  */
 public class JsonStorage {
 
@@ -11,8 +12,8 @@ public class JsonStorage {
     this.description = description;
   }
 
-  public void setMarked(boolean marked) {
-    this.marked = marked;
+  public void setMarked(boolean isMarked) {
+    this.isMarked = isMarked;
   }
 
   public void setStart(String start) {
@@ -36,7 +37,7 @@ public class JsonStorage {
   }
 
   public boolean isMarked() {
-    return marked;
+    return isMarked;
   }
 
   public String getStart() {
@@ -51,7 +52,7 @@ public class JsonStorage {
 
   protected String start;
 
-  protected boolean marked;
+  protected boolean isMarked;
 
   protected String end;
 
