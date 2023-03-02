@@ -1,7 +1,6 @@
 package taskList;
 
 import task.Task;
-
 import java.util.ArrayList;
 
 public class TaskList {
@@ -9,7 +8,7 @@ public class TaskList {
     private ArrayList<Task> tasks;
 
     public TaskList() {
-        this.tasks = new ArrayList<Task>();
+        this.tasks = new ArrayList<>();
     }
 
     public TaskList(ArrayList<Task> tasks) {

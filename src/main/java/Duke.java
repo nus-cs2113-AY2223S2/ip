@@ -20,6 +20,8 @@ public class Duke {
     private static Storage storage;
     private static TaskList taskList;
     private static boolean isDone = false;
+    private static final int COMMAND_INDEX = 0;
+    private static final int EXIT_SUCCESS = 0;
 
     public static void main(String[] args) {
         startDuke();
@@ -37,62 +39,82 @@ public class Duke {
 
     private static void exitDuke() {
         ui.byeUser();
-        System.exit(0);
+        System.exit(EXIT_SUCCESS);
+    }
+
+    private static Command createCommandObject(String command, ArrayList<String> commands) {
+        Command commandObject = null;
+        switch (command) {
+        case "list":
+            commandObject = new ListCommand(commands);
+            break;
+        case "mark":
+            commandObject = new MarkCommand(commands);
+            break;
+        case "unmark":
+            commandObject = new UnmarkCommand(commands);
+            break;
+        case "todo":
+            commandObject = new TodoCommand(commands);
+            break;
+        case "deadline":
+            commandObject = new DeadlineCommand(commands);
+            break;
+        case "event":
+            commandObject = new EventCommand(commands);
+            break;
+        case "delete":
+            commandObject = new DeleteCommand(commands);
+            break;
+        }
+        return commandObject;
+    }
+
+    private static void runCommand(ArrayList<String> commands) throws DukeException, IOException {
+        Command commandObject = createCommandObject(commands.get(COMMAND_INDEX), commands);
+        String result = commandObject.doCommand(taskList);
+        storage.updateData(taskList);
+        ui.printCommandResult(result);
+    }
+
+    private static ArrayList<String> getCommands() throws DukeException {
+        String input = ui.getNextLineInput();
+        return Parser.parse(input);
+    }
+
+    private static void handleDukeException(Exception e) {
+        String errorMessage = e.getMessage();
+        ui.printErrorMessage(errorMessage);
     }
 
     private static void runDuke() {
         while (!isDone) {
             try {
-                String input = ui.getNextLineInput();
-                ArrayList<String> commands = Parser.parse(input);
-                Command commandObject;
-                String result;
-                switch (commands.get(0)) {
+                ArrayList<String> commands = getCommands();
+                switch (commands.get(COMMAND_INDEX)) {
                 case "bye":
                     isDone = true;
-                    result = null;
-                    break;
+                    continue;
                 case "list":
-                    commandObject = new ListCommand(commands);
-                    result = commandObject.doCommand(taskList);
-                    break;
+                    // Fallthrough
                 case "mark":
-                    commandObject = new MarkCommand(commands);
-                    result = commandObject.doCommand(taskList);
-                    storage.updateData(taskList);
-                    break;
+                    // Fallthrough
                 case "unmark":
-                    commandObject = new UnmarkCommand(commands);
-                    result = commandObject.doCommand(taskList);
-                    storage.updateData(taskList);
-                    break;
+                    // Fallthrough
                 case "todo":
-                    commandObject = new TodoCommand(commands);
-                    result = commandObject.doCommand(taskList);
-                    storage.updateData(taskList);
-                    break;
+                    // Fallthrough
                 case "deadline":
-                    commandObject = new DeadlineCommand(commands);
-                    result = commandObject.doCommand(taskList);
-                    storage.updateData(taskList);
-                    break;
+                    // Fallthrough
                 case "event":
-                    commandObject = new EventCommand(commands);
-                    result = commandObject.doCommand(taskList);
-                    storage.updateData(taskList);
-                    break;
+                    // Fallthrough
                 case "delete":
-                    commandObject = new DeleteCommand(commands);
-                    result = commandObject.doCommand(taskList);
-                    storage.updateData(taskList);
+                    runCommand(commands);
                     break;
                 default:
                     throw new DukeException("OOPS!!! I'm sorry, but I don't know what that means :-(");
                 }
-                ui.printCommandResult(result);
             } catch (DukeException | IOException e) {
-                String errorMessage = e.getMessage();
-                ui.printErrorMessage(errorMessage);
+                handleDukeException(e);
             }
         }
     }

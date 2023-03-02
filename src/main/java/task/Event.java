@@ -1,8 +1,8 @@
 package task;
 
 public class Event extends Task {
-    private String start;
-    private String end;
+    private final String start;
+    private final String end;
 
     public String getStart() {
         return start;

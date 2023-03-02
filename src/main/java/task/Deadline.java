@@ -1,7 +1,7 @@
 package task;
 
 public class Deadline extends Task {
-    private String due;
+    private final String due;
 
     public String getDue() {
         return due;

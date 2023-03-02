@@ -1,15 +1,20 @@
 package ui;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.Scanner;
 
 public class Ui {
     private final String LINE = "____________________________________________________________";
-
     private final Scanner IN;
 
     public Ui(InputStream in) {
         this.IN = new Scanner(in);
+    }
+
+    public Ui(File file) throws FileNotFoundException {
+        this.IN = new Scanner(file);
     }
 
     public void greetUser() {
@@ -36,11 +41,20 @@ public class Ui {
         if (result == null) {
             return;
         }
-        System.out.println(result);
+        System.out.println(LINE);
+        System.out.print(result);
+        System.out.println(LINE);
     }
 
     public String getNextLineInput() {
-        String input = IN.nextLine();
-        return input;
+        return IN.nextLine();
+    }
+
+    public boolean hasNextLineInput() {
+        return IN.hasNextLine();
+    }
+
+    public void closeScanner() {
+        IN.close();
     }
 }

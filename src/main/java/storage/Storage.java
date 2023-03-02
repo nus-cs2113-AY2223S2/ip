@@ -13,64 +13,76 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Scanner;
 
 import static java.nio.file.Files.createDirectories;
 
 public class Storage {
+    private Ui ui;
     private final String DIR_PATH = "." + File.separator + "data";
     private final String FILE_PATH = DIR_PATH + File.separator + "duke.txt";
+    private final String DATA_SEPARATOR = " \\| ";
+    private final int TASK_TYPE = 0;
+    private final int STATUS = 1;
+    private final int DESCRIPTION = 2;
+    private final int FIRST_PARAMETER = 3;
+    private final int SECOND_PARAMETER = 4;
+    private final String STATUS_DONE = "1";
 
-    public void loadData(Ui ui, TaskList taskList) {
+    private void loadTasks(TaskList taskList) throws DukeException {
+        while (this.ui.hasNextLineInput()) {
+            String data = this.ui.getNextLineInput();
+            String[] parameters = data.split(DATA_SEPARATOR);
+            Task task = createTask(parameters);
+            taskList.add(task);
+        }
+    }
+
+    private void createFile(File file) throws IOException {
+        Path dirPath = Paths.get(DIR_PATH);
+        createDirectories(dirPath);
+        file.createNewFile();
+    }
+
+    public void loadData(Ui dukeUi, TaskList taskList) {
         try {
             File file = new File(FILE_PATH);
             if (!file.exists()) {
-                Path dirPath = Paths.get("./data");
-                createDirectories(dirPath);
-                file.createNewFile();
-                ui.printFileCreated();
+                createFile(file);
+                dukeUi.printFileCreated();
                 return;
             }
-            Scanner scanner = new Scanner(file);
-            while (scanner.hasNextLine()) {
-                String data = scanner.nextLine();
-                String[] parameters = data.split(" \\| ");
-                Task task = createTask(parameters);
-                taskList.add(task);
-            }
-            scanner.close();
+            this.ui = new Ui(file);
+            loadTasks(taskList);
+            dukeUi.printDataLoadSuccess();
+            this.ui.closeScanner();
         } catch (DukeException | IOException e) {
             String errorMessage = e.getMessage();
-            ui.printErrorMessage(errorMessage);
+            dukeUi.printErrorMessage(errorMessage);
         }
-        ui.printDataLoadSuccess();
     }
 
     private Task createTask(String[] parameters) throws DukeException {
         Task newTask;
-        switch (parameters[0]) {
+        switch (parameters[TASK_TYPE]) {
         case "T":
-            newTask = new Todo(parameters[2]);
+            newTask = new Todo(parameters[DESCRIPTION]);
             break;
         case "D":
-            newTask = new Deadline(parameters[2], parameters[3]);
+            newTask = new Deadline(parameters[DESCRIPTION], parameters[FIRST_PARAMETER]);
             break;
         case "E":
-            newTask = new Event(parameters[2], parameters[3], parameters[4]);
+            newTask = new Event(parameters[DESCRIPTION], parameters[FIRST_PARAMETER], parameters[SECOND_PARAMETER]);
             break;
         default:
             throw new DukeException("Unrecognized data!");
         }
-
-        if (parameters[1].equals("1")) {
+        if (parameters[STATUS].equals(STATUS_DONE)) {
             newTask.markDone();
         }
-
         return newTask;
     }
 
     public void updateData(TaskList taskList) throws IOException {
-        //format content to write
         StringBuilder content = new StringBuilder();
         for (Task task : taskList.getTasks()) {
             content.append(task.getDataSummary());

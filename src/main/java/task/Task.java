@@ -10,10 +10,6 @@ public abstract class Task {
         this.isDone = false;
     }
 
-    public boolean getIsDone() {
-        return this.isDone;
-    }
-
     public String getStatusIcon() {
         return (isDone ? "X" : " "); // mark done task with X
     }
