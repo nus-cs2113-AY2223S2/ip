@@ -1,7 +1,7 @@
 package sage.tasktypes;
 
 /**
- * A class that represents a todo task
+ * An inherited class from Task that represents Todo.
  */
 public class Todo extends Task {
 

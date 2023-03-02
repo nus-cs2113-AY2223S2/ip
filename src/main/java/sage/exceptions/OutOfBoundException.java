@@ -2,8 +2,6 @@ package sage.exceptions;
 
 /**
  * Exception which returns an error message when an out-of-bound task index is provided by the user
- * <p>
- * Prints exception message
  */
 public class OutOfBoundException extends Exception {
 

@@ -12,6 +12,10 @@ public class Parser {
     private String from = null;
     private String to = null;
 
+    private static final Integer MAXSPLIT = 2;
+    private static final Integer TASKTYPEINDEX = 0;
+    private static final Integer TASKDESCRIPTIONINDEX = 1;
+
     /**
      * Parses user input into its respective task type, description and other attributes
      *
@@ -19,16 +23,16 @@ public class Parser {
      */
     public Parser(String input) {
         this.rawOutput = input.split("/");
-        String[] body = rawOutput[0].split(" ", 2);
-        this.taskType = body[0].toLowerCase();
+        String[] body = rawOutput[TASKTYPEINDEX].split(" ", MAXSPLIT);
+        this.taskType = body[TASKTYPEINDEX].toLowerCase();
         if (body.length > 1) {
-            this.taskDescription = body[1];
+            this.taskDescription = body[TASKDESCRIPTIONINDEX];
         }
 
         for (String i : rawOutput) {
-            String[] line = i.split(" ", 2);
-            String field = line.length > 1 ? line[1].trim() : null;
-            switch (line[0]) {
+            String[] line = i.split(" ", MAXSPLIT);
+            String field = line.length > 1 ? line[TASKDESCRIPTIONINDEX].trim() : null;
+            switch (line[TASKTYPEINDEX]) {
             case "by":
                 this.by = field;
                 break;

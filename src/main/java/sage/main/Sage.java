@@ -1,6 +1,9 @@
 package sage.main;
 
-import sage.utility.*;
+import sage.utility.Display;
+import sage.utility.Parser;
+import sage.utility.Ui;
+
 
 public class Sage {
     public static void main(String[] args) {

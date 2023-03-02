@@ -1,7 +1,7 @@
 package sage.tasktypes;
 
 /**
- * A class that represents an event task
+ * An inherited class from Task that represents Event which also stores the expected starting and ending time of a task
  */
 
 public class Event extends Task {

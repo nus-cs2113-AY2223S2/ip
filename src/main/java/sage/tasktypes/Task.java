@@ -1,5 +1,9 @@
 package sage.tasktypes;
 
+
+/**
+ * A parent class that represents a task's description and completion status.
+ */
 public class Task {
     private String taskDetails = "";
     private boolean isCompleted = false;

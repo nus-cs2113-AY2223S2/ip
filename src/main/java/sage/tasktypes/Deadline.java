@@ -6,7 +6,7 @@ import java.time.format.DateTimeParseException;
 
 
 /**
- * A class that represents a deadline task
+ * An inherited class from Task that represents Deadline which also stores the expected completion date of a task
  */
 
 public class Deadline extends Task {

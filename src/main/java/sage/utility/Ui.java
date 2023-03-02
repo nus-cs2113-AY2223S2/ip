@@ -3,7 +3,7 @@ package sage.utility;
 import java.util.Scanner;
 
 /**
- * A class that represents user interaction methods.
+ * A class that represents user interaction methods such as the execution of user input and recovering previous session.
  */
 
 public class Ui {

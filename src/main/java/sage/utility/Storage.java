@@ -16,6 +16,14 @@ import java.util.Scanner;
 public class Storage {
 
     private static final String PROJECT_FILE_DIR = "./data/sage.txt";
+    private static final Integer TASKTYPEINDEX = 1;
+    private static final Integer TASKCOMPLETIONINDEX = 4;
+    private static final Integer TASKFROMLENGTH = 6;
+    private static final Integer TASKTOLENGTH = 4;
+
+    private static final Integer TASKBYLENGTH = 2;
+
+    private static final Integer TASKDESCENTRYINDEX = 7;
 
     /**
      * Recovers and parse any stored data in ./data/sage.txt to taskList
@@ -29,36 +37,46 @@ public class Storage {
             UI.printResumeSession();
             try {
                 Scanner scanner = new Scanner(f);
-
                 while (scanner.hasNextLine()) {
                     String line = scanner.nextLine();
-                    char taskType = line.charAt(1);
-                    String taskDescription = "";
-                    boolean isCompleted = false;
-                    char s = line.charAt(4);
-
-                    if (s == 'X') {
-                        isCompleted = true;
-                    }
-                    if (taskType == 'T') {
-                        taskDescription = line.substring(7);
-                        taskList.addTask(taskDescription, isCompleted, true);
-                    } else {
-                        String taskPeriod = line.substring(line.indexOf('(') + 1, line.indexOf(')'));
-                        taskDescription = line.substring(7, line.indexOf('(') - 1) + " ";
-                        if (taskType == 'D') {
-                            String taskBy = taskPeriod.substring(taskPeriod.indexOf(':') + 2);
-                            taskList.addTask(taskDescription, taskBy, isCompleted, true);
-                        } else {
-                            String taskFrom = taskPeriod.substring(taskPeriod.indexOf("from: ") + 6, taskPeriod.indexOf("to: ") - 1);
-                            String taskTo = taskPeriod.substring(taskPeriod.indexOf("to: ") + 4);
-                            taskList.addTask(taskDescription, taskFrom, taskTo, isCompleted, true);
-                        }
-                    }
+                    writeToApp(line, taskList);
                 }
                 scanner.close();
             } catch (FileNotFoundException e) {
                 System.out.println("An error occurred when trying to read/access the data file");
+            }
+        }
+    }
+
+    /**
+     * Writes a given line recovered from previous session data to the application
+     *
+     * @param line     contains information about a recovered task from the previous session
+     * @param taskList contains information and methods about all the tasks currently in the list
+     */
+    public void writeToApp(String line, TaskList taskList) {
+        char taskType = line.charAt(TASKTYPEINDEX);
+        String taskDescription = "";
+        boolean isCompleted = false;
+        char s = line.charAt(TASKCOMPLETIONINDEX);
+
+        if (s == 'X') {
+            isCompleted = true;
+        }
+        if (taskType == 'T') {
+            taskDescription = line.substring(TASKDESCENTRYINDEX);
+            taskList.addTask(taskDescription, isCompleted, true);
+        } else {
+            String taskPeriod = line.substring(line.indexOf('(') + 1, line.indexOf(')'));
+            taskDescription = line.substring(7, line.indexOf('(') - 1) + " ";
+            if (taskType == 'D') {
+                String taskBy = taskPeriod.substring(taskPeriod.indexOf(':') + TASKBYLENGTH);
+                taskList.addTask(taskDescription, taskBy, isCompleted, true);
+            } else {
+                String taskFrom = taskPeriod.substring(taskPeriod.indexOf("from: ") + TASKFROMLENGTH,
+                        taskPeriod.indexOf("to: ") - 1);
+                String taskTo = taskPeriod.substring(taskPeriod.indexOf("to: ") + TASKTOLENGTH);
+                taskList.addTask(taskDescription, taskFrom, taskTo, isCompleted, true);
             }
         }
     }

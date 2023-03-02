@@ -48,7 +48,7 @@ public class TaskList {
      *
      * @param taskName The name of the TODO task to be added
      **/
-    public void addTask(String taskName, boolean isCompleted, boolean silentmode) {
+    public void addTask(String taskName, boolean isCompleted, boolean isSilentMode) {
         try {
             if (taskName == null) {
                 throw new MissingParameterException();
@@ -56,7 +56,7 @@ public class TaskList {
                 Todo t = new Todo(taskName);
                 list.add(t);
                 t.setCompleted(isCompleted);
-                if (!silentmode) {
+                if (!isSilentMode) {
                     display.printAddedTask(t, list.size());
                     fm.updateFile(list);
                 }
@@ -72,7 +72,7 @@ public class TaskList {
      * @param taskName a string that represents the name of the Deadline task to add.
      * @param byWhen   a string that represents the deadline of the Deadline task.
      **/
-    public void addTask(String taskName, String byWhen, boolean isCompleted, boolean silentMode) {
+    public void addTask(String taskName, String byWhen, boolean isCompleted, boolean isSilentMode) {
         try {
             if (taskName == null || byWhen == null) {
                 throw new MissingParameterException();
@@ -80,7 +80,7 @@ public class TaskList {
                 Deadline d = new Deadline(taskName, byWhen);
                 list.add(d);
                 d.setCompleted(isCompleted);
-                if (!silentMode) {
+                if (!isSilentMode) {
                     fm.updateFile(list);
                     display.printAddedTask(d, list.size());
                 }
@@ -101,7 +101,7 @@ public class TaskList {
      * @param startWhen a string that represents the start date and time of the Event task.
      * @param endWhen   a string that represents the end date and time of the Event task.
      */
-    public void addTask(String taskName, String startWhen, String endWhen, boolean isCompleted, boolean silentmode) {
+    public void addTask(String taskName, String startWhen, String endWhen, boolean isCompleted, boolean isSilentMode) {
         try {
             if (taskName == null || startWhen == null || endWhen == null) {
                 throw new MissingParameterException();
@@ -109,7 +109,7 @@ public class TaskList {
                 Event e = new Event(taskName, startWhen, endWhen);
                 list.add(e);
                 e.setCompleted(isCompleted);
-                if (!silentmode) {
+                if (!isSilentMode) {
                     fm.updateFile(list);
                     display.printAddedTask(e, list.size());
                 }
