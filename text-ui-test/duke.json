@@ -1,41 +1,29 @@
 {
   "taskList": [
     {
-      "type": "todo",
-      "task": " Buy milk",
-      "isDone": false
-    },
-    {
-      "dueBy": " 17/02/2023",
+      "dueBy": "17/02/2023 0101",
       "type": "Deadline",
-      "task": "bake a cake ",
-      "isDone": true
+      "task": "buy a cake ",
+      "isDone": true,
+      "endTime": "2023-03-02T22:54:55.9538114"
     },
     {
-      "startTime": " 16/02/2023 ",
-      "endTime": " 19/02/2023",
+      "startString": "monday",
+      "endString": "18/02/2023 1500",
+      "startTime": "2023-03-02T22:54:55.987072",
       "type": "Event",
-      "task": "attend baking course ",
-      "isDone": true
+      "task": "attend another course",
+      "isDone": false,
+      "endTime": "2023-03-02T22:54:55.987072"
     },
     {
-      "startTime": " 16/02/2023 ",
-      "endTime": " 19/02/2023",
+      "startString": "19/02/2023 1545",
+      "endString": "tuesday",
+      "startTime": "2023-03-02T22:54:55.987072",
       "type": "Event",
-      "task": "attend baking course ",
-      "isDone": false
-    },
-    {
-      "dueBy": " 17/02/2023",
-      "type": "Deadline",
-      "task": "bake a cake ",
-      "isDone": false
-    },
-    {
-      "dueBy": " 18/02/2023",
-      "type": "Deadline",
-      "task": "sell the cake ",
-      "isDone": false
+      "task": "attend another another course",
+      "isDone": false,
+      "endTime": "2023-03-02T22:54:55.987072"
     }
   ]
 }
