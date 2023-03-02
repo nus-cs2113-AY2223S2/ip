@@ -14,13 +14,13 @@ import java.util.StringJoiner;
 import java.util.ArrayList;
 
 public class Storage {
-    static final int TASK_INFORMATION_BEGIN_INDEX = 7;
-    static final int TASK_TYPE_END_INDEX = 6;
-    static final int TASK_TYPE_INDICATOR_INDEX = 1;
-    static final int TASK_TYPE_STATUS_INDEX = 4;
-    static final String LOADING_FRONT_PARENTHESIS_DELIMITER = " \\(";
-    static final String LOADING_EVENT_FROM_DELIMITER = "from: ";
-    static final String LOADING_EVENT_TO_DELIMITER = " to: ";
+    private static final int TASK_INFORMATION_BEGIN_INDEX = 7;
+    private static final int TASK_TYPE_END_INDEX = 6;
+    private static final int TASK_TYPE_INDICATOR_INDEX = 1;
+    private static final int TASK_TYPE_STATUS_INDEX = 4;
+    private static final String LOADING_FRONT_PARENTHESIS_DELIMITER = " \\(";
+    private static final String LOADING_EVENT_FROM_DELIMITER = "from: ";
+    private static final String LOADING_EVENT_TO_DELIMITER = " to: ";
 
     public static void loadData(String filepath, ArrayList<Task> tasks) {
         try {
