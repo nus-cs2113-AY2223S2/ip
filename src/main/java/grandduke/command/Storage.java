@@ -15,7 +15,6 @@ public abstract class Storage {
 
     /**
      * get the directory of the data file
-     * 
      * @return the directory of the data file
      */
     public static String getFileDirectory() {
@@ -24,7 +23,6 @@ public abstract class Storage {
 
     /**
      * get the file path of the data file
-     * 
      * @return the file path of the data file
      */
     public static String getFilePath() {
@@ -64,7 +62,6 @@ public abstract class Storage {
 
     /**
      * Load the data from the data file into the task list
-     * 
      * @param file the data file
      * @throws FileNotFoundException if the data file is not found
      */
@@ -118,7 +115,6 @@ public abstract class Storage {
 
     /**
      * Save the data from the task list into the data file
-     * 
      * @param file the data file
      * @throws IOException if there is an error writing to the data file
      */

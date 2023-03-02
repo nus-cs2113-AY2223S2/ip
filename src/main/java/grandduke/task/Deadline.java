@@ -5,7 +5,6 @@ public class Deadline extends Task {
 
     /**
      * Creates a new Deadline object
-     * 
      * @param taskDesc the description of the task
      * @param deadline the deadline of the task
      */

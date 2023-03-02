@@ -6,10 +6,9 @@ public class Event extends Task {
 
     /**
      * Creates a new Event object
-     * 
-     * @param taskDesc  the description of the task
+     * @param taskDesc the description of the task
      * @param eventFrom the start time of the event
-     * @param eventTo   the end time of the event
+     * @param eventTo the end time of the event
      */
     public Event(String taskDesc, String eventFrom, String eventTo) {
         super(taskDesc);
