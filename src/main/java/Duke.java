@@ -7,18 +7,6 @@ import java.util.ArrayList;
 import java.io.*;
 import java.util.Scanner;
 
-
-/*
-Things to do:
-
-- copy refactored functions into created classes
-
-- Setup text file reading at startup
-    -use Scanner to read in text file
-    -use .nextline to read in each line
- */
-
-
 public class Duke {
 
     public static void main(String[] args) throws FileNotFoundException {
@@ -36,6 +24,7 @@ public class Duke {
         //setup of exit flag
         boolean exit = false;
 
+        //Initialize list with saved data
         counter = initializeList(tasks, counter);
 
 
@@ -45,6 +34,7 @@ public class Duke {
 
             inputString = getInputString();
 
+            //Parsing user input
             int descriptionPosition = inputString.indexOf(" ");
             if(descriptionPosition == -1) {
                 taskType = inputString;
@@ -53,8 +43,6 @@ public class Duke {
                 taskType = inputString.substring(0, descriptionPosition);
                 task = inputString.substring(descriptionPosition + 1, endPosition);
             }
-
-
 
             //switch cases for all specified input types
             switch (taskType) {
@@ -129,6 +117,7 @@ public class Duke {
         System.out.println("    _________________________________________");
         System.out.println("     ");
 
+        //Save list data into text file on disk
         PrintWriter fw = new PrintWriter("out\\list.txt");
         for (int i = 0; i < counter; i++) {
             String classType = String.valueOf(tasks.get(i).getClass());
@@ -139,8 +128,6 @@ public class Duke {
             } else if (classType.equalsIgnoreCase("Class Duke.Deadline")) {
                 fw.println("deadline " + tasks.get(i).getDescription() + "/" + tasks.get(i).getBy());
             }
-
-
         }
         fw.close();
     }
@@ -156,29 +143,25 @@ public class Duke {
     }
 
 
-        /**
-         * Prints greeting message when application is launched.
-         */
-        private static void printGreetingMessage() {
-            String logo = " ____        _        \n"
-                    + "|  _ \\ _   _| | _____ \n"
-                    + "| | | | | | | |/ / _ \\\n"
-                    + "| |_| | |_| |   <  __/\n"
-                    + "|____/ \\__,_|_|\\_\\___|\n";
+    /**
+     * Prints greeting message when application is launched.
+     */
+    private static void printGreetingMessage() {
+        String logo = " ____        _        \n"
+                + "|  _ \\ _   _| | _____ \n"
+                + "| | | | | | | |/ / _ \\\n"
+                + "| |_| | |_| |   <  __/\n"
+                + "|____/ \\__,_|_|\\_\\___|\n";
 
-            System.out.println("    Hello from\n" + logo);
-            System.out.println("    _________________________________________");
+        System.out.println("    Hello from\n" + logo);
+        System.out.println("    _________________________________________");
 
-            System.out.println("    Hello! I'm Duke");
-            System.out.println("    What can I do for you?");
-            System.out.println("    _________________________________________");
-            System.out.println("     ");
-        }
-
-
-
-
-
+        System.out.println("    Hello! I'm Duke");
+        System.out.println("    What can I do for you?");
+        System.out.println("    _________________________________________");
+        System.out.println("     ");
+    }
+    
     private static int initializeList(ArrayList<Todo> tasks, int counter) throws FileNotFoundException {
         String inputString;
         String task = null;
