@@ -3,6 +3,7 @@ package duke.task;
 import duke.exception.EmptyTaskException;
 
 import duke.Storage.Storage;
+import duke.exception.IllegalCommandException;
 import duke.ui.Ui;
 
 import java.util.ArrayList;
@@ -138,7 +139,7 @@ public class TaskList {
      * @throws EmptyTaskException when the user input string is "event"
      * @exception StringIndexOutOfBoundsException where either "/from" or "/to" are not present in the input
      */
-    public void generateEvent(String input) throws EmptyTaskException{
+    public void generateEvent(String input) throws EmptyTaskException, IllegalCommandException {
         if (input.equals("event")){
             throw new EmptyTaskException();
         }
@@ -148,6 +149,10 @@ public class TaskList {
         try {
             taskDescription = input.substring(0, indexSeparator); //locates location of first / for "from"
             taskDates = input.substring(indexSeparator + 6); //creates "from" substring
+            String test = input.substring(indexSeparator+1,indexSeparator+ 5);
+            if (!test.equals("from")){
+                throw new IllegalCommandException();
+            }
         }catch (StringIndexOutOfBoundsException a){
             ui.showException("Invalid Deadline or Event");
             return;
@@ -168,5 +173,18 @@ public class TaskList {
         ui.showSuccessfulAdd(newTask);
     }
 
-
+    /**
+     * Searches and returns Tasks whose description contains the user's description.
+     * @param description This is the user's input that is used to check each task against.
+     */
+    public void find(String description){
+        ArrayList<Task> temp = new ArrayList<>();
+        for (Task task : tasks){
+            if (task.getDescription().contains(description)){
+                temp.add(task);
+            }
+        }
+        ui.searchResults(temp);
+        temp.clear();
+    }
 }

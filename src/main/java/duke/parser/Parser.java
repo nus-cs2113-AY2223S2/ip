@@ -2,6 +2,7 @@ package duke.parser;
 
 import duke.task.TaskList;
 import duke.exception.EmptyTaskException;
+import duke.exception.IllegalCommandException;
 import duke.ui.Ui;
 
 /**
@@ -34,6 +35,10 @@ public class Parser {
     private static boolean isEventCommand(String userInput, String Command){
         return userInput.length()>6 && Command.equalsIgnoreCase("event");
     }
+    private static boolean isFindCommand(String userInput, String Command){
+        return userInput.length()>5 && Command.equalsIgnoreCase("find");
+    }
+    
 
     /**
      * Checks the user's input and applies the appropriate command, given that a valid command was given.
@@ -47,7 +52,7 @@ public class Parser {
         String remainder = userInput.substring(userInput.indexOf(" ")+1);
         if (userInput.equalsIgnoreCase("list")){
             taskList.listTasks();
-        } else if (userInput.equalsIgnoreCase("helo")){
+        } else if (userInput.equalsIgnoreCase("help")){
             ui.printHelp();
         }else if (isMarkCommand(userInput, commandLine[0])){
             parseMarkCommand(remainder, taskList);
@@ -63,9 +68,16 @@ public class Parser {
             parseEventCommand(remainder, taskList);
         } else if (userInput.equalsIgnoreCase("bye")){
             ui.handleExit();
+        } else if (isFindCommand(userInput,commandLine[0])){
+            parseFindCommand(remainder, taskList);
         } else{
             ui.showException("IllegalCommandException");
         }
+    }
+
+    private static void parseFindCommand(String remainder, TaskList taskList) {
+        String description = remainder.trim();
+        taskList.find(description);
     }
 
     private static void parseEventCommand(String remainder, TaskList taskList) {
@@ -73,6 +85,8 @@ public class Parser {
             taskList.generateEvent(remainder);
         } catch(EmptyTaskException e){
             ui.showException("EmptyTaskException");
+        } catch(IllegalCommandException e){
+            ui.showException("Invalid Deadline or Event");
         }
     }
 

@@ -21,7 +21,8 @@ public class Storage {
     private final Ui ui = new Ui();
     private static final String saveLocation = System.getProperty("user.dir")+"/save.json";
     final TypeToken<ArrayList<Task>> listOfTasks = new TypeToken<ArrayList<Task>>(){};
-    RuntimeTypeAdapterFactory<Task> adapter = RuntimeTypeAdapterFactory.of(Task.class,"type")
+    RuntimeTypeAdapterFactory<Task> adapter = RuntimeTypeAdapterFactory.of(
+            Task.class,"type", true)
             .registerSubtype(ToDo.class, "ToDo")
             .registerSubtype(Deadline.class, "Deadline")
             .registerSubtype(Event.class, "Event");

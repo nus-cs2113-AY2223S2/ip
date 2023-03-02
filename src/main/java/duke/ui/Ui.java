@@ -29,6 +29,7 @@ public class Ui {
 
     private static final String WELCOME = "\"Hello! I'm Duke!\" \n\"What can I do for you?\"";
     private static final String FAREWELL = "Bye! Hope to see you again!";
+    private static final String SEARCH_HEADER = "Here are the matching tasks in your list:";
     private static final String EMPTYTASKEXCEPTION_MSG = "Task description cannot be empty!";
     private static final String ILLEGALCOMMANDEXCEPTION_MSG = "Illegal Command entered. Type 'help' for assistance.";
     private static final String NUMBERFORMATEXCEPTION_MSG = "You can only use this command with a valid integer";
@@ -196,6 +197,18 @@ public class Ui {
         for (int i = 0; i < tasks.size(); i++){
             System.out.print((i+1)+ ".");
             System.out.println(tasks.get(i).toString());
+        }
+        out.println(DIVIDER);
+    }
+
+    /**
+     * Prints the array list of tasks of results found.
+     * @param tasks This is the array list of tasks matching the search description.
+     */
+    public void searchResults(ArrayList<Task> tasks){
+        out.println(SEARCH_HEADER);
+        for (int i = 0; i < tasks.size(); i++){
+            out.println("   "+ i + ". "+ tasks.get(i).toString());
         }
         out.println(DIVIDER);
     }
