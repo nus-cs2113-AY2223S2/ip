@@ -5,7 +5,8 @@ import duke.tasklist.TaskList;
 import duke.ui.Ui;
 
 /**
- * contains command to delete tasks
+ * contains command function to delete tasks when user enters "delete (x) task names
+ * lists the tasks remaining after deletion
  */
 public class CommandDelete {
 

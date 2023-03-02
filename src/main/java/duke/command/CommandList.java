@@ -5,7 +5,7 @@ import duke.tasklist.TaskList;
 import duke.ui.Ui;
 
 /**
- * contains command to list tasks
+ * contains command to list tasks entered by users
  */
 public class CommandList {
 
