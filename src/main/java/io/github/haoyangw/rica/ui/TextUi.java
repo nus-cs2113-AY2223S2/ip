@@ -136,7 +136,13 @@ public class TextUi {
      */
     public void printWelcomeMessage() {
         this.printHeader();
-        this.printlnWithIndent(" Hello! I'm R.I.C.A.");
+        this.printlnWithIndent(" Hello! I'm");
+        this.printlnWithIndent(" .______              __          ______             ___          ");
+        this.printlnWithIndent(" |   _  \\            |  |        /      |           /   \\         ");
+        this.printlnWithIndent(" |  |_)  |           |  |       |  ,----'          /  ^  \\        ");
+        this.printlnWithIndent(" |      /            |  |       |  |              /  /_\\  \\       ");
+        this.printlnWithIndent(" |  |\\  \\----.  __   |  |  __   |  `----.  __    /  _____  \\   __ ");
+        this.printlnWithIndent(" | _| `._____| (__)  |__| (__)   \\______| (__)  /__/     \\__\\ (__)");
         this.printlnWithIndent(" That's Really-Intelligent-Chat-Assistant for you!");
         this.printlnWithIndent(" How may I be of assistance?");
         this.printFooter();
