@@ -1,13 +1,19 @@
 package duke.commands;
 
-import duke.data.Event;
 import duke.data.Task;
 
+/**
+ * Find the task that contains keyword
+ */
 public class FindCommand extends Command{
     public static final String COMMAND_WORD = "find";
     public static final String MESSAGE_USAGE = "OOPS!! The correct format of finding task is: find keyword";
     protected String keyWord;
 
+    /**
+     * Convenience constructor using raw values
+     * @param keyWord the keyword which the description contains
+     */
     public FindCommand(String keyWord) {
         this.keyWord = keyWord;
     }

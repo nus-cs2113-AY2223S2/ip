@@ -1,11 +1,15 @@
 package duke.commands;
 
-import duke.TaskList;
-import duke.data.Task;
 
+/**
+ * The command to list all the tasks.
+ */
 public class ListCommand extends Command{
     public static final String COMMAND_WORD = "list";
 
+    /**
+     * Convenience constructor using raw values
+     */
     public ListCommand() {}
     public void execute() {
         System.out.println("Here are the tasks in your list: ");

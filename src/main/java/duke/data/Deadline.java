@@ -1,5 +1,8 @@
 package duke.data;
 
+/**
+ * The deadline class with the by time
+ */
 public class Deadline extends Task{
     public void setBy(String by) {
         this.by = by;

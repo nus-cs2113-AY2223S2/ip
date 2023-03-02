@@ -1,32 +1,34 @@
 package duke.commands;
 
-import duke.data.Deadline;
-import duke.data.Event;
-import duke.data.Task;
-import duke.data.Todo;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.NoSuchElementException;
-import java.util.Scanner;
 import java.io.File;
-import java.io.FileWriter;
 import duke.ui.TextUi;
 import duke.TaskList;
 import duke.parser.Parser;
 import duke.storage.Storage;
 
+/**
+ *  Entry point of the Duke application.
+ *  * Initializes the application and starts the interaction with the user.
+ */
 public class Duke {
     private TextUi ui;
     private TaskList taskList;
 
-
+    /**
+     * Runs the program until termination.
+     */
     public void run() {
         start();
         runCommandLoopUntilExitCommand();
         exit();
     }
 
+    /**
+     * Sets up the required objects, prints the welcome message.
+     * Check whether there's existing history, if yes, load the file.
+     */
     private void start() {
         this.ui = new TextUi();
         ui.showWelcomeMessage();
@@ -42,11 +44,18 @@ public class Duke {
 
     }
 
+    /**
+     * Prints the Goodbye message and exits.
+     * Stores the task list.
+     */
     private void exit() {
         new Storage("./duke.txt").saveFile(taskList);
         System.exit(0);
     }
 
+    /**
+     * Reads the user command and executes it, until the user issues the exit command.
+     */
     private void runCommandLoopUntilExitCommand() {
         Command command;
         do {
@@ -56,6 +65,10 @@ public class Duke {
         } while (!ExitCommand.isExit(command));
     }
 
+    /**
+     * Executes the command and returns the result.
+     * @param command user input command
+     */
     private void executeCommand(Command command) {
         try {
             command.execute();
@@ -64,8 +77,6 @@ public class Duke {
             throw new RuntimeException(e);
         }
     }
-
-
 
 
     public static void main(String[] args) throws IOException {

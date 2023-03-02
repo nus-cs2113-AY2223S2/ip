@@ -2,10 +2,17 @@ package duke.commands;
 
 import duke.data.*;
 
+/**
+ * Deletes a task displayed from the index
+ */
 public class DeleteCommand extends Command{
     public static final String COMMAND_WORD = "delete";
-    protected int targetIndex = -1;
+    protected int targetIndex;
 
+    /**
+     * Convenience constructor using raw values.
+     * @param targetIndex the task at which position to be deleted
+     */
     public DeleteCommand(int targetIndex) {
         this.targetIndex = targetIndex;
     }

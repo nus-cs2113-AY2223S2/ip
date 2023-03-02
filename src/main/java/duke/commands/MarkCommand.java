@@ -2,10 +2,17 @@ package duke.commands;
 
 import duke.data.Task;
 
+/**
+ * The command to mark a task to be done
+ */
 public class MarkCommand extends Command{
     public static final String COMMAND_WORD = "mark";
     protected int targetIndex = -1;
 
+    /**
+     * Convenience constructor using raw values
+     * @param targetIndex the position at which the task to be marked done
+     */
     public MarkCommand(int targetIndex) {
         this.targetIndex = targetIndex;
     }

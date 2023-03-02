@@ -12,14 +12,22 @@ import java.io.IOException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 import duke.TaskList;
-import duke.data.*;
 
+
+/**
+ * Deal with the file saving function.
+ */
 public class Storage {
     private static String filePath = "";
 
     public Storage(String filePath) {
         this.filePath = filePath;
     }
+
+    /**
+     * Write the current task list into a file
+     * @param tasks the current task list
+     */
     public static void FileWriting(TaskList tasks) {
         //File f = new File(filePath);
         try {
@@ -51,6 +59,10 @@ public class Storage {
         }
     }
 
+    /**
+     * Read the contents in the file and records in the task list
+     * @param tasks the task list that stores the tasks
+     */
     public static void FileReading(TaskList tasks) {
         File f = new File(filePath);
         try {
@@ -80,6 +92,10 @@ public class Storage {
         }
     }
 
+    /**
+     * the class that saves the file
+     * @param tasks the task list that stores the tasks
+     */
     public static void saveFile(TaskList tasks) {
         Storage.FileWriting(tasks);
     }
