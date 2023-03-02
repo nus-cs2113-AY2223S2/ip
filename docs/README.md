@@ -14,15 +14,15 @@ Duke can be accessed directly from the terminal.
 
 ## Features 
 
-### Automatic loading of data from previous sessions
+### 1. Automatic loading of data from previous sessions
 All changes made by the user will be saved in a local document. Each time the user starts the Duke Service, 
 data is retrieved from this document. 
 
-### Adding, Finding Task
+### 2. Adding, Finding Task
 Users can add and search for various types of Task by
 keying in the relevant fields.
 
-### Listing, Deleting, Marking and Un-marking Task
+### 3. Listing, Deleting, Marking and Un-marking Task
 Users can obtain the index for a particular Task through the `$list KEYWORD` command
 This index can then be used to delete, mark or un-mark a Task.
 
@@ -107,7 +107,7 @@ Nice! I've marked this task as done:
   [T][X] TASK_DESCRIPTION
 ```
 
-### `Un-mark` - mark a particular Task (by index in the List command) as undone
+### `Un-mark` - Mark a particular Task (by index in the List command) as undone
 
 Command: `$unmark 3`
 
