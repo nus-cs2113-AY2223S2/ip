@@ -228,8 +228,10 @@ public class Duke {
 	 */
 	private static String[] splitEventArg(String arg) {
 		String[] splitDescription = arg.split(FROM_DEMARCATION, 2); // separate the argument into description and fromAndTo
-		String[] splitFromAndTo = splitDescription[1].split(TO_DEMARCATION, 2); // separate fromAndTo into from and to
-		String[] descriptionFromAndTo = new String[]{splitDescription[0].trim(), splitFromAndTo[0].trim(), splitFromAndTo[1].trim()};
+		String fromAndTo = (splitDescription.length == 2) ? splitDescription[1] : ""; // if there is no remaining string, put empty string
+		String[] splitFromAndTo = fromAndTo.split(TO_DEMARCATION, 2); // separate fromAndTo into from and to
+		String to = (splitFromAndTo.length == 2) ? splitFromAndTo[1] : ""; // if there is no remaining string, put empty string
+		String[] descriptionFromAndTo = new String[]{splitDescription[0].trim(), splitFromAndTo[0].trim(), to.trim()};
 		return descriptionFromAndTo;
 	}
 	
@@ -263,7 +265,8 @@ public class Duke {
 	 */
 	private static String[] splitDeadlineArg(String arg) {
 		String[] splitDescriptionAndBy = arg.split(BY_DEMARCATION, 2);
-		String[] descriptionAndBy = new String[]{splitDescriptionAndBy[0].trim(), splitDescriptionAndBy[1].trim()};
+		String by = (splitDescriptionAndBy.length == 2) ? splitDescriptionAndBy[1] : "";
+		String[] descriptionAndBy = new String[]{splitDescriptionAndBy[0].trim(), by.trim()};
 		return descriptionAndBy;
 	}
 	
