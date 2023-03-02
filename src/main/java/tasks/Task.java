@@ -25,6 +25,9 @@ public class Task {
             return "[ ]";
         }
     }
+    public String getDescription() {
+        return this.description;
+    }
 
     public String toString() {
         return this.getMarked() + " " + this.description;
