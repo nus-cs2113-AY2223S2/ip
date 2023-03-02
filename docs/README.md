@@ -60,19 +60,21 @@ ____________________________________________________________
 ### `deadline` - Add a deadline task
 
 Adds a deadline task to Duke's record.
+Please note that deadline must be in **_dd-mm-yyyy hh:mm_** format.
 
 Format: `deadline <description> /by <deadline>`
 
-Example of usage: `deadline CS2113 IP /by Friday 2359`
+
+Example of usage: `deadline CS2113 IP /by 03-03-2022 23:59`
 
 Expected outcome:
 
-The deadline task of "CS2113 IP" with a deadline of "Friday 2359" will be recorded to Duke's memory.
+The deadline task of "CS2113 IP" with a deadline of "03-03-2022 23:59" will be recorded to Duke's memory.
 
 ```
 ____________________________________________________________
 Got it. I've added this task:
-[D][ ] CS2113 IP (by: Friday 2359)
+[D][ ] CS2113 IP (by: Mar 03 2022 23:59)
 Now you have 2 tasks in the list.
 ____________________________________________________________
 ```
@@ -82,19 +84,20 @@ ____________________________________________________________
 ### `event` - Add a event task
 
 Adds a event task to Duke's record.
+Please note that start and end dates must be in **_dd-mm-yyyy hh:mm_** format.
 
 Format: `event <description> /from <start> /to <end>`
 
-Example of usage: `event CG2023 Midterms /from Thursday 4pm /to 6pm`
+Example of usage: `event CG2023 Midterms /from 02-03-2023 16:00 /to 02-03-2023 18:00`
 
 Expected outcome:
 
-The event task of "CG2023 Midterms" with a start time of "Thursday 4pm" and end time of "6pm" will be recorded to Duke's memory.
+The event task of "CG2023 Midterms" with a start time of "02-03-2023 16:00" and end time of "02-03-2023 18:00" will be recorded to Duke's memory.
 
 ```
 ____________________________________________________________
 Got it. I've added this task:
-[E][ ] CG2023 Midterms (from: Thursday 4pm to: 6pm)
+[E][ ] CG2023 Midterms (from: Mar 02 2023 16:00 to: Mar 02 2023 18:00)
 Now you have 3 tasks in the list.
 ____________________________________________________________
 ```
@@ -119,9 +122,9 @@ ____________________________________________________________
 Here are the tasks in your list:
 1. [T][ ] CS2113 Week 7 Coursemology
 ---------------------------------------------
-2. [D][ ] CS2113 IP (by: Friday 2359)
+2. [D][ ] CS2113 IP (by: Mar 03 2023 23:59)
 ---------------------------------------------
-3. [E][ ] CG2023 Midterms (from: Thursday 4pm to: 6pm)
+3. [E][ ] CG2023 Midterms (from: Mar 02 2023 16:00 to: Mar 02 2023 18:00)
 ____________________________________________________________
 ```
 
@@ -142,7 +145,7 @@ The second task in Duke's memory will be marked as completed.
 ```
 ____________________________________________________________
 Nice! I've marked this task as done:
-[X] CS2113 IP (by: Friday 2359)
+[X] CS2113 IP (by: Mar 03 2023 23:59)
 ____________________________________________________________
 ```
 
@@ -163,7 +166,7 @@ The second task in Duke's memory will be marked as incomplete.
 ```
 ____________________________________________________________
 Ok, I've marked this task as not done yet:
-[ ] CS2113 IP (by: Friday 2359)
+[ ] CS2113 IP (by: Mar 03 2023 23:59)
 ____________________________________________________________
 ```
 
@@ -184,8 +187,8 @@ The second task in Duke's memory will be deleted.
 ```
 ____________________________________________________________
 Got it. I've removed this task:
-[D][ ] CS2113 IP
-Now you have 1 tasks in the list.
+[D][ ] CS2113 IP (by: Mar 03 2023 23:59)
+Now you have 2 tasks in the list.
 ____________________________________________________________
 ```
 
@@ -206,7 +209,7 @@ Tasks with descriptions containing "Midterms" in Duke's memory will be displayed
 ```
 ____________________________________________________________
 Here are the matching tasks in your list:
-1. [E][ ] CG2023 Midterms (from: Thursday 4pm to: 6pm)
+1. [E][ ] CG2023 Midterms (from: Mar 02 2023 16:00 to: Mar 02 2023 18:00)
 ____________________________________________________________
 ```
 
