@@ -5,6 +5,9 @@ import java.io.File;
 import java.io.IOException;
 import java.io.FileWriter;
 
+/**
+ * Handles reading and writing from memory to store TaskList across different chatbot sessions.
+ */
 public class Storage {
 
     String fileName;

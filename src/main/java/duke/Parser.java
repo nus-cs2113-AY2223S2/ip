@@ -10,13 +10,20 @@ public class Parser {
         this.tasks = tasks;
     }
 
-    enum taskType {
+    enum TaskType {
         TODO,
         DEADLINE,
         EVENT
     }
-
-    private void handleAddTask(taskType type, String[] argsSplit) throws InsufficientParametersException {
+    
+    /**
+     * Adds a new task to the TaskList and calls methods to print the appropriate output.
+     *
+     * @param type Enum type representing either a TODO, EVENT, or DEADLINE.
+     * @param argsSplit, String array of length 2 with command in first index and arguments in second index.
+     * @throws InsufficientParametersException If not enough parameters are passed in for a respective command.
+     */
+    private void handleAddTask(TaskType type, String[] argsSplit) throws InsufficientParametersException {
         if (argsSplit.length < 2) {
             throw new InsufficientParametersException();
         }
@@ -92,13 +99,13 @@ public class Parser {
                 tasks.removeTask(toDelete);
                 break;
             case "todo":
-                handleAddTask(taskType.TODO, splitIntoArgs);                
+                handleAddTask(TaskType.TODO, splitIntoArgs);                
                 break;
             case "deadline":
-                handleAddTask(taskType.DEADLINE, splitIntoArgs);
+                handleAddTask(TaskType.DEADLINE, splitIntoArgs);
                 break;
             case "event":
-                handleAddTask(taskType.EVENT, splitIntoArgs);
+                handleAddTask(TaskType.EVENT, splitIntoArgs);
                 break;
             case "find":
                 if (splitIntoArgs.length < 2) {
@@ -115,7 +122,8 @@ public class Parser {
             ui.printSimpleMessage("Command not found. Please enter a valid command!");
             return true;
         } catch (InsufficientParametersException e) {
-            ui.printSimpleMessage("You have not provided enough parameters for this command. Please recheck your syntax!");
+            ui.printSimpleMessage(
+                "You have not provided enough parameters for this command. Please recheck your syntax!");
             return true;
         } catch (IncorrectIndexException e) {
             ui.printSimpleMessage("Please enter a valid index.");

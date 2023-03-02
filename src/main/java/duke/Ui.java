@@ -14,7 +14,8 @@ public class Ui {
      */
     public void printAddTaskConfirmation(Task task, int numTasks) {
         System.out.println(LINE);
-        System.out.println("Got it. I've added this task:\n" + task + "\nNow you have " + numTasks + " tasks in the list.");
+        System.out.println("Got it. I've added this task:\n" + task + "\nNow you have " + 
+            numTasks + " tasks in the list.");
         System.out.println(LINE);
     }
 
