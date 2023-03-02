@@ -15,6 +15,7 @@ public class Duke {
     private Ui ui;
     private Storage storage;
     private TaskList tasks;
+    private static final String FILE_PATH = "duke.json";
 
 
     /**
@@ -58,6 +59,6 @@ public class Duke {
      * @param args None taken.
      */
     public static void main(String[] args) {
-        new Duke("duke.json").run();
+        new Duke(FILE_PATH).run();
     }
 }
