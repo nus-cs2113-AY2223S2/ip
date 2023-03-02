@@ -56,7 +56,7 @@ public class Ui {
     public static void listTasks(ArrayList<Task> tasks) {
         System.out.println(LINE);
         if (tasks.size() == 0) {
-            System.out.println("No task");
+            System.out.println("No task found");
             System.out.println(LINE);
             return;
         }

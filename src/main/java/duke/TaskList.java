@@ -72,4 +72,14 @@ public class TaskList {
     public ArrayList<Task> fullList() {
         return this.taskList;
     }
+
+    public ArrayList<Task> searchRelaventTask(String keyword) {
+        ArrayList<Task> result = new ArrayList<>();
+        for(Task cur: taskList) {
+            if(cur.getTaskDiscription().indexOf(keyword) != -1) result.add(cur);
+        }
+
+        return result;
+    }
+
 }

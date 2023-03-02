@@ -21,8 +21,14 @@ public class Parser {
         return splittedCommand[0];
     }
 
+    private static Boolean hasInfo() {
+        if (splittedCommand.length == 1 || splittedCommand[1].equals(""))
+            return false;
+        return true;
+    }
+
     public static int getTaskIndex(int taskSize) throws TaskNumberOutOfRange {
-        if (splittedCommand.length == 1 || splittedCommand[1].equals("")) {
+        if (!hasInfo()) {
             throw new TaskNumberOutOfRange("    > no task number!" + System.lineSeparator() + ": ");
         }
 
@@ -35,7 +41,7 @@ public class Parser {
     }
 
     public static String getToDoDescription() throws LackOfTaskDetail {
-        if (splittedCommand.length == 1 || splittedCommand[1].equals("")) {
+        if (!hasInfo()) {
             throw new LackOfTaskDetail("    > no task detail!" + System.lineSeparator() + ": ");
         }
         return splittedCommand[1];
@@ -43,7 +49,7 @@ public class Parser {
 
     private static String[] splitTime(String tasktype) throws LackOfTaskDetail {
         String splittedDiscription[];
-        if (splittedCommand.length == 1 || splittedCommand[1].equals("")) {
+        if (!hasInfo()) {
             throw new LackOfTaskDetail("    > no task detail!" + System.lineSeparator() + ": ");
         }
 
@@ -84,7 +90,14 @@ public class Parser {
         }
     }
 
-    public static boolean ParseCommand(String command, TaskList tasks, String path) {
+    public static String getKeyword() throws LackOfTaskDetail {
+        if (!hasInfo()) {
+            throw new LackOfTaskDetail("    > no keyword to search!" + System.lineSeparator() + ":");
+        }
+        return splittedCommand[1];
+    }
+
+    public static boolean parseOriginalCommand(String command, TaskList tasks, String path) {
         String commandType = Parser.parseCommand(command);
         boolean isEnd = false;
 
@@ -173,6 +186,14 @@ public class Parser {
                 Storage.autoSave(tasks.fullList(), path);
             } catch (IOException e) {
                 System.out.print(e.getMessage());
+            }
+            break;
+        case "find":
+            try {
+                String keyword = getKeyword();
+                Ui.listTasks(tasks.searchRelaventTask(keyword));
+            } catch (LackOfTaskDetail e) {
+                System.out.println(e.getMessage());
             }
             break;
         default:
