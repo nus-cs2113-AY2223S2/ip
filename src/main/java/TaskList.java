@@ -116,4 +116,19 @@ public class TaskList {
             }
         }
     }
+
+    public void listOverdue() {
+        if (taskList.size() == 0) {
+            System.out.println("Task list is empty.");
+        } else {
+            System.out.println("Here are the overdue deadlines in your list:");
+            Integer i = 0;
+            for (Task task : taskList) {
+                if (task instanceof Deadline & ((Deadline) task).isOverdue) {
+                    System.out.printf(String.format("%d.%s\n", i + 1, task.toString()));
+                    i++;
+                }
+            }
+        }
+    }
 }
