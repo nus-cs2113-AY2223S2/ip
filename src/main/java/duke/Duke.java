@@ -1,6 +1,8 @@
 package duke;
 import duke.addable.*;
 import duke.exception.*;
+
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.time.LocalDate;
@@ -45,6 +47,9 @@ public class Duke {
                 case UNMARK:
                     unmark(parameters);
                     break;
+                case FIND:
+                    find(parameters);
+                    break;
                 case BYE:
                     return;
                 default:
@@ -59,12 +64,27 @@ public class Duke {
                 ui.printInvalidInputMessage("Unknown command \'" + e.unknownCommand + "\'");
             } catch (NumberFormatException e) {
                 ui.printInvalidInputMessage("Argument for mark/unmark/delete must be an integer");
+            } catch (DateTimeParseException e) {
+                ui.printInvalidInputMessage("Invalid format for date and/or time");
             }
             currentInput = in.nextLine();
         }
     }
     // COMMAND HANDLERS
-
+    public static void find(String[] parameters) {
+        String toFind = String.join(" ", parameters);
+        ArrayList<Task> foundTasks = new ArrayList<>();
+        for (Task task : taskList.getTasks()) {
+            if (task.getDescription().contains(toFind)) {
+                foundTasks.add(task);
+            }
+        }
+        if (foundTasks.isEmpty()) {
+            ui.printMessage("No matching tasks found");
+        } else {
+            ui.printMessage(ui.getFormattedList("Here are the matching tasks in your list:", foundTasks));
+        }
+    }
     public static void delete(String[] parameters) throws MarkNonexistentTaskException {
         int taskIndex = getTaskIndex(parameters[0]);
         String[] taskDeletedMessage = {
@@ -76,7 +96,7 @@ public class Duke {
         ui.printMessage(taskDeletedMessage);
     }
     public static void list() {
-        ui.printMessage(ui.getFormattedList(taskList));
+        ui.printMessage(ui.getFormattedList("Here are the tasks in your list:", taskList.getTasks()));
     }
 
     public static int getTaskIndex(String index) throws MarkNonexistentTaskException {

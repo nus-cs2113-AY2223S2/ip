@@ -28,6 +28,8 @@ public class Parser {
             return Command.MARK;
         case "unmark":
             return Command.UNMARK;
+        case "find":
+            return Command.FIND;
         case "bye":
             return Command.BYE;
         default:

@@ -1,7 +1,7 @@
 package duke;
 
 import duke.addable.Task;
-
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Ui {
@@ -33,12 +33,12 @@ public class Ui {
         return number + ". " + task.toString();
     }
 
-    public static String[] getFormattedList(TaskList taskList) {
-        int numTasks = taskList.getTasks().size();
+    public static String[] getFormattedList(String heading, ArrayList<Task> tasks) {
+        int numTasks = tasks.size();
         String[] formattedList = new String[numTasks + 1];
-        formattedList[0] = "Here are the tasks in your list:";
+        formattedList[0] = heading;
         for (int i = 0; i < numTasks; i++) {
-            formattedList[i + 1] = getFormattedTask(taskList.getTasks().get(i), i + 1);
+            formattedList[i + 1] = getFormattedTask(tasks.get(i), i + 1);
         }
         return formattedList;
     }
