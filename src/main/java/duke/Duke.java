@@ -15,6 +15,12 @@ import duke.commands.Ui;
 public class Duke {
     public static String FILE = "./duke.txt";
     public static String DIRECTORY = "data";
+
+    /**
+     * Starts GrandDuke
+     *
+     * @param args starting arguments provided
+     */
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
         try {

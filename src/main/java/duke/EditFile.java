@@ -9,6 +9,11 @@ import java.util.ArrayList;
 public class EditFile {
     private static final String FILE = "./duke.txt";
     private static final String DIRECTORY = "data";
+
+    /**
+     * Checks that the appropriate directory and file exists for saving the file later. If the directory or file does
+     * not exist, create the directory or file respectively
+     */
     public static void checkFile() throws IOException,FileNotFoundException {
         File directory = new File(DIRECTORY);
         if (!directory.exists()) {
@@ -20,6 +25,12 @@ public class EditFile {
         }
     }
 
+    /**
+     * Loads the saved list of task into the current list of task
+     *
+     * @param tasks the list of tasks from the saved file
+     * @throws FileNotFoundException the file does not exist
+     */
     public static void loadFile(ArrayList<Task> tasks) throws FileNotFoundException {
         File f = new File("data/duke.txt");
         Scanner s = new Scanner(f);
@@ -54,6 +65,13 @@ public class EditFile {
         }
     }
 
+    /**
+     * Saves the list of tasks to the previously created file path
+     *
+     * @param filePath the path where the file is located at
+     * @param tasks the list of tasks
+     * @throws IOException the file path does not exist or is incorrect
+     */
     public static void writetoFile(String filePath, ArrayList<Task> tasks) throws IOException {
         FileWriter fw = new FileWriter(filePath);
         for (int i = 0; i < tasks.size(); i++) {

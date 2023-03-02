@@ -9,6 +9,11 @@ import java.util.ArrayList;
 
 public class Parser {
 
+    /**
+     * Parses the command from the user and decides on the appropriate command to execute
+     *
+     * @param input the command sent by the user
+     */
     public static void parseCommand(String input) {
         String[] inputs = input.split(" ", 2);
         String command = inputs[0];
