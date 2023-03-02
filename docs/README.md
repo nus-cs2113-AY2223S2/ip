@@ -16,6 +16,7 @@ java -jar <absolute_path>
 
 When you have successfully setup, you should see something like this:
 ```
+File created: duke.txt
 Hello from
  ____        _        
 |  _ \ _   _| | _____ 
@@ -169,7 +170,7 @@ This commands allows you to exit the application. Your tasklist will be automati
 
 Command:
 ```
-exit
+bye
 ```
 Expected outcome:
 ```
@@ -187,7 +188,7 @@ Bye. Hope to see you again soon!
 | `mark` | mark <task_number> | mark 1 |
 | `unmark` | unmark <task_number> | unmark 1|
 | `find` | find <keyword> | find review |
-| `exit` | exit | exit |
+| `bye` | bye | bye |
 
 ### Credits
 This project was completed with reference to [nus-cs2113-AY2223S2/personbook](https://github.com/nus-cs2113-AY2223S2/personbook)
