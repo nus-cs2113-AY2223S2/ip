@@ -107,10 +107,8 @@ public class TaskList {
         boolean contain=false;
         for(int i=0;i<index;i++){
             if(list[i].toString().substring(6).contains(whatToFind)){
-                System.out.println("--------------------------------");
-                System.out.println("Here are the matching tasks in your list:");
+                System.out.println("Here are the matching task in your list:");
                 System.out.println("\t" + list[i].toString());
-                System.out.println("--------------------------------");
                 contain=true;
             }
         }

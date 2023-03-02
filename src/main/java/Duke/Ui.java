@@ -9,12 +9,13 @@ public class Ui {
     public static Scanner in = new Scanner(System.in);
     public static void printHelp(){
         System.out.println("--------------------------------");
-        System.out.println("Enter \"todo task name\" to add a task.");
-        System.out.println("Enter \"event /from start time /to end time\" to add an event.");
-        System.out.println("Enter \"deadline task name /by end time\" to add a deadline");
+        System.out.println("Enter \"todo task_name\" to add a task.");
+        System.out.println("Enter \"event task_name /from start_time /to end_time\" to add an event.");
+        System.out.println("Enter \"deadline task_name /by end_time\" to add a deadline");
         System.out.println("Enter \"mark index\"to mark a task as done.");
         System.out.println("Enter \"unmark index\"to mark a task as not done.");
         System.out.println("Enter \"delete index\"to delete a task.");
+        System.out.println("Enter \"find content\"to find task(s) that contain the content.");
         System.out.println("Enter \"list\" to print all the tasks.");
         System.out.println("Enter \"bye\" to terminate this program.");
 
