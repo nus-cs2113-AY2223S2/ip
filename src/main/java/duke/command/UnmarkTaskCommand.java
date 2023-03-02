@@ -23,17 +23,15 @@ public class UnmarkTaskCommand extends Command {
             ui.printMarkNotDone();
             ui.printTask(task);
         } catch (IndexOutOfBoundsException e) {
-            System.out.println("The given task number does not exist. ):");
-        } catch (NumberFormatException e) {
-            System.out.println("The task index must be numeric.");
+            ui.printInvalidTaskNumber();
         } catch (DukeException e) {
-            System.out.println("The task is already marked as not done.");
+            ui.printTaskAlreadyMarked();
         }
 
         try {
-            storage.saveData(tasks);
+            storage.saveData(tasks, ui);
         } catch (IOException e) {
-            System.out.println("Unable to save.");
+            ui.printSavingError();
         }
     }
 }

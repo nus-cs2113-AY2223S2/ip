@@ -5,6 +5,8 @@ import duke.TaskList;
 import duke.UI;
 import duke.task.Task;
 
+import java.io.IOException;
+
 public class DeleteCommand extends Command {
     private int taskNumber;
 
@@ -19,10 +21,11 @@ public class DeleteCommand extends Command {
             ui.printDeleteTask();
             ui.printTask(task);
             tasks.removeTask(taskNumber);
+            storage.saveData(tasks, ui);
         } catch (IndexOutOfBoundsException e) {
-            System.out.println("The given task number does not exist. ):");
-        } catch (NumberFormatException e) {
-            System.out.println("The task index must be numeric.");
+            ui.printInvalidTaskNumber();
+        } catch (IOException e) {
+            ui.printSavingError();
         }
     }
 }

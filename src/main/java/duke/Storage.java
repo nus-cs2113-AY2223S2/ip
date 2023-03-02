@@ -25,7 +25,7 @@ public class Storage {
         this.gson = new Gson();
     }
 
-    public void saveData(TaskList tasks) throws IOException {
+    public void saveData(TaskList tasks, UI ui) throws IOException {
         File file = new File(filePath);
 
         if (file.exists()) {
@@ -33,23 +33,23 @@ public class Storage {
         }
 
         file.createNewFile();
-        taskToJson(tasks, file);
+        taskToJson(tasks, file, ui);
     }
 
-    public void taskToJson(TaskList tasks, File file) {
+    public void taskToJson(TaskList tasks, File file, UI ui) {
         JsonArray jsonArray = new JsonArray();
         try {
-            FileWriter input = new FileWriter(file);
+            FileWriter fileWriter = new FileWriter(file);
 
             for (Task task : tasks) {
                 JsonElement jsonElement = gson.toJsonTree(task);
                 jsonElement.getAsJsonObject().addProperty("type", task.getClass().getSimpleName());
                 jsonArray.add(jsonElement);
             }
-            gson.toJson(jsonArray, input);
-            input.close();
+            gson.toJson(jsonArray, fileWriter);
+            fileWriter.close();
         } catch (IOException | JsonIOException e) {
-            System.out.println("Error saving file");
+            ui.printSavingError();
         }
     }
 
@@ -94,7 +94,7 @@ public class Storage {
                 tasks.addTask(taskToAdd);
             }
         } catch (NullPointerException e) {
-            System.out.println("There are no tasks to load");
+            ui.printNoTasksToLoad();
         }
     }
 }

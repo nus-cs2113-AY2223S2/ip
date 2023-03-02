@@ -23,7 +23,7 @@ public class Duke implements Serializable {
 
         while (isRunning) {
             input = in.nextLine();
-           // Command command = Parser.parse(input, ui);
+
             try {
                 Command command = Parser.getCommand(input, ui);
                 command.execute(tasks, storage, ui);
@@ -33,10 +33,9 @@ public class Duke implements Serializable {
                 }
 
             } catch (NullPointerException e) {
-                System.out.println("Command could not be executed IN DUKE.");
+                ui.printCommandExecutionFailure();
+
             }
-
-
         }
     }
 
@@ -45,7 +44,7 @@ public class Duke implements Serializable {
             storage.loadData(tasks, ui);
 
         } catch (IOException e) {
-            System.out.println("Unable to load");
+            ui.printSavingError();
         }
     }
 }

@@ -57,7 +57,7 @@ public class UI {
     }
 
     public void printNoOfTasks(int size) {
-        System.out.println("Now you have " + size + " tasks in the list");
+        System.out.println("Now you have " + size + " tasks in the list.");
     }
 
     public void printInvalidMessage() {
@@ -65,7 +65,51 @@ public class UI {
     }
 
     public void printInvalidFileRead() {
-        System.out.println("Unable to read from file");
+        System.out.println("Unable to read from file.");
+    }
+
+    public void printTaskNumberWarning() {
+        System.out.println("The task index must be an integer between 1 and the total number of tasks in the list.");
+    }
+
+    public void printInvalidTaskNumber() {
+        System.out.println("The given task number does not exist.");
+    }
+
+    public void printSavingError() {
+        System.out.println("Unable to save.");
+    }
+
+    public void printTaskAlreadyMarked() {
+        System.out.println("The task is already marked as done.");
+    }
+
+    public void printEmptyDescriptionError() {
+        System.out.println("Not a valid command. Please specify more details about the task.");
+    }
+
+    public void printEmptyTodo() {
+        System.out.println("The description of a todo cannot be empty.");
+    }
+
+    public void printInvalidDeadline() {
+        System.out.println( "Invalid format. Specify deadlines in the format 'deadline EVENT /by TIME'.");
+    }
+
+    public void printInvalidEvent() {
+        System.out.println("Invalid format. Specify events in the format 'event DESCRIPTION /from A /to B'.");
+    }
+
+    public void printMissingWord() {
+        System.out.println("Please specify the word to be found.");
+    }
+
+    public void printNoTasksToLoad() {
+        System.out.println("There are no tasks to load");
+    }
+
+    public void printCommandExecutionFailure() {
+        System.out.println("Command could not be executed.");
     }
 
     public void printBye() {

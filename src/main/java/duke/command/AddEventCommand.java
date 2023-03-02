@@ -28,9 +28,9 @@ public class AddEventCommand extends Command {
             ui.printAddTask();
             ui.printTask(task);
             ui.printNoOfTasks(tasks.getSize());
-            storage.saveData(tasks);
+            storage.saveData(tasks, ui);
         } catch (IOException e) {
-            System.out.println("Unable to save.");
+            ui.printSavingError();
         }
     }
 }
