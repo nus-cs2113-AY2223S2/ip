@@ -1,3 +1,0 @@
-todoread book | 0
-deadlinereturn book /bynull | 0
-eventset project /from 3 /at4 | 0

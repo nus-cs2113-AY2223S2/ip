@@ -6,7 +6,9 @@ public class Deadline extends Task {
 
     public Deadline (String description, String by) {
         super(description);
-        this.by = by;
+        if (by.contains("/by")) {
+            this.by = by;
+        }
     }
 
     @Override
