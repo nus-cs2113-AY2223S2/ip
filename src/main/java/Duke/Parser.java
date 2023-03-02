@@ -1,7 +1,5 @@
 package Duke;
 
-import Duke.Exceptions.DukeException;
-
 import java.io.IOException;
 
 public class Parser {
