@@ -65,13 +65,27 @@ public class TextUi {
     }
 
     /**
+     * Prints a message that looks more important by wrapping the
+     *   message with '***'
      *
+     * @param message Message we want to format to look more important on the user's
+     *   screen
      */
-    public void printImportantErrorMessage(RicaException exception) {
+    public void printImportantMessage(String message) {
         String SUBSTITUTE_FOR_MESSAGE = "%s";
         String messageFormat = TextUi.IMPORTANT_MESSAGE_MARKER + TextUi.INDENT
                 + SUBSTITUTE_FOR_MESSAGE + TextUi.INDENT + TextUi.IMPORTANT_MESSAGE_MARKER;
-        this.getCmdLineOut().printf(messageFormat, exception.getMessage());
+        this.getCmdLineOut().printf((messageFormat) + System.lineSeparator(), message);
+    }
+
+    /**
+     * Prints an error message that looks more important by wrapping the
+     *   message with '***'
+     *
+     * @param exception Important Rica internal Exception to inform the user about
+     */
+    public void printImportantErrorMessage(RicaException exception) {
+        this.printImportantMessage(exception.getMessage());
     }
 
     /**
