@@ -61,13 +61,8 @@ public class Logic {
                 tasks.listTasks();
                 break;
             case "delete":
-//                taskNumber = Integer.parseInt(description);
                 taskNumber = Parser.handleIntegerConversion(tasks, description);
                 tasks.deleteTask(taskNumber);
-            case "save":
-                String filePath = FileManager.getFilePath();
-                tasks.saveList(filePath);
-                System.out.println("\t tasks saved.");
                 break;
             case "help":
                 Help.printHelpMessage(true);

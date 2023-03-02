@@ -6,6 +6,7 @@ import btb.help.Help;
 import btb.tasks.TaskManager;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
@@ -75,6 +76,9 @@ public abstract class UI {
                 break;
             }
         } while (isRepeat);
+
+        // save tasks after user has entered bye
+        save(tasks);
     }
 
     /**
@@ -85,5 +89,16 @@ public abstract class UI {
         System.out.println(Constant.DOTTED_LINE);
         System.out.println(Constant.BYE);
         System.out.println(Constant.DOTTED_LINE);
+    }
+
+    public static void save(TaskManager tasks) {
+        try {
+            String filePath = FileManager.getFilePath();
+            tasks.saveList(filePath);
+            System.out.println(Constant.DOTTED_LINE);
+            System.out.println("\t tasks saved.");
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
