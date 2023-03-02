@@ -46,14 +46,6 @@ public class Duke {
     }
 
 
-    /**
-     * The method performs three operations:
-     * 1. Add a task to the task list
-     * 2. Print the task added on the screen
-     * 3. Print the number of tasks in the list on the screen
-     *
-     * @param task The task to be added to the task list
-     */
     public static void addTask(Task task) {
         tasks.add(task);
         System.out.println(dividingLine);
@@ -63,15 +55,7 @@ public class Duke {
         System.out.println(dividingLine);
     }
 
-    /**
-     * The method processes the commands from user.
-     *
-     * @param line The command input by user
-     * @throws DukeException If the command is unrecognisable
-     * @throws TaskInfoException If the task information is not complete
-     * @throws MarkIndexException If the index does not exist in the task list
-     * @throws NoTaskException If there is no task in the task list
-     */
+
 
     public static void processTask(String line) throws DukeException, TaskInfoException, MarkIndexException, NoTaskException {
         if (line.equals("list")) {
