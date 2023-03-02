@@ -50,6 +50,8 @@ public class Parser {
             } catch (IOException ioexception) {
                 Ui.couldNotSaveMessage();
             }
+        } else if (line.split(" ")[0].equalsIgnoreCase("find")) {
+            TaskList.findTask(line);
         } else {
             throw new HinaException();
         }
