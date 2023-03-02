@@ -2,18 +2,18 @@ import command.Command;
 import components.Parser;
 import components.Storage;
 import components.TaskList;
-import components.Ui;
+import components.UI;
 import exception.DukeException;
 
 import java.util.Scanner;
 
 public class Duke {
-    public Storage storage;
-    public final Ui ui;
-    public TaskList tasks;
+    private Storage storage;
+    private final UI ui;
+    private TaskList tasks;
 
-    public Duke(String filePath) {
-        ui = new Ui();
+    private Duke(String filePath) {
+        ui = new UI();
         storage = new Storage(filePath);
         try {
             tasks = new TaskList(storage.load());
@@ -23,7 +23,7 @@ public class Duke {
         }
     }
 
-    public void run() {
+    private void run() {
         ui.greet();
         boolean isExit = false;
         while (!isExit) {

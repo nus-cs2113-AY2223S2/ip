@@ -1,5 +1,8 @@
 package exception;
 
+/**
+ * List of error messages
+ */
 public enum ErrorMessage {
     INVALID_COMMAND("I am sorry, I do not understand what this command means \n" +
             "Commands are available as follows:\n" +
