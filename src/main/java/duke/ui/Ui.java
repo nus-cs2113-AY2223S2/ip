@@ -14,18 +14,21 @@ import java.util.ArrayList;
  */
 public class Ui {
 
+    private static final String SEPARATOR = "===================";
+    private static final String BAD_SEPARATOR = "XXXXXXXXXXXXXXXXX";
+    private static final String LOGO = " .----------------.  .----------------.  .----------------.  .----------------. \n" +
+            "| | |_   ___ `.  | || ||_   _||_   _|| || | |_  ||_  _|  | || | |_   ___  |  | |\n" +
+            "| |   | |   `. \\ | || |  | |    | |  | || |   | |_/ /    | || |   | |_  \\_|  | |\n" +
+            "| |   | |    | | | || |  | '    ' |  | || |   |  __'.    | || |   |  _|  _   | |\n" +
+            "| |  _| |___.' / | || |   \\ `--' /   | || |  _| |  \\ \\_  | || |  _| |___/ |  | |\n" +
+            "| | |________.'  | || |    `.__.'    | || | |____||____| | || | |_________|  | |\n" +
+            " '----------------'  '----------------'  '----------------'  '----------------' ";
+
     /**
      * Prints out the greeting message to the user.
      */
     public static void greetUser() {
-        String logo = " .----------------.  .----------------.  .----------------.  .----------------. \n" +
-                "| | |_   ___ `.  | || ||_   _||_   _|| || | |_  ||_  _|  | || | |_   ___  |  | |\n" +
-                "| |   | |   `. \\ | || |  | |    | |  | || |   | |_/ /    | || |   | |_  \\_|  | |\n" +
-                "| |   | |    | | | || |  | '    ' |  | || |   |  __'.    | || |   |  _|  _   | |\n" +
-                "| |  _| |___.' / | || |   \\ `--' /   | || |  _| |  \\ \\_  | || |  _| |___/ |  | |\n" +
-                "| | |________.'  | || |    `.__.'    | || | |____||____| | || | |_________|  | |\n" +
-                " '----------------'  '----------------'  '----------------'  '----------------' ";
-        System.out.println("Hello from\n" + logo);
+        System.out.println("Hello from\n" + LOGO);
         String greetMessage = "Hello! I'm Duke\n"
                 + "Send me a list of things to remember!\n"
                 + "Type <bye> to exit";
@@ -36,7 +39,7 @@ public class Ui {
      * Prints a separator line.
      */
     public void showLine() {
-        System.out.println("===================");
+        System.out.println(SEPARATOR);
     }
 
     /**
@@ -44,7 +47,7 @@ public class Ui {
      */
     public void errorMessage(String errorText) {
         System.out.println(errorText);
-        System.out.println("xxxxxxxxxxxxxxxxx");
+        System.out.println(BAD_SEPARATOR);
     }
 
     /**
@@ -55,7 +58,7 @@ public class Ui {
      */
     public void printTaskDeadline(Deadline deadline, TaskList tasks) {
         System.out.println("Got it! Added \n"
-                + "[D][ ] " + deadline.getDescription() + deadline.getDueBy() + "\n"
+                + deadline.getTaskType() + "[ ] " + deadline.getDescription() + deadline.getDueBy() + "\n"
                 + "to the list.");
         System.out.println("Now you have " + tasks.size() + " task(s) in the list.");
     }
@@ -68,7 +71,7 @@ public class Ui {
      */
     public void printTaskEvent(Event event, TaskList tasks) {
         System.out.println("Got it! Added \n"
-                + "[E][ ] " + event.getDescription() + event.getDuration() + "\n"
+                + event.getTaskType() + "[ ] " + event.getDescription() + event.getDuration() + "\n"
                 + "to the list.");
         System.out.println("Now you have " + tasks.size() + " task(s) in the list.");
     }
@@ -81,7 +84,7 @@ public class Ui {
      */
     public void printTaskTodo(Task task, TaskList tasks) {
         System.out.println("Got it! Added \n"
-                + "[T][ ]" + task.getDescription() + "\n"
+                + task.getTaskType() + "[ ]" + task.getDescription() + "\n"
                 + "to the list.");
         System.out.println("Now you have " + tasks.size() + " task(s) in the list.");
     }
@@ -106,7 +109,7 @@ public class Ui {
      */
     public void printMarkedTask(Task task) {
         System.out.println("Noted sir, I have marked \n"
-                + task.getTaskType() + "[X] " + task.getDescription() + "\n"
+                + task.getTaskStatus() + " " + task.getDescription() + "\n"
                 + "as done.");
     }
 
@@ -117,7 +120,7 @@ public class Ui {
      */
     public void printUnmarkedTask(Task task) {
         System.out.println("Noted sir, I have marked \n"
-                + task.getTaskType() + "[ ]" + task.getDescription() + "\n"
+                + task.getTaskType() + "[ ] " + task.getDescription() + "\n"
                 + "as not done.");
     }
 
