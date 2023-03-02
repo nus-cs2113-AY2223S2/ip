@@ -1,14 +1,36 @@
-# User Guide
+# Duke - User Guide
+
+##About:
+Duke is an application that uses a command-line interface(CLI) to interact with the user. Duke can be used by users to keep track of various types of tasks. These types of tasks are *ToDo* , *Deadline* and *Event*.
+
+##Quick Start:
 
 ## Features 
 
-### Feature-ABC
+### Add Tasks
 
-Description of the feature.
+Add a task into the task list.
 
-### Feature-XYZ
+### Delete Tasks
 
-Description of the feature.
+Delete specific task within the task list.
+
+### Mark task as done/not done
+
+Mark a specified task as done or not done.
+
+### Find Tasks
+
+Filters tasks in the task list based on the task description matching a provided query.
+
+### Save Tasks
+
+Saves the task list to a file.
+
+### Load Tasks
+
+Loads the task list from a file.
+
 
 ## Usage
 
