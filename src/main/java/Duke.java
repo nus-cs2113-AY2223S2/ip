@@ -4,6 +4,7 @@ import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.StandardOpenOption;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -118,9 +119,9 @@ public class Duke {
         java.nio.file.Path path = java.nio.file.Paths.get(home, "src", "main", "savefile");
         boolean directoryExists = java.nio.file.Files.exists(path);
         if (!directoryExists) {
-            // https://docs.oracle.com/javase/7/docs/api/java/nio/file/Files.html
+        // https://docs.oracle.com/javase/7/docs/api/java/nio/file/Files.html
             try {
-                Files.createFile(path);
+               Files.createFile(path);
             } catch (IOException e) {
                 //complete
             }
