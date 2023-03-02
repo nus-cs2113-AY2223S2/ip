@@ -36,12 +36,7 @@ public class TaskManager {
     public TaskManager() {
         storageManager = new StorageManager();
         textUi = new TextUi();
-        try {
-            tasks = storageManager.getSavedTasks();
-        } catch (RicaStorageException exception) {
-            textUi.printImportantErrorMessage(exception);
-            tasks = new ArrayList<>();
-        }
+        tasks = new ArrayList<>();
     }
 
     /**
@@ -154,6 +149,22 @@ public class TaskManager {
         return this.getTasks().stream()
                 .filter(task -> task.getDescription().contains(keyword))
                 .collect(Collectors.toList());
+    }
+
+    /**
+     * Sets up TaskManager fully.
+     *
+     * Internally, this restores TaskManager's previously saved list of Tasks,
+     *   which is IO-heavy and prone to Exceptions. As such, only run this when
+     *   the application is ready.
+     */
+    public void initialise() {
+        try {
+            tasks = storageManager.getSavedTasks();
+        } catch (RicaStorageException exception) {
+            textUi.printImportantErrorMessage(exception);
+            textUi.printFooter();
+        }
     }
 
     /**
