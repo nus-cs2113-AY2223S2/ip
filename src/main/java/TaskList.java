@@ -4,9 +4,22 @@ import java.io.File;
 import java.util.Scanner;
 import java.io.IOException;
 
+/*
+ * TaskList is the class of Duke which contains the list of tasks and methods to makes changes to the list
+ * It contains only the ArrayList taskList
+ */
 public class TaskList {
     private static List<Task> taskList = new ArrayList<Task>();
 
+    /*
+     * Writes file data from file scanned from file to taskList object
+     * Uses <code>Scanner</code> to read contents from file, splits content into
+     * String[]
+     * 
+     * @param File file with contents of previously created tasklist
+     * 
+     * @throws IOException if file data is not formatted as specified
+     */
     public void Tasklist(File file) {
         String data;
         try {
@@ -25,6 +38,10 @@ public class TaskList {
         System.out.println("These are the tasks from your file:\n");
     }
 
+    /*
+     * Formats file data retrieved by Tasklist, parses String[] and adds them to
+     * taskList as Todo, Event or Deadline subclasses
+     */
     private static void addFileData(String[] inputArgs) {
         Task newTask;
         String command = inputArgs[0];
@@ -104,6 +121,9 @@ public class TaskList {
         }
     }
 
+    /*
+     * Main list method, lists all contents of tasklist
+     */
     public void list() {
         if (taskList.size() == 0) {
             System.out.println("Task list is empty.");
@@ -117,6 +137,9 @@ public class TaskList {
         }
     }
 
+    /*
+     * Lists overdue deadline subclass objects in tasklist
+     */
     public void listOverdue() {
         if (taskList.size() == 0) {
             System.out.println("Task list is empty.");
@@ -132,6 +155,11 @@ public class TaskList {
         }
     }
 
+    /*
+     * lists all tasks in task list containing <code>keyword</code>
+     * 
+     * @param keyword to be searched for
+     */
     public void find(String keyword) {
         if (taskList.size() == 0) {
             System.out.println("Task list is empty.");

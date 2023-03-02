@@ -1,3 +1,7 @@
+/*
+ * Superclass Task extends to subtasks Deadline, Event and Todo
+ * Task has 2 attributes, description and isDone, which toggles whether the task is done or not done
+ */
 public class Task {
     protected String description;
     protected boolean isDone;

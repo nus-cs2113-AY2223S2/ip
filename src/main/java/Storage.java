@@ -2,6 +2,9 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+/*
+ * Storage class handles all file methods of Duke, it only has the attribute fileName
+ */
 public class Storage {
     protected static String fileName;
 
@@ -9,11 +12,22 @@ public class Storage {
         fileName = inputFileName;
     }
 
+    /*
+     * Loads file from location specified by <code>fileName</code>
+     * 
+     * @param none
+     * 
+     * @return File object file from the location
+     */
     public File load() {
         File file = new File(fileName);
         return file;
     }
 
+    /*
+     * Saves file to destination specified by <code>fileName</code>, the same
+     * location where file is retrieved from
+     */
     public static void saveToFile() {
         try {
             FileWriter fWriter = new FileWriter(fileName);

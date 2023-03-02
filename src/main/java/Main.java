@@ -1,5 +1,11 @@
 import java.util.Scanner;
 
+/*
+ * Initialises Duke class
+ * If earlier written file exists, displays files
+ * Continuously promtps user for input until specified terminating input is received
+ * List of inputs include bye, list, mark, unmark, event, todo, deadline, delete, find
+ */
 public class Main {
     public static void main(String[] args) {
         Duke Duke = new Duke();

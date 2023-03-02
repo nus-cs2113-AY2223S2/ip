@@ -1,3 +1,7 @@
+/*
+ * Sub-class of super-class <code>Task</code>, represents a task that is an event,
+ * Contains attributes event name, start and end time
+ */
 public class Event extends Task {
     public String startTime, endTime, eventName;
     public String[] info;

@@ -1,4 +1,10 @@
+/*
+ * UI class contains methods that interact with user through text
+ */
 public class UI {
+    /*
+     * Prints greeting statement and logo to terminal
+     */
     public void greet() {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"

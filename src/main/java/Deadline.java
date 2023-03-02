@@ -3,6 +3,10 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 //import java.time.temporal.ChronoUnit;
 
+/*
+ * Sub-class of super-class <code>Task</code>, represents a task that has a deadline,
+ * Contains attributes due, info, deadline name and evaluates attribute whether Deadline task is overdue
+ */
 public class Deadline extends Task {
     public LocalDate due;
     public String[] info;
