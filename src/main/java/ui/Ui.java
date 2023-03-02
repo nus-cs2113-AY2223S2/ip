@@ -17,17 +17,21 @@ public class Ui {
         this.IN = new Scanner(file);
     }
 
+
     public void greetUser() {
         System.out.println(LINE + "\nHello! I'm Duke\nWhat can I do for you?\n" + LINE);
     }
+
 
     public void byeUser() {
         System.out.println(LINE + "\nBye. Hope to see you again soon!\n" + LINE);
     }
 
+
     public void printErrorMessage(String errorMessage) {
         System.out.println(LINE + '\n' + errorMessage + '\n' + LINE);
     }
+
 
     public void printDataLoadSuccess() {
         System.out.println(LINE + '\n' + "\"./data/duke.txt\" found.\nData loaded into Duke!" + '\n' + LINE);

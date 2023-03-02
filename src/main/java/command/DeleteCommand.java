@@ -2,7 +2,6 @@ package command;
 
 import exception.DukeException;
 import taskList.TaskList;
-
 import java.util.ArrayList;
 
 public class DeleteCommand extends Command {
