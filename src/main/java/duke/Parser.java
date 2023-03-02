@@ -2,8 +2,20 @@ package duke;
 
 import java.io.IOException;
 
+/**
+ * The Parser class is responsible for parsing the user's input command and
+ * executing the corresponding actions.
+ */
 public class Parser {
 
+    /**
+     * Parses the user's input command and executes the corresponding actions.
+     *
+     * @param userCmd     the user's input command
+     * @param listOfItems the TaskManager that stores the user's tasks
+     * @param ui          the Ui object that handles the program's output
+     * @throws IOException if an I/O error occurs
+     */
     public static void handleCmd(String userCmd, TaskManager listOfItems, Ui ui) throws IOException {
         switch (firstWord(userCmd)) {
             case "todo":
@@ -59,11 +71,24 @@ public class Parser {
         }
     }
 
+    /**
+     * Returns the first word of a given string.
+     *
+     * @param s the string
+     * @return the first word of the string
+     */
     public static String firstWord(String s) {
         String a[] = s.split(" ");
         return a[0];
     }
 
+    /**
+     * Executes the "todo" command by adding a new Todo task to the TaskManager.
+     *
+     * @param s           the user's input command
+     * @param listOfItems the TaskManager that stores the user's tasks
+     * @param ui          the Ui object that handles the program's output
+     */
     public static void executeAddTodo(String s, TaskManager listOfItems, Ui ui) {
         try {
             s = s.substring("todo ".length(), s.length());
@@ -77,6 +102,13 @@ public class Parser {
         }
     }
 
+    /**
+     * Adds a new Deadline task to the list of tasks.
+     *
+     * @param s           The string representation of the task to be added.
+     * @param listOfItems The TaskManager object that holds the list of tasks.
+     * @param ui          The UI object that interacts with the user.
+     */
     public static void executeAddDeadline(String s, TaskManager listOfItems, Ui ui) {
         try {
             s = s.substring("deadline ".length(), s.length());
@@ -100,6 +132,13 @@ public class Parser {
 
     }
 
+    /**
+     * Adds a new Event task to the list of tasks.
+     *
+     * @param s           The string representation of the task to be added.
+     * @param listOfItems The TaskManager object that holds the list of tasks.
+     * @param ui          The UI object that interacts with the user.
+     */
     public static void executeAddEvent(String s, TaskManager listOfItems, Ui ui) {
         try {
             s = s.substring("event ".length(), s.length());

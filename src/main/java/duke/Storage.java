@@ -6,8 +6,18 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 
+/**
+ * Storage class deals with saving and loading TaskManager class.
+ */
 public class Storage extends TaskManager {
 
+    /**
+     * Loads data from a file into the given TaskManager object.
+     *
+     * @param listOfItems The TaskManager object to load the data into.
+     * @return The TaskManager object with the loaded data.
+     * @throws FileNotFoundException If the file to load from is not found.
+     */
     public static TaskManager loadFile(TaskManager listOfItems) throws FileNotFoundException {
         String filePath = "C:/repos/IP/src/main/java/duke/load.txt";
         File f = new File(filePath);
@@ -29,6 +39,12 @@ public class Storage extends TaskManager {
         return listOfItems;
     }
 
+    /**
+     * Loads a Todo item from a string and adds it to the given TaskManager object.
+     *
+     * @param listOfItems The TaskManager object to add the Todo item to.
+     * @param l           he string containing the Todo item details.
+     */
     public static void loadTodo(TaskManager listOfItems, String l) {
         String name = l.substring(7).trim();
         if (l.contains("[ ]")) {
@@ -38,6 +54,13 @@ public class Storage extends TaskManager {
         }
     }
 
+    /**
+     * Loads an Event item from a string and adds it to the given TaskManager
+     * object.
+     *
+     * @param listOfItems The TaskManager object to add the Event item to.
+     * @param l           The string containing the Event item details.
+     */
     public static void loadEvent(TaskManager listOfItems, String l) {
         int fromIndex = l.indexOf("(from: ");
         int toIndex = l.indexOf(" to: ", fromIndex);
@@ -51,6 +74,13 @@ public class Storage extends TaskManager {
         }
     }
 
+    /**
+     * Loads a Deadline item from a string and adds it to the given TaskManager
+     * object.
+     *
+     * @param listOfItems The TaskManager object to add the Deadline item to.
+     * @param l           The string containing the Deadline item details.
+     */
     public static void loadDeadline(TaskManager listOfItems, String l) {
         int byIndex = l.indexOf("(by: ");
         String name = l.substring(8, byIndex - 1);
@@ -63,6 +93,12 @@ public class Storage extends TaskManager {
         }
     }
 
+    /**
+     * Save the TaskManager object into the harddrive.
+     * 
+     * @param listOfItems The TaskManager object
+     * @throws IOException If there is something wrong with saving the file
+     */
     public static void saveFile(TaskManager listOfItems) throws IOException {
         String filePath = "C:/repos/IP/src/main/java/duke/load.txt";
         FileWriter fw = new FileWriter(filePath);

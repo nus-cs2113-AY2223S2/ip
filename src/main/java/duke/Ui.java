@@ -1,7 +1,13 @@
 package duke;
 
+/**
+ * This class manages the UI for Duke
+ */
 public class Ui {
-
+    /**
+     * Print the Input guidelines for the reader such that Duke understands the
+     * Input
+     */
     public void printInstructions() {
         System.out.println("LIST OF ALL COMMANDS:");
         System.out.println("todo + \"task name\" to add a task");
@@ -16,6 +22,9 @@ public class Ui {
         System.out.println("find + \"phrase\" to find an item containing the phrase");
     }
 
+    /**
+     * Print the Horizontal Line that seperates between different user Inputs
+     */
     public void printHorizontalLine() {
         for (int i = 0; i <= 30; i++) {
             System.out.print("_");
@@ -23,11 +32,17 @@ public class Ui {
         System.out.println();
     }
 
+    /**
+     * Print the message for user to signal that Duke cannot understand the input
+     */
     public void printfalseInput() {
         System.out.println("Sorry Duke could not understand your input :> please follow the instructions");
         printInstructions();
     }
 
+    /**
+     * Print the Greeting when Duke is started
+     */
     public void printGreeting() {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -42,6 +57,9 @@ public class Ui {
         printHorizontalLine();
     }
 
+    /**
+     * Print the Goodbye message when user exits Duke
+     */
     public void printGoodbye() {
         System.out.println("Thanks for using Duke! See ya!");
         System.out.println(" /\\_/\\  ");

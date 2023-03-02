@@ -6,8 +6,10 @@ import duke.Storage;
 import duke.TaskManager;
 import duke.Ui;
 
+/**
+ * Duke main class. This is the entry point for the Duke program.
+ */
 public class Duke {
-
     public static void main(String[] args) throws IOException {
         Ui ui = new Ui();
         ui.printGreeting();
