@@ -1,15 +1,16 @@
 package duke;
 
+import duke.storage.ReadFromFile;
+import duke.storage.SaveToFile;
 import duke.tasks.Deadline;
 import duke.tasks.Event;
 import duke.tasks.Task;
 import duke.tasks.ToDo;
+import duke.ui.Ui;
 
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.io.FileNotFoundException;
 
 public class Duke {
@@ -197,20 +198,22 @@ public class Duke {
 
     public static void exitGreeting(ArrayList<Task> tasks, String filePath) {
         Ui ui = new Ui();
-        initialiseWritingToFile(tasks, filePath);
+        SaveToFile saveToFile = new SaveToFile();
+        saveToFile.initialiseWritingToFile(tasks, filePath);
         ui.showGoodbyeMessage();
     }
 
     // If there are saved tasks, print them out.
     private static void printFileContents(String filePath, ArrayList<Task> tasks) throws FileNotFoundException {
         Ui ui = new Ui();
+        ReadFromFile readFromFile = new ReadFromFile();
         File f = new File(filePath);
         Scanner s = new Scanner(f);
         if (s.hasNext()) {
             ui.horizontalLine();
             while (s.hasNext()) {
                 String lineInFile = s.nextLine();
-                copyToList(lineInFile, tasks, filePath);
+                readFromFile.copyToArrayList(lineInFile, tasks, filePath);
             }
             displayList(tasks);
             ui.horizontalLine();
@@ -219,116 +222,5 @@ public class Duke {
             ui.horizontalLine();
         }
     }
-
-    // Copying text file contents over to tasks list
-    private static void copyToList(String line, ArrayList<Task> tasks, String filePath) {
-        switch (line.substring(0, 1)) {
-        case "T":
-            copyTodoToList("T", line.substring(2), tasks);
-            break;
-        case "D":
-            copyDeadlineToList("D", line.substring(2), tasks);
-            break;
-        case "E":
-            copyEventToList("E", line.substring(2), tasks);
-            break;
-        case "S":
-            // Saved data text on the first line (initialisation step)
-            break;
-        default:
-            System.out.println("Unknown task type detected...");
-            System.out.println("Skipping task...");
-        }
-    }
-
-    //Does creation of ToDo and copying to tasks
-    private static void copyTodoToList(String taskType, String taskInfo, ArrayList<Task> tasks) {
-        // Parse line to split task status and task info
-        String[] messageComponents = taskInfo.split("/", 2);
-        // Create new todo with task info
-        ToDo newToDo = new ToDo(messageComponents[1]);
-        // Store todo in list of tasks
-        tasks.add(newToDo);
-        int currentTaskIndex = tasks.size() - 1;
-        // Mark task as done if task status was stored as 1
-        if (messageComponents[0].equals("1")) {
-            Task currentTask = tasks.get(currentTaskIndex);
-            currentTask.markAsDone();
-        }
-    }
-
-    private static void copyDeadlineToList(String taskType, String taskInfo, ArrayList<Task> tasks) {
-        String[] messageComponents = taskInfo.split("/", 3);
-        Deadline newDeadline = new Deadline(messageComponents[1], messageComponents[2]);
-        tasks.add(newDeadline);
-        int currentTaskIndex = tasks.size() - 1;
-        if (messageComponents[0].equals("1")) {
-            Task currentTask = tasks.get(currentTaskIndex);
-            currentTask.markAsDone();
-        }
-    }
-
-    private static void copyEventToList(String taskType, String taskInfo, ArrayList<Task> tasks) {
-        String[] messageComponents = taskInfo.split("/", 4);
-        Event newEvent = new Event(messageComponents[1], messageComponents[2], messageComponents[3]);
-        tasks.add(newEvent);
-        int currentTaskIndex = tasks.size() - 1;
-        if (messageComponents[0].equals("1")) {
-            Task currentTask = tasks.get(currentTaskIndex);
-            currentTask.markAsDone();
-        }
-    }
-
-    private static void initialiseWritingToFile(ArrayList<Task> tasks, String filePath) {
-        try {
-            FileWriter fw = new FileWriter(filePath);
-            fw.write("Saved tasks: " + System.lineSeparator());
-            fw.close();
-            FileWriter fwAppend = new FileWriter(filePath, true);
-            writeTasksToFile(fwAppend, tasks);
-            fwAppend.close();
-        } catch (IOException e) {
-            System.out.println("Something went wrong: " + e.getMessage());
-        }
-    }
-
-
-    private static void writeTasksToFile(FileWriter fwAppend, ArrayList<Task> tasks) throws IOException {
-        int totalNumberOfTasks = tasks.size();
-        for (int index = 0; index < totalNumberOfTasks; index += 1) {
-            Task currentTask = tasks.get(index);
-            String taskType = currentTask.getTaskType().substring(1, 2);
-            String taskStatus = currentTask.getStatus();
-            int isTaskDone = taskStatus.substring(1, 2).equals("X") ? 1 : 0;
-            String taskInfo = currentTask.getTaskInfo();
-            writeSpecificTaskToFile(fwAppend, taskType, currentTask, taskStatus, isTaskDone, taskInfo);
-        }
-    }
-
-    private static void writeSpecificTaskToFile(FileWriter fwAppend, String taskType, Task currentTask,
-                                                String taskStatus, int isTaskDone, String taskInfo) throws IOException {
-        String additionalTaskInfo = "";
-        switch (taskType) {
-        case "T":
-            fwAppend.write(taskType + "/" + isTaskDone + "/" + taskInfo + System.lineSeparator());
-            break;
-        case "D":
-            Deadline currentDeadline = (Deadline) currentTask;
-            additionalTaskInfo = currentDeadline.getDueInfo();
-            String deadlineDetails = taskInfo + "/" + additionalTaskInfo;
-            fwAppend.write(taskType + "/" + isTaskDone + "/" + deadlineDetails + System.lineSeparator());
-            break;
-        case "E":
-            Event currentEvent = (Event) currentTask;
-            String eventStart = currentEvent.getEventStartInfo();
-            String eventEnd = currentEvent.getEventEndInfo();
-            String eventDetails = taskInfo + "/" + eventStart + "/" + eventEnd;
-            fwAppend.write(taskType + "/" + isTaskDone + "/" + eventDetails + System.lineSeparator());
-            break;
-        default:
-            System.out.println("Unknown task type error!");
-        }
-    }
-
 
 }
