@@ -1,6 +1,7 @@
 package parser;
 
 import constants.Command;
+import constants.ErrorMessage;
 import constants.Keyword;
 import exception.DukeException;
 import ui.Ui;
@@ -24,7 +25,7 @@ public class Parser {
             HashMap<String, String> dictionary = new HashMap<>();
             String[] words = text.split(BY);
             if (words.length == 1) {
-                throw new DukeException("No description has been provided");
+                throw new DukeException(ErrorMessage.NO_DESCRIPTION_PROVIDED);
             }
             dictionary.put(Keyword.COMMAND, Command.DEADLINE);
             String description = words[0].trim();
@@ -78,7 +79,7 @@ public class Parser {
         }
 
         if (numOfEnd > 1 || numOfStart > 1) {
-            throw new DukeException("You did not provide a description");
+            throw new DukeException(ErrorMessage.NO_DESCRIPTION_PROVIDED);
         }
 
         for (int i = 0; i < 3; ++i) {
@@ -95,7 +96,7 @@ public class Parser {
 
         dictionary.put("start", start);
         dictionary.put("end", end);
-        dictionary.put("description", description);
+        dictionary.put(Keyword.DESCRIPTION, description);
         return dictionary;
     }
 
