@@ -5,7 +5,8 @@
 1. Ensure you have Java 11 or above installed on your computer.
 2. Download the latest version of Psyduck from [here](https://github.com/dendendenden04/ip/releases).
 3. Move the file to a location where you want to run Psyduck from.
-4. Use the following command to run the programme: `java -jar duke.jar`
+4. Open a command terminal and navigate to the location where psyduck.jar is. 
+4. Use the following command to run the program: `java -jar psyduck.jar`
 5. If Psyduck runs successfully, you will see the following welcome message
 ```
 --------------------------------------------------------------------------------

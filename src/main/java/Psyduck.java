@@ -54,6 +54,6 @@ public class Psyduck {
     }
 
     public static void main(String[] args) {
-        new Psyduck("data/save.txt").run();
+        new Psyduck("save.txt").run();
     }
 }
