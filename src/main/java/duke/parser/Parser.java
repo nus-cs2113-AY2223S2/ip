@@ -25,6 +25,7 @@ public class Parser {
      */
     public String extractCommand() {
         String[] extractFirstWord = userInput.split(" ", 2);
+
         return extractFirstWord[0];
     }
 
