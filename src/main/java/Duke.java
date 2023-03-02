@@ -1,21 +1,28 @@
 //package Duke.java;
 
-import java.sql.SQLOutput;
+import java.io.File;
+import java.io.FileNotFoundException;
+
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.Arrays;
+
 
 public class Duke {
-    public static void main(String[] args) throws DukeException {
+
+    public static void main(String[] args) throws DukeException, IOException {
         String logo = "Hello! I'm Duke\n" + "What can I do for you?\n";
         System.out.println(logo);
         Scanner in = new Scanner(System.in);
         String response;
-
+        String filePath = "C:\\Users\\user\\OneDrive - National University of Singapore\\" +
+                "Desktop\\NUS AY 2021-2025\\Semester 4\\CS2113\\duke.txt";
         List<Task> list = new ArrayList<>();
-        //loadData(list);
+//        loadData(list);
         while (true) {
+            saveData(list, filePath);
             response = in.nextLine();
             if (response.equals("bye")) {
                 System.out.println("Bye. Hope to see you again soon!");
@@ -99,6 +106,25 @@ public class Duke {
                     }
 
 
+                } else if (response.startsWith("find")) {
+                    try {
+                        String splitresponse = response.split(" ", 2)[1];
+                        String descresponse = splitresponse.split("/from")[0];
+                        int size = list.size();
+                        int amountfound = 0;
+                        System.out.println("Here are the matching tasks in your list:");
+                        for (int index = 0; index < size; index++) {
+                            if (list.get(index).toString().contains(descresponse)) {
+                                amountfound = amountfound + 1;
+                                System.out.println((amountfound) + "." + list.get(index).toString());
+                            }
+                        }
+                        continue;
+                    } catch (IndexOutOfBoundsException e) {
+                        throw new DukeException();
+                    }
+
+
                 } else {
                     throw new DukeException();
                 }
@@ -110,32 +136,32 @@ public class Duke {
                 System.out.println("Illegal Command");
             }
         }
+
     }
 
-//    private static void loadData(List<Task> list) {
-//        try {
-//            File data = new File("data/duke.txt");
-//            Scanner dataEntry = new Scanner(data);
-//            while (dataEntry.hasNext()) {
-//                String[] parsedData = dataEntry.nextLine().split(";", 4);
-//                String type = parsedData[0];
-//                String status = parsedData[1];
-//                String description = parsedData[2];
-//                if (type.equalsIgnoreCase("todo")) {
-//                    list.add(new Todo(description));
-//                } else if (type.equalsIgnoreCase("deadline")) {
-//                    String date = parsedData[3];
-//                    list.add(new Deadline(description, date));
-//                } else if (type.equalsIgnoreCase("event")) {
-//                    String date = parsedData[3];
-//                    list.add(new Deadline(description, date));
-//                } else {
-//                    System.out.println("Format Error!");
-//                }
-//            }
-//        } catch (FileNotFoundException e) {
-//            System.out.println("File not found");
-//        }
-//    }
+    private static void saveData(List<Task> list, String filePath) throws IOException {
+        FileWriter fw = new FileWriter(filePath);
+        for (Task t : list) {
+            String taskInformation = t.toString();
+            String taskType = taskInformation.substring(1, 2);
+            String taskStatus = (taskInformation.substring(4, 5).equals("V") ? "Done" : "Not Done");
+            String taskDescription = taskInformation.substring(7);
+            if (taskDescription.contains("(by:")) {
+                String taskDate = taskDescription.substring(taskDescription.indexOf("(by: ") + 5,
+                        taskDescription.indexOf(")", taskDescription.indexOf("(by: ")));
+                taskDescription = taskDescription.substring(0, taskDescription.indexOf("(by:") - 1);
+                fw.write(taskType + "|" + taskStatus + "|" + taskDescription + "| by:" + taskDate);
+            } else if (taskDescription.contains("(at:")) {
+                String taskDate = taskDescription.substring(taskDescription.indexOf("(at: ") + 5,
+                        taskDescription.indexOf(")", taskDescription.indexOf("(at: ")));
+                taskDescription = taskDescription.substring(0, taskDescription.indexOf("(at:") - 1);
+                fw.write(taskType + "|" + taskStatus + "|" + taskDescription + "|" + taskDate);
+            } else {
+                fw.write(taskType + "|" + taskStatus + "|" + taskDescription);
+            }
+            fw.write("\n");
+        }
+        fw.close();
+    }
 }
 
