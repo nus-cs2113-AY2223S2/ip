@@ -1,16 +1,23 @@
 package Duke;
 import java.io.File;
 import Duke.Tasks.Task;
-import Duke.TaskList;
-import Duke.Tasks.Todo;
-import Duke.Tasks.Event;
-import Duke.Tasks.Deadline;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+/**
+ * Deal with writing and reading file given a relative path.
+ */
 public class Storage {
     private static final String FILEPATH=".\\lists.txt";
+    /**
+     * Write the content of the task list to a file
+     * given the relative path of the file.
+     * If the file does not exist, then create a new file and write.
+     * @param Tasks the task list
+     * @param index the length of the list
+     * @throws IOException
+     */
     public static void writeToFile(Task[] Tasks, int index) throws IOException {
             File f = new File(FILEPATH);
             if (!f.exists()) {
@@ -23,6 +30,15 @@ public class Storage {
             }
             fw.close();
         }
+        /**
+         * Try to find whether the file exists based on the relative path.
+         * If the file exists, write the content of the file line by line
+         *  to the task list in the parameter list.
+         *  If not, then do nothing
+         * @param lists The task list that the content of the file should be written to
+         * @return the length of the list
+         * @throws  FileNotFoundException
+         */
         public static int initializeList(Task[] lists) throws FileNotFoundException {
             File f = new File(FILEPATH);
             int count = 0;

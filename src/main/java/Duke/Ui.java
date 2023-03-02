@@ -2,7 +2,9 @@ package Duke;
 import Duke.Tasks.Task;
 
 import java.util.Scanner;
-
+/**
+ * Showing all kinds of print messages to users.
+ */
 public class Ui {
     public static Scanner in = new Scanner(System.in);
     public static void printHelp(){

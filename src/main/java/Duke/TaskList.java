@@ -4,9 +4,9 @@ import Duke.Tasks.Task;
 import Duke.Tasks.Todo;
 import Duke.Tasks.Event;
 import Duke.Tasks.Deadline;
-import Duke.Storage;
-import java.io.IOException;
-
+/**
+ * Implement methods that operate on the tasks in the task list.
+ */
 public class TaskList {
     public static void printAddMessage(Task[] Tasks, int taskIndex) {
         System.out.println("--------------------------------");
