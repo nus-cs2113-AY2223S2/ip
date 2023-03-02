@@ -1,7 +1,8 @@
 package task;
 
 import java.util.ArrayList;
-import io.IO;
+import io.Storage;
+
 import io.Ui;
 
 public class TaskList {
@@ -100,13 +101,13 @@ public class TaskList {
         return numberOfTasks + 1;
     }
 
-    public static void writeAllToFile() {
+    public static void writeAllToFile(Storage storage) {
         String output = "";
         for (Task task : tasks) {
             if (task != null) {
                 output += task.getFileWriteFormat() + '\n';
             }
         }
-        IO.writeToFile(output);
+        storage.writeToFile(output);
     }
 }

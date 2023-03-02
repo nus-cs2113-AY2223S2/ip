@@ -1,5 +1,6 @@
 import io.DukeException;
 import io.IO;
+import io.Storage;
 import io.Ui;
 import task.Deadline;
 import task.Event;
@@ -7,14 +8,65 @@ import task.TaskList;
 import task.Todo;
 import task.Task;
 
+import java.nio.file.InvalidPathException;
+import java.nio.file.Paths;
 import java.util.Scanner;
 
 public class Duke {
-    private static final TaskList tasks = new TaskList();
+    private TaskList tasks;
+    private Storage storage;
 
+    public Duke(String filePath) {
+        storage = new Storage(filePath);
+        try {
+            tasks = new TaskList(); //storage.load());
+        } catch (DukeException e) {
+            System.out.println("Error");
+            tasks = new TaskList();
+        }
+    }
+
+    public Duke() {
+        storage = new Storage();
+        try {
+            tasks = new TaskList(); //storage.load());
+        } catch (DukeException e) {
+            System.out.println("Error");
+            tasks = new TaskList();
+        }
+    }
+
+    /**
+     * Runs duke. Takes in a command-line argument on the directory (if any).
+     *
+     * @param args First arg should be directory.
+     */
     public static void main(String[] args) {
+        if (isValidPath(args[0])) {
+            new Duke(args[0]).run();
+        } else {
+            new Duke().run();
+        }
+    }
+
+    /**
+     * Credit to Stackoverflow
+     * https://stackoverflow.com/questions/468789/is-there-a-way-in-java-to-determine-if-a-path-is-valid-without-attempting-to-cre
+     * @param path path name for saving file
+     * @return true if path is valid path
+     */
+    private static boolean isValidPath(String path) {
+        try {
+            Paths.get(path);
+        } catch (InvalidPathException
+                | NullPointerException e) {
+            return false;
+        }
+        return true;
+    }
+
+    private void run() {
         Ui.printGreeting();
-        Storage.openFile();
         Ui.printHLine();
 
         // Input variables initialised.

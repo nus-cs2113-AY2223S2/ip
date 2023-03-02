@@ -1,12 +1,5 @@
 package io;
 
-import task.TaskList;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.FileWriter;
-import java.util.Scanner;
-
 /**
  * This class manages Input and Output for Duke.<br>
  * Includes Input validation, processing arguments, and also file writing I/O.<br>
@@ -67,82 +60,4 @@ public final class IO {
         return eventArgs;
     }
 
-    private static final String DIRECTORY_PATH = "data";
-    private static final String FILE_PATH = "data/papatask.txt";
-    // Using this in Task.java, hence public. Consider possibility of only using in IO?
-    public static final String FILE_DELIMITER = "|";
-
-    /**
-     * Appends input text to the save file.
-     * @param textToAdd The String to append to the file.
-     * @throws IOException Unable to write successfully.
-     */
-    public static void writeToFile(String textToAdd) {
-        try {
-            // 2nd argument true: indicates to append instead of overwrite.
-            // I want to overwrite.
-            FileWriter writer = new FileWriter(FILE_PATH);
-            writer.write(textToAdd);
-            // Add newline
-            writer.write(System.lineSeparator());
-            writer.close();
-        } catch (IOException e) {
-            System.out.println("Something wrong: " + e.getMessage());
-        }
-    }
-
-    /**
-     * Read the file at the file save data path
-     */
-    public static void readFile(String path) {
-        File f = new File(path);
-        Scanner s;
-        try {
-            s = new Scanner(f);
-            while (s.hasNext()) {
-                readLineAsTask(s.nextLine());
-            }
-        } catch (FileNotFoundException e) {
-            System.out.println("File not found >_<: " + e.getMessage());
-        }
-    }
-
-    /**
-     * Reads the line in the save file and invokes TaskList to add task, if any.
-     * @param line String line in the text file.
-     */
-    private static void readLineAsTask(String line) {
-        if (line.isBlank()) {
-            return;
-        }
-        // Delimiter and any amount of whitespace on left/right. Note, need to escape regex \\.
-        String[] linesSplit = line.split("\\s+" + "\\" + FILE_DELIMITER + "\\s+");
-
-
-        switch (linesSplit[0]) {
-        case "T":
-            // Has to contain T, isdone, and Description
-            if (linesSplit.length == 3) {
-                TaskList.addTaskFromFile(linesSplit);
-                break;
-            }
-            // FALLTHROUGH
-        case "D":
-            // Has to contain D, isdone, description, by
-            if (linesSplit.length == 4) {
-                TaskList.addTaskFromFile(linesSplit);
-                break;
-            }
-            // FALLTHROUGH
-        case "E":
-            // Has to contain E, isdone, description, from, to
-            if (linesSplit.length == 5) {
-                TaskList.addTaskFromFile(linesSplit);
-                break;
-            }
-            // FALLTHROUGH
-        default:
-            System.out.println("I think there's an error with the file.");
-        }
-    }
 }
