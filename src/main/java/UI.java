@@ -113,4 +113,8 @@ public class UI {
         System.out.print("[User] ");
         return scanner.nextLine();
     }
+
+    public static void printDateFormatErrorComment(){
+        System.out.println("[Duke] Uh oh! Check if your date format is correct [YYYY-MM-DD] :<");
+    }
 }

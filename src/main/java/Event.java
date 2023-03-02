@@ -1,11 +1,21 @@
-public class Event extends Task {
-    String from;
-    String to;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 
-    Event(String content, String start, String end) {
+public class Event extends Task {
+    LocalDate from;
+    LocalDate to;
+
+    Event(String content, LocalDate start, LocalDate end) {
         super(content);
-        this.from = start; //start format: Date+time
-        this.to = end; //end format: (Date+)time
+        try{
+            this.from = start;
+            this.to = end;
+
+        } catch (Exception e){
+            UI.printDateFormatErrorComment();
+            return;
+        }
     }
 
     @Override

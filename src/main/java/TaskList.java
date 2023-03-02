@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.io.IOException;
+import java.time.LocalDate;
 
 public class TaskList {
     private ArrayList<Task> taskArray;
@@ -73,7 +74,7 @@ public class TaskList {
     public boolean addDeadline(Command command){
         try{
             String contents = command.getContent();
-            String by = command.getBy();
+            LocalDate by = command.getBy();
             Deadline newDeadline = new Deadline (contents, by);
             taskArray.add(newDeadline);
             totalTaskNum++;
@@ -88,8 +89,8 @@ public class TaskList {
     public boolean addEvent(Command command){
         try{
             String contents = command.getContent();
-            String from = command.getFrom();
-            String to = command.getTo();
+            LocalDate from = command.getFrom();
+            LocalDate to = command.getTo();
             Event newEvent = new Event(contents, from, to);
             taskArray.add(newEvent);
             totalTaskNum++;

@@ -1,9 +1,18 @@
-public class Deadline extends Task {
-    String by;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 
-    Deadline(String content, String end) {
+public class Deadline extends Task {
+    LocalDate by;
+
+    Deadline(String content, LocalDate end) {
         super(content);
-        this.by = end;
+        try{
+            this.by = end;
+        } catch(Exception e){
+            UI.printDateFormatErrorComment();
+            return;
+        }
     }
 
     @Override
