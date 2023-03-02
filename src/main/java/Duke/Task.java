@@ -13,14 +13,17 @@ public class Task {
         return (isDone ? "X" : " "); // mark done task with X
     }
 
-    public boolean markAsDone(){
+    public boolean markAsDone() {
         return this.isDone = true;
     }
 
-    public boolean unmarkAsDone(){
+    public boolean unmarkAsDone() {
         return this.isDone = false;
     }
 
+    public String getDescription() {
+        return description;
+    }
 
     @Override
     public String toString() {
