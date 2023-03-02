@@ -12,6 +12,7 @@ public enum ErrorMessage {
             "Example: event project meeting /from Mon 2pm /to 4pm"),
     MISSING_ONE_EVENT_PARAMETER("I am sorry, you are missing an end time\n" +
             "Example: event project meeting /from Mon 2pm /to 4pm"),
+    INVALID_FROM_TO_ORDER("I am sorry, you /from field has to be before the /to field"),
     MISSING_EVENT_PARAMETER("I am sorry, you are missing a description for event.\n" +
             "Example: event project meeting /from Mon 2pm /to 4pm"),
     MISSING_DEADLINE_BY_PARAMETER("I am sorry, you are missing the by parameter for your deadline.\n" +

@@ -30,6 +30,9 @@ public class Parser {
             if (positionOfFrom == -1) {
                 throw new DukeException(ErrorMessage.MISSING_TWO_EVENT_PARAMETER.toString());
             }
+            if (positionOfFrom > fullCommand.indexOf("/to")) {
+                throw new DukeException(ErrorMessage.INVALID_FROM_TO_ORDER.toString());
+            }
 
             String startEnd = fullCommand.substring(positionOfFrom + 1);
             int positionOfTo = startEnd.indexOf("/to");
