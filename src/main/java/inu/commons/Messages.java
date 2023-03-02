@@ -4,7 +4,7 @@ package inu.commons;
  * Container for messages shown to user.
  */
 public class Messages {
-    public static final String MESSAGE_GREETING = " Woof Woof! I'm Inu! Your personal Shib-Assistant! ^.^ + \n" + "\n"
+    public static final String MESSAGE_GREETING = " Woof Woof! I'm Inu! Your personal Shib-Assistant! ^.^" + "\n" + "\n"
             + " Allow me to provide more assistance through the <help> command!" + "\n"
             + " Format: help";
     public static final String MESSAGE_PROMPT = " What can I do for you today?";
@@ -33,7 +33,7 @@ public class Messages {
             + "the task number must be a valid number displayed from the task list!";
     public static final String MESSAGE_PROMPT_VALID_UNMARK = "Sorry! Please follow the unmark format!"
             + "\n" + " Format: " + "\n"
-            + " unmark <task number> "  + "\n" + "\n"
+            + " unmark <task number> " + "\n" + "\n"
             + "the task number must be a valid number displayed from the task list!";
     public static final String MESSAGE_PROMPT_VALID_DELETE = "Sorry! Please follow the delete format!"
             + "\n" + " Format: " + "\n"
