@@ -1,5 +1,7 @@
 package Onandon.module;
 
+import java.time.LocalDate;
+
 public class Task {
     protected String description;
     protected boolean isDone;
@@ -21,7 +23,9 @@ public class Task {
     public void markAsUnDone() {
         isDone = false;
     }
-    public String getBy() { return ""; }
+    public LocalDate getBy() {
+        return null;
+    }
     public String getTo() { return ""; }
     public String getFrom() { return ""; }
 
