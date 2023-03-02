@@ -41,6 +41,6 @@ public class UnmarkTaskCommand extends Command{
     @Override
     public void execute(TaskList taskList) {
         taskList.setDone(index, isDone);
-        Ui.markDoneMessage(taskList, index);
+        Ui.markUndoneMessage(taskList, index);
     }
 }

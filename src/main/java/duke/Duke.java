@@ -2,7 +2,6 @@ package duke;
 
 import duke.commands.Command;
 import duke.commands.Parser;
-import duke.exception.DukeException;
 import duke.tasks.TaskList;
 import duke.ui.Ui;
 

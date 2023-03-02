@@ -2,8 +2,6 @@ package duke.ui;
 
 import duke.tasks.TaskList;
 
-import java.util.Scanner;
-
 /**
  * Class that contains methods to send messages to users depending on what they input.
  */
@@ -12,15 +10,7 @@ public class Ui {
      * String of underscores that represents a divider in the terminal.
      */
     public static final String LONG_LINE = "____________________________________________________________";
-    private Scanner in;
-    public Ui() {
-        in = new Scanner(System.in);
-    }
 
-    public String readUserInput() {
-        String userInput = in.nextLine();
-        return userInput;
-    }
     /**
      * Prints out the long line, divider on a new line.
      */
@@ -50,7 +40,7 @@ public class Ui {
      * @param listCount The current number of tasks in the list.
      */
     public static void printListMessage(int listCount) {
-        System.out.println("Now you have " + Integer.toString(listCount) + " tasks in the list.");
+        System.out.println("Now you have " + listCount + " tasks in the list.");
     }
 
     /**
@@ -71,7 +61,7 @@ public class Ui {
         int lastElement = taskList.listCount() - 1;
         System.out.println("Got it. I've added this task:");
         System.out.println("  " + taskList.getTask(lastElement).toString());
-        System.out.println("Now you have " + Integer.toString(taskList.listCount()) + " tasks in the list.");
+        printListMessage(taskList.listCount());
     }
 
     /**
@@ -144,6 +134,6 @@ public class Ui {
      * Displays an error message when user did not enter a keyword for the find command.
      */
     public static void printEmptyFilterMessage(){
-        System.out.println("Please enter a keyword. The keyword cannot be left empty");
+        System.out.println("Please enter a keyword. The keyword cannot be left empty.");
     }
 }

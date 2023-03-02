@@ -123,10 +123,6 @@ public class Database {
      * @param task The task that is currently being added to the list.
      */
     private void updateMark(String mark, Task task) {
-        if (mark.equals("true")) {
-            task.setDone(true);
-        } else {
-            task.setDone(false);
-        }
+        task.setDone(mark.equals("true"));
     }
 }
