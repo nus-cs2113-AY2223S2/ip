@@ -4,6 +4,7 @@ public class Parser {
     public static Command parse(String fullCommand){
         String commandType = fullCommand.split(" ")[0];
         String description = "";
+        String find = "";
         String by = "";
         String from = "";
         String to = "";
@@ -34,11 +35,14 @@ public class Parser {
         case "delete":
             index = Integer.parseInt(fullCommand.split(" ")[1])-1;
             break;
+        case "find":
+            find = fullCommand.replaceAll("find ", "");
+            break;
         case "list":
         case "exit":
             break;
         }
 
-        return new Command(commandType, description, by, from, to, index);
+        return new Command(commandType, description, by, from, to, index, find);
     }
 }
