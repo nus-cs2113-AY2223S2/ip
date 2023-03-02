@@ -1,5 +1,4 @@
-todo 1 /done done
-todo 2 /done notdone
-event asdasd /from asd /to asdasd /done notdone
-event asdasd /from asdasd /to asdads /done notdone
-todo 55 /done notdone
+todo 6 /done notdone
+todo 3 /done notdone
+todo asdadsad /done done
+event asdasda /from asd /to aslkdja /done done

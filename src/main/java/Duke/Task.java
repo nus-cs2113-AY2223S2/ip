@@ -13,14 +13,14 @@ public abstract class Task {
         return isCompleted;
     }
 
-    void markAsComplete() {
+    Task markAsComplete() {
         this.isCompleted = true;
-        TaskSaver.updateTask(this);
+        return this;
     }
 
-    void markAsIncomplete() {
+    Task markAsIncomplete() {
         this.isCompleted = false;
-        TaskSaver.updateTask(this);
+        return this;
     }
 
     abstract String getType();

@@ -1,5 +1,7 @@
 package Duke;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 
@@ -15,7 +17,7 @@ public class Tasks {
         try {
             Task task = TaskCreator.createNewTask(commandByWord);
             taskList.add(task);
-            TaskSaver.addTask(task);
+            TaskSaver.addTask(taskList.size(), task);
             return "Got it. I've added this task:\n    " +
                     task + "\n" +
                     "  Now you have " + taskList.size() + " tasks in the list.";
@@ -34,30 +36,43 @@ public class Tasks {
             if (commandByWord.length != 2) {
                 return "☹ OOPS!!! The delete command is invalid\n" +
                         "  Please use the format \"delete {task number}\"";
-            } else {
-                int index = Integer.parseInt(commandByWord[1]) - 1;
-                Task removedTask = taskList.get(index);
-                taskList.remove(index);
-                TaskSaver.deleteTask(removedTask);
-                return "Noted. I've removed this task:\n    " +
-                        removedTask.toString() + "\n  " +
-                        "Now you have " + taskList.size() + " tasks in the list.";
             }
+            int index = Integer.parseInt(commandByWord[1]) - 1;
+            Task removedTask = taskList.get(index);
+            taskList.remove(index);
+            TaskSaver.updateTask(this.toStringList());
+            return "Noted. I've removed this task:\n    " +
+                    removedTask.toString() + "\n  " +
+                    "Now you have " + taskList.size() + " tasks in the list.";
 
-        } catch(IndexOutOfBoundsException | NumberFormatException e) {
+        } catch (IndexOutOfBoundsException | NumberFormatException e) {
             return "☹ OOPS!!! The task number is invalid!" +
                     "\n  Please try again.";
         }
     }
 
     String mark(int index) {
-        taskList.get(index - 1).markAsComplete();
-        return "Nice! I've marked this task as done:\n  " + taskList.get(index - 1).toString();
+        try {
+            Task newTask = taskList.get(index - 1).markAsComplete();
+            this.taskList.set(index - 1, newTask);
+            TaskSaver.updateTask(this.toStringList());
+            return "Nice! I've marked this task as done:\n  " + taskList.get(index - 1).toString();
+        } catch (IndexOutOfBoundsException e) {
+            return "☹ OOPS!!! The task number is invalid!" +
+                    "\n  Please try again.";
+        }
     }
 
     String unmark(int index) {
-        taskList.get(index - 1).markAsIncomplete();
-        return "OK, I've marked this task as not done yet:\n  " + taskList.get(index - 1).toString();
+        try {
+            Task newTask = taskList.get(index - 1).markAsIncomplete();
+            this.taskList.set(index - 1, newTask);
+            TaskSaver.updateTask(this.toStringList());
+            return "OK, I've marked this task as not done yet:\n  " + taskList.get(index - 1).toString();
+        } catch (IndexOutOfBoundsException e) {
+            return "☹ OOPS!!! The task number is invalid!" +
+                    "\n  Please try again.";
+        }
     }
 
     String listTasks() {
@@ -71,5 +86,13 @@ public class Tasks {
             ++counter;
         }
         return list;
+    }
+
+    String toStringList() {
+        String TaskListAsString = "";
+        for (Task task : taskList) {
+            TaskListAsString += TaskToStringConverter.convertTaskToCommandString(task) + "\n";
+        }
+        return TaskListAsString;
     }
 }
