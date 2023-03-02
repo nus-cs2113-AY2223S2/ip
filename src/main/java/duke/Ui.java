@@ -5,15 +5,26 @@ import duke.task.Task;
 import java.util.ArrayList;
 
 public class Ui {
-
+    /**
+     * Prints a greeting to the user.
+     */
     public static void greetUser() {
         System.out.println("Hello! I'm Duke");
         System.out.println("What can I do for you?");
     }
-    public static void listTasks(ArrayList<Task> tasks, String purpose) {
-        if (purpose.equals("find")) {
+
+    /**
+     * Prints a list of tasks in the task list, according to the order in which they were added.
+     *
+     * @param tasks   The list of tasks to be printed on the screen.
+     * @param context The context in which the tasks will be listed, which will affect the first line printed on the
+     *                screen. There are 2 contexts - 'list' where the user wants to list all the tasks in the task list
+     *                and 'find' where the user wants to list the tasks containing the keyword specified by the user.
+     */
+    public static void listTasks(ArrayList<Task> tasks, String context) {
+        if (context.equals("find")) {
             System.out.println("Here are the matching tasks in your list:");
-        } else if (purpose.equals("list")){
+        } else if (context.equals("list")) {
             System.out.println("Here are the tasks in your list:");
         }
         for (int i = 0; i < tasks.size(); i++) {
@@ -22,6 +33,14 @@ public class Ui {
             tasks.get(i).printTask();
         }
     }
+
+    /**
+     * Prints a message to notify the user of what has just been changed in the task list.
+     *
+     * @param task          The task which has just been modified in the task list or added to the task list.
+     * @param action        The modification or addition which has just been done to the task list.
+     * @param numberOfTasks The total number of tasks in the task list.
+     */
     public static void printNotification(Task task, String action, int numberOfTasks) {
         switch (action) {
         case "unmark":
@@ -51,8 +70,14 @@ public class Ui {
             break;
         }
     }
+
+    /**
+     * Prints a message to notify the user of the error that has just occurred.
+     *
+     * @param errorType The type of error that has just occurred.
+     */
     public static void printErrorMessage(String errorType) {
-        switch(errorType) {
+        switch (errorType) {
         case "conversion":
             System.out.println("OOPS! Something went wrong while converting your data!");
             break;
@@ -73,6 +98,10 @@ public class Ui {
             break;
         }
     }
+
+    /**
+     * Prints an exit message to the user.
+     */
     public static void printExitMessage() {
         System.out.println("Bye. Hope to see you again soon!");
     }
