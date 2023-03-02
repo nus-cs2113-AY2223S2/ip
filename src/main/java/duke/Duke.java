@@ -1,6 +1,9 @@
 package duke;
 
+import duke.parser.Parser;
+import duke.storage.Storage;
 import duke.tasks.TaskList;
+import duke.ui.Ui;
 
 import java.io.IOException;
 import java.util.Scanner;
