@@ -45,6 +45,8 @@ public class Parser {
             return prepareDelete();
         case ByeCommand.COMMAND_WORD:
             return new ByeCommand();
+        case FindCommand.COMMAND_WORD:
+            return prepareFind();
         default:
             return new IncorrectCommand();
         }
@@ -151,6 +153,12 @@ public class Parser {
         int number = Integer.parseInt(userInput[1]);
         return new DeleteCommand(number);
     }
+
+    private Command prepareFind() {
+        String toFind = userInput[1];
+        return new FindCommand(toFind);
+    }
+
 
 
 
