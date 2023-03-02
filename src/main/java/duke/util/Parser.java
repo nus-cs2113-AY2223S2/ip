@@ -6,10 +6,13 @@ import duke.task.Deadline;
 import duke.task.Event;
 import duke.task.Task;
 import duke.task.Todo;
+
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
-
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 /**
  * A <code>Parser</code> object takes care of the processing of user
  * inputs and registering tasks from any pre-existing Duke files.
@@ -93,6 +96,27 @@ public class Parser {
             lists.get(lists.size() - 1).markAsDoneSilent();
         }
         return lists;
+    }
+
+    /**
+     * Parses string if given in dd-MM-yyyy HH:mm format and translates to LLL dd yyyy HH:mm format.
+     * Else if string not in given format, return empty string.
+     *
+     * @param date String containing date to be parsed.
+     * @return Re-formatted date in string format or empty string.
+     * @throws DateTimeParseException if user does not provide date in required format.
+     */
+    public static String formatDateTime(String date) throws DateTimeParseException {
+        try {
+            DateTimeFormatter dateTimeFormatterInput = DateTimeFormatter.ofPattern("dd-MM-uuuu HH:mm");
+            DateTimeFormatter dateTimeFormatterOutput = DateTimeFormatter.ofPattern("LLL dd uuuu HH:mm");
+            LocalDateTime dateTime = LocalDateTime.parse(date, dateTimeFormatterInput);
+            String formattedDateTime = dateTime.format(dateTimeFormatterOutput);
+            return formattedDateTime;
+        } catch (DateTimeParseException e) {
+            System.out.println("The date provided must be of the following format: dd-MM-yyyy HH:MM");
+            return "";
+        }
     }
 
     public static boolean toExit() {
