@@ -1,4 +1,6 @@
-class Task|whattt|false|
-class Deadline|whatt |false|june|
-class Task|whhaha|false|
-class Event|what |false|end|start |
+class Tasks.Task|whattt|false|
+class Tasks.Deadline|whatt |false|june|
+class Tasks.Task|whhaha|false|
+class Tasks.Event|what |false|end|start |
+class Tasks.Task|haha|false|
+class Tasks.Task|hi|false|

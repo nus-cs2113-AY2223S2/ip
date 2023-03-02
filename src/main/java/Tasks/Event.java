@@ -1,4 +1,6 @@
-public class Event extends Deadline{
+package Tasks;
+
+public class Event extends Deadline {
     private final String start;
     public Event(String taskName, boolean isDone, int index, String start, String deadline) {
         super(taskName, isDone, index, deadline);

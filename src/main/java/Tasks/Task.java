@@ -1,3 +1,5 @@
+package Tasks;
+
 public class Task {
 
     private final String taskName;
@@ -26,7 +28,7 @@ public class Task {
 
     public void doTask() {
         if (this.isDone) {
-            System.out.println("Task is done already");
+            System.out.println("Tasks.Task is done already");
             return;
         }
         this.isDone = true;
@@ -34,7 +36,7 @@ public class Task {
 
     public void undoTask() {
         if (!this.isDone) {
-            System.out.println("Task has not been started");
+            System.out.println("Tasks.Task has not been started");
             return;
         }
         this.isDone = false;
