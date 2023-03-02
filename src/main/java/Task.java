@@ -42,7 +42,7 @@ public class Task {
         }
         marked.set(num-1, true);
         String dateOut = formatDateOut(num-1);
-        System.out.println("Nice! I've marked this  as done:\n" + "[" + tasks.get(num-1).toString().charAt(0) + "]" + "[X] " + items.get(num-1) + dateOut);
+        System.out.println("Nice! I've marked this  as done:\n" + "[" + tasks.get(num-1).toString().charAt(0) + "]" + "[X] " + items.get(num-1) + dateOut + "\n");
     }
     public void setNotDone(String input) { //set task as not done
         String[] strArray = input.split(" ");
@@ -53,7 +53,7 @@ public class Task {
         }
         marked.set(num-1, false);
         String dateOut = formatDateOut(num-1);
-        System.out.println("Ok, I've marked this task as not done yet:\n" + "[" + tasks.get(num-1).toString().charAt(0) + "]" + "[ ] " + items.get(num-1) + dateOut);
+        System.out.println("Ok, I've marked this task as not done yet:\n" + "[" + tasks.get(num-1).toString().charAt(0) + "]" + "[ ] " + items.get(num-1) + dateOut + "\n");
     }
     
     //getters
@@ -67,6 +67,7 @@ public class Task {
             String dateOut = formatDateOut(i);
             System.out.println((i+1) + ". " + "[" + tasks.get(i).toString().charAt(0) + "]" +"[" + (marked.get(i) ? "X" : " ") + "] " + items.get(i) + dateOut);
         }
+        System.out.print("\n");
     }
 
     public void getDue(String input) { //show items due before  & after a certain date time
@@ -105,6 +106,7 @@ public class Task {
         if (count == 1) {
             System.out.println("No tasks due after " + dateTime.format(DateTimeFormatter.ofPattern("MMM dd yyy HH:mm")));
         }
+        System.out.print("\n");
     }
 
     public void find(String input) { // find items containing a certain string
@@ -136,7 +138,7 @@ public class Task {
         }
         System.out.println("Noted. I've removed this task:\n" + "[" + tasks.get(num-1).toString().charAt(0) + "]" + "[" + (marked.get(num-1) ? "X" : "") + "] " + items.get(num-1));
         items.remove(num-1);
-        System.out.println("Now you have " + items.size() + " tasks in the list.");
+        System.out.println("Now you have " + items.size() + " tasks in the list." + "\n");
         marked.remove(num-1);
         tasks.remove(num-1);
         dateTimeFrom.remove(num-1);
@@ -150,6 +152,6 @@ public class Task {
         String checkbox = Task.marked.get(size) ? "[X] " : "[ ] ";
         String item = Task.items.get(size);
         String dateOut = formatDateOut(size); 
-        System.out.println("Got it. I've added this task: \n" + type + checkbox + item + dateOut + "\n" + "Now you have " + items.size() + " tasks in the list.");
+        System.out.println("Got it. I've added this task: \n" + type + checkbox + item + dateOut + "\n" + "Now you have " + items.size() + " tasks in the list." + "\n");
     }
 }
