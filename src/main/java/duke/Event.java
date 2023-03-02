@@ -32,6 +32,15 @@ public class Event extends Task {
     }
 
     @Override
+    public boolean matchesKeyword (String keyword) {
+        if (description.contains(keyword) || from.contains(keyword) || to.contains(keyword)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
     /**
      * Overrides string representation for todos, with a [E] to indicate event class and conveying information about time.
      *
