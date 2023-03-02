@@ -5,4 +5,5 @@ public interface Keyword {
     String DEADLINE = "deadline";
     String DESCRIPTION = "description";
     String INDEX = "index";
+    String KEYWORD = "keyword";
 }
