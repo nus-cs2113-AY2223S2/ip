@@ -1,0 +1,1 @@
+jar cfve Obama.jar Obama -C bin .
