@@ -1,3 +1,5 @@
+import java.time.LocalDate;
+
 public class AddDeadlineCommand extends Command{
     public AddDeadlineCommand(String userInput){
         super("add deadline");
@@ -7,6 +9,10 @@ public class AddDeadlineCommand extends Command{
 
         int byBeginIndex = originalInput.indexOf("by");
         super.content = originalInput.substring(0, byBeginIndex).strip();
-        super.by = originalInput.substring(byBeginIndex).replace("by", "").trim();
+        try{
+            super.by = LocalDate.parse(originalInput.substring(byBeginIndex).replace("by", "").trim());
+        } catch(Exception e){
+            UI.printDateFormatErrorComment();
+        }
     }
 }
