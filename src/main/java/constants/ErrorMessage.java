@@ -11,4 +11,5 @@ public interface ErrorMessage {
   String INVALID_COMMAND = "An invalid command has been provided";
   String NO_DESCRIPTION_PROVIDED = "No description has been provided";
   String PARSE_INT_ERROR = "You have provided a non-number index\n";
+  String UNKNOWN_COMMAND = "An unknown command has been provided";
 }

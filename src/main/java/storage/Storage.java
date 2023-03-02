@@ -1,6 +1,7 @@
 package storage;
 
 import com.google.gson.Gson;
+import constants.Command;
 import constants.ErrorMessage;
 import controller.TaskController;
 import model.storage.JsonStorage;
@@ -50,18 +51,18 @@ public class Storage {
       createFileIfNotExist();
       BufferedReader br = new BufferedReader(new FileReader(FILE_NAME));
       JsonStorage[] x = gson.fromJson(br, JsonStorage[].class);
-      boolean isMarked = false;
+      boolean isMarked;
 
       for (JsonStorage item : x) {
         String type = item.getType();
         switch (type) {
-          case "todo":
+        case Command.TODO:
             Todo todo = new Todo(item.getDescription());
             isMarked = item.isMarked();
             todo.setDone(isMarked);
             taskController.manuallyAdd(todo);
             break;
-          case "event":
+        case Command.EVENT:
             Event event = new Event(
               item.getDescription(),
               item.getStart(),
@@ -95,7 +96,7 @@ public class Storage {
    * @param tasks The array list from Storage
    */
   public void updateFile(ArrayList<Task> tasks) {
-    ArrayList<JsonStorage> items = new ArrayList<JsonStorage>();
+    ArrayList<JsonStorage> items = new ArrayList<>();
     for (Task task : tasks) {
       String end = "";
       String type = "";
@@ -103,17 +104,17 @@ public class Storage {
       if (task instanceof Todo) {
         start = null;
         end = null;
-        type = "todo";
+        type = Command.TODO;
       } else if (task instanceof Deadline) {
         Deadline deadlineTask = (Deadline) task;
         start = null;
         end = deadlineTask.getEndDate();
-        type = "deadline";
+        type = Command.DEADLINE;
       } else if (task instanceof Event) {
         Event eventTask = (Event) task;
         start = eventTask.getFrom();
         end = eventTask.getTo();
-        type = "event";
+        type = Command.EVENT;
       }
       JsonStorage item = new JsonStorage(
         task.getTaskName(),

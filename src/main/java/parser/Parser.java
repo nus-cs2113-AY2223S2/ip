@@ -126,13 +126,16 @@ public class Parser {
         case Command.MARK:
         case Command.UNMARK:
         case Command.DELETE:
+            if (words.length == 1) {
+                throw new DukeException(ErrorMessage.INVALID_INDEX);
+            }
             return handleMarkAndDelete(words[1], command);
         case Command.DEADLINE:
             return handleDeadline(words[1]);
         case Command.EVENT:
             return handleEvent(words[1]);
         default:
-            throw new DukeException("Cannot process command");
+            throw new DukeException(ErrorMessage.UNKNOWN_COMMAND);
         }
 
     }
