@@ -1,11 +1,11 @@
 package duke;
 
-import duke.task.Deadline;
-import duke.task.Event;
-import duke.task.Task;
-import duke.task.Todo;
+import duke.task.*;
 
+import java.io.IOException;
 import java.util.Scanner;
+import java.io.File;
+import java.io.FileWriter;
 
 public class Duke {
     protected static Task[] list = new Task[100];
@@ -20,7 +20,10 @@ public class Duke {
     public static final String EMPTY_TODO = HORIZONTAL + "\n\tCannot add, the description of a todo cannot be empty!\n" + HORIZONTAL;
 
     public static final String EMPTY_LISTNUM = HORIZONTAL + "\n\tI cannot change the status if I don't know the list number!\n" + HORIZONTAL;
-    public static void main(String[] args) {
+
+    public static final String FILEPATH = "data.txt";
+
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
 
         System.out.println(HORIZONTAL + "\n\t" + OPENING_MSG + "\n" + HORIZONTAL);
 
@@ -29,6 +32,7 @@ public class Duke {
 
         int numToMark;
         int item = 0;
+        loadTasksToFile();
 
         while (!line.equals("bye")) {
             if (!(line.startsWith("event") || line.startsWith("deadline") || line.startsWith("todo") || line.equals("list") || line.startsWith("mark") || line.startsWith("unmark"))) {
@@ -61,6 +65,7 @@ public class Duke {
                 if (line.toLowerCase().startsWith("unmark")) {
                     toggleDoneStatus(line, item, UNMARK_MSG, false);
                 }
+                writeTasksToFile();
             }
             // Read next line
             line = in.nextLine();
@@ -129,7 +134,7 @@ public class Duke {
         }
     }
 
-    public static int addToDo(String line, int item) {
+    public static int addToDo(String line, int item) throws IOException {
         try {
             int descriptionIndex = line.indexOf("todo");
             String description = line.substring(descriptionIndex + 5);
@@ -145,7 +150,7 @@ public class Duke {
             System.out.println(EMPTY_TODO);
 
         } finally {
-            return item;
+              return item;
 
         }
 
@@ -187,4 +192,51 @@ public class Duke {
 
         }
     }
+
+    public static void loadTasksToFile() throws IOException {
+        // @@author tangphi-reused
+        // Reused from www.w3schools.com/java/java_files_create.asp
+        // with minor modifications
+        try {
+            File file = new File(FILEPATH);
+            if (file.createNewFile()) {
+                System.out.println("File created: " + file.getName());
+            } else {
+                System.out.println("File already exists");
+            }
+            Scanner reader = new Scanner(file);
+            while (reader.hasNextLine()){
+                String line = reader.nextLine();
+                System.out.println("READER LINE\n" + line); //Do you want this printed in data.txt?
+            }
+        } catch (IOException e) {
+            System.out.println("An IO Exception error occurred");
+            e.printStackTrace();
+        }
+
+    }
+
+    public static void writeTasksToFile() throws IOException, ClassNotFoundException {
+        // https://www.w3schools.com/java/java_files_create.asp
+        try {
+            FileWriter myWriter = new FileWriter(FILEPATH);
+            for (Task task : list) {
+
+                if (task instanceof Todo) {
+                    myWriter.write(task.getDescription() + "\n");
+                }
+                else if (task instanceof Event) {
+                    myWriter.write(task.getDescription() + "\n");
+                }
+                else if (task instanceof Deadline) {
+                    myWriter.write(task.getDescription() + "\n");
+                }
+            }
+            myWriter.close();
+        } catch (IOException e) {
+            System.out.println("An IO Exception error occurred");
+            e.printStackTrace();
+        }
+    }
+    // @@author
 }
