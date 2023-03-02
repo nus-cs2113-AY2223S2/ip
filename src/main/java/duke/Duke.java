@@ -2,6 +2,7 @@ package duke;
 
 import constants.Command;
 import constants.ErrorMessage;
+import constants.Message;
 import controller.TaskController;
 import exception.DukeException;
 import parser.Parser;
@@ -50,7 +51,7 @@ public class Duke {
         index = dictionary.get("index");
         position = Integer.parseInt(index) - 1;
         controller.deleteTask(position);
-        ui.printMessage("Task successfully deleted");
+        ui.printMessage(Message.TASK_DELETED);
         break;
       case Command.LIST:
         controller.listTasks();

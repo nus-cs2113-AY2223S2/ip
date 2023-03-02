@@ -10,6 +10,7 @@ public interface Message {
     String LIST_TASKS = "Here are the tasks in your list:";
     String MARKED = "Nice! I've marked this task as done:";
     String TASK_ADDED = "Got it. I've added this task:";
+    String TASK_DELETED = "Task successfully deleted";
     String UNMARKED = "OK, I've marked this task as not done yet:";
     String WELCOME = "Hello! I'm Duke\nWhat can I do for you?\n";
 }
