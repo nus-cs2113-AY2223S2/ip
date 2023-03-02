@@ -10,15 +10,17 @@ public class Command {
     protected String by;
     protected String from;
     protected String to;
+    protected String find;
     protected int index;
 
-    public Command(String commandType, String description, String by, String from, String to, int index) {
+    public Command(String commandType, String description, String by, String from, String to, int index, String find) {
         this.commandType = commandType;
         this.description = description;
         this.by = by;
         this.from = from;
         this.to = to;
         this.index = index;
+        this.find = find;
     }
 
     public Boolean execute(TaskList tasks) {
@@ -85,6 +87,18 @@ public class Command {
             }
             Ui.printUnderline();
             Storage.storeCheckpoint(tasks);
+            break;
+        case "find":
+            Ui.printFind();
+
+            int cnt = 0;
+            for(int i=0; i<tasks.getNum(); i++){
+                if(tasks.get(i).getDescription().contains(find)) {
+                    System.out.println("\t " + (cnt + 1) + ". " + tasks.get(i).toString());
+                    cnt += 1;
+                }
+            }
+            Ui.printUnderline();
             break;
         case "exit":
             exit = true;
