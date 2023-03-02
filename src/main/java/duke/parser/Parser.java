@@ -16,6 +16,7 @@ public class Parser {
     private final String MARK = "mark";
     private final String UNMARK = "unmark";
     private final String DELETE = "delete";
+    private final String FIND = "find";
     private boolean isUserDone;
 
     /**
@@ -53,6 +54,10 @@ public class Parser {
             } else if (taskType.equals(DELETE)) {
                 int taskNumToDelete = Integer.parseInt(input[1]);
                 tasks.deleteTask(taskNumToDelete);
+            // find task
+            } else if (taskType.equals(FIND)) {
+                String wordToFind = input[1];
+                tasks.findTask(wordToFind);
             // exit
             } else if (taskType.equals(BYE)) {
                 isUserDone = true;
