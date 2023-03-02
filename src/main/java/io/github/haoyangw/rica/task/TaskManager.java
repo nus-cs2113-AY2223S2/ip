@@ -114,7 +114,7 @@ public class TaskManager {
         }
     }
 
-    private Task rmTask(int indexOfTask) throws RicaTaskException {
+    private Task rmTaskByIndex(int indexOfTask) throws RicaTaskException {
         int FIRST_VALID_INDEX = 0;
         boolean isNegativeIndex = indexOfTask < FIRST_VALID_INDEX;
         boolean isIndexTooLarge = indexOfTask >= this.getTasks().size();
@@ -198,7 +198,7 @@ public class TaskManager {
             this.getTextUi().printlnWithIndent("    " + selectedTodo);
             return selectedTodo;
         }
-        this.rmTask(indexOfTask);
+        this.rmTaskByIndex(indexOfTask);
         selectedTodo = selectedTodo.setDone(true);
         this.insertTask(indexOfTask, selectedTodo);
         this.getStorageManager().saveTasks(this.getTasks());
@@ -216,14 +216,14 @@ public class TaskManager {
     }
 
     /**
-     * Parses a remove command issued by the user and removes the corresponding
-     *   Task from Rica's list of Tasks.
+     * Parses a delete command issued by the user and removes the corresponding
+     *   Task from Rica's memory of all the user's Tasks.
      *
-     * @param command Full remove command issued by the user
+     * @param command Full delete command issued by the user
      * @throws RicaTaskException If the wrong command keyword was used, no Tasks
      *   exist, or a non-integer index was given within the command
      */
-    public void rmTask(String command) throws RicaTaskException {
+    public void deleteTaskSpecifiedByl(String command) throws RicaTaskException {
         String[] parameters = command.split(" ");
         int FIRST_PARAM = 0;
         if (!parameters[FIRST_PARAM].equals(TaskManager.DELETE_CMD)) {
@@ -242,7 +242,7 @@ public class TaskManager {
         }
         // givenIndex is 1-based, but rmTask() expects 0-based indexing, so subtract one
         //   before passing to rmTask()
-        Task removedTask = this.rmTask(givenIndex - 1);
+        Task removedTask = this.rmTaskByIndex(givenIndex - 1);
         this.getStorageManager().saveTasks(this.getTasks());
         this.getTextUi().printlnWithIndent(TaskManager.TASK_REMOVED_PHRASE);
         this.getTextUi().printlnWithIndent("   " + removedTask.toString());
@@ -280,7 +280,7 @@ public class TaskManager {
             this.getTextUi().printlnWithIndent("    " + selectedTodo);
             return selectedTodo;
         }
-        this.rmTask(indexOfTask);
+        this.rmTaskByIndex(indexOfTask);
         selectedTodo = selectedTodo.setDone(false);
         this.insertTask(indexOfTask, selectedTodo);
         this.getStorageManager().saveTasks(this.getTasks());

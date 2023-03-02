@@ -15,7 +15,7 @@ public class DeleteCommand extends Command {
     @Override
     public void run() {
         try {
-            super.getTaskManager().rmTask(super.getCommand());
+            super.getTaskManager().deleteTaskSpecifiedBy(super.getCommand());
         } catch (RicaTaskException exception) {
             super.getTextUi().printErrorMessage(exception);
         }
