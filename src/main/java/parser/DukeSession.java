@@ -1,6 +1,7 @@
 package parser;
 
 import file.storage.Storage;
+
 import utility.Ui;
 import utility.commandChecker;
 
@@ -12,14 +13,33 @@ import tasks.Todo;
 import java.util.Scanner;
 import java.util.ArrayList;
 
-
+/**
+ * Represents the whole session of Duke's communication.
+ * It creates an arraylist that stores all tasks that the user has given in this session.
+ * It also parses the input that the user has entered. After that, it sends the broken down inputs to
+ * the commandChecker class, where the inputs are validated.
+ * If there are no errors in the input, it is executed.
+ */
 public class DukeSession {
+    private static final String INPUT_ERROR_DETECTED = "Invalidate";
+
     private ArrayList<Task> actions = new ArrayList<>();
 
+    /**
+     * Calls the function setUpFile in the Storage class. It is used here to ensure arraylist is already setup.
+     */
     public void setUpArrayList() {
         Storage.setUpFile(actions);
     }
 
+    /**
+     * This method parses the inputs into decisions and dates.
+     * It then calls the method of commandChecker, hasErrors.
+     * hasErrors will then validate the inputs and then notify DukeSession of any errors caught.
+     * If there are no errors detected, it will call the method handleInputs where they are processed.
+     * If errors are detected, user input is discarded.
+     *
+     */
     public void execute() {
         String line;
         String[] decisions;
@@ -27,48 +47,48 @@ public class DukeSession {
         Scanner in = new Scanner(System.in);
         do {
             line = in.nextLine();
-            decisions = line.split(" ");
-            dates = line.split("/");
+            decisions = line.split(Ui.DEFAULT_LINE_SEPARATOR);
+            dates = line.split(Ui.DEFAULT_FLAG_SEPARATOR);
             commandChecker currentLoop = new commandChecker(decisions, dates, actions.size());
             if (currentLoop.hasErrors()) {
-                decisions[0] = "Invalidate";
+                decisions[0] = INPUT_ERROR_DETECTED;
             }
             handleInputs(line, decisions, dates);
-        } while (!decisions[0].equals("bye"));
+        } while (!decisions[0].equals(Ui.DEFAULT_EXIT));
         Storage.saveFile(actions);
-        System.out.println("That's all from me! Goodbye!");
+        Ui.printExitMessage();
     }
 
     private void handleInputs(String line, String[] decisions, String[] dates) {
         switch (decisions[0]) {
-            case "echo":
+            case Ui.DEFAULT_ECHO:
                 System.out.println(findTaskDetails(line));
                 break;
-            case "todo":
+            case Ui.DEFAULT_TODO:
                 handleToDo(line);
                 break;
-            case "event":
+            case Ui.DEFAULT_EVENT:
                 handleEvent(dates);
                 break;
-            case "deadline":
+            case Ui.DEFAULT_DEADLINE:
                 handleDeadline(dates);
                 break;
-            case "mark":
+            case Ui.DEFAULT_MARK_TASK:
                 handleMarkTask(decisions);
                 break;
-            case "unmark":
+            case Ui.DEFAULT_UNMARK_TASK:
                 handleUnmarkTask(decisions);
                 break;
-            case "list":
+            case Ui.DEFAULT_LIST_ALL_TASKS:
                 handleList();
                 break;
-            case "delete":
+            case Ui.DEFAULT_DELETE:
                 handleDeleteTask(decisions);
                 break;
-            case "find":
+            case Ui.DEFAULT_FIND:
                 handleFindTask(line);
                 break;
-            case "bye":
+            case Ui.DEFAULT_EXIT:
                 break;
             default:
                 Ui.printCurrentSupportedActions();
@@ -119,28 +139,28 @@ public class DukeSession {
 
     private void handleFindTask(String line) {
         String termToFind = findTaskDetails(line);
-        Ui.print(termToFind);
         int iterator = 0;
-        int printedTasks = 0;
+        int numberOfPrintedTasks = 0;
         for (Task searchTerm : actions) {
-            if (searchTerm.getDescription().contains(termToFind)) {
+            boolean containsMatchingTerm = searchTerm.getDescription().toLowerCase().contains(termToFind.toLowerCase());
+            if (containsMatchingTerm) {
                 Ui.printListElement(iterator, actions.get(iterator));
-                printedTasks++;
+                numberOfPrintedTasks++;
             }
             iterator++;
         }
-        if (printedTasks > 0) {
+        if (numberOfPrintedTasks > 0) {
             Ui.printFindAcknowledgement();
-        } else if (printedTasks == 0) {
+        } else if (numberOfPrintedTasks == 0) {
             Ui.printCannotFindAcknowledgement();
         } else {
-            Ui.print("Oh dear, Something has went wrong!");
+            Ui.printDefaultErrorMessage();
         }
     }
 
     private static String findTaskDetails(String line) {
-        return line.substring(line.indexOf(" ") + 1);
+        int correctLineIndex = line.indexOf(Ui.DEFAULT_LINE_SEPARATOR) + 1;
+        return line.substring(correctLineIndex);
     }
-
 
 }
