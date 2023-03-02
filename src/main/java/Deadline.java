@@ -7,12 +7,14 @@ public class Deadline extends Task {
     public LocalDate due;
     public String[] info;
     public String deadlineName;
+    public boolean isOverdue;
 
     public Deadline(String description) {
         super(description);
         this.info = this.description.split("/by", 2);
         this.deadlineName = info[0];
         this.due = LocalDate.parse(info[1]);
+        this.isOverdue = due.isAfter(LocalDate.now());
     }
 
     @Override

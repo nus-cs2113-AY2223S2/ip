@@ -131,4 +131,19 @@ public class TaskList {
             }
         }
     }
+
+    public void find(String keyword) {
+        if (taskList.size() == 0) {
+            System.out.println("Task list is empty.");
+        } else {
+            System.out.println("Here are the matching tasks in your list:");
+            Integer i = 0;
+            for (Task task : taskList) {
+                if (task.description.contains(keyword)) {
+                    System.out.printf(String.format("%d.%s\n", i + 1, task.toString()));
+                    i++;
+                }
+            }
+        }
+    }
 }
