@@ -1,3 +1,12 @@
+/**
+ * Contains methods to build up a complete Task
+ *
+ * @param description A string that details the description of the task
+ * @param isDone boolean variable that identifies whether the task is completed
+ * @param deadline A string that identifies the Task as a Deadline task
+ * @param date A string that represents the deadline date
+ */
+
 package duke.tasks;
 
 import duke.Task;

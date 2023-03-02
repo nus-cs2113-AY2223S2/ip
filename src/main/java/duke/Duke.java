@@ -4,9 +4,6 @@ import duke.tasks.Deadline;
 import duke.tasks.Event;
 import duke.tasks.ToDo;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -31,7 +28,6 @@ public class Duke {
                 break;
             }
             switch (wordList[0]) {
-            //if command is list, either display empty or display list
             case "List":
                 if (taskIndex == 0) {
                     UI.printer("empty", taskList.getTaskArray(), taskIndex);
@@ -39,7 +35,6 @@ public class Duke {
                     UI.printer("list", taskList.getTaskArray(), taskIndex);
                 }
                 break;
-            //if command is mark, mark the appropriate entry in the list
             case "Mark":
                 int indexToMark = Integer.parseInt(wordList[1]);
                 if (taskIndex == 0 || indexToMark > taskIndex) {
@@ -49,7 +44,6 @@ public class Duke {
                     UI.taskPrinter(taskList.getTaskArray(), indexToMark);
                 }
                 break;
-            //if command is unmark, unmark the appropriate entry in the list
             case "Unmark":
                 int indexToUnmark = Integer.parseInt(wordList[1]);
                 if (taskIndex == 0 || indexToUnmark > taskIndex) {
@@ -60,7 +54,6 @@ public class Duke {
                     UI.taskPrinter(taskList.getTaskArray(), indexToUnmark);
                 }
                 break;
-            //if command is todo, prompt for task and add into list
             case "Todo":
                 try {
                     if (wordList[1] == null) {
@@ -75,7 +68,6 @@ public class Duke {
                     break;
                 }
                 break;
-            //if command is Deadline, prompt for task then deadline and add into list
             case "Deadline":
                 int demarcator = wordList[1].indexOf("/");
                 String work = wordList[1].substring(0, demarcator - 1);
@@ -85,7 +77,6 @@ public class Duke {
                 UI.printer("addTask", taskList.getTaskArray(), taskIndex);
                 ++taskIndex;
                 break;
-            //if command is Event, prompt for event, then prompt for start and end date
             case "Event":
                 demarcator = wordList[1].indexOf("/");
                 work = wordList[1].substring(0, demarcator - 1);

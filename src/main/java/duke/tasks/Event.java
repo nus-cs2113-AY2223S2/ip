@@ -1,3 +1,12 @@
+/**
+ * Contains methods to build up a complete Task
+ *
+ * @param description A string that details the description of the task
+ * @param isDone boolean variable that identifies whether the task is completed
+ * @param event A string that identifies the Task as an event task
+ * @param startAndEnd A string that represents the duration of the event
+ */
+
 package duke.tasks;
 
 import duke.Task;
