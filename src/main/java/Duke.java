@@ -26,9 +26,9 @@ public class Duke {
     private void run() {
         ui.greet();
         boolean isExit = false;
+        Scanner in = new Scanner(System.in);
         while (!isExit) {
             try {
-                Scanner in = new Scanner(System.in);
                 String fullCommand = ui.readCommand(in);
                 ui.printHorizontalLine();
                 Command c = Parser.parse(fullCommand);

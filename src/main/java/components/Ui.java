@@ -27,7 +27,6 @@ public class UI {
     }
 
     public void greet() {
-        printHorizontalLine();
         printWelcomeMessage();
         System.out.println("Hello! I'm Duke\nWhat can I do for you?\n");
         printHorizontalLine();
@@ -54,12 +53,12 @@ public class UI {
     public void taskAdded(ArrayList<Task> tasks) {
         boolean isLessThanOne = (tasks.size() <= 1);
         System.out.println("Got it. I've added this task:\n" + tasks.get(tasks.size() - 1) +
-                "Now you have " + tasks.size() + (isLessThanOne ? " task" : " tasks") + " in the list");
+                "\nNow you have " + tasks.size() + (isLessThanOne ? " task" : " tasks") + " in the list");
     }
 
     public void taskRemoved(ArrayList<Task> tasks, Task t) {
         boolean isLessThanOne = (tasks.size() <= 1);
         System.out.println("Got it. I've removed this task:\n" + t.toString() +
-                "Now you have " + tasks.size() + (isLessThanOne ? " task" : " tasks") + " in the list\n");
+                "\nNow you have " + tasks.size() + (isLessThanOne ? " task" : " tasks") + " in the list\n");
     }
 }

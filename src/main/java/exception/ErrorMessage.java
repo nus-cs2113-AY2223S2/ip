@@ -4,9 +4,9 @@ package exception;
  * List of error messages
  */
 public enum ErrorMessage {
-    INVALID_COMMAND("I am sorry, I do not understand what this command means \n" +
+    INVALID_COMMAND("I am sorry, I do not understand what this command means\n" +
             "Commands are available as follows:\n" +
-            "1.todo \n2.event \n3.deadline \n4.list \n5.mark \n6.unmark \n7.delete \n8.find \n9.bye"),
+            "1.todo\n2.event\n3.deadline\n4.list\n5.mark\n6.unmark\n7.delete\n8.find\n9.bye"),
     MISSING_TODO_PARAMETER("I am sorry, you are missing a parameter for todo.\nExample: todo borrow book"),
     MISSING_TWO_EVENT_PARAMETER("I am sorry, you are missing a start & end time.\n" +
             "Example: event project meeting /from Mon 2pm /to 4pm"),
