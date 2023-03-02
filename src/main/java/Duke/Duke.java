@@ -17,6 +17,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.io.BufferedReader;
+import java.io.FileReader;
 
 public class Duke {
     //    private static int taskCount = 0;
@@ -107,13 +109,33 @@ public class Duke {
             String eventToFormatted = eventToTime.format(outputFormatter);
 
             addTask(new Event(line.substring(0, line.indexOf(" /")), eventFromFormatted, eventToFormatted));
-
         } else {
 //            tasks[taskCount] = new Task(line);
             throw new DukeException();
         }
     }
 
+    public static void keywordSearch(String keyword) {
+        String path = "data/tasks.txt";
+        try (BufferedReader br = new BufferedReader(new FileReader(path))) {
+            String line;
+            int count = 0;
+            System.out.println(dividingLine);
+            System.out.println("Here are the matching tasks in your list:");
+            while ((line = br.readLine()) != null) {
+                if (line.contains(keyword)) {
+                    count++;
+                    System.out.println(count + ". " + line);
+                }
+            }
+            if(count == 0){
+                System.out.println("Sorry, there is no matching task in your list.");
+            }
+            System.out.println(dividingLine);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public static void printTask(String line, String path) {
         try {
