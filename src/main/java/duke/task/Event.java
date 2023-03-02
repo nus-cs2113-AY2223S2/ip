@@ -5,6 +5,9 @@ import java.time.format.DateTimeParseException;
 
 import duke.DukeException;
 
+/**
+ * Represents task that has both start time and end time.
+ */
 public class Event extends Task {
     
     protected String from;
@@ -12,6 +15,15 @@ public class Event extends Task {
     protected LocalDateTime localFrom;
     protected LocalDateTime localTo;
 
+    /**
+     * Converter for <code>Event</code> task. It accepts an input in format of an instruction and
+     * returns the <code>Event</code> task object.
+     * @param instruction Written in format of "event <code>description</code> /from <code>from</code>(start time) /to <code>to</code>(end time)", 
+     * e.g. "event CS2113 class /from 2023/03/03 16:00 /to 2023/03/03 18:00".
+     * @return <code>Event</code> object constructed from input <code>instruction</code>.
+     * @throws DukeException If 1) description is not given; 2) start time is not given; 3) end time is not given;
+     * 4) start time is in wrong format; 5) end time is in wrong format.
+     */
     public static Event toEvent(String instruction) throws DukeException {
         int contentIdx = instruction.indexOf("/from");
         int fromIdx = instruction.indexOf("/to");
@@ -45,6 +57,12 @@ public class Event extends Task {
         return new Event(eventContent, eventFrom, eventTo);
     }
 
+    /**
+     * Constructor for <code>Event</code> task.
+     * @param description Description of <code>Event</code> task, e.g. "CS2113 class".
+     * @param from Start time of <code>Event</code> task, e.g. "2023/03/03 16:00".
+     * @param to End time of <code>Event</code> task, e.g. "2023/03/03 18:00".
+     */
     public Event(String description, String from, String to) {
         super(description, 'E');
         this.from = from;
@@ -52,6 +70,13 @@ public class Event extends Task {
         convertDateTime(from, to);
     }
 
+    /**
+     * Convert start time and end time from <code>String</code> type to <code>LocalDateTime</code> type.
+     * If <code>from</code> and/or <code>to</code> is not in the format of "yyyy/MM/dd HH:mm", converter will not work and
+     * set the result as <code>null</code> both.
+     * @param from Start time of the task in <code>String</code> type.
+     * @param to End time og the task in <code>String</code> type.
+     */
     private void convertDateTime(String from, String to) {
         try {
             from = from.substring(0, from.length() - 1);

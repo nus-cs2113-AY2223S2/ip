@@ -4,6 +4,9 @@ import java.util.Scanner;
 
 import duke.task.Task;
 
+/**
+ * Represents the UI interface interacting with users.
+ */
 public class Ui {
     
     private static final String SPLITTER = "    ____________________________________________________________";
@@ -18,18 +21,33 @@ public class Ui {
     
     private Scanner in;
 
+    /**
+     * Constructor for <code>Ui</code> class. It will create a 
+     * <code>Ui</code> object accepting standard input as its input stream.
+     */
     public Ui() {
         in = new Scanner(System.in);
     }
 
+    /**
+     * Read one line of command.
+     * @return The command line read.
+     */
     public String readCommand() {
         return in.nextLine();
     }
 
+    /**
+     * Show the <code>SPLITTER</code>, i.e. "    ____________________________________________________________".
+     */
     public static void showLine() {
         System.out.println(SPLITTER);
     }
 
+    /**
+     * Show the error message.
+     * @param errMsg Error message provided.
+     */
     public static void showError(String errMsg) {
         showLine();
         System.out.println("     " + errMsg);
@@ -37,6 +55,9 @@ public class Ui {
         System.out.println();
     }
 
+    /**
+     * Show welcome message.
+     */
     public static void showWelcome() {
         System.out.println("Hello from\n" + logo);
         showLine();
@@ -45,6 +66,12 @@ public class Ui {
         System.out.println();
     }
 
+    /**
+     * Show information of a task.
+     * @param num Number of the task.
+     * @param task Task provided.
+     * @param leadingSpaceNum Number of leading spaces for better appearance.
+     */
     public static void showTask(int num, Task task, int leadingSpaceNum) {
         for(int i = 0; i < leadingSpaceNum; i++) {
             System.out.print(" ");
@@ -52,6 +79,11 @@ public class Ui {
         System.out.println(num + ". " + task);
     }
 
+    /**
+     * Show information of a task.
+     * @param task Task provided.
+     * @param leadingSpaceNum Number of leading spaces for better appearance.
+     */
     public static void showTask(Task task, int leadingSpaceNum) {
         for(int i = 0; i < leadingSpaceNum; i++) {
             System.out.print(" ");
@@ -59,6 +91,9 @@ public class Ui {
         System.out.println(task);
     }
 
+    /**
+     * Show exit message.
+     */
     public static void showExit() {
         showLine();
         System.out.println(exitPrompt);

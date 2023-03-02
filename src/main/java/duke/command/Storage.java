@@ -13,20 +13,36 @@ import duke.task.Event;
 import duke.task.Task;
 import duke.task.Todo;
 
+/**
+ * Contains the operations involving with file I/O.
+ */
 public class Storage {
 
     private File listFile;
     private int listnum;
     private ArrayList<Task> tasks = new ArrayList<>();
 
+    /**
+     * Get the number of items in task list.
+     * @return Number of items in task list.
+     */
     public int getListnum() {
         return listnum;
     }
 
+    /**
+     * Get the list of tasks.
+     * @return List of tasks in <code>ArrayList<Task></code> type.
+     */
     public ArrayList<Task> getTasks() {
         return tasks;
     }
 
+    /**
+     * Constructor of <code>Storage</code> class.
+     * @param filePath File which stores data of <code>Duke</code>.
+     * @throws IOException If <code>IOException</code> appears in reading or creating the file.
+     */
     public Storage(String filePath) throws IOException {
         listFile = new File(filePath);
         // create file `f` if it does not exist
@@ -39,6 +55,10 @@ public class Storage {
         listnum = 0;
     }
 
+    /**
+     * Save <code>Duke</code> data(the <code>todoList</code>) to data file.
+     * @throws IOException If saver encounters <code>IOException</code>.
+     */
     public void save() throws IOException {
         FileWriter saver = new FileWriter(listFile);
         listnum = 0;
@@ -56,6 +76,12 @@ public class Storage {
         saver.close();
     }
 
+    /**
+     * Load <code>Duke</code> data(the <code>todoList</code>) from data file.
+     * @return The <code>Storage</code> class containing all data read from data file.
+     * @throws DukeException If data in data file is not written in correct form,
+     * e.g. the type is not 'T', 'D' or 'E'.
+     */
     public Storage load() throws DukeException {
         try (Scanner in = new Scanner(listFile)) {
             while(in.hasNext()) {
