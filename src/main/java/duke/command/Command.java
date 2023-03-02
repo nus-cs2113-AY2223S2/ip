@@ -11,7 +11,7 @@ import java.rmi.UnexpectedException;
  */
 public abstract class Command {
 
-    private Boolean isExit = false;
+    public Boolean isExit = false;
 
     /**
      * Executes the command
@@ -28,17 +28,8 @@ public abstract class Command {
      * Sets {@code isExit} to {@code true}.
      * Called when the current Command is the ExitCommand.
      */
-    public void setExit() {
+    void setExit() {
         isExit = true;
-    }
-
-    /**
-     * Gets the exit status of the program.
-     *
-     * @return {@code true} if exit command has been issued, {@code false} otherwise
-     */
-    public Boolean getExit() {
-        return isExit;
     }
 
 }

@@ -46,9 +46,8 @@ public class Parser {
      */
     public static Command getCommand(String userCommand, Ui ui, int size) {
         final String[] split = userCommand.trim().split("\\s+", 2);
-        String command = split[0];
         try {
-            return parseCommand(split, command, size);
+            return parseCommand(split, size);
         } catch (IllegalCommandException e) {
             ui.printInvalidCommand();
         } catch (EmptyTaskDescException e) {
@@ -82,8 +81,10 @@ public class Parser {
      * @throws InvalidEvent If the input format for adding an event is wrong
      * @throws IllegalCommandException If an unknown command is input by the user
      */
-    private static Command parseCommand(String[] split, String command, int size) throws InvalidDateTime, EmptyKeywordException,
-            EmptyTaskDescException, InvalidDeadline, InvalidEvent, IllegalCommandException, NumberFormatException {
+    private static Command parseCommand(String[] split, int size)
+            throws InvalidDateTime, EmptyKeywordException, EmptyTaskDescException, InvalidDeadline, InvalidEvent,
+            IllegalCommandException, NumberFormatException {
+        String command = split[0];
         switch (command) {
         case COMMAND_EXIT_WORD:
             return new ExitCommand();
@@ -92,26 +93,26 @@ public class Parser {
         case COMMAND_LIST_WORD:
             return new ListCommand();
         case COMMAND_DATE_WORD:
-            if (split.length != 2) {
+            if (isEmptyParam(split)) {
                 throw new InvalidDateTime();
             }
             return new DateCommand(split[1]);
         case COMMAND_FIND_WORD:
-            if (split.length != 2) {
+            if (isEmptyParam(split)) {
                 throw new EmptyKeywordException();
             }
             return new FindCommand(split[1]);
         case COMMAND_MARK_WORD:
         case COMMAND_UNMARK_WORD:
         case COMMAND_DELETE_WORD:
-            if (split.length != 2) {
+            if (isEmptyParam(split)) {
                 throw new NumberFormatException();
             }
             return new ModifyCommand(command, split[1], size);
         case COMMAND_TODO_WORD:
         case COMMAND_DEADLINE_WORD:
         case COMMAND_EVENT_WORD:
-            if (split.length != 2) {
+            if (isEmptyParam(split)) {
                 throw new EmptyTaskDescException();
             }
             return new AddCommand(command, split[1]);
@@ -127,6 +128,9 @@ public class Parser {
      * @param dateString Input date and time in the form of a String
      * @param pattern Format that the input date and time should be parsed into
      * @return String with parsed date and time
+    private static Boolean isEmptyParam(String[] split) {
+        return (split.length != 2);
+    }
      */
     public static String parseDateTime(LocalDateTime date, String dateString, DateTimeFormatter pattern) {
         if (date != null) {

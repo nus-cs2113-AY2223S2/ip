@@ -77,17 +77,8 @@ public class TaskList {
      *
      * @param idx Given index
      */
-    public void markDone(int idx) {
-        allTasks.get(idx).setDone(true);
-    }
-
-    /**
-     * Marks Task at given index as not done.
-     *
-     * @param idx Given index
-     */
-    public void markNotDone(int idx) {
-        allTasks.get(idx).setDone(false);
+    public void markStatus(int idx, boolean isDone) {
+        allTasks.get(idx).setDone(isDone);
     }
 
     /**

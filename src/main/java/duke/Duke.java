@@ -47,7 +47,7 @@ public class Duke {
             Command c = Parser.getCommand(fullCommand, ui, tasks.getSize());
             if (c != null) {
                 c.execute(tasks, ui, storage);
-                isExit = c.getExit();
+                isExit = c.isExit;
             }
             ui.showLine();
         }
