@@ -1,16 +1,18 @@
 package IPChat;
 
 public class Event extends Task {
-    protected String at;
+    protected String from;
+    protected String to;
 
-    public Event(String description, String at) {
+    public Event(String description, String from, String to) {
         super(description);
-        this.at = at;
+        this.from = from;
+        this.to = to;
     }
 
     @Override
     public String toString() {
-        return "[E][" + super.getStatusIcon() + "] " + super.toString() + "(at: " + at + ")";
+        return "[E][" + super.getStatusIcon() + "] " + super.toString() + "(from: " + from + " to: " + to + ")";
     }
 
     @Override
@@ -19,6 +21,6 @@ public class Event extends Task {
         if (this.isDone) {
             save = 1;
         }
-        return "event" + description + "/at" + at + " | " + save;
+        return "event" + description + "/from" + from + " | " + "/to" + to + save;
     }
 }
