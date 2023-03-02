@@ -1,5 +1,9 @@
 package Duke;
 
+/**
+ * Represents deadlines, one subtype of task.
+ * It contains deadline information, as well as the duedate.
+ */
 public class Deadline extends Task {
     private String dueDate;
 
@@ -8,6 +12,14 @@ public class Deadline extends Task {
         this.dueDate = dueDate;
     }
 
+    /**
+     * Creates new deadline.
+     *
+     * @param commandByWord String array the contains deadline data.
+     * @return New deadline made according to informations provided.
+     * @throws IllegalArgumentException When information given in insufficient.
+     * @throws ArrayIndexOutOfBoundsException When information given in insufficient.
+     */
     static Deadline createDeadline(String[] commandByWord) throws IllegalArgumentException, ArrayIndexOutOfBoundsException {
 
         if (commandByWord.length < 2) {
@@ -39,6 +51,9 @@ public class Deadline extends Task {
         return new Deadline(taskToDo, dueDate);
     }
 
+    /**
+     * @return type of task. i.e. deadline
+     */
     String getType() {
         return "deadline";
     }

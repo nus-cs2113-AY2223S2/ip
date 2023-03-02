@@ -1,5 +1,8 @@
 package Duke;
-
+/**
+ * Represents events, one subtype of task.
+ * It contains event information, as well as the start date and end date.
+ */
 public class Event extends Task {
     private String startDate;
     private String endDate;
@@ -10,7 +13,14 @@ public class Event extends Task {
         this.startDate = startDate;
         this.endDate = endDate;
     }
-
+/**
+ * Creates new event.
+ *
+ * @param commandByWord String array the contains deadline data.
+ * @return New event made according to informations provided.
+ * @throws IllegalArgumentException When information given in insufficient.
+ * @throws ArrayIndexOutOfBoundsException When information given in insufficient.
+ */
     static Event createEvent(String[] commandByWord)
             throws IllegalArgumentException, ArrayIndexOutOfBoundsException {
 

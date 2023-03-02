@@ -4,6 +4,11 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+/**
+ * Represents the list of tasks saved in Duke.
+ * Keeps an LinkedList of all tasks.
+ * Responsible for operations done on the tasks, such as adding, deleting, and searching for keyword.
+ */
 
 public class Tasks {
     private LinkedList<Task> taskList;
@@ -17,12 +22,18 @@ public class Tasks {
         return newTasks;
     }
 
+    /**
+     * Adds new task to the list.
+     *
+     * @param commandByWord Contains information on task.
+     * @return String command that is to be shown to the user that indicates successful insertion or any error.
+     */
     String addTask(String[] commandByWord) {
         String type = commandByWord[0];
         try {
             Task task = TaskCreator.createNewTask(commandByWord);
             taskList.add(task);
-            TaskSaver.addTask(taskList.size(), task);
+            TaskSaver.addTask(task);
             return "Got it. I've added this task:\n    " +
                     task + "\n" +
                     "  Now you have " + taskList.size() + " tasks in the list.";
@@ -40,6 +51,12 @@ public class Tasks {
         this.taskList.add(task);
     }
 
+    /**
+     * Deletes task from the list.
+     *
+     * @param commandByWord Contains information on task.
+     * @return String command that is to be shown to the user that indicates successful deletion or any error.
+     */
     String deleteTask(String[] commandByWord) {
         try {
             if (commandByWord.length != 2) {
@@ -60,6 +77,12 @@ public class Tasks {
         }
     }
 
+    /**
+     * Marks specific task in the list as complete.
+     *
+     * @param index index of the task in the list that is to be marked as complete.
+     * @return String command that is to be shown to the user that indicates successful marking or any error.
+     */
     String mark(int index) {
         try {
             Task newTask = taskList.get(index - 1).markAsComplete();
@@ -72,7 +95,12 @@ public class Tasks {
                     "\n  Please try again.";
         }
     }
-
+    /**
+     * Marks specific task in the list as incomplete.
+     *
+     * @param index index of the task in the list that is to be marked as incomplete.
+     * @return String command that is to be shown to the user that indicates successful unmarking or any error.
+     */
     String unmark(int index) {
         try {
             Task newTask = taskList.get(index - 1).markAsIncomplete();
@@ -86,8 +114,13 @@ public class Tasks {
         }
     }
 
-    String listTasks(String type) {
 
+    String listTasks(String type) {
+    /**
+     * Lists tasks stored in the task list in string format, which is shown to the user.
+     *
+     * @return String of all tasks saved, tasks written line by line.
+     */
         String list = (type.equals("list")) ? "Here are the tasks in your list:\n"
                 : "Here are the matching tasks in your list:\n";
         int counter = 1;

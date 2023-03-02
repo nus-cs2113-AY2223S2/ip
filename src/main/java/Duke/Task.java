@@ -1,5 +1,9 @@
 package Duke;
 
+/**
+ * Abstract class that represents each task set by user
+ * Keeps track of the task information, as well as the task's current status.
+ */
 public abstract class Task {
     protected String content;
     private boolean isCompleted;
@@ -9,15 +13,29 @@ public abstract class Task {
         this.isCompleted = false;
     }
 
+    /**
+     * Returns task's completion status.
+     *
+     * @return Completion status of task.
+     */
     boolean isCompleted() {
         return isCompleted;
     }
 
+    /**
+     * Changes task's completion status to complete.
+     *
+     * @return Complete verison of the current task.
+     */
     Task markAsComplete() {
         this.isCompleted = true;
         return this;
     }
-
+    /**
+     * Changes task's completion status to incomplete.
+     *
+     * @return Incomplete verison of the current task.
+     */
     Task markAsIncomplete() {
         this.isCompleted = false;
         return this;
