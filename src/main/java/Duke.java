@@ -2,6 +2,7 @@ import command.Command;
 import command.DeadlineCommand;
 import command.DeleteCommand;
 import command.EventCommand;
+import command.FindCommand;
 import command.ListCommand;
 import command.MarkCommand;
 import command.TodoCommand;
@@ -16,20 +17,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class Duke {
-    private static Ui ui;
-    private static Storage storage;
-    private static TaskList taskList;
-    private static boolean isDone = false;
-    private static final int COMMAND_INDEX = 0;
-    private static final int EXIT_SUCCESS = 0;
+    private Ui ui;
+    private Storage storage;
+    private TaskList taskList;
+    private boolean isDone = false;
+    private final int COMMAND_INDEX = 0;
+    private final int EXIT_SUCCESS = 0;
 
-    public static void main(String[] args) {
-        startDuke();
-        runDuke();
-        exitDuke();
-    }
-
-    private static void startDuke() {
+    public Duke() {
         ui = new Ui(System.in);
         ui.greetUser();
         taskList = new TaskList();
@@ -37,12 +32,17 @@ public class Duke {
         storage.loadData(ui, taskList);
     }
 
-    private static void exitDuke() {
+    public static void main(String[] args) {
+        new Duke().run();
+    }
+
+    private void exitDuke() {
         ui.byeUser();
         System.exit(EXIT_SUCCESS);
     }
 
-    private static Command createCommandObject(String command, ArrayList<String> commands) {
+    private Command createCommandObject(ArrayList<String> commands) {
+        String command = commands.get(COMMAND_INDEX);
         Command commandObject = null;
         switch (command) {
         case "list":
@@ -66,28 +66,31 @@ public class Duke {
         case "delete":
             commandObject = new DeleteCommand(commands);
             break;
+        case "find":
+            commandObject = new FindCommand(commands);
+            break;
         }
         return commandObject;
     }
 
-    private static void runCommand(ArrayList<String> commands) throws DukeException, IOException {
-        Command commandObject = createCommandObject(commands.get(COMMAND_INDEX), commands);
+    private void runCommand(ArrayList<String> commands) throws DukeException, IOException {
+        Command commandObject = createCommandObject(commands);
         String result = commandObject.doCommand(taskList);
         storage.updateData(taskList);
         ui.printCommandResult(result);
     }
 
-    private static ArrayList<String> getCommands() throws DukeException {
+    private ArrayList<String> getCommands() throws DukeException {
         String input = ui.getNextLineInput();
         return Parser.parse(input);
     }
 
-    private static void handleDukeException(Exception e) {
+    private void handleDukeException(Exception e) {
         String errorMessage = e.getMessage();
         ui.printErrorMessage(errorMessage);
     }
 
-    private static void runDuke() {
+    public void run() {
         while (!isDone) {
             try {
                 ArrayList<String> commands = getCommands();
@@ -108,6 +111,8 @@ public class Duke {
                 case "event":
                     // Fallthrough
                 case "delete":
+                    // Fallthrough
+                case "find":
                     runCommand(commands);
                     break;
                 default:
@@ -117,5 +122,6 @@ public class Duke {
                 handleDukeException(e);
             }
         }
+        exitDuke();
     }
 }
