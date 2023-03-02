@@ -5,6 +5,8 @@ import duke.commands.Task;
 import duke.commands.Deadline;
 import duke.commands.Event;
 
+import duke.commands.Datetime;
+
 import java.util.ArrayList;
 
 public class TaskList {
@@ -52,12 +54,12 @@ public class TaskList {
         listSize++;
     }
 
-    public void addTaskWithTime(String[] description, String tasktype) {
+    public void addTaskWithTime(String description, Datetime dt, String tasktype) {
         if (tasktype.equals("deadline")) {
-            Deadline newDdl = new Deadline(description[0], description[1]);
-            taskList.add(newDdl);
+            Deadline newddl = new Deadline(description, dt);
+            taskList.add(newddl);
         } else {
-            Event newevent = new Event(description[0], description[1]);
+            Event newevent = new Event(description, dt);
             taskList.add(newevent);
         }
         listSize++;

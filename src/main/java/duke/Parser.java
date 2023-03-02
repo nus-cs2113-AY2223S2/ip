@@ -1,10 +1,15 @@
 package duke;
 
 import duke.exceptions.TaskNumberOutOfRange;
+import duke.exceptions.LackOfTaskDetail;
+
+import duke.commands.Datetime;
 
 import java.io.IOException;
 
-import duke.exceptions.LackOfTaskDetail;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeParseException;
 
 public class Parser {
     protected static String splittedCommand[];
@@ -31,31 +36,52 @@ public class Parser {
 
     public static String getToDoDescription() throws LackOfTaskDetail {
         if (splittedCommand.length == 1 || splittedCommand[1].equals("")) {
-            System.out.println("yes");
             throw new LackOfTaskDetail("    > no task detail!" + System.lineSeparator() + ": ");
         }
         return splittedCommand[1];
     }
 
-    public static String[] getTaskWithTime(String taskType) throws LackOfTaskDetail {
+    private static String[] splitTime(String tasktype) throws LackOfTaskDetail {
         String splittedDiscription[];
         if (splittedCommand.length == 1 || splittedCommand[1].equals("")) {
             throw new LackOfTaskDetail("    > no task detail!" + System.lineSeparator() + ": ");
         }
 
-        if (taskType.equals("deadline")) {
+        if (tasktype.equals("deadline")) {
             splittedDiscription = splittedCommand[1].split(" /by ", 2);
         } else {
             splittedDiscription = splittedCommand[1].split(" /at ", 2);
         }
-
-        if (splittedDiscription.length == 1 || splittedDiscription[1].equals("")) {
-            throw new LackOfTaskDetail(
-                    "    > please enter with compelete event/deadline (description /at(or /by) time)"
-                            + System.lineSeparator() + ": ");
-        }
-
         return splittedDiscription;
+    }
+
+    public static String getTaskDetail(String tasktype) throws LackOfTaskDetail {
+        try {
+            String splittedDiscription[] = splitTime(tasktype);
+            return splittedDiscription[0];
+        } catch (LackOfTaskDetail e) {
+            throw new LackOfTaskDetail(e.getMessage());
+        }
+    }
+
+    public static Datetime getTaskTime(String tasktype) throws LackOfTaskDetail {
+        try {
+            String splittedDiscription[] = splitTime(tasktype);
+            if (splittedDiscription.length == 1 || splittedDiscription[1].equals("")) {
+                throw new LackOfTaskDetail("    > wrong task format!" + System.lineSeparator() + ": ");
+            }
+            String tasktime[] = splittedDiscription[1].split(" ");
+
+            if (tasktime.length > 1) {
+                return new Datetime(LocalDate.parse(tasktime[0]), LocalTime.parse(tasktime[1]));
+            } else {
+                System.out.println(tasktime[0]);
+                return new Datetime(LocalDate.parse(tasktime[0]));
+            }
+
+        } catch (LackOfTaskDetail e) {
+            throw new LackOfTaskDetail(e.getMessage());
+        }
     }
 
     public static boolean ParseCommand(String command, TaskList tasks, String path) {
@@ -68,9 +94,9 @@ public class Parser {
             break;
         case "mark":
             try {
-                int index = Parser.getTaskIndex(tasks.getSize());
-                tasks.markThisTask(index);
-                Ui.showMark(tasks.getDescription(index));
+                int idx = getTaskIndex(tasks.getSize());
+                tasks.markThisTask(idx);
+                Ui.showMark(tasks.getDescription(idx));
             } catch (TaskNumberOutOfRange e) {
                 System.out.print(e.getMessage());
             } catch (NumberFormatException e) {
@@ -84,9 +110,9 @@ public class Parser {
             break;
         case "unmark":
             try {
-                int index = Parser.getTaskIndex(tasks.getSize());
-                tasks.unMarkThisTask(index);
-                Ui.showUnmark(tasks.getDescription(index));
+                int idx = getTaskIndex(tasks.getSize());
+                tasks.unMarkThisTask(idx);
+                Ui.showUnmark(tasks.getDescription(idx));
             } catch (TaskNumberOutOfRange e) {
                 System.out.print(e.getMessage());
             } catch (NumberFormatException e) {
@@ -103,7 +129,7 @@ public class Parser {
             break;
         case "todo":
             try {
-                String tododetail = Parser.getToDoDescription();
+                String tododetail = getToDoDescription();
                 tasks.addToDo(tododetail);
                 Ui.showAddTask(tasks.latesttask(), tasks.getSize());
             } catch (LackOfTaskDetail e) {
@@ -117,11 +143,12 @@ public class Parser {
             break;
         case "deadline":
         case "event": {
-            String[] taskDetail = {};
             try {
-                taskDetail = Parser.getTaskWithTime(commandType);
-                tasks.addTaskWithTime(taskDetail, commandType);
+                tasks.addTaskWithTime(getTaskDetail(commandType), getTaskTime(commandType), commandType);
                 Ui.showAddTask(tasks.latesttask(), tasks.getSize());
+            } catch (DateTimeParseException e) {
+                System.out.println("Time format wrong!");
+                System.out.println("correct format is yyyy-MM-dd hh:mm (time can be ommitted)");
             } catch (LackOfTaskDetail e) {
                 System.out.print(e.getMessage());
             }
@@ -134,13 +161,13 @@ public class Parser {
             break;
         case "delete":
             try {
-                int index = Parser.getTaskIndex(tasks.getSize());
-                Ui.showDelete(tasks.getDescription(index), tasks.getSize());
-                tasks.deleteThisTask(index);
+                int idx = getTaskIndex(tasks.getSize());
+                Ui.showDelete(tasks.getDescription(idx), tasks.getSize());
+                tasks.deleteThisTask(idx);
             } catch (TaskNumberOutOfRange e) {
                 System.out.print(e.getMessage());
             } catch (NumberFormatException e) {
-                System.out.print("   > Please enter a valid NUMBER!");
+                System.out.println("   > Please enter a valid NUMBER!");
             }
             try {
                 Storage.autoSave(tasks.fullList(), path);
