@@ -62,6 +62,7 @@ public class Rica {
      */
     public void start() {
         this.getTextUi().printWelcomeMessage();
+        this.getTaskManager().initialise();
         try {
             this.runCommands();
         } catch (RicaException exception) {
