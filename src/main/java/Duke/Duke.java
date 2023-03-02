@@ -6,18 +6,26 @@ import Duke.Exception.NoTaskException;
 import Duke.Exception.TaskInfoException;
 
 import java.io.FileWriter;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.File;
 import java.io.IOException;
 //import java.io.FileInputStream;
 //import java.io.ObjectInputStream;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.io.BufferedReader;
 import java.io.FileReader;
 
 public class Duke {
     //    private static int taskCount = 0;
     private static ArrayList<Task> tasks = new ArrayList<>();
+
+    private static DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
+    private static DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("MMM dd yyyy HHmm");
 
     private static final String dividingLine = "\n————————————————————————————————————————————————————————\n";
 
@@ -37,6 +45,7 @@ public class Duke {
         System.out.println("Now you have " + tasks.size() + " tasks in the list.");
         System.out.println(dividingLine);
     }
+
 
     public static void processTask(String line) throws DukeException, TaskInfoException, MarkIndexException, NoTaskException {
         if (line.equals("list")) {
@@ -82,21 +91,24 @@ public class Duke {
             if (line.substring(line.indexOf("/by ") + 4).length() == 0) {
                 throw new TaskInfoException();
             }
+            String deadlineTimeStr = line.split("/by ")[1];
+            LocalDateTime deadlineTime = LocalDateTime.parse(deadlineTimeStr, inputFormatter);
+            String deadlineFormatted = deadlineTime.format(outputFormatter);
             addTask(new Deadline(line.substring(0, line.indexOf(" /")),
-                    line.substring(line.indexOf("/by ") + 4)));
+                    deadlineFormatted));
         } else if (line.contains("event")) {
             line = line.replace("event ", "");
             if (line.substring(line.indexOf("/to ") + 4).length() == 0) {
                 throw new TaskInfoException();
             }
-            addTask(new Event(line.substring(0, line.indexOf(" /")),
-                    line.substring(line.indexOf("/from ") + 6, line.indexOf(" /to",
-                            line.indexOf("/from") - 1)),
-                    line.substring(line.indexOf("/to ") + 4)));
-        } else if (line.contains("find")) {
-            line = line.replace("find ", "");
-            String keyword = line;
-            keywordSearch(keyword);
+            String eventFromStr = line.split("/from ")[1].split(" /to ")[0];
+            LocalDateTime eventFrom = LocalDateTime.parse(eventFromStr, inputFormatter);
+            String eventFromFormatted = eventFrom.format(outputFormatter);
+            String eventToStr = line.split("/from ")[1].split(" /to ")[1];
+            LocalDateTime eventToTime = LocalDateTime.parse(eventToStr, inputFormatter);
+            String eventToFormatted = eventToTime.format(outputFormatter);
+
+            addTask(new Event(line.substring(0, line.indexOf(" /")), eventFromFormatted, eventToFormatted));
         } else {
 //            tasks[taskCount] = new Task(line);
             throw new DukeException();
