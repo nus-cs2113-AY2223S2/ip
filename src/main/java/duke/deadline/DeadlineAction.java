@@ -27,11 +27,12 @@ public class DeadlineAction {
         try {
             String[] attributes = parameters.split(" /by ", 2);
             String description = attributes[0];
-            String datemark = attributes[1];
+            String dateMarkString = attributes[1];
 
-            CommandAction.areValidParameters(new String[] {description, datemark});
+            CommandAction.areValidParameters(new String[] {description, dateMarkString});
 
-            Item newDeadline = new Deadline(description, LocalDateTime.parse(datemark, formatter));
+            LocalDateTime datemark = LocalDateTime.parse(dateMarkString, formatter);
+            Item newDeadline = new Deadline(description, datemark);
 
             MessageAction.printAddItemMessage(newDeadline, itemsSize + 1);
             return newDeadline;

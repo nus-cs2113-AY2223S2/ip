@@ -24,6 +24,7 @@ public enum Message {
     ERROR_TODO_MISSING_PARAMETER("Parameters contain missing fields. Example: todo to eat"),
     ERROR_DEADLINE_MISSING_PARAMETER("Parameters contain missing fields. Example: deadline to eat /by 20-10-2020 18:00"),
     ERROR_EVENT_MISSING_PARAMETER("Parameters contain missing fields. Example: event to eat /from 20-10-2020 12:00 /to 20-10-2020 15:00"),
+    ERROR_EVENT_DATE_BEFORE("You cannot have a '/to' Date Time that is before the '/from' Date Time."),
     ERROR_FIND_MISSING_PARAMETER("Please specify your keyword. Example: find eat"),
 
     SUCCESS_LOADED_FILE("Data file " + Constants.FILE_NAME + " has been loaded successfully."),

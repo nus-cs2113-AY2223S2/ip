@@ -20,7 +20,7 @@ public class EventAction {
      * @param parameters Gets the description and from/to of the item.
      * @param itemsSize Total size of the items list. Use for printing add message.
      * @return Item object (Subclass Event) which will be added into the list in .
-     * @throws Exception when there are missing parameters or areValidParameters check fails.
+     * @throws Exception when there are missing parameters, areValidParameters check fails, or Date from is after Date to.
      */
     public static Item addEvent(String parameters, int itemsSize) throws Exception {
         try {
@@ -28,15 +28,24 @@ public class EventAction {
             String description = attributes[0];
             
             attributes = attributes[1].split(" /to ", 2);
-            String from = attributes[0];
-            String to = attributes[1];
+            String fromString = attributes[0];
+            String toString = attributes[1];
 
-            CommandAction.areValidParameters(new String[] {description, from, to});
+            CommandAction.areValidParameters(new String[] {description, fromString, toString});
 
-            Item newEvent = new Event(description, LocalDateTime.parse(from, formatter), LocalDateTime.parse(to, formatter));
+            // Check if date from is after date to
+            LocalDateTime from = LocalDateTime.parse(fromString, formatter);
+            LocalDateTime to = LocalDateTime.parse(toString, formatter);
+            if (from.isAfter(to)) {
+                throw new DukeException();
+            } 
+
+            Item newEvent = new Event(description, from, to);
 
             MessageAction.printAddItemMessage(newEvent, itemsSize + 1);
             return newEvent;
+        } catch (DukeException err) {
+            throw new DukeException(Message.ERROR_EVENT_DATE_BEFORE.toString());
         } catch (Exception err) {
             throw new DukeException(Message.ERROR_EVENT_MISSING_PARAMETER.toString());
         }
