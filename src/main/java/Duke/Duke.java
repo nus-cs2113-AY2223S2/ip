@@ -290,6 +290,9 @@ public class Duke{
                 index--;
                 Storage.writeToFile(lists,index);
                 break;
+            case "find":
+                TaskList.findTask(lists,input[1],index);
+                break;
             case "list":
                 Ui.printList(lists,index);
                 break;

@@ -67,7 +67,10 @@ public class TaskList {
             String number = command[1];
             int markIndex = Integer.parseInt(number);
             list[markIndex - 1].isDone = true;
-            //writeToFile(relativePath, list, index);
+            System.out.println("--------------------------------");
+            System.out.println("Nice! I've marked this task as done:");
+            System.out.println("\t" + list[markIndex-1].toString());
+            System.out.println("--------------------------------");
         } catch (NumberFormatException e) {
             System.out.println("Oops! Mark should be followed by a number. " +
                     "(A valid index number should be separated by a space after the mark)");
@@ -85,7 +88,10 @@ public class TaskList {
             String number = command[1];
             int unMarkIndex = Integer.parseInt(number);
             list[unMarkIndex - 1].isDone = false;
-            //writeToFile(relativePath, lists, index);
+            System.out.println("--------------------------------");
+            System.out.println("Nice! I've marked this task as not done yet:");
+            System.out.println("\t" + list[unMarkIndex-1].toString());
+            System.out.println("--------------------------------");
         } catch (NumberFormatException e) {
             System.out.println("Oops! Unmark should be followed by a number. " +
                     "(A valid index number should be separated by a space after the unmark)");
@@ -95,6 +101,23 @@ public class TaskList {
         } catch (NullPointerException e) {
             System.out.println("Oops! Unmark index out of bound! " +
                     "(A valid index number should be separated by a space after the unmark)");
+        }
+    }
+    public static void findTask(Task[] list,String whatToFind, int index){
+        boolean contain=false;
+        for(int i=0;i<index;i++){
+            if(list[i].toString().substring(6).contains(whatToFind)){
+                System.out.println("--------------------------------");
+                System.out.println("Here are the matching tasks in your list:");
+                System.out.println("\t" + list[i].toString());
+                System.out.println("--------------------------------");
+                contain=true;
+            }
+        }
+        if(!contain){
+            System.out.println("--------------------------------");
+            System.out.println("Sorry I don't find any content related in the list.");
+            System.out.println("--------------------------------");
         }
     }
 }
