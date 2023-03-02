@@ -81,4 +81,24 @@ public class TaskList {
         System.out.println("Roger that! This task is marked as not done: ");
         System.out.println(taskList.get(taskIndex - 1).toString());
     }
+    public static void findTask(String line) {
+        String query = line.substring(4).trim();
+        ArrayList<Task> matchList = new ArrayList<>();
+        for (Task task : taskList) {
+            if (task.getDescription().contains(query)) {
+                matchList.add(task);
+            }
+        }
+        if (!matchList.isEmpty()) {
+            Ui.taskFoundMessage();
+            for (Task task : matchList) {
+                int i = matchList.indexOf(task);
+                System.out.print(i + 1);
+                System.out.print(". ");
+                System.out.println(task.toString());
+            }
+        } else {
+            Ui.taskNotFoundMessage();
+        }
+    }
 }
