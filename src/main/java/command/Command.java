@@ -1,8 +1,12 @@
-import Exceptions.IncompleteInputException;
-import Tasks.Deadline;
-import Tasks.Event;
-import Tasks.TaskList;
-import Tasks.ToDo;
+package command;
+
+import exceptions.IncompleteInputException;
+import parser.Parser;
+import tasks.Deadline;
+import tasks.Event;
+import tasks.TaskList;
+import tasks.ToDo;
+import ui.Ui;
 
 public class Command {
     private final CommandType type;
@@ -102,8 +106,7 @@ public class Command {
             }
             break;
         case FIND:
-            System.out.println("Feature to be implemented in next Level.");
-            Ui.showLine();
+            System.out.println("\nFeature to be implemented in next Level.\n");
             break;
         case HELP:
             Ui.showHelp();

@@ -1,10 +1,10 @@
-package Storage;
-import Exceptions.FileParseReadingException;
-import Tasks.Deadline;
-import Tasks.Event;
-import Tasks.TaskList;
-import Tasks.ToDo;
-import Tasks.Task;
+package storage;
+import exceptions.FileParseReadingException;
+import tasks.Deadline;
+import tasks.Event;
+import tasks.TaskList;
+import tasks.ToDo;
+import tasks.Task;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

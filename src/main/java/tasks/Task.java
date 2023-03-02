@@ -1,6 +1,4 @@
-package Tasks;
-
-import javax.swing.plaf.PanelUI;
+package tasks;
 
 public class Task {
 

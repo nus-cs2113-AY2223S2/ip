@@ -1,4 +1,8 @@
-import Exceptions.IncompleteInputException;
+package parser;
+
+import exceptions.IncompleteInputException;
+import command.Command;
+import command.CommandType;
 
 public class Parser {
     public static Command parseCommands(String line) {

@@ -1,5 +1,8 @@
-import Tasks.TaskList;
-import Storage.Storage;
+import tasks.TaskList;
+import storage.Storage;
+import command.Command;
+import parser.Parser;
+import ui.Ui;
 
 public class Duke {
 
@@ -20,6 +23,7 @@ public class Duke {
 
     public void run() {
         Ui.showWelcome();
+        Ui.showLine();
         boolean isExit = false;
         while (!isExit) {
             try {

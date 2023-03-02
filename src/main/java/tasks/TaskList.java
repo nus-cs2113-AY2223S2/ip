@@ -1,6 +1,6 @@
-package Tasks;
+package tasks;
 
-import Exceptions.TaskListEmptyError;
+import exceptions.TaskListEmptyError;
 
 import java.util.ArrayList;
 
