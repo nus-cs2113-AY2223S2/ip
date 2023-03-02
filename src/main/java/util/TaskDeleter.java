@@ -18,6 +18,8 @@ public class TaskDeleter extends ErrorMessages {
     /**
      * Takes in input for a delete command and deletes accordingly
      * Handles index out of taskList bounds or incorrect input (e.g. input as String)
+     * @param  listOfTasks contains the list of tasks to delete a task from
+     * @param input Contains the index for deletion. Throws error otherwise
      */
     public void attemptToDeleteTask(ArrayList<Task> listOfTasks, String input) {
         String[] deleteActions = (input.split(BLANK, CORRECT_INPUT_FORMAT));
@@ -52,6 +54,14 @@ public class TaskDeleter extends ErrorMessages {
         }
     }
 
+
+    /**
+     *
+     * @param taskList Delete a task from this list. Only bringing the tasklist in for it's size here
+     * @param indexToDelete Connotates which task to delete
+     * @return Returns true if the mark index is within the size of the tasklist
+     * @throws DeleteTaskError
+     */
     private boolean verifyMarkAction(ArrayList<Task> taskList, int indexToDelete) throws DeleteTaskError {
         if (taskList.size() == ZERO) {
             throw new DeleteTaskError(errorEmptyListText());
