@@ -23,9 +23,7 @@ public class Task {
     public void markAsUnDone() {
         isDone = false;
     }
-    public LocalDate getBy() {
-        return null;
-    }
+    public String getBy() { return ""; }
     public String getTo() { return ""; }
     public String getFrom() { return ""; }
 
