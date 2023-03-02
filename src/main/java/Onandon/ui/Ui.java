@@ -16,6 +16,7 @@ public class Ui {
     public static final String unmark = "\t OK, I've marked this task as not done yet:";
     public static final String list = "\t Here are the tasks in your list:";
     public static final String delete = "\t Noted. I've removed this task:";
+    public static final String find = "\tHere are the matching tasks in your list:";
 
 
     // Prints underline : ----------------------------
@@ -47,6 +48,11 @@ public class Ui {
     public static void printDelete(){
         printUnderline();
         System.out.println(delete);
+    }
+
+    public static void printFind(){
+        printUnderline();
+        System.out.println(find);
     }
 
     // Greeting
