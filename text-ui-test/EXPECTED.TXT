@@ -1,7 +1,62 @@
-Hello from
- ____        _        
-|  _ \ _   _| | _____ 
-| | | | | | | |/ / _ \
-| |_| | |_| |   <  __/
-|____/ \__,_|_|\_\___|
+Hello! I'm SAGE, the knowledgeable one
+What can I do for you today?
 
+Got it. I've added this task:
+[T][ ] return books
+Now you have 1 tasks in the list
+Got it. I've added this task:
+[T][ ] return laundry
+Now you have 2 tasks in the list
+*****************************
+Here are the tasks in your list:
+1.[T][ ] return books
+2.[T][ ] return laundry
+*****************************
+Got it. I've added this task:
+[D][ ] assignment 1 (by: Next monday)
+Now you have 3 tasks in the list
+Got it. I've added this task:
+[D][ ] lab 10 (by: Next tues)
+Now you have 4 tasks in the list
+*****************************
+Here are the tasks in your list:
+1.[T][ ] return books
+2.[T][ ] return laundry
+3.[D][ ] assignment 1 (by: Next monday)
+4.[D][ ] lab 10 (by: Next tues)
+*****************************
+I don't understand what you mean, please try again!
+I don't understand what you mean, please try again!
+Got it. I've added this task:
+[E][ ] funfair 1 (from: 21 jan  to: 4 feb)
+Now you have 5 tasks in the list
+Got it. I've added this task:
+[E][ ] fund raising (from: 30 feb  to: 31 mar)
+Now you have 6 tasks in the list
+*****************************
+Here are the tasks in your list:
+1.[T][ ] return books
+2.[T][ ] return laundry
+3.[D][ ] assignment 1 (by: Next monday)
+4.[D][ ] lab 10 (by: Next tues)
+5.[E][ ] funfair 1 (from: 21 jan  to: 4 feb)
+6.[E][ ] fund raising (from: 30 feb  to: 31 mar)
+*****************************
+Nice! I've marked this task as done:
+[X] assignment 1
+Nice! I've marked this task as done:
+[X] funfair 1
+Uh-oh! Task Not Found!
+Task already marked as not completed!
+OK, I've marked this task as not done yet:
+[ ] assignment 1
+Task already marked as completed!
+*****************************
+Here are the tasks in your list:
+1.[T][ ] return books
+2.[T][ ] return laundry
+3.[D][ ] assignment 1 (by: Next monday)
+4.[D][ ] lab 10 (by: Next tues)
+5.[E][X] funfair 1 (from: 21 jan  to: 4 feb)
+6.[E][ ] fund raising (from: 30 feb  to: 31 mar)
+*****************************
