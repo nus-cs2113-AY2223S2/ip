@@ -5,19 +5,25 @@ import task.Todo;
 import ui.Ui;
 import utils.Storage;
 
-import java.io.IOException;
 
+/**
+ *  Command for adding a todo task.
+ *  Format: todo [description]
+ */
 public class TodoCommand extends Command{
     protected String todoString;
     public TodoCommand(String todoString){
         this.todoString = todoString;
     }
 
-    void checkTodoString(String todoString){
+    /* Check whether input is null */
+    private void checkTodoString(String todoString){
         if(todoString == null){
             throw new NullPointerException();
         }
     }
+
+    @Override
     public void execute(TaskList tasks, Ui ui, Storage storage){
         try {
             checkTodoString(todoString);
@@ -30,7 +36,7 @@ public class TodoCommand extends Command{
         tasks.add(newTodoObject);
         storage.addNewObjectToFile(newTodoObject, ui);
 
-        ui.showTodoTask(newTodoObject, tasks);
+        ui.showTodoTaskDone(newTodoObject, tasks);
     }
 
     public boolean isExit(){

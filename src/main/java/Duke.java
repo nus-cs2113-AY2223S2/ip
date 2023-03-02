@@ -1,22 +1,12 @@
 import command.Command;
-import exceptions.DeadlineParamsFormatException;
-import exceptions.EventParamsFormatException;
 import exceptions.FileLineParseException;
-import exceptions.TaskIndexNotFoundException;
 import task.*;
 import parser.Parser;
 import ui.Ui;
-import utils.DukeFileReader;
-import utils.DukeFileWriter;
 import utils.Storage;
 
 
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.*;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 
 public class Duke {
 
@@ -24,6 +14,11 @@ public class Duke {
     private TaskList tasks;
     private Storage storage;
 
+    /**
+     * Initialize the task list from the local file. If there's no local file,
+     * or cannot parse the local file, create a new empty task list.
+     * @param filePath The path of the local file which saves the past tasks.
+     */
     private Duke(String filePath){
         ui = new Ui();
         storage = new Storage(filePath);
@@ -38,6 +33,9 @@ public class Duke {
         }
     }
 
+    /**
+     * Read user's command, parse them into command objects and execute them.
+     */
     private void run(){
         ui.showWelcome();
         boolean isExit = false;
@@ -59,28 +57,4 @@ public class Duke {
         new Duke("Data/duke.txt").run();
     }
 
-
-//    static ArrayList<Task> tasksList = new ArrayList<Task>();
-//
-//    static String filePath = "Data/duke.txt";
-//    static DukeFileReader dukeFileReader = new DukeFileReader(filePath);
-//    static DukeFileWriter dukeFileWriter = new DukeFileWriter(filePath);
-
-
-//    public static void main2(String[] args) {
-//        sendLogo();
-//        sendGreeting();
-//
-//        String initialInfo = initializeTaskFromFile(dukeFileReader);
-//        showResultToUser(initialInfo);
-//
-//        while(true){
-//            String userCommand = getUserInput();
-//            if(userCommand.toLowerCase().equals("bye")){
-//                break;
-//            }
-//            String feedback = executeCommand(userCommand);
-//            showResultToUser(feedback);
-//        }
-//    }
 }

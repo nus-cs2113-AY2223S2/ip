@@ -4,6 +4,9 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
+/**
+ * Object of a deadline task, includes: a description and a 'by' time.
+ */
 public class Deadline extends Task {
     protected String by;
     protected LocalDate byDate;

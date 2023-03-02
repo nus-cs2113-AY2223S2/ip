@@ -2,6 +2,9 @@ package task;
 
 import java.util.ArrayList;
 
+/**
+ * Object of a tasklist, contains all types of tasks.
+ */
 public class TaskList extends ArrayList<Task>{
     protected ArrayList<Task> tasks = new ArrayList<>();
     public TaskList(){

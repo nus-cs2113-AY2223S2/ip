@@ -11,33 +11,41 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * A tool for reading local file into the task list.
+ */
 public class DukeFileReader {
-    String filePath;
+    private String filePath;
     public DukeFileReader(String filePath){
         this.filePath = filePath;
     }
+
+    /**
+     * Read the local file into the task list.
+     * @return An array list containing all the task.
+     * @throws FileNotFoundException Did not find the local file.
+     * @throws FileLineParseException Confront errors when parsing the file.
+     */
     public ArrayList<Task> readFileToTaskList() throws FileNotFoundException, FileLineParseException {
         File f = new File(filePath);
-        //System.out.println("Reading file to taskList...");
         Scanner s = new Scanner(f);
 
         ArrayList<Task>tasksList = new ArrayList<>();
         while(s.hasNext()){
             Task taskAdd = parseLineToTask(s.nextLine());
-            //System.out.println("New task = "+ taskAdd.toString());
             tasksList.add(taskAdd);
         }
         return tasksList;
     }
 
-    /*
-    * Format:
-    * A | isDone | [description]
-    * T | isDone | [description]
-    * D | isDone | [description] | [Deadline]
-    * E | isDone | [description] | [from] | [to]
-    * */
 
+    /**
+     * Function for parsing a line in the local file to a task object.
+     * You can find the format of the lines in the local file in DukeFileWriter.java
+     * @param fileLine A line in the local file.
+     * @return A task object converted from the line.
+     * @throws FileLineParseException
+     */
     private Task parseLineToTask(String fileLine) throws FileLineParseException {
         //[have not done] : magic numbers
         String[] words = fileLine.split("\\|");

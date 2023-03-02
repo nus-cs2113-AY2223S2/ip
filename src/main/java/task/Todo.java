@@ -1,5 +1,8 @@
 package task;
 
+/**
+ * Object of a todo task, includes: a description.
+ */
 public class Todo extends Task {
     public Todo(String description){
         super(description);

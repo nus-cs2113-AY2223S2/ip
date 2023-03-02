@@ -4,6 +4,10 @@ import task.TaskList;
 import ui.Ui;
 import utils.Storage;
 
+/**
+ *  Command for listing tasks in tasklist
+ *  Format: list
+ */
 public class ListCommand extends Command{
     public boolean isExit(){
         return false;
