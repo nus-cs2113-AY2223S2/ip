@@ -13,4 +13,8 @@ public class Ui {
     System.out.println("How can i help u? \n");
   }
 
+  public void goodbye_user() {
+    System.out.println("Goodbye. Hope to see u again :) \n");
+  }
+
 }

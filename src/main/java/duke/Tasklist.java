@@ -24,7 +24,7 @@ public class Tasklist {
     System.out.println("You now have " + counter + " tasks in the list.");
   }
 
-  public static void Todo(String description) {
+  public static void todo(String description) {
     try {
       Tasks t = new ToDo(description);
       listOfTasks.add(t);

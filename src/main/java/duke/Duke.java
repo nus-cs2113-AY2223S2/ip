@@ -1,7 +1,5 @@
 package duke;
 
-import java.util.Scanner;
-
 public class Duke {
 
     public static void main(String[] args) {
@@ -9,14 +7,12 @@ public class Duke {
         ui.greet_user();
         Tasklist.findFile();
 
-        Scanner scan = new Scanner(System.in);
-        String input = scan.nextLine();
-        String[] command = input.split(" ", 2);
+        String[] command = Parser.getCommand();
 
-        while (!"bye".equals(input)) {
+        while (!"bye".equals(command[0])) {
             switch (command[0]) {
                 case "todo":
-                    Tasklist.Todo(command[1]);
+                    Tasklist.todo(command[1]);
                     break;
                 case "deadline":
                     String[] d = command[1].split("/by", 2);
@@ -54,12 +50,10 @@ public class Duke {
                     System.out.println("There was an error. Please try again");
                     break;
             }
-            input = scan.nextLine();
-            command = input.split(" ", 2);
+            command = Parser.getCommand();
         }
 
-        System.out.println("Goodbye. Hope to see u again :) \n");
-        scan.close();
+        ui.goodbye_user();
         Tasklist.saveFile();
     }
 
