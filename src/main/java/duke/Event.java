@@ -2,15 +2,32 @@ package duke;
 
 public class Event extends Task {
 
-    private String date;
+    protected String fromDate;
+    protected String toDate;
 
-    public Event(String description, String date, boolean isDone) {
+    public Event(String description, String fromDate, String toDate, boolean isDone) {
         super(description, isDone);
-        this.date = date;
+        this.fromDate = fromDate;
+        this.toDate = toDate;
+    }
+
+    public String getTaskType() {
+        return "E";
+    }
+
+    public String getFromDate() {
+        return fromDate;
+    }
+
+    public String getToDate() {
+        return toDate;
     }
 
     @Override
     public String toString() {
-        return "[E]" + super.toString() + "(" + date + ")" ;
+        // String[] dates =  description.split("/from | /to");
+        // String fromDate = dates[1];
+        // String toDate = dates[2];
+        return "[E]" + super.toString() + " (from: " + fromDate + " to: " + toDate + ")" ;
     }
 }

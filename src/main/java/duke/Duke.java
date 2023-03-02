@@ -1,5 +1,7 @@
 package duke;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.io.File;
@@ -17,6 +19,7 @@ public class Duke {
     public static final String MARK = "mark";
     public static final String UNMARK = "mark";
     public static final String DELETE = "delete";
+    public static final String FILE_PATH = "src/main/duke.txt";
 
 
 
@@ -25,9 +28,25 @@ public class Duke {
         printStartMessage();
         // setup bot
         setup();
-        loadTaskData();
+        try {
+            createFile();
+            loadSavedTasksFile();
+        } catch (FileNotFoundException exception){
+            System.out.println("File not found.");
+        }
         // run bot (decode task)
         run();
+    }
+
+    public static void createFile() {
+        File savedTasksFile = new File(FILE_PATH);
+        if (!savedTasksFile.exists()) {
+            try {
+                savedTasksFile.createNewFile();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     public static void printStartMessage() {
@@ -68,13 +87,14 @@ public class Duke {
 
     public static void addDeadline(String taskDescription, boolean isDone) {
         int bySize = 3;
+        String description = taskDescription.substring(0, taskDescription.indexOf("by") - 2);
         String by = taskDescription.substring(taskDescription.indexOf("by") + bySize);
-        Deadline newDeadline = new Deadline(taskDescription, by, isDone);
+        Deadline newDeadline = new Deadline(description, by, isDone);
         TASKS.add(newDeadline);
-        printTaskAddedMessage(newDeadline);
+        printTaskAddedMessage(newDeadline, false);
     }
 
-    public static boolean addTodo(String taskDescription, boolean isDone) {
+    public static void addTodo(String taskDescription, boolean isDone) {
         boolean exceptionPresent = true;
         try {
             if (taskDescription.length() == 0) {
@@ -82,44 +102,124 @@ public class Duke {
             } else {
                 Todo newTodo = new Todo(taskDescription, isDone);
                 TASKS.add(newTodo);
-                printTaskAddedMessage(newTodo);
-                return !exceptionPresent;
+                printTaskAddedMessage(newTodo, false);
             }
         } catch (DukeException exception) {
             System.out.println("☹ OOPS!!! The description of a todo cannot be empty.");
-            return exceptionPresent;
         }
     }
 
-    public static void addEvent(String taskDescription, String date, boolean isDone) {
-        Event newEvent = new Event(taskDescription, date, isDone);
+    public static void addEvent(String taskDescription, boolean isDone) {
+        String[] dates =  taskDescription.split("/from | /to |from: | to: ");
+        /*
+        System.out.println("start");
+        for (String s : dates) {
+            System.out.println(s);
+        }
+        System.out.println("end");
+        */
+        String description = dates[0].substring(0, dates[0].length() - 1);
+        String fromDate = dates[1];;
+        String toDate = dates[2];
+        Event newEvent = new Event(description, fromDate, toDate, isDone);
         TASKS.add(newEvent);
-        printTaskAddedMessage(newEvent);
+        printTaskAddedMessage(newEvent, false);
     }
 
-    public static void printTaskAddedMessage(Task task) {
+    public static void printTaskAddedMessage(Task task, boolean excpetionPresent) {
         System.out.println("Got it. I've added this task: ");
         System.out.println(task.toString());
-    }
-
-    public static void createTask(String taskType, String[] taskDescription) {
-        String description = String.join(" ", taskDescription).substring(taskType.length());
-        boolean exceptionPresent = false;
-        if (taskType.equals(DEADLINE)) {
-            addDeadline(description, false);
-        } else if (taskType.equals(TODO)) {
-            exceptionPresent = addTodo(description, false);
-        } else if (taskType.equals(EVENT)) {
-            String[] dates =  description.split("/from | /to ");
-            String fromDate = dates[1];
-            String toDate = dates[2];
-            addEvent(description, fromDate + "-" + toDate, false);
-        }
-        if (!exceptionPresent) {
+        if (!excpetionPresent) {
             tasksI++;
             System.out.println("Now you have " + tasksI + " tasks in the list.");
         }
     }
+
+    public static void createTask(String taskType, String[] taskDescription, boolean isDone) {
+        /*
+        System.out.println("start");
+        for (String s : taskDescription) {
+            System.out.println(s);
+        }
+        System.out.println("end");
+         */
+        String description = String.join(" ", taskDescription).substring(taskType.length() + 1);
+        // System.out.println("description: " + description);
+        boolean exceptionPresent = false;
+        if (taskType.equals(DEADLINE)) {
+            addDeadline(description, isDone);
+        } else if (taskType.equals(TODO)) {
+            addTodo(description, isDone);
+        } else if (taskType.equals(EVENT)) {
+            addEvent(description, isDone);
+        }
+    }
+
+
+    // src: https://www.w3schools.com/java/java_files_create.asp
+    public static void saveTaskToFile() throws IOException {
+        FileWriter writer = new FileWriter(FILE_PATH);
+        writer.write(formatFile());
+        writer.close();
+    }
+
+    public static String formatFile () {
+        String formattedList = "";
+        for (int i = 1; i <= tasksI; i++) {
+            Task task = TASKS.get(i);
+            String taskType = task.getTaskType();
+            String taskStatus = task.getStatusIcon();
+            String taskDescription = task.getDescription();
+            if (taskStatus.equals("X")) {
+                taskStatus = "1";
+            } else {
+                taskStatus = "0";
+            }
+            if (taskType.equals("T")) {
+                formattedList += taskType + " | " + taskStatus + " | " + taskDescription + System.lineSeparator();
+            } else if (taskType.equals("D")){
+                Deadline deadline = (Deadline) task;
+                formattedList += taskType + " | " + taskStatus + " | " + taskDescription + " | " + deadline.getDeadline() + System.lineSeparator();
+            } else {
+                Event event = (Event) task;
+                formattedList += taskType + " | " + taskStatus + " | " + taskDescription + " | from: " + event.getFromDate() + " to: " + event.getToDate() + System.lineSeparator();
+            }
+        }
+        return formattedList;
+    }
+
+    public static void loadSavedTasksFile() throws FileNotFoundException {
+        File savedTasksFile = new File(FILE_PATH);
+        if (savedTasksFile.exists()) {
+            Scanner scanner = new Scanner(savedTasksFile);
+            while (scanner.hasNext()) {
+                String task = scanner.nextLine();
+                String[] splitTask = task.split(" \\| ");
+                /*
+                System.out.println("start");
+                for (String s : splitTask) {
+                    System.out.println(s);
+                }
+                System.out.println("end");
+                 */
+                addFileDataToList(splitTask);
+            }
+        }
+    }
+
+    public static void addFileDataToList(String[] input) {
+        boolean isDone = Boolean.parseBoolean(input[1]);
+        if (input[0].equals("T") || input[0].equals("D") || input[0].equals("E")) {
+            if (input[0].equals("T")) {
+                addTodo(input[2], isDone);
+            } else if (input[0].equals("D")) {
+                addDeadline(input[2] + " /by " + input[3], isDone);
+            } else {
+                addEvent( input[2] + " " + input[3], isDone);
+            }
+        }
+    }
+
 
     public static void deleteTask(Task task) {
         TASKS.remove(task);
@@ -127,38 +227,6 @@ public class Duke {
         System.out.println(task.toString());
         tasksI--;
         System.out.println("Now you have " + tasksI + " tasks in the list.");
-    }
-
-    public static void loadTaskData() {
-        try {
-            File tasks = new File("saved/duke.txt");
-            Scanner tasksList = new Scanner(tasks);
-            while (tasksList.hasNext()) {
-                String[] currentTask = tasksList.nextLine().split(";");
-                String taskType = currentTask[0];
-                boolean isTaskDone = false;
-                if (currentTask[1].equals(" 1 ")) {
-                    isTaskDone = true;
-                }
-                String taskDescription = currentTask[2];
-                if (taskType.equals("t ")) {
-                    Todo newTodo = new Todo(taskDescription, isTaskDone);
-                    TASKS.add(newTodo);
-                } else if (taskType.equals("d ") || taskType.equals("e ")) {
-                    String date = currentTask[3].substring(1);
-                    if (taskType.equals("d" )) {
-                        Deadline newDeadline = new Deadline(taskDescription, date, isTaskDone);
-                        TASKS.add(newDeadline);
-                    } else {
-                        Event newEvent = new Event(taskDescription, date, isTaskDone);
-                        TASKS.add(newEvent);
-                    }
-                }
-                tasksI++;
-            }
-        } catch (FileNotFoundException exception) {
-            System.out.println("File not found!");
-        }
     }
 
     public static void run() {
@@ -179,7 +247,7 @@ public class Duke {
                     unmarkTask(taskToUnmark);
                 // a task
                 } else if (input[0].equals(DEADLINE) || input[0].equals(TODO) || input[0].equals(EVENT)) {
-                    createTask(input[0], input);
+                    createTask(input[0], input, false);
                 // delete a task
                 } else if (input[0].equals(DELETE)) {
                     Task taskToDelete = TASKS.get(Integer.parseInt(input[1]));
@@ -190,10 +258,20 @@ public class Duke {
             } catch (DukeException exception) {
                 System.out.println("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
             }
+
+            try {
+                saveTaskToFile();
+            } catch (IOException e) {
+                System.out.println("I/O Error!");
+            }
+
             input = scan.nextLine().split(" ");
         }
         System.out.println("Bye. Hope to see you again soon!");
     }
+
+
+
 }
 
 

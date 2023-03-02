@@ -4,6 +4,7 @@ public class Task {
 
     protected String description;
     protected boolean isDone;
+    protected String taskType;
 
     public Task(String description, boolean isDone) {
         this.description = description;
@@ -25,10 +26,14 @@ public class Task {
     public String getDescription() {
         return this.description;
     }
+
+    public String getTaskType() {
+        return taskType;
+    }
     
     public String toString() {
-        String[] command =  description.split("/");
-        return "[" + getStatusIcon() + "]"  + command[0];
+        String[] command =  description.split("/ | :");
+        return "[" + getStatusIcon() + "] "  + command[0];
     }
 
 }

@@ -7,6 +7,10 @@ public class Todo extends Task {
         super(description,isDone);
     }
 
+    public String getTaskType() {
+        return "T";
+    }
+
     @Override
     public String toString() {
         return "[T]" + super.toString();
