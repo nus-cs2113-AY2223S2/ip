@@ -160,7 +160,7 @@ Here are the matching tasks in your list:
 ________________________________________________________________
 ```
 
-### `bye` - Exist Duke.
+### `bye` - Exit Duke.
 
 **Expected usage:**
 
