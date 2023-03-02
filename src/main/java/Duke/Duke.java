@@ -1,5 +1,13 @@
+package Duke;
+
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import Commands.PrintCommands;
+import Commands.TaskCommand;
+import Commands.FileCommands;
+
+import java.io.IOException;
 
 import Exceptions.InvalidTaskDescription;
 import Exceptions.InvalidTaskNumberException;
@@ -8,7 +16,7 @@ import Exceptions.NullCommandException;
 import Tasks.Task;
 
 public class Duke {
-    public static void main(String[] args) throws NullCommandException, InvalidTaskDescription {
+    public static void main(String[] args) throws NullCommandException, InvalidTaskDescription, IOException {
 
         PrintCommands.printWelcomeMessage();
 
@@ -18,6 +26,8 @@ public class Duke {
 
         Scanner scan = new Scanner(System.in);
 
+        FileCommands.readFileData(taskList); //read past task data
+
         while (!isExit) {
             try {
                 String input = scan.nextLine();
@@ -26,8 +36,9 @@ public class Duke {
                 switch (command[0]) {
 
                     case "bye":
-                        // terminate clom, print goodbye message
+                        // terminate clom, print goodbye message, save tasks
                         isExit = true;
+                        FileCommands.saveFile(taskList);
                         PrintCommands.printExitMessage();
                         System.exit(0);
 
@@ -60,7 +71,7 @@ public class Duke {
                         PrintCommands.printHelp();
                         break;
 
-                    case "delete" :
+                    case "delete":
                         TaskCommand.deleteTask(taskList, command, TaskCommand.getTaskIndex(command, taskList));
                         break;
 
@@ -78,5 +89,6 @@ public class Duke {
                 System.err.println("Task description is missing. Try again.");
             }
         }
+        scan.close();
     }
 }

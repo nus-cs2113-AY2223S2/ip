@@ -1,3 +1,4 @@
+package Commands;
 import java.util.ArrayList;
 
 import Exceptions.InvalidTaskDescription;
@@ -58,7 +59,7 @@ public class TaskCommand {
             throw new MissingDescriptionException(null);
         }
         String[] deadlineCommand = command[1].split(" /by", 2);
-
+        
         String deadlineDescription = deadlineCommand[0]; // Get description of the user input
         String byDate = deadlineCommand[1]; // Deadline of the user input
         taskList.add(new Deadline(deadlineDescription, byDate)); // Add the new deadline to the arraylist

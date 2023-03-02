@@ -18,4 +18,10 @@ public class Deadline extends Task {
     public String getDescription() {
         return "[D]" + getStatusIcon() + super.getDescription() + " (by: " + by + ")";
     }
+
+    @Override
+    public String formatTask() {
+        String saveString = "D" + "|" + super.formatTask() + "|" + by;
+        return saveString;
+    }
 }
