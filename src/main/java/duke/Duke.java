@@ -16,7 +16,7 @@ public class Duke {
     public static void main(String[] args) {
         ArrayList<Task> tasks = new ArrayList<>();
         Scanner in = new Scanner(System.in);
-        String filePath = "test11.txt";
+        String filePath = "savedTasks.txt";
 
         greeting();
         System.out.println("Attempting to retrieve your files..." + System.lineSeparator());
@@ -198,7 +198,7 @@ public class Duke {
     }
 
     public static void exitGreeting(ArrayList<Task> tasks, String filePath) {
-        initialiseWriteTasksToFile(tasks, filePath);
+        initialiseWritingToFile(tasks, filePath);
         System.out.println("Bye. Hope to see you again soon!");
         horizontalLine();
     }
@@ -229,7 +229,7 @@ public class Duke {
 
     // Copying text file contents over to tasks list
     private static void copyToList(String line, ArrayList<Task> tasks, String filePath) {
-        switch(line.substring(0,1)) {
+        switch (line.substring(0, 1)) {
         case "T":
             copyTodoToList("T", line.substring(2), tasks);
             break;
@@ -286,7 +286,7 @@ public class Duke {
         }
     }
 
-    private static void initialiseWriteTasksToFile(ArrayList<Task> tasks, String filePath) {
+    private static void initialiseWritingToFile(ArrayList<Task> tasks, String filePath) {
         try {
             FileWriter fw = new FileWriter(filePath);
             fw.write("Saved tasks: " + System.lineSeparator());
@@ -304,31 +304,33 @@ public class Duke {
         int totalNumberOfTasks = tasks.size();
         for (int index = 0; index < totalNumberOfTasks; index += 1) {
             Task currentTask = tasks.get(index);
-            String taskType = currentTask.getTaskType().substring(1,2);
+            String taskType = currentTask.getTaskType().substring(1, 2);
             String taskStatus = currentTask.getStatus();
-            int isTaskDone = taskStatus.substring(1,2).equals("X") ? 1 : 0;
+            int isTaskDone = taskStatus.substring(1, 2).equals("X") ? 1 : 0;
             String taskInfo = currentTask.getTaskInfo();
-            handleWritingSpecificTaskTypes(fwAppend, taskType, currentTask, taskStatus, isTaskDone, taskInfo);
+            writeSpecificTaskToFile(fwAppend, taskType, currentTask, taskStatus, isTaskDone, taskInfo);
         }
     }
 
-    private static void handleWritingSpecificTaskTypes(FileWriter fwAppend, String taskType, Task currentTask,
-                                                       String taskStatus, int isTaskDone, String taskInfo) throws IOException{
+    private static void writeSpecificTaskToFile(FileWriter fwAppend, String taskType, Task currentTask,
+                                                String taskStatus, int isTaskDone, String taskInfo) throws IOException {
         String additionalTaskInfo = "";
-        switch(taskType) {
+        switch (taskType) {
         case "T":
             fwAppend.write(taskType + "/" + isTaskDone + "/" + taskInfo + System.lineSeparator());
             break;
         case "D":
             Deadline currentDeadline = (Deadline) currentTask;
             additionalTaskInfo = currentDeadline.getDueInfo();
-            fwAppend.write(taskType + "/" + isTaskDone + "/" + taskInfo + "/" + additionalTaskInfo + System.lineSeparator());
+            String deadlineDetails = taskInfo + "/" + additionalTaskInfo;
+            fwAppend.write(taskType + "/" + isTaskDone + "/" + deadlineDetails + System.lineSeparator());
             break;
         case "E":
             Event currentEvent = (Event) currentTask;
             String eventStart = currentEvent.getEventStartInfo();
             String eventEnd = currentEvent.getEventEndInfo();
-            fwAppend.write(taskType + "/" + isTaskDone + "/" + taskInfo + "/" + eventStart + "/" + eventEnd +  System.lineSeparator());
+            String eventDetails = taskInfo + "/" + eventStart + "/" + eventEnd;
+            fwAppend.write(taskType + "/" + isTaskDone + "/" + eventDetails + System.lineSeparator());
             break;
         default:
             System.out.println("Unknown task type error!");
