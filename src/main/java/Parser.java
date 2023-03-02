@@ -1,6 +1,8 @@
+import java.util.ArrayList;
 
 public class Parser {
-    private boolean exit=false;
+    private boolean exit = false;
+
     public void parse(String command) {
         if (command.equalsIgnoreCase("list")) {
             System.out.println("Here are the tasks in your list:");
@@ -11,7 +13,7 @@ public class Parser {
         } else if (command.equalsIgnoreCase("bye")) {
             UI.showBye();
             Storage.save(TaskList.list);
-            this.exit=true;
+            this.exit = true;
         } else if (command.toLowerCase().contains("mark")) {
             try {
                 String[] split = command.split("\\s+");
@@ -62,12 +64,26 @@ public class Parser {
                     t = new Todo(description);
                     TaskList.taskListAdd(t);
                 }
+            } else if (command.toLowerCase().contains("find")) {
+                String substring = command.substring(command.indexOf(' ') + 1);
+                ArrayList<Task> result=new ArrayList<>();
+                for(Task k:TaskList.list){
+                    if(k.description.contains(substring)){
+                        result.add(k);
+                    }
+                }
+                System.out.println("Here are the matching tasks in your list:");
+                for(int i=0;i<result.size();i++){
+                    System.out.println(i + 1 + "." + TaskList.list.get(i).toString());
+                }
+                UI.showLine();
             } else {
                 System.out.println("☹ OOPS!!! I'm sorry, but I don't know what that means :-(" + '\n' + UI.lineBreak);
             }
         }
     }
-    public boolean isExit(){
+
+    public boolean isExit() {
         return exit;
     }
 }
