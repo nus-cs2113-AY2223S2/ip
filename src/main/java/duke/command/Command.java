@@ -32,9 +32,9 @@ public class Command {
         Duke.taskCount++;
         if (Duke.toPrint) {
             System.out.println(Ui.LINE);
-            System.out.println("\t" + "Task added!");
+            System.out.println("\t" + "task added!");
             System.out.println("\t  " + TaskList.tasks.get(Duke.taskCount - 1));
-            System.out.println("\t" + "Now you have " + Duke.taskCount + " pending tasks.");
+            System.out.println("\t" + "now you have " + Duke.taskCount + " pending tasks.");
             System.out.println(Ui.LINE);
         }
     }

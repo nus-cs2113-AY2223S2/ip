@@ -27,7 +27,7 @@ public class Ui {
     public static void printEmptyCommand(String taskType) {
         printLine();
         System.out.println("\tError! \"" + taskType + "\" command cannot be empty.");
-        System.out.println("\tPlease provide more details");
+        System.out.println("\t Please provide more details");
         printLine();
     }
 
@@ -87,7 +87,6 @@ public class Ui {
 
     /**
      * Function loops through given file and prints out each line
-     * Loops through as long as there is an available line
      *
      * @param s a file scanner to scan through the file
      */
