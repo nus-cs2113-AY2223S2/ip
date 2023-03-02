@@ -4,13 +4,16 @@ import tusky.constants.DateTime;
 import tusky.exceptions.EmptyDescriptionException;
 
 import java.time.LocalDate;
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Class that represents an event task.
+ * An event task has "from" and "to" fields to indicate when it is taking place.
+ */
 public class Event extends Task {
 
-    protected LocalDate from; // datetime as a string
-    protected LocalDate to; // datetime as a string
+    protected LocalDate from;
+    protected LocalDate to;
     public Event(String isDone, String description, String from, String to) throws EmptyDescriptionException {
         super(isDone, description);
         this.from = LocalDate.parse(from);

@@ -1,6 +1,11 @@
 package tusky.tasks;
 
 import tusky.exceptions.EmptyDescriptionException;
+
+/**
+ * Class that represents a task.
+ * A task has a description and a boolean to indicate if it is done.
+ */
 public class Task {
 
     protected TaskType taskType = TaskType.TASK;

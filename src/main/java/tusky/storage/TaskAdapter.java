@@ -18,6 +18,14 @@ public class TaskAdapter implements JsonDeserializer<Task> {
         this.ui = ui;
     }
 
+    /**
+     * Deserializes the Json data into a Task object.
+     * @param json The Json data being deserialized
+     * @param typeOfT The type of the Object to deserialize to
+     * @param context Context for deserialization
+     * @return Task object
+     * @throws JsonParseException If the Json data is not in the correct format
+     */
     @Override
     public Task deserialize (JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         JsonObject jsonObject = json.getAsJsonObject();

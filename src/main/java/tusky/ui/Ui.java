@@ -8,21 +8,36 @@ import tusky.tasks.TaskList;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Class that handles all interactions with the user
+ */
 public class Ui {
     Scanner in;
     public Ui(){
         in = new Scanner(System.in);
     }
 
+    /**
+     * Reads the line of input from the user
+     * @return The line of input from the user
+     */
     public String readCommand(){
         return in.nextLine();
     }
-    // println adds indentation before each println output string
+
+    /**
+     * Wrapper around println to prefix the output with a large indent
+     * @param x The string to be printed
+     */
     public void println (String x) {
         System.out.println(Messages.LARGE_INDENT + x);
     }
 
-    // printf adds indentation before each printf output string
+    /**
+     * Wrapper around printf to prefix the output with a large indent
+     * @param format The format of the string to be printed
+     * @param args The arguments to be formatted
+     */
     public void printf (String format, Object... args) {
         System.out.print(Messages.LARGE_INDENT);
         System.out.printf(format, args);
@@ -76,7 +91,7 @@ public class Ui {
     }
 
     public void showFoundTasks (ArrayList<Task> tasks) {
-        println(Messages.TASK_LIST.toString());
+        println(Messages.TASK_FIND.toString());
         for (int i = 1; i <= tasks.size(); i++) {
             printf(" %d.%s\n", i, tasks.get(i-1).getDetailedString());
         }
@@ -111,6 +126,9 @@ public class Ui {
     }
     public void showFileLoadError(){
         println(Messages.ERR_LOADING_FILE.toString());
+    }
+    public void showNumberFormatError(){
+        println(Messages.ERR_NUMBER_FORMAT.toString());
     }
 
     @Override

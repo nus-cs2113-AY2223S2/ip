@@ -1,5 +1,8 @@
 package tusky.constants;
 
+/**
+ * Enum for the different messages used in the program.
+ */
 public enum Messages {
     LINE("____________________________________________________________"),
     LARGE_INDENT("    "),
@@ -27,7 +30,8 @@ public enum Messages {
     ERR_INVALID_PARAMETERS(" Sorry something is wrong with your input, please try again\n"),
     ERR_INVALID_DATE(" Error: Task \"%s\" had an invalid date, defaulting to current time\n"),
 
-    ERR_LOADING_FILE(" Something went wrong while reading from the file");
+    ERR_LOADING_FILE(" Something went wrong while reading from your file, making a new one"),
+    ERR_NUMBER_FORMAT(" The index for this command must be a number!");
 
     private final String text;
 

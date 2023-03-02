@@ -4,6 +4,9 @@ import tusky.storage.Storage;
 import tusky.tasks.TaskList;
 import tusky.ui.Ui;
 
+/**
+ * Command to exit the program
+ */
 public class ExitCommand extends Command{
 
         public ExitCommand() {

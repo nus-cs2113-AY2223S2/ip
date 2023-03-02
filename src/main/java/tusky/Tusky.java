@@ -10,16 +10,19 @@ import tusky.tasks.TaskList;
 import tusky.ui.Ui;
 
 import java.io.IOException;
-import java.nio.file.NoSuchFileException;
 
-import java.io.FileNotFoundException;
-
+/**
+ * Main class for the Tusky program
+ */
 public class Tusky {
     private static TaskList tasks;
 
     private static Storage storage;
     private static Ui ui;
 
+    /**
+     * Runs the main loop of the program
+     */
     public static void run () {
         boolean isExit = false;
         while (!isExit) {
@@ -30,6 +33,8 @@ public class Tusky {
                 Command c = Parser.parse(fullCommand);
                 c.execute(tasks, ui, storage);
                 isExit = c.isExit();
+            } catch (NumberFormatException e){
+                ui.showNumberFormatError();
             } catch (IllegalArgumentException e) {
                 ui.showUnknownCommand();
             } catch (ArrayIndexOutOfBoundsException e) {
@@ -45,7 +50,6 @@ public class Tusky {
                 ui.showInvalidIndex();
             } catch (Exception e) {
                 ui.showUnknownException(e);
-                e.printStackTrace();
             } finally {
                 ui.showLine();
             }
@@ -63,10 +67,6 @@ public class Tusky {
         try {
             tasks = new TaskList(storage.readFile());
             ui.showFileLoaded();
-        } catch (FileNotFoundException | NoSuchFileException e) {
-            tasks = new TaskList();
-            storage.writeFile(tasks);
-            ui.showFileCreated();
         } catch (IOException e){
             ui.showFileLoadError();
             tasks = new TaskList();

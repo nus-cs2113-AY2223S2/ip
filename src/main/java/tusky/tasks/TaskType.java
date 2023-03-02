@@ -1,5 +1,8 @@
 package tusky.tasks;
 
+/**
+ * Enum for the different types of tasks.
+ */
 public enum TaskType {
     TASK("TASK"),
     EVENT("EVENT"),

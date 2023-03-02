@@ -11,18 +11,26 @@ import java.util.Map;
 
 public class Parser {
 
-
-    public static Command parse (String input) throws EmptyDescriptionException, IllegalArgumentException, KeyNotFoundException {
+    /**
+     * Parses the user input and returns a Command object
+     *
+     * @param input String input from the user containing the command and its parameters
+     * @return Command object to be executed
+     * @throws EmptyDescriptionException If a command to create a command is given but there is no description
+     * @throws IllegalArgumentException  If the provided command is not in CommandType
+     * @throws KeyNotFoundException      If a named input like 'from' is not provided
+     * @throws NumberFormatException     If the index provided for commands like 'mark' is not a number
+     */
+    public static Command parse (String input)
+            throws NumberFormatException, EmptyDescriptionException, IllegalArgumentException, KeyNotFoundException {
         Map<String, String> valueMap = new HashMap<>();
         String body = "";
         CommandType command;
         String[] inputs = input.split(" ", 2);
 
-        try {
-            command = CommandType.valueOf(inputs[0].trim().toUpperCase());
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException(Messages.ERR_UNKNOWN_COMMAND.toString());
-        }
+        // trim whitespace and convert to uppercase so input matches the enum names
+        command = CommandType.valueOf(inputs[0].trim().toUpperCase());
+
         if (inputs.length > 1) {
             String[] args = inputs[1].split(" /");
             body = args[0].trim();
@@ -54,13 +62,13 @@ public class Parser {
             }
 
         case EVENT:
+            if (!valueMap.containsKey("from")) {
+                throw new KeyNotFoundException("from");
+            }
+            if (!valueMap.containsKey("to")) {
+                throw new KeyNotFoundException("to");
+            }
             try {
-                if (!valueMap.containsKey("from")) {
-                    throw new KeyNotFoundException("from");
-                }
-                if (!valueMap.containsKey("to")) {
-                    throw new KeyNotFoundException("to");
-                }
                 return new AddCommand(new Event("false", body, valueMap.get("from"), valueMap.get("to")));
             } catch (EmptyDescriptionException e) {
                 throw new EmptyDescriptionException(
@@ -70,10 +78,10 @@ public class Parser {
 
 
         case DEADLINE:
+            if (!valueMap.containsKey("by")) {
+                throw new KeyNotFoundException("by");
+            }
             try {
-                if (!valueMap.containsKey("by")) {
-                    throw new KeyNotFoundException("by");
-                }
                 return new AddCommand(new Deadline("false", body, valueMap.get("by")));
             } catch (EmptyDescriptionException e) {
                 throw new EmptyDescriptionException(
