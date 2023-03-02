@@ -18,8 +18,8 @@ public class FindCommand extends Command {
     /**
      * Prints out a list of matching tasks based on user input.
      *
-     * @param tasks ArrayList of tasks.
-     * @param ui Deals with interactions with the user.
+     * @param tasks   ArrayList of tasks.
+     * @param ui      Deals with interactions with the user.
      * @param storage Deals with saving and loading tasks in the file.
      * @throws DukeException If there is no matching tasks.
      */
@@ -32,7 +32,7 @@ public class FindCommand extends Command {
         } else {
             System.out.println("Here are the matching tasks in your list:\n");
             for (Task task : filteredList) {
-                System.out.println((tasks.tasks.indexOf(task) + 1) + "." + task);
+                ui.printTaskInList(tasks, task);
             }
         }
     }

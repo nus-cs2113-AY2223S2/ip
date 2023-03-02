@@ -13,8 +13,8 @@ public class AddEventCommand extends Command {
     /**
      * Adds and writes task of <code>Event</code> to the ArrayList.
      *
-     * @param tasks ArrayList of tasks.
-     * @param ui Deals with interactions with the user.
+     * @param tasks   ArrayList of tasks.
+     * @param ui      Deals with interactions with the user.
      * @param storage Deals with saving and loading tasks in the file.
      */
     public void execute(TaskList tasks, UI ui, Storage storage) {

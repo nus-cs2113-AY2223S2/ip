@@ -1,6 +1,7 @@
 package components;
 
 import task.Task;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -53,12 +54,28 @@ public class UI {
     public void taskAdded(ArrayList<Task> tasks) {
         boolean isLessThanOne = (tasks.size() <= 1);
         System.out.println("Got it. I've added this task:\n" + tasks.get(tasks.size() - 1) +
-                "\nNow you have " + tasks.size() + (isLessThanOne ? " task" : " tasks") + " in the list");
+                "\nNow you have " + tasks.size() + (isLessThanOne ? " task" : " tasks") + " in the list.");
     }
 
     public void taskRemoved(ArrayList<Task> tasks, Task t) {
         boolean isLessThanOne = (tasks.size() <= 1);
         System.out.println("Got it. I've removed this task:\n" + t.toString() +
-                "\nNow you have " + tasks.size() + (isLessThanOne ? " task" : " tasks") + " in the list\n");
+                "\nNow you have " + tasks.size() + (isLessThanOne ? " task" : " tasks") + " in the list.");
+    }
+
+    public void taskMarked() {
+        System.out.println("Nice! I've marked this task as done:");
+    }
+
+    public void taskUnmarked() {
+        System.out.println("Ok, I've marked this task as not done yet:");
+    }
+
+    public void printTask(TaskList tasks, int taskNumber) {
+        System.out.println(tasks.tasks.get(taskNumber - 1));
+    }
+
+    public void printTaskInList(TaskList tasks, Task task) {
+        System.out.println((tasks.tasks.indexOf(task) + 1) + "." + task);
     }
 }

@@ -14,8 +14,8 @@ public class AddTodoCommand extends Command {
     /**
      * Adds and writes task of <code>Todo</code> to the ArrayList.
      *
-     * @param tasks ArrayList of tasks.
-     * @param ui Deals with interactions with the user.
+     * @param tasks   ArrayList of tasks.
+     * @param ui      Deals with interactions with the user.
      * @param storage Deals with saving and loading tasks in the file.
      */
     public void execute(TaskList tasks, UI ui, Storage storage) {

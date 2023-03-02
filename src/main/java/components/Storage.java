@@ -23,10 +23,10 @@ public class Storage {
      * Load data from previous file and put it in an arraylist.
      *
      * @return ArrayList.
-     * @throws IOException  If file is not found
+     * @throws IOException            If file is not found
      * @throws ClassNotFoundException If there is error in loading the ArrayList object from the file
      */
-    public ArrayList<Task> load() throws IOException, ClassNotFoundException{
+    public ArrayList<Task> load() throws IOException, ClassNotFoundException {
         FileInputStream readData = new FileInputStream(this.filePath);
         ObjectInputStream readStream = new ObjectInputStream(readData);
         ArrayList<Task> data = (ArrayList<Task>) readStream.readObject();
@@ -37,7 +37,7 @@ public class Storage {
     /**
      * Write ArrayList to file.
      *
-     * @param tasks ArrayList of tasks.
+     * @param tasks    ArrayList of tasks.
      * @param filePath Name of file.
      */
     public void writeToFile(ArrayList<Task> tasks, String filePath) {

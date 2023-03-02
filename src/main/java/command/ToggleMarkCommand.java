@@ -15,8 +15,8 @@ public class ToggleMarkCommand extends Command {
     /**
      * Mark or Unmark the task given the index.
      *
-     * @param tasks ArrayList of tasks.
-     * @param ui Deals with interactions with the user.
+     * @param tasks   ArrayList of tasks.
+     * @param ui      Deals with interactions with the user.
      * @param storage Deals with saving and loading tasks in the file.
      * @throws DukeException If a number is not provided or the index exceeds number of tasks in the list.
      */
@@ -31,13 +31,13 @@ public class ToggleMarkCommand extends Command {
             if (commandFields[0].equals("mark")) {
                 tasks.tasks.get(taskNumber - 1).toggleMark(1);
                 storage.writeToFile(tasks.tasks, storage.filePath);
-                System.out.println("Nice! I've marked this task as done:");
+                ui.taskMarked();
             } else {
                 tasks.tasks.get(taskNumber - 1).toggleMark(0);
                 storage.writeToFile(tasks.tasks, storage.filePath);
-                System.out.println("OK, I've marked this task as not done yet:");
+                ui.taskUnmarked();
             }
-            System.out.println(tasks.tasks.get(taskNumber - 1));
+            ui.printTask(tasks, taskNumber);
         } catch (NumberFormatException e) {
             throw new DukeException(ErrorMessage.INVALID_NUMBER.toString());
         }

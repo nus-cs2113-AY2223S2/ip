@@ -16,8 +16,8 @@ public class DeleteCommand extends Command {
     /**
      * Remove an item from the ArrayList of tasks given the task index.
      *
-     * @param tasks ArrayList of tasks.
-     * @param ui Deals with interactions with the user.
+     * @param tasks   ArrayList of tasks.
+     * @param ui      Deals with interactions with the user.
      * @param storage Deals with saving and loading tasks in the file.
      * @throws DukeException If the index to delete exceeds number of tasks.
      */
