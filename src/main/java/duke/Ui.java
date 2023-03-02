@@ -1,27 +1,37 @@
 package duke;
 
-import duke.task.Task;
+import duke.commands.CommandResult;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Ui {
 
-    static final String divider = "____________________________________________________________";
+    public static final int DISPLAYED_INDEX_OFFSET = 1;
+
+    private static final String LS = System.lineSeparator();
+    static final String DIVIDER = "____________________________________________________________";
+
+    public void showToUser(String... message) {
+        for (String m : message) {
+            System.out.println(m.replace("\n", LS));
+        }
+    }
+
 
     public void showLine() {
-        System.out.println(divider);
+        System.out.println(DIVIDER);
     }
+
     public void greet() {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
                 + "| | | | | | | |/ / _ \\\n"
                 + "| |_| | |_| |   <  __/\n"
                 + "|____/ \\__,_|_|\\_\\___|\n";
-        String greeting = divider
+        String greeting = DIVIDER
                 + "\nHello! I'm Duke\n"
                 + "What can I do for you?\n"
-                + divider;
+                + DIVIDER;
         System.out.println("Hello from\n" + logo + greeting);
     }
 
@@ -36,10 +46,7 @@ public class Ui {
         return userInput;
     }
 
-    public void printList(ArrayList<Task> taskList) {
-        for (int x = 0; x < taskList.size(); x += 1) {
-            System.out.print((x + 1) + ". ");
-            taskList.get(x).print();
-        }
+    public void showResultToUser(CommandResult result) {
+        showToUser(result.outputToUser, DIVIDER);
     }
 }
