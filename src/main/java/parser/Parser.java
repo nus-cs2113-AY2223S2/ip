@@ -3,9 +3,8 @@ package parser;
 import java.util.Scanner;
 
 public class Parser {
-
     //Error Strings
-    public static final String ERROR_NON_INTEGER_INDEX = "Invalid Input. Give Just an Integer!";
+    public static final String ERROR_NON_INTEGER_INDEX = "Invalid Input. Give just an Integer!";
     public static final String ERROR_NON_EXISTENT_TASK = "That task doesn't exist...";
     public static final String ERROR_NO_INDEX_PROVIDED = "Do you want me to edit the whole list?";
     public static final String ERROR_NO_QUERY_PROVIDED = "Do you want me to print the whole list?";
@@ -23,7 +22,6 @@ public class Parser {
      */
     public static String[] processInputMessage(Scanner in) {
         String input = in.nextLine();
-        input = input.trim();
         return input.split(" ", 2);
     }
 
@@ -31,7 +29,7 @@ public class Parser {
      * Checks if the queried index of the TaskList exists.
      * Used for Commands: "mark, unmark, delete"
      *
-     * @param input The user input. input[1] is expected to be a valid integer.
+     * @param input      The user input. input[1] is expected to be a valid integer.
      * @param indexLimit the size of the TaskList
      * @return the index if it is valid, else -1 if invalid.
      */
@@ -79,8 +77,8 @@ public class Parser {
      * Else, the first element of the String array is empty if incorrectly inputted
      */
     public static String[] processEventMessage(String[] input) {
-        String[] eventArray = new String[3];
         try {
+            String[] eventArray = new String[3];
             String[] inputArray = input[1].split(" /from ");
             if (inputArray.length != 2) {
                 System.out.println(ERROR_BAD_FORMATTING);
@@ -94,13 +92,14 @@ public class Parser {
             }
             eventArray[1] = inputArray[0];
             eventArray[2] = inputArray[1];
-            for (int i = 0; i < 2; i += 1) {
-                if (eventArray[i].trim().equals("")) {
+            for (int i = 0; i < 3; i += 1) {
+                eventArray[i] = eventArray[i].trim();
+                if (eventArray[i].equals("")) {
                     throw new IndexOutOfBoundsException();
                 }
             }
             return eventArray;
-        } catch (IndexOutOfBoundsException outOfBoundsIndex) {
+        } catch (IndexOutOfBoundsException outOfBoundsException) {
             System.out.println(ERROR_MISSING_OR_EMPTY_FIELDS);
             return new String[0];
         }
@@ -115,20 +114,21 @@ public class Parser {
      * Else, the first element of the String array is empty if incorrectly inputted
      */
     public static String[] processDeadlineMessage(String[] input) {
-        String[] deadlineArray;
         try {
+            String[] deadlineArray;
             deadlineArray = input[1].split(" /by ");
             if (deadlineArray.length != 2) {
                 System.out.println(ERROR_BAD_FORMATTING);
                 return new String[0];
             }
             for (int i = 0; i < 2; i++) {
-                if (deadlineArray[i].trim().equals("")) {
+                deadlineArray[i] = deadlineArray[i].trim();
+                if (deadlineArray[i].equals("")) {
                     throw new IndexOutOfBoundsException();
                 }
             }
             return deadlineArray;
-        } catch (IndexOutOfBoundsException outOfBoundsIndex) {
+        } catch (IndexOutOfBoundsException outOfBoundsException) {
             System.out.println(ERROR_MISSING_OR_EMPTY_FIELDS);
             return new String[0];
         }

@@ -22,7 +22,7 @@ NakiriAyame filters and returns your Tasks by any keyword in O(1)! (Trust me, I 
 
 ![Yammers](../assets/yammers.png)
 
-if you find it, that is.
+If you find it, that is.
 
 ## Usage
 

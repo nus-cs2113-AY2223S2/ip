@@ -4,18 +4,15 @@ import tasks.Deadline;
 import tasks.Event;
 import tasks.Task;
 import tasks.Todo;
+import ui.UI;
 
 import java.util.ArrayList;
 
 public class TaskList {
-    //All the messages Strings
-    public static final String COMPLETED_TASK_MESSAGE = "Nice! I've marked this task as done!";
-    public static final String INCOMPLETE_TASK_MESSAGE = "Stop being lazy, get to work!";
-    public static final String ADDED_TASK_MESSAGE = "Done! Added: ";
-    public static final String TASK_REMOVED_MESSAGE_ONE = "Task removed:";
-    public static final String TASK_REMOVED_MESSAGE_TWO = "Total tasks left: ";
-    //Error Strings
+
+    //Message Strings
     public static final String TASKS_WITH_CORRESPONDING_KEYWORDS = "These are the tasks found with Keyword: ";
+    //Error Strings
     public static final String ERROR_NO_TASK_WITH_KEYWORD_FOUND = "No task with such keyword found";
     public static final String ERROR_NO_TASKS_IN_LIST = "Behold the fields of which I keep your tasks. " +
             "Lay thine eyes upon it, and see that it is barren";
@@ -38,6 +35,10 @@ public class TaskList {
         return list.size();
     }
 
+    /**
+     * Lists all the tasks in the taskList.
+     * If taskList is empty, an error message is printed instead.
+     */
     public void listAllTasks() {
         int sizeOfTaskList = list.size();
         if (sizeOfTaskList == 0) {
@@ -59,9 +60,8 @@ public class TaskList {
     public void deleteATask(int taskIndex) {
         Task currentTask = list.get(taskIndex);
         list.remove(taskIndex);
-        System.out.println(TASK_REMOVED_MESSAGE_ONE);
-        System.out.println(currentTask);
-        System.out.println(TASK_REMOVED_MESSAGE_TWO + list.size());
+        int tasksLeft = list.size();
+        UI.printDeletedTaskMessage(currentTask, tasksLeft);
     }
 
     /**
@@ -70,23 +70,36 @@ public class TaskList {
      * @param query The String queried
      */
     public void searchByKeyword(String query) {
-        int indexOfTaskFound = 1;
+        ArrayList<String> tasksWithMatchingKeyword = new ArrayList<String>();
         for (Task currentTask : list) {
             String currentTaskName = currentTask.getTask();
             if (currentTaskName.contains(query)) {
-                if (indexOfTaskFound == 1) {
-                    System.out.println(TASKS_WITH_CORRESPONDING_KEYWORDS + query);
-                }
-                String printedMessage = String.format("[%d] %s", indexOfTaskFound, currentTask);
-                System.out.println(printedMessage);
-                indexOfTaskFound += 1;
+                tasksWithMatchingKeyword.add(currentTaskName);
             }
         }
-        if (indexOfTaskFound == 1) {
-            System.out.println(ERROR_NO_TASK_WITH_KEYWORD_FOUND);
-        }
+        printTasksWithMatchingKeyword(tasksWithMatchingKeyword, query);
     }
 
+    /**
+     * Helper function used by searchByKeyword
+     * Prints an error message if no matching tasks are found. Else, it prints all the matching tasks.
+     *
+     * @param listOfTasks the ArrayList containing all the matching Tasks
+     * @param query The String queried
+     */
+    private static void printTasksWithMatchingKeyword(ArrayList<String> listOfTasks, String query) {
+        if(listOfTasks.size() == 0) {
+            System.out.println(ERROR_NO_TASK_WITH_KEYWORD_FOUND);
+            return;
+        }
+        System.out.println(TASKS_WITH_CORRESPONDING_KEYWORDS + query);
+        int indexOfTask = 1;
+        for(String currentTask : listOfTasks) {
+            String printedMessage = String.format("[%d] %s", indexOfTask, currentTask);
+            System.out.println(printedMessage);
+            indexOfTask += 1;
+        }
+    }
     /**
      * Marks a task as complete, given the index of the task.
      * List follows a 1-based indexing.
@@ -96,8 +109,7 @@ public class TaskList {
     public void markTaskComplete(int taskIndex) {
         Task currentTask = list.get(taskIndex);
         currentTask.setComplete();
-        System.out.println(COMPLETED_TASK_MESSAGE);
-        System.out.println(currentTask);
+        UI.printMarkedTaskCompleteMessage(currentTask);
     }
 
     /**
@@ -109,26 +121,25 @@ public class TaskList {
     public void markTaskIncomplete(int taskIndex) {
         Task currentTask = list.get(taskIndex);
         currentTask.setIncomplete();
-        System.out.println(INCOMPLETE_TASK_MESSAGE);
-        System.out.println(currentTask);
+        UI.printMarkedTaskIncompleteMessage(currentTask);
     }
 
     public void addNewEventTask(String[] inputMessage) {
         Event newEvent = new Event(inputMessage[0], inputMessage[1], inputMessage[2]);
         list.add(newEvent);
-        System.out.println(ADDED_TASK_MESSAGE + newEvent);
+        UI.printAddedNewTaskMessage(newEvent);
     }
 
     public void addNewDeadlineTask(String[] inputMessage) {
         Deadline newDeadline = new Deadline(inputMessage[0], inputMessage[1]);
         list.add(newDeadline);
-        System.out.println(ADDED_TASK_MESSAGE + newDeadline);
+        UI.printAddedNewTaskMessage(newDeadline);
     }
 
     public void addNewTodoTask(String task) {
         Todo newTodo = new Todo(task);
         this.list.add(newTodo);
-        System.out.println(ADDED_TASK_MESSAGE + newTodo);
+        UI.printAddedNewTaskMessage(newTodo);
     }
 
 }
