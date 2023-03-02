@@ -11,15 +11,22 @@ public class Event extends Task{
         this.to = to;
     }
 
+    /**
+     * Override to update standard printing format for Event task type
+     */
     @Override
     public String toString() {
         return "[E]" + super.toString() + " (from:" + from + " to:" + to +")";
     }
-
+    /**
+     * get time event starts
+     */
     public String getFrom() {
         return from;
     }
-
+    /**
+     * get time event ends
+     */
     public String getTo() {
         return to;
     }

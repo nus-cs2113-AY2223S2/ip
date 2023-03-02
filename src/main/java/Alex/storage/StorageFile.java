@@ -11,6 +11,12 @@ import java.nio.file.Paths;
 import java.util.Scanner;
 
 public class StorageFile {
+
+    /**
+     * ReadData from a stored text file and updates taskList with stored data.
+     *
+     * @param taskList
+     */
     public static void readData(TaskList taskList) throws FileNotFoundException {
         String dir = System.getProperty("user.dir");
         Path filePath = Paths.get(dir, "data", "duke.txt");
@@ -25,7 +31,7 @@ public class StorageFile {
             {
                 Task t = new Todo(info[2] , "T");
                 if(info[1].equals("1")) {
-                    t.markAsDone();
+                    t.setAsDone();
                 }
                 taskList.setTask(t);
             }
@@ -33,7 +39,7 @@ public class StorageFile {
             {
                 Task t = new Deadline(info[2], "D", info[3]);
                 if(info[1].equals("1")) {
-                    t.markAsDone();
+                    t.setAsDone();
                 }
                 taskList.setTask(t);
             }
@@ -41,7 +47,7 @@ public class StorageFile {
             {
                 Task t = new Event(info[2], "E",info[3] ,info[4]);
                 if(info[1].equals("1")) {
-                    t.markAsDone();
+                    t.setAsDone();
                 }
                 taskList.setTask(t);
             }
@@ -49,15 +55,19 @@ public class StorageFile {
         }
     }
 
-
-    public static void saveData (TaskList tasklist) throws IOException {
+    /**
+     * Saves current taskList data by writing to a text file.
+     *
+     * @param taskList
+     */
+    public static void saveData (TaskList taskList) throws IOException {
         String toSave = "";
         String dir = System.getProperty("user.dir");
         Path filePath = Paths.get(dir, "data", "duke.txt");
         File file = new File(filePath.toString());
         file.getParentFile().mkdirs();
         FileWriter fw = new FileWriter(file);
-        for(Task t : tasklist.getAllTasks()) {
+        for(Task t : taskList.getAllTasks()) {
             if(t.getType().equals("T")) {
                 Todo td = (Todo)t;
                 int done = td.getDone() ? 1 : 0;
