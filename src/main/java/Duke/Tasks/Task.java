@@ -1,8 +1,8 @@
-package Duke;
+package Duke.Tasks;
 
 public class Task {
     protected String description;
-    protected boolean isDone;
+    public boolean isDone;
 
     public Task(String description) {
         this.description = description;
@@ -14,7 +14,7 @@ public class Task {
     }
 
     public String toString() {
-        return ("[" + getStatusIcon() + "] " + description);
+        return ("[" + getStatusIcon() + "]" + description);
     }
 
 

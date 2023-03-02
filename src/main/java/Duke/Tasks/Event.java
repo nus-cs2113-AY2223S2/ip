@@ -1,4 +1,4 @@
-package Duke;
+package Duke.Tasks;
 
 public class Event extends Task {
     protected String start;
@@ -12,7 +12,7 @@ public class Event extends Task {
 
     @Override
     public String toString() {
-        return "[E]" + super.toString() + " (from: " + start + "to: " + end + ")";
+        return "[E]" + super.toString() + " /from " + start + " /to " + end ;
     }
 
 }
