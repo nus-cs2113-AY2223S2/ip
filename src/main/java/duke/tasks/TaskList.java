@@ -98,4 +98,16 @@ public class TaskList {
     public int getNumTasks() {
         return numTasks;
     }
+
+    public void findTask(String wordToFind) {
+        System.out.println("Here are the matching tasks in your list: ");
+        int numTasksFound = 0;
+        for (int i = 1; i <= numTasks; i++) {
+            Task currTask = tasks.get(i);
+            if (currTask.getDescription().contains(wordToFind)) {
+                numTasksFound++;
+                System.out.println(numTasksFound + ". " + currTask.toString());
+            }
+        }
+    }
 }
