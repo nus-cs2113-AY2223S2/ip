@@ -92,6 +92,7 @@ public class TaskList {
      */
     public void listTasks() {
         Ui.linePrint();
+        Ui.printListDetails();
         if (taskCount == 0) { //list is empty
             System.out.println("List is empty.");
         } else {

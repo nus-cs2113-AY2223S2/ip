@@ -14,7 +14,7 @@ public class Ui {
      * Prints a dashed line.
      */
     public static void linePrint() {
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 80; i++) {
             System.out.print("-");
         }
         System.out.println();
@@ -43,8 +43,9 @@ public class Ui {
      * Prints the message before the program terminates.
      */
     public void sayBye() {
+        linePrint();
         System.out.println("Bye see you soon! :) ");
-        Ui.linePrint();
+        linePrint();
     }
 
     /**
@@ -95,7 +96,14 @@ public class Ui {
      */
     public static void printTaskUnmarked(Task task, TaskList tasks) {
         linePrint();
-        System.out.println("Psyduck has marked the task: " + task);
+        System.out.println("Psyduck has unmarked the task: " + task);
         linePrint();
+    }
+
+    /**
+     * Prints out the header details for the list.
+     */
+    public static void printListDetails() {
+        System.out.println("Here are the tasks currently in your list: ");
     }
 }

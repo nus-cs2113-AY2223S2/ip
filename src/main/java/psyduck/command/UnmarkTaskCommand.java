@@ -24,7 +24,7 @@ public class UnmarkTaskCommand extends Command{
             int taskNum = Integer.parseInt(input[0]);
             Task task = TaskList.getTask(taskNum);
             TaskList.getTask(taskNum).unmarkDone();
-            Ui.printTaskMarked(task, tasks);
+            Ui.printTaskUnmarked(task, tasks);
         } catch (NullPointerException e) {
             ErrorMessage.printUnmarkTaskErrorMessage();
         } catch (NumberFormatException e) {
