@@ -6,20 +6,24 @@ import Duke.Exception.NoTaskException;
 import Duke.Exception.TaskInfoException;
 
 import java.io.FileWriter;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.File;
 import java.io.IOException;
 //import java.io.FileInputStream;
 //import java.io.ObjectInputStream;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 import java.io.BufferedReader;
 import java.io.FileReader;
 
+/**
+ * A project template for a greenfield Java project.
+ *
+ * @author Zeng Ziqiu
+ * @version 2.0
+ * @since 2023-01-27
+ */
 public class Duke {
     //    private static int taskCount = 0;
     private static ArrayList<Task> tasks = new ArrayList<>();
@@ -29,6 +33,10 @@ public class Duke {
 
     private static final String dividingLine = "\n————————————————————————————————————————————————————————\n";
 
+    /**
+     * The method is to print the task list onto the screen,
+     * to show the user what tasks are on the list.
+     */
     public static void printList() {
         System.out.println(dividingLine + "Here are the tasks in your list:");
         for (int i = 0; i < tasks.size(); i++) {
@@ -37,6 +45,15 @@ public class Duke {
         System.out.println("Now you have " + tasks.size() + " tasks in the list." + dividingLine);
     }
 
+
+    /**
+     * The method performs three operations:
+     * 1. Add a task to the task list
+     * 2. Print the task added on the screen
+     * 3. Print the number of tasks in the list on the screen
+     *
+     * @param task The task to be added to the task list
+     */
     public static void addTask(Task task) {
         tasks.add(task);
         System.out.println(dividingLine);
@@ -46,6 +63,15 @@ public class Duke {
         System.out.println(dividingLine);
     }
 
+    /**
+     * The method processes the commands from user.
+     *
+     * @param line The command input by user
+     * @throws DukeException If the command is unrecognisable
+     * @throws TaskInfoException If the task information is not complete
+     * @throws MarkIndexException If the index does not exist in the task list
+     * @throws NoTaskException If there is no task in the task list
+     */
 
     public static void processTask(String line) throws DukeException, TaskInfoException, MarkIndexException, NoTaskException {
         if (line.equals("list")) {
@@ -119,6 +145,11 @@ public class Duke {
         }
     }
 
+    /**
+     * The method is to find and print the tasks that contains the keyword that the user searches onto the screen.
+     *
+     * @param keyword The keyword the user intends to find in the task list
+     */
     public static void keywordSearch(String keyword) {
         String path = "data/tasks.txt";
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
@@ -141,6 +172,15 @@ public class Duke {
         }
     }
 
+
+    /**
+     * The method is to process user's commands and write user's tasks to a txt file.
+     * If certain exception is detected, the method print the corresponding message onto the screen,
+     * to notify the user that there may be some issues with his input.
+     *
+     * @param line The command input by user
+     * @param path The path of the text file that stores user's task list
+     */
     public static void printTask(String line, String path) {
         try {
             processTask(line);
@@ -162,18 +202,6 @@ public class Duke {
         }
     }
 
-//    private static void loadTasks() {
-//        try {
-//            FileInputStream fis = new FileInputStream("tasks.txt");
-//            ObjectInputStream ois = new ObjectInputStream(fis);
-//            tasks = (ArrayList<Task>) ois.readObject();
-//            ois.close();
-//            fis.close();
-//        } catch (IOException | ClassNotFoundException e) {
-//            e.printStackTrace();
-//        }
-//    }
-
     private static void writeToFile(ArrayList<Task> tasks, String path) throws IOException {
         FileWriter fl = new FileWriter(path);
         for (Task task : tasks) {
@@ -183,6 +211,12 @@ public class Duke {
         fl.close();
     }
 
+    /**
+     * The method is to create a file to store user's tasks.
+     * If the file does not exist, then it creates one at the "data/tasks.txt".
+     *
+     * @param file The file that stores user's tasks
+     */
 
     private static void createFile(File file) {
         if (!file.exists()) {
