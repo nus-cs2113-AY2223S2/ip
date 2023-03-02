@@ -1,18 +1,44 @@
 package task;
 
 import java.util.ArrayList;
+
+import io.DukeException;
 import io.Storage;
 
 import io.Ui;
 
 public class TaskList {
-    private static final ArrayList<Task> tasks = new ArrayList<Task>();
-    private static int numberOfTasks = 0;
+    private ArrayList<Task> tasks;
+    private int numberOfTasks;
+
+    /**
+     * Constructor to use with saved file. Populates task list.
+     * @param listOfTasks Tasks from save file (handled by {@link io.Storage}).
+     */
+    public TaskList(ArrayList<String[]> listOfTasks) {
+        tasks = new ArrayList<Task>();
+        for (String[] strings : listOfTasks) {
+            try {
+                tasks.add(createTaskFromFile(strings));
+            } catch (DukeException e) {
+                System.out.println("Error trying to add a task from save file.");
+            }
+        }
+
+        numberOfTasks = tasks.size();
+    }
+    /**
+     * Constructor for BRAND NEW TaskList.
+     */
+    public TaskList() {
+        tasks = new ArrayList<Task>();
+        numberOfTasks = 0;
+    }
 
     /**
      * Print the contents of Task List
      */
-    public static String getTaskListString() {
+    public String getTaskListString() {
         String output = "Your Tasks: \n";
         for (Task task : tasks) {
             output += task.getTaskNumber() + task.toString() + '\n';
@@ -24,38 +50,47 @@ public class TaskList {
      * Adds a Task to the list of Tasks.
      * @param task {@link Task} object.
      */
-    public static void addTask(Task task) {
+    public void addTask(Task task) {
         tasks.add(task);
         numberOfTasks++;
     }
 
-    public static void addTaskFromFile(String[] input) {
+    /**
+     * Reads a line of strings from save file and returns a Task.
+     * @param input Strings describing the task.
+     * @return The Task, marked as done or not.
+     * @throws DukeException When there is an error in the file describing the task.
+     */
+    private Task createTaskFromFile(String[] input) throws DukeException {
+        Task newTask;
         switch(input[0]) {
         case "T":
-            Todo newTodo = new Todo(input[2], getNextTaskNumber());
-            addTask(newTodo); //problem cos tasks is not instantiated/static.
+            newTask = new Todo(input[2], getNextTaskNumber());
             break;
         case "D":
-            Deadline newDeadline = new Deadline(input[2], getNextTaskNumber(), input[3]);
-            addTask(newDeadline);
+            newTask = new Deadline(input[2], getNextTaskNumber(), input[3]);
             break;
         case "E":
-            Event newEvent = new Event(input[2], getNextTaskNumber(), input[3], input[4]);
-            addTask(newEvent);
+            newTask = new Event(input[2], getNextTaskNumber(), input[3], input[4]);
             break;
+        default:
+            // When there is error in reading the file.
+            throw new DukeException();
         }
 
-        // mark as done
+        // Set it as done.
         if (input[1].equals("1")) {
-            tasks.get(getNumberOfTasks() - 1).markAsDone();
+            newTask.markAsDone();
         }
+
+        return newTask;
     }
 
     /**
      * Deletes a task from the task list and decrement number of tasks.
      * @param taskNumber 1-indexed task index.
      */
-    public static Task deleteTask(int taskNumber) {
+    public Task deleteTask(int taskNumber) {
         Task deletedTask = tasks.get(taskNumber - 1);
         tasks.remove(taskNumber - 1);
         numberOfTasks--;

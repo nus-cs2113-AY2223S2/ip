@@ -68,19 +68,23 @@ public final class Storage {
      * Loads and parses each line of data in the save file.
      * @return ArrayList ({@link java.util.ArrayList}) of String (Task in parseable string format).
      */
-    public ArrayList<String> load() {
+    public ArrayList<String[]> load() {
         File f = new File(this.filePath);
         Scanner s;
-        ArrayList<String> output = new ArrayList<String>();
+        ArrayList<String[]> output = new ArrayList<String[]>();
         try {
             s = new Scanner(f);
             while (s.hasNext()) {
-                output.add(readFileLine(s.nextLine()));
+                output.add(splitSaveFileLine(s.nextLine()));
             }
         } catch (FileNotFoundException e) {
             System.out.println("File not found >_<: " + e.getMessage());
         }
         return output;
+    }
+
+    private String[] splitSaveFileLine(String line) {
+        return line.split("\\s+" + "\\" + FILE_DELIMITER + "\\s+");
     }
 
     /**
