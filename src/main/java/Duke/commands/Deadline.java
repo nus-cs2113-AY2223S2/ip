@@ -1,4 +1,6 @@
-package Duke;
+package Duke.commands;
+
+import Duke.commands.Task;
 
 public class Deadline extends Task {
     protected String by;
@@ -9,6 +11,10 @@ public class Deadline extends Task {
     }
 
     public String getBy() {
+        return by;
+    }
+
+    public String getDueTime(){
         return by;
     }
 

@@ -1,6 +1,8 @@
-package Duke;
+package Duke.commands;
 
-public class Event extends Task{
+import Duke.commands.Task;
+
+public class Event extends Task {
     protected String start;
     protected String end;
 
@@ -8,6 +10,14 @@ public class Event extends Task{
         super(description);
         this.start = start;
         this.end = end;
+    }
+
+    public String getStartTime() {
+        return start;
+    }
+
+    public String getDueTime() {
+        return end;
     }
 
     @Override

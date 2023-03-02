@@ -4,6 +4,10 @@ import Duke.Exception.DukeException;
 import Duke.Exception.MarkIndexException;
 import Duke.Exception.NoTaskException;
 import Duke.Exception.TaskInfoException;
+import Duke.commands.Deadline;
+import Duke.commands.Event;
+import Duke.commands.Task;
+import Duke.commands.Todo;
 
 import java.io.FileWriter;
 import java.util.ArrayList;
@@ -45,7 +49,6 @@ public class Duke {
         System.out.println("Now you have " + tasks.size() + " tasks in the list." + dividingLine);
     }
 
-
     public static void addTask(Task task) {
         tasks.add(task);
         System.out.println(dividingLine);
@@ -54,8 +57,6 @@ public class Duke {
         System.out.println("Now you have " + tasks.size() + " tasks in the list.");
         System.out.println(dividingLine);
     }
-
-
 
     public static void processTask(String line) throws DukeException, TaskInfoException, MarkIndexException, NoTaskException {
         if (line.equals("list")) {

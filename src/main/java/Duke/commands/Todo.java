@@ -1,6 +1,8 @@
-package Duke;
+package Duke.commands;
 
-public class Todo extends Task{
+import Duke.commands.Task;
+
+public class Todo extends Task {
 
     public Todo(String description){
         super(description);

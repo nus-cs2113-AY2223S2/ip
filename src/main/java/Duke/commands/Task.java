@@ -1,4 +1,6 @@
-package Duke;
+package Duke.commands;
+
+import java.security.PublicKey;
 
 public class Task {
     protected String description;
@@ -19,6 +21,14 @@ public class Task {
 
     public boolean unmarkAsDone() {
         return this.isDone = false;
+    }
+
+    public String getDueTime() {
+        return "";
+    }
+
+    public String getStartTime() {
+        return "";
     }
 
     public String getDescription() {
