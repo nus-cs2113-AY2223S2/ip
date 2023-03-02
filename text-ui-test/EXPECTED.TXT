@@ -1,7 +1,119 @@
+____________________________________________________________
+Could not find any Duke.txt but don't worry. One will be created later
+____________________________________________________________
 Hello from
- ____        _        
-|  _ \ _   _| | _____ 
+ ____        _
+|  _ \ _   _| | _____
 | | | | | | | |/ / _ \
 | |_| | |_| |   <  __/
 |____/ \__,_|_|\_\___|
+
+Hello! I'm Duke
+What can I do for you?
+
+____________________________________________________________
+____________________________________________________________
+I am sorry, you need to have something in your list before I can show you
+____________________________________________________________
+____________________________________________________________
+Got it. I've added this task:
+[T][] borrow book
+Now you have 1 task in the list
+____________________________________________________________
+____________________________________________________________
+I am sorry, you are missing a parameter for todo.
+Example: todo borrow book
+____________________________________________________________
+____________________________________________________________
+Got it. I've added this task:
+[T][] attend lecture
+Now you have 2 tasks in the list
+____________________________________________________________
+____________________________________________________________
+I am sorry, I do not understand what this command means
+Commands are available as follows:
+1.todo
+2.event
+3.deadline
+4.list
+5.mark
+6.unmark
+7.delete
+8.find
+9.bye
+____________________________________________________________
+____________________________________________________________
+I am sorry, you are missing the by parameter for your deadline.
+Example: deadline return book /by Sunday
+____________________________________________________________
+____________________________________________________________
+I am sorry, you are missing a description for deadline.
+Example: deadline return book /by Sunday
+____________________________________________________________
+____________________________________________________________
+Got it. I've added this task:
+[D][] return book (by: Sunday)
+Now you have 3 tasks in the list
+____________________________________________________________
+____________________________________________________________
+I am sorry, you are missing a start & end time.
+Example: event project meeting /from Mon 2pm /to 4pm
+____________________________________________________________
+____________________________________________________________
+I am sorry, you are missing an end time
+Example: event project meeting /from Mon 2pm /to 4pm
+____________________________________________________________
+____________________________________________________________
+I am sorry, you are missing a description for event.
+Example: event project meeting /from Mon 2pm /to 4pm
+____________________________________________________________
+____________________________________________________________
+Got it. I've added this task:
+[E][] project meeting (from: Mon 2pm to: 4pm)
+Now you have 4 tasks in the list
+____________________________________________________________
+____________________________________________________________
+1.[T][] borrow book
+2.[T][] attend lecture
+3.[D][] return book (by: Sunday)
+4.[E][] project meeting (from: Mon 2pm to: 4pm)
+____________________________________________________________
+____________________________________________________________
+I am sorry, you are trying to mark/unmark a task that does not exist.
+____________________________________________________________
+____________________________________________________________
+Nice! I've marked this task as done:
+[D][X] return book (by: Sunday)
+____________________________________________________________
+____________________________________________________________
+I am sorry, you are trying to mark/unmark a task that does not exist.
+____________________________________________________________
+____________________________________________________________
+I am sorry, pls enter the parameter you are trying to find
+Example: find borrow book
+____________________________________________________________
+____________________________________________________________
+Here are the matching tasks in your list:
+
+1.[T][] borrow book
+2.[D][X] return book (by: Sunday)
+____________________________________________________________
+____________________________________________________________
+Got it. I've removed this task:
+[T][] borrow book
+Now you have 3 tasks in the list
+
+____________________________________________________________
+____________________________________________________________
+Here are the matching tasks in your list:
+
+1.[D][X] return book (by: Sunday)
+____________________________________________________________
+____________________________________________________________
+OK, I've marked this task as not done yet:
+[E][] project meeting (from: Mon 2pm to: 4pm)
+____________________________________________________________
+____________________________________________________________
+____________________________________________________________
+Bye. Hope to see you again soon!
 

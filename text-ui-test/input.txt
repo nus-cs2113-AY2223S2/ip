@@ -1,0 +1,22 @@
+list
+todo borrow book
+todo
+todo attend lecture
+undo
+deadline
+deadline /by Sunday
+deadline return book /by Sunday
+event
+event /from Mon 2pm
+event /from Mon 2pm /to 4pm
+event project meeting /from Mon 2pm /to 4pm
+list
+mark 10
+mark 3
+mark 7
+find
+find book
+delete 1
+find book
+unmark 3
+bye
