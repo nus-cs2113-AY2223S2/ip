@@ -15,7 +15,7 @@ public class Parser {
             System.out.println("Something went wrong: " + e.getMessage());
         }
         
-        while((input = in.nextLine()) != "") {
+        while((input = in.nextLine()) != "") { //while input is not empty
             try {
 
                 if (input.equalsIgnoreCase("bye")) {
@@ -26,10 +26,10 @@ public class Parser {
                 else if (input.equals("list")) {
                     task.getItems();
                 }
-                else if (input.startsWith("due")) {
+                else if (input.startsWith("due ")) {
                     task.getDue(input);
                 }
-                else if (input.startsWith("find")) {
+                else if (input.startsWith("find ")) {
                     task.find(input);
                 }
                 else if (input.startsWith("mark ")) {
@@ -42,13 +42,13 @@ public class Parser {
                     
                     new Todo(input);
                 }
-                else if (input.startsWith("deadline ")) {
+                else if (input.equals("deadline")) {
                     
-                    new Deadline(input);
+                    new Deadline();
                 }
-                else if (input.startsWith("event ")) {
+                else if (input.equals("event")) {
                     
-                    new Event(input);
+                    new Event();
                 }
                 else if (input.startsWith("delete ")) {
                     
