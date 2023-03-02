@@ -13,13 +13,8 @@ public class Event extends Task {
      * Initializes Event class.
      *
      * @param description Description of event.
-<<<<<<< HEAD
-     * @param from        Date/time when event starts.
-     * @param to          Date/time when event ends.
-=======
      * @param from Date/time when event starts.
      * @param to Date/time when event ends.
->>>>>>> 265111f0883b68d2f2ae230b59ffbbeec3e62601
      */
     public Event(String description, String from, String to) {
         super(description);
@@ -27,15 +22,10 @@ public class Event extends Task {
         this.to = to;
     }
 
-<<<<<<< HEAD
 
     /**
      * Returns standardized string to be stored on memory that can be read back into
      * the program in the future.
-=======
-    /**
-     * Returns standardized string to be stored on memory that can be read back into the program in the future.
->>>>>>> 265111f0883b68d2f2ae230b59ffbbeec3e62601
      *
      * @return Standardized string to be stored in memory.
      */
@@ -45,21 +35,13 @@ public class Event extends Task {
 
     @Override
     /**
-<<<<<<< HEAD
      * Overrides matchesKeyword in Task. Searches through description, from, and to
      * fields for a keyword.
-=======
-     * Overrides matchesKeyword in Task. Searches through description, from, and to fields for a keyword.
->>>>>>> 265111f0883b68d2f2ae230b59ffbbeec3e62601
      *
      * @param keyword Keyword to search for.
      * @return True if Event matches the keyword, False otherwise.
      */
-<<<<<<< HEAD
     public boolean matchesKeyword(String keyword) {
-=======
-    public boolean matchesKeyword (String keyword) {
->>>>>>> 265111f0883b68d2f2ae230b59ffbbeec3e62601
         if (description.contains(keyword) || from.contains(keyword) || to.contains(keyword)) {
             return true;
         } else {
@@ -69,12 +51,8 @@ public class Event extends Task {
 
     @Override
     /**
-<<<<<<< HEAD
      * Overrides string representation for todos, with a [E] to indicate event class
      * and conveying information about time.
-=======
-     * Overrides string representation for todos, with a [E] to indicate event class and conveying information about time.
->>>>>>> 265111f0883b68d2f2ae230b59ffbbeec3e62601
      *
      * @return String Representation.
      */
