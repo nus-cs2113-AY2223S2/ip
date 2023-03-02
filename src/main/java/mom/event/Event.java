@@ -1,10 +1,10 @@
-package duke.event;
+package mom.event;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-import duke.item.Item;
-import duke.utils.Constants;
+import mom.item.Item;
+import mom.utils.Constants;
 
 public class Event extends Item {
     private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern(Constants.OUTPUT_DATE_TIME_FORMAT.toString());

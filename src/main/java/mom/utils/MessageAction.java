@@ -1,8 +1,8 @@
-package duke.utils;
+package mom.utils;
 
 import java.util.ArrayList;
 
-import duke.item.Item;
+import mom.item.Item;
 
 public class MessageAction {
     /**

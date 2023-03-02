@@ -1,4 +1,4 @@
-package duke.utils;
+package mom.utils;
 
 import java.util.HashMap;
 import java.io.IOException;
@@ -11,10 +11,10 @@ import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
-import duke.item.Item;
-import duke.todo.Todo;
-import duke.deadline.Deadline;
-import duke.event.Event;
+import mom.deadline.Deadline;
+import mom.event.Event;
+import mom.item.Item;
+import mom.todo.Todo;
 
 public class ItemAdapterFactory implements TypeAdapterFactory {
 

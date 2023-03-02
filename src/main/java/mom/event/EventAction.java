@@ -1,15 +1,14 @@
-package duke.event;
-
-import duke.item.Item;
-import duke.exceptions.DukeException;
+package mom.event;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-import duke.command.CommandAction;
-import duke.utils.Constants;
-import duke.utils.Message;
-import duke.utils.MessageAction;
+import mom.command.CommandAction;
+import mom.exceptions.MomException;
+import mom.item.Item;
+import mom.utils.Constants;
+import mom.utils.Message;
+import mom.utils.MessageAction;
 
 public class EventAction {
     private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern(Constants.ACCEPTABLE_DATE_TIME_FORMAT.toString());
@@ -37,17 +36,17 @@ public class EventAction {
             LocalDateTime from = LocalDateTime.parse(fromString, formatter);
             LocalDateTime to = LocalDateTime.parse(toString, formatter);
             if (from.isAfter(to)) {
-                throw new DukeException();
+                throw new MomException();
             } 
 
             Item newEvent = new Event(description, from, to);
 
             MessageAction.printAddItemMessage(newEvent, itemsSize + 1);
             return newEvent;
-        } catch (DukeException err) {
-            throw new DukeException(Message.ERROR_EVENT_DATE_BEFORE.toString());
+        } catch (MomException err) {
+            throw new MomException(Message.ERROR_EVENT_DATE_BEFORE.toString());
         } catch (Exception err) {
-            throw new DukeException(Message.ERROR_EVENT_MISSING_PARAMETER.toString());
+            throw new MomException(Message.ERROR_EVENT_MISSING_PARAMETER.toString());
         }
     }
 }

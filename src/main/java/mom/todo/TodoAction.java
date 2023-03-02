@@ -1,10 +1,10 @@
-package duke.todo;
+package mom.todo;
 
-import duke.item.Item;
-import duke.exceptions.DukeException;
-import duke.command.CommandAction;
-import duke.utils.Message;
-import duke.utils.MessageAction;
+import mom.command.CommandAction;
+import mom.exceptions.MomException;
+import mom.item.Item;
+import mom.utils.Message;
+import mom.utils.MessageAction;
 
 public class TodoAction {
     /**
@@ -13,7 +13,7 @@ public class TodoAction {
      * @param parameters Gets the item description.
      * @param itemsSize Total size of the items list. Use for printing add message.
      * @return Item object (Subclass Todo) which will be added into the list in main.
-     * @throws DukeException when areValidParameters check fails.
+     * @throws MomException when areValidParameters check fails.
      */
     public static Item addTodo(String parameters, int itemsSize) throws Exception {
         try {
@@ -24,7 +24,7 @@ public class TodoAction {
             MessageAction.printAddItemMessage(newTodo, itemsSize + 1);
             return newTodo;
         } catch (Exception err) {
-            throw new DukeException(Message.ERROR_TODO_MISSING_PARAMETER.toString());
+            throw new MomException(Message.ERROR_TODO_MISSING_PARAMETER.toString());
         }
     }
 }

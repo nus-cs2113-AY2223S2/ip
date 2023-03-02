@@ -1,4 +1,4 @@
-package duke.item;
+package mom.item;
 
 public abstract class Item {
     private String description; // item name

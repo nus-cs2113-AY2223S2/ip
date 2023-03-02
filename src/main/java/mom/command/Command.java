@@ -1,4 +1,4 @@
-package duke.command;
+package mom.command;
 
 public enum Command {
     LIST,

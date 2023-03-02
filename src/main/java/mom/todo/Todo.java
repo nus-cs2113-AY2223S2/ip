@@ -1,6 +1,6 @@
-package duke.todo;
+package mom.todo;
 
-import duke.item.Item;
+import mom.item.Item;
 
 public class Todo extends Item {
     public Todo(String description) {

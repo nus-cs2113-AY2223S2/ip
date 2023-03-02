@@ -1,41 +1,43 @@
-# Duke - User Guide
-Similar to post-it notes, Duke is a friendly remainder app that helps people to keep track of their todos, deadlines and events that they have! It uses a command-line interface, which make inputs swift and convenient! 
+![angry_mom](http://clipart-library.com/img1/1320251.png)
+
+# Mom - User Guide
+Similar to your real-life mom, Mom is a naggy remainder app that helps people to keep track of their todos, deadlines and events that they have! It uses a command-line interface, which make inputs swift and convenient! (Honestly, can't you remember it yourself?)
 
 ## Quick Start
 1. Ensure that you have Java 11 and above installed in your computer.
-2. Download the ***duke.jar*** [here](https://github.com/pinyoko573/ip/releases)
-3. Make sure that you do not have ***items.txt*** in the folder where *duke.jar* is located, as this file will be used to store your items!
-4. Launch your command prompt/terminal and navigate to the folder where *duke.jar* is located.
-5. Run the following command: `java -jar duke.jar`
+2. Download the ***ip.jar*** [here](https://github.com/pinyoko573/ip/releases)
+3. Make sure that you do not have ***reminders.txt*** in the folder where *ip.jar* is located, as this file will be used to store your items!
+4. Launch your command prompt/terminal and navigate to the folder where *ip.jar* is located.
+5. Run the following command: `java -jar ip.jar`
 
-Note: **DO NOT** modify ***items.txt*** unless you know what you are doing!
+Note: **DO NOT** modify ***reminders.txt*** unless you know what you are doing!
 
 ## Features
-### Keeps a list of items
+### Keeps a list of reminders
 
-Duke enables you to keep track a list of items and display it whenever you need it.
+Mom enables you to keep track a list of reminders and display it whenever you need it. (Why can't you do it yourself??)
 
-### Flexible task inputs
+### Flexible reminder inputs
 
-With different types of items, you can specify an item with dateline, or an item with start & end date.
+With different types of reminders, you can specify a reminder with dateline, or a reminder with start & end date. (Better than calendars, right??)
 
-### Marks item that are completed/uncompleted
+### Marks reminder that are completed/uncompleted
 
-You can mark items once you have completed them.
+You can mark reminders once you have completed them. (Good job?)
 
-### Find specific item
+### Find specific reminder
 
-With many items on hand, Duke allows to search and retrieve the item that you are finding.
+With many reminders, Mom allows to search and retrieve the item that you are finding. (Similar to asking your mom to find your lost stuff at home, no?)
 
 ### Persistent data
 
-Items are stored into a text file (items.txt) after each action is performed, so you don't need to key them again.
+Reminders are stored into a text file (reminders.txt) after each action is performed, so you don't need to key them again. (Aren't moms amazing?)
 
 ## Commands
 
-### `list` - List down all the items
+### `list` - List down all the reminders
 
-Shows the list of items recorded.
+Shows the list of reminders recorded.
 
 Format: `list`
 
@@ -43,16 +45,16 @@ Expected output:
 ```
 list
 _________________
-Here are the items in your list:
+Here are the things I need to remind you again and again...
 1. [T][ ] to eat
 2. [D][ ] to swim (by: 20-10-2020 06:00 PM)
 3. [E][ ] to sleep (from: 20-10-2020 12:00 PM to: 20-10-2020 03:00 PM)
 _________________
 ```
 
-### `mark` - Mark an item as done
+### `mark` - Mark a reminder as done
 
-Marks a specific item as done using the **number** shown from the list.
+Marks a specific reminder as done using the **number** shown from the list.
 
 Format: `mark (no)`
 
@@ -62,24 +64,24 @@ Shows the item that has been marked as done.
 ```
 mark 2
 _________________
-Good job! I've marked this item as done:
+Finally done this task? You could have done it earlier.
 [D][X] to swim (by: 20-10-2020 06:00 PM)
 _________________
 ```
 
-### `unmark` - Unmark an item as not done
+### `unmark` - Unmark a reminder as not done
 
-Marks a specific item as not done using the **number** shown from the list.
+Marks a specific reminder as not done using the **number** shown from the list.
 
 Format: `unmark (no)`
 
 Expected output:
 
-Shows the item that has been marked as not done.
+Shows the reminder that has been marked as not done.
 ```
 unmark 2
 _________________
-OK, I've marked this item as not done yet:
+I thought you told me this task was done???
 [D][ ] to swim (by: 20-10-2020 06:00 PM)
 _________________
 ```
@@ -96,9 +98,9 @@ Displays the Todo item added and the number of items after adding.
 ```
 todo to cook
 _________________
-Got it. I've added this item:
+Ok!! But make sure you finish this task soon:
 [T][ ] to cook
-Now you have 4 items in the list.
+Now you have 4 items that I need to remember...
 _________________
 ```
 
@@ -115,9 +117,9 @@ Displays the Deadline item added and the number of items after adding.
 ```
 deadline to play /by 20-10-2020 18:00
 _________________
-Got it. I've added this item:
+Ok!! But make sure you finish this task soon:
 [D][ ] to play (by: 20 Oct 2020 06:00 PM)
-Now you have 5 items in the list.
+Now you have 5 items that I need to remember...
 _________________
 ```
 
@@ -135,13 +137,13 @@ Displays the Event item added and the number of items after adding.
 ```
 event to exercise /from 20-10-2020 12:00 /to 20-10-2020 15:00
 _________________
-Got it. I've added this item:
+Ok!! But make sure you finish this task soon:
 [E][ ] to sleep (from: 20-10-2020 12:00 PM to: 20-10-2020 03:00 PM)
-Now you have 6 items in the list.
+Now you have 6 items that I need to remember...
 _________________
 ```
 
-### `delete` - Delete a task
+### `delete` - Delete a reminder
 
 Delete an item using the **number** shown from the items list.
 
@@ -153,9 +155,9 @@ Shows the item that has been deleted and the number of items remaining.
 ```
 delete 6
 _________________
-Got it. I've deleted this item:
+Finally, something that you don't need me to remind again.
 [E][ ] to sleep (from: 20-10-2020 12:00 PM to: 20-10-2020 03:00 PM)
-Now you have 5 items in the list.
+Now you have 5 items that I need to remember...
 _________________
 ```
 
@@ -171,7 +173,7 @@ Returns the list of items that contain the keyword.
 ```
 find to s
 _________________
-Here are the matching items in your list:
+How should I know what you are looking for? Anyway...
 1. [D][ ] to swim (by: 20-10-2020 06:00 PM)
 2. [E][ ] to sleep (from: 20-10-2020 12:00 PM to: 20-10-2020 03:00 PM)
 _________________
@@ -179,7 +181,7 @@ _________________
 
 ### `exit` - Exit Duke
 
-Exits the Duke application.
+Exits the Mom application.
 
 Format: `exit`
 
@@ -187,5 +189,11 @@ Expected output:
 ```
 exit
 _________________
-Bye. Thanks for using me!
+Leaving your mom? :(
 ```
+
+## P.S...
+
+Apologies if you are offended by my application. Please take it lightly 😭😭😭
+
+Image: Cliparts License for non-commerical use

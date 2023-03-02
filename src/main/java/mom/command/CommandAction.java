@@ -1,17 +1,15 @@
-package duke.command;
+package mom.command;
 
 import java.util.ArrayList;
 
-import duke.item.Item;
-import duke.item.ItemAction;
-import duke.todo.TodoAction;
-import duke.deadline.DeadlineAction;
-import duke.event.EventAction;
-
-import duke.utils.Message;
-import duke.utils.MessageAction;
-
-import duke.exceptions.DukeException;
+import mom.deadline.DeadlineAction;
+import mom.event.EventAction;
+import mom.exceptions.MomException;
+import mom.item.Item;
+import mom.item.ItemAction;
+import mom.todo.TodoAction;
+import mom.utils.Message;
+import mom.utils.MessageAction;
 
 public class CommandAction {
     /**
@@ -20,15 +18,15 @@ public class CommandAction {
      * 
      * @param input the user inputted text.
      * @return command specified by the user.
-     * @throws DukeException when an invalid command is entered.
+     * @throws MomException when an invalid command is entered.
      */
-    public static Command getCommand(String input) throws DukeException {
+    public static Command getCommand(String input) throws MomException {
         try {
             String[] splitInput = input.split(" ", 2);
             Command command = Command.valueOf(splitInput[0].toUpperCase());
             return command;
         } catch (IllegalArgumentException err) {
-            throw new DukeException(Message.ERROR_INVALID_COMMAND.toString());
+            throw new MomException(Message.ERROR_INVALID_COMMAND.toString());
         }
     }
 
@@ -99,7 +97,7 @@ public class CommandAction {
         case EXIT:
             return -1;
         default:
-            throw new DukeException(Message.ERROR_INVALID_COMMAND.toString());
+            throw new MomException(Message.ERROR_INVALID_COMMAND.toString());
         }
         
         return 0;
@@ -112,18 +110,18 @@ public class CommandAction {
      * @param parameters Number that will be validated.
      * @param itemsSize Total size of the items list.
      * @return number that is within the bounds of items list in Integer format.
-     * @throws DukeException When specified item is out of bounds or invalid.
+     * @throws MomException When specified item is out of bounds or invalid.
      */
-    private static int validateItem(String parameters, int itemsSize) throws DukeException {
+    private static int validateItem(String parameters, int itemsSize) throws MomException {
         try {
             int num = Integer.parseInt(parameters) - 1;
             if (num >= 0 && num < itemsSize) {
                 return num;
             } else {
-                throw new DukeException(Message.ERROR_MARK_OUT_OF_BOUNDS.toString());
+                throw new MomException(Message.ERROR_MARK_OUT_OF_BOUNDS.toString());
             }
         } catch (NumberFormatException err) {
-            throw new DukeException(Message.ERROR_MARK_INVALID_PARAMETER.toString());
+            throw new MomException(Message.ERROR_MARK_INVALID_PARAMETER.toString());
         }
     }
 
@@ -131,7 +129,7 @@ public class CommandAction {
         MessageAction.printList(items);
     }
 
-    private static void markItem(ArrayList<Item> items, String parameters, Boolean mark) throws DukeException {
+    private static void markItem(ArrayList<Item> items, String parameters, Boolean mark) throws MomException {
         int num = validateItem(parameters, items.size());
         Item newItem = ItemAction.markItem(items.get(num), mark);
         items.set(num, newItem);
@@ -147,14 +145,14 @@ public class CommandAction {
         }
     }
 
-    private static void deleteItem(ArrayList<Item> items, String parameters) throws DukeException {
+    private static void deleteItem(ArrayList<Item> items, String parameters) throws MomException {
         int num = validateItem(parameters, items.size());
         ItemAction.deleteItem(items.remove(num), items.size());
     }
 
-    private static void findItem(ArrayList<Item> items, String parameters) throws DukeException {
+    private static void findItem(ArrayList<Item> items, String parameters) throws MomException {
         if (parameters.isEmpty()) {
-            throw new DukeException(Message.ERROR_FIND_MISSING_PARAMETER.toString());
+            throw new MomException(Message.ERROR_FIND_MISSING_PARAMETER.toString());
         }
 
         ArrayList<Item> filteredItems = new ArrayList<Item>();

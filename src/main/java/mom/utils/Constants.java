@@ -1,4 +1,4 @@
-package duke.utils;
+package mom.utils;
 
 public enum Constants {
     // DATA FILE NAME USED FOR APPLIATION. default: items.txt

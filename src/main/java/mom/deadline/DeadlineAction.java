@@ -1,15 +1,14 @@
-package duke.deadline;
-
-import duke.item.Item;
-import duke.exceptions.DukeException;
+package mom.deadline;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-import duke.command.CommandAction;
-import duke.utils.Constants;
-import duke.utils.Message;
-import duke.utils.MessageAction;
+import mom.command.CommandAction;
+import mom.exceptions.MomException;
+import mom.item.Item;
+import mom.utils.Constants;
+import mom.utils.Message;
+import mom.utils.MessageAction;
 
 public class DeadlineAction {
     private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern(Constants.ACCEPTABLE_DATE_TIME_FORMAT.toString());
@@ -37,7 +36,7 @@ public class DeadlineAction {
             MessageAction.printAddItemMessage(newDeadline, itemsSize + 1);
             return newDeadline;
         } catch (Exception err) {
-            throw new DukeException(Message.ERROR_DEADLINE_MISSING_PARAMETER.toString());
+            throw new MomException(Message.ERROR_DEADLINE_MISSING_PARAMETER.toString());
         }
     }
 }

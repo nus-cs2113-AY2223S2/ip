@@ -1,22 +1,20 @@
 import java.util.Scanner;
+
+import mom.command.Command;
+import mom.command.CommandAction;
+import mom.exceptions.FileException;
+import mom.item.Item;
+import mom.utils.FileAction;
+import mom.utils.Message;
+import mom.utils.MessageAction;
+
 import java.util.ArrayList;
 
-import duke.command.Command;
-import duke.command.CommandAction;
-
-import duke.item.Item;
-
-import duke.utils.Message;
-import duke.utils.MessageAction;
-import duke.utils.FileAction;
-
-import duke.exceptions.FileException;
-
-public class Duke {
+public class Mom {
     private static ArrayList<Item> items; // List of items
 
     public static void main(String[] args) {
-        startDuke();
+        startMom();
 
         Scanner in = new Scanner(System.in);
         while (in.hasNextLine()) {
@@ -30,7 +28,7 @@ public class Duke {
                 int status = CommandAction.executeCommand(command, parameters, items);
                 if (status == -1) {
                     in.close();
-                    exitDuke();
+                    exitMom();
                 }
 
                 FileAction.exportItems(items);
@@ -45,7 +43,7 @@ public class Duke {
     /**
      * Checks for data file and starts the application.
      */
-    private static void startDuke() {
+    private static void startMom() {
         try {
             items = FileAction.importItems();
         } catch (FileException err) {
@@ -59,7 +57,7 @@ public class Duke {
     /**
      * Exits the application.
      */
-    private static void exitDuke() {
+    private static void exitMom() {
         System.out.println(Message.INFO_EXIT);
         System.exit(0);
     }

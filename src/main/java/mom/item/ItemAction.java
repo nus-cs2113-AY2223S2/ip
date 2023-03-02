@@ -1,7 +1,7 @@
-package duke.item;
+package mom.item;
 
-import duke.utils.Message;
-import duke.utils.MessageAction;
+import mom.utils.Message;
+import mom.utils.MessageAction;
 
 public class ItemAction {
     /**
