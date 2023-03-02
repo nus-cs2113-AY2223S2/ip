@@ -8,6 +8,13 @@ import task.*;
  * Also used to break down or format instructions/data such that it is understood by Duke
  */
 public class Parser {
+    /**
+     * takes the user input as a string and calls the appropriate method to format the input properly and executes
+     * the corresponding action
+     * @param input a string of user's input
+     * @return Command object which will execute the action required
+     * @throws DukeException if there are any errors in user's input
+     */
     public static Command parseUserInput(String input) throws DukeException {
         String inst = input.split("\\s+")[0];
         Command action = new Command(input);
