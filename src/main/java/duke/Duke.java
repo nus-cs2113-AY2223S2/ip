@@ -70,7 +70,7 @@ public class Duke {
     }
 
     public static void main(String[] args) {
-        new Duke("src/main/duke.txt").run();
+        new Duke("duke.txt").run();
     }
 }
 
