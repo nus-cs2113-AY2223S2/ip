@@ -8,18 +8,29 @@ import duke.ui.Ui;
 import java.io.IOException;
 import java.util.Scanner;
 
+/**
+ * Class runs Duke application.
+ */
 public class Duke {
 
     private Storage storage;
     private TaskList tasks;
     private Ui ui;
 
+    /**
+     * Initializes ui, tasks, and storage.
+     *
+     * @param filePath Location of file containing saved tasks.
+     */
     public Duke(String filePath) {
         ui = new Ui();
         tasks = new TaskList();
         storage = new Storage(filePath, tasks);
     }
 
+    /**
+     * Run Duke.
+     */
     public void run() {
         // greet user
         ui.greet();
@@ -29,7 +40,7 @@ public class Duke {
         try {
             storage.createSavedTasksFile();
             storage.loadSavedTasks();
-        } catch (IOException excpetion) {
+        } catch (IOException exception) {
             System.out.println("I/O Error! ");
         }
         System.out.println("Loading complete!");
