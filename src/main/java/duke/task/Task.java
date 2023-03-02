@@ -23,7 +23,7 @@ public class Task {
     public void markAsDone() {
         setDone();
         System.out.println(LINE);
-        System.out.println("Nice! I've marked this duke.task as DONE:");
+        System.out.println("Nice! I've marked this task as DONE:");
         System.out.println("  " + this.toString());
         System.out.println(LINE);
     }
@@ -31,7 +31,7 @@ public class Task {
     public void markAsUndone() {
         setUndone();
         System.out.println(LINE);
-        System.out.println("OK! I've marked this duke.task as NOT DONE YET:");
+        System.out.println("OK! I've marked this task as NOT DONE YET:");
         System.out.println("  " + this.toString());
         System.out.println(LINE);
     }

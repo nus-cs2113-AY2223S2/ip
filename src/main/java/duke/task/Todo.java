@@ -1,7 +1,7 @@
 package duke.task;
 
-public class Todos extends Task {
-    public Todos(String description) {
+public class Todo extends Task {
+    public Todo(String description) {
         super(description);
     }
 

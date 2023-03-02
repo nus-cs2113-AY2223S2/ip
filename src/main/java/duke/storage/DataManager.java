@@ -1,17 +1,17 @@
-package duke.data;
+package duke.storage;
 import duke.task.Task;
+import duke.utils.Ui;
+
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class DataManager {
-
     protected final String filePath;
     protected final ArrayList<Task> tasks;
 
@@ -27,16 +27,6 @@ public class DataManager {
         }
         fw.close();
     }
-
-/*    public void loadFile() throws IOException {
-        File file = new File(this.filePath);
-        Scanner scanner = new Scanner(file);
-        while (scanner.hasNextLine())
-            if (scanner.nextLine().startsWith([E]){
-                list.add
-            }
-    }*/
-
     public void createFile() throws IOException {
         File file = new File(this.filePath);
         Path path = Paths.get(filePath);
@@ -44,22 +34,21 @@ public class DataManager {
         file.createNewFile();
     }
 
-/*
     public void writeToFileWithErrorHandler() throws IOException {
         try {
-*/
-/*            loadFile();*//*
-
+            writeToFile();
         } catch (FileNotFoundException e) {
-            System.out.println("Meow! Something went wrong: " + e.getMessage());
+            System.out.println("Meow! Something went wrong: " + e.getMessage()
+                    + System.lineSeparator() + Ui.LINE);
             try {
                 createFile();
             } catch (IOException error){
-                System.out.println("Meow! Failed to create a file: " + e.getMessage());
+                System.out.println("Meow! Failed to create a file: " + e.getMessage()
+                        + System.lineSeparator() + Ui.LINE);
             }
             System.out.println("File Created!");
         }
+        writeToFile();
     }
-    */
 }
 

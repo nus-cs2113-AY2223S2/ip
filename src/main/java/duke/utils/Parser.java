@@ -1,8 +1,6 @@
 package duke.utils;
 
-import static duke.utils.Ui.FAREWELL_MESSAGE;
 import static duke.utils.Ui.GENERAL_ERROR_MESSAGE;
-import duke.utils.TaskList;
 public class Parser {
     public TaskList taskList;
     public Ui ui;
@@ -15,9 +13,6 @@ public class Parser {
         String[] splitInput = userInput.split(" ", 2);
         String command = splitInput[0];
         String content = splitInput[splitInput.length - 1];
-/*        String[] phrases = new String[10];*/
-        System.out.println(content);
-        System.out.println(command);
         switch (command) {
         case "mark":
             taskList.toggleMark(content, true);
@@ -27,7 +22,7 @@ public class Parser {
             break;
         case "list":
             ui.printListTasksMessage();
-            taskList.printList(TaskList.currentTaskNum);
+            taskList.printList(taskList.currentTaskNum);
             break;
         case "todo":
             taskList.addTodo(content);
@@ -42,8 +37,8 @@ public class Parser {
             taskList.printAddTaskMessage();
             break;
         case "delete":
-            taskList.deleteTask(content);
             taskList.printDeleteTaskMessage(Integer.parseInt(content) - 1);
+            taskList.deleteTask(content);
             break;
         case "find":
         case "guide":

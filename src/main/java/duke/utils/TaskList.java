@@ -1,24 +1,23 @@
 package duke.utils;
-
 import duke.task.Deadline;
 import duke.task.Event;
 import duke.task.Task;
-import duke.task.Todos;
-
+import duke.task.Todo;
 import java.util.ArrayList;
-
 import static duke.utils.Ui.*;
 
 public class TaskList {
     Ui ui = new Ui();
-    public static ArrayList<Task> list = new ArrayList<>();
-    public static int currentTaskNum = 0;
+    public ArrayList<Task> list = new ArrayList<>();
+
+    public int currentTaskNum;
+
     public void printList(int currentTaskNum) {
         int currentPrintedTask = 0;
         int placeHolder = currentTaskNum;
         System.out.println(LINE);
         if (placeHolder == 0) {
-            System.out.println("No Task! 〲⚆ﻌ⚆〉");
+            System.out.println("No Task!");
         } else {
             while (placeHolder > 0) {
                 System.out.println(currentPrintedTask + 1 + ". " + list.get(currentPrintedTask).toString());
@@ -28,6 +27,7 @@ public class TaskList {
         }
         System.out.println(LINE);
     }
+
     public void addEvent(String content) {
         String[] phrases;
         phrases = content.split("/");
@@ -35,7 +35,6 @@ public class TaskList {
             ui.printErrorMessage(EVENT_TIME_ERROR_MESSAGE);
         } else {
             list.add(new Event(phrases[0], phrases[1], phrases[2]));
-            //processAddTaskRequest();
         }
     }
 
@@ -46,22 +45,13 @@ public class TaskList {
             ui.printErrorMessage(DEADLINE_TIME_ERROR_MESSAGE);
         } else {
             list.add(new Deadline(phrases[0], phrases[1]));
-            //processAddTaskRequest();
         }
     }
 
     public void addTodo(String content) {
-        list.add(new Todos(content));
-        //processAddTaskRequest();
+        list.add(new Todo(content));
     }
 
-
-//    public void processAddTaskRequest() {
-//        currentTaskNum++;
-//        printTotalTasks(currentTaskNum);
-//        System.out.println(LINE);
-//    }
-//
     public void deleteTask(String content) {
         list.remove(Integer.parseInt(content) - 1);
         currentTaskNum--;
@@ -84,7 +74,7 @@ public class TaskList {
     public void printAddTaskMessage() {
         System.out.println(LINE + "Got it. I've added this task:\n"
                 + "  "
-                + TaskList.list.get(TaskList.currentTaskNum).toString()
+                + this.list.get(currentTaskNum).toString()
                 + System.lineSeparator());
         currentTaskNum++;
         printTotalTasks(currentTaskNum);
@@ -93,16 +83,19 @@ public class TaskList {
     public void printDeleteTaskMessage(int taskNum) {
         System.out.println(LINE + "Got it. I've deleted this task:\n"
                 + "  "
-                + TaskList.list.get(taskNum).toString()
+                + this.list.get(taskNum).toString()
                 + System.lineSeparator());
     }
 
     public void printTotalTasks(int currentTaskNum) {
         if (currentTaskNum == 1) {
-            System.out.println("Now you have " + currentTaskNum + " task in the list.");
+            System.out.println("Now you have " + currentTaskNum + " task in the list."
+                    + System.lineSeparator() + Ui.LINE);
+
+
         } else {
-            System.out.println("Now you have " + currentTaskNum + " tasks in the list.");
+            System.out.println("Now you have " + currentTaskNum + " tasks in the list."
+                    + System.lineSeparator() + Ui.LINE);
         }
     }
-
 }

@@ -16,35 +16,20 @@ public class Ui {
             " Meow! I'm Ashy n(=^-^=)n\n" +
             " What can I do for you?\n" +
             LINE;
+
     public static String FAREWELL_MESSAGE =
             " Bye. Hope to see you again soon meow!\n" + LINE;
-
-   /* public void printAddTaskMessage() {
-        System.out.println(LINE + "Got it. I've added this task:\n"
-                + "  "
-                + TaskList.list.get(TaskList.currentTaskNum).toString()
-                + System.lineSeparator());
-    }
-
-    public void printDeleteTaskMessage(int taskNum) {
-        System.out.println(LINE + "Got it. I've deleted this task:\n"
-                + "  "
-                + TaskList.list.get(taskNum).toString()
-                + System.lineSeparator());
-    }
-*/
+   public void printGreetingMessage() {
+       System.out.println(LOGO);
+       System.out.println(GREETING);
+   }
+   public void printFarewellMessage() {
+       System.out.println(FAREWELL_MESSAGE);
+   }
     public void printListTasksMessage() {
         System.out.println("Here is your list!");
     }
     public void printErrorMessage(String errorMessage) {
         System.out.println(errorMessage);
     }
-
-    /*public void printTotalTasks(int currentTaskNum) {
-        if (currentTaskNum == 1) {
-            System.out.println("Now you have " + currentTaskNum + " task in the list.");
-        } else {
-            System.out.println("Now you have " + currentTaskNum + " tasks in the list.");
-        }
-    }*/
 }
