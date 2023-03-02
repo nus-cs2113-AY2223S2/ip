@@ -50,6 +50,10 @@ public class Duke {
                     
                     new Event(input);
                 }
+                else if (input.startsWith("delete ")) {
+                    
+                    task.delete(input);
+                }
                 else {
                     throw new InvalidInputException();
                 }
