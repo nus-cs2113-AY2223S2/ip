@@ -1,77 +1,210 @@
 import java.util.Scanner;
 public class Duke {
+
+    public static boolean isDesEmpty(String description) {
+        boolean isEmpty;
+        isEmpty = true;
+
+        int i;
+        char val;
+        for (i = 0; description.length() > i; i += 1) {
+            val = description.charAt(i);
+            isEmpty = Character.isWhitespace(val);
+        }
+        return isEmpty;
+    }
+
     public static void printDash() {
         System.out.println("____________________________________________________________");
     }
-    public static void listTask(int num, Task[] todos) {
+
+    public static void printExit() {
+        printDash();
+        System.out.println("Bye, cya soon!");
+        printDash();
+    }
+
+    public static void listTask() {
         printDash();
         System.out.println("Tasks in list:");
-        int k;
-        for (k = 1; num >= k; k += 1) {
-            System.out.println(k + "." + todos[k - 1]);
+        int k = 0;
+        
+        for (Task command : Task.tasks) {
+            k += 1;
+            System.out.println((k + "." + command));
         }
+        
         printDash();
+    }
+    public static void unmarkTask(String[] list) {
+        try {
+            int pt;
+            pt = Integer.parseInt(list[1]);
+
+            if ((pt > Task.taskNum) || (1 > pt)) {
+                throw new DukeException();
+            }
+
+            Task command;
+            command = Task.tasks.get(pt - 1);
+            command.markNotDone();
+            printDash();
+            System.out.println("Marking task as undone:\n" + command);
+            printDash();
+        } catch (NullPointerException err) {
+            printDash();
+            System.out.println("☹ OOPS!!! Not enough tasks here. Try again.");
+            printDash();
+        } catch (IndexOutOfBoundsException err) {
+            printDash();
+            System.out.println("☹ OOPS!!! Task number is missing. Try again.");
+            printDash();
+        } catch (DukeException err) {
+            printDash();
+            System.out.println("☹ OOPS!!! Invalid task number. Try again.");
+            printDash();
+        }
     }
 
-    public static void addTask(String cmd, Task[] todos, int num) {
-        Task command;
-        command = new Task(cmd);
-        todos[num] = command;
-        printDash();
-        System.out.println("added: " + command.description);
-        printDash();
+    public static void markTask(String[] list) {
+        try {
+            int pt;
+            pt = Integer.parseInt(list[1]);
+
+            if ((pt > Task.taskNum) || (1 > pt)) {
+                throw new DukeException();
+            }
+
+            Task command;
+            command = Task.tasks.get(pt - 1);
+            command.markAsDone();
+            printDash();
+            System.out.println("Marking task as done:\n" + command);
+            printDash();
+        } catch (NullPointerException err) {
+            printDash();
+            System.out.println("☹ OOPS!!! Not enough tasks here. Try again.");
+            printDash();
+        } catch (IndexOutOfBoundsException err) {
+            printDash();
+            System.out.println("☹ OOPS!!! Task number is missing. Try again.");
+            printDash();
+        } catch (DukeException err) {
+            printDash();
+            System.out.println("☹ OOPS!!! Invalid task number. Try again.");
+            printDash();
+        }
     }
 
-    public static void unmarkTask(int k,Task[] todos, String[] list) {
-        int pt;
-        pt = Integer.parseInt(list[k]);
-        Task command;
-        command = todos[pt - 1];
-        command.markNotDone();
-        printDash();
-        System.out.println("Marking task as undone:\n" + command);
-        printDash();
+    public static void deleteTask(String[] list) {
+        try {
+            int pt;
+            pt = Integer.parseInt(list[1]);
+
+            if ((pt > Task.taskNum) || (1 > pt)) {
+                throw new DukeException();
+            }
+
+            Task command;
+            command = Task.tasks.get(pt - 1);
+            Task.tasks.remove(pt - 1);
+            Task.taskNum -= 1;
+            printDash();
+            System.out.println("Successfully deleted task:\n" + command);
+            System.out.println("You currently have " + Task.taskNum + " task(s) left");
+            printDash();
+        } catch (NullPointerException err) {
+            printDash();
+            System.out.println("☹ OOPS!!! Not enough tasks here. Try again.");
+            printDash();
+        } catch (IndexOutOfBoundsException err) {
+            printDash();
+            System.out.println("☹ OOPS!!! Task number is missing. Try again.");
+            printDash();
+        } catch (DukeException err) {
+            printDash();
+            System.out.println("☹ OOPS!!! Invalid task number. Try again.");
+            printDash();
+        }
     }
 
-    public static void markTask(int k, Task[] todos, String[] list) {
-        int pt;
-        pt = Integer.parseInt(list[k]);
-        Task command;
-        command = todos[pt - 1];
-        command.markAsDone();
-        printDash();
-        System.out.println("Marking task as done:\n" + command);
-        printDash();
-    }
-    public static void makeDeadline(String[] list, Task[] todos, int num, int k, int j) {
-        Task command;
-        command = new Deadline(list[k], list[j]);
-        todos[num] = command;
-        num += 1;
-        printDash();
-        System.out.println("Adding this task:\n" + command);
-        System.out.println("You currently have " + num + " task(s)");
-        printDash();
+    public static void makeDeadline(String[] list) {
+        try {
+            if (isDesEmpty(list[1])) {
+                throw new DukeException();
+            }
+
+            String[] due;
+            due = list[1].split("/by ", 2);
+            Task command;
+            command = new Deadline(due[0], due[1]);
+            Task.tasks.add(Task.taskNum, command);
+            Task.taskNum += 1;
+            printDash();
+            System.out.println("Adding this task:\n" + command);
+            System.out.println("You currently have " + Task.taskNum + " task(s)");
+            printDash();
+        } catch (IndexOutOfBoundsException err) {
+            printDash();
+            System.out.println("☹ OOPS!!! Due date of deadline or description cannot be empty. Try again.\nFollow the following format: deadline [description] /by [due date]");
+            printDash();
+        } catch (DukeException e) {
+            printDash();
+            System.out.println("☹ OOPS!!! Due date of deadline or description cannot be empty. Try again.\nFollow the following format: deadline [description] /by [due date]");
+            printDash();
+        }
     }
 
-    public static void makeToDo(Task[] todos, int num, String[] list, int k) {
-        Task command;
-        command = new Todo(list[k]);
-        todos[num] = command;
-        num += 1;
-        printDash();
-        System.out.println("Adding this task:\n" + command);
-        System.out.println("You currently have " + num + " task(s)");
-        printDash();
+    public static void makeToDo(String[] list) {
+        try {
+            if (isDesEmpty(list[1])) {
+                throw new DukeException();
+            }
+
+            Task command;
+            command = new Todo(list[1]);
+            Task.tasks.add(Task.taskNum, command);
+            Task.taskNum += 1;
+            printDash();
+            System.out.println("Adding this task:\n" + command);
+            System.out.println("You currently have " + Task.taskNum + " task(s)");
+            printDash();
+        } catch (IndexOutOfBoundsException err) {
+            printDash();
+            System.out.println("☹ OOPS!!! Description of a to do cannot be empty. Try again.");
+            printDash();
+        } catch (DukeException e) {
+            printDash();
+            System.out.println("☹ OOPS!!! Description of a to do cannot be empty. Try again.");
+            printDash();
+        }
     }
-    public static void makeEvent(Task[] todos, String[] beg, String[] end, int num, int k, int j, int l) {
-        Task command = new Event(beg[k], end[j], end[l]);
-        todos[num] = command;
-        num += 1;
-        printDash();
-        System.out.println("Adding this task:\n" + command);
-        System.out.println("You currently have " + num + " task(s)");
-        printDash();
+    public static void makeEvent(String[] list) {
+        try {
+            if (isDesEmpty(list[1])) {
+                throw new DukeException();
+            }
+
+            String[] beg;
+            beg = list[1].split("/from ", 2);
+            String[] end;
+            end = beg[1].split("/to ", 2);
+            Task command = new Event(end[0], end[1], beg[0]);
+            Task.tasks.add(Task.taskNum, command);
+            Task.taskNum += 1;
+            printDash();
+            System.out.println("Adding this task:\n" + command);
+            System.out.println("You currently have " + Task.taskNum + " task(s)");
+            printDash();
+        } catch (IndexOutOfBoundsException err) {
+            printDash();
+            System.out.println("☹ OOPS!!! Date of event or description cannot be empty. Try again.\nFollow the following format: event [description] /from [start] /to [end]");
+            printDash();
+        } catch (DukeException e) {
+            printDash();
+            System.out.println("☹ OOPS!!! Date of event or description cannot be empty. Try again.\nFollow the following format: event [description] /from [start] /to [end]");
+            printDash();
+        }
     }
     public static void main(String[] args) {
         printDash();
@@ -81,51 +214,37 @@ public class Duke {
 
         Scanner in = new Scanner(System.in);
 
-        int num;
-        num = 0;
-
         String cmd;
         cmd = in .nextLine();
 
-        Task[] todos;
-        todos = new Task[100];
-
         while (!(cmd.equals("bye"))) {
             if (cmd.equals("list")) {
-                listTask(num, todos);
+                listTask();
             } else {
                 String[] list = cmd.split(" ", 2);
 
                 if (list[0].equals("mark")) {
-                    markTask(1, todos, list);
+                    markTask(list);
                 } else if (list[0].equals("unmark")) {
-                    unmarkTask(1, todos, list);
+                    unmarkTask(list);
                 } else if (list[0].equals("todo")) {
-                    makeToDo(todos, num, list, 1);
-                    num += 1;
+                    makeToDo(list);
                 } else if (list[0].equals("event")) {
-                    String[] beg;
-                    beg = list[1].split("/from ", 2);
-                    String[] end;
-                    end = beg[1].split("/to ", 2);
-                    makeEvent(todos, beg, end, num,0, 0, 1);
-                    num += 1;
+                    makeEvent(list);
                 } else if (list[0].equals("deadline")) {
-                    String[] due;
-                    due = list[1].split("/by ", 2);
-                    makeDeadline(due, todos, num, 0, 1);
-                    num += 1;
+                    makeDeadline(list);
+                } else if (list[0].equals("delete")) {
+                    deleteTask(list);
                 } else {
-                    addTask(cmd, todos, num);
-                    num += 1;
+                    printDash();
+                    System.out.println("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
+                    printDash();
                 }
             }
             cmd = in.nextLine();
         }
 
         // exit
-        printDash();
-        System.out.println("Bye, cya soon!");
-        printDash();
+        printExit();
     }
 }

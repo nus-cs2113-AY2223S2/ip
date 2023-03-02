@@ -1,6 +1,10 @@
+import java.util.ArrayList;
+
 public class Task {
+    static ArrayList<Task> tasks = new ArrayList<>();
     protected String description;
-    protected boolean isDone;
+    protected boolean isDone = false;
+    static int taskNum = 0;
     public Task(String description) {
         this.description = description;
     }
