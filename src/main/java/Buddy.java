@@ -4,8 +4,8 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.io.FileWriter;
-import java.text.ParseException;
-import java.util.zip.DataFormatException;
+import java.util.stream.Collectors;
+import static java.util.stream.Collectors.toList;
 
 
 public class Buddy {
@@ -79,7 +79,7 @@ public class Buddy {
                     System.out.println("That is not a valid task to unmark! Please check your list again and input a valid task");
 
                 }
-            } else if (command.startsWith("todo") || command.startsWith("deadline") || command.startsWith("event") || command.startsWith("delete")) { //todo or deadline or event or delete--> put together so don't have to repeat the same code thrice
+            } else if (command.startsWith("todo") || command.startsWith("deadline") || command.startsWith("event") || command.startsWith("delete") || command.startsWith("find")) { //todo or deadline or event or delete--> put together so don't have to repeat the same code thrice
                 System.out.println(divider);
                 System.out.println("Got it! I have added this task: ");
                 if (command.startsWith("todo")) {
@@ -125,6 +125,27 @@ public class Buddy {
                     listOfThings.remove(taskNumberToBeDeleted - 1);
                     taskCount--;
                     System.out.print("OK! Task deleted :) Type list to see remaining tasks!");
+                } else if (command.startsWith("find")){
+                    String keyword = command.split(" ")[1].trim().toLowerCase();
+                    ArrayList <Task> matchedTasks = new ArrayList<>();
+                    matchedTasks = (ArrayList<Task>) listOfThings.stream() // casts list to ArrayList
+                            .filter(t -> t.getTaskName().trim().toLowerCase().contains(keyword)).collect(toList());
+                    if (!matchedTasks.isEmpty()){
+                        System.out.println("Well, I found these matching tasks in your list!");
+                    }
+                    for (Task task : matchedTasks){
+
+                        System.out.println(task);
+
+                    }
+                    if (matchedTasks.isEmpty()){
+                        System.out.println("Oops, there are no tasks matching the keyword! Try again with another keyword");
+                    }
+
+
+
+
+
                 }
                 System.out.print("You currently have " + taskCount);
                 if (taskCount == 1) {
