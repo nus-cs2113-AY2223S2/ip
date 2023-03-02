@@ -4,7 +4,7 @@ package exception;
  * An exception for the Chatbot
  */
 public class DukeException extends Exception {
-    String description;
+    protected String description;
 
     public DukeException(String description) {
         this.description = description;
