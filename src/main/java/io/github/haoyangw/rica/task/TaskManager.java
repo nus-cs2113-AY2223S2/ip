@@ -223,7 +223,7 @@ public class TaskManager {
      * @throws RicaTaskException If the wrong command keyword was used, no Tasks
      *   exist, or a non-integer index was given within the command
      */
-    public void deleteTaskSpecifiedByl(String command) throws RicaTaskException {
+    public void deleteTaskSpecifiedBy(String command) throws RicaTaskException {
         String[] parameters = command.split(" ");
         int FIRST_PARAM = 0;
         if (!parameters[FIRST_PARAM].equals(TaskManager.DELETE_CMD)) {
