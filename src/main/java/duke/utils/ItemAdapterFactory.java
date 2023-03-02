@@ -11,10 +11,10 @@ import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
-import duke.deadline.Deadline;
-import duke.event.Event;
 import duke.item.Item;
 import duke.todo.Todo;
+import duke.deadline.Deadline;
+import duke.event.Event;
 
 public class ItemAdapterFactory implements TypeAdapterFactory {
 
@@ -48,10 +48,12 @@ public class ItemAdapterFactory implements TypeAdapterFactory {
             out.name("description").value(item.getDescription());
             out.name("isDone").value(Boolean.toString(item.getDone()));
 
+            // Check the class type and write accordingly
             if (item instanceof Deadline) {
                 out.name("datemark").value(((Deadline) item).getDate());
             } else if (item instanceof Event) {
-                
+                out.name("from").value(((Event) item).getFromDate());
+                out.name("to").value(((Event) item).getToDate());
             }
 
             out.endObject();
@@ -70,27 +72,34 @@ public class ItemAdapterFactory implements TypeAdapterFactory {
             return itemMap;
         }
 
-        private Item parseItem(HashMap<String, String> itemMap) {
+        private Item parseItem(HashMap<String, String> itemMap) throws IOException {
             Item item = null;
 
+            // Load all the variables that all Items have
             String type = itemMap.get("type");
             String description = itemMap.get("description");
             boolean isDone = Boolean.parseBoolean(itemMap.get("isDone"));
 
+            // Check the class type and load their variables accordingly
             switch (type) {
                 case "Todo": {
                     item = new Todo(description, isDone);
                     break;
                 }
                 case "Deadline": {
-                    item = new Deadline(description, LocalDateTime.parse(itemMap.get("datemark")), isDone);
+                    LocalDateTime datemark = LocalDateTime.parse(itemMap.get("datemark"));
+                    item = new Deadline(description, datemark, isDone);
                     break;
                 }
                 case "Event": {
+                    LocalDateTime from = LocalDateTime.parse(itemMap.get("from"));
+                    LocalDateTime to = LocalDateTime.parse(itemMap.get("to"));
+                    item = new Event(description, from, to, isDone);
                     break;
                 }
                 default:
-                    //give some err here
+                    // When an unknown class type is received
+                    throw new IOException();
             }
 
             return item;

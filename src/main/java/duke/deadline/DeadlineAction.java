@@ -7,12 +7,12 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import duke.command.CommandAction;
+import duke.utils.Constants;
 import duke.utils.Message;
 import duke.utils.MessageAction;
 
 public class DeadlineAction {
-    private static String format = "dd-MM-yyyy HH:mm";
-    private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
+    private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern(Constants.ACCEPTABLE_DATE_TIME_FORMAT.toString());
 
     /**
      * Adds a Deadline item into the list.

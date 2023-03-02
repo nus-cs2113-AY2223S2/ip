@@ -14,7 +14,6 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 public class FileAction {
-    public static final String FILE_NAME = "items.txt";
 
     /**
      * Imports the file and put into the list.
@@ -22,7 +21,7 @@ public class FileAction {
      * @throws FileException When file is missing or cannot be opened.
      */
     public static ArrayList<Item> importItems() throws FileException {
-        File file = new File(FILE_NAME);
+        File file = new File(Constants.FILE_NAME.toString());
         if (!file.exists()) {
             System.out.println(Message.WARNING_MISSING_FILE);
             return new ArrayList<Item>();
@@ -50,7 +49,7 @@ public class FileAction {
         try {
             Gson gson = new GsonBuilder().registerTypeAdapterFactory(new ItemAdapterFactory()).create();
 
-            FileWriter fw = new FileWriter("items.txt");
+            FileWriter fw = new FileWriter(Constants.FILE_NAME.toString());
             String jsonString = gson.toJson(items);
             fw.write(jsonString);
             fw.flush();

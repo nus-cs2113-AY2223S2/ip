@@ -4,10 +4,10 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import duke.item.Item;
+import duke.utils.Constants;
 
 public class Deadline extends Item {
-    private static String format = "dd MMM yyyy hh:mm a";
-    private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
+    private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern(Constants.OUTPUT_DATE_TIME_FORMAT.toString());
     
     private LocalDateTime datemark;
     

@@ -4,10 +4,10 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import duke.item.Item;
+import duke.utils.Constants;
 
 public class Event extends Item {
-    private static String format = "dd MMM yyyy hh:mm a";
-    private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
+    private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern(Constants.OUTPUT_DATE_TIME_FORMAT.toString());
 
     private LocalDateTime from;
     private LocalDateTime to;
@@ -22,6 +22,14 @@ public class Event extends Item {
         super(description, isDone);
         this.from = from;
         this.to = to;
+    }
+
+    public String getFromDate() {
+        return this.from.toString();
+    }
+
+    public String getToDate() {
+        return this.to.toString();
     }
 
     @Override
