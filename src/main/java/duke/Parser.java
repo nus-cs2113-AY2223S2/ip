@@ -9,7 +9,6 @@ import java.io.IOException;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
 public class Parser {
@@ -66,8 +65,6 @@ public class Parser {
     }
 
     public static Datetime getTaskTime(String tasktype) throws LackOfTaskDetail {
-        DateTimeFormatter inputformat = DateTimeFormatter.ofPattern("yyyy-mm-dd");
-
         try {
             String splittedDiscription[] = splitTime(tasktype);
             if (splittedDiscription.length == 1 || splittedDiscription[1].equals("")) {
