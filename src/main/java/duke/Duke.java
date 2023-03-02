@@ -2,11 +2,8 @@ package duke;
 
 import duke.task.*;
 
-<<<<<<< HEAD
 import java.io.IOException;
-=======
 import java.util.ArrayList;
->>>>>>> branch-Level-6
 import java.util.Scanner;
 import java.io.File;
 import java.io.FileWriter;
@@ -75,15 +72,14 @@ public class Duke {
                 if (line.toLowerCase().startsWith("unmark")) {
                     toggleDoneStatus(line, item, UNMARK_MSG, false);
                 }
-<<<<<<< HEAD
-                writeTasksToFile();
-=======
+
 
                 // Delete item
                 if (line.toLowerCase().startsWith("delete")) {
                     item = deleteTask(line, item);
                 }
->>>>>>> branch-Level-6
+                writeTasksToFile();
+
             }
             // Read next line
             line = in.nextLine();
