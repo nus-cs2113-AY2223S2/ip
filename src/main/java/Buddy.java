@@ -1,12 +1,29 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 import java.util.ArrayList;
-
+import java.io.FileWriter;
+import java.text.ParseException;
+import java.util.zip.DataFormatException;
 
 
 public class Buddy {
+    public static int taskCount = 0;
+
 
 
     public static void main(String[] args) {
+        ArrayList<Task> listOfThings = new ArrayList<>();
+        try{
+            Storage.loadFile(listOfThings);
+
+        } catch (FileNotFoundException e){
+            System.out.println("File not found");
+            Storage.createFile();
+
+        }
+
         String greeting = "Hello there! I'm Buddy\n"
                 + "How may I assist you?";
         String listOfCommands = "Here are the commands you can use: todo, deadline, event,  list, mark, unmark, bye";
@@ -18,18 +35,19 @@ public class Buddy {
         System.out.println(listOfCommands);
         System.out.println(divider);
 
-        ArrayList<Task> listOfThings = new ArrayList<>();
-        int currentPosition = 0;
+
+
         String command;
         Scanner in = new Scanner(System.in);
         command = in.nextLine();
+
 
 
         while (!command.equals("bye")) {
 
             int index = 1;
             if (command.equals("list")) {
-                for (int i = 0; i < currentPosition; i++) { // while not null
+                for (int i = 0; i < taskCount; i++) { // while not null
                     System.out.println(index + "." + listOfThings.get(index - 1));
                     index++;
                 }
@@ -74,9 +92,8 @@ public class Buddy {
                     Todo todoBeingAdded = new Todo(command.substring(todoStartingIndex));
                     listOfThings.add(todoBeingAdded);
 
-                    // Task is not a Todo but Todo is a task
                     System.out.println(todoBeingAdded);
-                    currentPosition++;
+                    taskCount++;
 
                 } else if (command.startsWith("deadline")) {
                     int deadlineStartingIndex = 9;
@@ -89,7 +106,7 @@ public class Buddy {
                     Deadline deadlineBeingAdded = new Deadline(taskDescription, date);
                     listOfThings.add(deadlineBeingAdded);
                     System.out.println(deadlineBeingAdded);
-                    currentPosition++;
+                    taskCount++;
 
                 } else if (command.startsWith("event")) {
                     int eventStartingIndex = 6;
@@ -104,17 +121,17 @@ public class Buddy {
                     Event eventBeingAdded = new Event(taskDescription, from, to);
                     listOfThings.add(eventBeingAdded);
                     System.out.println(eventBeingAdded);
-                    currentPosition++;
+                    taskCount++;
 
                 } else if (command.startsWith("delete")) {
                     int indexOfTaskNumber = 7;
                     int taskNumberToBeDeleted = Integer.parseInt(command.substring(indexOfTaskNumber));
                     listOfThings.remove(taskNumberToBeDeleted - 1);
-                    currentPosition--;
+                    taskCount--;
                     System.out.print("OK! Task deleted :) Type list to see remaining tasks!");
                 }
-                System.out.print("You currently have " + currentPosition);
-                if (currentPosition == 1) {
+                System.out.print("You currently have " + taskCount);
+                if (taskCount == 1) {
                     System.out.println(" task remaining! Let's finish it quickly!");
                 } else {
                     System.out.println(" tasks remaining! You got this, buddy!");  // all these same for all four subtasks so put at the bottom
@@ -125,6 +142,13 @@ public class Buddy {
             command = in.nextLine();
 
         }
+        try{
+            Storage.updateFile(listOfThings);
+
+        } catch(IOException e){
+            System.out.println("Error occurred");
+        }
+
         System.out.println(divider);
         System.out.println(exitMessage);
         System.out.println(divider);
