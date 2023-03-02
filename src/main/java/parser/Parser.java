@@ -1,6 +1,7 @@
 package parser;
 
 import constants.Command;
+import constants.Keyword;
 import exception.DukeException;
 import ui.Ui;
 
@@ -8,16 +9,13 @@ import java.util.HashMap;
 import java.util.regex.PatternSyntaxException;
 
 public class Parser {
-    protected final String COMMAND = "command";
-    protected final String DESCRIPTION = "description";
-    protected final String DEADLINE = "deadline";
     protected final String BY = " /by ";
     protected final Ui ui = Ui.getInstance();
 
     protected HashMap<String, String> handleTodo(String text) {
         HashMap<String, String> dictionary = new HashMap<>();
-        dictionary.put(COMMAND, Command.TODO);
-        dictionary.put(DESCRIPTION, text.trim());
+        dictionary.put(Keyword.COMMAND, Command.TODO);
+        dictionary.put(Keyword.DESCRIPTION, text.trim());
         return dictionary;
     }
 
@@ -28,11 +26,11 @@ public class Parser {
             if (words.length == 1) {
                 throw new DukeException("No description has been provided");
             }
-            dictionary.put(COMMAND, Command.DEADLINE);
+            dictionary.put(Keyword.COMMAND, Command.DEADLINE);
             String description = words[0].trim();
             String deadline = words[1].trim();
-            dictionary.put(DESCRIPTION, description);
-            dictionary.put(DEADLINE, deadline);
+            dictionary.put(Keyword.DESCRIPTION, description);
+            dictionary.put(Keyword.DEADLINE, deadline);
             return dictionary;
         } catch (PatternSyntaxException e) {
             ui.printMessage("No deadline provided");
@@ -42,20 +40,20 @@ public class Parser {
 
     protected HashMap<String, String> handleMarkAndDelete(String text, String command) {
         HashMap<String, String> dictionary = new HashMap<>();
-        dictionary.put(COMMAND, command);
-        dictionary.put("index", text);
+        dictionary.put(Keyword.COMMAND, command);
+        dictionary.put(Keyword.INDEX, text);
         return dictionary;
     }
 
     protected HashMap<String, String> handleOthers(String command) {
         HashMap<String, String> dictionary = new HashMap<>();
-        dictionary.put(COMMAND, command);
+        dictionary.put(Keyword.COMMAND, command);
         return dictionary;
     }
 
     protected HashMap<String, String> handleEvent(String text) throws DukeException {
         HashMap<String, String> dictionary = new HashMap<>();
-        dictionary.put(COMMAND, Command.EVENT);
+        dictionary.put(Keyword.COMMAND, Command.EVENT);
         String[] words = text.split("/");
         if (words.length != 3) {
             throw new DukeException("Invalid input");
@@ -105,7 +103,7 @@ public class Parser {
     protected HashMap<String, String> handleFind(String keyword) {
         HashMap<String, String> dictionary = new HashMap<>();
         keyword = keyword.trim();
-        dictionary.put(COMMAND, "find");
+        dictionary.put(Keyword.COMMAND, "find");
         dictionary.put("keyword", keyword);
         return dictionary;
     }
