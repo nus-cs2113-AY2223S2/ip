@@ -10,7 +10,7 @@ public class Messages {
             "todo: Adds a todo to your task list\n" +
             "FORMAT: todo <todo name>\n" +
             "deadline: Adds a deadline to your task list\n" +
-            "FORMAT: deadline <deadline name> /by <deadline date>\n" +
+            "FORMAT: deadline <deadline name> /by <YYYY-MM-DD> (where YYYY is year, MM is month and DD is day)\n" +
             "event: Adds an event to your task list\n" +
             "FORMAT: event <event name> /from <start> /to <end>\n" +
             "There are 5 other action commands: list, mark, unmark, find and bye\n" +

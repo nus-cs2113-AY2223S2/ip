@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-
 import static java.util.stream.Collectors.toList;
 
 public class FindTaskCommand extends Command{

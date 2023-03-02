@@ -24,8 +24,6 @@ public class Buddy {
 
         }
 
-
-
         System.out.println(Messages.DIVIDER);
         System.out.println(Messages.GREETING);
         System.out.println(Messages.INTRODUCTION);
@@ -39,68 +37,6 @@ public class Buddy {
 
         while (! processAllCommands.isExit(input)) {
             processAllCommands.executeLine(taskList, input);
-
-
-            /*int index = 1;
-            if (input.equals("list")) {
-                Command list = new ListCommand();
-                list.executeCommand(taskList, input);
-
-            } else if (input.startsWith("mark")) {
-                Command mark = new MarkTaskCommand();
-                mark.executeCommand(taskList, input);
-                /*try {
-                    Task currentTask = taskList.get(taskNumber - 1);
-                    currentTask.setDone(true);
-                    System.out.println(divider);
-                    System.out.println("Great work on completing this task! Marked as done! :)");
-                    System.out.println(currentTask);
-                    System.out.println(divider);
-                } catch (IndexOutOfBoundsException a) {
-                    System.out.println("That is not a valid task to mark! Please check your list again and input a valid task");
-
-                }
-
-            } else if (input.startsWith("unmark")) {
-                Command unmark = new UnmarkTaskCommand();
-                unmark.executeCommand(taskList, input);
-                /*
-                try {
-                    Task currentTask = taskList.get(taskNumber - 1);
-
-                    currentTask.setDone(false);
-                    System.out.println(divider);
-                    System.out.println("Remember to come back to this task! Marked as undone!");
-                    System.out.println(currentTask);
-                    System.out.println(divider);
-                } catch (IndexOutOfBoundsException a) {
-                    System.out.println("That is not a valid task to unmark! Please check your list again and input a valid task");
-
-                }
-            } else if (input.startsWith("todo") || input.startsWith("deadline") || input.startsWith("event") || input.startsWith("delete") || input.startsWith("find")) {
-
-                if (input.startsWith("todo")) {
-                    Command addTodo = new AddTodoCommand();
-                    addTodo.executeCommand(taskList, input);
-
-                } else if (input.startsWith("deadline")) {
-                    Command addDeadline = new AddDeadlineCommand();
-                    addDeadline.executeCommand(taskList, input);
-
-                } else if (input.startsWith("event")) {
-                    Command addEvent = new AddEventCommand();
-                    addEvent.executeCommand(taskList, input);
-
-                } else if (input.startsWith("delete")) {
-                    Command delete = new DeleteTaskCommand();
-                    delete.executeCommand(taskList, input);
-
-                } else if (input.startsWith("find")){
-                    Command find = new FindTaskCommand();
-                    find.executeCommand(taskList, input);
-
-                }*/
-
             input = in.nextLine();
 
         }

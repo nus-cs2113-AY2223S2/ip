@@ -8,6 +8,9 @@ public class ListCommand extends Command {
             System.out.println(index + "." + taskList.get(i));
             index++;                                                // increment the number on the task
         }
+        if (taskList.isEmpty()){
+            System.out.println("There is nothing in the list! Please enter a new command");
+        }
         System.out.println(Messages.DIVIDER);
 
 
