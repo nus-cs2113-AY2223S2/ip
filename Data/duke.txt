@@ -1,14 +1,4 @@
-D|0|prepare test|2
-D|0|eatfood|2020-01-23
-E|1|eat|2020-3-14|2021-3-15
-D|0|prepare a meeting|2
-A|0|test
-D|1|ddltest|2023-2-2
-D|1|ddltest|2023-02-02
-T|0|eat
-E|0|homework|1|2
-D|0|eat|3
-A|1|eat food
-T|0|get food
-D|1|have food |2020-02-20
-E|1|cook food|1|2
+A|0|meeting
+T|1|homework
+T|0|attend a lab meeting
+D|0|write a report after the meeting|2023-03-05

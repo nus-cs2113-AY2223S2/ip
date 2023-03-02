@@ -203,7 +203,9 @@ public class Parser {
                 return prepareFindCommand(commandParams);
             } case("bye"):{
                 return new ExitCommand();
-            }default:{
+            } case("help"):{
+                return new HelpCommand();
+            } default: {
                 return new UnknownCommand(commandParams);
             }
         }

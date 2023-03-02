@@ -8,7 +8,7 @@ public class Ui {
 
 
     public void showLine(){
-        System.out.println("------------------------------------------------------------\n");
+        System.out.println("------------------------------------------------------------");
     }
 
     /**
@@ -28,6 +28,31 @@ public class Ui {
         System.out.println(greeting_word);
     }
 
+    /**
+     * Show help messages.
+     */
+    public void showHelp(){
+        String helpMessage = "For help, here is a description for all the commands:\n" +
+                "> list\n" +
+                "List all the tasks in the list.\n\n" +
+                "> todo [description]\n" +
+                "Add a todo task to the list.\n\n" +
+                "> deadline [description] /by [time]\n" +
+                "Add a deadline task to the list. Date format YYYY-MM-DD is encouraged.\n\n" +
+                "> event [description] /from [time] /to [time]\n" +
+                "Add a event task to the list. Date format YYYY-MM-DD is encouraged.\n\n" +
+                "> mark [index]\n" +
+                "Mark a specified object according to index.\n\n" +
+                "> unmark [index]\n" +
+                "Unmark a specified object according to index.\n\n" +
+                "> delete [index]\n" +
+                "Delete a specified object according to index.\n\n" +
+                "> find [keyword]\n" +
+                "Find the tasks according to the keyword.\n\n" +
+                "> bye\n" +
+                "End the program.";
+        System.out.println(helpMessage);
+    }
     /**
      * If the program does not find the local file when initializing, show this message.
      * and create a new file.
@@ -97,7 +122,7 @@ public class Ui {
             return;
         }
         for(int i = 0; i < tasks.size() ; i++){
-            System.out.println((i + 1) + "." + tasks.get(i).toString() + "\n");
+            System.out.println((i + 1) + "." + tasks.get(i).toString() );
         }
     }
 
@@ -191,9 +216,10 @@ public class Ui {
      * @param index The index of the deleted task.
      */
     public void showDeleteTask(TaskList tasks, int index){
+        int newTasksSize = tasks.size()-1;
         String feedback = "Noted. I've removed this task:\n"
                 + tasks.get(index).toString()
-                + "\nNow you have 4 tasks in the list.\n";
+                + "\nNow you have "+ newTasksSize + " tasks in the list.";
         System.out.println(feedback);
     }
 
