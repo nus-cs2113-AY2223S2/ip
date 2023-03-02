@@ -6,18 +6,15 @@ import duke.task.Tasks;
 import java.util.Scanner;
 
 public class Ui {
-
     private String userInput;
     private static final String DIVIDER = "\t____________________________________________________________";
 
     public Ui() {
         userInput = null;
     }
-
     public String getUserInput() {
         return userInput;
     }
-
     public static void sayHi() {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
