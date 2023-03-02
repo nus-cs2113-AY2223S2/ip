@@ -1,5 +1,4 @@
 package duke.task;
-
 public class Event extends Tasks {
     String startDate;
     String endDate;

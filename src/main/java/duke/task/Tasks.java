@@ -1,7 +1,4 @@
 package duke.task;
-
-import java.util.ArrayList;
-
 public abstract class Tasks {
     private String item;
     private boolean isMarked;

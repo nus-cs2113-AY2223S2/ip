@@ -1,5 +1,4 @@
 package duke.command;
-
 import duke.ui.Ui;
 /**
  * <code>FindCommand</code> object represents a command that executes

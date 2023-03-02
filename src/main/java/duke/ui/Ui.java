@@ -13,9 +13,11 @@ public class Ui {
     public Ui() {
         userInput = null;
     }
+
     public String getUserInput() {
         return userInput;
     }
+
     public static void sayHi() {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -55,7 +57,7 @@ public class Ui {
             Tasks thisTask = TaskList.getTaskList().get(num - 1);
             System.out.println("\t  " + num + ". " + thisTask);
         }
-        System.out.println(DIVIDER +'\n');
+        System.out.println(DIVIDER + '\n');
 
     }
 
@@ -79,6 +81,7 @@ public class Ui {
         System.out.println("\t Now you have " + (TaskList.getNumberOfTasks() - 1) + " item(s) in your list.\n"
                 + DIVIDER + '\n');
     }
+
     public static void displayHelp() {
         System.out.println(DIVIDER + "\n\t Please read the User Guide in docs/README.md for more help.\n" +
                 DIVIDER + '\n');

@@ -1,6 +1,5 @@
 package duke;
 
-
 import duke.exception.FolderNotFoundException;
 import duke.exception.NoKeyException;
 import duke.parser.Parser;
@@ -15,8 +14,7 @@ import java.io.IOException;
  * to keep track of the different type of tasks in their daily lives
  */
 public class Duke {
-
-    public static void main(String[] args) throws IOException{
+    public static void main(String[] args) throws IOException {
         Storage storage = new Storage("data", "data/Duke.txt");
         Ui ui = new Ui();
         Ui.sayHi();
@@ -40,7 +38,6 @@ public class Duke {
                 Ui.displayErrorIOException();
             }
         } while (!ui.getUserInput().equals("/bye"));
-
         Ui.sayBye();
     }
 }

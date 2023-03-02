@@ -1,4 +1,4 @@
 package duke.exception;
 
-public class NoKeyException extends Exception{
+public class NoKeyException extends Exception {
 }

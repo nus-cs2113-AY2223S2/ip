@@ -1,5 +1,4 @@
 package duke.exception;
 
-public class FolderNotFoundException extends Exception{
-
+public class FolderNotFoundException extends Exception {
 }

@@ -6,6 +6,7 @@ import duke.exception.NoKeyException;
 public class Parser {
     /**
      * Parses the input from user
+     *
      * @param userInput Description of task entered by user
      * @throws NoKeyException If keywords are missing from user input
      */
@@ -62,7 +63,7 @@ public class Parser {
                 command.execute();
                 break;
             case "/find":
-                command= new FindCommand(item);
+                command = new FindCommand(item);
                 command.execute();
             case "/bye":
                 break;

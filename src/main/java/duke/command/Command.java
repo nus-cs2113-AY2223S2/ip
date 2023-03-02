@@ -6,6 +6,5 @@ package duke.command;
  * <code>execute()</code>
  */
 public abstract class Command {
-
     public abstract void execute();
 }

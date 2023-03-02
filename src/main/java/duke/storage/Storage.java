@@ -15,6 +15,7 @@ import java.util.Scanner;
 public class Storage {
     private final String filePath;
     private final String folderName;
+
     public Storage(String folderName, String filePath) {
         this.filePath = filePath;
         this.folderName = folderName;
@@ -22,8 +23,9 @@ public class Storage {
 
     /**
      * Loads user data
+     *
      * @throws FolderNotFoundException if folder is not found
-     * @throws FileNotFoundException if file is not found
+     * @throws FileNotFoundException   if file is not found
      */
     public void load() throws FolderNotFoundException, FileNotFoundException {
         File folder = new File(folderName);
@@ -75,6 +77,7 @@ public class Storage {
 
     /**
      * Saves user data
+     *
      * @throws IOException if trouble accessing files
      */
     public void save() throws IOException {
@@ -86,20 +89,20 @@ public class Storage {
         }
         fw.close();
     }
+
     public void createNewFile() throws IOException {
         File f = new File(filePath);
         if (f.createNewFile()) {
             System.out.println("File created");
-        }
-        else
+        } else
             System.out.println("File already exists");
     }
+
     public void createNewFolder() {
         File folder = new File(folderName);
-        if(folder.mkdir()) {
+        if (folder.mkdir()) {
             System.out.println("Folder created");
-        }
-        else {
+        } else {
             System.out.println("Folder already exists");
         }
     }
