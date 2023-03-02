@@ -21,13 +21,22 @@ public class Duke {
             ui.showLoadingError();
             tasks = new TaskList(new ArrayList<Task>());
         }
-        Parser.readCommand(ui, tasks);
+
+    }
+
+    public void run() {
+        try {
+            Parser.readCommand(ui, tasks);
+        } catch (DukeException e) {
+            System.out.println(e.getMessage());
+            this.run();
+        }
     }
 
     public static void main(String[] args) throws Exception {
         String home = System.getProperty("user.dir");
         java.nio.file.Path path = java.nio.file.Paths.get(home, "src", "main", "savefile");
-        new Duke(path);
+        new Duke(path).run();
     }
 
     // Printing the startup code

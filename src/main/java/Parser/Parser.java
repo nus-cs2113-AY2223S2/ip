@@ -1,5 +1,6 @@
 package Parser;
 
+import Exceptions.DukeException;
 import TaskList.TaskList;
 import Tasks.Deadline;
 import Tasks.Event;
@@ -18,7 +19,7 @@ public class Parser {
     public Parser() {
 
     }
-    public static void readCommand(UserInterface ui, TaskList tasks) {
+    public static void readCommand(UserInterface ui, TaskList tasks) throws DukeException {
         ArrayList<Task> list = tasks.getList();
         Scanner inputScanner = ui.getScanner();
         while (true) {
@@ -236,7 +237,7 @@ public class Parser {
         list.add(deadline);
         System.out.println("event added");
     }
-    private static void dukeCommandDeadline(String nextLine, List<Task> list) {
+    private static void dukeCommandDeadline(String nextLine, List<Task> list) throws DukeException {
 //        System.out.println(nextLine);
         String lineWithoutCommand;
         try {
@@ -246,7 +247,7 @@ public class Parser {
         }
         String[] regexOutput = lineWithoutCommand.split("/", 0);
         if (regexOutput.length != 2) {
-            return;
+            throw new DukeException("Incorrect format");
         }
         String deadlineName = regexOutput[0];
         String deadlineDate = regexOutput[1];
