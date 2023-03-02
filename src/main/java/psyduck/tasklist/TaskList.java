@@ -11,15 +11,31 @@ public class TaskList {
 
     private static int taskCount = 0;
 
+    /**
+     * Returns the number of tasks in the array list.
+     *
+     * @return the number of tasks currently in the array list.
+     */
     public static int getTaskCount() {
         return taskCount;
     }
 
-
+    /**
+     * Returns the Task object at a specified position in the list.
+     *
+     * @param taskNum the position of the Task object in the list.
+     * @return the Task object at the index specified in the list.
+     */
     public static Task getTask(int taskNum) {
         return tasks.get(taskNum - 1); //array is 0-indexed, taskNum is 1-indexed
     }
 
+
+    /**
+     * Returns the latest Task object that was added to the list.
+     *
+     * @return the last Task object that was added to the list.
+     */
     public static Task getNewestTask() {
         return tasks.get(taskCount - 1); //array is 0-indexed, taskNum is 1-indexed
     }
@@ -29,13 +45,22 @@ public class TaskList {
         taskCount++;
     }
 
-
+    /**
+     * Removes the Task object at a specified position in the list.
+     *
+     * @param taskNum the position of the Task object in the list.
+     */
     public void removeTask(int taskNum) {
         tasks.remove(taskNum - 1);
         taskCount--;
 
     }
 
+    /**
+     * Finds and returns the list tasks that are closest to the keyword given.
+     *
+     * @param input the keyword used for the search.
+     */
     public void findTasks(String input) {
         if (taskCount == 0) {
             System.out.println("List is empty");
@@ -61,6 +86,10 @@ public class TaskList {
         }
         Ui.linePrint();
     }
+
+    /**
+     *  List out all tasks currently in the list
+     */
     public void listTasks() {
         Ui.linePrint();
         if (taskCount == 0) { //list is empty
