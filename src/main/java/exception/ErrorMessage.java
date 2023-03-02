@@ -26,7 +26,7 @@ public enum ErrorMessage {
     EMPTY_MARK_OR_UNMARK_PARAMETER("I am sorry, you need to indicate the task number you want to mark or unmark.\n" +
             "Example: mark 3"),
     INVALID_NUMBER("I am sorry, please enter a valid task number\n" +
-            "Example: mark 3"),
+            "Example: mark 3 or delete 1"),
     MISSING_FIND_PARAMETER("I am sorry, pls enter the parameter you are trying to find\n" +
             "Example: find borrow book"),
     INVALID_DELETE("I am sorry, you are trying to delete a task that does not exist."),
