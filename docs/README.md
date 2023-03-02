@@ -11,7 +11,7 @@ Duke is an application that uses a command-line interface(CLI) to interact with 
 
 Add a task into the task list.
 
-### Delete Tasks
+ Delete Tasks
 
 Delete specific task within the task list.
 
