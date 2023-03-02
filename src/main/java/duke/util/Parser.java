@@ -20,7 +20,6 @@ import java.time.format.DateTimeFormatter;
 public class Parser {
 
     private static Ui ui;
-    private static boolean isExit = false;
 
     /**
      * Checks for input from user via command line.
@@ -117,9 +116,5 @@ public class Parser {
             System.out.println("The date provided must be of the following format: dd-MM-yyyy HH:MM");
             return "";
         }
-    }
-
-    public static boolean toExit() {
-        return isExit;
     }
 }
