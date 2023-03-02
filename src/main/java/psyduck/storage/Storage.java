@@ -11,15 +11,29 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+/**
+ * Represents the storage of the to-do list.
+ */
+
 public class Storage {
 
-    protected Ui ui;
     protected String filepath;
 
+    /**
+     * Returns the Storage class with the file path specified.
+     *
+     * @param filepath the string containing the file path.
+     */
     public Storage(String filepath) {
         this.filepath = filepath;
     }
 
+    /**
+     * Creates a file
+     *
+     * @param filepath the targeted file path which the file will be created at.
+     * @return A File object with its file path located at the specified path.
+     */
     public static File createFile(String filepath) {
         try {
             File f = new File(filepath);
@@ -34,6 +48,13 @@ public class Storage {
         return null;
     }
 
+    /**
+     * Reads in and process the text file and process it into a task list.
+     *
+     * @param filePath path containing the file that is being processed.
+     * @param tasks the task list that the file is processed to.
+     * @throws FileNotFoundException thrown if file is not found in specified path.
+     */
     public static void readFile(String filePath, TaskList tasks) throws FileNotFoundException {
         File f = new File(filePath); // create a File for the given file path
         Scanner s = new Scanner(f); // create a Scanner using the File as the source
@@ -67,6 +88,14 @@ public class Storage {
 
         }
     }
+
+    /**
+     * Processes the task list and saves it by writing to a text file.
+     *
+     * @param filePath path containing the file that is written to.
+     * @param tasks the task list that is being processed
+     * @throws FileNotFoundException thrown if file is not found in specified path.
+     */
     public static void writeToFile(String filePath, TaskList tasks) throws IOException {
         FileWriter fw = new FileWriter(createFile(filePath));
         for (int i = 1; i < TaskList.getTaskCount() + 1; i++) {

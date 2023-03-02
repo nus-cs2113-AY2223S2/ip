@@ -9,6 +9,10 @@ import java.util.Scanner;
 public class Ui {
 
     private final Scanner in = new Scanner(System.in);
+
+    /**
+     * Prints a dashed line.
+     */
     public static void linePrint() {
         for (int i = 0; i < 100; i++) {
             System.out.print("-");
@@ -16,23 +20,37 @@ public class Ui {
         System.out.println();
     }
 
+    /**
+     * Reads in the input from the stream.
+     *
+     * @return a string containing the user's input.
+     */
     public String readInput() {
         String input = in.nextLine();
         return input;
     }
 
+    /**
+     * Prints the message at the start of the program.
+     */
     public void greet() {
         Ui.linePrint();
         System.out.println("Hi I am Psyduck! How can I help you?");
         Ui.linePrint();
     }
 
-
+    /**
+     * Prints the message before the program terminates.
+     */
     public void sayBye() {
         System.out.println("Bye see you soon! :) ");
         Ui.linePrint();
     }
 
+    /**
+     * Prints the message about the newly added task.
+     * @param tasks The task list containing the task that was recently added.
+     */
     public static void printTaskAdded(TaskList tasks) {
         linePrint();
         System.out.println("Psyduck has added the task: " + TaskList.getNewestTask());
@@ -45,18 +63,36 @@ public class Ui {
         linePrint();
     }
 
+    /**
+     * Prints a message on the task that was removed.
+     *
+     * @param task the task that was removed.
+     * @param tasks the task list containing the task that was removed.
+     */
     public static void printTaskRemoved(Task task, TaskList tasks) {
         linePrint();
         System.out.println("Psyduck has removed the task: " + task);
         linePrint();
     }
 
+    /**
+     * Prints a message on the task that was marked.
+     *
+     * @param task the task that was marked.
+     * @param tasks the task list containing the task that was marked.
+     */
     public static void printTaskMarked(Task task, TaskList tasks) {
         linePrint();
         System.out.println("Psyduck has marked the task: " + task);
         linePrint();
     }
 
+    /**
+     * Prints a message on the task that was unmarked.
+     *
+     * @param task the task that was unmarked.
+     * @param tasks the task list containing the task that was unmarked.
+     */
     public static void printTaskUnmarked(Task task, TaskList tasks) {
         linePrint();
         System.out.println("Psyduck has marked the task: " + task);

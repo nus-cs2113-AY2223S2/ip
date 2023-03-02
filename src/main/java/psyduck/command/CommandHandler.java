@@ -14,6 +14,13 @@ public class CommandHandler {
     protected Parser parser = new Parser();
     public boolean canExit = false;
 
+    /**
+     * Handles the command inputs from the user and executes the target command.
+     *
+     * @param input the string input from the user.
+     * @param tasks the list containing the tasks.
+     * @param ui the user interface that interacts with the user.
+     */
     public void processCommands(String input, TaskList tasks, Ui ui) {
         String command = parser.prepareCommand(input);
         Command commandType;
@@ -73,7 +80,6 @@ public class CommandHandler {
             } catch (InvalidDeadlineFormatException e) {
                 ErrorMessage.printInvalidDeadlineFormatMessage();
             }
-
             break;
         case "event":
             try {

@@ -7,7 +7,6 @@ import psyduck.ui.*;
 import psyduck.tasklist.TaskList;
 import psyduck.storage.Storage;
 
-
 public class Psyduck {
     private static Storage storage;
 
@@ -20,6 +19,11 @@ public class Psyduck {
         Psyduck.shouldExit = shouldExit;
     }
 
+    /**
+     * Initialises the program by loading in the save file.
+     *
+     * @param filepath the path containing the save file.
+     */
     public Psyduck(String filepath) {
         ui = new Ui();
         storage = new Storage(filepath);
@@ -30,6 +34,9 @@ public class Psyduck {
         }
     }
 
+    /**
+     * Runs the main program of Psyduck.
+     */
     public void run() {
         ui.greet();
         do {
