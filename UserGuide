@@ -23,37 +23,29 @@ To add a task, type one of the following commands followed by the task descripti
 - todo: adds a new todo task
 - event: adds a new event task
 - deadline: adds a new deadline task
-
 For example:
-todo borrow book
-event project meeting /from Mon 2pm /to 4pm
-deadline return book /by Sunday
+todo buy groceries
+event attend meeting /at 2022-03-01 10:00-12:00
+deadline submit report /by 2022-03-05 23:59
 
 ### Listing Tasks
 To list all the tasks currently in Duke, type the command list.
 
 ### Marking Tasks
-To mark a task as done, type the command mark followed by the task number. 
-
-For example:
+To mark a task as done, type the command mark followed by the task number. For example:
 mark 2
 
 ### Unmarking Tasks
 To unmark a task as done, type the command unmark followed by the task number. 
-
 For example:
 unmark 2
 
 ### Deleting Tasks
-To delete a task, type the command delete followed by the task number. 
-
-For example:
+To delete a task, type the command delete followed by the task number. For example:
 delete 2
 
 ### Finding Tasks
-To find tasks containing a specific keyword, type the command find followed by the keyword. 
-
-For example:
+To find tasks containing a specific keyword, type the command find followed by the keyword. For example:
 find groceries
 
 ### Exiting Duke
