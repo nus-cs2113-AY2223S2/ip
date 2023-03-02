@@ -91,38 +91,35 @@ public class Storage {
   }
 
   /**
-   * Updates the JSON file
+   * This function rewrites the whole JSON file based on the tasks provided.
    *
-   * @param tasks The array list from Storage
+   * @param tasks The array list from the {@code Storage} class.
    */
   public void updateFile(ArrayList<Task> tasks) {
     ArrayList<JsonStorage> items = new ArrayList<>();
     for (Task task : tasks) {
-      String end = "";
-      String type = "";
-      String start = "";
+      JsonStorage item = new JsonStorage();
+
+      // Set the two properties as they are common for all types of task.
+      item.setDescription(task.getTaskName());
+      item.setMarked(task.isDone());
+
+      // Set the properties based on the type of task.
       if (task instanceof Todo) {
-        start = null;
-        end = null;
-        type = Command.TODO;
+        item.setStart(null);
+        item.setEnd(null);
+        item.setType(Command.TODO);
       } else if (task instanceof Deadline) {
         Deadline deadlineTask = (Deadline) task;
-        start = null;
-        end = deadlineTask.getEndDate();
-        type = Command.DEADLINE;
+        item.setStart(null);
+        item.setEnd(deadlineTask.getEndDate());
+        item.setType(Command.DEADLINE);
       } else if (task instanceof Event) {
         Event eventTask = (Event) task;
-        start = eventTask.getFrom();
-        end = eventTask.getTo();
-        type = Command.EVENT;
+        item.setStart(eventTask.getFrom());
+        item.setEnd(eventTask.getTo());
+        item.setType(Command.EVENT);
       }
-      JsonStorage item = new JsonStorage(
-        task.getTaskName(),
-        task.isDone(),
-        end,
-        type,
-        start
-      );
       items.add(item);
     }
     String json = gson.toJson(items);

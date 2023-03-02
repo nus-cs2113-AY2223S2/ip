@@ -1,16 +1,30 @@
 package model.storage;
 
 /**
- * Uses the following model to store the data in the format inside of the JSON file.
+ * Uses the following model to store the data in the format inside the JSON file.
+ * The builder design pattern is used here.
  */
 public class JsonStorage {
 
-  public JsonStorage(String description, boolean marked, String end, String type, String start) {
+
+  public void setDescription(String description) {
     this.description = description;
+  }
+
+  public void setMarked(boolean marked) {
     this.marked = marked;
-    this.type = type;
+  }
+
+  public void setStart(String start) {
     this.start = start;
+  }
+
+  public void setEnd(String end) {
     this.end = end;
+  }
+
+  public void setType(String type) {
+    this.type = type;
   }
 
   public String getDescription() {
