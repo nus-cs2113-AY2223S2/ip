@@ -5,9 +5,11 @@ import java.util.Scanner;
 
 public class TaskList {
     public static ArrayList<Task> list;
-    public TaskList(){
-        list=new ArrayList<>();
-    }
+
+    /**
+     * Read the file and convert to taskList
+     * @param filePath the filepath of the data location
+     */
     public TaskList(String filePath){
         try {
             list=new ArrayList<>();

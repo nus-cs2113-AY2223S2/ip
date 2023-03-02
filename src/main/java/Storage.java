@@ -12,6 +12,11 @@ public class Storage {
     public static String load() {
         return filePath;
     }
+
+    /**
+     * to save the taskList to txt file
+     * @param list the whole taskList created by user
+     */
     public static void save(ArrayList<Task> list){
         try {
             FileWriter writer = new FileWriter("duke.txt", false);
