@@ -20,6 +20,7 @@ public class Main {
 
     /**
      * Runner function of the class, executes the main loop
+     * while catching the main sagyo errors
      */
     public void run() {
         TextFormatter ui = new TextFormatter(2, 120);
