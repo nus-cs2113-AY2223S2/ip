@@ -5,8 +5,18 @@ import duke.commands.task.*;
 
 import static duke.Ui.DISPLAYED_INDEX_OFFSET;
 
+/**
+ * Processes user inputs.
+ * Adapted from nus-cs2113-AY2223S2/personbook
+ */
+
 public class Parser {
 
+    /**
+     * Processes input and returns the correct command to be executed
+     * @param userInput string containing user input
+     * @return command
+     */
     public Command parseCommand(String userInput) {
         String[] intermediateInput = userInput.split(" ", 2);
         String commandWord = intermediateInput[0];
@@ -34,6 +44,12 @@ public class Parser {
         }
     }
 
+    /**
+     * Processes a string containing an expected index
+     * @param arguments contains the string form of an expected index
+     * @return an integer containing the index or -1 if invalid input
+     */
+
     private int getIndexFromCommand(String arguments) {
         int taskIndex;
         try {
@@ -42,6 +58,13 @@ public class Parser {
             return -1;
         }
     }
+
+    /**
+     * Processes the index argument needed for the commands and returns the correct command
+     * @param command identifier for the right command
+     * @param arguments contains the string form of an expected index
+     * @return command
+     */
 
     private Command prepareCommand(String command, String arguments) {
         int taskIndex = getIndexFromCommand(arguments) - DISPLAYED_INDEX_OFFSET;
@@ -57,6 +80,12 @@ public class Parser {
         }
     }
 
+    /**
+     * Processes a string expected to contain the task description
+     * and "from" and "to" information of a event task
+     * @param arguments contains task details
+     * @return command
+     */
     private Command prepareEvent(String arguments) {
         int fromIndex = arguments.indexOf("/from");
         int toIndex = arguments.indexOf("/to");
@@ -69,6 +98,13 @@ public class Parser {
             return new IncorrectCommand(1);
         }
     }
+
+    /**
+     * Processes an string expected to contain the task description
+     * and the "by" information of a deadline task
+     * @param arguments contains task details
+     * @return command
+     */
 
     private Command prepareDeadline(String arguments) {
         int byIndex = arguments.indexOf("/by");

@@ -1,5 +1,8 @@
 package duke.commands;
 
+/**
+ * Handles invalid commands.
+ */
 public class IncorrectCommand extends Command {
 
     public static final String MESSAGE_INCORRECT_COMMAND = "Oops I don't understand this command!";
@@ -11,6 +14,11 @@ public class IncorrectCommand extends Command {
     public IncorrectCommand(int error_num) {
         this.error_num = error_num;
     }
+
+    /**
+     * Gives the corresponding message specified by the error number provided
+     * @return CommandResult object containing message on feedback of invalid command given
+     */
 
     @Override
     public CommandResult execute() {

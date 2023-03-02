@@ -4,6 +4,10 @@ import duke.commands.task.Task;
 
 import static duke.Ui.DISPLAYED_INDEX_OFFSET;
 
+/**
+ * Changes the status of a task in the task list to uncompleted.
+ */
+
 public class UnmarkCommand extends Command {
 
     public static final String COMMAND_WORD = "unmark";
@@ -13,6 +17,11 @@ public class UnmarkCommand extends Command {
     public UnmarkCommand(int targetIndex) {
         super(targetIndex);
     }
+
+    /**
+     * Changes the status of a task in the task list specified by its task number to uncompleted
+     * @return CommandResult object containing feedback of execution
+     */
 
     public CommandResult execute() {
         int taskNumber = targetIndex + DISPLAYED_INDEX_OFFSET;
