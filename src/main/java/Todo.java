@@ -10,4 +10,12 @@ public class Todo extends Task {
         }
         return "[T][ ] " + getContents();
     }
+
+    @Override
+    public String showTask(){
+        if (getIsDone()) {
+            return "[T][O] " + getContents();
+        }
+        return "[T][ ] " + getContents();
+    }
 }

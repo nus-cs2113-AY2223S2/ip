@@ -79,11 +79,11 @@ public class TaskList {
             Deadline newDeadline = new Deadline (contents, by);
             taskArray.add(newDeadline);
             totalTaskNum++;
+            taskStorage.writeDeadlineToFile(newDeadline);
         } catch(Exception e){
             UI.printEmptyDescriptionComment("deadline");
             return false;
         }
-        taskStorage.writeToFile(this.toString());
         return true;
     }
 
@@ -96,11 +96,11 @@ public class TaskList {
             Event newEvent = new Event(contents, from, to);
             taskArray.add(newEvent);
             totalTaskNum++;
+            taskStorage.writeEventToFile(newEvent);
         } catch(Exception e){
             UI.printEmptyDescriptionComment("event");
             return false;
         }
-        taskStorage.writeToFile(this.toString());
         return true;
     }
 
@@ -145,6 +145,14 @@ public class TaskList {
 
     public Task getTask(int taskNumInt){
         return taskArray.get(taskNumInt-1);
+    }
+
+    public String showTaskList(){
+        String str = "";
+        for(int i=1; i<totalTaskNum+1; i++){
+            str = str.concat(i + "." + taskArray.get(i-1).showTask() + "\n");
+        }
+        return str;
     }
 }
 

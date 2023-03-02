@@ -17,6 +17,14 @@ public class Event extends Task {
         }
     }
 
+    public LocalDate getFrom(){
+        return from;
+    }
+
+    public LocalDate getTo(){
+        return to;
+    }
+
     @Override
     public String toString() {
         String returnStr = "[E]";
@@ -27,5 +35,18 @@ public class Event extends Task {
         }
 
         return returnStr + getContents() + " / from " + from + " / to " + to;
+    }
+
+    @Override
+    public String showTask(){
+        String returnStr = "[E]";
+        if (getIsDone()) {
+            returnStr = returnStr.concat("[O] ");
+        } else {
+            returnStr = returnStr.concat("[ ] ");
+        }
+
+        return returnStr + getContents() + " / from " + from.format(DateTimeFormatter.ofPattern("MMM d yyyy"))
+                + " / to " + to.format(DateTimeFormatter.ofPattern("MMM d yyyy"));
     }
 }

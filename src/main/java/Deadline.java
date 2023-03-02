@@ -3,7 +3,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
 public class Deadline extends Task {
-    LocalDate by;
+    private LocalDate by;
 
     Deadline(String content, LocalDate end) {
         super(content);
@@ -12,6 +12,10 @@ public class Deadline extends Task {
         } catch(Exception e){
             UI.printDateFormatErrorComment();
         }
+    }
+
+    public LocalDate getBy(){
+        return by;
     }
 
     @Override
@@ -24,5 +28,17 @@ public class Deadline extends Task {
         }
 
         return returnStr + getContents() + " / by " + by;
+    }
+
+    @Override
+    public String showTask(){
+        String returnStr = "[D]";
+        if (getIsDone()) {
+            returnStr = returnStr.concat("[O] ");
+        } else {
+            returnStr = returnStr.concat("[ ] ");
+        }
+
+        return returnStr + getContents() + " / by " + by.format(DateTimeFormatter.ofPattern("MMM d yyyy"));
     }
 }

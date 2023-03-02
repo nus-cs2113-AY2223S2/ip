@@ -72,7 +72,7 @@ public class UI {
     public static void printTaskList(TaskList taskList){
         System.out.println(HORIZONTAL_LINE);
         System.out.println("[DUKE] Here are the tasks in your list: ");
-        System.out.print(taskList);
+        System.out.print(taskList.showTaskList());
         System.out.println(HORIZONTAL_LINE);
     }
 
