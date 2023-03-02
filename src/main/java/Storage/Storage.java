@@ -1,7 +1,8 @@
-package storage;
+package Storage;
 import Exceptions.FileParseReadingException;
 import Tasks.Deadline;
 import Tasks.Event;
+import Tasks.TaskList;
 import Tasks.ToDo;
 import Tasks.Task;
 
@@ -16,29 +17,28 @@ public class Storage {
 
     private static final String SEPARATOR = " I:I ";
 
-    public Storage() {
-
-        File f = new File("data/taskList.txt");
-        File directory = new File("data");
-        try {
-            if (directory.mkdir()) {
-                System.out.println("Directory for file saving created.");
-            } else {
-                System.out.println("Directory for file saving already exists.");
-            }
-            if (f.createNewFile()) {
-                System.out.println("Save file created.");
-            } else {
-                System.out.println("Save file already exists.");
-            }
-            System.out.println();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    private static String filePath;
+    public static void setFilePath(String filePath) {
+        Storage.filePath = filePath;
     }
 
-    // Parsing functions
-    public static ArrayList<String> parseTasksToString(ArrayList<Task> taskList) {
+    public static void createSavedFile() throws IOException {
+        File f = new File(filePath); // filePath == "data/taskList.txt"
+        File directory = new File("data");
+        if (directory.mkdir()) {
+            System.out.println("\nDirectory for file saving created.");
+        } else {
+            System.out.println("\nDirectory for file saving already exists.");
+        }
+        if (f.createNewFile()) {
+            System.out.println("Save file created.");
+        } else {
+            System.out.println("Save file already exists.");
+        }
+        System.out.println();
+    }
+
+    public static ArrayList<String> encodeTasksToString(ArrayList<Task> taskList) {
         ArrayList<String> dataToStore = new ArrayList<>();
         String type, status, description, by, from, to, index;
         String temp = "";
@@ -74,7 +74,7 @@ public class Storage {
         return dataToStore;
     }
 
-    public static Task parseStringToTask(String str) throws FileParseReadingException {
+    public static Task decodeTaskFromStrings(String str) throws FileParseReadingException {
         String[] parsed = str.split(SEPARATOR);
         Task task;
         switch (parsed[1]) {
@@ -100,8 +100,8 @@ public class Storage {
 
     //File reading and writing function
 
-    public static void printFileContents() throws FileNotFoundException {
-        File f = new File("data/taskList.txt"); // create a File for the given file path
+    public static void showFileContents() throws FileNotFoundException {
+        File f = new File(filePath); // create a File for the given file path
         Scanner s = new Scanner(f); // create a Scanner using the File as the source
         System.out.println();
         while (s.hasNext()) {
@@ -109,41 +109,33 @@ public class Storage {
         }
     }
 
-    public static ArrayList<Task> readFileContents() throws FileNotFoundException, FileParseReadingException {
-        ArrayList<Task> tasks = new ArrayList<>();
+    public static TaskList readFileContents() throws FileNotFoundException, FileParseReadingException {
+        ArrayList<Task> list = new ArrayList<>();
         Task temp;
-        File f = new File("data/taskList.txt"); // create a File for the given file path
+        File f = new File(filePath); // create a File for the given file path
         Scanner s = new Scanner(f); // create a Scanner using the File as the source
         if (s.hasNext()) {
             s.nextLine(); // to filter out the title of the file
         }
         while (s.hasNext()) {
-            temp = parseStringToTask(s.nextLine());
-            tasks.add(temp);
+            temp = decodeTaskFromStrings(s.nextLine());
+            list.add(temp);
         }
-        return tasks;
+        return new TaskList(list);
     }
 
     public static void writeToFile(ArrayList<String> textToAdd) throws IOException {
-        FileWriter fw = new FileWriter("data/taskList.txt");
+        FileWriter fw = new FileWriter(filePath);
         for (String str : textToAdd) {
             fw.write(str + '\n');
         }
         fw.close();
     }
 
-    public static void saveToFiles(ArrayList<Task> taskList) {
+    public static void saveToFile(TaskList taskList) throws IOException {
         ArrayList<String> linesToWrite;
-        try {
-            linesToWrite = Storage.parseTasksToString(taskList);
-            Storage.writeToFile(linesToWrite);
-        } catch (FileNotFoundException ex) {
-            System.out.println("There is some exception coming! \n File not Found.");
-            ex.printStackTrace();
-        } catch (IOException e) {
-            System.out.println("There is some exception coming! \n File IO Error.");
-            e.printStackTrace();
-        }
+        linesToWrite = Storage.encodeTasksToString(taskList.getTasksList());
+        Storage.writeToFile(linesToWrite);
     }
 
 }

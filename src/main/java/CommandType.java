@@ -1,0 +1,4 @@
+public enum CommandType {
+    LIST, TODO, DEADLINE, EVENT, MARK, UNMARK,
+    FIND, DELETE, HELP, EXIT, UNKNOWN
+}
