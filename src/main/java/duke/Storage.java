@@ -8,36 +8,53 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.ArrayList;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+
 import duke.commands.Task;
 import duke.commands.Todo;
 import duke.commands.Event;
 import duke.commands.Deadline;
+import duke.commands.Datetime;
 
 public class Storage {
     public Storage() {}
 
     private static String[] changeLoadedDescription(String dscrption) {
-        String[] taskInfo = dscrption.split(" \\| ");
-        return taskInfo;
+        String[] taskinfo = dscrption.split(" \\| ");
+        return taskinfo;
+    }
+
+    private static Datetime convertToDT(String datetime, DateTimeFormatter formatter) {
+        System.out.println("TYYYYY");
+        String[] splittedDT = datetime.split(" ");
+        if (splittedDT.length == 1) {
+            return new Datetime (LocalDate.parse(splittedDT[0], formatter));
+        } else {
+            return new Datetime(LocalDate.parse(splittedDT[0], formatter), LocalTime.parse(splittedDT[1]));
+        }
     }
 
     public static ArrayList<Task> loadFile(String path) {
         ArrayList<Task> task = new ArrayList<>();
+        DateTimeFormatter loadingformatter = DateTimeFormatter.ofPattern("MMM/dd/yyyy");
+
         try {
             Scanner scanner = new Scanner(new File(path));
-            String curTask = "";
+            String curtask = "";
 
             while (scanner.hasNextLine()) {
-                curTask = scanner.nextLine();
-                String[] taskInfo = changeLoadedDescription(curTask);
-                if (taskInfo[0].equals("T")) {
-                    task.add(new Todo(taskInfo[2]));
-                } else if (taskInfo[0].equals("E"))
-                    task.add(new Event(taskInfo[2], taskInfo[3]));
+                curtask = scanner.nextLine();
+                String[] taskinfo = changeLoadedDescription(curtask);
+                if (taskinfo[0].equals("T")) {
+                    task.add(new Todo(taskinfo[2]));
+                } else if (taskinfo[0].equals("E"))
+                    task.add(new Event(taskinfo[2], convertToDT(taskinfo[3], loadingformatter)));
                 else
-                    task.add(new Deadline(taskInfo[2], taskInfo[3]));
+                    task.add(new Deadline(taskinfo[2], convertToDT(taskinfo[3], loadingformatter)));
 
-                if (taskInfo[1].equals("1"))
+                if (taskinfo[1].equals("1"))
                     task.get(task.size() - 1).markAsDone();
             }
         } catch (FileNotFoundException e) {
@@ -49,24 +66,19 @@ public class Storage {
     private static String changeDescriptionForSaving(ArrayList<Task> tasks) {
         String content = "";
         for (int i = 0; i < tasks.size(); i++) {
-            Task curTask = tasks.get(i);
-            if (!curTask.getClass().getName().equals("duke.commands.Todo")) {
-                if (curTask.getClass().getName().equals("duke.commands.Event")) {
+            Task curtask = tasks.get(i);
+            if (!curtask.getClass().getName().equals("duke.commands.Todo")) {
+                if (curtask.getClass().getName().equals("duke.commands.Event"))
                     content += "E | ";
-                } else {
+                else
                     content += "D | ";
-                }
-            } else {
+            } else
                 content += "T | ";
-            }
 
-            content += ((curTask.getTaskStatus().equals("X") ? "1" : "0") + " | "
-                    + curTask.getTaskDiscription());
-
-            if (!curTask.getClass().getName().equals("duke.commands.Todo")) {
+            content += ((curtask.getTaskStatus().equals("X") ? "1" : "0") + " | "
+                    + curtask.getTaskDiscription());
+            if (!curtask.getClass().getName().equals("duke.commands.Todo"))
                 content += (" | " + tasks.get(i).getDue());
-            }
-
             content += System.lineSeparator();
         }
         return content;
@@ -81,5 +93,4 @@ public class Storage {
         fw.write(changeDescriptionForSaving(tasks));
         fw.close();
     }
-
 }
