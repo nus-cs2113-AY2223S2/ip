@@ -22,13 +22,13 @@ You can check the contents in your task list. The task list record is automatica
 
 ## Usage
 
-### `Keyword` - Describe action
-
-#### Keyword-todo
+### Keyword-todo
 
 Add a task which has no deadline or time frame.
-Example of usage: 
+
+Example of usage:
 `todo borrow book`
+
 Expected outcome:
 Echo the newly created task. Display the number of tasks in the task list.
 ```
@@ -40,8 +40,10 @@ Got it. I've added this task:
 ### Keyword-deadline
 
 Add a task which has the deadline.
+
 Example of usage: 
 `deadline return book /by Sunday`
+
 Expected outcome:
 Echo the newly created task. Display the number of tasks in the task list.
 ```
@@ -53,8 +55,10 @@ Got it. I've added this task:
 ### Keyword-event
 
 Add a task which has has a time frame.
+
 Example of usage: 
 `event project meeting /from Mon 2pm /to 4pm`
+
 Expected outcome:
 Echo the newly created task. Display the number of tasks in the task list.
 ```
@@ -66,8 +70,10 @@ Got it. I've added this task:
 ### Keyword-list
 
 Display all the tasks in the task list.
+
 Example of usage: 
 `list`
+
 Expected outcome:
 Print out the information of all the tasks in a sequential order.
 ```
@@ -82,8 +88,10 @@ Here are the tasks in your list:
 ### Keyword-delete
 
 Delete a task at a specific index.
+
 Example of usage: 
 `delete 3`
+
 Expected outcome:
 Echo the task deleted. Display the number of tasks in the task list.
 ```
@@ -95,8 +103,10 @@ Noted. I've removed this task:
 ### Keyword-mark
 
 Mark a task at a specific index as done.
+
 Example of usage: 
 `mark 3`
+
 Expected outcome:
 Echo the task marked. Display the information of the task.
 ```
@@ -107,8 +117,10 @@ Nice! I've marked this task as done:
 ### Keyword-mark
 
 Mark a task at a specific index as undone.
+
 Example of usage: 
 `unmark 3`
+
 Expected outcome:
 Echo the task unmarked. Display the information of the task.
 ```
@@ -119,8 +131,10 @@ OK, I've marked this task as not done yet:
 ### Keyword-find
 
 Display the tasks that contain the keyword.
+
 Example of usage: 
 `find book`
+
 Expected outcome:
 Display the information of the tasks that contain the keyword.
 ```
