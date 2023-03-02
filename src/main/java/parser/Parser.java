@@ -10,7 +10,6 @@ import java.util.HashMap;
 import java.util.regex.PatternSyntaxException;
 
 public class Parser {
-    protected final String BY = " /by ";
     protected final Ui ui = Ui.getInstance();
 
     protected HashMap<String, String> handleTodo(String text) {
@@ -23,9 +22,9 @@ public class Parser {
     protected HashMap<String, String> handleDeadline(String text) throws DukeException {
         try {
             HashMap<String, String> dictionary = new HashMap<>();
-            String[] words = text.split(BY);
+            String[] words = text.split(Keyword.BY);
             if (words.length == 1) {
-                throw new DukeException(ErrorMessage.NO_DESCRIPTION_PROVIDED);
+                throw new DukeException(ErrorMessage.INVALID_INPUT);
             }
             dictionary.put(Keyword.COMMAND, Command.DEADLINE);
             String description = words[0].trim();
@@ -34,7 +33,7 @@ public class Parser {
             dictionary.put(Keyword.DEADLINE, deadline);
             return dictionary;
         } catch (PatternSyntaxException e) {
-            ui.printMessage("No deadline provided");
+            ui.printMessage(ErrorMessage.NO_DEADLINE_PROVIDED);
             return null;
         }
     }
@@ -57,7 +56,7 @@ public class Parser {
         dictionary.put(Keyword.COMMAND, Command.EVENT);
         String[] words = text.split("/");
         if (words.length != 3) {
-            throw new DukeException("Invalid input");
+            throw new DukeException(ErrorMessage.INVALID_INPUT);
         }
 
         String start = "";
@@ -94,8 +93,8 @@ public class Parser {
             }
         }
 
-        dictionary.put("start", start);
-        dictionary.put("end", end);
+        dictionary.put(Keyword.START, start);
+        dictionary.put(Keyword.END, end);
         dictionary.put(Keyword.DESCRIPTION, description);
         return dictionary;
     }
@@ -104,8 +103,8 @@ public class Parser {
     protected HashMap<String, String> handleFind(String keyword) {
         HashMap<String, String> dictionary = new HashMap<>();
         keyword = keyword.trim();
-        dictionary.put(Keyword.COMMAND, "find");
-        dictionary.put("keyword", keyword);
+        dictionary.put(Keyword.COMMAND, Command.FIND);
+        dictionary.put(Keyword.KEYWORD, keyword);
         return dictionary;
     }
 
