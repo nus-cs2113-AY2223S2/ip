@@ -3,15 +3,23 @@ package duke.item;
 public abstract class Item {
     private String description; // item name
     private boolean isDone;
-    public String type = "Item";
 
     public Item (String description) {
         this.description = description;
         this.isDone = false;
     }
 
+    public Item (String description, boolean isDone) {
+        this.description = description;
+        this.isDone = isDone;
+    }
+
     public String getDescription() {
         return this.description;
+    }
+
+    public boolean getDone() {
+        return this.isDone;
     }
 
     public String getStatus() {
