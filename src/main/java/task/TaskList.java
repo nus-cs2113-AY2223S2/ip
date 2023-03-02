@@ -147,4 +147,22 @@ public class TaskList {
         }
         storage.writeToFile(output);
     }
+
+    public String listAllMatchingKeyword(String keyword) {
+        String results = "";
+        int numOfResults = 0;
+        for (int i = 0; i < tasks.size(); i++) {
+            if (tasks.get(i).getDescription().contains(keyword)) {
+                // i + 1 is to one-index it.
+                results += String.format("\n %d. %s", ++numOfResults, tasks.get(i).toString());
+            }
+        }
+
+        // No matches
+        if (results.equals("")) {
+            return "No matches found.";
+        } else {
+            return "Here are the matching tasks in your list: " + results;
+        }
+    }
 }

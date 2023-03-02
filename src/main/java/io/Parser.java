@@ -109,6 +109,8 @@ public class Parser {
             return handleAddTaskEvent(tasks, commandArgs);
         case Ui.COMMAND_DELETE:
             return handleDelete(tasks, commandArgs);
+        case Ui.COMMAND_FIND:
+            return handleFind(tasks, commandArgs);
         case Ui.COMMAND_BYE:
             Ui.printExitMessage();
             tasks.writeAllToFile(storage);
@@ -152,6 +154,10 @@ public class Parser {
         } catch (DukeException e) {
             return Ui.ERROR_MESSAGE_ARGUMENT_NUMBER;
         }
+    }
+
+    private static String handleFind(TaskList tasks, String commandArgs) {
+        return tasks.listAllMatchingKeyword(commandArgs);
     }
 
     /**

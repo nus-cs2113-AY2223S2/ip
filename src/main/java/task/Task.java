@@ -28,6 +28,10 @@ public abstract class Task {
         return (this.isDone ? "[X]" : "[ ]"); // mark done task with X
     }
 
+    public String getDescription() {
+        return description;
+    }
+
     // use "mark" to mark done
     public String markAsDone() {
         this.isDone = true;
@@ -38,6 +42,7 @@ public abstract class Task {
         this.isDone = false;
         return "Marked as undone: " + this;
     }
+
 
     /**
      * To be used by child classes to append their own file write.

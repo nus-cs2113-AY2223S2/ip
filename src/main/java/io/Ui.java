@@ -14,6 +14,7 @@ public final class Ui {
     public static final String COMMAND_MARK = "mark";
     public static final String COMMAND_UNMARK = "unmark";
     public static final String COMMAND_DELETE = "delete";
+    public static final String COMMAND_FIND = "find";
 
     /** Add task commands. Sample usage as below. not delimited by spaces.
      *  todo: "todo task_name"
