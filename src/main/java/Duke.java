@@ -60,118 +60,12 @@ public class Duke {
             userInput = myScanner.nextLine();
 
             // Execute command and print out the feedback string.
-            String feedback = executeCommand(userInput.toLowerCase());
+            String feedback = Parser.executeCommand(tasks, storage, userInput);
             System.out.println(feedback);
 
             Ui.printHLine();
         }
     }
 
-    /**
-     * Performs each input's methods as long as it exists, if not return error
-     * @param inputLine Input directly from command-line
-     * @return Feedback string or error string
-     */
-    public String executeCommand(String inputLine) {
-        final String[] commandTypeAndArgs = Parser.splitCommandAndArgs(inputLine);
-        final String command = commandTypeAndArgs[0];
-        final String commandArgs = commandTypeAndArgs[1];
 
-        // Check command against the set list of commands.
-        // If it doesn't exist, default is invalid
-        switch(command) {
-        case Ui.COMMAND_HELP:
-            return Ui.MESSAGE_HELP;
-        case Ui.COMMAND_LIST:
-            if (tasks.getNumberOfTasks() < 1) {
-                return Ui.ERROR_TASKS_EMPTY;
-            }
-            return tasks.getTaskListString();
-        case Ui.COMMAND_MARK: // Fallthrough
-        case Ui.COMMAND_UNMARK:
-            return tasks.executeMarkUnmark(command, commandArgs);
-        case Ui.COMMAND_TASK_TODO:
-            return handleAddTaskTodo(commandArgs);
-        case Ui.COMMAND_TASK_DEADLINE:
-            return handleAddTaskDeadline(commandArgs);
-        case Ui.COMMAND_TASK_EVENT:
-            return handleAddTaskEvent(commandArgs);
-        case Ui.COMMAND_DELETE:
-            return handleDelete(commandArgs);
-        case Ui.COMMAND_BYE:
-            Ui.printExitMessage();
-            tasks.writeAllToFile(storage);
-            System.exit(0);
-            // Fallthrough (If somehow cannot exit? LOL)
-        default:
-            return Ui.ERROR_MESSAGE_INVALID_COMMAND;
-        }
-    }
-
-    /**
-     * ==============================================================
-     * Below handling Tasks (Validation and addTask)
-     * ==============================================================
-     */
-    private String handleAddTaskTodo(String commandArgs) {
-        try {
-            Todo newTask = new Todo(Parser.processTaskTodo(commandArgs), tasks.getNextTaskNumber());
-            tasks.addTask(newTask);
-            return Ui.feedbackTaskAdded(tasks, newTask);
-        } catch (DukeException e) {
-            return Ui.ERROR_MESSAGE_ARGUMENT_MISSING;
-        }
-    }
-
-    private String handleAddTaskDeadline(String commandArgs) {
-        try {
-            String[] deadlineArgs = Parser.processTaskDeadline(commandArgs);
-            Deadline newTask =
-                    new Deadline(deadlineArgs[0], tasks.getNextTaskNumber(), deadlineArgs[1]);
-            tasks.addTask(newTask);
-            return Ui.feedbackTaskAdded(tasks, newTask);
-        } catch (DukeException e) {
-            return Ui.ERROR_MESSAGE_ARGUMENT_NUMBER;
-        }
-    }
-
-    private String handleAddTaskEvent(String commandArgs) {
-        try {
-            String[] eventArgs = Parser.processTaskEvent(commandArgs);
-            Event newTask =
-                    new Event(eventArgs[0], tasks.getNextTaskNumber(),
-                            eventArgs[1], eventArgs[2]);
-            tasks.addTask(newTask);
-            return Ui.feedbackTaskAdded(tasks, newTask);
-        } catch (DukeException e) {
-            return Ui.ERROR_MESSAGE_ARGUMENT_NUMBER;
-        }
-    }
-
-    /**
-     * Validates input for delete command, and then deletes the task.
-     * @param commandArgs 1-indexed number to be parsed as integer.
-     * @return Feedback string, either successful delete or throw number exception.
-     */
-    private String handleDelete(String commandArgs) {
-        int taskNumber;
-
-        // Parse Int first
-        try {
-            taskNumber = Integer.parseInt(commandArgs);
-        } catch (NumberFormatException e) {
-            return Ui.ERROR_MESSAGE_TASK_INDEX;
-        }
-
-        // Index out of bounds
-        if (taskNumber > tasks.getNumberOfTasks()) {
-            return Ui.ERROR_MESSAGE_TASK_INDEX;
-        }
-
-        Task deletedTask = tasks.deleteTask(taskNumber);
-        String output = "Noted. I've removed this task:\n"
-                + deletedTask.toString() + '\n'
-                + "Now you have " + tasks.getNumberOfTasks() + " task(s) in the list.";
-        return output;
-    }
 }
