@@ -173,16 +173,14 @@ public class Duke {
     public static ToDo createToDo(String messageFromUser) {
         // Remove the word "todo" from message
         String[] messageComponents = messageFromUser.split(" ", 2);
-        ToDo newToDo = new ToDo(messageComponents[1]);
-        return newToDo;
+        return new ToDo(messageComponents[1]);
     }
 
     public static Deadline createDeadline(String messageFromUser) {
         // Remove the word "deadline" from message
         messageFromUser = messageFromUser.substring(8);
         String[] messageComponents = messageFromUser.split("/by", 2);
-        Deadline newDeadline = new Deadline(messageComponents[0], messageComponents[1]);
-        return newDeadline;
+        return new Deadline(messageComponents[0], messageComponents[1]);
     }
 
     public static Event createEvent(String messageFromUser) {
@@ -191,8 +189,7 @@ public class Duke {
         // Event has 3 aspects message /from startDate /to endDate
         String[] messageComponents = messageFromUser.split("/from", 2);
         String[] timeComponents = messageComponents[1].split("/to", 2);
-        Event newEvent = new Event(messageComponents[0], timeComponents[0], timeComponents[1]);
-        return newEvent;
+        return new Event(messageComponents[0], timeComponents[0], timeComponents[1]);
     }
 
 
