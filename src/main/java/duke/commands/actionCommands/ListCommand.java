@@ -13,6 +13,8 @@ public class ListCommand extends Command {
 
     /**
      * {@inheritDoc}
+     * @throws EmptyListException If the list is empty.
+     * @throws InvalidArgsException If the arguments are invalid.
      */
     @Override
     public void handleCommand(String line, TaskList tasks, Storage storage) {

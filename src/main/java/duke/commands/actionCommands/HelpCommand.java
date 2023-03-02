@@ -11,6 +11,7 @@ public class HelpCommand extends Command {
 
     /**
      * {@inheritDoc}
+     * @throws InvalidArgsException If the arguments are invalid.
      */
     @Override
     public void handleCommand(String line, TaskList tasks, Storage storage) {

@@ -37,7 +37,7 @@ public class Storage {
     public void initFile() throws IOException {
         File newDirectory = new File(filepath);
 
-        if (!(newDirectory.exists() && newDirectory.isDirectory())){
+        if (!(newDirectory.exists() && newDirectory.isDirectory())) {
             newDirectory.mkdirs();
             newDirectory.createNewFile();
         }

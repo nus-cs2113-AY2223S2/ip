@@ -21,7 +21,7 @@ public class DeleteCommand extends Command {
         int indexSelect;
         int indexCount = Task.getIndexCount();
         try {
-            if (getArgumentNumber(line) != 2){
+            if (getArgumentNumber(line) != 2) {
                 throw new InvalidArgsException();
             }
             String indexSelectString = line.split(" ")[1];
@@ -44,7 +44,7 @@ public class DeleteCommand extends Command {
         } catch (NumberFormatException e) {
             System.out.println("Invalid command. Please try again.");
             System.out.println(LINEBREAK);
-        } catch (IOException e){
+        } catch (IOException e) {
             System.out.println("Something went wrong!");
         }
     }

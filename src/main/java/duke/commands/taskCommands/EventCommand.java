@@ -20,6 +20,9 @@ public class EventCommand extends Command {
 
     /**
      * {@inheritDoc}
+     * @throws EventDateException If the date is not in the correct format.
+     * @throws InvalidTaskException If the task is not in the correct format.
+     * @throws DateTimeParseException If the date is not in the correct format.
      */
     @Override
     public void handleCommand(String line, TaskList taskList, Storage storage) {

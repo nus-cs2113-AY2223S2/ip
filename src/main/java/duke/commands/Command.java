@@ -12,7 +12,7 @@ public abstract class Command {
      * @return Number of words in the user input.
      */
     protected int getArgumentNumber(String line) {
-        if (line == null || line.isEmpty()){
+        if (line == null || line.isEmpty()) {
             return 0;
         }
 

@@ -15,6 +15,7 @@ public class ToDoCommand extends Command {
 
     /**
      * {@inheritDoc}
+     * @throws InvalidTaskException If the task is not in the correct format.
      */
     @Override
     public void handleCommand(String line, TaskList taskList, Storage storage) {

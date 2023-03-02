@@ -7,18 +7,10 @@ import duke.tasks.TaskList;
 
 import java.util.Scanner;
 
+import static duke.constants.Constants.INTRO;
 import static duke.constants.Constants.LINEBREAK;
 
 public class Ui {
-
-    public static final String INTRO = LINEBREAK + "\nHello I'm\n" +
-            "    ____        _        \n" +
-            "   |  _ \\ _   _| | _____ \n" +
-            "   | | | | | | | |/ / _ \\\n" +
-            "   | |_| | |_| |   <  __/\n" +
-            "   |____/ \\__,_|_|\\_\\___|" + "\nWhat can I do for you?\n" +
-            "Input your tasks and I'll keep track of them!\n" +
-            "If you're unsure of how to use me, type \"help\" to see what I can do!\n" + LINEBREAK;
 
     /**
      * Prints a greeting message to the user.
