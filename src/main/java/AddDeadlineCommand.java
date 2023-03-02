@@ -1,7 +1,9 @@
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+
 public class AddDeadlineCommand extends Command{
+
     @Override
     public void executeCommand(TaskList taskList, String input) {
         try{
@@ -17,7 +19,6 @@ public class AddDeadlineCommand extends Command{
             if (deadlineName.equals("")){
                 throw new InvalidCommandException();
             }
-
             Deadline deadlineBeingAdded = new Deadline(deadlineName, deadlineByFormatted);
             taskList.addTask(deadlineBeingAdded);
 
