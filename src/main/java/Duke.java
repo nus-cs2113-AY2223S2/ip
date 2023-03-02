@@ -9,14 +9,14 @@ import java.util.Scanner;
 
 public class Duke {
     private TaskList tasks;
-    private Storage storage;
+    private final Storage storage;
 
     public Duke(String filePath) {
         storage = new Storage(filePath);
         try {
-            tasks = new TaskList(); //storage.load());
+            tasks = new TaskList(storage.load());
         } catch (DukeException e) {
-            System.out.println("Error");
+            System.out.println(Ui.ERROR_MESSAGE_CANNOT_LOAD);
             tasks = new TaskList();
         }
     }
@@ -24,7 +24,7 @@ public class Duke {
     public Duke() {
         storage = new Storage();
         try {
-            tasks = new TaskList(); //storage.load());
+            tasks = new TaskList(storage.load());
         } catch (DukeException e) {
             System.out.println("Error");
             tasks = new TaskList();
@@ -70,7 +70,7 @@ public class Duke {
      * @param inputLine Input directly from command-line
      * @return Feedback string or error string
      */
-    public static String executeCommand(String inputLine) {
+    public String executeCommand(String inputLine) {
         final String[] commandTypeAndArgs = Parser.splitCommandAndArgs(inputLine);
         final String command = commandTypeAndArgs[0];
         final String commandArgs = commandTypeAndArgs[1];
@@ -84,10 +84,10 @@ public class Duke {
             if (tasks.getNumberOfTasks() < 1) {
                 return Ui.ERROR_TASKS_EMPTY;
             }
-            return TaskList.getTaskListString();
+            return tasks.getTaskListString();
         case Ui.COMMAND_MARK: // Fallthrough
         case Ui.COMMAND_UNMARK:
-            return TaskList.executeMarkUnmark(command, commandArgs);
+            return tasks.executeMarkUnmark(command, commandArgs);
         case Ui.COMMAND_TASK_TODO:
             return handleAddTaskTodo(commandArgs);
         case Ui.COMMAND_TASK_DEADLINE:
@@ -98,7 +98,7 @@ public class Duke {
             return handleDelete(commandArgs);
         case Ui.COMMAND_BYE:
             Ui.printExitMessage();
-            TaskList.writeAllToFile();
+            tasks.writeAllToFile(storage);
             System.exit(0);
             // Fallthrough (If somehow cannot exit? LOL)
         default:
@@ -111,36 +111,36 @@ public class Duke {
      * Below handling Tasks (Validation and addTask)
      * ==============================================================
      */
-    private static String handleAddTaskTodo(String commandArgs) {
+    private String handleAddTaskTodo(String commandArgs) {
         try {
-            Todo newTask = new Todo(Parser.processTaskTodo(commandArgs), TaskList.getNextTaskNumber());
+            Todo newTask = new Todo(Parser.processTaskTodo(commandArgs), tasks.getNextTaskNumber());
             tasks.addTask(newTask);
-            return Ui.feedbackTaskAdded(newTask);
+            return Ui.feedbackTaskAdded(tasks, newTask);
         } catch (DukeException e) {
             return Ui.ERROR_MESSAGE_ARGUMENT_MISSING;
         }
     }
 
-    private static String handleAddTaskDeadline(String commandArgs) {
+    private String handleAddTaskDeadline(String commandArgs) {
         try {
             String[] deadlineArgs = Parser.processTaskDeadline(commandArgs);
             Deadline newTask =
-                    new Deadline(deadlineArgs[0], TaskList.getNextTaskNumber(), deadlineArgs[1]);
+                    new Deadline(deadlineArgs[0], tasks.getNextTaskNumber(), deadlineArgs[1]);
             tasks.addTask(newTask);
-            return Ui.feedbackTaskAdded(newTask);
+            return Ui.feedbackTaskAdded(tasks, newTask);
         } catch (DukeException e) {
             return Ui.ERROR_MESSAGE_ARGUMENT_NUMBER;
         }
     }
 
-    private static String handleAddTaskEvent(String commandArgs) {
+    private String handleAddTaskEvent(String commandArgs) {
         try {
             String[] eventArgs = Parser.processTaskEvent(commandArgs);
             Event newTask =
-                    new Event(eventArgs[0], TaskList.getNextTaskNumber(),
+                    new Event(eventArgs[0], tasks.getNextTaskNumber(),
                             eventArgs[1], eventArgs[2]);
             tasks.addTask(newTask);
-            return Ui.feedbackTaskAdded(newTask);
+            return Ui.feedbackTaskAdded(tasks, newTask);
         } catch (DukeException e) {
             return Ui.ERROR_MESSAGE_ARGUMENT_NUMBER;
         }
@@ -151,7 +151,7 @@ public class Duke {
      * @param commandArgs 1-indexed number to be parsed as integer.
      * @return Feedback string, either successful delete or throw number exception.
      */
-    private static String handleDelete(String commandArgs) {
+    private String handleDelete(String commandArgs) {
         int taskNumber;
 
         // Parse Int first
@@ -162,14 +162,14 @@ public class Duke {
         }
 
         // Index out of bounds
-        if (taskNumber > TaskList.getNumberOfTasks()) {
+        if (taskNumber > tasks.getNumberOfTasks()) {
             return Ui.ERROR_MESSAGE_TASK_INDEX;
         }
 
-        Task deletedTask = TaskList.deleteTask(taskNumber);
+        Task deletedTask = tasks.deleteTask(taskNumber);
         String output = "Noted. I've removed this task:\n"
                 + deletedTask.toString() + '\n'
-                + "Now you have " + TaskList.getNumberOfTasks() + " task(s) in the list.";
+                + "Now you have " + tasks.getNumberOfTasks() + " task(s) in the list.";
         return output;
     }
 }

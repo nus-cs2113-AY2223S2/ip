@@ -83,7 +83,8 @@ public final class Ui {
             "I think you might be missing something.\n" + ERROR_MESSAGE_HELP;
     public static final String ERROR_MESSAGE_INVALID_COMMAND =
             "Oops, I don't understand you.\n" + ERROR_MESSAGE_HELP;
-
+    public static final String ERROR_MESSAGE_CANNOT_LOAD =
+            "Error in retrieving tasks from saved file. Creating new empty TaskList.";
     // Prints line separator.
     public static void printHLine() {
         System.out.println("================================");
@@ -105,9 +106,9 @@ public final class Ui {
     }
 
     // Announce the number of tasks.
-    public static String feedbackTaskAdded(Task task) {
+    public static String feedbackTaskAdded(TaskList taskList, Task task) {
         String output = MESSAGE_TASK_ADDED + '\n' + task + '\n';
-        output += "Total number of tasks: " + TaskList.getNumberOfTasks();
+        output += "Total number of tasks: " + taskList.getNumberOfTasks();
         return output;
     }
 }

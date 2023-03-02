@@ -15,13 +15,14 @@ public class TaskList {
      * Constructor to use with saved file. Populates task list.
      * @param listOfTasks Tasks from save file (handled by {@link io.Storage}).
      */
-    public TaskList(ArrayList<String[]> listOfTasks) {
+    public TaskList(ArrayList<String[]> listOfTasks) throws DukeException {
         tasks = new ArrayList<Task>();
         for (String[] strings : listOfTasks) {
             try {
                 tasks.add(createTaskFromFile(strings));
             } catch (DukeException e) {
                 System.out.println("Error trying to add a task from save file.");
+                throw new DukeException();
             }
         }
 
@@ -103,7 +104,7 @@ public class TaskList {
      * @param commandArgs Should be an int corresponding to the task number (1-index)
      * @return Feedback string: "Task marked: ____"
      */
-    public static String executeMarkUnmark(String command, String commandArgs) {
+    public String executeMarkUnmark(String command, String commandArgs) {
         int taskNumber;
         // Check is Integer
         try {
@@ -127,16 +128,16 @@ public class TaskList {
     }
 
     // Getter for number of task
-    public static int getNumberOfTasks() {
+    public int getNumberOfTasks() {
         return numberOfTasks;
     }
 
     // A bit unoptimised, but this is to get the next number for numbering purposes.
-    public static int getNextTaskNumber() {
+    public int getNextTaskNumber() {
         return numberOfTasks + 1;
     }
 
-    public static void writeAllToFile(Storage storage) {
+    public void writeAllToFile(Storage storage) {
         String output = "";
         for (Task task : tasks) {
             if (task != null) {
