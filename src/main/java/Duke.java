@@ -1,5 +1,6 @@
 import io.DukeException;
 import io.IO;
+import io.Ui;
 import task.Deadline;
 import task.Event;
 import task.TaskList;
@@ -12,9 +13,9 @@ public class Duke {
     private static final TaskList tasks = new TaskList();
 
     public static void main(String[] args) {
-        IO.printGreeting();
+        Ui.printGreeting();
         IO.openFile();
-        IO.printHLine();
+        Ui.printHLine();
 
         // Input variables initialised.
         Scanner myScanner = new Scanner(System.in);
@@ -29,7 +30,7 @@ public class Duke {
             String feedback = executeCommand(userInput.toLowerCase());
             System.out.println(feedback);
 
-            IO.printHLine();
+            Ui.printHLine();
         }
     }
 
@@ -46,31 +47,31 @@ public class Duke {
         // Check command against the set list of commands.
         // If it doesn't exist, default is invalid
         switch(command) {
-        case IO.COMMAND_HELP:
-            return IO.MESSAGE_HELP;
-        case IO.COMMAND_LIST:
+        case Ui.COMMAND_HELP:
+            return Ui.MESSAGE_HELP;
+        case Ui.COMMAND_LIST:
             if (tasks.getNumberOfTasks() < 1) {
-                return IO.ERROR_TASKS_EMPTY;
+                return Ui.ERROR_TASKS_EMPTY;
             }
             return TaskList.getTaskListString();
-        case IO.COMMAND_MARK: // Fallthrough
-        case IO.COMMAND_UNMARK:
+        case Ui.COMMAND_MARK: // Fallthrough
+        case Ui.COMMAND_UNMARK:
             return TaskList.executeMarkUnmark(command, commandArgs);
-        case IO.COMMAND_TASK_TODO:
+        case Ui.COMMAND_TASK_TODO:
             return handleAddTaskTodo(commandArgs);
-        case IO.COMMAND_TASK_DEADLINE:
+        case Ui.COMMAND_TASK_DEADLINE:
             return handleAddTaskDeadline(commandArgs);
-        case IO.COMMAND_TASK_EVENT:
+        case Ui.COMMAND_TASK_EVENT:
             return handleAddTaskEvent(commandArgs);
-        case IO.COMMAND_DELETE:
+        case Ui.COMMAND_DELETE:
             return handleDelete(commandArgs);
-        case IO.COMMAND_BYE:
-            IO.printExitMessage();
+        case Ui.COMMAND_BYE:
+            Ui.printExitMessage();
             TaskList.writeAllToFile();
             System.exit(0);
             // Fallthrough (If somehow cannot exit? LOL)
         default:
-            return IO.ERROR_MESSAGE_INVALID_COMMAND;
+            return Ui.ERROR_MESSAGE_INVALID_COMMAND;
         }
     }
 
@@ -83,9 +84,9 @@ public class Duke {
         try {
             Todo newTask = new Todo(IO.processTaskTodo(commandArgs), TaskList.getNextTaskNumber());
             tasks.addTask(newTask);
-            return IO.feedbackTaskAdded(newTask);
+            return Ui.feedbackTaskAdded(newTask);
         } catch (DukeException e) {
-            return IO.ERROR_MESSAGE_ARGUMENT_MISSING;
+            return Ui.ERROR_MESSAGE_ARGUMENT_MISSING;
         }
     }
 
@@ -95,9 +96,9 @@ public class Duke {
             Deadline newTask =
                     new Deadline(deadlineArgs[0], TaskList.getNextTaskNumber(), deadlineArgs[1]);
             tasks.addTask(newTask);
-            return IO.feedbackTaskAdded(newTask);
+            return Ui.feedbackTaskAdded(newTask);
         } catch (DukeException e) {
-            return IO.ERROR_MESSAGE_ARGUMENT_NUMBER;
+            return Ui.ERROR_MESSAGE_ARGUMENT_NUMBER;
         }
     }
 
@@ -108,9 +109,9 @@ public class Duke {
                     new Event(eventArgs[0], TaskList.getNextTaskNumber(),
                             eventArgs[1], eventArgs[2]);
             tasks.addTask(newTask);
-            return IO.feedbackTaskAdded(newTask);
+            return Ui.feedbackTaskAdded(newTask);
         } catch (DukeException e) {
-            return IO.ERROR_MESSAGE_ARGUMENT_NUMBER;
+            return Ui.ERROR_MESSAGE_ARGUMENT_NUMBER;
         }
     }
 
@@ -126,12 +127,12 @@ public class Duke {
         try {
             taskNumber = Integer.parseInt(commandArgs);
         } catch (NumberFormatException e) {
-            return IO.ERROR_MESSAGE_TASK_INDEX;
+            return Ui.ERROR_MESSAGE_TASK_INDEX;
         }
 
         // Index out of bounds
         if (taskNumber > TaskList.getNumberOfTasks()) {
-            return IO.ERROR_MESSAGE_TASK_INDEX;
+            return Ui.ERROR_MESSAGE_TASK_INDEX;
         }
 
         Task deletedTask = TaskList.deleteTask(taskNumber);
