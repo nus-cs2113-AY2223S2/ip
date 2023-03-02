@@ -9,7 +9,7 @@ public class FindTaskCommand extends Command{
         ArrayList<Task> matchedTasks;
         matchedTasks = (ArrayList<Task>) taskList.stream()                                              // casts list to ArrayList
                 .filter(t -> t.getTaskName().trim().toLowerCase().contains(keyword)).collect(toList());
-        System.out.println(Buddy.divider);
+        System.out.println(Messages.DIVIDER);
         if (!matchedTasks.isEmpty()){
             System.out.println("Well, here is the list of tasks matching your keyword!");
         }
@@ -19,7 +19,7 @@ public class FindTaskCommand extends Command{
         if (matchedTasks.isEmpty()){
             System.out.println("Oops, there are no tasks matching the keyword! Try again with another keyword");
         }
-        System.out.println(Buddy.divider);
+        System.out.println(Messages.DIVIDER);
 
     }
 }

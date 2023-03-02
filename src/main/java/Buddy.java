@@ -10,7 +10,7 @@ import static java.util.stream.Collectors.toList;
 
 public class Buddy {
     public static int taskCount = 0;
-    public static String divider = "________________________________________________________________________________";
+
 
     public static void main(String[] args) throws IOException {
         TaskList taskList = new TaskList();
@@ -23,16 +23,12 @@ public class Buddy {
 
         }
 
-        String greeting = "Hello there! I'm Buddy\n"
-                + "How may I assist you?";
-        String listOfCommands = "Here are the commands you can use: todo, deadline, event,  list, mark, unmark, bye";
-        String exitMessage = "Hope I was of help to you! Have a great day and see you again, Buddy :)";
 
 
-        System.out.println(divider);
-        System.out.println(greeting);
-        System.out.println(listOfCommands);
-        System.out.println(divider);
+        System.out.println(Messages.DIVIDER);
+        System.out.println(Messages.GREETING);
+        System.out.println(Messages.INTRODUCTION);
+        System.out.println(Messages.DIVIDER);
 
 
         String input;
@@ -114,9 +110,9 @@ public class Buddy {
             System.out.println("Error occurred");
         }
 
-        System.out.println(divider);
-        System.out.println(exitMessage);
-        System.out.println(divider);
+        System.out.println(Messages.DIVIDER);
+        System.out.println(Messages.EXITMESSAGE);
+        System.out.println(Messages.DIVIDER);
 
     }
 }
