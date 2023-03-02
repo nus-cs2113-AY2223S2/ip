@@ -3,6 +3,10 @@ import java.util.ArrayList;
 public class Parser {
     private boolean exit = false;
 
+    /**
+     * Parse the user command and store to the taskList if applicable
+     * @param command the user input
+     */
     public void parse(String command) {
         if (command.equalsIgnoreCase("list")) {
             System.out.println("Here are the tasks in your list:");
@@ -83,6 +87,9 @@ public class Parser {
         }
     }
 
+    /**
+     * @return check if the user want to stop the program
+     */
     public boolean isExit() {
         return exit;
     }
