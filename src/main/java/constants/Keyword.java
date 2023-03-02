@@ -5,7 +5,9 @@ public interface Keyword {
     String COMMAND = "command";
     String DEADLINE = "deadline";
     String DESCRIPTION = "description";
+    String EMPTY_ARRAY = "[]";
     String END = "end";
+    String FILE_NAME = "./data.json";
     String FROM = "from ";
     String INDEX = "index";
     String KEYWORD = "keyword";
