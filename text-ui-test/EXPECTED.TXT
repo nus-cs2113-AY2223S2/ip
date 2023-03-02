@@ -1,7 +1,81 @@
-Hello from
- ____        _        
-|  _ \ _   _| | _____ 
-| | | | | | | |/ / _ \
-| |_| | |_| |   <  __/
-|____/ \__,_|_|\_\___|
+____________________________________________________________
+Hello! I'm Duke.
+To add general tasks to the todo list, simply type in the task and press enter.
+You can specify the type of tasks by using 'todo' / 'deadline' / 'event' keyword before the task description.
+You can keep track of deadlines by typing 'deadline' followed by task description + '/by' to specify the time of the deadline.
+You can also add events to the list by typing 'event' followed by task description + '/from' + starting time of event + '/to' ending time of event.
+Type 'list' to view the current todo list.
+Type 'mark' and task event index to mark the task as done and type 'unmark' and index to undo the task.
+____________________________________________________________
+
+____________________________________________________________
+Great! I've added this task:
+   [T][ ] submit CS2113 project
+
+Now you have 1 task(s) in the list.
+____________________________________________________________
+
+____________________________________________________________
+Great! I've added this task:
+   [D][ ] individual project (by: Thursday 2359)
+
+Now you have 2 task(s) in the list.
+____________________________________________________________
+
+____________________________________________________________
+Great! I've added this task:
+   [E][ ] CS2113 lecture (from: Friday 4 to: 6pm)
+
+Now you have 3 task(s) in the list.
+____________________________________________________________
+
+____________________________________________________________
+Here are the tasks in your list:
+1. [T][ ] submit CS2113 project
+2. [D][ ] individual project (by: Thursday 2359)
+3. [E][ ] CS2113 lecture (from: Friday 4 to: 6pm)
+____________________________________________________________
+
+____________________________________________________________
+Task 2 marked as done:
+[D][X] individual project (by: Thursday 2359)
+____________________________________________________________
+
+____________________________________________________________
+added: read a book
+____________________________________________________________
+
+____________________________________________________________
+Great! I've added this task:
+   [T][ ] laundry
+
+Now you have 5 task(s) in the list.
+____________________________________________________________
+
+____________________________________________________________
+Great! I've added this task:
+   [E][ ] meeting (from: 10pm to: 11pm)
+
+Now you have 6 task(s) in the list.
+____________________________________________________________
+
+____________________________________________________________
+Task 4 marked as done:
+[X] read a book
+____________________________________________________________
+
+____________________________________________________________
+Task 2 marked as not done yet:
+[D][ ] individual project (by: Thursday 2359)
+____________________________________________________________
+
+____________________________________________________________
+Here are the tasks in your list:
+1. [T][ ] submit CS2113 project
+2. [D][ ] individual project (by: Thursday 2359)
+3. [E][ ] CS2113 lecture (from: Friday 4 to: 6pm)
+4. [X] read a book
+5. [T][ ] laundry
+6. [E][ ] meeting (from: 10pm to: 11pm)
+____________________________________________________________
 

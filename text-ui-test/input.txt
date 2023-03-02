@@ -1,0 +1,11 @@
+todo submit CS2113 project
+deadline individual project /by Thursday 2359
+event CS2113 lecture /from Friday 4 /to 6pm
+list
+mark 2
+read a book
+todo laundry
+event meeting /from 10pm /to 11pm
+mark 4
+unmark 2
+list
