@@ -35,7 +35,7 @@ public class Storage {
         writer.close();
       }
     } catch (IOException e) {
-      ui.printMessage("An IO Exception occured");
+      ui.printMessage("An IO Exception occurred");
       e.printStackTrace();
     }
   }
@@ -83,7 +83,7 @@ public class Storage {
         }
       }
     } catch (FileNotFoundException e) {
-      ui.printMessage(ErrorMessage.FOUND_NOT_FOUND_EXCEPTION.message);
+      ui.printMessage(ErrorMessage.FOUND_NOT_FOUND_EXCEPTION);
     } catch (Exception e) {
       ui.printMessage(e.getMessage());
     }
@@ -131,7 +131,7 @@ public class Storage {
       writer.write(json);
       writer.close();
     } catch (IOException e) {
-      ui.printMessage(ErrorMessage.IO_EXCEPTION_ERROR.message);
+      ui.printMessage(ErrorMessage.IO_EXCEPTION_ERROR);
     }
   }
 

@@ -1,19 +1,12 @@
 package constants;
 
 /**
- * An enum that contains all the error messages.
+ * This interface will contain most of the error messages that will be used throughout the
+ * application.
  */
-public enum ErrorMessage {
-  IO_EXCEPTION_ERROR(
-          "Named file exists but is a directory rather than a regular file, does not exist but cannot be created, or cannot be opened for any other reason."
-  ),
-  PARSE_INT_ERROR("You have provided a non-number index\n"),
-  INVALID_COMMAND("An invalid command has been provided"),
-  FOUND_NOT_FOUND_EXCEPTION("A file not found exception occurred");
-
-  public final String message;
-
-  ErrorMessage(String message) {
-    this.message = message;
-  }
+public interface ErrorMessage {
+  String IO_EXCEPTION_ERROR = "Named file exists but is a directory rather than a regular file, does not exist but cannot be created, or cannot be opened for any other reason.";
+  String PARSE_INT_ERROR = "You have provided a non-number index\n";
+  String INVALID_COMMAND = "An invalid command has been provided";
+  String FOUND_NOT_FOUND_EXCEPTION = "A file not found exception occurred";
 }

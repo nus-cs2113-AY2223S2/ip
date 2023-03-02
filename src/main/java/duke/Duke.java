@@ -16,8 +16,8 @@ public class Duke {
   }
 
   /**
-   * The function that is used to return the instance of the
-   * Duke.
+   * The function that is used to return the instance of Duke. Singleton pattern
+   * is used.
    *
    * @return The Duke instance
    */
@@ -85,12 +85,12 @@ public class Duke {
         controller.findTask(keyword);
         break;
       default:
-        throw new DukeException(ErrorMessage.INVALID_COMMAND.message);
+        throw new DukeException(ErrorMessage.INVALID_COMMAND);
       }
     } catch (DukeException e) {
       ui.printMessage(e.getDescription());
     } catch (NumberFormatException e) {
-      ui.printMessage(ErrorMessage.PARSE_INT_ERROR.message);
+      ui.printMessage(ErrorMessage.PARSE_INT_ERROR);
     } catch (Exception e) {
       ui.printMessage(e.getMessage());
     }
