@@ -1,5 +1,8 @@
 package duke;
 
+/**
+ * Class used to handle output to the user. Contains a collection of methods used to print to standard output.
+ */
 public class Ui {
 
     static final String LINE = "_".repeat(60);
@@ -19,12 +22,23 @@ public class Ui {
         System.out.println(LINE);
     }
 
+    /**
+     * Prints any message, correctly separated by horizontal lines.
+     *
+     * @param message Message to be printed.
+     */
     public void printSimpleMessage (String message) {
         System.out.println(LINE);
         System.out.println(message);
         System.out.println(LINE);
     }
 
+    /**
+     * Prints any message followed by a corresponding task, correctly separated by horizontal lines.
+     *
+     * @param message Message to be printed.
+     * @param task Task to be printed.
+     */
     public void printMessageWithTask (String message, Task task) {
         System.out.println(LINE);
         System.out.println(message);
@@ -32,6 +46,11 @@ public class Ui {
         System.out.println(LINE);
     }
 
+    /**
+     * Prints a list of all tasks currently in the list.
+     *
+     * @param tasks TaskList to print list for.
+     */
     public void printList(TaskList tasks) {
         System.out.println(LINE);
         System.out.println("Here are the tasks in your list:");
@@ -46,6 +65,12 @@ public class Ui {
         System.out.println(LINE);
     }
 
+    /**
+     * Searches through TaskList for any Tasks that match with keyword and prints only those Tasks.
+     *
+     * @param tasks TaskList to search through.
+     * @param keyword Keyword to search for.
+     */
     public void printMatches(TaskList tasks, String keyword) {
         System.out.println(LINE);
         System.out.println("Here are the matching tasks in your list:");

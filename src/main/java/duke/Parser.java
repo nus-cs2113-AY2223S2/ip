@@ -5,6 +5,11 @@ public class Parser {
     Ui ui;
     TaskList tasks;
 
+    /**
+     * Initializes Parser class
+     *
+     * @param tasks Pointer to TaskList storing all tasks currently in the list.
+     */
     public Parser(TaskList tasks) {
         ui = new Ui();
         this.tasks = tasks;
@@ -60,7 +65,12 @@ public class Parser {
         ui.printAddTaskConfirmation(task, tasks.length());
     }
 
-
+    /**
+     * Parses an input string, printing the appropriate output and handling any exceptions.
+     *
+     * @param input Line of input from the user.
+     * @return True if more input is expected, false if user sent "bye" command.
+     */
     public boolean parseInput(String input) {
         // Splits into only two sections, one for command name and one for arguments
         try {
