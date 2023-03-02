@@ -25,7 +25,6 @@ public class Marker extends ErrorMessages {
      *                         screen with a whole list of inputs, hence we mute it upon starting Duke
      *                         Otherwise we print output as per normal
      */
-
     public void markOrUnamrkTask(ArrayList<Task> taskList, String input, boolean loadFromSaveData) {
         String[] markActions = (input.split(BLANK, 2));
         try {
