@@ -20,6 +20,12 @@ public class Ui {
     public static void couldNotSaveMessage() {
         System.out.println("Something went wrong, could not save!");
     }
+    public static void taskFoundMessage() {
+        System.out.println("Found a match! Here are the results master!");
+    }
+    public static void taskNotFoundMessage() {
+        System.out.println("Hina could not find anything about that in master's list...");
+    }
     public static void showDateTimeError() {
         System.out.println("Please use dd-MMM-yyyy HH:mm format!");
     }
