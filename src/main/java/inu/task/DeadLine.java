@@ -32,7 +32,7 @@ public class DeadLine extends Task {
 
     @Override
     public String encodeTaskToString() {
-        return "D" + "//" + getStatusIcon() + "//" + getDescription() + "//" + getBy();
+        return String.format("D//%s//%s//%s", getStatusIcon(), getDescription(), getBy());
     }
 
 }

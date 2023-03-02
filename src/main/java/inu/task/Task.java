@@ -55,8 +55,6 @@ public abstract class Task {
      *
      * @return string to save in file.
      */
-    public String encodeTaskToString() {
-        return "";
-    }
+    public abstract String encodeTaskToString();
 
 }

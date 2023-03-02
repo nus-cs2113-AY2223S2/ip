@@ -44,7 +44,7 @@ public class Event extends Task {
 
     @Override
     public String encodeTaskToString() {
-        return "E" + "//" + getStatusIcon() + "//" + getDescription() + "//" + getFrom() + "//" + getTo();
+        return String.format("E//%s//%s//%s//%s", getStatusIcon(), getDescription(), getFrom(), getTo());
     }
 
 }

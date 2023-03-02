@@ -16,7 +16,7 @@ public class Todo extends Task {
 
     @Override
     public String encodeTaskToString() {
-        return "T" + "//" + getStatusIcon() + "//" + getDescription();
+        return String.format("T//%s//%s", getStatusIcon(), getDescription());
     }
 
 }
