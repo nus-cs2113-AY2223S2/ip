@@ -11,7 +11,6 @@ public class Deadline extends Task {
             this.by = end;
         } catch(Exception e){
             UI.printDateFormatErrorComment();
-            return;
         }
     }
 

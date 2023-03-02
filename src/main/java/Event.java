@@ -14,7 +14,6 @@ public class Event extends Task {
 
         } catch (Exception e){
             UI.printDateFormatErrorComment();
-            return;
         }
     }
 

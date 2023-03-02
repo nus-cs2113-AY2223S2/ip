@@ -75,6 +75,7 @@ public class TaskList {
         try{
             String contents = command.getContent();
             LocalDate by = command.getBy();
+            if(by == null) {return false;}
             Deadline newDeadline = new Deadline (contents, by);
             taskArray.add(newDeadline);
             totalTaskNum++;
@@ -91,6 +92,7 @@ public class TaskList {
             String contents = command.getContent();
             LocalDate from = command.getFrom();
             LocalDate to = command.getTo();
+            if(from == null || to == null) {return false;}
             Event newEvent = new Event(contents, from, to);
             taskArray.add(newEvent);
             totalTaskNum++;
