@@ -1,5 +1,3 @@
-![angry_mom](http://clipart-library.com/img1/1320251.png)
-
 # Mom - User Guide
 Similar to your real-life mom, Mom is a naggy remainder app that helps people to keep track of their todos, deadlines and events that they have! It uses a command-line interface, which make inputs swift and convenient! (Honestly, can't you remember it yourself?)
 
