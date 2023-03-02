@@ -2,7 +2,7 @@ package command;
 
 import exception.DukeException;
 import components.TaskList;
-import components.Ui;
+import components.UI;
 import components.Storage;
 
 public abstract class Command {
@@ -15,7 +15,7 @@ public abstract class Command {
     public Command() {
     }
 
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws DukeException {
+    public void execute(TaskList tasks, UI ui, Storage storage) throws DukeException {
     }
 
     public boolean isExit() {

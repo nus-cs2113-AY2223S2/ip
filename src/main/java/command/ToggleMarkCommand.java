@@ -3,7 +3,7 @@ package command;
 import exception.DukeException;
 import exception.ErrorMessage;
 import components.TaskList;
-import components.Ui;
+import components.UI;
 import components.Storage;
 
 
@@ -12,7 +12,15 @@ public class ToggleMarkCommand extends Command {
         super(commandFields);
     }
 
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws DukeException {
+    /**
+     * Mark or Unmark the task given the index.
+     *
+     * @param tasks ArrayList of tasks.
+     * @param ui Deals with interactions with the user.
+     * @param storage Deals with saving and loading tasks in the file.
+     * @throws DukeException If a number is not provided or the index exceeds number of tasks in the list.
+     */
+    public void execute(TaskList tasks, UI ui, Storage storage) throws DukeException {
         try {
             int taskNumber = Integer.parseInt(commandFields[1]);
 

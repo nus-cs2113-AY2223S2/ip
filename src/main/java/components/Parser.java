@@ -12,6 +12,9 @@ import command.ToggleMarkCommand;
 import exception.DukeException;
 import exception.ErrorMessage;
 
+/**
+ * Deals with making sense of the user command.
+ */
 public class Parser {
     private static void ParseTodoCommand(String fullCommand, String[] commandFields) throws DukeException {
         try {
@@ -86,6 +89,13 @@ public class Parser {
         }
     }
 
+    /**
+     * Returns new command object based on command by user.
+     *
+     * @param fullCommand Command entered by user.
+     * @return Command object based on description.
+     * @throws DukeException If command is invalid.
+     */
     public static Command parse(String fullCommand) throws DukeException {
         String[] words = fullCommand.split(" ");
         String[] commandFields = new String[5];

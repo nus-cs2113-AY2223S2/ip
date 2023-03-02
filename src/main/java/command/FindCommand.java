@@ -2,7 +2,7 @@ package command;
 
 import components.Storage;
 import components.TaskList;
-import components.Ui;
+import components.UI;
 import exception.DukeException;
 import exception.ErrorMessage;
 import task.Task;
@@ -15,7 +15,15 @@ public class FindCommand extends Command {
         super(commandFields);
     }
 
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws DukeException {
+    /**
+     * Prints out a list of matching tasks based on user input.
+     *
+     * @param tasks ArrayList of tasks.
+     * @param ui Deals with interactions with the user.
+     * @param storage Deals with saving and loading tasks in the file.
+     * @throws DukeException If there is no matching tasks.
+     */
+    public void execute(TaskList tasks, UI ui, Storage storage) throws DukeException {
         ArrayList<Task> filteredList = (ArrayList<Task>) tasks.tasks.stream()
                 .filter(t -> t.getDescription().contains((commandFields[0])))
                 .collect(Collectors.toList());

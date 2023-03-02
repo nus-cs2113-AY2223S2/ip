@@ -4,7 +4,7 @@ import exception.DukeException;
 import exception.ErrorMessage;
 import task.Task;
 import components.TaskList;
-import components.Ui;
+import components.UI;
 import components.Storage;
 
 
@@ -13,7 +13,15 @@ public class DeleteCommand extends Command {
         super(commandFields);
     }
 
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws DukeException {
+    /**
+     * Remove an item from the ArrayList of tasks given the task index.
+     *
+     * @param tasks ArrayList of tasks.
+     * @param ui Deals with interactions with the user.
+     * @param storage Deals with saving and loading tasks in the file.
+     * @throws DukeException If the index to delete exceeds number of tasks.
+     */
+    public void execute(TaskList tasks, UI ui, Storage storage) throws DukeException {
         int taskNumber = Integer.parseInt(commandFields[0]);
         if (taskNumber > tasks.tasks.size()) {
             throw new DukeException(ErrorMessage.INVALID_DELETE.toString());
