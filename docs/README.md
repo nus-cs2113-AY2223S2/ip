@@ -8,6 +8,8 @@ Similar to post-it notes, Duke is a friendly remainder app that helps people to 
 4. Launch your command prompt/terminal and navigate to the folder where *duke.jar* is located.
 5. Run the following command: `java -jar duke.jar`
 
+Note: **DO NOT** modify ***items.txt*** unless you know what you are doing!
+
 ## Features
 ### Keeps a list of items
 
@@ -43,8 +45,8 @@ list
 _________________
 Here are the items in your list:
 1. [T][ ] to eat
-2. [D][ ] to swim (by: today)
-3. [E][ ] to sleep (from: today to: tomorrow)
+2. [D][ ] to swim (by: 20-10-2020 06:00 PM)
+3. [E][ ] to sleep (from: 20-10-2020 12:00 PM to: 20-10-2020 03:00 PM)
 _________________
 ```
 
@@ -61,7 +63,7 @@ Shows the item that has been marked as done.
 mark 2
 _________________
 Good job! I've marked this item as done:
-[D][X] to swim (by: today)
+[D][X] to swim (by: 20-10-2020 06:00 PM)
 _________________
 ```
 
@@ -78,7 +80,7 @@ Shows the item that has been marked as not done.
 unmark 2
 _________________
 OK, I've marked this item as not done yet:
-[D][ ] to swim (by: today)
+[D][ ] to swim (by: 20-10-2020 06:00 PM)
 _________________
 ```
 
@@ -102,7 +104,8 @@ _________________
 
 ### `deadline` - Create a Deadline item
 
-Adds an item of type Deadline with datemark specified into the list.
+Adds an item of type Deadline with datemark(or dateline) specified into the list.
+Datemark format must be strictly followed: "dd-MM-yyyy HH:mm". Example: "20-10-2020 18:00".
 
 Format: `deadline (description) /by (datemark)`
 
@@ -110,10 +113,10 @@ Expected output:
 
 Displays the Deadline item added and the number of items after adding.
 ```
-deadline to play /by everyday
+deadline to play /by 20-10-2020 18:00
 _________________
 Got it. I've added this item:
-[D][ ] to play (by: everyday)
+[D][ ] to play (by: 20 Oct 2020 06:00 PM)
 Now you have 5 items in the list.
 _________________
 ```
@@ -121,6 +124,8 @@ _________________
 ### `event` - Create an Event task
 
 Adds an item of type Event with from & to date specified into the list.
+From (start date) and To (end date) format must be strictly followed: "dd-MM-yyyy HH:mm". Example: "20-10-2020 18:00".
+The start date must not be after the end date.
 
 Format: `event (description) /from (start date) /to (end date)`
 
@@ -128,10 +133,10 @@ Expected output:
 
 Displays the Event item added and the number of items after adding.
 ```
-event to exercise /from 1pm /to 3pm
+event to exercise /from 20-10-2020 12:00 /to 20-10-2020 15:00
 _________________
 Got it. I've added this item:
-[E][ ] to exercise (from: 1pm to: 3pm)
+[E][ ] to sleep (from: 20-10-2020 12:00 PM to: 20-10-2020 03:00 PM)
 Now you have 6 items in the list.
 _________________
 ```
@@ -149,7 +154,7 @@ Shows the item that has been deleted and the number of items remaining.
 delete 6
 _________________
 Got it. I've deleted this item:
-[E][ ] to exercise (from: 1pm to: 3pm)
+[E][ ] to sleep (from: 20-10-2020 12:00 PM to: 20-10-2020 03:00 PM)
 Now you have 5 items in the list.
 _________________
 ```
@@ -167,8 +172,8 @@ Returns the list of items that contain the keyword.
 find to s
 _________________
 Here are the matching items in your list:
-1. [D][ ] to swim (by: today)
-2. [E][ ] to sleep (from: today to: tomorrow)
+1. [D][ ] to swim (by: 20-10-2020 06:00 PM)
+2. [E][ ] to sleep (from: 20-10-2020 12:00 PM to: 20-10-2020 03:00 PM)
 _________________
 ```
 
