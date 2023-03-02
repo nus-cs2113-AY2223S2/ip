@@ -32,7 +32,7 @@ public class FindCommand extends Command {
         } else {
             System.out.println("Here are the matching tasks in your list:\n");
             for (Task task : filteredList) {
-                System.out.println((filteredList.indexOf(task) + 1) + "." + task);
+                System.out.println((tasks.tasks.indexOf(task) + 1) + "." + task);
             }
         }
     }
