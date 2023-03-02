@@ -7,9 +7,13 @@ public class TaskList {
     private int totalTaskNum;
     private Storage taskStorage = new Storage();
 
-    public TaskList(){
+    public TaskList(boolean shouldLoad){
         taskArray = new ArrayList<>();
         totalTaskNum = 0;
+        if(!shouldLoad){
+            return;
+        }
+
         try{
             ArrayList<String> existingTasks = Storage.scanData();
             loadData(existingTasks);
@@ -55,6 +59,12 @@ public class TaskList {
             default:
                 return false;
         }
+    }
+
+    public boolean addTask(Task task){
+        taskArray.add(task);
+        totalTaskNum++;
+        return true;
     }
 
     public boolean addTodo(Command command){
@@ -145,6 +155,10 @@ public class TaskList {
 
     public Task getTask(int taskNumInt){
         return taskArray.get(taskNumInt-1);
+    }
+
+    public ArrayList<Task> getTaskArray() {
+        return taskArray;
     }
 
     public String showTaskList(){

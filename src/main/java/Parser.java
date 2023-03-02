@@ -21,7 +21,9 @@ public class Parser {
             return new UnmarkCommand(userInput);
         }else if(userInput.startsWith("delete")){
             return new DeleteCommand(userInput);
-        }else if(userInput.startsWith("bye")){
+        }else if(userInput.startsWith("find")){
+            return new FindCommand(userInput);
+        } else if(userInput.startsWith("bye")){
             return new ByeCommand();
         }
 
