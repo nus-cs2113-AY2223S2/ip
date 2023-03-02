@@ -11,7 +11,7 @@ public class Duke {
     private TaskList tasks;
     private final Storage storage;
 
-    public Duke(String filePath) {
+    private Duke(String filePath) {
         storage = new Storage(filePath);
         try {
             tasks = new TaskList(storage.load());
@@ -21,7 +21,7 @@ public class Duke {
         }
     }
 
-    public Duke() {
+    private Duke() {
         storage = new Storage();
         try {
             tasks = new TaskList(storage.load());
@@ -33,7 +33,7 @@ public class Duke {
 
     /**
      * Runs duke. Takes in a command-line argument on the directory (if any).
-     *
+     * If there are no command-line arguments, it uses the default directory.
      * @param args First arg should be directory.
      */
     public static void main(String[] args) {

@@ -11,7 +11,10 @@ public abstract class Task {
     protected String description;
     protected boolean isDone;
 
-    // Constructor
+    /**
+     * Constructs a task and by default, done status is set to false.
+     * @param description The task description/name.
+     */
     public Task(String description) {
         this.description = description;
         this.isDone = false;

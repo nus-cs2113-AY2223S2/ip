@@ -35,6 +35,9 @@ public class Parser {
         return commandArgs;
     }
 
+    /**
+     * Input Validation for Deadline.
+     */
     public static String[] processTaskDeadline(String commandArgs) throws DukeException {
         String[] deadlineArgs = commandArgs.split(Ui.COMMAND_TASK_DEADLINE_DELIMITER_REGEX);
 
@@ -46,6 +49,9 @@ public class Parser {
         return deadlineArgs;
     }
 
+    /**
+     * Input Validation for Event.
+     */
     public static String[] processTaskEvent(String commandArgs) throws DukeException {
         // ensure it contains both.
         if (!commandArgs.contains(Ui.COMMAND_TASK_EVENT_DELIMITER1) ||

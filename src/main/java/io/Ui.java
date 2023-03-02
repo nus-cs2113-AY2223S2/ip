@@ -91,7 +91,9 @@ public final class Ui {
         System.out.println("================================");
     }
 
-    // Greets the user.
+    /**
+     * Simply greets the user.
+     */
     public static void printGreeting() {
         System.out.println(MESSAGE_LOGO);
         // Greet message
@@ -100,13 +102,20 @@ public final class Ui {
         printHLine();
     }
 
-    // Exit, goodbye message.
+    /**
+     * Simply bids farewell to the user.
+     */
     public static void printExitMessage() {
         System.out.println(MESSAGE_OUTRO);
         printHLine();
     }
 
-    // Announce the number of tasks.
+    /**
+     * To be called when a task is added to feedback to user current status of tasklist.
+     * @param taskList The tasklist to be shown.
+     * @param task the task that was added.
+     * @return String representation of tasklist.
+     */
     public static String feedbackTaskAdded(TaskList taskList, Task task) {
         String output = MESSAGE_TASK_ADDED + '\n' + task + '\n';
         output += "Total number of tasks: " + taskList.getNumberOfTasks();
