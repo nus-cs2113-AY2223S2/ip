@@ -63,7 +63,7 @@ public class Commands {
 
     /**
      * Removes a given task from the tasklist based on the input message
-     * @param userInput the input from the user
+     * @param userInput user's input
      */
     public static void deleteTask(String userInput) {
         int itemIndex = Ui.getItemIndex(userInput);
