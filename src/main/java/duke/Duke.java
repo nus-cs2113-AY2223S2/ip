@@ -24,10 +24,12 @@ public class Duke {
     private static final String COMMAND_ADD_DEADLINE = "deadline";
     private static final String COMMAND_ADD_EVENT = "event";
     private static final String COMMAND_DELETE_TASK = "delete";
-    private static final String FILE_PATH = "./duke.txt";
+    private static final String FILE_PATH = "./data/duke.txt";
 
     private static ArrayList<Task> taskItems = new ArrayList<>();
     private static Ui ui;
+    private static Storage storage;
+
 
 
     public static void addDeadlineTaskItems(String taskName, String by) {
@@ -149,77 +151,22 @@ public class Duke {
         }
     }
 
-    public static void writeToFile(String filePath) throws IOException {
-        FileWriter fw = new FileWriter(filePath);
-
-        for (Task taskItem : taskItems) {
-            String textToAdd = taskItem.toFile() + "\n";
-            fw.write(textToAdd);
-        }
-
-        fw.close();
-    }
-
     public static void saveTaskListToFile() {
         try {
-            writeToFile(FILE_PATH);
+            storage.writeFile(taskItems);
         } catch (IOException e) {
             System.out.println("Error writing to file: " + e.getMessage());
         }
     }
 
-    public static void processFileContents(String content) {
-        String[] words = content.split(" \\| ", 2);
-        String taskType = words[0];
-        words = words[1].split(" \\| ", 2);
-        String taskStatus = words[0];
-
-        switch (taskType) {
-        case "T":
-            String toDoTaskName = words[1];
-            taskItems.add(new Todo(toDoTaskName));
-            break;
-        case "D":
-            words = words[1].split(" \\| ", 2);
-            String deadlineTaskName = words[0];
-            String by = words[1];
-            taskItems.add(new Deadline(deadlineTaskName, by));
-            break;
-        case "E":
-            words = words[1].split(" \\| ", 2);
-            String eventTaskName = words[0];
-            words = words[1].split(" \\| ", 2);
-            String from = words[0];
-            String to = words[1];
-            taskItems.add(new Event(eventTaskName, from, to));
-        default:
-            break;
-        }
-
-        if (taskStatus.startsWith("1")) {
-            taskItems.get(taskItems.size() - 1).setCompleted();
-        }
-    }
-
-    public static void readFileContents(String filePath) throws FileNotFoundException {
-        File f = new File(filePath);
-        Scanner s = new Scanner(f);
-        while (s.hasNext()) {
-            processFileContents(s.nextLine());
-        }
-    }
-
-    public static void loadTaskListFromFile() {
-        try {
-            readFileContents(FILE_PATH);
-        } catch (FileNotFoundException e) {
-            System.out.println("File Not Found");
-        }
-    }
-
     public Duke() {
         ui = new Ui();
-        loadTaskListFromFile();
+        storage = new Storage(FILE_PATH);
+        try {
+            taskItems = storage.load();
+        } catch (IOException e) {
+            System.out.println("File not found/empty file. Creating new empty task list...");
+        }
     }
 
     public void run() {
