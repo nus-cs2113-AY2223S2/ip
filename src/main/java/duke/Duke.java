@@ -14,16 +14,16 @@ import java.io.File;
 import java.io.FileNotFoundException;
 
 public class Duke {
+    final static String FILE_PATH = "savedTasks.txt";
     public static void main(String[] args) {
         Ui ui = new Ui();
         ArrayList<Task> tasks = new ArrayList<>();
         Scanner in = new Scanner(System.in);
-        String filePath = "savedTasks.txt";
 
         ui.showWelcomeMessage();
         ui.showSavedTasksRetrievalMessage();
         try {
-            printFileContents(filePath, tasks);
+            printFileContents(FILE_PATH, tasks);
         } catch (FileNotFoundException e) {
             ui.showFileNotFoundMessage();
             ui.showNewFileCreationMessage();
@@ -42,7 +42,7 @@ public class Duke {
                 } else if (messageFromUser.equals("list")) {
                     displayList(tasks);
                 } else if (messageFromUser.equals("bye")) {
-                    exitGreeting(tasks, filePath);
+                    saveAndExit(tasks, FILE_PATH);
                     isExit = true;
                 } else if (messageFromUser.startsWith("delete")) {
                     deleteFromList(messageFromUser, tasks);
@@ -187,7 +187,7 @@ public class Duke {
     }
 
 
-    public static void exitGreeting(ArrayList<Task> tasks, String filePath) {
+    public static void saveAndExit(ArrayList<Task> tasks, String filePath) {
         Ui ui = new Ui();
         SaveToFile saveToFile = new SaveToFile();
         saveToFile.initialiseWritingToFile(tasks, filePath);
