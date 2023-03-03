@@ -2,13 +2,16 @@ package duke;
 
 import duke.exception.InvalidCommandException;
 import duke.exception.EmptyCommandException;
+import duke.parser.Parser;
+import duke.storage.Storage;
 import duke.task.*;
+import duke.ui.Ui;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import static duke.Storage.*;
+import static duke.storage.Storage.*;
 
 /**
  * <h1>DUKE THE CHATBOT</h1>

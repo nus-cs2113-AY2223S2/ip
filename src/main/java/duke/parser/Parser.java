@@ -1,11 +1,14 @@
-package duke;
+package duke.parser;
+
+import duke.storage.Storage;
+import duke.task.TaskList;
+import duke.ui.Ui;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
-import static duke.Storage.writeTasksToFile;
-import static duke.Ui.*;
-import static duke.Ui.UNMARK_MSG;
+import static duke.ui.Ui.*;
+import static duke.ui.Ui.UNMARK_MSG;
 
 /**
  * <h1>Parser</h1>

@@ -1,16 +1,11 @@
-package duke;
+package duke.task;
 
-import duke.task.Deadline;
-import duke.task.Event;
-import duke.task.Task;
-import duke.task.Todo;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 
-import static duke.Ui.*;
+import static duke.ui.Ui.*;
 
 /**
  * <h1>TaskList</h1>
