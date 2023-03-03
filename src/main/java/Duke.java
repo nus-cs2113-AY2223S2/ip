@@ -9,6 +9,7 @@ import java.util.Scanner;
 
 
 // PR merged now
+// All merged
 public class Duke {
     private static TaskList tasks;
 
