@@ -1,11 +1,10 @@
 import duke.Deadline;
-import duke.DukeException;
 import duke.Event;
 import duke.Todo;
-
 import java.util.ArrayList;
 import java.io.*;
 import java.util.Scanner;
+
 
 public class Duke {
 
@@ -26,7 +25,6 @@ public class Duke {
 
         //Initialize list with saved data
         counter = initializeList(tasks, counter);
-
 
         while (!exit) {
             String taskType;
@@ -108,29 +106,48 @@ public class Duke {
 
             default:
                 System.out.println("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
-            break;
+                break;
+            }
         }
-    }
 
         //When user types "bye"
-        System.out.println("    Bye. Hope to see you again soon!");
-        System.out.println("    _________________________________________");
-        System.out.println("     ");
+        exitMessage();
 
         //Save list data into text file on disk
         PrintWriter fw = new PrintWriter("docs\\list.txt");
         for (int i = 0; i < counter; i++) {
             String classType = String.valueOf(tasks.get(i).getClass());
-            if(classType.equalsIgnoreCase("Class Duke.Todo")) {
-                fw.println("todo " + tasks.get(i).getDescription());
-            } else if (classType.equalsIgnoreCase("Class Duke.Event")) {
-                fw.println("event " + tasks.get(i).getDescription() + "/" + tasks.get(i).getBy() + "|"
-                            + tasks.get(i).getEnd());
-            } else if (classType.equalsIgnoreCase("Class Duke.Deadline")) {
-                fw.println("deadline " + tasks.get(i).getDescription() + "/" + tasks.get(i).getBy());
-            }
+            writeToFile(tasks, fw, i, classType);
         }
         fw.close();
+    }
+
+    /**
+     * Prints exit message when application is closed.
+     */
+    private static void exitMessage() {
+        System.out.println("    Bye. Hope to see you again soon!");
+        System.out.println("    _________________________________________");
+        System.out.println("     ");
+    }
+
+    /**
+     * Marks a task as done.
+     *
+     * @param tasks list of tasks already added.
+     * @param fw file to be modified.
+     * @param i increment for loop.
+     * @param classType type of task.
+     */
+    private static void writeToFile(ArrayList<Todo> tasks, PrintWriter fw, int i, String classType) {
+        if(classType.equalsIgnoreCase("Class Duke.Todo")) {
+            fw.println("todo " + tasks.get(i).getDescription());
+        } else if (classType.equalsIgnoreCase("Class Duke.Event")) {
+            fw.println("event " + tasks.get(i).getDescription() + "/" + tasks.get(i).getBy() + "|"
+                    + tasks.get(i).getEnd());
+        } else if (classType.equalsIgnoreCase("Class Duke.Deadline")) {
+            fw.println("deadline " + tasks.get(i).getDescription() + "/" + tasks.get(i).getBy());
+        }
     }
 
     /**
@@ -164,8 +181,9 @@ public class Duke {
     }
 
     /**
-     * Returns lateral location of the specified position.
-     * If the position is unset, NaN is returned.
+     * Returns counter after initializing list with items that were saved to disk previously.
+     * If no such saved file exists, a new file will be created on disk to save list items
+     * upon exiting the program.
      *
      * @param tasks list of tasks already added.
      * @param counter number of tasks in the list.
@@ -181,13 +199,14 @@ public class Duke {
             File myFile = new File("docs\\list.txt");
             if (myFile.createNewFile()) {
                 System.out.println("New List backup is created! List items will be saved to " +
-                                    "disk after you exit the program!");
+                        "disk after you exit the program!");
             } else {
                 System.out.println("List backup already exists and has been initialized.");
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+
 
         Scanner scanner = new Scanner(new File("docs\\list.txt"));
         Scanner in = new Scanner(System.in);
@@ -233,7 +252,7 @@ public class Duke {
                 break;
             }
         }
-            scanner.close();
+        scanner.close();
         return counter;
     }
 

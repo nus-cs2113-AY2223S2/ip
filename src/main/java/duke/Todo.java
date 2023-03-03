@@ -1,6 +1,9 @@
 package duke;
 
-import java.util.Scanner;
+/**
+ * Represents a <code>Task</code> task that can be added to the list. A <code>Task</code> object only stores a
+ * description of the task.
+ */
 
 public class Todo extends Task {
     public boolean isDone;
