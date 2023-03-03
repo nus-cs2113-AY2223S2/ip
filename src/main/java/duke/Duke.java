@@ -176,7 +176,6 @@ public class Duke {
             tasks = addTaskToFile(tasks, tempTask, file);
 
         } else if (action.startsWith("find")) {
-            int dividerPos = action.indexOf(" ");
             String taskToFind = action.substring(5);
             System.out.println(DIVIDER_LINE + "Here are the matching tasks in your list:");
             for (Task t : tasks) {
@@ -205,7 +204,7 @@ public class Duke {
         System.out.println(DIVIDER_LINE + "deleted:\n" + deletedTask.toString() + "\n" + DIVIDER_LINE);
     }
 
-    public static void printNumTask() {
+    private static void printNumTask() {
         System.out.println("Now you have " + taskCount + " tasks in the list");
     }
 }
