@@ -255,7 +255,7 @@ Say bye to Alex and exits the program.
 
 Example of usage:
 
-`exit`
+`bye`
 
 Expected outcome:
 
