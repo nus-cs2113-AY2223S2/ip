@@ -5,43 +5,52 @@
 ### Feature-Add Todo
 
     [User] todo individual project
+
 Duke will add the task to your task list.
 
 
 ### Feature-Add Deadline
 
     [User] deadline coursemology by 2023-01-01
+
 Duke will add task with the deadline to your task list.
 
 
 ### Feature-Add Event
     [User] event tutorial from 2023-01-25 to 2023-04-07
+
 Duke will add task with the starting and end date to your task list.
 
 
 ### Feature-List Tasks
     [User] list
+
 Duke will list all the tasks in your task list.
 
 ### Feature-(Un)Mark Task
     [User] mark 1
+
 Duke will mark the 1st task in your task list as done.
 
     [User] unmark 1
+
 Duke will mark the 1st task in your task list as undone.
 
 
 ### Feature-Delete Task
     [User] delete 1
+
 Duke will delete the 1st task in your task list.
 
 
 ### Feature-Find Task
     [User] find book
+
 Duke will find tasks in your task list that contains the keyword.
 
 ### Feature-Exit
     [User] bye
+
 Duke will say goodbye and finish the program.
 
 ## Usage
