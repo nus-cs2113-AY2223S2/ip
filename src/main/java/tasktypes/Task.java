@@ -4,6 +4,7 @@ public class Task {
     protected String description;
     protected boolean isDone;
     protected int listIndex;
+
     public Task(String description) {   //ok to leave as public?
         this.description = description;
         this.isDone = false;
@@ -12,10 +13,13 @@ public class Task {
     public String getStatusIcon() {
         return (isDone ? "X" : " "); // mark done task with X
     }
+
     public String getTypeIcon() {
         return "NULL";
     }
+
     public String taskTypeIcon() { return "[" + getTypeIcon() + "]";}
+
     public void setDescription(String description) {
         this.description = description;
     }
@@ -29,6 +33,7 @@ public class Task {
     }
 
     public String isDoneIcon() { return "[" + getStatusIcon() + "]";}
+
     public String getDescription() {
         return description;
     }

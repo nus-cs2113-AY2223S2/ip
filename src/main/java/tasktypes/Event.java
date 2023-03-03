@@ -8,6 +8,7 @@ public class Event extends Task{
         this.startDate = startDate;
         this.endDate = endDate;
     }
+
     @Override
     public String getTypeIcon() {
         return TYPE_ICON;

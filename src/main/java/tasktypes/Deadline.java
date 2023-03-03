@@ -8,6 +8,7 @@ public class Deadline extends Task {
         super(description);
         this.dueDate = dueDate;
     }
+
     @Override
     public String getTypeIcon() {
         return TYPE_ICON;
@@ -20,6 +21,6 @@ public class Deadline extends Task {
     @Override
     public String getTask() {
         return taskTypeIcon() + isDoneIcon() + " " + getDescription()
-                + System.lineSeparator() + "    Deadline: " + getDueDate();
+                + System.lineSeparator() + "    Deadline:" + getDueDate();
     }
 }
