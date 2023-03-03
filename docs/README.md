@@ -100,7 +100,7 @@ You currently have 3 task(s)
 ____________________________________________________________
 
 ```
-### List Tasks
+### 4. List Tasks
 
 List all the tasks in task list.
 
@@ -122,7 +122,7 @@ Tasks in list:
 3.[E][ ] First Aid Course (from: Monday 8am to: 6pm)
 ____________________________________________________________
 ```
-### Delete Task
+### 5. Delete Task
 
 Delete a task from task list. Use the task number to specify task to delete. 
 
@@ -143,7 +143,7 @@ Successfully deleted task:
 You currently have 2 task(s) left
 ____________________________________________________________
 ```
-### Mark As Done
+### 6. Mark As Done
 
 Mark a task as done. Use the task number to specify task to mark as done. 
 
@@ -163,7 +163,7 @@ Marking task as done:
 [T][X] return book
 ____________________________________________________________
 ```
-### Mark As Not Done
+### 7. Mark As Not Done
 
 Mark a task as not done. Use the task number to specify task to unmark. 
 
@@ -183,7 +183,7 @@ Marking task as undone:
 [T][ ] return book
 ____________________________________________________________
 ```
-### Find Task
+### 8. Find Task
 
 Find a task in the list. Use a keyword to specify task to find.
 
@@ -203,7 +203,7 @@ The keyword is found in these tasks:
 1.[E][ ] First Aid Course (from: Monday 8am to: 6pm)
 ____________________________________________________________
 ```
-### Exit
+### 9. Exit
 
 Exit Duke chatbot.
 
