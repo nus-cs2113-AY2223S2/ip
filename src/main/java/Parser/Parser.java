@@ -15,7 +15,6 @@ import java.util.Scanner;
 public class Parser {
     public Parser() {
     }
-
     /**
      * The method that parses through user input. It will find the different valid commands that the code is able to run
      * and then find the one that the user input matches. If the user input matches none of the commands, then the method

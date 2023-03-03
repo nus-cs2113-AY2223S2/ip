@@ -6,7 +6,6 @@ import Tasks.Task;
 import UI.UserInterface;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Duke {
     private TaskList tasks;
