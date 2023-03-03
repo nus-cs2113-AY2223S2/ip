@@ -100,7 +100,13 @@ There are 9 types of command you can give to this chatbot.
          1. [E][ ] take midterm (from: Mar 03 2023 to: Mar 01 2023)
       ____________________________________________________________
    ```
-
+9. `exit` : If you want to exit the program, just type the `exit` command. Then, you will see the
+   farewell messag after pressing the `Enter` key.
+   ```
+      ____________________________________________________________
+       Bye. Hope to see you again soon!
+      ____________________________________________________________
+   ```  
 
 ## 🧑🏻‍💻 Setting up in Intellij
 
