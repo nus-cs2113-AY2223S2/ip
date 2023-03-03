@@ -13,7 +13,7 @@ public abstract class AddCommand extends Command {
 
     public static final String ADD_MESSAGE = " The following task has been added:"
             + Ui.NEW_LINE + "   %s"
-            + Ui.NEW_LINE + " There is now %d task(s) in total.";
+            + Ui.NEW_LINE + " The task list now has %d task(s) in total.";
 
     public static final String TODO_MESSAGE_USAGE = " " + COMMAND_TODO + ": adds a todo task to the task list. "
             + Ui.NEW_LINE + "  Parameters: task name"
