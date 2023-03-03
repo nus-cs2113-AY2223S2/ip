@@ -48,6 +48,7 @@ public abstract class Parser {
      * @throws EmptyDeadlineDescriptionException if user enters an incomplete deadline command.
      * @throws EmptyToDoDescriptionException if user enters an incomplete to do command.
      * @throws EmptyEventDescriptionException if user enters an incomplete event command.
+     * @throws EmptyKeywordException if users enter an incomplete find command.
      */
     public static Command parse(String input) throws UnknownCommandException,
             IndexOutOfBoundsException, NumberFormatException, EmptyDeadlineDescriptionException,
@@ -212,6 +213,13 @@ public abstract class Parser {
         return toDoTaskName;
     }
 
+    /**
+     * Retrieves keyword from user input.
+     *
+     * @param input User input enter via CLI.
+     * @return Keyword.
+     * @throws EmptyKeywordException if user enters an incomplete find command.
+     */
     private static String getKeyword(String input) throws EmptyKeywordException {
         String[] words = input.split(" ", 2);
 

@@ -134,6 +134,12 @@ public class Ui {
         System.out.print(LIST_TASK_BOTTOM_DIVIDER);
     }
 
+    /**
+     * Prints the task list based on a keyword entered via user input to CLI.
+     * Called when a user enters the find command in CLI.
+     *
+     * @param tasks Task list of Duke chatbot.
+     */
     public void listFoundTask(ArrayList<Task> tasks) {
         System.out.print(TOP_DIVIDER + LIST_FOUND_TASK_DESC);
 
@@ -218,6 +224,10 @@ public class Ui {
         showToUser(WRITE_FILE_ERR);
     }
 
+    /**
+     * Prints the empty keyword error message of Duke chatbot to CLI by calling showToUser().
+     * Called when a user did not enter a keyword when using find command.
+     */
     public void showEmptyKeywordErr() {
         showToUser(EMPTY_KEYWORD_ERR);
     }
