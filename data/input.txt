@@ -1,0 +1,5 @@
+todo 2 
+deadline book is life /by tom 
+todo 1 
+deadline 1 /by tom 
+event 1 /from 1 /to 2 
