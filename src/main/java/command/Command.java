@@ -9,6 +9,8 @@ import tasks.TaskList;
 import tasks.ToDo;
 import ui.Ui;
 
+import java.util.ArrayList;
+
 /**
  * Represents a particular command to be carried out consisting of the
  * command type and command description.
