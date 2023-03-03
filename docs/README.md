@@ -39,6 +39,11 @@ Loads the task list from a file.
 
 ## Usage
 
+### `help` - Displays commands and their usages
+Displays all the commands recognized by Duke for the user as well as sample usages
+
+**Format: `help`**
+
 ### `todo` - Add a todo task to the task list
 
 Adds a _Task_ of type _ToDo_ to the task list. The task description is provided through user input. 
