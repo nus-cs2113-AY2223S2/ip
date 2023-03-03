@@ -1,5 +1,7 @@
 package duke;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -9,6 +11,35 @@ public class Duke {
     protected static int taskCount = 0;
 
     public static void main(String[] args) {
+        greetUser();
+        ArrayList<Task> tasks = new ArrayList<>();
+        TaskData file = new TaskData("./duke.txt");
+        tasks = loadData(tasks, file);
+        taskCount = tasks.size();
+        Scanner in = new Scanner(System.in);
+        String action;
+        while (shouldContinue) {
+            action = in.nextLine();
+            try {
+                tasks = handleAction(tasks, action, file);
+            } catch (DukeException e) {
+                System.out.println(DIVIDER_LINE + "Sorry! I don't know what that means.\n" + DIVIDER_LINE);
+            } catch (DukeException.TaskEmpty e) {
+                System.out.println(DIVIDER_LINE + "The content of the task cannot be empty!\n" + DIVIDER_LINE);
+            }
+        }
+    }
+
+    private static ArrayList<Task> loadData(ArrayList<Task> tasks, TaskData file) {
+        try {
+            file.readData(tasks);
+        } catch (FileNotFoundException e) {
+            System.out.println("file not found!");
+        }
+        return tasks;
+    }
+
+    private static void greetUser() {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
                 + "| | | | | | | |/ / _ \\\n"
@@ -20,22 +51,27 @@ public class Duke {
                 + "What can i do for you\n"
                 + DIVIDER_LINE;
         System.out.println(greet);
-        Scanner in = new Scanner(System.in);
-        String action;
-        ArrayList<Task> tasks = new ArrayList<>();
-        while (shouldContinue) {
-            action = in.nextLine();
-            try {
-                tasks = handleAction(tasks, action);
-            } catch (DukeException e) {
-                System.out.println(DIVIDER_LINE + "Sorry! I don't know what that means.\n" + DIVIDER_LINE);
-            } catch (DukeException.TaskEmpty e) {
-                System.out.println(DIVIDER_LINE + "The content of the task cannot be empty!\n" + DIVIDER_LINE);
-            }
-        }
     }
 
-    public static ArrayList<Task> handleAction(ArrayList<Task> tasks, String action) throws DukeException, DukeException.TaskEmpty{
+    private static ArrayList<Task> addTaskToFile(ArrayList<Task> tasks, Task taskToAdd, TaskData file) {
+        try {
+            tasks = file.writeToFile(tasks, taskToAdd.toString());
+        } catch (IOException e) {
+            System.out.println("IOException!");
+        }
+        return tasks;
+    }
+
+    private static ArrayList<Task> updateFile(ArrayList<Task> tasks, TaskData file) {
+        try {
+            tasks = file.updateFile(tasks);
+        } catch (IOException e) {
+            System.out.println("IOException!");
+        }
+        return tasks;
+    }
+
+    public static ArrayList<Task> handleAction(ArrayList<Task> tasks, String action, TaskData file) throws DukeException, DukeException.TaskEmpty{
         if (action.equals("bye")) {
             System.out.println(DIVIDER_LINE + "Bye. Hope to see you again soon!\n" + DIVIDER_LINE);
             shouldContinue = false;
@@ -52,17 +88,20 @@ public class Duke {
             int toBeMarked = Integer.parseInt(action.substring(dividerPos + 1)) - 1;
             tasks.get(toBeMarked).markAsDone();
             printMarked(tasks.get(toBeMarked), action.split(" ")[0]);
+            updateFile(tasks, file);
         } else if (action.startsWith("unmark")) {
             int dividerPos = action.indexOf(" ");
             int toBeUnmarked = Integer.parseInt(action.substring(dividerPos + 1)) - 1;
             tasks.get(toBeUnmarked).markAsUndone();
             printMarked(tasks.get(toBeUnmarked), action.split(" ")[0]);
+            updateFile(tasks, file);
         } else if (action.startsWith("todo")){
             Task tempTask = new Task(action.substring(5));
             tasks.add(tempTask);
             printAdded(tasks);
             taskCount += 1;
             printNumTask(taskCount);
+            tasks = addTaskToFile(tasks, tempTask, file);
         } else if (action.startsWith("deadline")) {
             int dividerPosition = action.indexOf("/by");
             Task tempTask = new Deadline(action.substring(9,dividerPosition - 1),
@@ -71,6 +110,7 @@ public class Duke {
             printAdded(tasks);
             taskCount += 1;
             printNumTask(taskCount);
+            tasks = addTaskToFile(tasks, tempTask, file);
         } else if (action.startsWith("event")) {
             int dividerPosition1 = action.indexOf("/from");
             int dividerPosition2 = action.indexOf("/to");
@@ -82,6 +122,7 @@ public class Duke {
             printAdded(tasks);
             taskCount += 1;
             printNumTask(taskCount);
+            tasks = addTaskToFile(tasks, tempTask, file);
         } else {
             throw new DukeException();
         }
