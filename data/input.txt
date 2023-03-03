@@ -1,2 +1,5 @@
 todo 1 
 todo 2 
+todo read book 
+event see book /from 1 /to 2 
+deadline book is life /by tom 

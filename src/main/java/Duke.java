@@ -69,6 +69,14 @@ public class Duke {
         taskCounter += 1;
         printAddTodo(todo, taskCounter);
     }
+    public static void findID(String input) {
+        for (int index = 0; index < tasks.size(); index += 1) {
+            Task currentTask = tasks.get(index);
+            if (currentTask.getDescription().contains(input)) {
+                System.out.println((index + 1) + "." + currentTask);
+            }
+        }
+    }
     private static boolean readInput(String s) throws EmptyInputException, IllegalInputException {
         String input = "";
         if (s.equals("in")) {
@@ -92,6 +100,21 @@ public class Duke {
             switch (command) {
             case "list":
                 printList(taskCounter);
+                break;
+            case "find":
+                if (inputs.length == 1) {
+                    throw new EmptyInputException();
+                }
+                String ID = "";
+                for (int i = 1; i < inputs.length; i += 1) {
+                    if (i != inputs.length-1) {
+                        ID = ID + inputs[i] + " ";
+                    }
+                    else {
+                        ID = ID + inputs[i];
+                    }
+                }
+                findID(ID);
                 break;
             case "mark":
                 if (inputs.length == 1) {
