@@ -5,6 +5,15 @@ chatbot, check this [[project page]](https://0nandon.github.io/ip/)!
 
 ## 🤖 Getting start with Onandon chatbot!
 
+To download the release, click the  [[Download]](https://github.com/0nandon/ip/files/10762994/ip.jar.zip).
+
+To execute the program, follow the below steps.
+* Unzip the file.
+* Copy the jar file into an empty folder.
+* Open a command window in that folder.
+* Run the command `java -jar {filename}.jar e.g., java -jar ip.jar` (i.e., run the command in the same folder as the jar file)
+
+
 ## 🧑🏻‍💻 Setting up in Intellij
 
 Prerequisites: JDK 11, update Intellij to the most recent version.
