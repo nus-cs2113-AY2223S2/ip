@@ -31,7 +31,7 @@ public class TaskList {
      *
      * @param currentTaskNum The current number of tasks in the task list.
      */
-    public void printList(int currentTaskNum) {
+    public void printAllTasks(int currentTaskNum) {
         int currentPrintedTask = 0;
         int placeHolder = currentTaskNum;
         System.out.println(LINE);
@@ -123,7 +123,7 @@ public class TaskList {
      */
     public void deleteTask(String content) {
         list.remove(Integer.parseInt(content) - 1);
-        matchingTasksNum--;
+        currentTaskNum--;
     }
 
     /**
@@ -136,7 +136,7 @@ public class TaskList {
      */
     public void toggleMark(String content, boolean shouldMarkAsDone) throws DukeException {
         int posOfMark = Integer.parseInt(content) - 1;
-        if (!(posOfMark >= 0 && posOfMark <= matchingTasksNum)) {
+        if (!(posOfMark >= 0 && posOfMark <= currentTaskNum)) {
             ui.printErrorMessage(INVALID_NUM_ERROR_MESSAGE);
             throw new DukeException();
         } else {

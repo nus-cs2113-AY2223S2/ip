@@ -42,7 +42,7 @@ public class Duke {
         Duke ashy = new Duke();
         ashy.ui.printGreetingMessage();
         ashy.taskList.list = ashy.originalFile.loadData();
-        ashy.taskList.matchingTasksNum = ashy.taskList.list.size();
+        ashy.taskList.currentTaskNum = ashy.taskList.list.size();
 
         String userInput = input.nextLine();
         while (!userInput.equals("bye")) {
