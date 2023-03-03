@@ -2,4 +2,4 @@ E:0: play more games /from now /to later
 T:1: more
 T:0: read stuff
 E:0: play games /from now /to night
-T:0: shit
+D:1: finish cs2113 assignment /by 2359

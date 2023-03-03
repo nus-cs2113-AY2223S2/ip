@@ -93,7 +93,6 @@ public class Storage {
                 taskList.getTask(taskList.getSize() - 1).markAsDone();
             }
         }
-        //return taskList;
     }
 
     public static void clearFile() throws IOException {
