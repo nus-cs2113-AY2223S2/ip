@@ -26,6 +26,7 @@ public class Ui {
     final static String DELETE = "delete";
 
     final static String LIST_MESSAGE = "Here are the tasks in the list:";
+    final static String FIND_MESSAGE = "Here are the matching tasks in your list:";
     final static String MARK_MESSAGE = "Nice! I've marked this task as done:";
     final static String UNMARK_MESSAGE = "OK, I've marked this task as not done yet:";
     final static String ADD_TASK_MESSAGE = "Got it. I've added this task:";
@@ -42,6 +43,14 @@ public class Ui {
     public static void printList(ArrayList<Task> tasks) {
         String output = LIST_MESSAGE + System.lineSeparator()
                 + TaskList.printTasksList(tasks);
+        System.out.println(LINEBREAK);
+        System.out.println(output);
+        System.out.println(LINEBREAK);
+    }
+
+    public static void findTask(ArrayList<Task> tasks, String input) {
+        String output = FIND_MESSAGE + System.lineSeparator()
+                + TaskList.findList(tasks, input);
         System.out.println(LINEBREAK);
         System.out.println(output);
         System.out.println(LINEBREAK);

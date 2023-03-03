@@ -41,6 +41,12 @@ public class Duke {
                         }
                         taskList.getTasks().get(index).markAsNotDone();
                         Ui.unmarkMessage(taskList.getTasks(), index);
+                    } else if (input.startsWith("find")) {
+                        String findString = Parser.processFindString(input);
+                        if (findString == "") {
+                            throw new Exception();
+                        }
+                        Ui.findTask(taskList.getTasks(), findString);
                     } else if (input.startsWith("todo", 0)) {
                         String toDoDesc = Parser.processTodoString(input);
                         if (toDoDesc == "") {

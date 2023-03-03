@@ -30,6 +30,20 @@ public class Parser {
             return -1;
         }
     }
+    
+    public static String processFindString(String input) {
+        try {
+            String findString = input.split("find")[1].trim();
+            if (findString.equals("")) {
+                System.out.println(ERROR_MESSAGE);
+                return findString;
+            }
+            return findString;
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println(ERROR_MESSAGE);
+            return "";
+        }
+    }
 
     public static String processTodoString(String input) {
         try {

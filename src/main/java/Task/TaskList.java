@@ -35,4 +35,17 @@ public class TaskList {
         }
         return tasksList;
     }
+
+    public static String findList(ArrayList<Task> tasks, String input) {
+        String findList = new String();
+        int count = 1;
+        for (Task i : tasks) {
+            if (i.toString().contains(input)){
+                findList+= count + ". " + i.toString();
+                findList += System.lineSeparator();
+                count++;
+            }
+        }
+        return findList;
+    }
 }
