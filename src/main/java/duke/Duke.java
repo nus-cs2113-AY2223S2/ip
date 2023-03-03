@@ -16,6 +16,11 @@ import java.io.FileNotFoundException;
 
 public class Duke {
     final static String FILE_PATH = "savedTasks.txt";
+
+    /**
+     * Reads inputs from user and performs the corresponding actions.
+     * @param args
+     */
     public static void main(String[] args) {
         Ui ui = new Ui();
         ArrayList<Task> tasks = new ArrayList<>();
@@ -45,6 +50,13 @@ public class Duke {
         }
     }
 
+    /**
+     * Returns true if the message from user contains the keywords todo, deadline or event.
+     * This function checks if the user has mentioned any of the 3 keywords todo, deadline or event
+     * to differentiate task creation actions from other actions.
+     * @param messageFromUser
+     * @return true if the message from user contains the keywords todo, deadline or event
+     */
     public static boolean hasTaskKeyword(String messageFromUser) {
         boolean isToDo = messageFromUser.startsWith("todo");
         boolean isDeadline = messageFromUser.startsWith("deadline");
@@ -52,7 +64,13 @@ public class Duke {
         return (isToDo || isDeadline || isEvent);
     }
 
-    // Input has been checked that only the todo, deadline or event commands are passed into this function
+    /**
+     * This function creates a ToDo, Deadline or Event Object based on the type of task the user specified.
+     * This object is then stored in the parent class object, Task as an ArrayList of Task is used to store
+     * these objects.
+     * @param messageFromUser
+     * @return Task object
+     */
     public static Task handleTaskCreation(String messageFromUser) {
         Task newTask;
         if (messageFromUser.startsWith("todo")) {
@@ -65,6 +83,12 @@ public class Duke {
         return newTask;
     }
 
+    /**
+     * Adds Task object to ArrayList of Tasks and prints out that the object has been successfully added as well as
+     * the number of tasks in the ArrayList.
+     * @param newTask
+     * @param tasks
+     */
     public static void addToList(Task newTask, ArrayList<Task> tasks) {
         Ui ui = new Ui();
         ui.horizontalLine();
@@ -75,6 +99,13 @@ public class Duke {
         ui.horizontalLine();
     }
 
+    /**
+     * Deletes the object at the specific index in the ArrayList as specified by the user.
+     * Since the ArrayList has 0 based indexing, the 1 based index specified by the user will be decremented by 1.
+     * Task that was deleted will be shown to the user.
+     * @param messageFromUser
+     * @param tasks
+     */
     public static void deleteFromList(String messageFromUser, ArrayList<Task> tasks) {
         Ui ui = new Ui();
         ui.horizontalLine();
@@ -91,6 +122,12 @@ public class Duke {
         ui.horizontalLine();
     }
 
+    /**
+     * Changes the task status of the task in the ArrayList as specified by the user.
+     * Only marking an undone task as done or a done task as unmarked is allowed.
+     * @param sentence
+     * @param tasks
+     */
     public static void changeTaskStatus(String sentence, ArrayList<Task> tasks) {
         Ui ui = new Ui();
         String[] words = sentence.split(" ");
@@ -106,6 +143,11 @@ public class Duke {
         ui.horizontalLine();
     }
 
+    /**
+     * Displays all the tasks in the ArrayList to the user by iterating through the entire ArrayList.
+     * If there are no tasks in the ArrayList, a corresponding message will be printed.
+     * @param tasks
+     */
     public static void displayList(ArrayList<Task> tasks) {
         Ui ui = new Ui();
         int totalNumberOfTasks = tasks.size();
@@ -122,6 +164,15 @@ public class Duke {
         ui.horizontalLine();
     }
 
+    /**
+     * Displays each specific task based on whether it is a ToDo, Deadline or Event type of task.
+     * The information of the corresponding task will be formatted and displayed correctly.
+     * The tasks will be displayed as follows:
+     * ToDo: [T] [{STATUS}] {TODO MESSAGE}
+     * Deadline: [D] [{STATUS}] {Deadline message (by: {DUEDATE})}
+     * Event: [E] [{STATUS}] {Event message (from: {START} to: {END})}
+     * @param currentTask
+     */
     public static void displayTask(Task currentTask) {
         // Check task type
         String taskType = currentTask.getTaskType();
@@ -151,8 +202,13 @@ public class Duke {
         }
     }
 
-
-
+    /**
+     * Creates and returns a new ToDo object containing the message the user specified.
+     * The input to this function has to be of the form:
+     * todo MESSAGE
+     * @param messageFromUser
+     * @return
+     */
     public static ToDo createToDo(String messageFromUser) {
         // Remove the word "todo" from message
         String[] messageComponents = messageFromUser.split(" ", 2);
@@ -161,6 +217,13 @@ public class Duke {
         return new ToDo(messageComponents[1]);
     }
 
+    /**
+     * Creates and returns a new Deadline object containing the message and due date the user specified.
+     * The input to this function has to be of the form:
+     * deadline MESSAGE /by DUEDATE
+     * @param messageFromUser
+     * @return
+     */
     public static Deadline createDeadline(String messageFromUser) {
         // Remove the word "deadline" from message
         messageFromUser = messageFromUser.substring(8);
@@ -168,6 +231,13 @@ public class Duke {
         return new Deadline(messageComponents[0], messageComponents[1]);
     }
 
+    /**
+     * Creates and returns a new Event object containing the message, start and end information the user specified.
+     * The input to this function has to be of the form:
+     * event MESSAGE /from START /to END
+     * @param messageFromUser
+     * @return
+     */
     public static Event createEvent(String messageFromUser) {
         // Remove the word "event" from message
         messageFromUser = messageFromUser.substring(5);
@@ -177,7 +247,11 @@ public class Duke {
         return new Event(messageComponents[0], timeComponents[0], timeComponents[1]);
     }
 
-
+    /**
+     * This function saves all tasks in the ArrayList to the file savedTasks and displays the goodbye message.
+     * @param tasks
+     * @param filePath
+     */
     public static void saveAndExit(ArrayList<Task> tasks, String filePath) {
         Ui ui = new Ui();
         SaveToFile saveToFile = new SaveToFile();
@@ -185,7 +259,15 @@ public class Duke {
         ui.showGoodbyeMessage();
     }
 
-    // If there are saved tasks, print them out.
+    /**
+     * Prints all the tasks stored in the savedTasks text file to the user and copies the tasks to the ArrayList
+     * so that the user can manipulate the tasks later on.
+     * If there are no tasks in the savedTasks text file, then a message saying there is no tasks to display
+     * will be printed.
+     * @param filePath
+     * @param tasks
+     * @throws FileNotFoundException if there is no savedTasks file.
+     */
     private static void printFileContents(String filePath, ArrayList<Task> tasks) throws FileNotFoundException {
         Ui ui = new Ui();
         ReadFromFile readFromFile = new ReadFromFile();
@@ -205,6 +287,11 @@ public class Duke {
         }
     }
 
+    /**
+     * Returns a boolean based on whether the user has given the exit command "bye".
+     * @param messageFromUser
+     * @return true is user inputs "bye".
+     */
     public static boolean isExitCommandGiven(String messageFromUser) {
         if (messageFromUser.equals("bye")) {
             return true;
@@ -212,6 +299,14 @@ public class Duke {
         return false;
     }
 
+    /**
+     * Calls the relevant methods based on the action the user specifies.
+     * "todo", "deadline", "event", "mark", "unmark", "list", "bye", "delete" are the keywords that the user has to
+     * input. If any other keyword is given, an exception is thrown.
+     * @param messageFromUser
+     * @param tasks
+     * @throws DukeException if user inputs a keyword that is incorrect.
+     */
     public static void handleMessageFromUser(String messageFromUser, ArrayList<Task> tasks) throws DukeException {
         if (hasTaskKeyword(messageFromUser)) {
             Task newTask = handleTaskCreation(messageFromUser);
