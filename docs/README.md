@@ -183,9 +183,27 @@ I have saved your tasks.
 Bye. Hope to see you again soon!
 ________________________________________
 ```
+
+## Running Duke for the first time vs subsequent times
+### Running Duke for the first time:
+
+As there is no saved text file to load the tasks from. Duke will only create the text file after the command `find` or `bye` is used.
+Expected output:
+```
+________________________________________
+Hello! I'm Duke
+________________________________________
+Please wait, I am attempting to retrieve your saved tasks...
+Hmm.. I can't seem to locate a saved file...
+No worries, I have just created a new file for you:D
+Add your first task!
+________________________________________
+```
+
 ### Running Duke again:
 
 The saved tasks will be loaded the moment you open Duke again.
+
 Expected output:
 ```
 ________________________________________
