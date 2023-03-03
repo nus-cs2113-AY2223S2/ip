@@ -8,6 +8,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import static duke.Ui.*;
 
@@ -68,6 +69,7 @@ public class TaskList {
             displayTaskAddedMessage(newTodo);
 
         } catch (StringIndexOutOfBoundsException e) {
+            // CHANGE TO UI text
             System.out.println(EMPTY_TODO);
 
         } finally {
@@ -126,6 +128,38 @@ public class TaskList {
             System.out.println(EMPTY_LISTNUM);
 
         }
+    }
+
+    public static void findTasks (String line, ArrayList tasks) {
+        try {
+            String inputMessageArray[] = new String[2];
+            inputMessageArray = line.split(" ");
+            String taskToFind = inputMessageArray[1];
+
+            String taskDescrip;
+
+
+            System.out.println("Here are the matching tasks in your list: \n");
+
+            for (int i = 0; i < tasks.size(); i++) {
+                taskDescrip = ((Task) tasks.get(i)).getPureDescription();
+                String taskDescripArray[] = new String[5];
+                taskDescripArray = taskDescrip.split(" ");
+
+                for (String word: taskDescripArray) {
+                    // if matching word
+                    if (word.equals(taskToFind)) {
+                        System.out.println("\n\t" + (i + 1) + ". " + ((Task) tasks.get(i)).getDescription() + "\n");
+                    }
+                }
+
+            }
+
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println(EMPTY_LISTNUM);
+
+        }
+
     }
 
 

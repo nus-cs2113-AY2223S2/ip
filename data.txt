@@ -1,1 +1,4 @@
-[T] [ ] sleep well
+[T] [ ] eat banana
+[T] [ ] eat food
+[T] [ ] return book
+[D] [ ] return book (by:  Sunday)

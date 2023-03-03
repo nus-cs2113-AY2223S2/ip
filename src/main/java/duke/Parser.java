@@ -23,7 +23,7 @@ public class Parser {
             return true;
         }
 
-        if (!(line.toLowerCase().startsWith("event") || line.toLowerCase().startsWith("delete") || line.toLowerCase().startsWith("deadline") || line.toLowerCase().startsWith("todo") || line.equals("list") || line.toLowerCase().startsWith("mark") || line.toLowerCase().startsWith("unmark"))) {
+        if (!(line.toLowerCase().startsWith("find") || line.toLowerCase().startsWith("event") || line.toLowerCase().startsWith("delete") || line.toLowerCase().startsWith("deadline") || line.toLowerCase().startsWith("todo") || line.equals("list") || line.toLowerCase().startsWith("mark") || line.toLowerCase().startsWith("unmark"))) {
             ui.displayUnrecognisedWord();
             return false;
 
@@ -65,6 +65,12 @@ public class Parser {
             if (line.toLowerCase().startsWith("delete")) {
                 item = TaskList.deleteTask(line, item, tasks);
             }
+
+            // Find item
+            if (line.toLowerCase().startsWith("find")) {
+                TaskList.findTasks(line, tasks);
+            }
+
             Storage.writeTasksToFile(tasks);
             return false;
 
