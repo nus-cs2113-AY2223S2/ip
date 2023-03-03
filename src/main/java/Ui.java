@@ -1,3 +1,5 @@
+import tasktypes.Task;
+
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -9,18 +11,16 @@ public class Ui {
     public static final String STARTDATE_USERINPUT_PREFIX = "/from";
     public static final String ENDDATE_USERINPUT_PREFIX = "/to";
     public static final String DEADLINE_USERINPUT_PREFIX = "/by";
-
     static final int STARTDATE_INDEX = 0;
     static final int ENDDATE_INDEX = 1;
     private static final String WELCOME_MESSAGE = "Hi it's Anna!\nWhat do you need to do?";
-
+    public static void exitMessage() {
+        System.out.println(EXIT_MESSAGE);
+    }
     public static void welcomeMessage() {
         System.out.println(WELCOME_MESSAGE);
     }
 
-    public static void exitMessage() {
-        System.out.println(EXIT_MESSAGE);
-    }
     public static String getItemDescription(String userInput) {
         Scanner in = new Scanner(System.in);
         String description;
@@ -48,7 +48,6 @@ public class Ui {
                 itemNumber = getItemNumber(userInput);
             }
         } catch (NumberFormatException n) {
-            //Search for the item and spit out the index?
             itemNumber = getItemNumber(userInput);
         }
         return itemNumber;

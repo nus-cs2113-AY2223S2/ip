@@ -1,3 +1,6 @@
+import tasktypes.Todo;
+import tasktypes.*;
+
 import java.util.ArrayList;
 
 public class Commands {
@@ -9,7 +12,7 @@ public class Commands {
     static final int STARTDATE_INDEX = 0;
     static final int ENDDATE_INDEX = 1;
     public static final String SHOWLIST_HEADER = "Here's what we've gotta do:";
-    public static final String SHOWLIST_FOOTER = "We currently have " + TaskList.getNumItems() + " tasks";
+
     public static final String SEARCH_NO_RESULT = "We don't have that in the list!";
 
     public static void invalidCommand() {
@@ -19,8 +22,8 @@ public class Commands {
         if (TaskList.getNumItems() == 0) {
             System.out.println("We are free! Let's go play!");
         } else {
-            //TODO: CHANGE HEADER INTO FORMATTING FUCKERY
-            Ui.printList(TaskList.getList(),SHOWLIST_HEADER,SHOWLIST_FOOTER);
+            String showList_footer = "We currently have " + TaskList.getNumItems() + " tasks";
+            Ui.printList(TaskList.getList(),SHOWLIST_HEADER,showList_footer);
         }
     }
 
@@ -95,8 +98,8 @@ public class Commands {
         if (searchResults == 0) {
             System.out.println(SEARCH_NO_RESULT);
         } else {
-            //TODO: CHANGE ME INTO FORMATTING FUCKERY
-            Ui.printList(resultsList, "We have " + searchResults + " results!", "");
+            String resultsList_header = "We have " + searchResults + " results!";
+            Ui.printList(resultsList, resultsList_header, "");
         }
     }
 }
