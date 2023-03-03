@@ -76,13 +76,13 @@ public class Parser {
             if (splittedDiscription.length == 1 || splittedDiscription[1].equals("")) {
                 throw new LackOfTaskDetail("    > wrong task format!" + System.lineSeparator() + ": ");
             }
-            String tasktime[] = splittedDiscription[1].split(" ");
+            String taskTime[] = splittedDiscription[1].split(" ");
 
-            if (tasktime.length > 1) {
-                return new Datetime(LocalDate.parse(tasktime[0]), LocalTime.parse(tasktime[1]));
+            if (taskTime.length > 1) {
+                return new Datetime(LocalDate.parse(taskTime[0]), LocalTime.parse(taskTime[1]));
             } else {
-                System.out.println(tasktime[0]);
-                return new Datetime(LocalDate.parse(tasktime[0]));
+                System.out.println(taskTime[0]);
+                return new Datetime(LocalDate.parse(taskTime[0]));
             }
 
         } catch (LackOfTaskDetail e) {
@@ -142,8 +142,8 @@ public class Parser {
             break;
         case "todo":
             try {
-                String tododetail = getToDoDescription();
-                tasks.addToDo(tododetail);
+                String todoDetail = getToDoDescription();
+                tasks.addToDo(todoDetail);
                 Ui.showAddTask(tasks.latesttask(), tasks.getSize());
             } catch (LackOfTaskDetail e) {
                 System.out.print(e.getMessage());

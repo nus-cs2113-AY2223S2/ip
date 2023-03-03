@@ -6,17 +6,17 @@ import java.time.LocalTime;
 public class Datetime {
     protected LocalDate date;
     protected LocalTime time;
-    protected Boolean hastime;
+    protected Boolean hasTime;
 
     public Datetime(LocalDate dd) {
         this.date = dd;
-        this.hastime = false;
+        this.hasTime = false;
     }
 
     public Datetime(LocalDate dd, LocalTime tt) {
         this.date = dd;
         this.time = tt;
-        hastime = true;
+        hasTime = true;
     }
 
     public LocalDate getDate() {
@@ -28,6 +28,6 @@ public class Datetime {
     }
 
     public Boolean hasTime() {
-        return hastime;
+        return hasTime;
     }
 }

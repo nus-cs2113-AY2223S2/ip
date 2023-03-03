@@ -56,11 +56,11 @@ public class TaskList {
 
     public void addTaskWithTime(String description, Datetime dt, String tasktype) {
         if (tasktype.equals("deadline")) {
-            Deadline newddl = new Deadline(description, dt);
-            taskList.add(newddl);
+            Deadline newDeadline = new Deadline(description, dt);
+            taskList.add(newDeadline);
         } else {
-            Event newevent = new Event(description, dt);
-            taskList.add(newevent);
+            Event newEvent = new Event(description, dt);
+            taskList.add(newEvent);
         }
         listSize++;
     }

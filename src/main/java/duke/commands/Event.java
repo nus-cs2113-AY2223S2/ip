@@ -5,8 +5,8 @@ import java.time.format.DateTimeFormatter;
 public class Event extends Task {
     Datetime due;
 
-    static DateTimeFormatter dateformatter = DateTimeFormatter.ofPattern("MMM/dd/yyyy");
-    static DateTimeFormatter timeformatter = DateTimeFormatter.ofPattern("HH:mm");
+    static DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MMM/dd/yyyy");
+    static DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
 
     public Event(String discription, Datetime due) {
         super(discription);
@@ -14,12 +14,12 @@ public class Event extends Task {
     }
 
     public String getDue() {
-        return due.getDate().format(dateformatter)
-                + (!due.hasTime() ? "" : (" " + due.getTime().format(timeformatter)));
+        return due.getDate().format(dateFormatter)
+                + (!due.hasTime() ? "" : (" " + due.getTime().format(timeFormatter)));
     }
 
     public String toString() {
-        return "[E]" + super.toString() + " (" + due.getDate().format(dateformatter)
-                + (!due.hasTime() ? "" : (" " + due.getTime().format(timeformatter))) + ")";
+        return "[E]" + super.toString() + " (" + due.getDate().format(dateFormatter)
+                + (!due.hasTime() ? "" : (" " + due.getTime().format(timeFormatter))) + ")";
     }
 }

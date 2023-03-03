@@ -22,38 +22,39 @@ public class Storage {
     public Storage() {}
 
     private static String[] changeLoadedDescription(String dscrption) {
-        String[] taskinfo = dscrption.split(" \\| ");
-        return taskinfo;
+        String[] taskInfo = dscrption.split(" \\| ");
+        return taskInfo;
     }
 
     private static Datetime convertToDT(String datetime, DateTimeFormatter formatter) {
-        String[] splittedDT = datetime.split(" ");
-        if (splittedDT.length == 1) {
-            return new Datetime (LocalDate.parse(splittedDT[0], formatter));
+        String[] splittedDatetime = datetime.split(" ");
+        if (splittedDatetime.length == 1) {
+            return new Datetime(LocalDate.parse(splittedDatetime[0], formatter));
         } else {
-            return new Datetime(LocalDate.parse(splittedDT[0], formatter), LocalTime.parse(splittedDT[1]));
+            return new Datetime(LocalDate.parse(splittedDatetime[0], formatter),
+                    LocalTime.parse(splittedDatetime[1]));
         }
     }
 
     public static ArrayList<Task> loadFile(String path) {
         ArrayList<Task> task = new ArrayList<>();
-        DateTimeFormatter loadingformatter = DateTimeFormatter.ofPattern("MMM/dd/yyyy");
+        DateTimeFormatter loadingFormatter = DateTimeFormatter.ofPattern("MMM/dd/yyyy");
 
         try {
             Scanner scanner = new Scanner(new File(path));
-            String curtask = "";
+            String currentTask = "";
 
             while (scanner.hasNextLine()) {
-                curtask = scanner.nextLine();
-                String[] taskinfo = changeLoadedDescription(curtask);
-                if (taskinfo[0].equals("T")) {
-                    task.add(new Todo(taskinfo[2]));
-                } else if (taskinfo[0].equals("E"))
-                    task.add(new Event(taskinfo[2], convertToDT(taskinfo[3], loadingformatter)));
+                currentTask = scanner.nextLine();
+                String[] taskInfo = changeLoadedDescription(currentTask);
+                if (taskInfo[0].equals("T")) {
+                    task.add(new Todo(taskInfo[2]));
+                } else if (taskInfo[0].equals("E"))
+                    task.add(new Event(taskInfo[2], convertToDT(taskInfo[3], loadingFormatter)));
                 else
-                    task.add(new Deadline(taskinfo[2], convertToDT(taskinfo[3], loadingformatter)));
+                    task.add(new Deadline(taskInfo[2], convertToDT(taskInfo[3], loadingFormatter)));
 
-                if (taskinfo[1].equals("1"))
+                if (taskInfo[1].equals("1"))
                     task.get(task.size() - 1).markAsDone();
             }
         } catch (FileNotFoundException e) {
@@ -65,18 +66,18 @@ public class Storage {
     private static String changeDescriptionForSaving(ArrayList<Task> tasks) {
         String content = "";
         for (int i = 0; i < tasks.size(); i++) {
-            Task curtask = tasks.get(i);
-            if (!curtask.getClass().getName().equals("duke.commands.Todo")) {
-                if (curtask.getClass().getName().equals("duke.commands.Event"))
+            Task currentTask = tasks.get(i);
+            if (!currentTask.getClass().getName().equals("duke.commands.Todo")) {
+                if (currentTask.getClass().getName().equals("duke.commands.Event"))
                     content += "E | ";
                 else
                     content += "D | ";
             } else
                 content += "T | ";
 
-            content += ((curtask.getTaskStatus().equals("X") ? "1" : "0") + " | "
-                    + curtask.getTaskDiscription());
-            if (!curtask.getClass().getName().equals("duke.commands.Todo"))
+            content += ((currentTask.getTaskStatus().equals("X") ? "1" : "0") + " | "
+                    + currentTask.getTaskDiscription());
+            if (!currentTask.getClass().getName().equals("duke.commands.Todo"))
                 content += (" | " + tasks.get(i).getDue());
             content += System.lineSeparator();
         }
