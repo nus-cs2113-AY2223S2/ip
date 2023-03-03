@@ -6,12 +6,12 @@ This is Duke, a chatbot. He is here to assist you in compiling a task list that 
 
 ## `Features` 
 
-1) Add a Task
-2) List all Tasks
-3) Mark/Unmark a Task
-4) Find a Task
-5) Delete a Task
-6) Exit
+1) Add a Task  
+2) List all Tasks  
+3) Mark/Unmark a Task  
+4) Find a Task  
+5) Delete a Task  
+6) Exit  
 
 ### 1.1) Add a Task (To Do)
 
