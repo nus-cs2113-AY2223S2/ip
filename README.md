@@ -52,9 +52,8 @@ There are 5 types of command you can give to this chatbot.
        Now you have 3 tasks in the list.
       ____________________________________________________________
    ```
-   In the line of `[D][ ] paper submission (by: Mar 08 2023)`, `[D]` means this task is created from `deadline` command.
-   Also, if you type the due date of the task, you should follow the specified format of `YYYY-MM-dd`
-   just like the example above. If you don't, the program would be terminated with the error message.
+   In the line of `[E][ ] take midterm (from: Mar 03 2023 to: Mar 01 2023)`, `[E]` means this task is created from `event` command.
+   Note that you should follow the specified date format `yyyy-MM-dd` when you type the date.
 
 
 ## 🧑🏻‍💻 Setting up in Intellij
