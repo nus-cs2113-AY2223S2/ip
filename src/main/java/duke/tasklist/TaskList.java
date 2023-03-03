@@ -64,8 +64,9 @@ public class TaskList {
         boolean isLongInput = userInput.length >= 2;
         boolean isTodo = userInput[0].equals("todo");
         boolean isEvent = userInput[0].equals("event");
+        boolean isDeadline = userInput[0].equals("deadline");
         if (!isLongInput && (isTodo ||
-                isEvent || userInput[0].equals("deadline"))) {
+                isEvent || isDeadline)) {
             throw new IndexOutOfBoundsException();
         }
     }
@@ -77,7 +78,8 @@ public class TaskList {
      * @throws IndexOutOfBoundsException if task to be marked is out of bounds.
      */
     public static void markValidTask(String[] userInput) throws IndexOutOfBoundsException {
-        if (userInput.length < 2) {
+        boolean isLongInput = userInput.length >= 2;
+        if (!isLongInput) {
             throw new NumberFormatException();
         }
         try {
@@ -85,7 +87,7 @@ public class TaskList {
             if (tasks.get(taskNum - 1) == null || tasks.size() == 0) {
                 throw new IndexOutOfBoundsException();
             }
-            tasks.get(taskNum - 1).markAsDone(userInput[0]);
+            tasks.get(taskNum - 1).setDone(userInput[0]);
         } catch (NumberFormatException e) {
             Ui.printMessage(Ui.CommandType.NUMBERFORMAT);
         }
@@ -124,7 +126,7 @@ public class TaskList {
                 throw new IndexOutOfBoundsException();
             }
             tasks.add(newTask);
-            tasks.get(tasks.size()-1).addIsDone(status);
+            tasks.get(tasks.size()-1).setIsDone(status);
         }
         numTasks = tasks.size();
         Ui.printMessage(Ui.CommandType.LIST);
