@@ -12,12 +12,18 @@ public class Ui {
             + "| |_| | |_| |   <  __/\n"
             + "|____/ \\__,_|_|\\_\\___|\n";
 
+    /**
+     * The method is to print Greetings from Duke on the Screen
+     */
     public static void printHello() {
         System.out.println(dividingLine);
         System.out.println("Hello from\n" + logo);
         System.out.println("Hello! I'm Duke" + System.lineSeparator() + "What can I do for you?" + dividingLine);
     }
 
+    /**
+     * The method is to print farewell from Duke on the screen
+     */
     public static void printBye(){
         System.out.println(dividingLine + "Bye. Hope to see you again soon!" + dividingLine);
     }

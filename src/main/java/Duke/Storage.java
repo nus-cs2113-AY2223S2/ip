@@ -12,7 +12,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * The Storage class implements methods that help load and save files.
+ */
 public class Storage {
+    /**
+     * The method loads tasks stored in the .txt file when the project starts.
+     *
+     * @param path The path of the .txt file
+     * @return the task list stored in the .txt file
+     */
     public static ArrayList<Task> loadFile(String path) {
         ArrayList<Task> tasks = new ArrayList<>();
         try {

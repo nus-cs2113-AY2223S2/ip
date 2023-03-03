@@ -2,6 +2,14 @@ package Duke;
 
 import java.util.Scanner;
 
+/**
+ * The Duke program implements several operations
+ * that enable the user to manage his tasks.
+ *
+ * @author Zeng Ziqiu
+ * @since 21/01/2023
+ * @version V2.0 (final version)
+ */
 public class Duke {
 
     public static void main(String[] args) {
