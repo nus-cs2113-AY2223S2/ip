@@ -50,7 +50,7 @@ public class Command {
             case "deadline": {
                 UI.Deadline(UserInput, todoItems);
                 LocalDate dueBy = handleDate.getDate(UserInput);
-                Deadline Item = new Deadline(UserInput, false, "D", dueBy);
+                Deadline Item = new Deadline(UserInput.replace("/", ""), false, "D", dueBy);
                 todoItems.add(Item);
                 DukeFile.WriteToFile(todoItems);
                 break;
