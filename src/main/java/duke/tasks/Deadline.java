@@ -10,8 +10,8 @@ public class Deadline extends Task {
 
     /**
      * Creates a deadline object.
-     * @param description
-     * @param dueInfo
+     * @param description Task information
+     * @param dueInfo Task due information
      */
     public Deadline(String description, String dueInfo) {
         super(description, "D");
