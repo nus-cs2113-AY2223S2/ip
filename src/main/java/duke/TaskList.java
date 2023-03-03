@@ -202,7 +202,7 @@ public class TaskList {
                 taskDescripArray = taskDescrip.split(" ");
 
                 for (String word: taskDescripArray) {
-                    // if matching word
+                    // Check if it matches user word
                     if (word.equals(taskToFind)) {
                         System.out.println("\n\t" + (i + 1) + ". " + ((Task) tasks.get(i)).getDescription() + "\n");
                     }
