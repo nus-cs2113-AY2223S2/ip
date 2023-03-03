@@ -18,8 +18,9 @@ public class SaveToFile {
      * Overwrites all the tasks in the existing file specified by filePath. If there is no existing file, a new file
      * is created.
      * This is done by writing "Saved tasks: " followed by a newline.
-     * @param tasks
-     * @param filePath
+     *
+     * @param tasks    ArrayList to store Task objects
+     * @param filePath Location of the text file that is used to store the tasks
      */
     public static void initialiseWritingToFile(ArrayList<Task> tasks, String filePath) {
         try {
@@ -40,9 +41,10 @@ public class SaveToFile {
      * taskType refers to either ToDo, Deadline or Event.
      * taskStatus refers to whether the task is completed or not.
      * isTaskDone is an integer to represent whether a task is completed or incomplete
-     * @param fwAppend
-     * @param tasks
-     * @throws IOException
+     *
+     * @param fwAppend object to allow writing to file
+     * @param tasks    ArrayList to store Task objects
+     * @throws IOException if file is not found
      */
     private static void writeTasksToFile(FileWriter fwAppend, ArrayList<Task> tasks) throws IOException {
         int totalNumberOfTasks = tasks.size();
@@ -60,24 +62,24 @@ public class SaveToFile {
      * Based on the specific task type, this function formats the task info.
      * Since todo, deadline and event task types have different parameters this function formats the task info
      * according to their respective parameters to the text file for storage.
-     * @param fwAppend
-     * @param taskType of todo, deadline or event
-     * @param currentTask
-     * @param isTaskDone whether the task is completed or not
-     * @param taskInfo
-     * @throws IOException
+     *
+     * @param fwAppend    object to allow lines to be appended to a text file
+     * @param taskType    Todo, deadline or event
+     * @param currentTask Task from the ArrayList at a specified index
+     * @param isTaskDone  Indicates whether the task is completed or not
+     * @param taskInfo    Task description
+     * @throws IOException If fwAppend.write encounters an error
      */
     private static void writeSpecificTaskToFile(FileWriter fwAppend, String taskType, Task currentTask,
                                                 int isTaskDone, String taskInfo) throws IOException {
-        String additionalTaskInfo = "";
         switch (taskType) {
         case "T":
             fwAppend.write(taskType + "/" + isTaskDone + "/" + taskInfo + System.lineSeparator());
             break;
         case "D":
             Deadline currentDeadline = (Deadline) currentTask;
-            additionalTaskInfo = currentDeadline.getDueInfo();
-            String deadlineDetails = taskInfo + "/" + additionalTaskInfo;
+            String dueInfo = currentDeadline.getDueInfo();
+            String deadlineDetails = taskInfo + "/" + dueInfo;
             fwAppend.write(taskType + "/" + isTaskDone + "/" + deadlineDetails + System.lineSeparator());
             break;
         case "E":
