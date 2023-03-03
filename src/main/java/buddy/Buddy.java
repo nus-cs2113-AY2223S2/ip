@@ -44,6 +44,7 @@ public class Buddy {
         }
         ui.sayByeToUser();
     }
+    
 
     public static void main(String[] args) {
         new Buddy("./Data").run();
