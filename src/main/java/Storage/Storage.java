@@ -90,6 +90,16 @@ public class Storage {
      * Saves list of tasks to the file path given. If fails, nothing is saved.
      */
     public void save(ArrayList<Task> list, Path path) throws DukeException {
+        if (list.isEmpty()) {
+            try {
+                System.out.println("Nothing in tasklist, deleting file if exists.");
+                Files.deleteIfExists(path);
+                return;
+            } catch (IOException e) {
+                throw new DukeException("Something wrong happened when deleting the file. " +
+                        "This should not significantly impact anything. When starting in the future, it will print some comment.");
+            }
+        }
         boolean directoryExists = java.nio.file.Files.exists(path);
         if (!directoryExists) {
             // from https://docs.oracle.com/javase/7/docs/api/java/nio/file/Files.html

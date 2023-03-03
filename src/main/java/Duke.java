@@ -49,7 +49,7 @@ public class Duke {
      */
     public static void main(String[] args) throws Exception {
         String home = System.getProperty("user.dir");
-        java.nio.file.Path path = java.nio.file.Paths.get(home, "src", "main", "savefile");
+        java.nio.file.Path path = java.nio.file.Paths.get(home,"savefile");
         new Duke(path).run();
     }
 
