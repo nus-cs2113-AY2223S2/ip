@@ -1,7 +1,100 @@
 Hello from
- ____        _        
-|  _ \ _   _| | _____ 
-| | | | | | | |/ / _ \
-| |_| | |_| |   <  __/
-|____/ \__,_|_|\_\___|
+    ___                         _                                 _
+   / _ \     _____   _____  ___| |   ___    _____   _   _____   _| |_
+  / /_\ \   /  ___| /  __/ /  _  |  / _ \  /  ___| | | |  _  \ |_   _|
+ / _____ \  | /    __\ \   | |_| | | |_| | | /     | | | | | |   | |
+/_/     \_\ |_|   /____/   \_____|  \___/  |_|     |_| |_| |_|   |_|
 
+____________________________________________________________
+ Hello! I'm TaskList, a member of TaskList Team.
+ Please Type The Command As Follow:
+
+> Type "list" to list all the tasks.
+> Type "mark" follow by a number x to mark x tasks in the list.
+> Type "unmark" follow by a number y to unmark y tasks in the list.
+> Type "todo" follow by a string x to add a work that need to be done.
+> Type "deadline /x y" with x is the type of work, y is the time or date of the deadline.
+> Type "event x /y" with x is the event, y is the time or date of that event.
+> Type "bye" to exit.
+
+ What can I do for you?
+____________________________________________________________
+
+=( OOPS!!! I'm sorry, but I don't know what that means :-(
+____________________________________________________________
+
+____________________________________________________________
+
+
+____________________________________________________________
+
+Got it. I've added this task:
+
+[T][ ] CS2113 tp CS2113 tp
+	Now you have 3 tasks in the list.
+____________________________________________________________
+
+____________________________________________________________
+
+Got it. I've added this task:
+
+[E][ ] Valentine (at 14th February)
+	Now you have 4 tasks in the list.
+____________________________________________________________
+
+Here are the tasks in your list:
+
+____________________________LIST____________________________
+1.[T][ ] CS2113 ip
+2.[T][ ] CS2113 tp
+3.[T][ ] CS2113 tp CS2113 tp
+4.[E][ ] Valentine (at 14th February)
+____________________________________________________________
+
+____________________________________________________________
+
+Got it. I've added this task:
+
+[D][ ] EE2026 (by next-week)
+	Now you have 5 tasks in the list.
+____________________________________________________________
+
+Nice! I've marked this task as done:
+
+____________________________LIST____________________________
+1.[T][ ] CS2113 ip
+2.[T][ ] CS2113 tp
+3.[T][X} CS2113 tp CS2113 tp
+4.[E][ ] Valentine (at 14th February)
+5.[D][ ] EE2026 (by next-week)
+____________________________________________________________
+
+Nice! I've marked this task as done:
+
+____________________________LIST____________________________
+1.[T][ ] CS2113 ip
+2.[T][X} CS2113 tp
+3.[T][X} CS2113 tp CS2113 tp
+4.[E][ ] Valentine (at 14th February)
+5.[D][ ] EE2026 (by next-week)
+____________________________________________________________
+
+OK, I've marked this task as not done yet:
+
+____________________________LIST____________________________
+1.[T][ ] CS2113 ip
+2.[T][X} CS2113 tp
+3.[T][X} CS2113 tp CS2113 tp
+4.[E][ ] Valentine (at 14th February)
+5.[D][ ] EE2026 (by next-week)
+____________________________________________________________
+
+Here are the tasks in your list:
+
+____________________________LIST____________________________
+1.[T][ ] CS2113 ip
+2.[T][X} CS2113 tp
+3.[T][X} CS2113 tp CS2113 tp
+4.[E][ ] Valentine (at 14th February)
+5.[D][ ] EE2026 (by next-week)
+____________________________________________________________
