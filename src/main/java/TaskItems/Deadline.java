@@ -14,7 +14,7 @@ public class Deadline extends Todos {
     }
     /**
      * checks what type of task item it is
-     * @return a string "[D]" indicating that it is an Deadline type
+     * @return a string "[D]" indicating that it is a Deadline type
      */
     public String getType() {
         return "[D]";
