@@ -161,18 +161,33 @@ public class Ui {
     public void printHelp(){ //duke.Duke prints this if none of the duke.commands below are used
         System.out.println("Looks like you did not enter a valid duke.Duke.command.\n");
         System.out.println("Command list:");
-        System.out.println("    1. todo: Adds a duke.Duke.task to be done");
+        System.out.println("    1. todo: Adds a Task of type ToDo to the task list. The task description is provided " +
+                "through user input.");
+        System.out.println("        Format: todo <task description>");
         System.out.println("        Usage example: todo eat dinner");
-        System.out.println("    2. deadline: Adds a duke.Duke.task to be done, use /by to specify when it is due");
+        System.out.println("    2. deadline: Adds a Task of type Deadline to the task list. The task description and" +
+                " due date is provided through user input.");
+        System.out.println("        Format: deadline <task description> /by <due date>");
         System.out.println("        Usage example: deadline submit homework /by 3pm tonight");
-        System.out.println("    3. event: Adds an upcoming event. Use /from and /to to specify when it starts " +
-                "and ends respectively.");
+        System.out.println("    3. event: Adds a Task of type Event to the task list. The task description, " +
+                "start time and end time is provided through user input.");
+        System.out.println("        Format: event <task description> /from <start date> /to <end date>");
         System.out.println("        Usage example: event lecture this evening /from 4pm /to 6pm");
-        System.out.println("    4. list: lists all tasks recorded by duke. Only enter the keyword.");
-        System.out.println("    5. mark: Marks a specific duke.Duke.task as done. Command requires a specific " +
+        System.out.println("    4. list: lists all tasks recorded by duke.");
+        System.out.println("        Format: list");
+        System.out.println("    5. mark: Marks a specific task as done. Command requires a specific " +
                 "index starting from 1");
+        System.out.println("        Format: mark <task index>");
         System.out.println("        Usage example: mark 2 (assuming that there are more than two tasks in the list");
-        System.out.println("    6. bye: Exits duke");
+        System.out.println("    6. unmark: Marks a specific duke as not done. Command requires a specific " +
+                "index starting from 1");
+        System.out.println("        Format: unmark <task index>");
+        System.out.println("        Usage example: unmark 2 (assuming that there are more than two tasks in the list");
+        System.out.println("    7. find: Filters the task list and returns results whose description matches the " +
+                "query provided by the user.");
+        System.out.println("        Format: find <query>");
+        System.out.println("        Usage example: find school");
+        System.out.println("    8. bye: Exits duke");
         out.println(DIVIDER);
     }
 
