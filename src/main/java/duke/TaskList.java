@@ -22,7 +22,6 @@ import static duke.Ui.*;
  * @version 1.0
  * @since   2023-03-03
  */
-
 public class TaskList {
 
     /**
@@ -31,7 +30,6 @@ public class TaskList {
      * @param String line - user input, int item - a count of the number of items in the arraylist, ArrayList tasks - the collection of tasks
      * @return an int of the number of items in the arraylist
      */
-
     public static int addEvent(String line, int item, ArrayList tasks) {
         try {
             int toIndex = line.indexOf("/to");
@@ -60,7 +58,6 @@ public class TaskList {
      * @param String line - user input, int item - a count of the number of items in the arraylist, ArrayList tasks - the collection of tasks
      * @return an int of the number of items in the arraylist
      */
-
     public static int addDeadline(String line, int item, ArrayList tasks) {
         try {
             int byIndex = line.indexOf("/by");
@@ -89,7 +86,6 @@ public class TaskList {
      * @param String line - user input, int item - a count of the number of items in the arraylist, ArrayList tasks - the collection of tasks
      * @return an int of the number of items in the arraylist
      */
-
     public static int addToDo(@NotNull String line, int item, ArrayList tasks) throws IOException {
         try {
             int descriptionIndex = line.indexOf("todo");
@@ -116,7 +112,6 @@ public class TaskList {
      * @param String line - user input, int item - a count of the number of items in the arraylist, ArrayList tasks - the collection of tasks
      * @return an int of the number of items in the arraylist
      */
-
     public static int deleteTask(String line, int item, ArrayList tasks) {
         try {
             String inputMessageArray[] = new String[2];
@@ -149,7 +144,6 @@ public class TaskList {
      *
      * @return Nothing
      */
-
     public static void toggleDoneStatus(String line, int item, String msg, boolean status, ArrayList tasks) {
         try {
             String inputMessageArray[] = new String[2];
@@ -185,7 +179,6 @@ public class TaskList {
      * @param String line - user input, ArrayList tasks - the collection of tasks
      * @return Nothing
      */
-
     public static void findTasks (String line, ArrayList tasks) {
         try {
             String inputMessageArray[] = new String[2];

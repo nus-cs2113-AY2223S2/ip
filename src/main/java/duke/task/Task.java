@@ -12,7 +12,6 @@ import java.io.IOException;
  * @version 1.0
  * @since   2023-03-03
  */
-
 public class Task {
     protected String description;
     protected boolean isDone;
@@ -40,7 +39,6 @@ public class Task {
      * @param Nothing
      * @return the String status and description of the task
      */
-
     public String getDescription() {
         return "[" + getStatusIcon() + "] " + this.description;
     }

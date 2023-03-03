@@ -16,7 +16,6 @@ import static duke.Ui.UNMARK_MSG;
  * @version 1.0
  * @since   2023-03-03
  */
-
 public class Parser {
 
     public int item = 0;
