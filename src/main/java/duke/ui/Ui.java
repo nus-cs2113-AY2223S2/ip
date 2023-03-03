@@ -29,8 +29,8 @@ public class Ui {
     private static final String EMPTY_TASK_NO_ERR = " WHOOPS! Task number cannot be empty.";
     private static final String WRONG_TASK_NO_FORMAT_ERR = " WHOOPS! Task number must be an integer.";
     private static final String TASK_NO_OUT_OF_RANGE_ERR = " WHOOPS! There is no such task number.";
-    private static final String WRITE_FILE_ERR = "Error writing to file\n";
-    private static final String LOAD_FILE_ERR = "File not found/empty file. Creating new empty task list...\n";
+    private static final String WRITE_FILE_ERR = "Error writing to file.";
+    private static final String LOAD_FILE_ERR = "File not found/empty file. Creating new empty task list...";
     private static final String LIST_FOUND_TASK_DESC = " Here are the matching tasks in your list:\n";
     private static final String EMPTY_KEYWORD_ERR = " WHOOPS! The keyword of find cannot be empty.";
 
