@@ -1,11 +1,11 @@
 package duke.tasks;
 
+import duke.constants.Config;
 import duke.parser.datetime.DateTimeParser;
 
 import java.time.LocalDateTime;
 
 public class Event extends Task {
-    public static final String MARKER = "E";
     private final LocalDateTime fromDateTime, toDateTime;
 
     public Event(String description, LocalDateTime fromDateTime, LocalDateTime toDateTime) {
@@ -21,7 +21,7 @@ public class Event extends Task {
      */
     @Override
     public String describeTask() {
-        return getCheckbox(true, MARKER)
+        return getCheckbox(true, Config.MARKER_EVENT)
                 + super.describeTask()
                 + " (from: " + fromDateTime.format(DateTimeParser.getFormatter())
                 + " to: " + toDateTime.format(DateTimeParser.getFormatter())

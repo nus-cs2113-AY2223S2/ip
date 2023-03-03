@@ -1,8 +1,8 @@
 package duke.tasks;
 
-public class ToDo extends Task {
-    public static final String MARKER = "T";
+import duke.constants.Config;
 
+public class ToDo extends Task {
     public ToDo(String description) {
         super(description, TaskEnum.TODO);
     }
@@ -14,6 +14,6 @@ public class ToDo extends Task {
      */
     @Override
     public String describeTask() {
-        return getCheckbox(true, MARKER) + super.describeTask();
+        return getCheckbox(true, Config.MARKER_TODO) + super.describeTask();
     }
 }

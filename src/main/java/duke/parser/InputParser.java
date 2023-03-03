@@ -9,6 +9,8 @@ import duke.command.HelpCommand;
 import duke.command.ListCommand;
 import duke.command.MarkCommand;
 import duke.command.UnmarkCommand;
+import duke.constants.Config;
+import duke.constants.ParserConstants;
 import duke.exceptions.InvalidCommandException;
 import duke.exceptions.InvalidDateTimeException;
 import duke.exceptions.InvalidInputIDException;
@@ -25,19 +27,6 @@ import java.util.Scanner;
  * Processes user input
  */
 public class InputParser {
-    private static final String CHAR_SPACE = " ";
-    private static final String COMMAND_BYE = "bye";
-    private static final String COMMAND_DEADLINE = "deadline";
-    private static final String COMMAND_DELETE = "delete";
-    private static final String COMMAND_EVENT = "event";
-    private static final String COMMAND_EXIT = "exit";
-    private static final String COMMAND_FIND = "find";
-    private static final String COMMAND_HELP = "help";
-    private static final String COMMAND_LIST = "list";
-    private static final String COMMAND_MARK = "mark";
-    private static final String COMMAND_TODO = "todo";
-    private static final String COMMAND_UNMARK = "unmark";
-
     /**
      * Reads the task ID input by the user.
      *
@@ -102,8 +91,8 @@ public class InputParser {
      * @throws InvalidCommandException    If the command does not match any supported commands
      */
     public Command parseInput(String input) throws Exception {
-        final String inputFirstWord = input.split(CHAR_SPACE)[0];
-        boolean isExit = inputFirstWord.equals(COMMAND_BYE) || inputFirstWord.equals(COMMAND_EXIT);
+        final String inputFirstWord = input.split(Config.CHAR_SPACE)[0];
+        boolean isExit = inputFirstWord.equals(ParserConstants.COMMAND_BYE) || inputFirstWord.equals(ParserConstants.COMMAND_EXIT);
         if (isExit) {
             return new ExitCommand();
         }
@@ -117,31 +106,31 @@ public class InputParser {
 
         Command commandObj;
         switch (inputCommand) {
-        case COMMAND_DEADLINE:
+        case ParserConstants.COMMAND_DEADLINE:
             commandObj = new AddTaskCommand(getTaskFromInput(scanner, TaskEnum.DEADLINE));
             break;
-        case COMMAND_DELETE:
+        case ParserConstants.COMMAND_DELETE:
             commandObj = new DeleteCommand(getID(scanner));
             break;
-        case COMMAND_EVENT:
+        case ParserConstants.COMMAND_EVENT:
             commandObj = new AddTaskCommand(getTaskFromInput(scanner, TaskEnum.EVENT));
             break;
-        case COMMAND_FIND:
+        case ParserConstants.COMMAND_FIND:
             commandObj = new FindCommand(scanner.nextLine());
             break;
-        case COMMAND_HELP:
+        case ParserConstants.COMMAND_HELP:
             commandObj = new HelpCommand();
             break;
-        case COMMAND_LIST:
+        case ParserConstants.COMMAND_LIST:
             commandObj = new ListCommand();
             break;
-        case COMMAND_MARK:
+        case ParserConstants.COMMAND_MARK:
             commandObj = new MarkCommand(getID(scanner));
             break;
-        case COMMAND_TODO:
+        case ParserConstants.COMMAND_TODO:
             commandObj = new AddTaskCommand(getTaskFromInput(scanner, TaskEnum.TODO));
             break;
-        case COMMAND_UNMARK:
+        case ParserConstants.COMMAND_UNMARK:
             commandObj = new UnmarkCommand(getID(scanner));
             break;
         default:

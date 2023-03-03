@@ -1,11 +1,11 @@
 package duke.tasks;
 
+import duke.constants.Config;
 import duke.parser.datetime.DateTimeParser;
 
 import java.time.LocalDateTime;
 
 public class Deadline extends Task {
-    public static final String MARKER = "D";
     private final LocalDateTime byDateTime;
 
     public Deadline(String description, LocalDateTime byDateTime) {
@@ -20,7 +20,7 @@ public class Deadline extends Task {
      */
     @Override
     public String describeTask() {
-        return getCheckbox(true, MARKER)
+        return getCheckbox(true, Config.MARKER_DEADLINE)
                 + super.describeTask()
                 + " (by: " + byDateTime.format(DateTimeParser.getFormatter())
                 + ")";

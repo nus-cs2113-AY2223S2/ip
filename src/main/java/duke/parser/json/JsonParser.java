@@ -5,6 +5,8 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
+import duke.constants.ParserConstants;
+import duke.constants.TasksConstants;
 import duke.exceptions.CorruptSaveDataException;
 import duke.tasks.Deadline;
 import duke.tasks.Event;
@@ -23,9 +25,6 @@ public class JsonParser {
             .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
             .create().newBuilder();
     static final Gson GSON = GSON_BUILDER.create();
-    private static final String TASK_DEADLINE = "DEADLINE";
-    private static final String TASK_EVENT = "EVENT";
-    private static final String TASK_TODO = "TODO";
 
     /**
      * Convert the JSON string into the corresponding task. If the data is corrupted, a generic Task object is returned.
@@ -37,19 +36,19 @@ public class JsonParser {
         Task savedTask;
         try {
             JsonObject jsonObject = GSON.fromJson(taskJson, JsonObject.class);
-            JsonElement taskType = jsonObject.get("type");
+            JsonElement taskType = jsonObject.get(ParserConstants.JSON_KEY_TYPE);
             if (taskType == null) {
                 throw new CorruptSaveDataException(taskJson);
             }
 
             switch (taskType.getAsString()) {
-            case TASK_TODO:
+            case TasksConstants.TASK_TODO:
                 savedTask = GSON.fromJson(jsonObject, ToDo.class);
                 break;
-            case TASK_EVENT:
+            case TasksConstants.TASK_EVENT:
                 savedTask = GSON.fromJson(jsonObject, Event.class);
                 break;
-            case TASK_DEADLINE:
+            case TasksConstants.TASK_DEADLINE:
                 savedTask = GSON.fromJson(jsonObject, Deadline.class);
                 break;
             default:

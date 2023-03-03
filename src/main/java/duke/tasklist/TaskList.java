@@ -1,5 +1,6 @@
 package duke.tasklist;
 
+import duke.constants.Config;
 import duke.exceptions.CorruptSaveDataException;
 import duke.exceptions.InvalidInputIDException;
 import duke.exceptions.NoTaskException;
@@ -14,9 +15,6 @@ import java.util.regex.Pattern;
  * A list used to store and access all tasks created.
  */
 public class TaskList {
-    private static final String MESSAGE_TASKS_AVAILABLE = "Here are the tasks in your list:";
-    private static final String MESSAGE_TASKS_MARKED = "Nice! I've marked this task as done:";
-    private static final String MESSAGE_TASKS_UNMARKED = "OK, I've marked this task as not done yet:";
     private static ArrayList<Task> tasks = new ArrayList<>();
 
     public TaskList() {
@@ -106,7 +104,7 @@ public class TaskList {
 
         // adds tasks to output, if any
         // combine details of tasks into a single string
-        StringBuilder output = new StringBuilder(MESSAGE_TASKS_AVAILABLE);
+        StringBuilder output = new StringBuilder(Config.MESSAGE_TASKS_AVAILABLE);
         output.append(System.lineSeparator());
 
         for (int i = 0; i < tasks.size(); ++i) {
@@ -135,8 +133,8 @@ public class TaskList {
             }
             tasks.get(taskId).setIsCompleted(isCompleted);
             String output = isCompleted
-                            ? MESSAGE_TASKS_MARKED + System.lineSeparator()
-                            : MESSAGE_TASKS_UNMARKED + System.lineSeparator();
+                            ? Config.MESSAGE_TASKS_MARKED + System.lineSeparator()
+                            : Config.MESSAGE_TASKS_UNMARKED + System.lineSeparator();
             output += tasks.get(taskId).describeTask();
             return output;
         } catch (IndexOutOfBoundsException e) {

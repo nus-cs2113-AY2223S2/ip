@@ -1,8 +1,8 @@
 package duke.storage;
 
+import duke.constants.Config;
+
 import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -11,16 +11,12 @@ import java.io.IOException;
  * Used for read/write operations to the default save directory: {projectDir}/data/save.txt
  */
 public class Storage {
-    private static final String HOME = System.getProperty("user.dir");
-    private static final Path SAVE_DIR = Paths.get(HOME, "data");
-    private static final Path SAVE_FILE = Paths.get(SAVE_DIR.toString(), "save.txt");
-
     /**
      * Checks if the save data directory exists. Creates the directory if is does not exist.
      */
     private static void checkSaveDir() {
         // check if file/directory exists
-        File saveDir = new File(SAVE_DIR.toUri());
+        File saveDir = new File(Config.PATH_SAVE_DIR.toUri());
         if (!saveDir.exists()) { // create directory if required
             saveDir.mkdir();
         }
@@ -34,7 +30,7 @@ public class Storage {
     public String read() {
         checkSaveDir();
         try {
-            return Files.readString(SAVE_FILE);
+            return Files.readString(Config.PATH_SAVE_FILE);
         } catch (IOException e) {
             return "";
         }
@@ -47,7 +43,7 @@ public class Storage {
      * @throws IOException If the save operation fails
      */
     public void save(String saveData) throws IOException {
-        writeToFile(SAVE_FILE.toString(), saveData);
+        writeToFile(Config.PATH_SAVE_FILE.toString(), saveData);
     }
 
     /**

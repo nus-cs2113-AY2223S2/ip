@@ -1,5 +1,6 @@
 package duke.parser.tasks;
 
+import duke.constants.ParserConstants;
 import duke.exceptions.InvalidDateTimeException;
 import duke.exceptions.InvalidTaskFormatException;
 import duke.tasks.Task;
@@ -9,16 +10,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public interface TaskParser {
-    Pattern PATTERN_DEADLINE = Pattern.compile(
-            "^(\\S+[\\S\\s]*)(\\s+/by\\s+)(\\S+[\\S\\s]*)$",
-            Pattern.CASE_INSENSITIVE);
-    Pattern PATTERN_EVENT = Pattern.compile(
-            "^(\\S+[\\S\\s]*)(\\s+/from\\s+)(\\S+[\\S\\s]*)(\\s+/to\\s+)(\\S+[\\S\\s]*)$",
-            Pattern.CASE_INSENSITIVE);
-    Pattern PATTERN_TODO = Pattern.compile(
-            "^(\\S+[\\S\\s]*)$",
-            Pattern.CASE_INSENSITIVE);
-
     /**
      * Helper method, checks if input string matches Pattern.
      *
@@ -28,13 +19,13 @@ public interface TaskParser {
      */
     static void checkValidInput(String input, TaskEnum taskType)
             throws InvalidTaskFormatException {
-        Pattern pattern = PATTERN_TODO;
+        Pattern pattern = ParserConstants.PATTERN_TODO;
         switch (taskType) {
         case DEADLINE:
-            pattern = PATTERN_DEADLINE;
+            pattern = ParserConstants.PATTERN_DEADLINE;
             break;
         case EVENT:
-            pattern = PATTERN_EVENT;
+            pattern = ParserConstants.PATTERN_EVENT;
             break;
         }
 
