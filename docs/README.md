@@ -145,7 +145,7 @@ The first task of the tasklist is unmarked, indicated by the empty whitespace in
 
 ### `find` - Finds all relevant tasks in the tasklist which contain the keyword(s) specified by the user
 
-Mark the status of a specified task as done, and updates a status icon indicating it being marked.
+Finds the tasks containing the keyword specified by the user in the tasklist, and outputs them.
 
 Example of usage: 
 
