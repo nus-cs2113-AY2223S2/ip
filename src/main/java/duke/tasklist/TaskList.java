@@ -135,8 +135,8 @@ public class TaskList {
             }
             tasks.get(id).setIsCompleted(isCompleted);
             String output = isCompleted
-                            ? MESSAGE_TASKS_MARKED + "\n"
-                            : MESSAGE_TASKS_UNMARKED + "\n";
+                            ? MESSAGE_TASKS_MARKED + System.lineSeparator()
+                            : MESSAGE_TASKS_UNMARKED + System.lineSeparator();
             output += tasks.get(id).describe();
             return output;
         } catch (IndexOutOfBoundsException e) {

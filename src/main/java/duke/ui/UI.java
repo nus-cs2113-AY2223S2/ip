@@ -8,13 +8,13 @@ import java.util.Scanner;
 public class UI {
     private static final String INDENT = "    ";
     private static final String LINE = "____________________________________________________________";
-    private static final String LOGO = " ____        _        \n"
-            + "|  _ \\ _   _| | _____ \n"
-            + "| | | | | | | |/ / _ \\\n"
-            + "| |_| | |_| |   <  __/\n"
-            + "|____/ \\__,_|_|\\_\\___|\n";
+    private static final String LOGO = " ____        _        " + System.lineSeparator()
+            + "|  _ \\ _   _| | _____ " + System.lineSeparator()
+            + "| | | | | | | |/ / _ \\" + System.lineSeparator()
+            + "| |_| | |_| |   <  __/" + System.lineSeparator()
+            + "|____/ \\__,_|_|\\_\\___|" + System.lineSeparator();
     private static final String MESSAGE_EXIT = "Bye. Hope to see you again soon!";
-    private static final String MESSAGE_GREET = "Hello! I'm Duke\nWhat can I do for you?";
+    private static final String MESSAGE_GREET = "Hello! I'm Duke" + System.lineSeparator() + "What can I do for you?";
     private static final String MESSAGE_HELP = "Welcome to Duke." + System.lineSeparator()
             + "Duke is a task managing application optimised for the Command-Line Interface." + System.lineSeparator()
             + "Commands: bye, deadline, event, exit, find, help, list, mark, todo, unmark" + System.lineSeparator()
@@ -51,7 +51,7 @@ public class UI {
     }
 
     public void printLine() {
-        print(LINE + "\n");
+        print(LINE + System.lineSeparator());
     }
 
     public void printLine(String text) {
@@ -71,8 +71,8 @@ public class UI {
      * @param numTasks    Number of tasks in the list
      */
     public void printTaskAdded(String description, int numTasks) {
-        String output = "Got it. I've added this task:\n"
-                + INDENT + description + "\n"
+        String output = "Got it. I've added this task:" + System.lineSeparator()
+                + INDENT + description + System.lineSeparator()
                 + "Now you have " + numTasks + " tasks in the list";
         print(output);
         printLine();
@@ -85,8 +85,8 @@ public class UI {
      * @param numTasks    Number of tasks in the list
      */
     public void printTaskDeleted(String description, int numTasks) {
-        String output = "Noted. I have removed this task:\n"
-                + INDENT + description + "\n"
+        String output = "Noted. I have removed this task:" + System.lineSeparator()
+                + INDENT + description + System.lineSeparator()
                 + "Now you have " + numTasks + " tasks in the list.";
         print(output);
         printLine();
@@ -99,7 +99,7 @@ public class UI {
      * @param tasks The matching tasks
      */
     public void printTasksFound(String query, String tasks) {
-        print("Showing matches for query: " + query + "\n");
+        print("Showing matches for query: " + query + System.lineSeparator());
         print(tasks);
         printLine();
     }
