@@ -7,7 +7,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-
+/**
+ * Represents a file storing data for duke.
+ * Manages the file
+ */
 public class TaskData {
     private File data;
     private String fileName;
@@ -17,6 +20,13 @@ public class TaskData {
         data = new File(fileName);
     }
 
+    /**
+     * Reads data from a file and stores them inside ArrayList tasks
+     *
+     * @param tasks the ArrayList storing all the tasks
+     * @return tasks
+     * @throws FileNotFoundException when the file cannot be found
+     */
     public ArrayList<Task> readData (ArrayList<Task> tasks) throws FileNotFoundException {
         if (!data.exists()) {
             return tasks;
@@ -61,6 +71,13 @@ public class TaskData {
         return tasks;
     }
 
+    /**
+     * Appends data of a task to the file
+     * @param tasks storing all the tasks
+     * @param task the task to be appended
+     * @return tasks
+     * @throws IOException when the file writer fails
+     */
     public ArrayList<Task> writeToFile (ArrayList<Task> tasks,String task) throws IOException {
         FileWriter fw = new FileWriter(fileName, true);
         fw.write(task + System.lineSeparator());
@@ -68,6 +85,13 @@ public class TaskData {
         return tasks;
     }
 
+    /**
+     * updates the file entirely based on the current tasks
+     *
+     * @param tasks the ArrayList storing all the tasks
+     * @return tasks
+     * @throws IOException when file writer fails
+     */
     public ArrayList<Task> updateFile (ArrayList<Task> tasks) throws IOException {
         FileWriter fw = new FileWriter(fileName);
         fw.write("");

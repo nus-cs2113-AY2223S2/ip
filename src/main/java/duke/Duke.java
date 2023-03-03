@@ -30,6 +30,14 @@ public class Duke {
         }
     }
 
+    /**
+     * Returns updated tasks from file "/duke.txt"
+     * tasks is unchanged if there is no such file already existing and creates a file
+     *
+     * @param tasks all the tasks added
+     * @param file the file storing the tasks
+     * @return tasks
+     */
     private static ArrayList<Task> loadData(ArrayList<Task> tasks, TaskData file) {
         try {
             file.readData(tasks);
@@ -53,6 +61,14 @@ public class Duke {
         System.out.println(greet);
     }
 
+    /**
+     * Appends a task to the file and returns the updated tasks
+     *
+     * @param tasks all the tasks added
+     * @param taskToAdd the task to append to the text file
+     * @param file the txt file storing the tasks
+     * @return tasks
+     */
     private static ArrayList<Task> addTaskToFile(ArrayList<Task> tasks, Task taskToAdd, TaskData file) {
         try {
             tasks = file.writeToFile(tasks, taskToAdd.toString());
@@ -62,6 +78,13 @@ public class Duke {
         return tasks;
     }
 
+    /**
+     * updates the file entirely to the current tasks
+     *
+     * @param tasks all the tasks added
+     * @param file the txt file storing the tasks
+     * @return tasks
+     */
     private static ArrayList<Task> updateFile(ArrayList<Task> tasks, TaskData file) {
         try {
             tasks = file.updateFile(tasks);
@@ -71,6 +94,17 @@ public class Duke {
         return tasks;
     }
 
+    /**
+     * Handles command(action) input by the user
+     * Returns updated tasks
+     *
+     * @param tasks all the tasks added
+     * @param action the input line by the user
+     * @param file the txt file storing the tasks
+     * @return tasks
+     * @throws DukeException when the command word is not recognised
+     * @throws DukeException.TaskEmpty when the content of task to be added is empty
+     */
     public static ArrayList<Task> handleAction(ArrayList<Task> tasks, String action, TaskData file) throws DukeException, DukeException.TaskEmpty{
         if (action.equals("bye")) {
             System.out.println(DIVIDER_LINE + "Bye. Hope to see you again soon!\n" + DIVIDER_LINE);
@@ -162,7 +196,6 @@ public class Duke {
         System.out.println(DIVIDER_LINE + "Nice! I've marked this task as "+ (action.equals("mark") ? "done:" : "undone:")
                 + "\n" + tasks.toString() + "\n" + DIVIDER_LINE);
     }
-
 
     private static void printAdded(ArrayList<Task> tasks) {
         System.out.println(DIVIDER_LINE + "added:\n" + tasks.get(taskCount).toString() + "\n" + DIVIDER_LINE);
