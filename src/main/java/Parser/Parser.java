@@ -1,6 +1,7 @@
 package Parser;
 
 import Exceptions.DukeException;
+import Storage.Storage;
 import TaskList.TaskList;
 import Tasks.Deadline;
 import Tasks.Event;
@@ -10,6 +11,7 @@ import UI.UserInterface;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,9 +19,14 @@ import java.util.Scanner;
 
 public class Parser {
     public Parser() {
-
     }
-    public static void readCommand(UserInterface ui, TaskList tasks) throws DukeException {
+
+    /**
+     * The method that parses through user input. It will find the different valid commands that the code is able to run
+     * and then find the one that the user input matches. If the user input matches none of the commands, then the method
+     * outputs "Command does not exist."
+     */
+    public static void readCommand(UserInterface ui, TaskList tasks,  Storage storage, Path path) throws DukeException {
         ArrayList<Task> list = tasks.getList();
         Scanner inputScanner = ui.getScanner();
         while (true) {
@@ -41,7 +48,7 @@ public class Parser {
                 dukeCommandEvent(nextLine, list);
             } else if (nextLine.equals("bye")) {
                 System.out.println("Bye. Hope to see you again soon!");
-                dukeSaveList(list);
+                dukeSaveList(list, storage, path);
                 return;
             } else {
                 System.out.println("Command does not exist");
@@ -49,6 +56,10 @@ public class Parser {
             }
         }
     }
+
+    /**
+     * Finds all keyword-matching task names by iterating through the ArrayList and copying over all tasks that have match.
+     */
     private static void dukeCommandFind(String nextLine, ArrayList<Task> list) throws DukeException {
         String[] inputArray = nextLine.split(" ", 0);
         if (inputArray.length != 2) {
@@ -69,73 +80,17 @@ public class Parser {
         System.out.println("Here are the following Tasks that have names containing your keyword:");
         dukeCommandList(containsSubstring);
     }
-    private static void dukeSaveList(ArrayList<Task> list) throws DukeException {
-        String home = System.getProperty("user.dir");
-        java.nio.file.Path path = java.nio.file.Paths.get(home, "src", "main", "savefile");
-        boolean directoryExists = java.nio.file.Files.exists(path);
-        if (!directoryExists) {
-            // from https://docs.oracle.com/javase/7/docs/api/java/nio/file/Files.html
-            try {
-                Files.createFile(path);
-            } catch (IOException e) {
-                throw new DukeException("Unable to create filepath");
-            }
-        }
-        try {
-            Files.deleteIfExists(path);
-            Files.createFile(path);
-        } catch (IOException e) {
-            throw new DukeException("Unable to delete and then recreate file with given filepath");
-        }
-        for (Task task: list) {
-            String taskType = String.valueOf(task.getClass());
-            ArrayList<String> attributesToStore = new ArrayList<String>();
-            String taskInLineForm = "";
 
-            switch (taskType) {
-                case ("class Tasks.Task"):
-                    attributesToStore.add(taskType);
-                    attributesToStore.add(task.getTaskName());
-                    attributesToStore.add(String.valueOf(task.isDone()));
-                    taskInLineForm = deliminterAdder(attributesToStore);
-                    break;
-                case ("class Tasks.Deadline"):
-                    attributesToStore.add(taskType);
-                    attributesToStore.add(task.getTaskName());
-                    attributesToStore.add(String.valueOf(task.isDone()));
-                    attributesToStore.add(((Deadline) task).getDeadline());
-                    taskInLineForm = deliminterAdder(attributesToStore);
-                    break;
-                case ("class Tasks.Event"):
-                    attributesToStore.add(taskType);
-                    attributesToStore.add(task.getTaskName());
-                    attributesToStore.add(String.valueOf(task.isDone()));
-                    attributesToStore.add(((Event) task).getDeadline());
-                    attributesToStore.add(((Event) task).getStart());
-                    taskInLineForm = deliminterAdder(attributesToStore);
-                default:
-                    break;
-            }
-            taskInLineForm = taskInLineForm.concat("\n");
-//            System.out.println(taskInLineForm);
-            try {
-                Files.write(path, taskInLineForm.getBytes(StandardCharsets.UTF_8), StandardOpenOption.APPEND);
-            } catch (IOException e) {
-                throw new DukeException("Unable to write the task to file, given the filepath");
-            }
-        }
-    }
 
-    private static String deliminterAdder(ArrayList<String> items) {
-        String taskInStringForm = "";
-        for (String item : items) {
-            taskInStringForm = taskInStringForm.concat(item + "|");
-        }
-//        System.out.println(taskInStringForm);
-        return taskInStringForm;
+    private static void dukeSaveList(ArrayList<Task> list, Storage storage, Path path) throws DukeException {
+        storage.save(list, path);
     }
 
 
+
+    /**
+     * Deletes the task by iterating through all tasks in the ArrayList.
+     */
     private static void dukeCommandDelete(String nextLine, List<Task> list) throws DukeException {
         String[] inputArray = nextLine.split(" ", 0);
         if (inputArray.length != 2) {
@@ -156,6 +111,9 @@ public class Parser {
         System.out.println("Removed task at " + index);
     }
 
+    /**
+     * Lists tasks by iterating through the ArrayList. Uses helper functions to print out Tasks, Deadlines, and Events.
+     */
     private static void dukeCommandList (List<Task> list) {
         for (int i = 0; i < list.size(); i++ ) {
             Task task = list.get(i);
@@ -197,6 +155,9 @@ public class Parser {
         }
     }
 
+    /**
+     * Marks a task as done based on index. To check index, list out all tasks.
+     */
     private static void dukeCommandMark(String nextLine, List<Task> list) throws DukeException {
         String[] inputArray = nextLine.split(" ", 0);
         if (inputArray.length != 2) {
@@ -220,6 +181,9 @@ public class Parser {
         System.out.println("Task already marked as complete!");
     }
 
+    /**
+     * Creates an event. Requires CLI input to be 'event [event name] /[start] /[end]
+     */
     private static void dukeCommandEvent(String nextLine, List<Task> list) throws DukeException {
         String lineWithoutCommand;
         try {
@@ -238,6 +202,10 @@ public class Parser {
         list.add(deadline);
         System.out.println("event added");
     }
+
+    /**
+     * Creates an deadline. Requires CLI input to be 'deadline [deadline name] /[deadline]
+     */
     private static void dukeCommandDeadline(String nextLine, List<Task> list) throws DukeException {
 //        System.out.println(nextLine);
         String lineWithoutCommand;
@@ -256,6 +224,10 @@ public class Parser {
         list.add(deadline);
         System.out.println("deadline added");
     }
+
+    /**
+     * Creates an task. Requires CLI input to be 'task [task name]'
+     */
     private static void dukeCommandToDo(String nextLine, List<Task> list) throws DukeException {
         String lineWithoutCommand;
         try {
