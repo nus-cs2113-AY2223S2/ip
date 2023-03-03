@@ -9,7 +9,6 @@ import java.io.IOException;
  */
 
 public class Duke {
-    //Data
     static TaskList taskList = new TaskList();
 
     public static void main(String[] args) {
