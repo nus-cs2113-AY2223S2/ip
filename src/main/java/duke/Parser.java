@@ -30,7 +30,7 @@ public class Parser {
         case DeleteCommand.COMMAND_WORD: case UnmarkCommand.COMMAND_WORD: case MarkCommand.COMMAND_WORD:
             return prepareCommand(commandWord, intermediateInput[1]);
         case ToDo.COMMAND_WORD:
-            return new ToDo(intermediateInput[1], "[ ]");
+            return prepareToDo(intermediateInput[1]);
         case Deadline.COMMAND_WORD:
             return prepareDeadline(intermediateInput[1]);
         case Event.COMMAND_WORD:
@@ -77,6 +77,14 @@ public class Parser {
                 return new MarkCommand(taskIndex);
             default:
                 return null;
+        }
+    }
+
+    private Command prepareToDo(String arguments) {
+        if (arguments.length() == 0) {
+            return new IncorrectCommand(1);
+        } else {
+            return new ToDo(arguments, "[ ]");
         }
     }
 
