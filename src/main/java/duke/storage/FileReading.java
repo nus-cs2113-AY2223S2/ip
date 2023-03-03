@@ -4,12 +4,9 @@ import duke.tasklist.Task;
 import duke.tasklist.TaskList;
 import duke.ui.Ui;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +14,7 @@ import java.util.List;
  * Represents a txt file storing information.
  */
 public class FileReading {
-    private static final String filePath = "data/Duke.txt";
+    private static final String filePath = "data/duke.txt";
 
     /**
      * Creates a new txt file using the specified file path.
@@ -33,7 +30,7 @@ public class FileReading {
         }
         newFolder.mkdirs();
 
-        File newFile = new File(filePath);
+        File newFile = new File("data/duke.txt");
         if (!newFile.exists()) {
             newFile.createNewFile();
         } else {

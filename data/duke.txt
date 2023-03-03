@@ -1,5 +1,2 @@
-[D][ ] work report (by: 2359)
-[E][ ] birthday party (from: Friday 3pm to: 6pm)
-[E][X] lecture (from: 2pm to: 5pm)
-[D][ ] cs2113 user guide (by: 2359 tomorrow)
-[D][ ] cs2113 team project MVP (by: next tutorial)
+[T][ ] eat
+[T][ ] sleep
