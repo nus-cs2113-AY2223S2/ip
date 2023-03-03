@@ -8,17 +8,18 @@ Duke is a Command Line Interface (CLI) Personal Assistant Chatbot that helps you
   * [Quick start](#quick-start)
   * [Features](#features)
     * [Viewing help: `help`](#viewing-help--help)
-    * [Adding todo task: `todo` \<task>](#adding-todo-task--todo-task-)
-    * [Adding deadline task: `deadline` \<task> `/by` \<date>](#adding-deadline-task--deadline-task--by-date-)
-    * [Adding event task: `event` \<task> `/from` \<start date> `/to` \<end date>](#adding-event-task--event-task--from-start-date--to-end-date-)
-    * [Delete a task: `delete` \<task number>](#delete-a-task--delete-task-number-)
+    * [Adding todo task: `todo` [task]](#adding-todo-task--todo-task)
+    * [Adding deadline task: `deadline` [task] `/by` [date]](#adding-deadline-task--deadline-task-by-date)
+    * [Adding event task: `event` [task] `/from` [start date] `/to` [end date]](#adding-event-task--event-task-from-start-date-to-end-date)
+    * [Delete a task: `delete` [task number]](#delete-a-task--delete-task-number)
     * [Saving the task list and exiting the program: `bye`](#saving-the-task-list-and-exiting-the-program--bye)
-    * [Search task by date: `date` \<yyyy/mm/dd>](#search-task-by-date--date-yyyymmdd-)
-    * [Find tasks by keyword(s): `find` \<keyword(s)>](#find-tasks-by-keyword--s---find-keyword--s--)
+    * [Search task by date: `date` [yyyy/mm/dd]](#search-task-by-date--date-yyyymmdd)
+    * [Find tasks by keyword(s): `find` [keyword(s)]](#find-tasks-by-keyword--s---find-keywords)
     * [View all tasks: `list`](#view-all-tasks--list)
-    * [Marking a task done: `mark` \<task number>](#marking-a-task-done--mark-task-number-)
-    * [Marking a task not done: `unmark` \<task number>](#marking-a-task-not-done--unmark-task-number-)
+    * [Marking a task done: `mark` [task number]](#marking-a-task-done--mark-task-number)
+    * [Marking a task not done: `unmark` [task number]](#marking-a-task-not-done--unmark-task-number)
   * [An Example Walkthrough](#an-example-walkthrough)
+  * [FAQ](#faq)
   * [Command Summary](#command-summary)
 <!-- TOC -->
 
@@ -34,7 +35,7 @@ Duke is a Command Line Interface (CLI) Personal Assistant Chatbot that helps you
 ### Viewing help: `help`
 Displays a message showing the commands available, and their usage.
 
-### Adding todo task: `todo` \<task>
+### Adding todo task: `todo` [task]
 Adds a todo task to the task list. </br> A task type of todo only keeps track of:
 - Task name
 - Status of task: done or not done
@@ -43,7 +44,7 @@ Example:
 - `todo go supermarket`
 - `todo charge phone`
 
-### Adding deadline task: `deadline` \<task> `/by` \<date>
+### Adding deadline task: `deadline` [task] `/by` [date]
 Adds a deadline task to the task list. </br> A task type of deadline only keeps track of:
 - Task name
 - Status of task: done or not done
@@ -58,7 +59,7 @@ Example:
 Tip: Duke understands valid date in the format of yyyy/mm/dd, hence supplying a date in such format allows you to filter deadline tasks by the date
 ```
 
-### Adding event task: `event` \<task> `/from` \<start date> `/to` \<end date>
+### Adding event task: `event` [task] `/from` [start date] `/to` [end date]
 Adds an event task to the task list. </br> A task type of event only keeps track of:
 - Task name
 - Status of task: done or not done
@@ -74,7 +75,7 @@ Example:
 Tip: Duke understands valid date in the format of yyyy/mm/dd, hence supplying a date in such format allows you to filter event tasks by the date
 ```
 
-### Delete a task: `delete` \<task number>
+### Delete a task: `delete` [task number]
 Deletes a task by the task number in the task list. </br> Example:
 - `delete 1`
 - `delete 2`
@@ -83,12 +84,12 @@ Deletes a task by the task number in the task list. </br> Example:
 Exits the program and saves the data in the list into a text file that is stored in a file named data that is stored in the file where Duke.jar is stored. </br> Example:
 - `bye`
 
-### Search task by date: `date` \<yyyy/mm/dd>
+### Search task by date: `date` [yyyy/mm/dd]
 Shows the tasks that contains the date in its task information. </br> Example:
 - `date 2023/01/25`
 - `date 2023/02/01`
 
-### Find tasks by keyword(s): `find` \<keyword(s)>
+### Find tasks by keyword(s): `find` [keyword(s)]
 Shows the tasks that contains the keyword(s) in the task name of the task. </br> Example:
 - `find bread`
 - `find sale`
@@ -97,12 +98,12 @@ Shows the tasks that contains the keyword(s) in the task name of the task. </br>
 Shows all the tasks in the list. </br> Example: 
 - `list`
 
-### Marking a task done: `mark` \<task number>
+### Marking a task done: `mark` [task number]
 Marks a task as done by the task number in the task list. </br> Example:
 - `mark 1`
 - `mark 2`
 
-### Marking a task not done: `unmark` \<task number>
+### Marking a task not done: `unmark` [task number]
 Marks a task as not done by the task number in the task list. </br> Example:
 - `unmark 1`
 - `unmark 2`
@@ -119,58 +120,56 @@ todo go supermarket
 ________________________________________________________________________________
  The following task has been added:
    [T][ ] go supermarket
- There is now 1 task(s) in total.
+ The task list now has 1 task(s) in total.
 ________________________________________________________________________________
 
 todo charge phone
 ________________________________________________________________________________
  The following task has been added:
    [T][ ] charge phone
- There is now 2 task(s) in total.
+ The task list now has 2 task(s) in total.
 ________________________________________________________________________________
-
 
 deadline eat bread /by tomorrow
 ________________________________________________________________________________
  The following task has been added:
    [D][ ] eat bread (by: tomorrow)
- There is now 3 task(s) in total.
+ The task list now has 3 task(s) in total.
 ________________________________________________________________________________
 
 deadline submit proposal /by 2023/01/30
 ________________________________________________________________________________
  The following task has been added:
    [D][ ] submit proposal (by: 30 Jan 2023)
- There is now 4 task(s) in total.
+ The task list now has 4 task(s) in total.
 ________________________________________________________________________________
-
 
 deadline bread sale /by 2023/01/25 1800
 ________________________________________________________________________________
  The following task has been added:
    [D][ ] bread sale (by: 25 Jan 2023 1800)
- There is now 5 task(s) in total.
+ The task list now has 5 task(s) in total.
 ________________________________________________________________________________
 
 event visit friends /from today /to tomorrow
 ________________________________________________________________________________
  The following task has been added:
    [E][ ] visit friends (from: today to: tomorrow)
- There is now 6 task(s) in total.
+ The task list now has 6 task(s) in total.
 ________________________________________________________________________________
 
 event closing down sale /from today /to 2023/01/30
 ________________________________________________________________________________
  The following task has been added:
    [E][ ] closing down sale (from: today to: 30 Jan 2023)
- There is now 7 task(s) in total.
+ The task list now has 7 task(s) in total.
 ________________________________________________________________________________
 
 event opera performance /from 2023/01/25 1600 /to 2023/01/25 1900
 ________________________________________________________________________________
  The following task has been added:
    [E][ ] opera performance (from: 25 Jan 2023 1600 to: 25 Jan 2023 1900)
- There is now 8 task(s) in total.
+ The task list now has 8 task(s) in total.
 ________________________________________________________________________________
 
 list
@@ -200,13 +199,6 @@ ________________________________________________________________________________
  You now have 6 task(s) in the list.
 ________________________________________________________________________________
 
-delete 2
-________________________________________________________________________________
- Noted. Task removed: 
-   [T][ ] charge phone
- You now have 6 task(s) in the list.
-________________________________________________________________________________
-
 mark 1
 ________________________________________________________________________________
  Awesome! I've marked this task as done:
@@ -218,7 +210,6 @@ ________________________________________________________________________________
  Awesome! I've marked this task as done:
    [D][X] bread sale (by: 25 Jan 2023 1800)
 ________________________________________________________________________________
-
 
 unmark 1
 ________________________________________________________________________________
@@ -244,14 +235,6 @@ ________________________________________________________________________________
  2. [E][ ] opera performance (from: 25 Jan 2023 1600 to: 25 Jan 2023 1900)
 ________________________________________________________________________________
 
-date 2023/01/25
-________________________________________________________________________________
- The following task(s) occur on 25 Jan 2023:
- 1. [D][X] bread sale (by: 25 Jan 2023 1800)
- 2. [E][ ] opera performance (from: 25 Jan 2023 1600 to: 25 Jan 2023 1900)
-________________________________________________________________________________
-
-
 find sale
 ________________________________________________________________________________
  Here are the matching tasks in your list:
@@ -264,6 +247,53 @@ ________________________________________________________________________________
  Bye! Hope to see you again soon!
 ________________________________________________________________________________
 ```
+
+## FAQ
+**Question**: </br> 
+How do I transfer data to other device? </br>
+**Answer**: </br> 
+Copy the folder named "data" that is in the same directory as Duke.jar to the new device and location that Duke.jar is going to be stored in</br></br>
+
+**Question**: </br>
+How do I save the data? </br>
+**Answer**: </br> 
+Data is saved when the command `bye` is given to Duke </br></br>
+
+**Question**: </br> 
+I am receiving: </br>
+```
+________________________________________________________________________________
+ Failed to set up, exiting
+ Duke exiting...
+________________________________________________________________________________
+```
+upon starting Duke and the program ends immediately </br>
+What is happening and how do I fix it? </br>
+**Answer**: </br>
+The error message shown above happens when the saved data is corrupted or when the data saved not in the correct format. </br>
+To try to retrieve the data previously saved, you could: </br>
+1. Navigate to the file directory where Duke.jar is stored
+2. Access the file directory "data" by double-clicking on it
+3. Open the duke.txt file 
+4. Look and inspect the data stored, the data stored should be in the following format
+```
+T | 1 | eat bread
+D | 0 | buy bread | today
+E | 1 | make bread | today to tomorrow
+```
+* The format of the data is stored as follows: </br> 
+* For a todo task: `T | [status] | [task name] </br>`
+* For a deadline task: `D | [status] | [task name] | [deadline]` </br>
+* For an event task: `E | [status] | [task name] | [start date] to [end date]`
+* `[status]`: `1` indicates done, `0` indicates not done </br>
+5. Try to fix the format of the data to the one describe above
+6. If the error still occurs after the above steps, you could consider carrying out the following steps
+
+To run the program without any data, you could fix the issue by: </br>
+1. Navigating to the file directory where Duke.jar is stored
+2. Delete the folder named "data"
+
+The program will be able to run properly now. </br>
 
 ## Command Summary
 
