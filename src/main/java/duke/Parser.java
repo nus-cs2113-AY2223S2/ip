@@ -7,6 +7,16 @@ import static duke.Storage.writeTasksToFile;
 import static duke.Ui.*;
 import static duke.Ui.UNMARK_MSG;
 
+/**
+ * <h1>Parser</h1>
+ * The Parser class deals with extracting and interpreting the user input.
+ * <p>
+ *
+ * @author  Tang Yinxuan (Sophie)
+ * @version 1.0
+ * @since   2023-03-03
+ */
+
 public class Parser {
 
     public int item = 0;
@@ -16,6 +26,15 @@ public class Parser {
 
     }
 
+    /**
+     * This method takes the user input and tasks arraylist,
+     * reads the user input and runs relevant methods to deal with the relevant input.
+     * It returns the boolean status of whether the user has finished his/her input session.
+     *
+     * @param String line - the user input, ArrayList tasks - the collection that stores all the user's tasks
+     * @return boolean of whether the user has finished his/her input session
+     * @exception IOException On input error, ClassNotFoundException
+     */
     public boolean manipulateUserCommand(String line, ArrayList tasks) throws IOException, ClassNotFoundException {
         Ui ui = new Ui();
 

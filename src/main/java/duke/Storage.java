@@ -11,6 +11,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * <h1>Storage</h1>
+ * The Storage class deals with loading tasks from the file and saving tasks in the file.
+ * <p>
+ *
+ * @author  Tang Yinxuan (Sophie)
+ * @version 1.0
+ * @since   2023-03-03
+ */
+
 public class Storage {
     protected static String filepath;
     public Storage(String filepath) {
@@ -19,21 +29,30 @@ public class Storage {
     }
 
 
+    /**
+     * This method loads the tasks to the data file specified by the filepath or
+     * creates a new file if it does not already exist.
+     *
+     * @param Nothing
+     * @return Nothing
+     * @exception IOException On input error
+     */
+
     public static void loadTasksToFile() throws IOException {
         // @@author tangphi-reused
         // Reused from www.w3schools.com/java/java_files_create.asp
         // with minor modifications
+
         try {
             File file = new File(filepath);
             if (file.createNewFile()) {
                 System.out.println("File created: " + file.getName());
-            } else {
-                System.out.println("File already exists");
             }
             Scanner reader = new Scanner(file);
+            FileWriter myWriter = new FileWriter(filepath);
             while (reader.hasNextLine()){
                 String line = reader.nextLine();
-                System.out.println("READER LINE\n" + line); //Do you want this printed in data.txt?
+                myWriter.write(line);
             }
         } catch (IOException e) {
             System.out.println("An IO Exception error occurred");
@@ -42,10 +61,18 @@ public class Storage {
 
     }
 
+    /**
+     * This method writes and saves the tasks in the given arraylist to the data file specified by the filepath.
+     *
+     * @param Arraylist of tasks
+     * @return Nothing
+     * @exception IOException On input error, ClassNotFoundException
+     */
     public static void writeTasksToFile(ArrayList tasks) throws IOException, ClassNotFoundException {
-        // https://www.w3schools.com/java/java_files_create.asp
+
         try {
             FileWriter myWriter = new FileWriter(filepath);
+
             for (int i = 0; i < tasks.size(); i++ ) {
 
                 Task task = (Task) tasks.get(i);

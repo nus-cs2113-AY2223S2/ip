@@ -1,5 +1,15 @@
 package duke.task;
 
+/**
+ * <h1>Event</h1>
+ * The Event class is the child of the Task class.
+ * It represents the Event tasks.
+ * <p>
+ *
+ * @author  Tang Yinxuan (Sophie)
+ * @version 1.0
+ * @since   2023-03-03
+ */
 public class Event extends Task {
     protected String description;
     protected String from;

@@ -12,7 +12,25 @@ import java.util.Arrays;
 
 import static duke.Ui.*;
 
+/**
+ * <h1>TaskList</h1>
+ * The TaskList class contains all the methods related to manipulating the tasklist.
+ * It deals with the adding, deleting, marking/unmarking done status and finding task operations.
+ * <p>
+ *
+ * @author  Tang Yinxuan (Sophie)
+ * @version 1.0
+ * @since   2023-03-03
+ */
+
 public class TaskList {
+
+    /**
+     * This method adds an event task into the arraylist.
+     *
+     * @param String line - user input, int item - a count of the number of items in the arraylist, ArrayList tasks - the collection of tasks
+     * @return an int of the number of items in the arraylist
+     */
 
     public static int addEvent(String line, int item, ArrayList tasks) {
         try {
@@ -28,13 +46,20 @@ public class TaskList {
             item++;
             displayTaskAddedMessage(newEvent);
         } catch (StringIndexOutOfBoundsException e) {
-            System.out.println(EMPTY_EVENT);
+            showEmptyEventMsg();
 
         } finally {
             return item;
 
         }
     }
+
+    /**
+     * This method adds a deadline task into the arraylist.
+     *
+     * @param String line - user input, int item - a count of the number of items in the arraylist, ArrayList tasks - the collection of tasks
+     * @return an int of the number of items in the arraylist
+     */
 
     public static int addDeadline(String line, int item, ArrayList tasks) {
         try {
@@ -50,13 +75,20 @@ public class TaskList {
             displayTaskAddedMessage(newDeadline);
 
         } catch (StringIndexOutOfBoundsException e) {
-            System.out.println(EMPTY_DEADLINE);
+            showEmptyDeadlineMsg();
 
         } finally {
             return item;
 
         }
     }
+
+    /**
+     * This method adds a todo task into the arraylist.
+     *
+     * @param String line - user input, int item - a count of the number of items in the arraylist, ArrayList tasks - the collection of tasks
+     * @return an int of the number of items in the arraylist
+     */
 
     public static int addToDo(@NotNull String line, int item, ArrayList tasks) throws IOException {
         try {
@@ -69,8 +101,7 @@ public class TaskList {
             displayTaskAddedMessage(newTodo);
 
         } catch (StringIndexOutOfBoundsException e) {
-            // CHANGE TO UI text
-            System.out.println(EMPTY_TODO);
+            showEmptyTodoMsg();
 
         } finally {
             return item;
@@ -78,6 +109,14 @@ public class TaskList {
         }
 
     }
+
+    /**
+     * This method deletes a task from the arraylist.
+     *
+     * @param String line - user input, int item - a count of the number of items in the arraylist, ArrayList tasks - the collection of tasks
+     * @return an int of the number of items in the arraylist
+     */
+
     public static int deleteTask(String line, int item, ArrayList tasks) {
         try {
             String inputMessageArray[] = new String[2];
@@ -96,10 +135,20 @@ public class TaskList {
                 System.out.println("Item number " + (numToDelete + 1) + " does not exist in list");
             }
         } catch(ArrayIndexOutOfBoundsException e){
-            System.out.println(EMPTY_LISTNUM);
+            showEmptyListNumMsg();
         }
         return item;
     }
+
+    /**
+     * This method changes the isDone status of a task - whether a task has been done or not.
+     *
+     * @param String line - user input, int item - a count of the number of items in the arraylist,
+     *               String msg - a UI output message to the user, boolean status - the current isDone state of the task,
+     *               ArrayList tasks - the collection of tasks
+     *
+     * @return Nothing
+     */
 
     public static void toggleDoneStatus(String line, int item, String msg, boolean status, ArrayList tasks) {
         try {
@@ -125,10 +174,17 @@ public class TaskList {
             }
 
         } catch (ArrayIndexOutOfBoundsException e) {
-            System.out.println(EMPTY_LISTNUM);
+            showEmptyListNumMsg();
 
         }
     }
+
+    /**
+     * This method finds tasks from the arraylist that contains the same word as the word from user input.
+     *
+     * @param String line - user input, ArrayList tasks - the collection of tasks
+     * @return Nothing
+     */
 
     public static void findTasks (String line, ArrayList tasks) {
         try {
@@ -138,8 +194,7 @@ public class TaskList {
 
             String taskDescrip;
 
-
-            System.out.println("Here are the matching tasks in your list: \n");
+            displayMatchingTasks();
 
             for (int i = 0; i < tasks.size(); i++) {
                 taskDescrip = ((Task) tasks.get(i)).getPureDescription();
@@ -156,11 +211,10 @@ public class TaskList {
             }
 
         } catch (ArrayIndexOutOfBoundsException e) {
-            System.out.println(EMPTY_LISTNUM);
+            showEmptyListNumMsg();
 
         }
 
     }
-
 
 }
