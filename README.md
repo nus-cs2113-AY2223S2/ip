@@ -54,6 +54,18 @@ There are 5 types of command you can give to this chatbot.
    ```
    In the line of `[E][ ] take midterm (from: Mar 03 2023 to: Mar 01 2023)`, `[E]` means this task is created from `event` command.
    Note that you should follow the specified date format `yyyy-MM-dd` when you type the date.
+   
+4. `list` : You can print all of the tasks with `list` command.
+   ```
+   list
+      ____________________________________________________________
+	    Here are the tasks in your list:
+	    1. [T][ ] read book
+	    2. [D][ ] paper submission (by: 3월 08 2023)
+	    3. [E][ ] take midterm (from: 3월 03 2023 to: 3월 01 2023)
+	   ____________________________________________________________
+      
+   ```
 
 
 ## 🧑🏻‍💻 Setting up in Intellij
