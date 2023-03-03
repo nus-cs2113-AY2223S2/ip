@@ -8,6 +8,12 @@ public class Event extends Task {
     private String eventStartInfo;
     private String eventEndInfo;
 
+    /**
+     * Creates Event object
+     * @param description Event description
+     * @param eventStartInfo Event start information
+     * @param eventEndInfo Event end information
+     */
     public Event(String description, String eventStartInfo, String eventEndInfo) {
         super(description, "E");
         setEventStartInfo(eventStartInfo);
