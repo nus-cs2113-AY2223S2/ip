@@ -46,6 +46,7 @@ public class TaskData {
                 }
                 tasks.add(tempTask);
             } else if (task.charAt(1) == 'D') {
+                //extracts info
                 taskDescription = task.substring(6, task.indexOf("(by") - 1);
                 String by = task.substring(task.indexOf("(by") + 5, task.length() - 1);
                 Task tempTask = new Deadline(taskDescription, by);
@@ -56,6 +57,7 @@ public class TaskData {
                 }
                 tasks.add(tempTask);
             } else {
+                //extracts info
                 taskDescription = task.substring(6, task.indexOf("(from") - 1);
                 String from = task.substring(task.indexOf("(from") + 7, task.indexOf("to") -1);
                 String to = task.substring(task.indexOf("to") + 4, task.length() - 1);
