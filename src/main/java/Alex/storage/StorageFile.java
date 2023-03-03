@@ -19,14 +19,11 @@ public class StorageFile {
      */
     public static void readData(TaskList taskList) throws FileNotFoundException {
         String dir = System.getProperty("user.dir");
-        Path filePath = Paths.get(dir, "data", "duke.txt");
+        Path filePath = Paths.get(dir, "data", "alex.txt");
         File f = new File(filePath.toString());
         Scanner s = new Scanner(f);
         while (s.hasNextLine()) {
             String[] info = s.nextLine().trim().split(",");
-            /*for(String part :info) {
-                System.out.println(part);
-            }*/
             if(info[0].equals("T"))
             {
                 Task t = new Todo(info[2] , "T");
@@ -63,7 +60,7 @@ public class StorageFile {
     public static void saveData (TaskList taskList) throws IOException {
         String toSave = "";
         String dir = System.getProperty("user.dir");
-        Path filePath = Paths.get(dir, "data", "duke.txt");
+        Path filePath = Paths.get(dir, "data", "alex.txt");
         File file = new File(filePath.toString());
         file.getParentFile().mkdirs();
         FileWriter fw = new FileWriter(file);

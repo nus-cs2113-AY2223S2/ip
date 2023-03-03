@@ -21,9 +21,8 @@ public class ListCommand extends Command{
         String list = "";
         for(Task t : taskList.getAllTasks()) {
             list += taskNo + DOT + t + NEW_LINE;
-            /*System.out.println(taskNo + "." + t);*/
             taskNo += 1;
         }
-        return new CommandResult(list);
+        return new CommandResult(list.substring(0,list.length() - 1));
     }
 }

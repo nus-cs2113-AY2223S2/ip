@@ -6,23 +6,27 @@ public class Ui {
     /**
      * Commonly used printing outputs
      */
-    private static final String LS = System.lineSeparator();
     private static final String DIVIDER = "===================================================";
     /**
      * Print welcome message for user
      */
     public static void showWelcomeMessage() {
         printLineDivider();
-        String greet = "Hello! I'm Alex\nWhat can I do for you today?";
+        String Alex = "\n" +
+                " $$$$$$\\  $$\\       $$$$$$$$\\ $$\\   $$\\ \n" +
+                "$$  __$$\\ $$ |      $$  _____|$$ |  $$ |\n" +
+                "$$ /  $$ |$$ |      $$ |      \\$$\\ $$  |\n" +
+                "$$$$$$$$ |$$ |      $$$$$\\     \\$$$$  / \n" +
+                "$$  __$$ |$$ |      $$  __|    $$  $$<  \n" +
+                "$$ |  $$ |$$ |      $$ |      $$  /\\$$\\ \n" +
+                "$$ |  $$ |$$$$$$$$\\ $$$$$$$$\\ $$ /  $$ |\n" +
+                "\\__|  \\__|\\________|\\________|\\__|  \\__|\n";
+        String greet = "Hello! I'm Alex the less famous brother of Amazon's Alexa\nWhat can I do for you today?";
+        System.out.print(Alex);
         System.out.println(greet);
         printLineDivider();
     }
 
-    public static void showExitMessage () {
-        String exit = "Bye. Hope to chat with you again soon!";
-        System.out.println(exit);
-        printLineDivider();
-    }
     /**
      * Print output for user encased in line dividers
      */
@@ -33,9 +37,6 @@ public class Ui {
 
     }
 
-    private static void printNewLine() {
-        System.out.println();
-    }
     private static void printLineDivider() {
         System.out.println(DIVIDER);
     }

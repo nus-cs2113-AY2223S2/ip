@@ -1,7 +1,6 @@
 package Alex.task;
 
 import Alex.task.Task;
-
 import java.util.ArrayList;
 
 public class TaskList {

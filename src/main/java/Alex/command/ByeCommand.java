@@ -23,6 +23,6 @@ public class ByeCommand extends Command{
      * @return true if user wants to exit false if not
      */
     public static boolean isExit(Command command) {
-        return command instanceof ByeCommand; // instanceof returns false if it is null
+        return command instanceof ByeCommand;
     }
 }

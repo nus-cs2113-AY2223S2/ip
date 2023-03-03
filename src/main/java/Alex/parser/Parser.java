@@ -1,12 +1,20 @@
 package Alex.parser;
 
 import Alex.command.*;
-
+import Alex.exception.AlexCommandException;
+import Alex.exception.AlexTaskException;
 import java.util.Scanner;
 
 
 public class Parser {
     private static String[] userInput;
+    private static final String TASK_INDEX_ERROR = "I do not understand your command." +
+            " Please check user guide for list of valid commands!";
+    private static final String EMPTY_DESCRIPTION = "Please state your description!";
+    private static final String EMPTY_BY = "Please state your completion time appropriately!";
+    private static final String EMPTY_FROM = "Please state your start time!";
+    private static final String EMPTY_TO = "Please state your end time!";
+    private static final int INDEX_COMMAND = 0;
     private static Scanner myScanner = new Scanner(System.in);
 
     /**
@@ -22,11 +30,12 @@ public class Parser {
     /**
      * Parses user input and decides which command to execute.
      *
+     * @throw AlexCommandException and AlexTaskException that are command errors and tasks errors
      * @return command that will be executed
      */
-    public Command parseCommand() {
+    public Command parseCommand() throws AlexCommandException, AlexTaskException  {
         userInput = takeInput();
-        String commandAction = userInput[0].toLowerCase();
+        String commandAction = userInput[INDEX_COMMAND].toLowerCase();
 
         switch (commandAction) {
         case TodoCommand.COMMAND_WORD:
@@ -48,7 +57,7 @@ public class Parser {
         case FindCommand.COMMAND_WORD:
             return prepareFind();
         default:
-            return new IncorrectCommand();
+            throw new AlexCommandException(TASK_INDEX_ERROR);
         }
     }
 
@@ -57,7 +66,7 @@ public class Parser {
      *
      * @return prepared TodoCommand to be executed
      */
-    private Command prepareTodo() {
+    private Command prepareTodo() throws AlexTaskException{
         String activity = "";
         for (int i = 1; i < userInput.length; i++) {
             if (userInput[i].charAt(0) == '/') {
@@ -65,6 +74,9 @@ public class Parser {
             } else {
                 activity += userInput[i] + " ";
             }
+        }
+        if (activity.isEmpty()) {
+            throw new AlexTaskException("Please state your todo description!");
         }
         return new TodoCommand(activity);
     }
@@ -75,8 +87,9 @@ public class Parser {
      * Prepares arguments to execute DeadlineCommand
      *
      * @return prepared DeadlineCommand to be executed
+     * @throws AlexTaskException an exception that is related to Tasks tracked by Alex
      */
-    private Command prepareDeadline() {
+    private Command prepareDeadline() throws AlexTaskException {
         String activity = "";
         for (int i = 1; i < userInput.length; i++) {
             if (userInput[i].charAt(0) == '/') {
@@ -95,8 +108,14 @@ public class Parser {
         for(int i = byIndex + 1; i < userInput.length; i++) {
             by += userInput[i] += " ";
         }
+        if (activity.isEmpty()) {
+            throw new AlexTaskException(EMPTY_DESCRIPTION);
+        }
+        if (by.isEmpty() || byIndex == 0) {
+            throw new AlexTaskException(EMPTY_BY);
+        }
 
-        return new DeadlineCommand(activity, by);
+        return new DeadlineCommand(activity, by.substring(0,by.length()-1));
     }
 
     /**
@@ -104,7 +123,7 @@ public class Parser {
      *
      * @return prepared EventCommand to be executed
      */
-    private Command prepareEvent() {
+    private Command prepareEvent() throws AlexTaskException{
         String activity = "";
         for (int i = 1; i < userInput.length; i++) {
             if (userInput[i].charAt(0) == '/') {
@@ -131,6 +150,17 @@ public class Parser {
         for(int i = toIndex + 1; i < userInput.length; i++) {
             to += userInput[i] + " ";
         }
+
+        if (activity.isEmpty()) {
+            throw new AlexTaskException(EMPTY_DESCRIPTION);
+        }
+        if (from.isEmpty() || fromIndex == 0) {
+            throw new AlexTaskException(EMPTY_FROM);
+        }
+        if (to.isEmpty() || toIndex == 0) {
+            throw new AlexTaskException(EMPTY_TO);
+        }
+
         return new EventCommand(activity,from,to);
 
     }
@@ -139,8 +169,11 @@ public class Parser {
      *
      * @return prepared MarkCommand to be executed
      */
-    private Command prepareMark() {
+    private Command prepareMark() throws AlexTaskException{
         int number = Integer.parseInt(userInput[1]);
+        if (number < 1) {
+            throw new AlexTaskException("Please input a valid index");
+        }
         return new MarkCommand(number);
     }
 

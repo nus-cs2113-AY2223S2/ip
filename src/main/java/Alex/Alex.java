@@ -3,23 +3,13 @@ package Alex;
 import Alex.command.ByeCommand;
 import Alex.command.Command;
 import Alex.command.CommandResult;
-import Alex.exception.DukeException;
+import Alex.exception.AlexException;
+import Alex.exception.AlexTaskException;
 import Alex.parser.Parser;
 import Alex.storage.StorageFile;
 import Alex.task.TaskList;
-import Alex.task.Deadline;
-import Alex.task.Event;
-import Alex.task.Task;
-import Alex.task.Todo;
 import Alex.ui.Ui;
-
 import java.io.*;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
 
 public class Alex {
     public static TaskList taskList;
@@ -31,7 +21,10 @@ public class Alex {
         } catch (FileNotFoundException e) {
             System.out.println("File not found" + e.getMessage());
         }
-        Ui.showWelcomeMessage();
+        new Alex().start();
+    }
+
+    private void runCommands() throws AlexTaskException {
         boolean isExit = false;
         while (!isExit) {
             try {
@@ -42,18 +35,28 @@ public class Alex {
                 try {
                     StorageFile.saveData(taskList);
                 } catch (IOException e){
-                    System.out.println("Error...aborting save" + e.getMessage());
+                    Ui.showOutput("Error...aborting save" + e.getMessage());
                 }
                 isExit = ByeCommand.isExit(command);
 
             } catch (IndexOutOfBoundsException e) {
-                System.out.println("☹ OOPS!!! The description of a " + e.getMessage() + " cannot be empty.");
-            } /*catch (DukeException e) {
-            System.out.println("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
-            printLine();
-        }*/
+                Ui.showOutput("☹ OOPS!!! You are inputted an invalid index, try again!");
+            } catch (AlexException e) {
+                Ui.showOutput((e.getMessage()));
+            }
 
         }
 
+
+    }
+
+    public void start() {
+        Ui.showWelcomeMessage();
+        try {
+            this.runCommands();
+        }catch (AlexException e)
+        {
+            Ui.showOutput(e.getMessage());
+        }
     }
 }
