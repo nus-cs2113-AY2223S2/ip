@@ -23,10 +23,10 @@ public class Deadline extends Task {
 
     @Override
     public String toString() {
-        return "[D]" + super.getStatusIcon() + super.getDescription() ;
+        return "[D]" + super.getStatusIcon() + " " + super.getDescription() ;
     }
     @Override
     public String toFile() {
-        return this.getStatusIcon() + " : " +"D"+ " :" + this.description;
+        return this.getStatusIcon() + " : " +"D"+ " : " + this.description;
     }
 }

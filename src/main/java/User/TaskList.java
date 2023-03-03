@@ -78,6 +78,7 @@ public class TaskList {
         String[] userInputParts;
         userInput = userInput.replace("event","");
         userInputParts = userInput.split("/");
+        userInputParts[0] = userInputParts[0].replace(" ","");
         userInputParts[1] = userInputParts[1].replace("from ", "");
         userInputParts[2] = userInputParts[2].replace("to ", "");
         Event event = new Event(userInputParts[0], userInputParts[1], userInputParts[2]);
@@ -92,10 +93,11 @@ public class TaskList {
         String[] userInputParts;
         userInput = userInput.replace("deadline","");
         userInputParts = userInput.split("/");
+        userInputParts[0] = userInputParts[0].replace(" ","");
         userInputParts[1] = userInputParts[1].replace("by ", "");
         Deadline deadline = new Deadline(userInputParts[0], userInputParts[1]);
         taskList.add(deadline);
-        System.out.println(deadline.getSymbol() + deadline.getStatusIcon() + deadline.getDescription());
+        System.out.println(deadline.toString());
         System.out.println("Now you have " + taskList.size() + " tasks in the list. ");
         System.out.println(line);
     }
@@ -115,4 +117,28 @@ public class TaskList {
             System.out.println(line);
         }
     }
+
+    public static void find(String userInput) {
+        ArrayList<Task> findList = new ArrayList<Task>(100);
+        userInput = userInput.replace("find ", "");
+        for (Task item : taskList) {
+            if (item.getDescription().contains(userInput)) {
+                findList.add(item);
+            }
+        }
+        if (!findList.isEmpty()) {
+            System.out.println(line);
+            System.out.println("Here are the matching tasks in your list:");
+            for (Task item : findList) {
+                System.out.print((findList.indexOf(item) + 1) + ".");
+                System.out.println(item.toString());
+            }
+            System.out.println(line);
+        } else {
+            System.out.println("Use another keyword!");
+            System.out.println(line);
+        }
+    }
+
+
 }

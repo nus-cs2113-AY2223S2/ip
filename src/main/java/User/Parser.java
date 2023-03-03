@@ -30,6 +30,13 @@ public class Parser {
         case("help"):
             UI.printHelp();
             break;
+        case("find"):
+            if(!TaskList.taskList.isEmpty()) {
+                TaskList.find(userInput);
+            } else {
+                UI.listIsEmpty();
+            }
+            break;
         default:
             UI.invalidCommand();
             break;
