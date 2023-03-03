@@ -16,11 +16,13 @@ public class ReadFromFile {
     /**
      * This function determines the whether the task from a line in the text file is a ToDo, Deadline or Event and
      * calls the corresponding function to format the task accordingly.
+     * Case S is added to ignore the first line of the text file as it contains "Saved tasks" as its first line
+     * during the initialisation phase.
      *
      * @param line  String from text file
      * @param tasks ArrayList of tasks to store the task objects
      */
-    public static void copyToArrayList(String line, ArrayList<Task> tasks) {
+    public void copyToArrayList(String line, ArrayList<Task> tasks) {
         switch (line.substring(0, 1)) {
         case "T":
             copyTodoToArrayList(line.substring(2), tasks);
@@ -48,7 +50,7 @@ public class ReadFromFile {
      * @param taskInfo Task description
      * @param tasks    ArrayList that stores task objects
      */
-    private static void copyTodoToArrayList(String taskInfo, ArrayList<Task> tasks) {
+    private void copyTodoToArrayList(String taskInfo, ArrayList<Task> tasks) {
         // Parse line to split task status and task info
         String[] messageComponents = taskInfo.split("/", 2);
         // Create new todo with task info
@@ -71,7 +73,7 @@ public class ReadFromFile {
      * @param taskInfo Task description
      * @param tasks    ArrayList that stores task objects
      */
-    private static void copyDeadlineToArrayList(String taskInfo, ArrayList<Task> tasks) {
+    private void copyDeadlineToArrayList(String taskInfo, ArrayList<Task> tasks) {
         String[] messageComponents = taskInfo.split("/", 3);
         Deadline newDeadline = new Deadline(messageComponents[1], messageComponents[2]);
         tasks.add(newDeadline);
@@ -90,7 +92,7 @@ public class ReadFromFile {
      * @param taskInfo Task description
      * @param tasks    ArrayList that stores task objects
      */
-    private static void copyEventToArrayList(String taskInfo, ArrayList<Task> tasks) {
+    private void copyEventToArrayList(String taskInfo, ArrayList<Task> tasks) {
         String[] messageComponents = taskInfo.split("/", 4);
         Event newEvent = new Event(messageComponents[1], messageComponents[2], messageComponents[3]);
         tasks.add(newEvent);

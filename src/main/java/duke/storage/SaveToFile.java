@@ -22,7 +22,7 @@ public class SaveToFile {
      * @param tasks    ArrayList to store Task objects
      * @param filePath Location of the text file that is used to store the tasks
      */
-    public static void initialiseWritingToFile(ArrayList<Task> tasks, String filePath) {
+    public void initialiseWritingToFile(ArrayList<Task> tasks, String filePath) {
         try {
             FileWriter fw = new FileWriter(filePath);
             fw.write("Saved tasks: " + System.lineSeparator());
@@ -46,7 +46,7 @@ public class SaveToFile {
      * @param tasks    ArrayList to store Task objects
      * @throws IOException if file is not found
      */
-    private static void writeTasksToFile(FileWriter fwAppend, ArrayList<Task> tasks) throws IOException {
+    private void writeTasksToFile(FileWriter fwAppend, ArrayList<Task> tasks) throws IOException {
         int totalNumberOfTasks = tasks.size();
         for (int index = 0; index < totalNumberOfTasks; index += 1) {
             Task currentTask = tasks.get(index);
@@ -70,7 +70,7 @@ public class SaveToFile {
      * @param taskInfo    Task description
      * @throws IOException If fwAppend.write encounters an error
      */
-    private static void writeSpecificTaskToFile(FileWriter fwAppend, String taskType, Task currentTask,
+    private void writeSpecificTaskToFile(FileWriter fwAppend, String taskType, Task currentTask,
                                                 int isTaskDone, String taskInfo) throws IOException {
         switch (taskType) {
         case "T":
