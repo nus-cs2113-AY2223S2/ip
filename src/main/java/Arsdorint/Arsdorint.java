@@ -41,7 +41,7 @@ public class Arsdorint {
             command = new TaskParser().parsedCommand(userCommandText);
             CommandRes res = executeCommand(command);
             UI.showResToUser(res);
-            UI.showToUser(Storage.save());
+            Storage.save();
         } while (!CommandExit.isExit(command));
     }
     private CommandRes executeCommand(Command command) {

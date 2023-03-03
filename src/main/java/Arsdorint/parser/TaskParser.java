@@ -48,6 +48,9 @@ public class TaskParser {
         else if (lowerCaseLine.equalsIgnoreCase("event")) {
             return addEvent(arguments);
         }
+        else if (lowerCaseLine.equalsIgnoreCase("find")) {
+            return addFind(arguments);
+        }
         //add command when user don't type the instruction's Arsdorint.command
         else if (lowerCaseLine.equalsIgnoreCase("delete")) {
             return delete(arguments);
@@ -156,6 +159,17 @@ public class TaskParser {
             return new CommandDate(LocalDate.parse(taskDescription));
         } catch (DateTimeParseException err) {
             return new CommandWrong(CommandDate.SYNTAX);
+        }
+    }
+
+    public Command addFind(String taskDescription) {
+        try {
+            if (taskDescription.equals("")) {
+                throw new ArsdorintException();
+            }
+            return new CommandFind(taskDescription);
+        } catch (ArsdorintException err) {
+            return new CommandWrong(CommandFind.SYNTAX);
         }
     }
 

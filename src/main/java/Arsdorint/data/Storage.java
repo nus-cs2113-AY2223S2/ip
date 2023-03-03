@@ -16,7 +16,7 @@ public class Storage {
     public Storage() {
     }
     public static final String STORAGE_DIRECTORY = "./storage";
-    public static final String STORAGE_FILE_NAME = "./storage/ArsdorintTask.txt";
+    public static final String STORAGE_FILE_NAME = "./storage/arsdorintTask.txt";
     public static String[] save() {
         try {
             FileWriter fileWriter = new FileWriter(STORAGE_FILE_NAME);
