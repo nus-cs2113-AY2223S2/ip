@@ -22,10 +22,12 @@ public class AddCommand extends Command{
     @Override
     public void execute(TasksList tasksList, Ui ui, Storage storage) throws SherlockException {
 
-        tasksList.addTask(new Task(this.name, false));
+        Task task = new Task(this.name, false);
+
+        tasksList.addTask(task);
 
         storage.writeToFile(tasksList);
 
-        ui.printLines("added: " + this.name);
+        ui.printAddedTask(task, tasksList);
     }
 }

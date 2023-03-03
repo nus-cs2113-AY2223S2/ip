@@ -1,6 +1,7 @@
 package commands;
 
 import data.TasksList;
+import data.exceptions.SherlockException;
 import storage.Storage;
 import tasks.Task;
 import ui.Ui;
@@ -21,17 +22,9 @@ public class FindCommand extends Command {
     }
 
     @Override
-    public void execute(TasksList tasksList, Ui ui, Storage storage) {
+    public void execute(TasksList tasksList, Ui ui, Storage storage) throws SherlockException {
         String successMessage = "Here are the matching tasks in your list:\n";
-        ArrayList<Task> tasks = tasksList.getTasks();
-        TasksList result = new TasksList();
-
-        for (Task task : tasks) {
-            String name = task.getName();
-            if (name.contains(term)) {
-                result.addTask(task);
-            }
-        }
+        TasksList result = tasksList.findTasks(term);
 
         if (result.getTasksCount() > 0) {
             ui.printLines(successMessage + result.toString());
