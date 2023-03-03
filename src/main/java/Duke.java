@@ -105,11 +105,10 @@ public class Duke {
                 break;
 
             case "find":
-                System.out.println("    Please specify keyword: ");
-                inputString = getInputString();
+                String keyword = task;
                 for (int i = 0; i < tasks.size(); i++) {
-                    String task = tasks.get(i).getDescription();
-                    if (task.contains(inputString)) {
+                    String taskDescription = tasks.get(i).getDescription();
+                    if (taskDescription.contains(task)) {
                         tasks.get(i).printInList();
                     }
                 }

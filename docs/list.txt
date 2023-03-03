@@ -1,0 +1,3 @@
+todo hello
+deadline hello/4pm
+event hello/4pm|6pm
