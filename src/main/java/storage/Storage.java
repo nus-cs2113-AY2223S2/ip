@@ -20,6 +20,11 @@ import java.util.Scanner;
 public class Storage {
 
     private static final String SEPARATOR = " I:I ";
+    public static final String DIRECTORY_CREATED = "\nDirectory for file saving created.";
+    public static final String DIRECTORY_EXISTS = "\nDirectory for file saving already exists.";
+    public static final String FILE_CREATED = "Save file created.";
+    public static final String FILE_EXISTS = "Save file already exists.";
+    public static final String FILE_PARSING_ERROR = "The task does not meet the parsing requirements for unpacking.";
     private static String filePath;
 
     /**
@@ -38,17 +43,17 @@ public class Storage {
      * @throws IOException if an I/O error has occurred.
      */
     public static void createSavedFile() throws IOException {
-        File f = new File(filePath); // filePath == "data/taskList.txt"
+        File f = new File(filePath);
         File directory = new File("data");
         if (directory.mkdir()) {
-            System.out.println("\nDirectory for file saving created.");
+            System.out.println(DIRECTORY_CREATED);
         } else {
-            System.out.println("\nDirectory for file saving already exists.");
+            System.out.println(DIRECTORY_EXISTS);
         }
         if (f.createNewFile()) {
-            System.out.println("Save file created.");
+            System.out.println(FILE_CREATED);
         } else {
-            System.out.println("Save file already exists.");
+            System.out.println(FILE_EXISTS);
         }
         System.out.println();
     }
@@ -122,7 +127,7 @@ public class Storage {
             task = new Event(parsed[3], parsed[4], parsed[5]);
             break;
         default:
-            throw new FileParseReadingException("The task does not meet the parsing requirements for unpacking.");
+            throw new FileParseReadingException(FILE_PARSING_ERROR);
         }
         if (parsed[2].equals("0")) {
             task.markAsUndone();
@@ -138,8 +143,8 @@ public class Storage {
      * @throws FileNotFoundException if <code>filePath</code> not found or saved file does not exist.
      */
     public static void showFileContents() throws FileNotFoundException {
-        File f = new File(filePath); // create a File for the given file path
-        Scanner s = new Scanner(f); // create a Scanner using the File as the source
+        File f = new File(filePath);
+        Scanner s = new Scanner(f);
         System.out.println();
         while (s.hasNext()) {
             System.out.println(s.nextLine());
@@ -159,10 +164,10 @@ public class Storage {
     public static TaskList readFileContents() throws FileNotFoundException, FileParseReadingException {
         ArrayList<Task> list = new ArrayList<>();
         Task tempTask;
-        File f = new File(filePath); // create a File for the given file path
-        Scanner s = new Scanner(f); // create a Scanner using the File as the source
+        File f = new File(filePath);
+        Scanner s = new Scanner(f);
         if (s.hasNext()) {
-            s.nextLine(); // to filter out the title of the file
+            s.nextLine();
         }
         while (s.hasNext()) {
             tempTask = decodeTaskFromStrings(s.nextLine());

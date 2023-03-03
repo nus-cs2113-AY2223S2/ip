@@ -9,6 +9,15 @@ import command.CommandType;
  * and description.
  */
 public class Parser {
+
+    public static final String DEADLINE_MISSING_DESCRIPTION_BY = "Deadline is missing the \"DESCRIPTION\" or \"BY\"!\n";
+    public static final String DEADLINE_MISSING_DESCRIPTION = "Deadline is missing \"DESCRIPTION\"!\n";
+    public static final String DEADLINE_MISSING_BY = "Deadline is missing \"BY\"!\n";
+    public static final String EVENT_MISSING_DESCRIPTION_FROM_TO = "Event is missing the \"DESCRIPTION\" or \"FROM\" or \"TO\"!\n";
+    public static final String EVENT_MISSING_DESCRIPTION = "Event is missing \"DESCRIPTION\"!\n";
+    public static final String EVENT_MISSING_FROM = "Event is missing \"FROM\"!\n";
+    public static final String EVENT_MISSING_TO = "Event is missing \"TO\"!\n";
+
     /**
      * Returns a <code>Command</code> type which contains the command to be
      * executed and its full description to support its execution. It takes
@@ -75,13 +84,13 @@ public class Parser {
     public static String[] parseDeadline(String description) throws IncompleteInputException {
         String[] parsed = description.split(" /by ");
         if (parsed.length < 2) {
-            throw new IncompleteInputException("Deadline is missing the \"DESCRIPTION\" or \"BY\"!\n");
+            throw new IncompleteInputException(DEADLINE_MISSING_DESCRIPTION_BY);
         }
         if (parsed[0].isEmpty()) {
-            throw new IncompleteInputException("Deadline is missing \"DESCRIPTION\"!\n");
+            throw new IncompleteInputException(DEADLINE_MISSING_DESCRIPTION);
         }
         if (parsed[1].isEmpty()) {
-            throw new IncompleteInputException("Deadline is missing \"BY\"!\n");
+            throw new IncompleteInputException(DEADLINE_MISSING_BY);
         }
         return parsed;
     }
@@ -98,18 +107,18 @@ public class Parser {
     public static String[] parseEvent(String description) throws IncompleteInputException {
         String[] parsed = description.split(" /", 3);
         if (parsed.length < 3) {
-            throw new IncompleteInputException("Event is missing the \"DESCRIPTION\" or \"FROM\" or \"TO\"!\n");
+            throw new IncompleteInputException(EVENT_MISSING_DESCRIPTION_FROM_TO);
         }
         if (parsed[0].isEmpty()) {
-            throw new IncompleteInputException("Event is missing \"DESCRIPTION\"!\n");
+            throw new IncompleteInputException(EVENT_MISSING_DESCRIPTION);
         }
         parsed[1] = parsed[1].substring(5);
         if (parsed[1].isEmpty()) {
-            throw new IncompleteInputException("Event is missing \"FROM\"!\n");
+            throw new IncompleteInputException(EVENT_MISSING_FROM);
         }
         parsed[2] = parsed[2].substring(3);
         if (parsed[2].isEmpty()) {
-            throw new IncompleteInputException("Event is missing \"TO\"!\n");
+            throw new IncompleteInputException(EVENT_MISSING_TO);
         }
         return parsed;
     }

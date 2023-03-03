@@ -74,7 +74,12 @@ public class Ui {
     private final static String BYE_MESSAGE = "\nBye. Hope to see you again soon!\n";
     private final static String EMPTY_LIST_MESSAGE = "\nMATE! Your list is empty!\n";
     private final static String NO_MATCHING_FIND_RESULTS_MESSAGE = "\nSeems like you do not have any tasks matching: ";
-
+    public static final String CREATING_NEW_FILE_AND_DIRECTORY = "\nNew file and directory will be created.";
+    public static final String MARKED_TASK_AS_DONE = "\nNice! I've marked this task as done:";
+    public static final String MARKED_TASK_AS_NOT_DONE = "\nOK, I've marked this task as not done yet:";
+    public static final String ALREADY_MARKED_DONE = "\nTask is originally marked as done.\n";
+    public static final String ALREADY_MARKED_NOT_DONE = "\nTask is originally marked as not done.\n";
+    public static final String FIND_LIST_MESSAGE = "\nHere are the matching tasks in your list:\n";
     private final static String DUDE_MAIN_ERROR = "\nError in my run method!"
                                                 + "\nException occurred : ";
     private final static String UNRECOGNIZABLE_ERROR = "\nOOPS!!! I'm sorry, but I don't know what that means"
@@ -123,7 +128,7 @@ public class Ui {
             System.out.println(NO_MATCHING_FIND_RESULTS_MESSAGE + keywords + '\n');
             return;
         }
-        System.out.println("\nHere are the matching tasks in your list:\n");
+        System.out.println(FIND_LIST_MESSAGE);
         int i = 1;
         for (Task t : list) {
             System.out.println(i + ". " + t.toString());
@@ -147,15 +152,15 @@ public class Ui {
     public static void showMarkTask(boolean isChanged, Task task, CommandType command) {
         if (!isChanged) {
             if (command == CommandType.MARK) {
-                System.out.println('\n' + "Task is originally marked as done." + '\n');
+                System.out.println(ALREADY_MARKED_DONE);
             } else  {
-                System.out.println('\n' + "Task is originally marked as not done." + '\n');
+                System.out.println(ALREADY_MARKED_NOT_DONE);
             }
         } else {
             if (command == CommandType.MARK) {
-                System.out.println('\n' + "Nice! I've marked this task as done:");
+                System.out.println(MARKED_TASK_AS_DONE);
             } else  {
-                System.out.println('\n' + "OK, I've marked this task as not done yet:");
+                System.out.println(MARKED_TASK_AS_NOT_DONE);
             }
             switch (task.getType()){
             case "T":
@@ -206,7 +211,7 @@ public class Ui {
     }
     public static void showLoadingErrorMessage(Exception e) {
         if (e instanceof FileNotFoundException) {
-            System.out.println(FILE_NOT_FOUND_ERROR + e + "\nNew file and directory will be created.");
+            System.out.println(FILE_NOT_FOUND_ERROR + e + CREATING_NEW_FILE_AND_DIRECTORY);
         } else if (e instanceof FileParseReadingException) {
             System.out.println(FILE_PARSE_READING_ERROR + e);
         } else {

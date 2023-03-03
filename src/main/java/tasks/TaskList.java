@@ -1,8 +1,6 @@
 package tasks;
 
 import exceptions.TaskListEmptyError;
-
-import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -58,7 +56,7 @@ public class TaskList {
 
     /**
      * Adds a new task to the <code>taskList</code> and
-     * increases the number of tasks for <code>currentTaskNumber</code>
+     * increases the number of tasks for <code>currentTaskNumber</code>.
      *
      * @param task task to be added to the list.
      */
@@ -69,7 +67,7 @@ public class TaskList {
 
     /**
      * Removes a new task from the <code>taskList</code> and
-     * decreases the number of tasks for <code>currentTaskNumber</code>
+     * decreases the number of tasks for <code>currentTaskNumber</code>.
      *
      * @param index the index of the task to be removed from the list.
      * @throws TaskListEmptyError if <code>taskList</code> is empty.
@@ -83,9 +81,9 @@ public class TaskList {
     }
 
     /**
-     * Returns the latest added task from the <code>taskList</code> and
+     * Returns the latest added task from the <code>taskList</code>.
      *
-     * @return the latest task added tp the <code>taskList</code>
+     * @return the latest task added tp the <code>taskList</code>.
      */
     public Task getNewestTask() {
         return tasksList.get(currTaskNumber - 1);
