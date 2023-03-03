@@ -1,6 +1,6 @@
 # Duke project template
-
-This is a project template for a greenfield Java project. It's named after the Java mascot _Duke_. Given below are instructions on how to use it.
+Welcome! This is a User Guide for the task tracker Duke!
+It's named after the Java mascot _Duke_. Given below are instructions on how to use it.
 
 ## Setting up in Intellij
 
@@ -22,3 +22,25 @@ Prerequisites: JDK 11, update Intellij to the most recent version.
    | |_| | |_| |   <  __/
    |____/ \__,_|_|\_\___|
    ```
+
+## Commands
+
+1. list - To see the user's current list of tasks
+2. todo <task> - Simply adds a task to be done
+3. deadline <task> /by <deadline of task> - Adds a task with a specific deadline.
+4. event <task> /from <start time of event> /to <end time of event> - Adds an event with a start and end time
+5. mark <task number> - To mark a task as done.
+6. unmark <task number> - To mark a task as not done. 
+7. delete <task number> - To delete a task from the user's current list of tasks.
+8. bye - To terminate the program
+
+## Usage
+
+Example:  
+event do CS2113 individual project /from Monday 12pm /to Sunday 12pm
+
+Expected Outcome:  
+Got it. I've added this task:   
+[E][ ] do CS2113 individual project (From: Monday 12pm to Sunday 4pm)  
+Now you have 1 task(s) in the list. 
+
