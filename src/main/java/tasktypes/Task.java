@@ -3,7 +3,7 @@ package tasktypes;
 public class Task {
     protected String description;
     protected boolean isDone;
-
+    protected int listIndex;
     public Task(String description) {   //ok to leave as public?
         this.description = description;
         this.isDone = false;

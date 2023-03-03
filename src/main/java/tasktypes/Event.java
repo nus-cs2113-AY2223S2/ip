@@ -1,6 +1,7 @@
 package tasktypes;
 
 public class Event extends Task{
+    public static final String TYPE_ICON = "E";
     String startDate, endDate;
     public Event(String description, String startDate, String endDate) {
         super(description);
@@ -9,7 +10,7 @@ public class Event extends Task{
     }
     @Override
     public String getTypeIcon() {
-        return "E";
+        return TYPE_ICON;
     }
 
     public String getStartDate() {

@@ -5,7 +5,6 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Ui {
-
     public static final String EXIT_MESSAGE = "Go away Anna\nO-kay bye......";
     static final int DESCRIPTION_INDEX = 1;
     public static final String STARTDATE_USERINPUT_PREFIX = "/from";
@@ -17,8 +16,9 @@ public class Ui {
     public static void exitMessage() {
         System.out.println(EXIT_MESSAGE);
     }
-    public static void welcomeMessage() {
+    public static void welcome() {
         System.out.println(WELCOME_MESSAGE);
+        System.out.println("You may load existing data using the load command");
     }
 
     public static String getItemDescription(String userInput) {
@@ -39,6 +39,7 @@ public class Ui {
         try {
             itemNumber = Integer.parseInt(userInput.split(" ", 2)[1]);
         } catch (ArrayIndexOutOfBoundsException e) {
+            //TODO: change to updated UI code
             TaskList.viewList();
             System.out.println("What is the number of the item in the list?");
             try {
@@ -68,23 +69,55 @@ public class Ui {
         }
         return dueDate;
     }
-    public static String[] getStartEndDates(String userInput) {
-        Scanner in = new Scanner(System.in);
-        String[] StartEndDates = new String[2];
 
+    public static int getStartMarkerIndex(String userInput) {
         if (userInput.contains(STARTDATE_USERINPUT_PREFIX)) {
-            StartEndDates[STARTDATE_INDEX] = userInput.substring(userInput.indexOf(STARTDATE_USERINPUT_PREFIX),userInput.indexOf(ENDDATE_USERINPUT_PREFIX)).trim();
+            return userInput.indexOf(STARTDATE_USERINPUT_PREFIX);
         } else {
-            System.out.println("When does this event start?");
-            StartEndDates[STARTDATE_INDEX] = in.nextLine().trim();
+            return -99;
         }
-
+    }
+    public static int getEndMarkerIndex(String userInput) {
         if (userInput.contains(ENDDATE_USERINPUT_PREFIX)) {
-            StartEndDates[ENDDATE_INDEX] = userInput.substring(userInput.indexOf(ENDDATE_USERINPUT_PREFIX)).trim();
+            return userInput.indexOf(ENDDATE_USERINPUT_PREFIX);
         } else {
-            System.out.println("When does this event end?");
-            StartEndDates[ENDDATE_INDEX] = in.nextLine().trim();
+            return -99;
         }
+    }
+    public static String getStartDate(String userInput) {
+        Scanner in = new Scanner (System.in);
+        int startMarkerIndex = getStartMarkerIndex(userInput);
+        int endMarkerIndex = getEndMarkerIndex(userInput);
+        if (startMarkerIndex == -99) {
+            System.out.println("When does this event start?");
+            return in.nextLine().trim();
+        } else {
+            if (endMarkerIndex == -99) {
+                return userInput.substring(startMarkerIndex + 1);
+            } else {
+                return userInput.substring(startMarkerIndex + 1,endMarkerIndex);
+            }
+        }
+    }
+    public static String getEndDate(String userInput) {
+        Scanner in = new Scanner (System.in);
+        int startMarkerIndex = getStartMarkerIndex(userInput);
+        int endMarkerIndex = getEndMarkerIndex(userInput);
+        if (endMarkerIndex == -99) {
+            System.out.println("When does this event end?");
+            return in.nextLine().trim();
+        } else {
+            if (startMarkerIndex > endMarkerIndex) {
+                return userInput.substring(endMarkerIndex + 1,startMarkerIndex);
+            } else {
+                return userInput.substring(endMarkerIndex + 1);
+            }
+        }
+    }
+    public static String[] getStartEndDates(String userInput) {
+        String[] StartEndDates = new String[2];
+        StartEndDates[STARTDATE_INDEX] = getStartDate(userInput);
+        StartEndDates[ENDDATE_INDEX] = getEndDate(userInput);
         return StartEndDates;
     }
 
