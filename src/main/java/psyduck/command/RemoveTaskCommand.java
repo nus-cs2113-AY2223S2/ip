@@ -13,23 +13,21 @@ public class RemoveTaskCommand extends Command{
     /**
      * Executes the command to remove a specific task from the list.
      *
-     * @param input the string array containing the target position of the
-     *              task to be removed.
+     * @param input the string input from the user.
      * @param tasks the array list which the task is being removed.
      * @param ui the user interface which interacts with the user.
      */
     @Override
-    public void executeCommand(String[] input, TaskList tasks, Ui ui) {
+    public void executeCommand(String input, TaskList tasks, Ui ui) {
         try {
-            int taskNum = Integer.parseInt(input[0]);
+            String format = parser.prepareRemove(input);
+            int taskNum = Integer.parseInt(format);
             Task temp = TaskList.getTask(taskNum);
             tasks.removeTask(taskNum);
             Ui.printTaskRemoved(temp, tasks);
         } catch (NullPointerException e) {
             ErrorMessage.printRemoveTaskErrorMessage();
-        } catch (NumberFormatException e) {
-            ErrorMessage.printRemoveTaskErrorMessage();
-        } catch (IndexOutOfBoundsException e) {
+        }  catch (IndexOutOfBoundsException e) {
             ErrorMessage.printRemoveTaskErrorMessage();
         }
     }

@@ -258,7 +258,7 @@ Here are the tasks currently in your list:
 2.[D][ ] Drink the juice in the fridge  (by: 19th February)
 3.[E][ ] Festival at Celadon City  (from: Monday  to: Saturday)
 4.[T][ ] Drink bubble tea
-5.[D][ ] drink 2l of water  (by: end of the day)
+5.[D][ ] Drink 2l of water  (by: end of the day)
 --------------------------------------------------------------------------------
 ```
 `find Drink`

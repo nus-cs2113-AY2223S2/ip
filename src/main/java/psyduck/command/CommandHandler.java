@@ -19,12 +19,11 @@ public class CommandHandler {
      *
      * @param input the string input from the user.
      * @param tasks the list containing the tasks.
-     * @param ui the user interface that interacts with the user.
+     * @param ui    the user interface that interacts with the user.
      */
     public void processCommands(String input, TaskList tasks, Ui ui) {
         String command = parser.prepareCommand(input);
         Command commandType;
-        String[] format;
         switch (command) {
         case "bye":
             //fallthrough
@@ -32,65 +31,38 @@ public class CommandHandler {
             canExit = true;
             break;
         case "find":
-            try {
-                format = parser.prepareFind(input);
-                commandType = new FindCommand();
-                commandType.executeCommand(format, tasks, ui);
-            } catch (EmptyFindException e) {
-                ErrorMessage.printEmptyFindMessage();
-            }
+            commandType = new FindCommand();
+            commandType.executeCommand(input, tasks, ui);
             break;
         case "list":
             commandType = new ListCommand();
             commandType.executeCommand(null, tasks, ui);
             break;
         case "mark":
-            format = parser.prepareMark(input);
             commandType = new MarkTaskCommand();
-            commandType.executeCommand(format, tasks, ui);
+            commandType.executeCommand(input, tasks, ui);
             break;
         case "unmark":
-            format = parser.prepareUnmark(input);
             commandType = new UnmarkTaskCommand();
-            commandType.executeCommand(format, tasks, ui);
+            commandType.executeCommand(input, tasks, ui);
             break;
         case "delete":
             //fallthrough
         case "remove":
-            format = parser.prepareRemove(input);
             commandType = new RemoveTaskCommand();
-            commandType.executeCommand(format, tasks, ui);
+            commandType.executeCommand(input, tasks, ui);
             break;
         case "todo":
-            try {
-                format = parser.prepareToDo(input);
-                commandType = new AddToDoCommand();
-                commandType.executeCommand(format, tasks, ui);
-            } catch (TaskEmptyException e) {
-                ErrorMessage.printTaskEmptyMessage();
-            }
+            commandType = new AddToDoCommand();
+            commandType.executeCommand(input, tasks, ui);
             break;
         case "deadline":
-            try {
-                format = parser.prepareDeadline(input);
-                commandType = new AddDeadlineCommand();
-                commandType.executeCommand(format, tasks, ui);
-            } catch (TaskEmptyException e) {
-                ErrorMessage.printTaskEmptyMessage();
-            } catch (InvalidDeadlineFormatException e) {
-                ErrorMessage.printInvalidDeadlineFormatMessage();
-            }
+            commandType = new AddDeadlineCommand();
+            commandType.executeCommand(input, tasks, ui);
             break;
         case "event":
-            try {
-                format = parser.prepareEvent(input);
-                commandType = new AddEventCommand();
-                commandType.executeCommand(format, tasks, ui);
-            } catch (TaskEmptyException e) {
-                ErrorMessage.printTaskEmptyMessage();
-            } catch (InvalidEventFormatException e) {
-                ErrorMessage.printInvalidEventFormatMessage();
-            }
+            commandType = new AddEventCommand();
+            commandType.executeCommand(input, tasks, ui);
             break;
         default:
             ErrorMessage.printInvalidCommandMessage();

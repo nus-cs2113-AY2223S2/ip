@@ -1,6 +1,7 @@
 package psyduck.parser;
 
 import psyduck.exceptions.*;
+import psyduck.ui.ErrorMessage;
 
 import java.util.Scanner;
 
@@ -34,7 +35,7 @@ public class Parser {
      *
      * @param input The string input from the user
      * @return the string array containing the strings required to create a deadline.
-     * @throws TaskEmptyException thrown when the input string does not contain a description.
+     * @throws TaskEmptyException             thrown when the input string does not contain a description.
      * @throws InvalidDeadlineFormatException thrown when the input string does not contain a deadline.
      */
     public String[] prepareDeadline(String input) throws
@@ -62,7 +63,7 @@ public class Parser {
      *
      * @param input The string input from the user
      * @return the string array containing the strings required to create an event.
-     * @throws TaskEmptyException thrown when the input string does not contain a description.
+     * @throws TaskEmptyException          thrown when the input string does not contain a description.
      * @throws InvalidEventFormatException thrown when the input string does not contain a from string or to string
      */
     public String[] prepareEvent(String input) throws
@@ -88,82 +89,106 @@ public class Parser {
     }
 
     /**
-     * Parses the string input to return the string array containing the strings required
-     * to create a todo task.
+     * Parses the string input to return the string required to create a to-do task.
      *
      * @param input the string input from the user
-     * @return the string array containing the strings required to create a todo task.
+     * @return the string containing the description required to create a to-do task.
      * @throws TaskEmptyException thrown when the input string does not contain a description.
      */
-    public String[] prepareToDo(String input) throws TaskEmptyException {
+    public String prepareToDo(String input) throws TaskEmptyException {
         input = input.trim();
         int space = input.indexOf(" ");
         if (space == NOT_FOUND) {
             throw new TaskEmptyException();
         }
         String description = input.substring(space + 1);
-        String[] output = new String[1];
-        output[0] = description;
-        return output;
+        return description;
     }
 
     /**
-     * Parses the string input to return the string array containing the strings required
+     * Parses the string input to return the string containing the task number required
      * to remove a task.
      *
      * @param input the string input from the user.
-     * @return the string array containing the strings required to remove a task.
+     * @return the string containing the task number required to remove a task.
      */
-    public String[] prepareRemove(String input) {
+    public String prepareRemove(String input) {
         input = input.trim();
         int space = input.indexOf(" ");
-        int taskNum = Integer.parseInt(input.substring(space + 1));
-        String[] output = new String[1];
-        output[0] = Integer.toString(taskNum);
+        int taskNum = 0;
+        try {
+            taskNum = Integer.parseInt(input.substring(space + 1));
+        } catch (NumberFormatException e) {
+            /*
+              left empty as this will cause the task number to be returned as 0,
+              which is invalid, and will throw IndexOutOfBoundsException due to
+              the nature of how TaskList manages the removal. The same error
+              message is returned as IndexOutOfBoundsException.
+             */
+        }
+        String output = Integer.toString(taskNum);
         return output;
     }
 
     /**
-     * Parses the string input to return the string array containing the strings required
+     * Parses the string input to return the string containing the task number required
      * to mark a task.
      *
      * @param input the string input from the user
-     * @return the string array containing the strings required to mark a task.
+     * @return the string containing the task number required to mark a task.
      */
-    public String[] prepareMark(String input) {
+    public String prepareMark(String input) {
         input = input.trim();
         int space = input.indexOf(" ");
-        int taskNum = Integer.parseInt(input.substring(space + 1));
-        String[] output = new String[1];
-        output[0] = Integer.toString(taskNum);
+        int taskNum = 0;
+        try {
+            taskNum = Integer.parseInt(input.substring(space + 1));
+        } catch (NumberFormatException e) {
+            /*
+              left empty as this will cause the task number to be returned as 0,
+              which is invalid, and will throw IndexOutOfBoundsException due to
+              the nature of how TaskList manages the removal. The same error
+              message is returned as IndexOutOfBoundsException.
+             */
+        }
+        String output = Integer.toString(taskNum);
         return output;
     }
 
     /**
-     * Parses the string input to return the string array containing the strings required
+     * Parses the string input to return the string containing the task number required
      * to unmark a task.
      *
      * @param input the string input from the user
-     * @return the string array containing the strings required to unmark a task.
+     * @return the string containing the task number required to unmark a task.
      */
-    public String[] prepareUnmark(String input) {
+    public String prepareUnmark(String input) {
         input = input.trim();
         int space = input.indexOf(" ");
-        int taskNum = Integer.parseInt(input.substring(space + 1));
-        String[] output = new String[1];
-        output[0] = Integer.toString(taskNum);
+        int taskNum = 0;
+        try {
+            taskNum = Integer.parseInt(input.substring(space + 1));
+        } catch (NumberFormatException e) {
+            /*
+              left empty as this will cause the task number to be returned as 0,
+              which is invalid, and will throw IndexOutOfBoundsException due to
+              the nature of how TaskList manages the removal. The same error
+              message is returned as IndexOutOfBoundsException.
+             */
+        }
+        String output = Integer.toString(taskNum);
         return output;
     }
 
     /**
-     * Parses the string input to return the string array containing the strings required
-     * to find all tasks related to a keyword string.
+     * Parses the string input to return the string containing the keyword
+     * to find all tasks related to the keyword string.
      *
      * @param input the string input from the user.
-     * @return the string array containing the keyword .
+     * @return the string containing the keyword .
      * @throws EmptyFindException thrown when the input string does not contain a keyword.
      */
-    public String[] prepareFind(String input) throws EmptyFindException {
+    public String prepareFind(String input) throws EmptyFindException {
         input = input.trim();
         int space = input.indexOf(" ");
         if (space == NOT_FOUND) {
@@ -171,8 +196,6 @@ public class Parser {
         }
         String description = input.substring(space + 1);
         description = description.trim();
-        String[] output = new String[1];
-        output[0] = description;
-        return output;
+        return description;
     }
 }
