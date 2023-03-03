@@ -2,15 +2,38 @@ package duke;
 
 import java.util.Scanner;
 
+/*
+ * This class deals with user interaction
+ * displaying text and reading in text
+ * */
 public class Ui {
+    /*
+     * a constant used for readability
+     */
     private final String LINE_SPACING = "\t____________________________________________________________";
+    /*
+     * A scanner for reading in user input
+     */
     private Scanner scan;
+
+    /*
+     * Initialized the scanner in the constructor for user input
+     *
+     */
     public Ui() {
         scan = new Scanner(System.in);
     }
+
+    /*
+     * Displays the line constant in the console
+     */
     public void showLine() {
         System.out.println(LINE_SPACING);
     }
+
+    /*
+     * Displays the intro message in a formatted way
+     */
     public void greetUser() {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -25,16 +48,12 @@ public class Ui {
         System.out.println(LINE_SPACING);
     }
 
+    /*
+     * reads in input
+     * @returns String of user input
+     */
     public String readCommand() {
         String input = scan.nextLine();
         return input;
-    }
-
-    public void showError(String message) {
-
-    }
-
-    public void showLoadingError() {
-
     }
 }

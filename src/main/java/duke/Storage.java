@@ -15,18 +15,32 @@ import java.util.ArrayList;
 
 public class Storage {
 
-
+    /**
+     * Constructor for Storage class.
+     * Reads file and populates TaskList object.
+     *
+     * @param tasks The TaskList object to be populated from the file.
+     */
     public Storage(TaskList tasks) {
         readFile(tasks);
     }
 
-
+    /**
+     * Writes the tasks in the TaskList object to a file.
+     *
+     * @param tasks The TaskList object to be written to a file.
+     */
     public static void saveTasks(TaskList tasks) {
         Ui ui = new Ui();
         ui.showLine();
         Storage.writeFile(tasks);
     }
 
+    /**
+     * Writes the given TaskList object to a file.
+     *
+     * @param tasks The TaskList object to be written to a file.
+     */
     public static void writeFile(TaskList tasks) {
         try {
             FileWriter myWriter = new FileWriter("./data/duke.txt");
@@ -59,35 +73,34 @@ public class Storage {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Reads from the file and populates the TaskList object.
+     *
+     * @param tasks The TaskList object to be populated from the file.
+     */
     public static void readFile(TaskList tasks) {
         try {
             ArrayList<String> tmpStrTasks = new ArrayList<>();
             tmpStrTasks = (ArrayList<String>) Files.readAllLines(Paths.get("./data/duke.txt"), StandardCharsets.UTF_8);
-
             for (int i = 0; i < tmpStrTasks.size(); i++) {
                 String[] strTask = tmpStrTasks.get(i).split("SplitFactString");
-
                 boolean isMark = false;
                 if (tmpStrTasks.get(i).contains("[X]")) {
                     isMark = true;
                 }
                 switch (strTask[0]) {
-                    case "todo":
-                        Todo todo = new Todo(strTask[1], isMark);
-                        tasks.add(todo);
-
-//                        insertTodo("todo " + newTask.substring(7), isMark);
-                        break;
-                    case "deadline":
-                        Deadline dL = new Deadline(strTask[1], isMark, strTask[3]);
-                        tasks.add(dL);
-//                        insertDeadline("deadline " + newTask.substring(7), isMark);
-                        break;
-                    case "event":
-
-                        Event event = new Event(strTask[1], isMark, strTask[3], strTask[4]);
-//                        insertEvent("event " + newTask.substring(7), isMark);
-                        break;
+                case "todo":
+                    Todo todo = new Todo(strTask[1], isMark);
+                    tasks.add(todo);
+                    break;
+                case "deadline":
+                    Deadline dL = new Deadline(strTask[1], isMark, strTask[3]);
+                    tasks.add(dL);
+                    break;
+                case "event":
+                    Event event = new Event(strTask[1], isMark, strTask[3], strTask[4]);
+                    break;
                 }
             }
         } catch (IOException | DukeException ioe) {
