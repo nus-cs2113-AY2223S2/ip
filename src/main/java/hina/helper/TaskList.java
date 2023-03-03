@@ -11,18 +11,38 @@ import java.util.ArrayList;
 
 public class TaskList {
     private static ArrayList<Task> taskList;
+
+    /**
+     * Specifies the date-time format to be used.
+     */
     public static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MMM-yyyy HH:mm");
+
+    /**
+     * Class constructor with a <code>taskList</code> initialised with the <code>Task</code> elements of
+     * another <code>ArrayList</code>.
+     *
+     * @param savedList the list from which elements are initialised.
+     */
     public TaskList(ArrayList<Task> savedList) {
         taskList = savedList;
     }
 
+    /**
+     * Returns an <code>ArrayList</code> containing the <code>Task</code> elements currently stored in
+     * the <code>taskList</code>.
+     *
+     * @return the <code>ArrayList</code> of <code>Task</code> objects.
+     */
     public static ArrayList<Task> getTaskList() {
         return taskList;
     }
 
+    /**
+     * Prints line-by-line the data of the <code>Task</code> objects stored in the <code>taskList</code>.
+     */
     public static void listTasks() {
         if (taskList.size() == 0) {
-            System.out.println("There are no items on the list :o");
+            Ui.emptyListMessage();
         }
         for (Task task : taskList) {
             int i = taskList.indexOf(task);
@@ -31,16 +51,32 @@ public class TaskList {
             System.out.println(task.toString());
         }
     }
+
+    /**
+     * Prints the number of elements in the <code>taskList</code>.
+     */
     public static void getTaskCount() {
         System.out.printf("There are %d items on your list.\n", taskList.size());
     }
+
+    /**
+     * Adds a <code>Task</code> object to the <code>taskList</code>.
+     *
+     * @param description the description of the <code>Task</code>.
+     */
     public static void addTask(String description) {
         Task newTask = new Task(description);
         taskList.add(newTask);
-        System.out.println("Noted! This task has been added:");
-        System.out.println(newTask.toString());
+        Ui.taskAdded(newTask);
         getTaskCount();
     }
+
+    /**
+     * Adds a <code>Deadline</code> object to the <code>taskList</code>.
+     *
+     * @param deadline a <code>String</code> specifying the description of the <code>Deadline</code> and
+     *                 the do-by date and time.
+     */
     public static void addDeadline(String deadline) {
         String[] details = deadline.split("/by");
         if (details.length < 2) {
@@ -50,8 +86,7 @@ public class TaskList {
                 LocalDateTime by = LocalDateTime.parse(details[1].trim(), formatter);
                 Deadline newDeadline = new Deadline(details[0], by);
                 taskList.add(newDeadline);
-                System.out.println("Noted! This task has been added:");
-                System.out.println(newDeadline);
+                Ui.taskAdded(newDeadline);
                 getTaskCount();
 
             } catch (DateTimeException exception) {
@@ -59,6 +94,13 @@ public class TaskList {
             }
         }
     }
+
+    /**
+     * Adds an <code>Event</code> object to the <code>taskList</code>.
+     *
+     * @param event a <code>String</code> specifying the description of the <code>Event</code> and
+     *              the start and end time.
+     */
     public static void addEvent(String event) {
         String[] details = event.split("/from");
         if (details.length < 2) {
@@ -72,8 +114,7 @@ public class TaskList {
                     LocalDateTime to = LocalDateTime.parse(details[1].split("/to")[1].trim(), formatter);
                     Event newEvent = new Event(details[0], from, to);
                     taskList.add(newEvent);
-                    System.out.println("Noted! This task has been added:");
-                    System.out.println(newEvent);
+                    Ui.taskAdded(newEvent);
                     getTaskCount();
 
                 } catch (DateTimeException exception) {
@@ -99,6 +140,15 @@ public class TaskList {
         System.out.println("Roger that! This task is marked as not done: ");
         System.out.println(taskList.get(taskIndex - 1).toString());
     }
+
+    /**
+     * Determines, ignoring and trailing and leading whitespaces, if any of the
+     * <code>Task</code> descriptions contain the exact query substring. Prints
+     * the <code>Task</code> data of those that do and prints a message if none are
+     * found.
+     *
+     * @param line the query substring.
+     */
     public static void findTask(String line) {
         String query = line.substring(4).trim();
         ArrayList<Task> matchList = new ArrayList<>();

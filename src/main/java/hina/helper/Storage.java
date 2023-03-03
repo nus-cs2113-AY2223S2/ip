@@ -17,15 +17,25 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Storage {
-
+    /**
+     * Class constructor.
+     */
     public Storage() {
     }
 
+    /**
+     * Returns an <code>ArrayList</code> containing <code>Task</code> objects from a .txt save file
+     * at a specified path on the hard disk.
+     *
+     * @param savePath relative path to the save file.
+     * @return the <code>ArrayList</code> of saved <code>Task</code> elements.
+     * @throws FileNotFoundException If the file could not be found at the specified path.
+     */
     public static ArrayList<Task> readSaveFile(String savePath) throws FileNotFoundException {
         ArrayList<Task> savedList = new ArrayList<>();
         File saveFile = new File(savePath);
         Scanner save = new Scanner(saveFile);
-        System.out.println("Saved list found, loading saved list...");
+        Ui.saveFound();
         while (save.hasNext()) {
             String line = save.nextLine();
             String[] taskDetails = line.split(" / ");
@@ -37,7 +47,8 @@ public class Storage {
                 break;
             case "D":
                 try {
-                    Deadline savedDeadline = new Deadline(taskDetails[2], LocalDateTime.parse(taskDetails[3], TaskList.formatter));
+                    Deadline savedDeadline = new Deadline(taskDetails[2],
+                            LocalDateTime.parse(taskDetails[3], TaskList.formatter));
                     savedDeadline.setDone(!taskDetails[1].equals("0"));
                     savedList.add(savedDeadline);
                 } catch (DateTimeParseException e) {
@@ -45,7 +56,8 @@ public class Storage {
                 }
                 break;
             case "E":
-                Event savedEvent = new Event(taskDetails[2], LocalDateTime.parse(taskDetails[3], TaskList.formatter), LocalDateTime.parse(taskDetails[4], TaskList.formatter));
+                Event savedEvent = new Event(taskDetails[2], LocalDateTime.parse(taskDetails[3], TaskList.formatter),
+                        LocalDateTime.parse(taskDetails[4], TaskList.formatter));
                 savedEvent.setDone(!taskDetails[1].equals("0"));
                 savedList.add(savedEvent);
                 break;
@@ -54,19 +66,32 @@ public class Storage {
         return savedList;
     }
 
+    /**
+     * Creates a new .txt file at the specified path. If the directory does not exist,
+     * creates a new one.
+     *
+     * @param savePath relative path to the new file.
+     * @param dataDir relative path to the new file's directory.
+     */
     public static void createSaveFile(String savePath, String dataDir) {
-        System.out.println("Save file not found! Creating new file...");
+        Ui.saveNotFound();
         File newFile = new File(savePath);
         try {
             Path dataPath = Paths.get(dataDir);
             Files.createDirectory(dataPath);
             newFile.createNewFile();
-            System.out.println("Save file created!");
+            Ui.saveCreated();
         } catch (IOException ioException) {
-            System.out.println("T.T Ahh! Something went wrong, could not create file!");
+            Ui.fileCreateError();
         }
     }
 
+    /**
+     * Prints all the formatted <code>Task</code> objects in the <code>TaskList</code> on separate lines
+     * into a .txt file on the hard disk.
+     *
+     * @throws IOException If the file could not be written to.
+     */
     public static void writeToFile() throws IOException {
         FileWriter saveFile = new FileWriter("data/savedlist.txt");
         for (Task taskToSave : TaskList.getTaskList()) {
