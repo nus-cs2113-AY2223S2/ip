@@ -138,7 +138,7 @@ public class Tasklist {
   public static void unmarkTask(int index) {
     try {
       listOfTasks.get(index - 1).markAsUnDone();
-      System.out.println("Nice! This task is completed");
+      System.out.println("Alright, this task has yet to be complete");
       System.out.println(listOfTasks.get(index - 1).toString());
     } catch (IndexOutOfBoundsException e) {
       System.out.println(":( There is an error (Index is out of bounds/negative)");
