@@ -9,6 +9,7 @@ public class Task {
     /**
      * Initialises a Task object.
      * Sets the initial value of the task as undone.
+     *
      * @param taskInfo Description of task
      * @param taskType Specifies the type of task
      */
