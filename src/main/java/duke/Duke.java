@@ -51,8 +51,8 @@ public class Duke {
         do {
             try {
                 input = scanner.nextLine();
-                Command command = inputParser.parseInput(input);
                 ui.printLine();
+                Command command = inputParser.parseInput(input);
                 // tasks saved after every command execution
                 command.execute(tasks, ui, storage);
                 isExit = command.isExit();

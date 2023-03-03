@@ -6,7 +6,7 @@ public final class TasksConstants {
     private TasksConstants() {
     }
 
-    public static final String FORMAT_EVENT = "Event - event <task details>"
+    public static final String FORMAT_EVENT = "Event - event <task details> "
             + "/from <" + DateTimeParser.getFormatDateTime() + "> "
             + "/to <" + DateTimeParser.getFormatDateTime() + ">"
             + System.lineSeparator();
