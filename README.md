@@ -75,7 +75,31 @@ There are 9 types of command you can give to this chatbot.
        Now you have 2 tasks in the list.
       ____________________________________________________________
    ```
-
+   
+6. `mark` : You can mark the task as done with `mark {index of the task you want to remove}` command.
+   ```
+   mark 1
+      ____________________________________________________________
+       Nice! I've marked this task as done:
+         [X] paper submission
+      ____________________________________________________________
+   ```
+7. `unmark` : You can unmark the task as not done with `unmark {index of the task you want to remove}` command.
+   ```
+   unmark 1
+      ____________________________________________________________
+       OK, I've marked this task as not done yet:
+         [ ] paper submission
+      ____________________________________________________________
+   ```
+8. `find` : You can find the task with the search key with `find {search key}` command.
+   ```
+   find term
+      ____________________________________________________________
+       Here are the matching tasks in your list:
+         1. [E][ ] take midterm (from: Mar 03 2023 to: Mar 01 2023)
+      ____________________________________________________________
+   ```
 
 
 ## 🧑🏻‍💻 Setting up in Intellij
