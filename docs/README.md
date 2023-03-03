@@ -18,7 +18,7 @@
 todo buy bread
 ```
 
-#### Duke:
+#### Expected Output:
 ```
 Got it. I've added this task:
 [T][ ] buy bread
@@ -34,7 +34,7 @@ You currently have 1 tasks in your list.
 deadline finish tuna sandwich /by monday
 ```
 
-#### Duke:
+#### Expected Output:
 ```
 Got it. I've added this task:
 [D][ ] finish tuna sandwich (by: monday)
@@ -50,7 +50,7 @@ You currently have 1 tasks in your list.
 event family dinner at joyden /from 6pm /to 9pm
 ```
 
-#### Duke:
+#### Expected Output:
 ```
 Got it. I've added this task:
 [E][ ] family dinner at joyden (from: 6pm to: 9pm)
@@ -68,7 +68,7 @@ You currently have 1 tasks in your list.
 delete 3
 ```
 
-#### Duke:
+#### Expected Output:
 ```
 Noted. I've removed this task:
 [T][ ] sell fridge
@@ -87,7 +87,7 @@ You currently have 2 tasks in your list.
 mark 1
 ```
 
-#### Duke:
+#### Expected Output:
 ```
 Nice! I've marked this task as done:
 Here are the tasks in your list:
@@ -105,7 +105,7 @@ Here are the tasks in your list:
 unmark 1
 ```
 
-#### Duke:
+#### Expected Output:
 ```
 OK, I've marked this task as not done yet:
 Here are the tasks in your list:
@@ -125,7 +125,7 @@ Here are the tasks in your list:
 list
 ```
 
-#### Duke:
+#### Expected Output:
 ```
 Here are the tasks in your list:
 1. [T][ ] paint a portrait of a horse
@@ -143,7 +143,7 @@ Here are the tasks in your list:
 find beef
 ```
 
-#### Duke:
+#### Expected Output:
 ```
 Here are the matching tasks in your list:
 1. [D][ ] cook beef shank (by: friday)
@@ -160,7 +160,7 @@ Here are the matching tasks in your list:
 bye
 ```
 
-#### Duke:
+#### Expected Output:
 ```
 Bye! Hope to see you again soon!
 ```
