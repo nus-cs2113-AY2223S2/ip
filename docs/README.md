@@ -10,7 +10,7 @@
 
 ### Add a Task into the List
 1. ``todo``
-- this command allows users to add a task of `TASK_NAME` that does not specify a time or date
+- this command allows users to add a task that does not specify a time or date
 #### Format of Input
 
 ```
@@ -96,7 +96,7 @@ Here are the tasks in your list:
 #### Format of Input
 
 ```
-mark 1
+unmark 1
 ```
 
 #### Duke:
