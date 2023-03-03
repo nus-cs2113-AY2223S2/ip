@@ -18,6 +18,7 @@ public class Duke {
 
     /**
      * Reads inputs from user and performs the corresponding actions.
+     *
      * @param args user input
      */
     public static void main(String[] args) {
@@ -56,6 +57,7 @@ public class Duke {
      * Returns true if the message from user contains the keywords todo, deadline or event.
      * This function checks if the user has mentioned any of the 3 keywords todo, deadline or event
      * to differentiate task creation actions from other actions.
+     *
      * @param messageFromUser This is the user input
      * @return true if the message from user contains the keywords todo, deadline or event
      */
@@ -70,6 +72,7 @@ public class Duke {
      * This function creates a ToDo, Deadline or Event Object based on the type of task the user specified.
      * This object is then stored in the parent class object, Task as an ArrayList of Task is used to store
      * these objects.
+     *
      * @param messageFromUser This is the user input
      * @return Task object
      */
@@ -88,8 +91,9 @@ public class Duke {
     /**
      * Adds Task object to ArrayList of Tasks and prints out that the object has been successfully added as well as
      * the number of tasks in the ArrayList.
+     *
      * @param newTask Task object to be added to ArrayList
-     * @param tasks ArrayList to store Task objects
+     * @param tasks   ArrayList to store Task objects
      */
     public static void addToList(Task newTask, ArrayList<Task> tasks) {
         Ui ui = new Ui();
@@ -105,8 +109,9 @@ public class Duke {
      * Deletes the object at the specific index in the ArrayList as specified by the user.
      * Since the ArrayList has 0 based indexing, the 1 based index specified by the user will be decremented by 1.
      * Task that was deleted will be shown to the user.
+     *
      * @param messageFromUser This is the user input
-     * @param tasks ArrayList to store Task objects
+     * @param tasks           ArrayList to store Task objects
      */
     public static void deleteFromList(String messageFromUser, ArrayList<Task> tasks) {
         Ui ui = new Ui();
@@ -127,8 +132,9 @@ public class Duke {
     /**
      * Changes the task status of the task in the ArrayList as specified by the user.
      * Only marking an undone task as done or a done task as unmarked is allowed.
+     *
      * @param sentence User input
-     * @param tasks ArrayList to store Task objects
+     * @param tasks    ArrayList to store Task objects
      */
     public static void changeTaskStatus(String sentence, ArrayList<Task> tasks) {
         Ui ui = new Ui();
@@ -148,6 +154,7 @@ public class Duke {
     /**
      * Displays all the tasks in the ArrayList to the user by iterating through the entire ArrayList.
      * If there are no tasks in the ArrayList, a corresponding message will be printed.
+     *
      * @param tasks ArrayList to store Task objects
      */
     public static void displayList(ArrayList<Task> tasks) {
@@ -170,7 +177,7 @@ public class Duke {
             displayTask(currentTask);
         }
     }
-    
+
     /**
      * Displays each specific task based on whether it is a ToDo, Deadline or Event type of task.
      * The information of the corresponding task will be formatted and displayed correctly.
@@ -178,6 +185,7 @@ public class Duke {
      * ToDo: [T] [{STATUS}] {TODO MESSAGE}
      * Deadline: [D] [{STATUS}] {Deadline message (by: {DUE_DATE})}
      * Event: [E] [{STATUS}] {Event message (from: {START} to: {END})}
+     *
      * @param currentTask Single task selected from ArrayList of Task objects to be displayed
      */
     public static void displayTask(Task currentTask) {
@@ -213,6 +221,7 @@ public class Duke {
      * Creates and returns a new ToDo object containing the message the user specified.
      * The input to this function has to be of the form:
      * todo MESSAGE
+     *
      * @param messageFromUser This is the user input
      * @return ToDo object
      */
@@ -228,6 +237,7 @@ public class Duke {
      * Creates and returns a new Deadline object containing the message and due date the user specified.
      * The input to this function has to be of the form:
      * deadline MESSAGE /by DUE_DATE
+     *
      * @param messageFromUser This is the user input
      * @return Deadline object
      */
@@ -242,6 +252,7 @@ public class Duke {
      * Creates and returns a new Event object containing the message, start and end information the user specified.
      * The input to this function has to be of the form:
      * event MESSAGE /from START /to END
+     *
      * @param messageFromUser This is the user input
      * @return Event object
      */
@@ -256,7 +267,8 @@ public class Duke {
 
     /**
      * This function saves all tasks in the ArrayList to the file savedTasks and displays the goodbye message.
-     * @param tasks ArrayList to store Task objects
+     *
+     * @param tasks    ArrayList to store Task objects
      * @param filePath Location of the text file that is used to store the tasks
      */
     public static void saveAndExit(ArrayList<Task> tasks, String filePath) {
@@ -271,8 +283,9 @@ public class Duke {
      * so that the user can manipulate the tasks later on.
      * If there are no tasks in the savedTasks text file, then a message saying there is no tasks to display
      * will be printed.
+     *
      * @param filePath Location of the text file that is used to store the tasks
-     * @param tasks ArrayList to store Task objects
+     * @param tasks    ArrayList to store Task objects
      * @throws FileNotFoundException if there is no savedTasks file.
      */
     private static void printFileContents(String filePath, ArrayList<Task> tasks) throws FileNotFoundException {
@@ -296,6 +309,7 @@ public class Duke {
 
     /**
      * Returns a boolean based on whether the user has given the exit command "bye".
+     *
      * @param messageFromUser User input
      * @return true is user inputs "bye".
      */
@@ -310,8 +324,9 @@ public class Duke {
      * Calls the relevant methods based on the action the user specifies.
      * "todo", "deadline", "event", "mark", "unmark", "list", "bye", "delete" are the keywords that the user has to
      * input. If any other keyword is given, an exception is thrown.
+     *
      * @param messageFromUser User input
-     * @param tasks ArrayList to store Task objects
+     * @param tasks           ArrayList to store Task objects
      * @throws DukeException if user inputs a keyword that is incorrect.
      */
     public static void handleMessageFromUser(String messageFromUser, ArrayList<Task> tasks) throws DukeException, FileNotFoundException {
