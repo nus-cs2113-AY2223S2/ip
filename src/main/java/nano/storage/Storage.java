@@ -27,6 +27,11 @@ public class Storage {
         this.taskFile = new File(taskFile);
     }
 
+    /**
+     * Reads froms task text datafile and adds tasks into a list.
+     *
+     * @param tasks List of tasks.
+     */
     public void getUserData(ArrayList<Task> tasks){
         if (taskFile.exists()) {
             try {
@@ -43,6 +48,12 @@ public class Storage {
         }
     }
 
+    /**
+     * Processes task details from task text datafile and add task to a list.
+     *
+     * @param taskDetails Details of task to add.
+     * @param tasks List of tasks.
+     */
     private static void readTaskFile(String taskDetails, ArrayList<Task> tasks) {
         Task newTask;
         String taskName;
@@ -73,6 +84,10 @@ public class Storage {
         }
     }
 
+    /**
+     * Creates directories and files to store task list.
+     * Only created when task text datafile does not exist.
+     */
     private void createTaskFile() {
         try {
             if (taskFile.getParentFile().mkdirs()) {
@@ -93,6 +108,12 @@ public class Storage {
         Ui.printHorizontalLine();
     }
 
+    /**
+     * Saves task lists into a text datafile.
+     *
+     * @param tasks List of tasks.
+     * @throws IOException If unable to write to text datafile.
+     */
     public void saveTaskFile(ArrayList<Task> tasks) throws IOException {
         FileWriter fileWriter = new FileWriter(taskFile);
         for (Task task : tasks) {

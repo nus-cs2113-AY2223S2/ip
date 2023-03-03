@@ -17,6 +17,13 @@ public class Parser {
     private static final int TASK_END_DATE_INDEX = 4;
     private static final int USER_INPUT_MAX_ARG_COUNT = 4;
 
+    /**
+     * Executes command entered by user.
+     *
+     * @param userInput Input entered by user.
+     * @param tasks Task list
+     * @throws NanoCommandException If unknown command is given.
+     */
     public static void executeCommand(String userInput, TaskList tasks) throws NanoCommandException {
         String[] userInputs;
         try {
@@ -57,6 +64,13 @@ public class Parser {
         Ui.printHorizontalLine();
     }
 
+    /**
+     * Returns processed input entered by user to separate command and the details.
+     *
+     * @param userInput Input entered by user.
+     * @return Processed input.
+     * @throws NanoInputFormatException If user input does not follow the correct format.
+     */
     private static String[] processInput(String userInput) throws NanoInputFormatException {
         userInput = userInput.trim();
         if (!userInput.startsWith("/")) {
@@ -73,6 +87,13 @@ public class Parser {
         return userInputs;
     }
 
+    /**
+     * Process tasks into its details based on its task type.
+     *
+     * @param userInput Input entered by user.
+     * @param userInputs Array of Strings to store processed input.
+     * @throws NanoInputFormatException If tasks details are in an invalid format.
+     */
     private static void processTaskDetails(String userInput, String[] userInputs) throws NanoInputFormatException {
         if (isDeadline(userInput)) {
             getDeadline(userInput, userInputs);

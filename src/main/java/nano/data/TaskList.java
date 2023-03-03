@@ -28,6 +28,11 @@ public class TaskList {
 
     }
 
+    /**
+     * Delete task from task list.
+     *
+     * @param taskName Name of task to delete.
+     */
     public void deleteTask(String taskName) {
         int taskIndex = getTaskIndex(taskName);
         if (taskIndex == TASK_INDEX_ERROR) {
@@ -40,6 +45,11 @@ public class TaskList {
         System.out.println("Deleted " + taskName);
     }
 
+    /**
+     * Set task as uncompleted.
+     *
+     * @param taskName Name of task to unmark.
+     */
     public void unmarkTask(String taskName) {
         int taskIndex = getTaskIndex(taskName);
         if (taskIndex == TASK_INDEX_ERROR) {
@@ -55,6 +65,11 @@ public class TaskList {
         }
     }
 
+    /**
+     * Set task as completed.
+     *
+     * @param taskName Name of task to mark.
+     */
     public void markTask(String taskName) {
         int taskIndex = getTaskIndex(taskName);
         if (taskIndex == TASK_INDEX_ERROR) {
@@ -70,6 +85,12 @@ public class TaskList {
         }
     }
 
+    /**
+     * Returns index of task in task list.
+     *
+     * @param taskName Name of task.
+     * @return Index of task.
+     */
     private int getTaskIndex(String taskName) {
         for (Task task : tasks) {
             if (task.getTaskName().equals(taskName)) {
@@ -79,6 +100,11 @@ public class TaskList {
         return TASK_INDEX_ERROR;
     }
 
+    /**
+     * Adds task to task list.
+     *
+     * @param taskDetails Details of task added
+     */
     public void addTask(String[] taskDetails) {
         if (isInList(taskDetails[TASK_NAME_INDEX])) {
             System.out.println(taskDetails[TASK_NAME_INDEX] + " is already in the list!");
@@ -102,6 +128,12 @@ public class TaskList {
         System.out.println("Added " + taskDetails[TASK_NAME_INDEX]);
     }
 
+    /**
+     * Check if task is found in task list.
+     *
+     * @param taskName Name of task.
+     * @return true if task is in task list. Returns false otherwise.
+     */
     public boolean isInList(String taskName) {
         for (Task task : tasks) {
             if (task.getTaskName().equals(taskName)) {
@@ -111,10 +143,20 @@ public class TaskList {
         return false;
     }
 
+    /**
+     * Get lists of task
+     *
+     * @return Task list.
+     */
     public ArrayList<Task> getTaskList() {
         return tasks;
     }
 
+    /**
+     * Finds and displays all tasks containing a keyword.
+     *
+     * @param keyword Keyword used in search.
+     */
     public void findTasks(String keyword) {
 
         if (isInvalidKeyword(keyword)) {
