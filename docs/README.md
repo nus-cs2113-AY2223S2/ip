@@ -122,6 +122,7 @@ ____________________________________________________________
 Task of the corresponding index will be marked as undone.
 
 Format: `unmark <taskIndex>`
+
 Example of usage: `unmark 2`
 
 Expected outcome:
