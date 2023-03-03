@@ -2,23 +2,40 @@
 
 ## Features 
 
-### Feature-ABC
+### Stores and saves your tasks.
 
-Description of the feature.
+If you need a quick checklist, you can use this CLI-based digital checklist that saves your previous tasks.
 
-### Feature-XYZ
+### Ability to mark tasks as complete and delete tasks.
 
-Description of the feature.
+After completion, users can mark their tasks and delete them as they wish.
 
 ## Usage
 
-### `Keyword` - Describe action
+### `Keyword` - todo
 
-Describe the action and its outcome.
+Creates a task with no startdate or deadline. Ability to mark tasks as completed and delete them.
 
 Example of usage: 
 
-`keyword (optional arguments)`
+todo task0
+
+After listing (see list), your list should have:
+
+0. [T] [ ] task0
+
+### `Keyword` - deadline
+
+Creates a task with a deadline. Ability to mark tasks as completed and delete them. The deadline is defined by any character after the first delimiter "/".
+
+Example of usage: 
+
+deadline task1 /tomorrow
+
+After listing (see list), your list should have:
+
+0. [T] [ ] task0
+1. [D] [ ] task1 (by: tomorrow)
 
 Expected outcome:
 
