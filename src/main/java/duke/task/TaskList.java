@@ -112,8 +112,8 @@ public class TaskList {
      * @throws EmptyTaskException where the description is equals to "deadline".
      * @exception StringIndexOutOfBoundsException where the input does not have "/from" in it.
      */
-    public void generateDeadline(String input) throws EmptyTaskException{
-        if (input.equals("deadline")){
+    public void generateDeadline(String input) throws EmptyTaskException, IllegalCommandException{
+        if (input.equals("deadline")){ //catches bug where description is empty but parser passes "deadline" to TaskList
             throw new EmptyTaskException();
         }
         int indexSeparator = input.indexOf("/");
@@ -122,6 +122,10 @@ public class TaskList {
         try {
             taskDescription = input.substring(0, indexSeparator);
             taskDue = input.substring(indexSeparator + 4);
+            String test = input.substring(indexSeparator+1, indexSeparator+3);
+            if (!test.equals("by")){
+                throw new IllegalCommandException();
+            }
         }catch(StringIndexOutOfBoundsException a){
             ui.showException("Invalid Deadline or Event");
             return;
@@ -140,7 +144,7 @@ public class TaskList {
      * @exception StringIndexOutOfBoundsException where either "/from" or "/to" are not present in the input
      */
     public void generateEvent(String input) throws EmptyTaskException, IllegalCommandException {
-        if (input.equals("event")){
+        if (input.equals("event")){ //catches bug where description is empty but parser passes "event" to TaskList
             throw new EmptyTaskException();
         }
         int indexSeparator = input.indexOf("/");
@@ -157,12 +161,16 @@ public class TaskList {
             ui.showException("Invalid Deadline or Event");
             return;
         }
-        indexSeparator = taskDates.indexOf("/"); //locates location of second / for "by"
+        indexSeparator = taskDates.indexOf("/"); //locates location of second / for "to"
         String taskStart = "";
         String taskEnd = "";
         try {
-            taskStart = taskDates.substring(0, indexSeparator - 1); //creates "by" substring
+            taskStart = taskDates.substring(0, indexSeparator - 1); //creates "to" substring
+            String test = taskDates.substring(indexSeparator+1, indexSeparator+3);
             taskEnd = taskDates.substring(indexSeparator + 4);
+            if (!test.equals("to")){
+                throw new IllegalCommandException();
+            }
         }catch(StringIndexOutOfBoundsException a){
             ui.showException("Invalid Deadline or Event");
             return;

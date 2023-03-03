@@ -95,6 +95,8 @@ public class Parser {
             taskList.generateDeadline(remainder);
         }catch(EmptyTaskException e){
             ui.showException("EmptyTaskException");
+        }catch(IllegalCommandException e){
+            ui.showException("Invalid Deadline or Event");
         }
     }
 
