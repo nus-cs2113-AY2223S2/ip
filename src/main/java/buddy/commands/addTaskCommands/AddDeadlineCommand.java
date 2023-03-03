@@ -23,6 +23,9 @@ public class AddDeadlineCommand extends Command {
     @Override
     public void executeCommand(TaskList taskList, String input) {
         try {
+            if (input.equals("deadline")){
+                throw new InvalidCommandException();
+            }
             String[] deadlineSplit = input.split("/by", 2);
             String deadlineBy = deadlineSplit[1].trim();
             LocalDate toFormat = LocalDate.parse(deadlineBy);

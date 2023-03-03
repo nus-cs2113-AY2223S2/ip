@@ -1,5 +1,6 @@
 package buddy.commands.actionCommands;
 
+import buddy.exceptions.InvalidCommandException;
 import buddy.messages.Messages;
 import buddy.commands.Command;
 import buddy.tasks.TaskList;
@@ -19,7 +20,10 @@ public class FindTaskCommand extends Command {
      * @param input    Command inputted by user
      */
     @Override
-    public void executeCommand(TaskList taskList, String input) {
+    public void executeCommand(TaskList taskList, String input) throws InvalidCommandException {
+        if (input.equals("find")){
+            throw new InvalidCommandException();
+        }
         String keyword = input.split(" ")[1].trim().toLowerCase();
         ArrayList<Task> matchedTasks;
         matchedTasks = (ArrayList<Task>) taskList.stream()                                              // casts list to ArrayList

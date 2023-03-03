@@ -17,6 +17,9 @@ public class AddEventCommand extends Command {
     @Override
     public void executeCommand(TaskList taskList, String input) {
         try {
+            if (input.equals("event")){
+                throw new InvalidCommandException();
+            }
             String[] eventSplit = input.split("/", 3);
             String[] eventAndName = eventSplit[0].split(" ", '2');
             String eventName = eventAndName[1];

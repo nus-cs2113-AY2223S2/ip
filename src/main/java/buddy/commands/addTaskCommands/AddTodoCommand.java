@@ -16,6 +16,9 @@ public class AddTodoCommand extends Command {
     @Override
     public void executeCommand(TaskList taskList, String input) {
         try {
+            if (input.equals("todo")){
+                throw new InvalidCommandException();
+            }
             String[] todoSplit = input.split(" ", 2);
             if (todoSplit[1].equals("")) {
                 throw new InvalidCommandException();

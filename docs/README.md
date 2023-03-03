@@ -1,14 +1,22 @@
 # User Guide
 
+Buddy is a very helpful tool in helping you manage your daily tasks
+and helping you be more organised. It also helps you improve your day to day productivity!
+Get immersed in this cli-optimised application!
+
 ## Features 
 
-### Feature-ABC
+### Add tasks to your task list
+Add various types of tasks - todo, deadline and event.
 
-Description of the feature.
+### Delete tasks from your task list
+Delete tasks from the list.
 
-### Feature-XYZ
+### Keep track of the progress of your tasks
+Mark/Unmark tasks from the list to keep track of what you have completed.
 
-Description of the feature.
+### Find tasks in your task list
+Find tasks that match a keyword
 
 ## Usage
 
