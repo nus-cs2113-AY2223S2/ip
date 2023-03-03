@@ -5,7 +5,17 @@ import hina.exceptions.HinaException;
 import java.io.IOException;
 import java.util.Scanner;
 
+/**
+ * Contains methods to process user input.
+ */
 public class Parser {
+    /**
+     * Reads a user input from the command line and determines if it was a command.
+     * If the input was a recognised command, handle it respectively, else throws
+     * a <code>HinaException</code>.
+     *
+     * @throws HinaException If the input is not recognised as a valid command.
+     */
     public static void readCommand() throws HinaException {
         String line;
         Scanner in = new Scanner(System.in);

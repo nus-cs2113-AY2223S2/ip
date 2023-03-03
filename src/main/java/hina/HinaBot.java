@@ -5,17 +5,21 @@ import hina.helper.Parser;
 import hina.helper.Storage;
 import hina.helper.TaskList;
 import hina.helper.Ui;
-import hina.task.Task;
 
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-
 
 public class HinaBot {
-    protected static ArrayList<Task> taskList = new ArrayList<Task>();
     private static Ui ui;
     private static Storage storage;
     private static TaskList tasks;
+
+    /**
+     * Class constructor specifying the path to a file containing save data. Tries to
+     * access the save file and attempts to create a new one if it does not exist.
+     *
+     * @param savePath path to the save file.
+     * @param dataDir directory the save file is stored in.
+     */
     public HinaBot(String savePath, String dataDir) {
         ui = new Ui();
         storage = new Storage();
