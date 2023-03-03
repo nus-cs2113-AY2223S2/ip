@@ -1,24 +1,62 @@
-# Duke project template
+# Duke User Guide
 
-This is a project template for a greenfield Java project. It's named after the Java mascot _Duke_. Given below are instructions on how to use it.
+Duke is a personal task tracker used through CLI. Users can add three types of tasks to Duke, which are ToDos, Deadlines, and Events.
+One can create, read, and delete tasks using according commands in the CLI.
 
-## Setting up in Intellij
+## Features Available
 
-Prerequisites: JDK 11, update Intellij to the most recent version.
+### Adding task 
+Available task types are: todo, deadline, event
+One needs to enter task type, followed by task information
 
-1. Open Intellij (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project first)
-1. Open the project into Intellij as follows:
-   1. Click `Open`.
-   1. Select the project directory, and click `OK`.
-   1. If there are any further prompts, accept the defaults.
-1. Configure the project to use **JDK 11** (not other versions) as explained in [here](https://www.jetbrains.com/help/idea/sdk.html#set-up-jdk).<br>
-   In the same dialog, set the **Project language level** field to the `SDK default` option.
-3. After that, locate the `src/main/java/Duke.java` file, right-click it, and choose `Run Duke.main()` (if the code editor is showing compile errors, try restarting the IDE). If the setup is correct, you should see something like the below as the output:
-   ```
-   Hello from
-    ____        _        
-   |  _ \ _   _| | _____ 
-   | | | | | | | |/ / _ \
-   | |_| | |_| |   <  __/
-   |____/ \__,_|_|\_\___|
-   ```
+Examplary commands:
+> todo eat lunch
+
+> deadline submit assignment /by Sunday
+
+> event weekend /from Saturday /to Sunday
+
+Not following the command format will result in an error. The error message will guide the user with the command format. 
+
+
+
+### Listing tasks
+Duke shows the list of tasks that has been entered so far.
+
+Examplary command:
+> list
+
+
+
+### Mark/Unmarking task 
+The user can mark the task according to their completion state. Completed tasks can also be unmarked, reverting the task back to incomplete.
+Users can enter the task index shown in the task list to target specific task. 
+
+Examplary command:
+> mark 1
+
+> unmark 4
+
+Not following the command format will result in an error. The error message will guide the user with the command format. 
+
+
+
+### Delete task 
+The user can delete tasks that are no longer relevant. Deletion of task is based on the task index provided by the user.
+
+Examplary command:
+> delete 2
+
+Not following the command format will result in an error. The error message will guide the user with the command format. 
+
+
+
+### Find task
+Users can enter keyword to search for tasks that are relevant to the keyword entered. Note that only one word can be entered as keyword. 
+
+Examplary command:
+> find assignment
+
+> find book
+
+Not following the command format will result in an error. The error message will guide the user with the command format. 
