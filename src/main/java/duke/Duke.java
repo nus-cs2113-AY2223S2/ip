@@ -24,6 +24,7 @@ public class Duke {
     private final static String EDIT_EMPTY_TASKS = "The list is empty, there is nothing to be updated\n";
     private final static String INDEX_OUT_OF_BOUND = "The element you are looking for does not exist!!\n";
     private final static String WRONG_DATE_FORMAT = "Please follow date format YYYY-MM-DD!!\n";
+    private final static String WRONG_INDEX_FORMAT = "Please enter an integer for index!!\n";
 
     public static void startDuke() throws IOException{
         commandManager.sayHello();
@@ -60,6 +61,8 @@ public class Duke {
                 ui.printError(EDIT_EMPTY_TASKS);
             }catch(WrongDateFormat wrongDateFormat){
                 ui.printError(WRONG_DATE_FORMAT);
+            }catch(NumberFormatException formatException){
+                ui.printError(WRONG_INDEX_FORMAT);
             }finally{
                 continue;
             }

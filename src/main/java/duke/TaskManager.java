@@ -131,7 +131,7 @@ public class TaskManager {
      * @param taskIndex index of the task to be edited.
      * @param status mark/unmark.
      */
-    public static void editTaskStatus(String taskIndex, String status) throws EditEmptyTasks, IOException, UpdateOutOfBound {
+    public static void editTaskStatus(String taskIndex, String status) throws EditEmptyTasks, IOException, UpdateOutOfBound, NumberFormatException {
         if(tasks.size()==0){
             throw new EditEmptyTasks();
         }
