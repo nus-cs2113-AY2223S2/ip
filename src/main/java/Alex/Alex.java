@@ -14,16 +14,6 @@ import java.io.*;
 public class Alex {
     public static TaskList taskList;
 
-    public static void main(String[] args) {
-        taskList = new TaskList();
-        try {
-            StorageFile.readData(taskList);
-        } catch (FileNotFoundException e) {
-            System.out.println("File not found" + e.getMessage());
-        }
-        new Alex().start();
-    }
-
     private void runCommands() throws AlexTaskException {
         boolean isExit = false;
         while (!isExit) {
@@ -45,11 +35,12 @@ public class Alex {
             } catch (NumberFormatException e) {
                 Ui.showOutput("☹ OOPS!!! You are inputted an invalid index, try again!");
             }
-
         }
-
-
     }
+
+    /**
+     * Welcomes the user and executes runCommands which asks for user input continuously
+     */
 
     public void start() {
         Ui.showWelcomeMessage();
@@ -59,5 +50,20 @@ public class Alex {
         {
             Ui.showOutput(e.getMessage());
         }
+    }
+    /**
+     * Main method of Alex program that is executed every time Alex is started
+     *
+     * @param args Commandline arguments passed by the user when executing the Alex
+     *   jar file
+     */
+    public static void main(String[] args) {
+        taskList = new TaskList();
+        try {
+            StorageFile.readData(taskList);
+        } catch (FileNotFoundException e) {
+            Ui.showOutput("File not found" + e.getMessage());
+        }
+        new Alex().start();
     }
 }
