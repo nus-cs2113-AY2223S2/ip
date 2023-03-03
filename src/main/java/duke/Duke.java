@@ -33,8 +33,12 @@ public class Duke {
         } while (!input.equals("bye"));
     }
     private static void run(String input) {
-        Command command = Parser.parse(input);
-        command.execute(tasks);
+        try {
+            Command command = Parser.parse(input);
+            command.execute(tasks);
+        } catch (NumberFormatException err){
+            System.out.println("Number expected after command");
+        }
     }
     /**
      * Command to start the program

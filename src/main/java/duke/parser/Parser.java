@@ -23,7 +23,7 @@ public interface Parser {
      * @param input the information that requires parsing
      * @return command type that would represent what to execute
      */
-    public static Command parse(String input) {
+    public static Command parse(String input) throws NumberFormatException{
         String[] inputWords = input.split(" ");
         String command = inputWords[0];
         String taskField = input.replaceFirst(command, "").trim();

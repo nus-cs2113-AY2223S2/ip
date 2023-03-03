@@ -26,7 +26,7 @@ public class IndexCommand extends Command {
     @Override
     public void execute(TaskList tasks) {
         try {
-            DukeException.catchInvalidIndexError(taskNum, tasks);
+            DukeException.catchIndexCommandError(taskNum, tasks);
             switch (commandType){
                 case "mark":
                     tasks.mark(taskNum);
