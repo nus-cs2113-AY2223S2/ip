@@ -11,6 +11,7 @@ import static bro.Ui.printReply;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.lang.String;
 
 public class TaskList {
     private final ArrayList<Task> taskList;
@@ -24,6 +25,13 @@ public class TaskList {
         taskList.add(task);
     }
 
+    /**
+     * Creates a ToDo Task and adds it to the list of tasks.
+     *
+     * @param taskListObject Instance of TaskList that contains all tasks
+     * @param arrayOfInputs Array of Strings containing the user input
+     * @throws invalidInputFormat If index of task is not provided, throw an exception
+     */
     public void createToDo(TaskList taskListObject, String[] arrayOfInputs) throws invalidInputFormat {
         ArrayList<Task> taskList = taskListObject.getTaskList();
         StringBuilder todoName = new StringBuilder();
@@ -97,7 +105,17 @@ public class TaskList {
         return taskIndex;
     }
 
-    public void markComplete(boolean markAsComplete, ArrayList<Task> taskList, String[] arrayOfInputs) throws invalidInputFormat, invalidTaskIndexException {
+    /**
+     * Marks a task in the list of all tasks as complete or incomplete.
+     *
+     * @param markAsComplete If true, the task is marked as complete. If False, the method is marked as not complete.
+     * @param taskListObject Instance of TaskList that contains all tasks
+     * @param arrayOfInputs Array of Strings containing the user input
+     * @throws invalidInputFormat If index of task given is not a number, throw an exception.
+     * @throws invalidTaskIndexException If index of task given is out of bounds of the list of all tasks, throw an exception.
+     */
+    public void markComplete(boolean markAsComplete, TaskList taskListObject, String[] arrayOfInputs) throws invalidInputFormat, invalidTaskIndexException {
+        ArrayList<Task> taskList = taskListObject.getTaskList();
         int taskIndex = checkAndGetValidTaskIndex(Type.MARK, taskList.size(), arrayOfInputs);
         if (markAsComplete){   // mark as Completed
             taskList.get(taskIndex).setCompleted();
@@ -109,6 +127,14 @@ public class TaskList {
         }
     }
 
+    /**
+     * Deletes a task from the list of all tasks.
+     *
+     * @param taskListObject Instance of TaskList that contains all tasks
+     * @param arrayOfInputs Array of Strings containing the user input
+     * @throws invalidInputFormat If index of task given is not a number, throw an exception.
+     * @throws invalidTaskIndexException If index of task given is out of bounds of the list of all tasks, throw an exception.
+     */
     public void deleteTask(TaskList taskListObject, String[] arrayOfInputs) throws invalidInputFormat, invalidTaskIndexException {
         ArrayList<Task> taskList = taskListObject.getTaskList();
         int taskIndex = checkAndGetValidTaskIndex(Type.DELETE, taskList.size(), arrayOfInputs);
@@ -116,5 +142,22 @@ public class TaskList {
         taskList.remove(taskIndex);
         printReply(" Ok bro I remove this task:\n" + "   [" + currentTask.getType() + "][" + currentTask.mark() + "] " + currentTask +
                 "\n Now you have " + taskList.size() + " tasks in the list.");
+    }
+
+    public void find(TaskList taskListObject, String[] arrayOfInputs) throws invalidInputFormat {
+        ArrayList<Task> taskList = taskListObject.getTaskList();
+        if (arrayOfInputs.length <= 1) {
+            throw new invalidInputFormat(Type.FIND);
+        }
+        String toFind = arrayOfInputs[1].toLowerCase();
+        StringBuilder reply = new StringBuilder(" Here are the matching tasks in your list:\n");
+        int count = 0;
+        for (Task currentTask : taskList) {
+            if (currentTask.toString().toLowerCase().contains(toFind)) {
+                String mark = currentTask.mark();
+                reply.append(" ").append(++count).append(".[").append(currentTask.getType()).append("][").append(mark).append("] ").append(currentTask).append("\n");
+            }
+        }
+        printReply(reply.toString());
     }
 }

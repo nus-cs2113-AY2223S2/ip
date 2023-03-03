@@ -33,7 +33,7 @@ public class Parser {
         case "unmark":
             boolean markAsComplete = arrayOfInputs[0].equals("mark");   // this boolean decides if the following `markComplete()` marks the task as Completed or Uncompleted
             try {
-                taskList.markComplete(markAsComplete, taskList.getTaskList(), arrayOfInputs);
+                taskList.markComplete(markAsComplete, taskList, arrayOfInputs);
             } catch (invalidInputFormat e) {
                 printException(e);
             } catch (invalidTaskIndexException e) {
@@ -74,6 +74,13 @@ public class Parser {
                 printException(TASK_DOES_NOT_EXIST);
             }
             Storage.save(taskList);
+            break;
+        case "find":
+            try {
+                taskList.find(taskList, arrayOfInputs);
+            } catch (invalidInputFormat e) {
+                printException(e);
+            }
             break;
         default:
             printReply(INVALID_COMMAND);

@@ -15,6 +15,14 @@ import java.util.Scanner;
 
 public class Storage {
     private final static String PATH_NAME = "docs/tasks.txt";
+
+    /**
+     * Loads an Instance of TaskList with all tasks saved in the storage file.
+     *
+     * @param taskListObject Instance of empty TaskList
+     * @return Instance of TaskList with all tasks loaded
+     * @throws FileNotFoundException Missing storage file
+     */
     public static TaskList load(TaskList taskListObject) throws FileNotFoundException {
         Scanner scanner = new Scanner(new File(PATH_NAME));
         while (scanner.hasNext()) {
@@ -39,6 +47,12 @@ public class Storage {
         }
         return taskListObject;
     }
+
+    /**
+     * Updates all tasks in the storage file.
+     *
+     * @param taskListObject Instance of TaskList that contains all tasks
+     */
     public static void save(TaskList taskListObject) {
         try {
             ArrayList<Task> taskList = taskListObject.getTaskList();
