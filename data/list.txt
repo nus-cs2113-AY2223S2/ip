@@ -1,0 +1,12 @@
+T | 0 | join sports club
+T | 0 | borrow book
+T | 0 | swimming
+D | 1 | running | 2019-10-15
+D | 0 | jumping | not decided yet
+D | 1 | homework | 2019-12-02-1800
+E | 1 | greeting | 2019-10-14 | 2019-10-16
+T | 0 | play football
+D | 0 | Midterm assignment | not announce yet
+D | 0 | Final exam | 2019-10-15
+E | 0 | recess week | 2023-2-20 | 2023-2-27
+E | 0 | tour | 2023-02-20 | 2023-02-22
