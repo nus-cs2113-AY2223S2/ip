@@ -39,25 +39,46 @@ public class Ui {
 
     public static void emptyDescriptionTodo() {
         String errorMessage = DIVIDER + System.lineSeparator() +
-                "☹ OOPS!!! The description of a todo cannot be empty." + System.lineSeparator() + DIVIDER;
+                "☹ OOPS!!! The description of a todo cannot be empty."
+                + System.lineSeparator() + DIVIDER;
         System.out.println(errorMessage);
     }
 
     public static void emptyDescriptionEvent() {
         String errorMessage = DIVIDER + System.lineSeparator() +
-                "☹ OOPS!!! The description of a event cannot be empty." + System.lineSeparator() + DIVIDER;
+                "☹ OOPS!!! The description of a event cannot be empty."
+                + System.lineSeparator() + DIVIDER;
         System.out.println(errorMessage);
     }
 
     public static void emptyDescriptionDeadline() {
         String errorMessage = DIVIDER + System.lineSeparator() +
-                "☹ OOPS!!! The description of a deadline cannot be empty." + System.lineSeparator() + DIVIDER;
+                "☹ OOPS!!! The description of a deadline cannot be empty."
+                + System.lineSeparator() + DIVIDER;
         System.out.println(errorMessage);
     }
 
     public static void emptyDescriptionNumber() {
-        String errorMessage = DIVIDER + System.lineSeparator() +
-                "☹ OOPS!!! The task number cannot be empty." + System.lineSeparator() + DIVIDER;
+        String errorMessage = DIVIDER + System.lineSeparator()
+                + "☹ OOPS!!! The task number cannot be empty."
+                + System.lineSeparator() + DIVIDER;
+        System.out.println(errorMessage);
+    }
+
+    public static void emptyDescriptionKeyword() {
+        String errorMessage = DIVIDER + System.lineSeparator()
+                + "☹ OOPS!!! You did not specify a keyword.";
+    }
+
+    public static void taskAlreadyMarkedError() {
+        String errorMessage = DIVIDER + System.lineSeparator()
+                + "This task has already been marked!" + System.lineSeparator() + DIVIDER;
+        System.out.println(errorMessage);
+    }
+
+    public static void taskAlreadyNotMarkedError() {
+        String errorMessage = DIVIDER + System.lineSeparator()
+                + "This task was already unmarked!" + System.lineSeparator() + DIVIDER;
         System.out.println(errorMessage);
     }
 

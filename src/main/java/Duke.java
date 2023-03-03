@@ -10,7 +10,7 @@ public class Duke {
             Storage.loadFile(taskList, "duke.txt");
             System.out.println("File loaded!");
         } catch (FileNotFoundException e) {
-            System.out.println("File not found! File will be created on termination");
+            System.out.println("File not found! The file will be created on termination of this program!");
         }
 
         Ui.printLogo();

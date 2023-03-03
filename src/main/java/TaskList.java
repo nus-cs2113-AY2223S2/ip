@@ -36,18 +36,40 @@ public class TaskList {
         System.out.println(DIVIDER);
     }
 
-    public void markTask(int taskNum) {
-        getTask(taskNum-1).markAsDone();
-        System.out.println("Nice! I've marked this task as done:");
-        System.out.println(DIVIDER + System.lineSeparator() + getTask(taskNum-1).toString()
-                + System.lineSeparator() + DIVIDER);
+    public void markTask(int taskNum) throws ArrayIndexOutOfBoundsException, TaskAlreadyMarkedException {
+        if (taskNum > getSize() || taskNum <= 0) {
+            throw new ArrayIndexOutOfBoundsException();
+        } else {
+            int taskIndex = taskNum - 1;
+            if (!list.get(taskIndex).isDone) {
+                list.get(taskIndex).markAsDone();
+                System.out.println("Nice! I've marked this task as done:");
+                System.out.println(DIVIDER + System.lineSeparator() + getTask(taskIndex).toString()
+                        + System.lineSeparator() + DIVIDER);
+            } else {
+                throw new TaskAlreadyMarkedException();
+            }
+        }
     }
 
-    public void unmarkTask(int taskNum) {
-        getTask(taskNum-1).markAsNotDone();
+    public void unmarkTask(int taskNum) throws TaskAlreadyNotMarkedException, ArrayIndexOutOfBoundsException{
+        /*getTask(taskNum-1).markAsNotDone();
         System.out.println("OK, I've marked this task as not done:");
         System.out.println(DIVIDER + System.lineSeparator() + getTask(taskNum-1).toString()
-                + System.lineSeparator() + DIVIDER);
+                + System.lineSeparator() + DIVIDER);*/
+        if (taskNum > getSize() || taskNum <= 0) {
+            throw new ArrayIndexOutOfBoundsException();
+        } else {
+            int taskIndex = taskNum - 1;
+            if (list.get(taskIndex).isDone) {
+                list.get(taskIndex).markAsNotDone();
+                System.out.println("OK, I've marked this task as not done:");
+                System.out.println(DIVIDER + System.lineSeparator() + getTask(taskIndex).toString()
+                        + System.lineSeparator() + DIVIDER);
+            } else {
+                throw new TaskAlreadyNotMarkedException();
+            }
+        }
     }
 
     public void deleteTask(int taskNum) {
@@ -90,5 +112,25 @@ public class TaskList {
         String deadlineTaskDesc = deadlineInput[0];
         String deadlineDuration = deadlineInput[1];
         list.add(new Deadline(deadlineTaskDesc, deadlineDuration));
+    }
+
+    public void findKeyword(String keyWord) {
+        ArrayList<Task> foundList = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            String taskDesc = getTask(i).toString();
+            if (taskDesc.contains(keyWord)) {
+                foundList.add(getTask(i));
+            }
+        }
+        if (foundList.size() == 0) {
+            System.out.println(DIVIDER + System.lineSeparator()
+                    + "There are no matching tasks in the list."
+                    + System.lineSeparator() + DIVIDER);
+        } else {
+            for (Task item: foundList) {
+                System.out.println((foundList.indexOf(item) + 1)
+                        + "." + item.toString());
+            }
+        }
     }
 }

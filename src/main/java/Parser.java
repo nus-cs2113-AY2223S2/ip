@@ -36,9 +36,6 @@ public class Parser {
                     throw new EmptyDescriptionException();
                 }
                 int taskNum = Integer.parseInt(inputText[1]);
-                if (taskNum > taskList.getSize() || taskNum <= 0) {
-                    throw new ArrayIndexOutOfBoundsException();
-                }
                 taskList.markTask(taskNum);
             } catch (EmptyDescriptionException e) {
                 Ui.emptyDescriptionNumber();
@@ -47,6 +44,8 @@ public class Parser {
                         + "Unable to mark task as task does not exist!" + System.lineSeparator() + DIVIDER);
             } catch (NumberFormatException e) {
                 Ui.invalidTaskNumberError();
+            } catch (TaskAlreadyMarkedException e) {
+                Ui.taskAlreadyMarkedError();
             }
             break;
         case COMMAND_UNMARK:
@@ -55,9 +54,6 @@ public class Parser {
                     throw new EmptyDescriptionException();
                 }
                 int taskNum = Integer.parseInt(inputText[1]);
-                if (taskNum > taskList.getSize() || taskNum <= 0) {
-                    throw new ArrayIndexOutOfBoundsException();
-                }
                 taskList.unmarkTask(taskNum);
             } catch (EmptyDescriptionException e) {
                 Ui.emptyDescriptionNumber();
@@ -66,6 +62,8 @@ public class Parser {
                         + "Unable to unmark task as task does not exist!" + System.lineSeparator() + DIVIDER);
             } catch (NumberFormatException e) {
                 Ui.invalidTaskNumberError();
+            } catch (TaskAlreadyNotMarkedException e) {
+                Ui.taskAlreadyNotMarkedError();
             }
             break;
         case COMMAND_TODO:
@@ -131,9 +129,14 @@ public class Parser {
             }
             break;
         case COMMAND_FIND:
-            //add in find function.
-            //use indexOf to find.
-
+            try {
+                if (taskDesc.isEmpty()) {
+                    throw new EmptyDescriptionException();
+                }
+                taskList.findKeyword(taskDesc);
+            } catch (EmptyDescriptionException e) {
+                Ui.emptyDescriptionKeyword();
+            }
             break;
         default:
             Ui.unknownTaskError();

@@ -1,5 +1,5 @@
 E:0: play more games /from now /to later
-T:0: more
-T:1: read stuff
-E:1: play games /from now /to night
+T:1: more
+T:0: read stuff
+E:0: play games /from now /to night
 T:0: shit
