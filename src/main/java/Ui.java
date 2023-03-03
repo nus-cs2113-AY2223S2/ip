@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -24,7 +25,7 @@ public class Ui {
         Scanner in = new Scanner(System.in);
         String description;
         try {
-            description = userInput.split(" ", 3)[DESCRIPTION_INDEX];
+            description = userInput.split(" ", 2)[DESCRIPTION_INDEX];
         } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("What are you referring to?");
             description = in.nextLine().trim();
@@ -86,5 +87,18 @@ public class Ui {
             StartEndDates[ENDDATE_INDEX] = in.nextLine().trim();
         }
         return StartEndDates;
+    }
+
+    public static void printList(ArrayList<Task> itemList, String header, String footer) {
+        if (!header.isBlank()) {
+            System.out.println(header);
+        }
+        for (int i = 0 ; i < itemList.size(); ++i) {
+            System.out.print((i+1)+ ". ");
+            System.out.println(itemList.get(i).getTask());
+        }
+        if (!footer.isBlank()) {
+            System.out.println(footer);
+        }
     }
 }

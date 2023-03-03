@@ -3,6 +3,9 @@ import java.util.ArrayList;
 public class TaskList {
     private static final ArrayList<Task> TaskList = new ArrayList<>(10);
     private static int NumTasks = 0;
+    public static ArrayList<Task> getList() {
+        return TaskList;
+    }
     public static void addItem (Task newTask) {
         TaskList.add(newTask);
         NumTasks += 1;

@@ -2,8 +2,6 @@ import java.util.Scanner;
 
 public class Duke {
     static final int COMMAND_INDEX = 0;
-    static final int MAX_COMMAND_LENGTH = 1;
-
     public static final int STATUSTYPE_DONE = 1;
     public static final int STATUSTYPE_NOTDONE = 0;
 
@@ -13,7 +11,7 @@ public class Duke {
         while (true) {
             String userInput = in.nextLine().trim();
             String inputCommand = userInput.split(" ", 2)[COMMAND_INDEX];
-
+            inputCommand = inputCommand.toLowerCase();
             switch (inputCommand) {
             case "exit":
             case "bye":
@@ -47,6 +45,9 @@ public class Duke {
             }
             case "event":
                 Commands.addEventTask(userInput);
+                break;
+            case "search":
+                Commands.searchTask(userInput);
                 break;
             default:
                 Commands.invalidCommand();

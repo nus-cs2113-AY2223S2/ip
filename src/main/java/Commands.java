@@ -1,4 +1,4 @@
-import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Commands {
     static final String TASK_NO_EXIST = "Task does not exist!";
@@ -8,6 +8,10 @@ public class Commands {
     public static final int STATUSTYPE_NOTDONE = 0;
     static final int STARTDATE_INDEX = 0;
     static final int ENDDATE_INDEX = 1;
+    public static final String SHOWLIST_HEADER = "Here's what we've gotta do:";
+    public static final String SHOWLIST_FOOTER = "We currently have " + TaskList.getNumItems() + " tasks";
+    public static final String SEARCH_NO_RESULT = "We don't have that in the list!";
+
     public static void invalidCommand() {
         System.out.println("I didn't get that!");
     }
@@ -15,9 +19,8 @@ public class Commands {
         if (TaskList.getNumItems() == 0) {
             System.out.println("We are free! Let's go play!");
         } else {
-            System.out.println("Here's what we've gotta do:");
-            TaskList.viewList();
-            System.out.println("We currently have " + TaskList.getNumItems() + " tasks");
+            //TODO: CHANGE HEADER INTO FORMATTING FUCKERY
+            Ui.printList(TaskList.getList(),SHOWLIST_HEADER,SHOWLIST_FOOTER);
         }
     }
 
@@ -36,7 +39,6 @@ public class Commands {
         } else {
             System.out.println("Item does not exist!");
         }
-
     }
 
     public static void deleteTask(String userInput) {
@@ -75,5 +77,26 @@ public class Commands {
         String endDate = StartEndDates[ENDDATE_INDEX];
         Event newTask = new Event(itemDescription,startDate,endDate);
         TaskList.addItem(newTask);
+    }
+    public static boolean containsSearchTerm(String searchTerm, String taskDescription) {
+        return taskDescription.contains(searchTerm);
+    }
+    public static void searchTask(String userInput) {
+        String searchTerm = Ui.getItemDescription(userInput);
+        ArrayList<Task> resultsList = new ArrayList<>();
+        int searchResults = 0;
+        for (int i = 1; i <= TaskList.getNumItems(); ++i) {
+            String taskDescription = TaskList.getItem(i-1).getDescription();
+            if (containsSearchTerm(searchTerm, taskDescription)) {
+                resultsList.add(TaskList.getItem(i-1));
+                searchResults += 1;
+            }
+        }
+        if (searchResults == 0) {
+            System.out.println(SEARCH_NO_RESULT);
+        } else {
+            //TODO: CHANGE ME INTO FORMATTING FUCKERY
+            Ui.printList(resultsList, "We have " + searchResults + " results!", "");
+        }
     }
 }
