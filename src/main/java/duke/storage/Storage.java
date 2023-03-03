@@ -128,14 +128,13 @@ public class Storage {
     }
 
     private String getDeadline(String taskDescription) {
- //       String deadline = "/by " + taskDescription.split("by: ", 2)[1];
         String deadline = taskDescription.split("\\(by: ", 2)[1].replace(")", "");
         return deadline;
     }
 
     private String[] getEventDuration(String taskDescription) {
         String[] temp = taskDescription.split("to: ", 2);
-        String to = temp[1];
+        String to = temp[1].replace(")", "");
         String from = temp[0].split("from: ", 2)[1];
         temp[1] = "/to" + to;
         temp[0] = "/from" + from;
@@ -146,15 +145,4 @@ public class Storage {
         String trimmedDescription = taskDescription.split(" \\(", 2)[0];
         return trimmedDescription;
     }
-
-           /* try {
-    } catch (IOException e) {
-        System.out.println(Ui.LINE + e + System.lineSeparator());
-        try {
-            obj.originalFile.createFile();
-        } catch (IOException error) {
-            System.out.println("Meow! Failed to create a file: " + e.getMessage());
-        }
-        System.out.println("File Created!");
-    }*/
 }
