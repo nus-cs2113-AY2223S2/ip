@@ -97,8 +97,6 @@ Example use : "bye"
 Hope this list has been informational to you! 
 ```
 
-<p></p>
-
 ### `list` - List all tasks
 
 **Example of usage:**
@@ -155,7 +153,7 @@ Now you have <size> tasks in the list.
 ### `event` - Adds an Event task to the list
 
 Event tasks have two time elements taken with `/from` and `/to` keywords that refers to the dates for the period of the task.
-<p>
+
 Dates are expected to be in `YYYY-MM-DD` format.
 
 **Example of usage:**
@@ -191,7 +189,7 @@ Here are the matching tasks in your list:
 2. [T][ ] Orientation2 
 ```
 
-### `Delete` - Removes a task from the list
+### `delete` - Removes a task from the list
 
 The index of the task to remove must be positive and must exist in the list.
 
@@ -228,7 +226,7 @@ The index of the task to remove must be positive and must exist in the list.
 
 **Example of usage:**
 
-`mark <index>`
+`unmark <index>`
 
 **Expected outcome:**
 
