@@ -2,7 +2,6 @@ package buddy.tasks;
 
 import buddy.Buddy;
 import buddy.messages.Messages;
-
 import java.util.ArrayList;
 
 public class TaskList extends ArrayList<Task> {

@@ -2,10 +2,9 @@ package buddy.commands.actionCommands;
 
 import buddy.messages.Messages;
 import buddy.commands.Command;
-import buddy.tasks.*;
-
+import buddy.tasks.TaskList;
+import buddy.tasks.Task;
 import java.util.ArrayList;
-
 import static java.util.stream.Collectors.toList;
 
 public class FindTaskCommand extends Command {

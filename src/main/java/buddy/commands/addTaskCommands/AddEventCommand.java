@@ -2,7 +2,9 @@ package buddy.commands.addTaskCommands;
 
 import buddy.exception.InvalidCommandException;
 import buddy.commands.Command;
-import buddy.tasks.*;
+import buddy.tasks.TaskList;
+import buddy.tasks.Event;
+
 
 public class AddEventCommand extends Command {
     @Override

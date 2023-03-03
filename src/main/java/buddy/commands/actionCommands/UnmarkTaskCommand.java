@@ -1,7 +1,8 @@
 package buddy.commands.actionCommands;
 
 import buddy.commands.Command;
-import buddy.tasks.*;
+import buddy.tasks.TaskList;
+import buddy.tasks.Task;
 
 public class UnmarkTaskCommand extends Command {
     @Override

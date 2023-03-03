@@ -1,10 +1,9 @@
 package buddy;
 
 import java.util.Scanner;
-
 import buddy.parser.Parser;
 import buddy.storage.Storage;
-import buddy.tasks.*;
+import buddy.tasks.TaskList;
 import buddy.ui.Ui;
 
 

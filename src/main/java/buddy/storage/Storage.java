@@ -2,13 +2,15 @@ package buddy.storage;
 
 import buddy.Buddy;
 import buddy.tasks.TaskList;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
-import buddy.tasks.*;
+import buddy.tasks.Task;
+import buddy.tasks.Todo;
+import buddy.tasks.Deadline;
+import buddy.tasks.Event;
 
 public class Storage {
 
@@ -21,7 +23,7 @@ public class Storage {
         File newFile = new File(filePath);
 
         try {
-           /* if (!directory.exists()){
+           /* if (directory.mkdirs()){
                 System.out.println("Directory has been created :)");
              }*/
 

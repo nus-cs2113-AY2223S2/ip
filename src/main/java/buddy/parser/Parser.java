@@ -1,12 +1,19 @@
 package buddy.parser;
 
 import java.io.IOException;
-import buddy.commands.*;
-import buddy.commands.actionCommands.*;
-import buddy.commands.addTaskCommands.*;
+import buddy.commands.Command;
+import buddy.commands.actionCommands.DeleteTaskCommand;
+import buddy.commands.actionCommands.HelpCommand;
+import buddy.commands.actionCommands.ListCommand;
+import buddy.commands.actionCommands.MarkTaskCommand;
+import buddy.commands.actionCommands.UnmarkTaskCommand;
+import buddy.commands.actionCommands.FindTaskCommand;
+import buddy.commands.addTaskCommands.AddTodoCommand;
+import buddy.commands.addTaskCommands.AddDeadlineCommand;
+import buddy.commands.addTaskCommands.AddEventCommand;
 import buddy.exception.InvalidCommandException;
 import buddy.storage.Storage;
-import buddy.tasks.*;
+import buddy.tasks.TaskList;
 
 public class Parser {
 
@@ -63,6 +70,7 @@ public class Parser {
                 case "help":
                     Command help = new HelpCommand();
                     help.executeCommand(taskList, input);
+                    break;
 
                 default:
                     throw new InvalidCommandException();

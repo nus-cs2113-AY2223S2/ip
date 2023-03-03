@@ -1,7 +1,7 @@
 package buddy.commands.actionCommands;
 
 import buddy.commands.Command;
-import buddy.tasks.*;
+import buddy.tasks.TaskList;
 
 public class DeleteTaskCommand extends Command {
 

@@ -3,7 +3,7 @@ package buddy.commands.actionCommands;
 import buddy.Buddy;
 import buddy.messages.Messages;
 import buddy.commands.Command;
-import buddy.tasks.*;
+import buddy.tasks.TaskList;
 
 public class ListCommand extends Command {
     @Override

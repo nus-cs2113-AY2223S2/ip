@@ -2,7 +2,7 @@ package buddy.ui;
 
 import buddy.messages.Messages;
 import buddy.storage.Storage;
-import buddy.tasks.*;
+import buddy.tasks.TaskList;
 
 import java.io.FileNotFoundException;
 
