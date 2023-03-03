@@ -1,5 +1,8 @@
 package duke.ui;
 
+/**
+ * List of trivial methods that contains a message to be printed to the user.
+ */
 public class Ui {
 
     public void showWelcomeMessage() {
@@ -8,14 +11,16 @@ public class Ui {
         horizontalLine();
     }
 
+
     public void showGoodbyeMessage() {
         System.out.println("I have saved your tasks.");
         System.out.println("Bye. Hope to see you again soon!");
         horizontalLine();
     }
 
+
     public void showSavedTasksRetrievalMessage() {
-        System.out.println("Please wait, I am attempting to retrieve your files...");
+        System.out.println("Please wait, I am attempting to retrieve your saved tasks...");
     }
 
     public void showFileNotFoundMessage() {
@@ -58,6 +63,14 @@ public class Ui {
         } else {
             System.out.println("You currently have " + currentIndex + " tasks in the list.");
         }
+    }
+
+    public void showMessageForSimilarTasksFound() {
+        System.out.println("Here are the matching tasks I found: ");
+    }
+
+    public void showMessageForNoSimilarTasksFound() {
+        System.out.println("I couldn't find any matching tasks :/ ");
     }
 
     public void horizontalLine() {

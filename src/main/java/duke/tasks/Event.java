@@ -1,5 +1,9 @@
 package duke.tasks;
 
+/**
+ * This class inherits from Task class.
+ * Events contain a description, a start date and an end date.
+ */
 public class Event extends Task {
     private String eventStartInfo;
     private String eventEndInfo;
