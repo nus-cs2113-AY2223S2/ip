@@ -85,7 +85,6 @@ public class InputValidity {
      * @return true if input only contains digit characters, false otherwise
      */
     private static boolean isStringOfInteger(String input) {
-        // takes in a string and checks whether the string only contains digits characters
         input = input.trim();
         char[] inputInArray = input.toCharArray();
         for (char c : inputInArray) {
@@ -108,15 +107,12 @@ public class InputValidity {
         if (!isTwoWordInput || !isStringOfInteger(input[1])) {
             switch (command) {
             case MarkCommand.COMMAND_WORD:
-                // user only provided "mark" || user provided "mark <not digit chars>"
                 Error.throwError(ErrorTypes.INVALID_MARK_COMMAND);
                 break;
             case UnmarkCommand.COMMAND_WORD:
-                // user only provided "unmark" || user provided "unmark <not digit chars>"
                 Error.throwError(ErrorTypes.INVALID_UNMARK_COMMAND);
                 break;
             case DeleteCommand.COMMAND_WORD:
-                // user only provided "delete" || user provided "delete <not digit chars>"
                 Error.throwError(ErrorTypes.INVALID_DELETE_COMMAND);
                 break;
             }
