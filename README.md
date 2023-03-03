@@ -59,11 +59,11 @@ There are 5 types of command you can give to this chatbot.
    ```
    list
       ____________________________________________________________
-	    Here are the tasks in your list:
-	    1. [T][ ] read book
-	    2. [D][ ] paper submission (by: 3월 08 2023)
-	    3. [E][ ] take midterm (from: 3월 03 2023 to: 3월 01 2023)
-	   ____________________________________________________________
+	Here are the tasks in your list:
+	1. [T][ ] read book
+	2. [D][ ] paper submission (by: 3월 08 2023)
+	3. [E][ ] take midterm (from: 3월 03 2023 to: 3월 01 2023)
+      ____________________________________________________________
       
    ```
 
