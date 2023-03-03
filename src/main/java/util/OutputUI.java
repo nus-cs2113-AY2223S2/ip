@@ -86,19 +86,16 @@ public class OutputUI {
     public void printDeleteTaskMessage(Task task, int numTasks) {
         printLine();
         String taskSymbol;
-        if (task instanceof Todo)
-        {
+        if (task instanceof Todo) {
             taskSymbol = "T";
-        }
-        else if (task instanceof Deadline) {
+        } else if (task instanceof Deadline) {
             taskSymbol = "D";
-        }
-        else {
+        } else {
             taskSymbol = "E";
         }
 
 
-        System.out.println("Pikapi has deleted the task: " + "\n" + "  ["+ taskSymbol + "]["
+        System.out.println("Pikapi has deleted the task: " + "\n" + "  [" + taskSymbol + "]["
                 + task.getStatusIcon() + "]" + task.getDescription());
         System.out.println("Pikapi sees that now you have " + numTasks + " tasks in the list");
     }
