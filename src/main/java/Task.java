@@ -18,10 +18,6 @@ public class Task {
         isDone = false;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
     public boolean isDone() {
         return isDone;
     }
@@ -29,5 +25,8 @@ public class Task {
     @Override
     public String toString() {
         return (isDone ? "[X]" : "[ ]") + " " + description;
+    }
+    public String getUpdate() {
+        return (description);
     }
 }

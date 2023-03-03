@@ -10,4 +10,8 @@ public class Event extends Task{
     public String toString() {
         return ("[E]" + super.toString() + "(from: " + startTime + " to: " + endTime + ")");
     }
+    @Override
+    public String getUpdate() {
+        return "event " + super.description + " /from " + startTime + " /to " + endTime;
+    }
 }

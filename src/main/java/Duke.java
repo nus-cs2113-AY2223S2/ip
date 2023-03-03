@@ -4,9 +4,12 @@ import exceptions.IllegalInputException;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.io.FileWriter;
 public class Duke {
+    protected static final String FILE_PATH = "data/input.txt";
     private static ArrayList<Task> tasks = new ArrayList<>();
     public static void printWelcomeMessage() {
         String welcomeMessage = "____________________________________________________________\n" +
@@ -22,6 +25,18 @@ public class Duke {
         System.out.println("Your current tasks are as follows: ");
         for (int index = 0; index < tasks.size(); index += 1) {
             System.out.println((index + 1) + "." + tasks.get(index));
+        }
+    }
+    public static void updateFile() {
+        String list = "";
+        for (int index = 0; index < tasks.size(); index += 1) {
+            list += tasks.get(index).getUpdate();
+        }
+        try {
+            writeToFile(FILE_PATH, list);
+        }
+        catch (IOException ex) {
+            System.out.println("Something went wrong: " + ex.getMessage());
         }
     }
     public static void printAddTodo(Todo print, int taskCounter) {
@@ -79,6 +94,9 @@ public class Duke {
                 printList(taskCounter);
                 break;
             case "mark":
+                if (inputs.length == 1) {
+                    throw new EmptyInputException();
+                }
                 taskIndex = Integer.parseInt(inputs[1]);
                 if (taskIndex > tasks.size() || taskIndex <= 0) throw new IllegalInputException();
                 tasks.get(taskIndex - 1).markAsDone();
@@ -86,6 +104,9 @@ public class Duke {
                 printList(taskCounter);
                 break;
             case "unmark":
+                if (inputs.length == 1) {
+                    throw new EmptyInputException();
+                }
                 taskIndex = Integer.parseInt(inputs[1]);
                 if (taskIndex > tasks.size() || taskIndex <= 0) throw new IllegalInputException();
                 tasks.get(taskIndex - 1).markAsNotDone();
@@ -93,9 +114,15 @@ public class Duke {
                 printList(taskCounter);
                 break;
             case "todo":
+                if (inputs.length == 1) {
+                    throw new EmptyInputException();
+                }
                 inputTodo(inputs, taskCounter);
                 break;
             case "deadline":
+                if (inputs.length == 1) {
+                    throw new EmptyInputException();
+                }
                 String deadlineInput = "";
                 String deadlineDeadline = "";
                 boolean isDeadline = false;
@@ -119,6 +146,9 @@ public class Duke {
                 printAddDeadline(deadline, taskCounter);
                 break;
             case "event":
+                if (inputs.length == 1) {
+                    throw new EmptyInputException();
+                }
                 String eventInput = "";
                 String eventFrom = "";
                 String eventTo = "";
@@ -151,6 +181,9 @@ public class Duke {
                 printAddEvent(event, taskCounter);
                 break;
             case "delete":
+                if (inputs.length == 1) {
+                    throw new EmptyInputException();
+                }
                 taskIndex = Integer.parseInt(inputs[1]);
                 if (taskIndex > tasks.size() || taskIndex <= 0) throw new IllegalInputException();
                 tasks.remove(taskIndex - 1);
@@ -161,7 +194,7 @@ public class Duke {
             default:
                 throw new IllegalInputException();
             }
-
+            updateFile();
             printLine();
             return false;
         }
@@ -187,16 +220,26 @@ public class Duke {
         printList(0);
         printLine();
     }
-
+    private static void writeToFile(String filePath, String textToAdd) throws IOException {
+        FileWriter fw = new FileWriter(filePath);
+        fw.write(textToAdd);
+        fw.close();
+    }
     public static void main(String[] args) {
         printWelcomeMessage();
-        File f = new File("data/input.txt");
+        File f = new File(FILE_PATH);
         //populate
         try {
-            printFileContents("data/input.txt");
+            printFileContents(FILE_PATH);
         }
         catch (FileNotFoundException e) {
-            System.out.println("File not found!");
+            System.out.println("File not found! Creating new file for you!");
+            try {
+                writeToFile(FILE_PATH, "");
+            }
+            catch (IOException ex) {
+                System.out.println("Something went wrong: " + ex.getMessage());
+            }
         }
 
         boolean isBye = false;

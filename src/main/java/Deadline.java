@@ -9,4 +9,8 @@ public class Deadline extends Task{
     public String toString() {
         return "[D]" + super.toString() + "(by: " + day + ")";
     }
+    @Override
+    public String getUpdate() {
+        return "event " + super.description + " /by " + day;
+    }
 }
