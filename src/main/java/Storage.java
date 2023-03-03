@@ -3,7 +3,20 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 
+/**
+ * Represents all functions needed to
+ * check if there's any existing data
+ * and to store data
+ */
 public class Storage {
+    /**
+     * Adds a task from the list to a locally
+     * saved file with a correct format and
+     * saves it
+     *
+     * @param command Task to be saved into file
+     * @return Correct format of tasks
+     */
     public static String toData(Task command) {
         int openB, closeB;
         String val, info, task, eg, due, len;
@@ -51,6 +64,14 @@ public class Storage {
         return info;
     }
 
+    /**
+     * Adds the data found in local text file
+     * into a Task object before loading it
+     * into the list
+     *
+     * @param val Task that will be loaded into
+     *            local file
+     */
     public static void fromData(String val) {
         String[] task;
         String eg, due, event;
@@ -96,6 +117,15 @@ public class Storage {
         }
     }
 
+    /**
+     * Locates the data that was previously
+     * recorded by Duke so that users can
+     * have the list of tasks they added
+     * in their previous sessions
+     *
+     * @throws FileNotFoundException when the duke.txt
+     * file is not found in specified folder (/data)
+     */
     public static void findData() throws FileNotFoundException {
         String path;
         path = "data/duke.txt";
@@ -108,8 +138,34 @@ public class Storage {
             val = scanner.nextLine();
             fromData(val);
         }
+        System.out.println("Data that was saved previously has been loaded.");
+        Ui.printDash();
     }
 
+    /**
+     * Tries to locate locally saved file, duke.txt.
+     * If file does not exist, it will create a new one.
+     *
+     * @throws IOException when failure to create file
+     */
+    public static void fileExists() throws IOException {
+        try {
+            Storage.findData();
+        } catch (IOException err) {
+            System.out.println("☹ OOPS!!! Currently creating file as it does not exist.");
+            String path = "data";
+            String file = "data/duke.txt";
+            FileOperations.makeFile(file, path);
+            System.out.println("File created successfully! Please proceed with Duke.");
+        }
+
+    }
+
+
+    /**
+     * Saves tasks in a local file whenever it is updated
+     * by user, even when Duke fails unexpectedly
+     */
     public static void saveData() {
         String path;
         path = "data/duke.txt";
@@ -117,9 +173,16 @@ public class Storage {
         try {
             FileOperations.addToFile(path, toData(Task.tasks.get(0)) + System.lineSeparator());
             int k;
-            for (k = 1; Task.tasks.size() > k; k += 1) {
-                FileOperations.appendFile(path, toData(Task.tasks.get(k)) + System.lineSeparator());
+            if (0 == Task.tasks.size()) {
+                FileOperations.addToFile(path,"");
+            } else {
+                FileOperations.addToFile(path,toData(Task.tasks.get(0)) + System.lineSeparator());
+
+                for (k = 1; Task.tasks.size() > k; k += 1) {
+                    FileOperations.appendFile(path, toData(Task.tasks.get(k)) + System.lineSeparator());
+                }
             }
+
         } catch (IOException err) {
             System.out.println("The following error occurred: " + err.getMessage());
         }
