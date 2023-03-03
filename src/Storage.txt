@@ -1,3 +1,2 @@
-Tt/Ym/hello
-Dt/Ym/bye n/now
-Et/Ym/hi n/ now s/ later
+Tt/Ym/A-JavaDoc
+Dt/Ym/Submit the final version n/Fri, Mar 3rd 2359

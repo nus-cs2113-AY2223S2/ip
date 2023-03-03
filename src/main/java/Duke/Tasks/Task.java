@@ -94,7 +94,6 @@ public class Task {
      */
     public void printUnmarkedTask() {
         System.out.println(BLANK + LINE);
-        System.out.print(BLANK);
         System.out.println(BLANK + "OK, I've marked this task as not done yet:");
         System.out.print(BLANK);
         printTask();
