@@ -68,7 +68,7 @@ Got it. I've added this task:
  [D][] return book (by: Friday)
 Now you have 2 tasks in the list.
 ```
-### `event` - Adds a event task to the tasklist
+### `event` - Adds an event task to the tasklist
 
 Adds an event task to the tasklist and displays the number of tasks currently in the tasklist.
 
