@@ -13,5 +13,9 @@ src/main/resources/docs/
 *.iml
 bin/
 
+# Any other stuff that should not be committed
+/data
+*.jar
+
 /text-ui-test/ACTUAL.TXT
 text-ui-test/EXPECTED-UNIX.TXT

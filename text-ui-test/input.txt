@@ -1,0 +1,10 @@
+todo CS2113 tutorial questions
+deadline return book /by Monday 2pm
+list
+event project meeting /from Wed 5pm /to 6pm
+list
+mark 2
+mark 3
+list
+unmark 2
+bye
