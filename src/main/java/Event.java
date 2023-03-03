@@ -1,6 +1,10 @@
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
+
+/**
+ * Represents an event task.
+ * A <code>Event</code> object corresponds to a task with contents, task progress, start date, and end date.
+ */
 
 public class Event extends Task {
     LocalDate from;
@@ -37,6 +41,12 @@ public class Event extends Task {
         return returnStr + getContents() + " / from " + from + " / to " + to;
     }
 
+
+    /**
+     * Returns information of an <code>Event</code> object with dates in mm-dd-yyyy format.
+     * @param none.
+     * @return String.
+     */
     @Override
     public String showTask(){
         String returnStr = "[E]";

@@ -1,5 +1,11 @@
 import java.time.LocalDate;
 
+/**
+ * Represents an abstract format of a command.
+ * A <code>Command</code> object has null type, content, by, from, to, targetTaskIndex, and targetWord.
+ * Classes that extend this class should fill in necessary information through their constructors or methods.
+ */
+
 abstract public class Command {
     protected String type = " ";
     protected String content = " ";

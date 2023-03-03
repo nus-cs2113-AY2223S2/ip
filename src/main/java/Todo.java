@@ -1,3 +1,8 @@
+/**
+ * Represents a todo task.
+ * A <code>Todo</code> object corresponds to a task with contents and progress of the task.
+ */
+
 public class Todo extends Task {
     Todo(String userInput) {
         super(userInput);

@@ -3,6 +3,11 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+/**
+ * Represents a storage that deals with local file.
+ * A <code>Storage</code> can write and scan text data to/from the local file.
+ */
+
 public class Storage {
     static String home = System.getProperty("user.home");
     static java.nio.file.Path path = Paths.get(home, "duke.txt");

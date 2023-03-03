@@ -1,3 +1,8 @@
+/**
+ * Represents a basic task format.
+ * A <code>Task</code> object corresponds to a task with contents and progress of the task.
+ */
+
 public class Task {
     private String contents;
     private Boolean isDone = false;

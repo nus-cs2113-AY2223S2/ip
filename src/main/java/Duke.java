@@ -1,3 +1,9 @@
+/**
+ * Represents a virtual assistant that helps you manage your tasks.
+ * A <code>Duke</code> object can execute 9 types of command
+ * : bye, list, mark, unmark, delete, add todo/deadline/event, and find
+ */
+
 public class Duke {
 
     public static final String COMMAND_BYE = "bye";
@@ -21,7 +27,7 @@ public class Duke {
         }
     }
 
-    public static void executeCommand(){
+    private static void executeCommand(){
         Command command = Parser.getCommand();
 
         if(command == null) return;
@@ -50,12 +56,12 @@ public class Duke {
         }
     }
 
-    public static void exitProgram(){
+    private static void exitProgram(){
         UI.printBye();
         System.exit(0);
     }
 
-    public static void add(Command command){
+    private static void add(Command command){
         if (taskList.addTask(command)) {
             int totalTaskNum = taskList.getTotalTaskNum();
             UI.printAddComment(taskList.getTask(totalTaskNum), totalTaskNum);
@@ -64,21 +70,21 @@ public class Duke {
         }
     }
 
-    public static void list(){
+    private static void list(){
         UI.printTaskList(taskList);
     }
 
-    public static void mark(Command command){
+    private static void mark(Command command){
         taskList.markTask(command.getTargetTaskIndex());
         UI.printMarkComment(taskList.getTask(command.getTargetTaskIndex()));
     }
 
-    public static void unmark(Command command) {
+    private static void unmark(Command command) {
         taskList.unmarkTask(command.getTargetTaskIndex());
         UI.printUnmarkComment(taskList.getTask(command.getTargetTaskIndex()));
     }
 
-    public static void delete(Command command){
+    private static void delete(Command command){
         int taskNumInt = command.getTargetTaskIndex();
         if(taskNumInt > taskList.getTotalTaskNum() || taskNumInt <= 0){
             UI.printNotFoundErrorComment();
@@ -93,7 +99,7 @@ public class Duke {
         }
     }
 
-    public static void find(Command command){
+    private static void find(Command command){
         String targetWord = command.getTargetWord();
         TaskList targetTaskList = new TaskList(false);
 

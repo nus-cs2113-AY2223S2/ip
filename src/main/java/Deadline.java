@@ -1,6 +1,10 @@
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
+
+/**
+ * Represents a deadline task.
+ * A <code>Deadline</code> object corresponds to a task with contents, task progress, and deadline.
+ */
 
 public class Deadline extends Task {
     private LocalDate by;
@@ -30,6 +34,11 @@ public class Deadline extends Task {
         return returnStr + getContents() + " / by " + by;
     }
 
+    /**
+     * Returns information of a <code>Deadline</code> object with dates in mm-dd-yyyy format.
+     * @param none.
+     * @return String.
+     */
     @Override
     public String showTask(){
         String returnStr = "[D]";

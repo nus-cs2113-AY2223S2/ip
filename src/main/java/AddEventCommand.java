@@ -1,5 +1,11 @@
 import java.time.LocalDate;
 
+/**
+ * Represents a command to add event.
+ * A <code>AddEventCommand</code> object corresponds to a command with "add event" type, content, from(starting date), and to(ending date).
+ * It prints <code>UI.printDateFormatErrorComment()</code> if the input has an invalid date format.
+ */
+
 public class AddEventCommand extends Command{
     public AddEventCommand(String userInput){
         super("add event");

@@ -1,5 +1,10 @@
 import java.util.Scanner;
 
+/**
+ * Represents a user interface that interact directly with the user.
+ * A <code>UI</code> prints greetings, task lists, errors, and comments of Duke.
+ */
+
 public class UI {
     public static String HORIZONTAL_LINE = "____________________________________________________________";
 

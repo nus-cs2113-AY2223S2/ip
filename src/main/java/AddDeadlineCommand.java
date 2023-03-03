@@ -1,5 +1,11 @@
 import java.time.LocalDate;
 
+/**
+ * Represents a command to add deadline.
+ * A <code>AddDeadlineCommand</code> object corresponds to a command with "add deadline" type, content, and by(due date).
+ * It prints <code>UI.printDateFormatErrorComment()</code> if the input has an invalid date format.
+ */
+
 public class AddDeadlineCommand extends Command{
     public AddDeadlineCommand(String userInput){
         super("add deadline");

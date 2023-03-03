@@ -2,6 +2,13 @@ import java.util.ArrayList;
 import java.io.IOException;
 import java.time.LocalDate;
 
+/**
+ * Represents a list of tasks that Duke has to manage your tasks.
+ * A <code>TaskList</code> object loads existing data in file named "Duke.txt" whenever a Duke is operated
+ * and can add/delete/mark/print tasks on the list.
+ * Also, it can automatically update the local file by using Storage class.
+ */
+
 public class TaskList {
     private ArrayList<Task> taskArray;
     private int totalTaskNum;
@@ -23,7 +30,7 @@ public class TaskList {
         }
     }
 
-    public void loadData(ArrayList<String> existingTasks) throws IOException{
+    private void loadData(ArrayList<String> existingTasks) throws IOException{
         for(String taskInfo : existingTasks){
             Boolean isTaskDone = false;
             if(taskInfo.contains("[O]")){
@@ -48,6 +55,12 @@ public class TaskList {
         }
     }
 
+    /**
+     * Returns boolean value after successfully adding a task to the task list.
+     *
+     * @param command <code>Command</code> class object that contains a command to add todo, deadline, or event.
+     * @return boolean value regarding the success of the addition
+     */
     public boolean addTask(Command command){
         switch(command.getType()){
             case "add todo":
@@ -61,13 +74,19 @@ public class TaskList {
         }
     }
 
+    /**
+     * Returns boolean value after successfully adding a task to the task list.
+     *
+     * @param task <code>Task</code> class object that contains a todo, deadline, or event task.
+     * @return boolean value regarding the success of the addition
+     */
     public boolean addTask(Task task){
         taskArray.add(task);
         totalTaskNum++;
         return true;
     }
 
-    public boolean addTodo(Command command){
+    private boolean addTodo(Command command){
         try{
             String contents = command.getContent();
             Todo newTodo = new Todo(contents);
@@ -81,7 +100,7 @@ public class TaskList {
         return true;
     }
 
-    public boolean addDeadline(Command command){
+    private boolean addDeadline(Command command){
         try{
             String contents = command.getContent();
             LocalDate by = command.getBy();
@@ -97,7 +116,7 @@ public class TaskList {
         return true;
     }
 
-    public boolean addEvent(Command command){
+    private boolean addEvent(Command command){
         try{
             String contents = command.getContent();
             LocalDate from = command.getFrom();
@@ -114,18 +133,34 @@ public class TaskList {
         return true;
     }
 
-    public boolean markTask(int taskNumInt){
+    /**
+     * Marks a task as done and reflects it on the local file.
+     *
+     * @param taskNumInt the index of a task to mark.
+     */
+
+    public void markTask(int taskNumInt){
         taskArray.get(taskNumInt-1).mark();
         taskStorage.writeToFile(this.toString());
-        return true;
     }
 
-    public boolean unmarkTask(int taskNumInt){
+    /**
+     * Marks a task as undone and reflects it on the local file.
+     *
+     * @param taskNumInt the index of a task to unmark.
+     */
+    public void unmarkTask(int taskNumInt){
         taskArray.get(taskNumInt-1).unmark();
         taskStorage.writeToFile(this.toString());
-        return true;
     }
 
+    /**
+     * Deletes a task from the task list, rewrite the local file, and return true.
+     * If it fails to delete, it returns false.
+     *
+     * @param taskNumInt the index of a task to delete.
+     * @return boolean value indicating the success of deletion.
+     */
     public boolean delete(int taskNumInt){
         try{
             taskArray.remove(taskNumInt-1);

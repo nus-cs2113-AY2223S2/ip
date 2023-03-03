@@ -1,3 +1,8 @@
+/**
+ * Represents a parser that interprets user input.
+ * A <code>Parser</code> sorts inputs into 9 different comments, and create appropriate Command objects.
+ */
+
 public class Parser {
 
     public static Command getCommand(){
@@ -5,6 +10,13 @@ public class Parser {
         return getCommand(userInput);
     }
 
+    /**
+     * Returns appropriate <code>Command</code> object according to the user input.
+     * If the command is in wrong format, it will return null value.
+     *
+     * @param userInput string input of user
+     * @return a <code>Command</code> object according to the command type.
+     */
     public static Command getCommand(String userInput){
 
         if(userInput.startsWith("todo")){
