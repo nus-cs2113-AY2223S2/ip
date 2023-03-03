@@ -145,7 +145,7 @@ public class Ui {
     }
 
     /**
-     * Displays message when task does not exists in the list.
+     * Displays message when task does not exist in the list.
      */
     public static void displayTaskNotFoundMessage() {
         System.out.println(MESSAGE_TASK_NOT_FOUND);
