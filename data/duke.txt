@@ -1,6 +1,0 @@
-[E][X] study  (from: 3 to: 4)
-[E][X] studybah  (from: 2 to: 4)
-[T][ ] meow
-[T][ ] yes
-[D][ ] yes yes (by: 1pm)
-[D][ ] yes ok (by: 1pm)
