@@ -4,7 +4,6 @@ package inu.commands;
  * Represents the result of a command execution.
  */
 public class CommandResult {
-
     private final String COMMAND_RESULT;
 
     /**
@@ -19,5 +18,4 @@ public class CommandResult {
     public String getCommandResult() {
         return COMMAND_RESULT;
     }
-
 }

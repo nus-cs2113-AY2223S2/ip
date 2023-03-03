@@ -8,7 +8,6 @@ import java.time.LocalDateTime;
  * Represents a deadline.
  */
 public class DeadLine extends Task {
-
     private LocalDateTime by;
 
     public DeadLine(String description, LocalDateTime by) {
@@ -34,5 +33,4 @@ public class DeadLine extends Task {
     public String encodeTaskToString() {
         return String.format("D//%s//%s//%s", getStatusIcon(), getDescription(), getBy());
     }
-
 }

@@ -14,7 +14,6 @@ import java.time.format.DateTimeFormatter;
  * Utility methods.
  */
 public class Util {
-
     public static final int INDEX_BEGIN = 0;
     public static final int INDEX_OFFSET_IN_COMMAND = 1;
     public static final int INDEX_OFFSET_IN_BY_COMMAND = 5;
@@ -154,5 +153,4 @@ public class Util {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMM yyyy hh:mm a");
         return localDateTime.format(formatter);
     }
-
 }

@@ -8,9 +8,7 @@ import inu.task.Todo;
  * Adds a new to-do to the task list.
  */
 public class TodoCommand extends Command {
-
     public static final String COMMAND_WORD = "todo";
-
     private final String todoDescription;
 
     /**

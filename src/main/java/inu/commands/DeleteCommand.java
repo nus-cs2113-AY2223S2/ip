@@ -8,9 +8,7 @@ import inu.task.TaskList;
  * Delete a task in the task list.
  */
 public class DeleteCommand extends Command {
-
     public static final String COMMAND_WORD = "delete";
-
     private final int targetIndex;
 
     /**
@@ -29,5 +27,4 @@ public class DeleteCommand extends Command {
         StorageFile.saveTaskListToFile(taskList);
         return new CommandResult(Messages.MESSAGE_DELETE_TASK + "\n" + deletedTask);
     }
-
 }

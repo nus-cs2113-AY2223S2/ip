@@ -8,7 +8,6 @@ import inu.commands.Command;
 import inu.parser.Parser;
 
 public class Inu {
-
     public TaskList taskList;
 
     public void startInu() {

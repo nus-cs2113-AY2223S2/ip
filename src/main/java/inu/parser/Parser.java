@@ -26,7 +26,6 @@ import java.time.LocalDateTime;
 import java.util.Scanner;
 
 public class Parser {
-
     private static final Scanner input = new Scanner(System.in);
     private static String[] userString;
     private static final int INDEX_COMMAND = 0;
@@ -282,7 +281,5 @@ public class Parser {
         default:
             return null;
         }
-
     }
-
 }

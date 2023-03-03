@@ -4,9 +4,7 @@ package inu.task;
  * Represents a task.
  */
 public abstract class Task {
-
     private String description;
-
     private boolean isDone;
 
     /**
@@ -56,5 +54,4 @@ public abstract class Task {
      * @return string to save in file.
      */
     public abstract String encodeTaskToString();
-
 }

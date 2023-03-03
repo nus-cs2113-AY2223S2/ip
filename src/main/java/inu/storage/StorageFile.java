@@ -13,7 +13,6 @@ import inu.parser.Parser;
  * Represents the file used to store the task list.
  */
 public class StorageFile {
-
     /** Default file path used */
     public static final String DEFAULT_STORAGE_FILEPATH = System.getProperty("user.dir") + "/inu.txt";
 

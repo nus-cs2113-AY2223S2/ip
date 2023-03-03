@@ -7,7 +7,6 @@ import inu.task.TaskList;
  * Terminates the program.
  */
 public class ExitCommand extends Command {
-
     public static final String COMMAND_WORD = "bye";
 
     /**
@@ -20,5 +19,4 @@ public class ExitCommand extends Command {
         return new CommandResult(Messages.MESSAGE_EXIT + '\n'
                 + " Saved " + taskList.getTaskListSize() + " tasks ^.^!");
     }
-
 }

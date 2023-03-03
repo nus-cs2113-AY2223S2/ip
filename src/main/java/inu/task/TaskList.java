@@ -11,13 +11,9 @@ import java.util.stream.Collectors;
  * Represents the task list and methods to manage the task list.
  */
 public class TaskList {
-
     private final ArrayList<Task> taskList;
-
     private final String EMPTY_STRING = "";
-
     private final String STRING_PERIOD = ". ";
-
     private final int INDEX_OFFSET = 1;
 
     /**
@@ -126,5 +122,4 @@ public class TaskList {
         int lastIndex = getTaskListSize() - INDEX_OFFSET;
         return taskList.get(lastIndex);
     }
-
 }

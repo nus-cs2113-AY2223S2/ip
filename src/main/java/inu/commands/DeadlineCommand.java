@@ -12,11 +12,8 @@ import java.time.LocalDateTime;
  * Adds a new deadline to the task list.
  */
 public class DeadlineCommand extends Command {
-
     public static final String COMMAND_WORD = "deadline";
-
     private final String deadlineDescription;
-
     private final LocalDateTime deadlineBy;
 
     /**
@@ -39,5 +36,4 @@ public class DeadlineCommand extends Command {
         return new CommandResult("added: " + taskList.getLastTask().toString() + "\n"
                 + "Now you have " + taskList.getTaskListSize() + " tasks in your list.");
     }
-
 }

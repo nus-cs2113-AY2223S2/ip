@@ -7,7 +7,6 @@ import inu.task.TaskList;
  * Lists all commands supported and how they are used.
  */
 public class HelpCommand extends Command {
-
     public static final String COMMAND_WORD = "help";
     /**
      * Constructor.

@@ -1,7 +1,5 @@
 package inu.exceptionhandling;
 
-import inu.task.TaskList;
-
 import java.time.LocalDateTime;
 
 /**
@@ -12,14 +10,12 @@ public class ExceptionManager {
     /**
      * Checks for empty strings.
      *
-     * @param strings the strings to be checked.
+     * @param string the strings to be checked.
      * @throws EmptyStringException when an empty string is read.
      */
-    public static void checkEmptyString(String... strings) throws EmptyStringException {
-        for (String s : strings) {
-            if (s.isEmpty()) {
-                throw new EmptyStringException();
-            }
+    public static void checkEmptyString(String string) throws EmptyStringException {
+        if (string.isEmpty()) {
+            throw new EmptyStringException();
         }
     }
 
@@ -36,12 +32,15 @@ public class ExceptionManager {
         }
     }
 
-    public static void checkCorrectDate(LocalDateTime... dates) throws InvalidDate {
-        for (LocalDateTime d : dates) {
-            if (d.isBefore(LocalDateTime.now())) {
-                throw new InvalidDate();
-            }
+    /**
+     * Checks that the date provided for tasks is not in the past
+     *
+     * @param date provided from user input
+     * @throws InvalidDate when the date provided is in the past, hence it is invalid.
+     */
+    public static void checkCorrectDate(LocalDateTime date) throws InvalidDate {
+        if (date.isBefore(LocalDateTime.now())) {
+            throw new InvalidDate();
         }
     }
-
 }

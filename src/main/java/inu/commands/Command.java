@@ -6,7 +6,6 @@ import inu.task.TaskList;
  * Represents an executable command.
  */
 public abstract class Command {
-
     /**
      * Checks if exit command is inputted by user.
      *
@@ -22,5 +21,4 @@ public abstract class Command {
      * @param taskList task list to contain the tasks.
      */
     public abstract CommandResult execute(TaskList taskList);
-
 }

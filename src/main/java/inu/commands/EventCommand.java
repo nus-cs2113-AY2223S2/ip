@@ -13,13 +13,9 @@ import java.time.LocalDateTime;
  * Adds a new event to the task list.
  */
 public class EventCommand extends Command {
-
     public static final String COMMAND_WORD = "event";
-
     private final String eventDescription;
-
     private final LocalDateTime eventFrom;
-
     private final LocalDateTime eventTo;
 
     /**
@@ -45,5 +41,4 @@ public class EventCommand extends Command {
         return new CommandResult("added: " + taskList.getLastTask().toString() + "\n"
                 + "Now you have " + taskList.getTaskListSize() + " tasks in your list.");
     }
-
 }

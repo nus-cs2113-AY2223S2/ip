@@ -6,7 +6,6 @@ import inu.task.TaskList;
  * Represents an incorrect or unrecognised command.
  */
 public class InvalidCommand extends Command {
-
     private final String messagePrompt;
 
     /**
@@ -22,5 +21,4 @@ public class InvalidCommand extends Command {
     public CommandResult execute(TaskList taskList) {
         return new CommandResult(messagePrompt);
     }
-
 }

@@ -4,7 +4,6 @@ package inu.commons;
  * Represents the ui used to interact with the user.
  */
 public class Ui {
-
     public static void printDivider() {
         System.out.println(Messages.MESSAGE_DIVIDER);
     }
@@ -27,5 +26,4 @@ public class Ui {
         System.out.println(output);
         printDivider();
     }
-
 }

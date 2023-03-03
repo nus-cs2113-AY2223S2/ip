@@ -8,9 +8,7 @@ import java.time.LocalDateTime;
  * Represents an event.
  */
 public class Event extends Task {
-
     private LocalDateTime from;
-
     private LocalDateTime to;
 
     public Event(String description, LocalDateTime from, LocalDateTime to) {
@@ -46,5 +44,4 @@ public class Event extends Task {
     public String encodeTaskToString() {
         return String.format("E//%s//%s//%s//%s", getStatusIcon(), getDescription(), getFrom(), getTo());
     }
-
 }

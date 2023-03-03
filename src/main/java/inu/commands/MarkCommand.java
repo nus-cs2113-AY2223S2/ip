@@ -8,9 +8,7 @@ import inu.task.TaskList;
  * Marks a task in the task list as done.
  */
 public class MarkCommand extends Command {
-
     public static final String COMMAND_WORD = "mark";
-
     private final int targetIndex;
 
     /**
@@ -27,5 +25,4 @@ public class MarkCommand extends Command {
         StorageFile.saveTaskListToFile(taskList);
         return new CommandResult(Messages.MESSAGE_MARK_TASK + "\n" + taskList.getTask(targetIndex).toString());
     }
-
 }

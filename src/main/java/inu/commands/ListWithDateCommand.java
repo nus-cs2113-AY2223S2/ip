@@ -9,9 +9,7 @@ import java.time.LocalDate;
  * List all the tasks found on a specific date in the task list to the user.
  */
 public class ListWithDateCommand extends Command {
-
     public static final String COMMAND_WORD = "list";
-
     private final LocalDate date;
 
     /**
@@ -28,5 +26,4 @@ public class ListWithDateCommand extends Command {
         return new CommandResult(Messages.MESSAGE_LIST_HEADER_WITH_DATE + Util.convertDateToString(date) + "\n"
                 + taskList.printList(taskList.filterDate(date)));
     }
-
 }
