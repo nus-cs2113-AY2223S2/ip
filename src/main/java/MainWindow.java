@@ -65,6 +65,10 @@ public class MainWindow extends AnchorPane {
         userInput.clear();
     }
 
+    /**
+     * Function that performs task to be done only when the program is first opened
+     * i.e. greeting the user and  readFileContents
+     */
     public void windowOpened() {
         String text = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"

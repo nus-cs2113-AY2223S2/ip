@@ -12,12 +12,15 @@ import java.lang.String;
 
 public class Duke {
 
+    //function for writing content in command line to Duke.txt, if the command was valid AND altered the list
     private static void writeToFile(String filePath, String textToAdd) throws IOException {
         FileWriter fw = new FileWriter(filePath, true);
         fw.write(textToAdd + "\n");
         fw.close();
     }
 
+    //function for reading all previous command lines stored in Duke.txt to restore list to its previous state upon
+    //reopening Duke.
     public static void readFileContents(ArrayList<String> filecontents, String filePath, int i, ArrayList<LocalDateTime> dates_and_times, DateTimeFormatter formatter, ArrayList<String> tasks, ArrayList<String> done, ArrayList<String> type) throws FileNotFoundException, DukeException {
         File f = new File(filePath);
         Scanner s = new Scanner(f);
@@ -43,6 +46,7 @@ public class Duke {
         }
     }
 
+    //alters date from whatever input format to YYYY-MM-DD so it can be stored as LocalDate/LocalDateTime
     public static String Date(String datestr) {
         String datestr2 = datestr;
         if (datestr.indexOf('-') != 4) {
@@ -56,6 +60,7 @@ public class Duke {
         return datestr2;
     }
 
+    //alters time from whatever input format to 24 hour format so it cna be stored as LocalDate/LocalDateTime
     public static String Time(String timestr) {
         String timestr2 = timestr;
         if (timestr.endsWith("PM") && timestr.charAt(0) == '0') {
@@ -70,6 +75,7 @@ public class Duke {
         return timestr2;
     }
 
+    //combines Date and Time so they can be stored together as LocalDateTime
     public static String DT(String str) {
         String datestr;
         String timestr;
@@ -92,12 +98,14 @@ public class Duke {
         return datetimestr;
     }
 
+    //adds date and time to arraylist dates_and_times
     public static void DateTime(ArrayList<LocalDateTime> dates_and_times, String str, DateTimeFormatter formatter) {
         String datetimestr = DT(str);
         LocalDateTime datetime = LocalDateTime.parse(datetimestr, formatter);
         dates_and_times.add(datetime);
     }
 
+    //marks ith task in list as done
     public static void mark(int i, String line, ArrayList<String> done) throws DukeException {
         int number = Integer.parseInt(line.substring(5));
         if (number > i || number < 1) {
@@ -107,6 +115,7 @@ public class Duke {
         done.add(number - 1, "[X]");
     }
 
+    //marks ith task in list as undone
     public static void unmark(int i, String line, ArrayList<String> done) throws DukeException {
         int number = Integer.parseInt(line.substring(7));
         if (number > i || number < 1) {
@@ -116,6 +125,7 @@ public class Duke {
         done.add(number - 1, "[ ]");
     }
 
+    //deletes ith task in list
     public static void delete(ArrayList<LocalDateTime> dates_and_times, int i, String line, ArrayList<String> tasks, ArrayList<String> done, ArrayList<String> type) throws DukeException {
         int number = Integer.parseInt(line.substring(7));
         if (number > i || number < 1) {
@@ -128,6 +138,7 @@ public class Duke {
         dates_and_times.remove(2 * (number - 1));
     }
 
+    //adds todo task to list
     public static void todo(ArrayList<LocalDateTime> dates_and_times, DateTimeFormatter formatter, String line, ArrayList<String> tasks, ArrayList<String> done, ArrayList<String> type) throws DukeException {
         String description = line.substring(4);
         if (description.isBlank()) {
@@ -140,6 +151,7 @@ public class Duke {
         DateTime(dates_and_times, "2015-10-23T03:34", formatter);
     }
 
+    //adds deadline task to list
     public static void deadline(ArrayList<LocalDateTime> dates_and_times, DateTimeFormatter formatter, String line, ArrayList<String> tasks, ArrayList<String> done, ArrayList<String> type) throws DukeException {
         int slash = line.indexOf("/");
         String description = line.substring(8, slash - 1);
@@ -153,7 +165,8 @@ public class Duke {
         done.add("[ ]");
         DateTime(dates_and_times, "2015-10-23T03:34", formatter);
     }
-    
+
+    //adds event task to list
     public static void event(ArrayList<LocalDateTime> dates_and_times, DateTimeFormatter formatter, String line, ArrayList<String> tasks, ArrayList<String> done, ArrayList<String> type) throws DukeException {
         int slash1 = line.indexOf("/");
         int slash2 = line.indexOf("/", slash1 + 1);
@@ -170,6 +183,7 @@ public class Duke {
         done.add("[ ]");
     }
 
+    //returns Duke response to user input
     public String getResponse(String input, ArrayList<String> filecontents, String filePath, ArrayList<String> type, ArrayList<String> done, ArrayList<String> tasks, ArrayList<LocalDateTime> dates_and_times, DateTimeFormatter formatter, int i) {
         String output = "";
         if (input.startsWith("bye")) {
