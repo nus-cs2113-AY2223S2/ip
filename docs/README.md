@@ -228,6 +228,7 @@ Exits the program.
 Format: ```bye```
 
 ## Command Summary
+
 | **Action**   | **Format, Examples**                                                                                        |
 |--------------|-------------------------------------------------------------------------------------------------------------|
 | Add To-do    | `todo TASK_DESCRIPTION`<br/>e.g.,`todo read book`                                                           |
