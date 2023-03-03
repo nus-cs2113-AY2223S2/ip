@@ -19,13 +19,13 @@ public class Storage {
         this.filePath = filePath;
     }
     public void createFile(){
-        //File directory = new File(filePath);
-        File newFile = new File(filePath);
+        File directory = new File(filePath);
+        File newFile = new File(filePath + "/BuddyTaskList.txt");
 
         try {
-           /* if (directory.mkdirs()){
+            if (directory.mkdirs()){
                 System.out.println("Directory has been created :)");
-             }*/
+             }
 
             if (newFile.createNewFile()) {
                 System.out.println("File has been created :)");
@@ -39,7 +39,7 @@ public class Storage {
     }
 
     public void updateFile(TaskList taskList) throws IOException {
-        FileWriter overwriteFile = new FileWriter(filePath);
+        FileWriter overwriteFile = new FileWriter(filePath + "/BuddyTaskList.txt");
         for (Task task : taskList) {
             String taskType = task.getType();
             String taskName = task.getTaskName();
@@ -66,7 +66,7 @@ public class Storage {
 
 
     public void loadFile(TaskList taskList) throws FileNotFoundException {
-        File file = new File(filePath);
+        File file = new File(filePath + "/BuddyTaskList.txt");
         Scanner s = new Scanner(file);
         while (s.hasNext()) {
             String line = s.nextLine();

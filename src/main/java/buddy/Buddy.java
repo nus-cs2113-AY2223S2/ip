@@ -35,7 +35,7 @@ public class Buddy {
         ui.sayByeToUser();
     }
     public static void main(String[] args){
-        new Buddy("./buddy.txt").run();
+        new Buddy("./Data").run();
 
     }
 }
