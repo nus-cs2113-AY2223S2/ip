@@ -46,6 +46,7 @@ public class Duke {
     }
 
     public static void main(String[] args) {
-        new Duke("./duke.txt").run();
+        String home = System.getProperty("user.home");
+        new Duke(home + "/duke.txt").run();
     }
 }
