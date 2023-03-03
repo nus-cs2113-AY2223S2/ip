@@ -19,13 +19,12 @@ public class StrIntLib {
     public static final String cmdEvent = "event";
     public static final String cmdDeadline = "deadline";
     public static final String cmdDelete = "delete";
-    public static final String cmdSave = "save";
     public static final String to = "to ";
-    public static final String toReplacement = "";
+    public static final String toReplacement = " ";
     public static final String from = "from ";
-    public static final String fromReplacement = "";
+    public static final String fromReplacement = " ";
     public static final String by = "by ";
-    public static final String byReplacement = "";
+    public static final String byReplacement = " ";
     public static final String missingInputsError = "Huh! Something is missing!\n" +
                                                         "Please check your inputs and correct them accordingly!";
     public static final String done = "X";
@@ -36,6 +35,13 @@ public class StrIntLib {
                                                 "Could you verify that?";
     public static final String emptyList = "You have no tasks on your list!";
     public static final String deleteText = "Noted. I've removed this task:";
-    public static final String IOExceptionText = "IOException occurred!";
     public static final String saveDone = "Task list saved!";
+    public static final String deadlineIcon = "D";
+    public static final String toDoIcon = "T";
+    public static final String eventIcon = "E";
+    public static final String invalidTask = "Task is invalid!";
+    public static final String noSaveFound = "No save file found!\n" +
+                                                "Creating a new task list...";
+    public static final String saveError = "Error occurred while saving...";
+    public static final String saveCreated = "Save file created!";
 }

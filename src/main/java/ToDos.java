@@ -3,6 +3,6 @@ public class ToDos extends Task {
         super(description);
     }
     public String getIcon() {
-        return "T";
+        return StrIntLib.toDoIcon;
     }
 }
