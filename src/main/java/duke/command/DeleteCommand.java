@@ -15,6 +15,7 @@ public class DeleteCommand extends Command {
 
     /**
      * Constructs a DeleteCommand object.
+     *
      * @param taskNumber The (zero-based) index of the task to be deleted
      */
     public DeleteCommand(int taskNumber) {
@@ -23,10 +24,11 @@ public class DeleteCommand extends Command {
 
     /**
      * Deletes a task from the task list.
-     * @param tasks The task list that the user modifies
+     *
+     * @param tasks   The task list that the user modifies
      * @param storage Updates when task list is modified
-     * @param ui Prints error messages if changes cannot be saved or invalid
-     *           task number is encountered.
+     * @param ui      Prints error messages if changes cannot be saved or invalid
+     *                task number is encountered.
      */
     @Override
     public void execute(TaskList tasks, Storage storage, UI ui) {

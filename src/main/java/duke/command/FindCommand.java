@@ -12,6 +12,7 @@ public class FindCommand extends Command {
 
     /**
      * Constructs a FindCommand object.
+     *
      * @param keyword The word to be searched for in the task list.
      */
     public FindCommand(String keyword) {
@@ -20,9 +21,10 @@ public class FindCommand extends Command {
 
     /**
      * Finds tasks in the task list that contains the keyword to be searched for.
-     * @param tasks The task list that the user modifies
+     *
+     * @param tasks   The task list that the user modifies
      * @param storage Updates when task list is modified
-     * @param ui Prints tasks that contain the keyword to be searched for.
+     * @param ui      Prints tasks that contain the keyword to be searched for.
      */
     @Override
     public void execute(TaskList tasks, Storage storage, UI ui) {

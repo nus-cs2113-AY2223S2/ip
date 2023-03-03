@@ -18,9 +18,10 @@ public class AddEventCommand extends Command {
 
     /**
      * Constructs an AddEventCommand object.
+     *
      * @param description The description of the Event task
-     * @param from The starting time of the event
-     * @param to The ending time of the event
+     * @param from        The starting time of the event
+     * @param to          The ending time of the event
      */
     public AddEventCommand(String description, String from, String to) {
         this.description = description;
@@ -30,9 +31,10 @@ public class AddEventCommand extends Command {
 
     /**
      * Adds an Event task to the task list.
-     * @param tasks The task list that the user modifies
+     *
+     * @param tasks   The task list that the user modifies
      * @param storage Updates when task list is modified
-     * @param ui Prints error messages if changes cannot be saved.
+     * @param ui      Prints error messages if changes cannot be saved.
      */
     @Override
     public void execute(TaskList tasks, Storage storage, UI ui) {

@@ -16,6 +16,7 @@ public class MarkTaskCommand extends Command {
 
     /**
      * Constructs a MarkTaskCommand object.
+     *
      * @param taskNumber The (zero-based) index of the task to be marked as done
      */
     public MarkTaskCommand(int taskNumber) {
@@ -24,10 +25,11 @@ public class MarkTaskCommand extends Command {
 
     /**
      * Marks task as done and saves any changes made to the task list.
-     * @param tasks The task list that the user modifies
+     *
+     * @param tasks   The task list that the user modifies
      * @param storage Updates when task list is modified
-     * @param ui Prints error messages if task number is invalid, task is already
-     *           marked as done, or there is an error when saving.
+     * @param ui      Prints error messages if task number is invalid, task is already
+     *                marked as done, or there is an error when saving.
      */
     @Override
     public void execute(TaskList tasks, Storage storage, UI ui) {

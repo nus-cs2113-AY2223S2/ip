@@ -14,8 +14,10 @@ import java.io.IOException;
 public class AddTodoCommand extends Command {
     private String description;
 
-    /**s
+    /**
+     * s
      * Constructs an AddTodoCommand object.
+     *
      * @param description The description of the Todo task
      */
     public AddTodoCommand(String description) {
@@ -24,9 +26,10 @@ public class AddTodoCommand extends Command {
 
     /**
      * Adds a Todo task to the task list.
-     * @param tasks The task list that the user modifies
+     *
+     * @param tasks   The task list that the user modifies
      * @param storage Updates when task list is modified
-     * @param ui Prints error messages if changes cannot be saved.
+     * @param ui      Prints error messages if changes cannot be saved.
      */
     @Override
     public void execute(TaskList tasks, Storage storage, UI ui) {

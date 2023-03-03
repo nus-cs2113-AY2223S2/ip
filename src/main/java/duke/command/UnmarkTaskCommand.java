@@ -16,6 +16,7 @@ public class UnmarkTaskCommand extends Command {
 
     /**
      * Constructs an UnmarkTaskCommand object.
+     *
      * @param taskNumber The (zero-based) index of the task to be marked as not done
      */
     public UnmarkTaskCommand(int taskNumber) {
@@ -24,10 +25,11 @@ public class UnmarkTaskCommand extends Command {
 
     /**
      * Marks task as not done and saves any changes made to the task list.
-     * @param tasks The task list that the user modifies
+     *
+     * @param tasks   The task list that the user modifies
      * @param storage Updates when task list is modified
-     * @param ui Prints error messages if task number is invalid, task is already
-     *           marked as not done, or there is an error when saving.
+     * @param ui      Prints error messages if task number is invalid, task is already
+     *                marked as not done, or there is an error when saving.
      */
     @Override
     public void execute(TaskList tasks, Storage storage, UI ui) {

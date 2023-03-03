@@ -3,14 +3,12 @@ package duke;
 import duke.task.Task;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class UI {
-    public static final Scanner in = new Scanner(System.in);
-    private static final String separator = "===========================================";
 
     /**
      * Prints all the tasks in the task list.
+     *
      * @param tasks The task list to be printed out.
      */
     public void printAllTasks(TaskList tasks) {
@@ -29,6 +27,7 @@ public class UI {
 
     /**
      * Prints all tasks containing a certain word.
+     *
      * @param foundTasks The ArrayList of tasks to be printed out
      */
     public void printFoundTasks(ArrayList<Task> foundTasks) {
@@ -47,6 +46,7 @@ public class UI {
 
     /**
      * Prints a task.
+     *
      * @param task The task to be printed.
      */
     public void printTask(Task task) {
@@ -83,6 +83,7 @@ public class UI {
 
     /**
      * Prints the number of tasks in the task list.
+     *
      * @param size Number of tasks in the task list.
      */
     public void printNoOfTasks(int size) {
@@ -146,7 +147,7 @@ public class UI {
     }
 
     /**
-     * Prints error messaage if the user begins their command with an invalid keyword or
+     * Prints error message if the user begins their command with an invalid keyword or
      * does not provide a description of the task.
      */
     public void printEmptyDescriptionError() {
@@ -165,7 +166,7 @@ public class UI {
      * Prints warning message if the user provides a Deadline task with invalid format.
      */
     public void printInvalidDeadline() {
-        System.out.println( "Invalid format. Specify deadlines in the format 'deadline EVENT /by TIME'.");
+        System.out.println("Invalid format. Specify deadlines in the format 'deadline EVENT /by TIME'.");
     }
 
     /**
@@ -210,6 +211,7 @@ public class UI {
     public void printSeparator() {
         System.out.println("============================================");
     }
+
     /**
      * Prints welcome message when program first starts.
      */

@@ -2,18 +2,18 @@
 
 
 ## Contents
-- [Quick Start](##Quick Start)
-- [Features](##Features)
-    - [Add a todo task](###Add a todo task)
-    - [Add a deadline task](###Add a deadline task)
-    - [Add an event task](###Add an event task)
-    - [Mark a task as done](###Mark a task as done)
-    - [Mark a task as not done](###Mark a task as not done)
-    - [Delete a task](###Delete a task)
-    - [List down all tasks and their statuses](###List down all tasks and their statuses)
-    - [Find a task using keywords](###Find a task using keywords)
-    - [Exit the program](###Exit the program)
-    - [Saving tasks](##Saving tasks)
+- [Quick Start](https://github.com/ysl-28/ip/tree/master/docs#Quick_Start)
+- [Features](https://github.com/ysl-28/ip/tree/master/docs#Features)
+  - [Add a todo task](https://github.com/ysl-28/ip/tree/master/docs#Add_a_todo_task)
+  - [Add a deadline task](https://github.com/ysl-28/ip/tree/master/docs#Add_a_deadline_task)
+  - [Add an event task](https://github.com/ysl-28/ip/tree/master/docs#Add_an_event_task)
+  - [Mark a task as done](https://github.com/ysl-28/ip/tree/master/docs#Mark_a_task_as_done)
+  - [Mark a task as not done](https://github.com/ysl-28/ip/tree/master/docs#Mark_a_task_as_not_done)
+  - [Delete a task](https://github.com/ysl-28/ip/tree/master/docs#Delete_a_task)
+  - [List down all tasks and their statuses](https://github.com/ysl-28/ip/tree/master/docs#List_down_all_tasks_and_their_statuses)
+  - [Find a task using keywords](https://github.com/ysl-28/ip/tree/master/docs#Find_a_task_using_keywords)
+  - [Exit the program](https://github.com/ysl-28/ip/tree/master/docs#Exit_the_program)
+  - [Saving tasks](https://github.com/ysl-28/ip/tree/master/docs#Saving_tasks)
 
 ## Quick Start
 1. Ensure that Java 11 is installed. This can be confirmed by entering `java --version` in the terminal.

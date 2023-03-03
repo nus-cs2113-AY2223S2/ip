@@ -33,8 +33,9 @@ public class Storage {
 
     /**
      * Saves the list of tasks entered by the user.
+     *
      * @param tasks List of tasks entered by the user
-     * @param ui Prints warning message if task list cannot be converted to JSON
+     * @param ui    Prints warning message if task list cannot be converted to JSON
      * @throws IOException When file cannot be saved
      */
     public void saveData(TaskList tasks, UI ui) throws IOException {
@@ -50,9 +51,10 @@ public class Storage {
 
     /**
      * Converts the list of tasks entered by the user into a JSON file
+     *
      * @param tasks List of tasks entered by the user.
-     * @param file File for tasks to be saved in.
-     * @param ui Prints error message when tasks cannot be converted to JSON or saved.
+     * @param file  File for tasks to be saved in.
+     * @param ui    Prints error message when tasks cannot be converted to JSON or saved.
      */
     public void taskToJson(TaskList tasks, File file, UI ui) {
         JsonArray jsonArray = new JsonArray();
@@ -74,8 +76,9 @@ public class Storage {
 
     /**
      * Loads previously-entered tasks from a JSON file that was previously saved by the user
+     *
      * @param tasks List of tasks entered by the user
-     * @param ui Prints error message
+     * @param ui    Prints error message
      * @throws IOException When JSON file cannot be loaded
      */
     public void loadData(TaskList tasks, UI ui) throws IOException {
@@ -100,9 +103,10 @@ public class Storage {
 
     /**
      * Converts JSON file back into TaskList object
-     * @param tasks List of tasks that tasks from the JSON file are added to
+     *
+     * @param tasks    List of tasks that tasks from the JSON file are added to
      * @param tempList Tasks from the saved JSON file
-     * @param ui Prints warning message when there is no file to be loaded.
+     * @param ui       Prints warning message when there is no file to be loaded.
      */
     public void jsonToTask(TaskList tasks, JsonArray tempList, UI ui) {
         try {

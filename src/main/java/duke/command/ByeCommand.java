@@ -12,9 +12,9 @@ public class ByeCommand extends Command {
 
     }
 
-
     /**
      * Prints goodbye message before user exits the program.
+     *
      * @param ui Prints goodbye message.
      */
     @Override

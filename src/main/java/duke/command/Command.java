@@ -15,9 +15,10 @@ public class Command {
 
     /**
      * Executes the user's command
-     * @param tasks The task list that the user modifies
+     *
+     * @param tasks   The task list that the user modifies
      * @param storage Updates when task list is modified
-     * @param ui Prints error messages if command cannot be executed.
+     * @param ui      Prints error messages if command cannot be executed.
      */
     public void execute(TaskList tasks, Storage storage, UI ui) {
 
