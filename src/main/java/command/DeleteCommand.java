@@ -35,6 +35,8 @@ public class DeleteCommand extends Command {
             storage.writeToFile(tasks.tasks, storage.filePath);
         } catch (NumberFormatException e) {
             throw new DukeException(ErrorMessage.INVALID_NUMBER.toString());
+        } catch (IndexOutOfBoundsException e) {
+            throw new DukeException(ErrorMessage.INVALID_NUMBER.toString());
         }
 
     }

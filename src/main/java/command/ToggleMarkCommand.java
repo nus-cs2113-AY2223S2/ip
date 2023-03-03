@@ -40,6 +40,8 @@ public class ToggleMarkCommand extends Command {
             ui.printTask(tasks, taskNumber);
         } catch (NumberFormatException e) {
             throw new DukeException(ErrorMessage.INVALID_NUMBER.toString());
+        } catch (IndexOutOfBoundsException e) {
+            throw new DukeException(ErrorMessage.INVALID_NUMBER.toString());
         }
     }
 
