@@ -1,11 +1,15 @@
 package duke;
 
-import java.io.*;
+import java.io.IOException;
 import java.util.Scanner;
+
 import duke.command.ByeCommand;
 import duke.command.Command;
 
-public class Duke implements Serializable {
+/**
+ * Runs Duke.
+ */
+public class Duke {
     private static TaskList tasks = new TaskList();
     private static Storage storage = new Storage();
 
@@ -34,17 +38,19 @@ public class Duke implements Serializable {
 
             } catch (NullPointerException e) {
                 ui.printCommandExecutionFailure();
-
             }
         }
     }
 
+    /**
+     * Loads .json file containing previously saved tasks.
+     */
     public static void start() {
         try {
             storage.loadData(tasks, ui);
 
         } catch (IOException e) {
-            ui.printSavingError();
+            ui.printLoadingError();
         }
     }
 }
