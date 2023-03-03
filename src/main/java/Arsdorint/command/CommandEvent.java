@@ -1,7 +1,6 @@
 package Arsdorint.command;
 
 import Arsdorint.data.TaskList;
-import Arsdorint.task.Deadline;
 import Arsdorint.task.Event;
 import Arsdorint.task.Task;
 

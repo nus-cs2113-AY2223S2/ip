@@ -24,10 +24,6 @@ public class Deadline extends Task {
         this(description, date);
         this.isDone = status;
     }
-    public void printTask() {
-        System.out.println(this.taskType + this.getStatus()
-        + " " + this.description + "(" + this.date + ")");
-    }
     @Override
     public String toSave() {
         return (this.taskName + VERTICAL_BAR + binaryRes() + VERTICAL_BAR +
@@ -44,8 +40,8 @@ public class Deadline extends Task {
         return (this.date == null ? true : false);
     }
 
-    public String printDate(String date) {
-        return (this.date == null) ? this.dateString : this.date.format(DateTimeFormatter.ofPattern(date));
+    public String printDate(String pattern) {
+        return (this.date == null) ? this.dateString : this.date.format(DateTimeFormatter.ofPattern(pattern));
     }
     public LocalDate getDate() {
         return this.date;

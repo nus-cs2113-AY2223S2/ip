@@ -25,10 +25,6 @@ public class Event extends Task {
         this.isDone = status;
     }
 
-    public void printTask() {
-        System.out.println(this.taskType + this.getStatus()
-                + " " + this.description + "(" + this.date + ")");
-    }
     @Override
     public String toSave() {
         return (this.taskName + VERTICAL_BAR + binaryRes() + VERTICAL_BAR
