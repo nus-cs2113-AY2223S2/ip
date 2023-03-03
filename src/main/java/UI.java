@@ -34,7 +34,7 @@ public class UI {
         System.out.println("* |Add event| ex) event tutorial from 2023-02-09 to 2023-03-07");
         System.out.println("* |List tasks| ex) list");
         System.out.println("* |Mark a task as Done| ex) mark 2");
-        System.out.println("* |Unmark a task as Undone| ex) unmark 2");
+        System.out.println("* |Mark a task as Undone| ex) unmark 2");
         System.out.println("* |Delete| ex) delete 3");
         System.out.println("* |Find| ex) find project");
         System.out.println("* |Exit| ex) bye");
@@ -59,14 +59,14 @@ public class UI {
     public static void printMarkComment(Task targetTask){
         System.out.println(HORIZONTAL_LINE);
         System.out.println("[DUKE] Good job! I marked this task as done: ");
-        System.out.println(targetTask);
+        System.out.println(targetTask.showTask());
         System.out.println(HORIZONTAL_LINE);
     }
 
     public static void printUnmarkComment(Task targetTask){
         System.out.println(HORIZONTAL_LINE);
         System.out.println("[DUKE] OK, I've marked this task as not done yet: ");
-        System.out.println(targetTask);
+        System.out.println(targetTask.showTask());
         System.out.println(HORIZONTAL_LINE);
     }
 
@@ -80,7 +80,7 @@ public class UI {
     public static void printTargetTaskList(TaskList taskList){
         System.out.println(HORIZONTAL_LINE);
         System.out.println("[DUKE] Here are the matching tasks in your list: ");
-        System.out.print(taskList);
+        System.out.print(taskList.showTaskList());
         System.out.println(HORIZONTAL_LINE);
     }
 
