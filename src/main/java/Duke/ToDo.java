@@ -4,10 +4,11 @@ package Duke;
  * Represents ToDo subtype of tasks
  */
 public class ToDo extends Task {
+    public static String TYPE = "todo";
+
     private ToDo(String content) {
         super(content);
     }
-    static String TYPE = "todo";
 
     /**
      * creates new ToDo
@@ -17,7 +18,7 @@ public class ToDo extends Task {
      * @throws IllegalArgumentException When information given in insufficient.
      * @throws ArrayIndexOutOfBoundsException When information given in insufficient.
      */
-    static ToDo createToDo(String[] commandByWord) throws IllegalArgumentException, ArrayIndexOutOfBoundsException {
+    public static ToDo createToDo(String[] commandByWord) throws IllegalArgumentException, ArrayIndexOutOfBoundsException {
         String task = "";
 
         if (commandByWord.length < 2) {
@@ -33,11 +34,18 @@ public class ToDo extends Task {
         return new ToDo(task);
     }
 
-    String getType() {
-        return "todo";
+    public String getType() {
+        return ToDo.TYPE;
     }
 
-    boolean contains(String keyword) {
+    /**
+     * Returns boolean on whether the keyword in contained in the task's information.
+     * It looks through the event's information to determine keyword's relevance
+     *
+     * @param keyword Word that is looked for in the task.
+     * @return Boolean on whether the task contains the keyword.
+     */
+    public boolean contains(String keyword) {
         return (this.content.contains(keyword));
     }
 

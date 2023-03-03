@@ -8,7 +8,7 @@ public abstract class Task {
     protected String content;
     private boolean isCompleted;
 
-    Task(String content) {
+    public Task(String content) {
         this.content = content;
         this.isCompleted = false;
     }
@@ -18,7 +18,7 @@ public abstract class Task {
      *
      * @return Completion status of task.
      */
-    boolean isCompleted() {
+    public boolean isCompleted() {
         return isCompleted;
     }
 
@@ -27,7 +27,7 @@ public abstract class Task {
      *
      * @return Complete verison of the current task.
      */
-    Task markAsComplete() {
+    public Task markAsComplete() {
         this.isCompleted = true;
         return this;
     }
@@ -36,14 +36,22 @@ public abstract class Task {
      *
      * @return Incomplete verison of the current task.
      */
-    Task markAsIncomplete() {
+    public Task markAsIncomplete() {
         this.isCompleted = false;
         return this;
     }
 
-    abstract boolean contains(String keyword);
+    /**
+     * Returns boolean on whether the keyword in contained in the task's information.
+     * It looks through the event's information to determine keyword's relevance.
+     * The search criteria is implemented specific to the task subtype.
+     *
+     * @param keyword Word that is looked for in the task.
+     * @return Boolean on whether the task contains the keyword.
+     */
+    public abstract boolean contains(String keyword);
 
-    abstract String getType();
+    public abstract String getType();
 
     public String toString() {
         return (this.isCompleted ? "[X] " : "[ ] ") + this.content;

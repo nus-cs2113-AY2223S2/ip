@@ -13,10 +13,10 @@ import java.util.LinkedList;
 public class Tasks {
     private LinkedList<Task> taskList;
 
-    Tasks() {
+    private Tasks() {
         this.taskList = new LinkedList<Task>();
     }
-    static Tasks loadTasks() {
+    public static Tasks loadTasks() {
         Tasks newTasks = new Tasks();
         newTasks.taskList = TaskSaver.loadTasks();
         return newTasks;
@@ -28,7 +28,7 @@ public class Tasks {
      * @param commandByWord Contains information on task.
      * @return String command that is to be shown to the user that indicates successful insertion or any error.
      */
-    String addTask(String[] commandByWord) {
+    public String addTask(String[] commandByWord) {
         String type = commandByWord[0];
         try {
             Task task = TaskCreator.createNewTask(commandByWord);
@@ -57,7 +57,7 @@ public class Tasks {
      * @param commandByWord Contains information on task.
      * @return String command that is to be shown to the user that indicates successful deletion or any error.
      */
-    String deleteTask(String[] commandByWord) {
+    public String deleteTask(String[] commandByWord) {
         try {
             if (commandByWord.length != 2) {
                 return "☹ OOPS!!! The delete command is invalid\n" +
@@ -83,7 +83,7 @@ public class Tasks {
      * @param index index of the task in the list that is to be marked as complete.
      * @return String command that is to be shown to the user that indicates successful marking or any error.
      */
-    String mark(int index) {
+    public String mark(int index) {
         try {
             Task newTask = taskList.get(index - 1).markAsComplete();
             this.taskList.set(index - 1, newTask);
@@ -101,7 +101,7 @@ public class Tasks {
      * @param index index of the task in the list that is to be marked as incomplete.
      * @return String command that is to be shown to the user that indicates successful unmarking or any error.
      */
-    String unmark(int index) {
+    public String unmark(int index) {
         try {
             Task newTask = taskList.get(index - 1).markAsIncomplete();
             this.taskList.set(index - 1, newTask);
@@ -114,15 +114,15 @@ public class Tasks {
         }
     }
 
-
-    String listTasks(String type) {
     /**
      * Lists tasks stored in the task list in string format, which is shown to the user.
      *
      * @return String of all tasks saved, tasks written line by line.
      */
+    public String listTasks(String type) {
         String list = (type.equals("list")) ? "Here are the tasks in your list:\n"
                 : "Here are the matching tasks in your list:\n";
+
         int counter = 1;
         for (Task task : taskList) {
             list += "  " + Integer.toString(counter) + ". ";
@@ -133,9 +133,15 @@ public class Tasks {
         return list;
     }
 
+    /**
+     * Returns string form of tasks that contain the keyword given by the user.
+     * Iterates through all tasks within the taskList to find matching task.
+     *
+     * @param commandByWord String array containing command information.
+     * @return String form of list of tasks that contain the keyword.
+     */
 
-
-    String findTask(String[] commandByWord) {
+    public String findTask(String[] commandByWord) {
         if (commandByWord.length > 2) return "☹ OOPS!!! Please enter a single keyword\n";
         Tasks tasksWithKeyword = new Tasks();
         for (Task task : this.taskList) {
@@ -146,7 +152,12 @@ public class Tasks {
         return tasksWithKeyword.listTasks("find");
     };
 
-    String toStringList() {
+    /**
+     * Converts the list of tasks into string format.
+     *
+     * @return String form of all tasks in the list.
+     */
+    private String toStringList() {
         String TaskListAsString = "";
         for (Task task : taskList) {
             TaskListAsString += TaskToStringConverter.convertTaskToCommandString(task) + "\n";

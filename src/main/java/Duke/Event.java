@@ -6,9 +6,9 @@ package Duke;
 public class Event extends Task {
     private String startDate;
     private String endDate;
-    static String TYPE = "event";
+    public static String TYPE = "event";
 
-    public Event(String content, String startDate, String endDate) {
+    private Event(String content, String startDate, String endDate) {
         super(content);
         this.startDate = startDate;
         this.endDate = endDate;
@@ -21,7 +21,7 @@ public class Event extends Task {
  * @throws IllegalArgumentException When information given in insufficient.
  * @throws ArrayIndexOutOfBoundsException When information given in insufficient.
  */
-    static Event createEvent(String[] commandByWord)
+    public static Event createEvent(String[] commandByWord)
             throws IllegalArgumentException, ArrayIndexOutOfBoundsException {
 
         if (commandByWord.length < 2) {
@@ -33,9 +33,7 @@ public class Event extends Task {
         String startDate = "";
         String endDate = "";
 
-        // traverse array until /from is found
         while (commandByWord[index].charAt(0) != '/') {
-            // add space between words
             if (index != 1) {
                 taskToDo += " ";
             }
@@ -43,7 +41,7 @@ public class Event extends Task {
             taskToDo += commandByWord[index];
             ++index;
         }
-        ++index; // move past the /from
+        ++index;
         int indexOfFrom = index;
 
         while (commandByWord[index].charAt(0) != '/') {
@@ -56,7 +54,6 @@ public class Event extends Task {
         }
 
         for (int i = index + 1; i < commandByWord.length; ++i) {
-            // add space between words
             if (i != index + 1) {
                 endDate += " ";
             }
@@ -66,11 +63,18 @@ public class Event extends Task {
         return new Event(taskToDo, startDate, endDate);
     }
 
-    String getType() {
-        return "event";
+    public String getType() {
+        return Event.TYPE;
     }
 
-    boolean contains(String keyword) {
+    /**
+     * Returns boolean on whether the keyword in contained in the task's information.
+     * It looks through the event's information and start/end dates to determine keyword's relevance
+     *
+     * @param keyword Word that is looked for in the task.
+     * @return Boolean on whether the task contains the keyword.
+     */
+    public boolean contains(String keyword) {
         return (this.content.contains(keyword)
                 | this.startDate.contains(keyword)
                 | this.endDate.contains(keyword));

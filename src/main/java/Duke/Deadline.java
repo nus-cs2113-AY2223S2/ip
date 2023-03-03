@@ -6,8 +6,9 @@ package Duke;
  */
 public class Deadline extends Task {
     private String dueDate;
+    public static String TYPE = "deadline";
 
-    public Deadline(String content, String dueDate) {
+    private Deadline(String content, String dueDate) {
         super(content);
         this.dueDate = dueDate;
     }
@@ -20,7 +21,7 @@ public class Deadline extends Task {
      * @throws IllegalArgumentException When information given in insufficient.
      * @throws ArrayIndexOutOfBoundsException When information given in insufficient.
      */
-    static Deadline createDeadline(String[] commandByWord) throws IllegalArgumentException, ArrayIndexOutOfBoundsException {
+    public static Deadline createDeadline(String[] commandByWord) throws IllegalArgumentException, ArrayIndexOutOfBoundsException {
 
         if (commandByWord.length < 2) {
             throw new IllegalArgumentException();
@@ -29,9 +30,7 @@ public class Deadline extends Task {
         int index = 1;
         String taskToDo = "";
         String dueDate = "";
-        // traverse array until /by is found
         while (commandByWord[index].charAt(0) != '/') {
-            // add space between words
             if (index != 1) {
                 taskToDo += " ";
             }
@@ -41,7 +40,6 @@ public class Deadline extends Task {
         }
 
         for (int i = index + 1; i < commandByWord.length; ++i) {
-            // add space between words
             if (i != index + 1) {
                 dueDate += " ";
             }
@@ -54,11 +52,18 @@ public class Deadline extends Task {
     /**
      * @return type of task. i.e. deadline
      */
-    String getType() {
-        return "deadline";
+    public String getType() {
+        return Deadline.TYPE;
     }
 
-    boolean contains(String keyword) {
+    /**
+     * Returns boolean on whether the keyword in contained in the task's information.
+     * It looks through the event's information and deadline to determine keyword's relevance
+     *
+     * @param keyword Word that is looked for in the task.
+     * @return Boolean on whether the task contains the keyword.
+     */
+    public boolean contains(String keyword) {
         return (this.content.contains(keyword) | this.dueDate.contains(keyword));
     }
 

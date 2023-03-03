@@ -20,7 +20,7 @@ public class TaskSaver {
      * Sets up reader and writer for the class.
      * Ran initially when loading the tasks from the text file.
      */
-    static void setUpReadWrite() {
+    private static void setUpReadWrite() {
         try {
             txtFile = new File("duke.txt");
             FW = new FileWriter(txtFile, true);
@@ -37,7 +37,7 @@ public class TaskSaver {
      *
      * @return LinkedList<Task> that contains tasks loaded from the text file.
      */
-    static LinkedList<Task> loadTasks() {
+    public static LinkedList<Task> loadTasks() {
         setUpReadWrite();
         LinkedList<Task> tasks = new LinkedList<Task>();
         while (SC.hasNextLine()) {
@@ -53,7 +53,7 @@ public class TaskSaver {
      *
      * @param newTask Task to be added to the text file.
      */
-    static void addTask(Task newTask) {
+    public static void addTask(Task newTask) {
         try {
             String command = TaskToStringConverter.convertTaskToCommandString(newTask);
             FW = new FileWriter("duke.txt", true);
@@ -71,7 +71,7 @@ public class TaskSaver {
      *
      * @param taskList List of current tasks, in String form.
      */
-    static void updateTask(String taskList) {
+    public static void updateTask(String taskList) {
         try {
             FW = new FileWriter("duke.txt");
             FW.write(taskList);

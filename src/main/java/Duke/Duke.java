@@ -59,7 +59,7 @@ public class Duke {
      *
      * @param message Message that has to be communicated to the user.
      */
-    static void speak(String message) {
+    private static void speak(String message) {
         System.out.println(LINE_BREAK);
         System.out.println("  " + message);
         System.out.println(LINE_BREAK);

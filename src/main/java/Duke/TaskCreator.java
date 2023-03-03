@@ -18,13 +18,17 @@ public class TaskCreator {
     public static Task createNewTask(String[] commandByWord)
             throws IllegalArgumentException, ArrayIndexOutOfBoundsException {
         String type = commandByWord[0];
-        if (type.equals("todo")) {
+        if (type.equals(ToDo.TYPE)) {
             return ToDo.createToDo(commandByWord);
-        } else if (type.equals("deadline")) {
+        }
+        if (type.equals(Deadline.TYPE)) {
             return Deadline.createDeadline(commandByWord);
-        } else {
+        }
+        if (type.equals(Event.TYPE)) {
             return Event.createEvent(commandByWord);
         }
+
+        throw new IllegalArgumentException();
     }
 
     /**
