@@ -19,7 +19,7 @@ public class FindCommand extends Command{
         int taskNo = 1;
         String list = "Here are the matching tasks in your list:" + NEW_LINE;
         for(Task t: taskList.getAllTasks()) {
-            if (t.getDescription().contains(toFind)) {
+            if (t.getDescription().toLowerCase().contains(toFind.toLowerCase())) {
                 list += taskNo + DOT + t + NEW_LINE;
                 taskNo += 1;
             }

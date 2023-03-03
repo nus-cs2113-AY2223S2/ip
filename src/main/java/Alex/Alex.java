@@ -38,11 +38,12 @@ public class Alex {
                     Ui.showOutput("Error...aborting save" + e.getMessage());
                 }
                 isExit = ByeCommand.isExit(command);
-
             } catch (IndexOutOfBoundsException e) {
                 Ui.showOutput("☹ OOPS!!! You are inputted an invalid index, try again!");
             } catch (AlexException e) {
                 Ui.showOutput((e.getMessage()));
+            } catch (NumberFormatException e) {
+                Ui.showOutput("☹ OOPS!!! You are inputted an invalid index, try again!");
             }
 
         }

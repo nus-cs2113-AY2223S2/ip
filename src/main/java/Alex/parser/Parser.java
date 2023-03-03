@@ -161,7 +161,7 @@ public class Parser {
             throw new AlexTaskException(EMPTY_TO);
         }
 
-        return new EventCommand(activity,from,to);
+        return new EventCommand(activity.substring(0,activity.length()-1),from.substring(0,from.length()-1),to.substring(0,to.length()-1));
 
     }
     /**
@@ -169,11 +169,8 @@ public class Parser {
      *
      * @return prepared MarkCommand to be executed
      */
-    private Command prepareMark() throws AlexTaskException{
+    private Command prepareMark(){
         int number = Integer.parseInt(userInput[1]);
-        if (number < 1) {
-            throw new AlexTaskException("Please input a valid index");
-        }
         return new MarkCommand(number);
     }
 
