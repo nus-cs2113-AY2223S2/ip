@@ -120,6 +120,16 @@ public class Duke {
                 counter--;
                 break;
 
+            case "find":
+                System.out.println("    Please specify keyword: ");
+                inputString = getInputString();
+                for (int i = 0; i < tasks.size(); i++) {
+                    String task = tasks.get(i).getDescription();
+                    if (task.contains(inputString)) {
+                        tasks.get(i).printInList();
+                    }
+                }
+
             default:
                 System.out.println("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
             break;
