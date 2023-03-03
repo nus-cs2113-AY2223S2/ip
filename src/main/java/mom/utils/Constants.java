@@ -1,8 +1,8 @@
 package mom.utils;
 
 public enum Constants {
-    // DATA FILE NAME USED FOR APPLIATION. default: items.txt
-    FILE_NAME("items.txt"),
+    // DATA FILE NAME USED FOR APPLIATION. default: reminders.txt
+    FILE_NAME("reminders.txt"),
 
     // ACCEPTABLE DATE TIME FORMAT FOR DEADLINE AND EVENT. default: dd-MM-yyyy HH:mm
     ACCEPTABLE_DATE_TIME_FORMAT("dd-MM-yyyy HH:mm"),

@@ -4,7 +4,7 @@ Similar to your real-life mom, Mom is a naggy remainder app that helps people to
 ## Quick Start
 1. Ensure that you have Java 11 and above installed in your computer.
 2. Download the ***ip.jar*** [here](https://github.com/pinyoko573/ip/releases)
-3. Make sure that you do not have ***reminders.txt*** in the folder where *ip.jar* is located, as this file will be used to store your items!
+3. Make sure that you do not have ***reminders.txt*** in the folder where *ip.jar* is located, as this file will be used to store the reminders!
 4. Launch your command prompt/terminal and navigate to the folder where *ip.jar* is located.
 5. Run the following command: `java -jar ip.jar`
 
@@ -25,7 +25,7 @@ You can mark reminders once you have completed them. (Good job?)
 
 ### Find specific reminder
 
-With many reminders, Mom allows to search and retrieve the item that you are finding. (Similar to asking your mom to find your lost stuff at home, no?)
+With many reminders, Mom allows to search and retrieve the reminder that you are finding. (Similar to asking your mom to find your lost stuff at home, no?)
 
 ### Persistent data
 
@@ -58,7 +58,7 @@ Format: `mark (no)`
 
 Expected output:
 
-Shows the item that has been marked as done.
+Shows the reminder that has been marked as done.
 ```
 mark 2
 _________________
@@ -84,15 +84,15 @@ I thought you told me this task was done???
 _________________
 ```
 
-### `todo` - Create a Todo item
+### `todo` - Create a Todo reminder
 
-Adds an item of type Todo into the list.
+Adds a reminder of type Todo into the list.
 
 Format: `todo (description)`
 
 Expected output:
 
-Displays the Todo item added and the number of items after adding.
+Displays the Todo added and the number of reminders after adding.
 ```
 todo to cook
 _________________
@@ -104,14 +104,14 @@ _________________
 
 ### `deadline` - Create a Deadline item
 
-Adds an item of type Deadline with datemark(or dateline) specified into the list.
+Adds a reminder of type Deadline with datemark(or dateline) specified into the list.
 Datemark format must be strictly followed: "dd-MM-yyyy HH:mm". Example: "20-10-2020 18:00".
 
 Format: `deadline (description) /by (datemark)`
 
 Expected output:
 
-Displays the Deadline item added and the number of items after adding.
+Displays the Deadline added and the number of reminders after adding.
 ```
 deadline to play /by 20-10-2020 18:00
 _________________
@@ -123,7 +123,7 @@ _________________
 
 ### `event` - Create an Event task
 
-Adds an item of type Event with from & to date specified into the list.
+Adds a reminder of type Event with from & to date specified into the list.
 From (start date) and To (end date) format must be strictly followed: "dd-MM-yyyy HH:mm". Example: "20-10-2020 18:00".
 The start date must not be after the end date.
 
@@ -131,7 +131,7 @@ Format: `event (description) /from (start date) /to (end date)`
 
 Expected output:
 
-Displays the Event item added and the number of items after adding.
+Displays the Event added and the number of reminders after adding.
 ```
 event to exercise /from 20-10-2020 12:00 /to 20-10-2020 15:00
 _________________
@@ -143,13 +143,13 @@ _________________
 
 ### `delete` - Delete a reminder
 
-Delete an item using the **number** shown from the items list.
+Delete a reminder using the **number** shown from the reminders list.
 
 Format: `delete (no)`
 
 Expected output:
 
-Shows the item that has been deleted and the number of items remaining.
+Shows the reminder that has been deleted and the number of reminders remaining.
 ```
 delete 6
 _________________
@@ -161,13 +161,13 @@ _________________
 
 ### `find` - Find specific items
 
-Find all items that contain the specified keyword.
+Find all reminders that contain the specified keyword.
 
 Format: `find (keyword)`
 
 Expected output:
 
-Returns the list of items that contain the keyword.
+Returns the list of reminders that contain the keyword.
 ```
 find to s
 _________________
