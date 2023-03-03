@@ -13,33 +13,32 @@ public class Bro {
     public static final String HORIZONTAL_LINE = "\n───────────────────────────────────────────────────────────────\n";
     public static final String GREETING = " Sup bro. I'm Bro.\n" + " What do you want?";
     public static final String TASK_DOES_NOT_EXIST = " Bro that task number does not exist...";
-    public static ArrayList<Task> taskList = Save.getSavedTasks(new ArrayList<>());
+    public static ArrayList<Task> taskList = Save.getSavedTasks();
     public static void main(String[] args) {
         System.out.println(HORIZONTAL_LINE + GREETING + HORIZONTAL_LINE);
 
         // User Input
         String line;
-        StringBuilder reply = new StringBuilder();  // Use StringBuilder as we concatenate Strings in a loop later on
+        StringBuilder reply;  // Use StringBuilder as we concatenate Strings in a loop later on
         Scanner in = new Scanner(System.in);
         boolean haveInput = true;
         while (haveInput) {
             line = in.nextLine();
             String[] arrayOfInputs = line.split(" ");
             switch (arrayOfInputs[0]) {
-            case "bye":
+            case "bye" -> {
                 reply = new StringBuilder(" Bye bye bro.");
                 haveInput = false;
-                break;
-            case "list":
+            }
+            case "list" -> {
                 reply = new StringBuilder(" Your tasks:\n");
                 for (int i = 0; i < taskList.size(); ++i) {
                     Task currentTask = taskList.get(i);
                     String mark = currentTask.mark();
                     reply.append(" ").append(i + 1).append(".[").append(currentTask.getType()).append("][").append(mark).append("] ").append(currentTask).append("\n");
                 }
-                break;
-            case "mark": // Fallthrough
-            case "unmark":
+            } // Fallthrough
+            case "mark", "unmark" -> {
                 boolean markAsComplete = arrayOfInputs[0].equals("mark");   // this boolean decides if the following `markComplete()` marks the task as Completed or Uncompleted
                 try {
                     reply = markComplete(markAsComplete, taskList, arrayOfInputs);
@@ -49,24 +48,24 @@ public class Bro {
                     reply = new StringBuilder(TASK_DOES_NOT_EXIST);
                 }
                 Save.saveToFile();
-                break;
-            case "todo":
+            }
+            case "todo" -> {
                 try {
                     reply = createToDo(taskList, arrayOfInputs);
                 } catch (invalidInputFormat e) {
                     reply = new StringBuilder(e.toString());
                 }
                 Save.saveToFile();
-                break;
-            case "deadline":
+            }
+            case "deadline" -> {
                 try {
                     reply = createDeadline(taskList, arrayOfInputs);
                 } catch (invalidInputFormat e) {
                     reply = new StringBuilder(e.toString());
                 }
                 Save.saveToFile();
-                break;
-            case "event":
+            }
+            case "event" -> {
                 StringBuilder eventName = new StringBuilder();
                 StringBuilder startTime = new StringBuilder();
                 StringBuilder endTime = new StringBuilder();
@@ -85,8 +84,8 @@ public class Bro {
                 taskList.add(event);
                 reply = new StringBuilder(" added: " + event);
                 Save.saveToFile();
-                break;
-            case "delete":
+            }
+            case "delete" -> {
                 try {
                     reply = deleteTask(taskList, arrayOfInputs);
                 } catch (invalidInputFormat e) {
@@ -95,9 +94,8 @@ public class Bro {
                     reply = new StringBuilder(TASK_DOES_NOT_EXIST);
                 }
                 Save.saveToFile();
-                break;
-            default:
-                reply = new StringBuilder(" Not a valid command bro...");
+            }
+            default -> reply = new StringBuilder(" Not a valid command bro...");
             }
             System.out.println(HORIZONTAL_LINE + reply + HORIZONTAL_LINE);  // Output reply
         }
@@ -109,7 +107,7 @@ public class Bro {
      * @param taskList List of all tasks
      * @param arrayOfInputs Array of input words
      * @return Bro's reply
-     * @throws invalidInputFormat
+     * @throws invalidInputFormat If
      */
     private static StringBuilder createToDo(ArrayList<Task> taskList, String[] arrayOfInputs) throws invalidInputFormat {
         StringBuilder todoName = new StringBuilder();
@@ -130,7 +128,6 @@ public class Bro {
      * @param taskList List of all tasks
      * @param arrayOfInputs Array of input words
      * @return Bro's reply
-     * @throws invalidInputFormat
      */
     private static StringBuilder createDeadline(ArrayList<Task> taskList, String[] arrayOfInputs) throws invalidInputFormat {
         int indexOfDeadline = Arrays.asList(arrayOfInputs).indexOf("/by");
@@ -156,8 +153,6 @@ public class Bro {
      * @param sizeOfTaskList Size of the list of all Tasks
      * @param arrayOfInputs Array of input words
      * @return The valid input Task Index
-     * @throws invalidInputFormat
-     * @throws invalidTaskIndexException
      */
     private static int checkAndGetValidTaskIndex(Type queryType, int sizeOfTaskList, String[] arrayOfInputs) throws invalidInputFormat, invalidTaskIndexException {
         int taskIndex;
@@ -181,7 +176,6 @@ public class Bro {
      * @param taskList List of all tasks
      * @param arrayOfInputs Array of input words
      * @return Bro's reply
-     * @throws invalidTaskIndexException
      */
     private static StringBuilder markComplete(boolean markAsComplete, ArrayList<Task> taskList, String[] arrayOfInputs) throws invalidInputFormat, invalidTaskIndexException {
         int taskIndex = checkAndGetValidTaskIndex(Type.MARK, taskList.size(), arrayOfInputs);
@@ -199,8 +193,6 @@ public class Bro {
      * @param taskList List of all Tasks
      * @param arrayOfInputs Array of input words
      * @return Bro's reply
-     * @throws invalidInputFormat
-     * @throws invalidTaskIndexException
      */
     private static StringBuilder deleteTask(ArrayList<Task> taskList, String[] arrayOfInputs) throws invalidInputFormat, invalidTaskIndexException {
         int taskIndex = checkAndGetValidTaskIndex(Type.DELETE, taskList.size(), arrayOfInputs);

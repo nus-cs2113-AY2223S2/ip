@@ -11,20 +11,22 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Save {
-    static final String PATH_NAME = "text files/saved_tasks.txt";
+    static final String PATH_NAME = "saved_tasks.txt";
     static final String FILE_NOT_FOUND = "File not found";
     static final String IO_ERROR = "Error in reading/writing saved tasks file";
-    static ArrayList getSavedTasks(ArrayList taskList) {
+    static ArrayList<Task> getSavedTasks() {
+        ArrayList<Task> savedTaskList = new ArrayList<>();
         try {
-            taskList = readFile(taskList);
+            savedTaskList = readFile();
         } catch (FileNotFoundException e) {
             System.out.println(FILE_NOT_FOUND);
         } catch (IOException e) {
             System.out.println(IO_ERROR);
         }
-        return taskList;
+        return savedTaskList;
     }
-    static ArrayList readFile(ArrayList<Task> taskList) throws IOException {
+    static ArrayList<Task> readFile() throws IOException {
+        ArrayList<Task> readTaskList = new ArrayList<>();
         Scanner scanner = new Scanner(new File(PATH_NAME));
         while (scanner.hasNext()) {
             String[] line = scanner.nextLine().split("\\|");
@@ -33,20 +35,13 @@ public class Save {
             }
             String type = line[0];
             switch (type) {
-            case "T":
-                taskList.add(new ToDo(line[2], Boolean.parseBoolean(line[1])));
-                break;
-            case "D":
-                taskList.add(new Deadline(line[2], Boolean.parseBoolean(line[1]), line[3]));
-                break;
-            case "E":
-                taskList.add(new Event(line[2], Boolean.parseBoolean(line[1]), line[3], line[4]));
-                break;
-            default:
-                throw new IOException();
+            case "T" -> readTaskList.add(new ToDo(line[2], Boolean.parseBoolean(line[1])));
+            case "D" -> readTaskList.add(new Deadline(line[2], Boolean.parseBoolean(line[1]), line[3]));
+            case "E" -> readTaskList.add(new Event(line[2], Boolean.parseBoolean(line[1]), line[3], line[4]));
+            default -> throw new IOException();
             }
         }
-        return taskList;
+        return readTaskList;
     }
     static void saveToFile() {
         try {
@@ -58,29 +53,27 @@ public class Save {
     static void updateTasks(ArrayList<Task> taskList) throws IOException {
         FileWriter fileWriter = new FileWriter(PATH_NAME);
         StringBuilder output = new StringBuilder();
-        for (int i = 0; i < taskList.size(); i++) {
-            Task currentTask = taskList.get(i);
+        for (Task currentTask : taskList) {
             String type = currentTask.getType();
             String isCompleted = currentTask.isCompleted() ? "true" : "false";
             String name = currentTask.getName();
             String line;
             switch (type) {
-            case "T":
+            case "T" -> {
                 line = String.format("%s | %s | %s", type, isCompleted, name);
                 output.append(line).append(System.lineSeparator());
-                break;
-            case "D":
+            }
+            case "D" -> {
                 Deadline currentDeadline = (Deadline) currentTask; // casting to use subclass methods
                 line = String.format("%s | %s | %s | %s", type, isCompleted, name, currentDeadline.getDeadline());
                 output.append(line).append(System.lineSeparator());
-                break;
-            case "E":
+            }
+            case "E" -> {
                 Event currentEvent = (Event) currentTask;
                 line = String.format("%s | %s | %s | %s | %s", type, isCompleted, name, currentEvent.getStartTime(), currentEvent.getEndTime());
                 output.append(line).append(System.lineSeparator());
-                break;
-            default:
-                throw new IOException();
+            }
+            default -> throw new IOException();
             }
         }
         fileWriter.write(String.valueOf(output));
