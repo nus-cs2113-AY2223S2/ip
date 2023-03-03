@@ -1,0 +1,7 @@
+package duke;
+
+import java.io.IOException;
+
+abstract class Command {
+    abstract void complete(String temp) throws IOException;
+}
