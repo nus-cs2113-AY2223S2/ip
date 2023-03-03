@@ -256,7 +256,9 @@ Exits the program (data has been saved).
 
 ***Example of usage*** :
 
-```bye```
+```
+bye
+```
 
 ***Expected outcome*** :
 ```
