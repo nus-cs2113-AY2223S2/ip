@@ -3,6 +3,8 @@ package task;
 import java.util.ArrayList;
 import exceptions.DukeException;
 
+import static ui.UI.greet;
+
 public class TaskList {
     private static final String LINE = "____________________________________________________________";
     private static final String TODO_ERROR = "☹ OOPS!!! The description of a todo cannot be empty.";
@@ -35,6 +37,7 @@ public class TaskList {
         list.get(index).markDone();
         System.out.println("Awesome! I've mark this task as done:");
         System.out.println("[" + list.get(index).getStatusIcon() + "] " + list.get(index).description.split(" ", 2)[1]);
+        System.out.println(LINE);
     }
 
     /**
@@ -46,6 +49,7 @@ public class TaskList {
         list.get(index).markUndone();
         System.out.println("What!?!? OK, I've marked this task as not done yet:");
         System.out.println("[" + list.get(index).getStatusIcon() + "] " + list.get(index).description.split(" ", 2)[1]);
+        System.out.println(LINE);
     }
 
     /**

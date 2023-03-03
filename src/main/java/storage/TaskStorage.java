@@ -49,11 +49,12 @@ public class TaskStorage {
     public static void loadSaveData() {
         try {
             File saveData = new File(dataPath);
+            greet();
             if (!saveData.createNewFile()) {
                 Scanner readData = new Scanner(saveData);
                 while (readData.hasNext()) {
                     String data = readData.nextLine();
-                    String taskType = data.split("|",5)[0];
+                    String taskType = data.split("|", 5)[0];
                     if (taskType.equals("T")) {
                         parseTodo(data);
                     } else if (taskType.equals("D")) {
@@ -62,7 +63,6 @@ public class TaskStorage {
                         parseEvent(data);
                     }
                 }
-                greet();
                 loadSaveList();
             }
         } catch (IOException e) {
