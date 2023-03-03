@@ -23,10 +23,12 @@ public class Parser {
 
     /**
      * breaks down description into
-     * [task description, dueDate].
+     * [task description, dueDate]
      *
      * @param description description entered by user
      * @return string array consisting of the split inputs
+     * @throws InvalidDeadlineCommandException
+     * @throws EmptyTaskDescriptionException
      */
     public static String[] handleDeadline(String description) throws
             InvalidDeadlineCommandException, EmptyTaskDescriptionException {
@@ -45,12 +47,15 @@ public class Parser {
         return splitStrings;
     }
 
+
     /**
      * breaks down the description into
      * [task description, startDate, endDate].
      *
-     * @param description description entered by user
+     * @param description entered by user
      * @return string array consisting of the split inputs
+     * @throws InvalidEventCommandException
+     * @throws EmptyTaskDescriptionException
      */
     public static String[] handleEvent(String description) throws
             InvalidEventCommandException, EmptyTaskDescriptionException {
@@ -68,6 +73,17 @@ public class Parser {
         return splitStrings;
     }
 
+    /**
+     * checks if the description entered is a valid task number
+     * and return the integer task number converted from the string task number
+     * @param tasks task list containing the to-do lists to check if the description task
+     *              number is out of bound
+     * @param description string task number that is to be converted to integer if valid
+     * @return
+     * @throws TaskNumberOutOfBoundException
+     * @throws NotIntegerTaskNumberException
+     * @throws EmptyTaskNumberException
+     */
     public static int handleIntegerConversion(TaskManager tasks, String description) throws
             TaskNumberOutOfBoundException, NotIntegerTaskNumberException, EmptyTaskNumberException {
         int taskNumber;
@@ -86,6 +102,13 @@ public class Parser {
         return taskNumber;
     }
 
+    /**
+     * checks if the input String is an integer number
+     *
+     * @param string the input String that we want to check
+     *               if it is an integer.
+     * @return returns true if input is an integer, else false.
+     */
     private static boolean isInteger(String string) {
         for (int i = 0; i < string.length(); i++) {
             if (string.charAt(i) < '0' || string.charAt(i) > '9') {
@@ -96,6 +119,12 @@ public class Parser {
         return true;
     }
 
+    /**
+     * converts a string number to integer data type
+     * @param string the string we want to convert
+     * @return the integer converted from the string
+     * @throws NotIntegerTaskNumberException
+     */
     private static int convertStringToInt(String string) throws NotIntegerTaskNumberException {
         int number;
         if (isInteger(string)) {
@@ -105,6 +134,7 @@ public class Parser {
         }
         return number;
     }
+
 
     public static String[] handleTextInputs(String description) {
         String[] taskDescriptions = description.split("] ");

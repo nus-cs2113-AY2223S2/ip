@@ -28,6 +28,16 @@ public class FileManager {
         return HELP_PATH;
     }
 
+    /**
+     * create storage files if not exists directory. If files exists,
+     * load the content to task lists in TaskManager and print the content
+     * out to the terminal when program first starts.
+     *
+     * @param tasks tasks list that stores the task
+     * @throws FileNotFoundException
+     * @throws FileIsADirectoryException
+     * @throws DirectoryIsAFileException
+     */
     public static void createFile(TaskManager tasks) throws
             FileNotFoundException, FileIsADirectoryException, DirectoryIsAFileException {
 
@@ -75,6 +85,13 @@ public class FileManager {
         printAndLoadContent(tasks);
     }
 
+    /**
+     * load the contents of storage file in tasks and print
+     * them out to the terminal
+     *
+     * @param tasks the task lists that stores all the tasks
+     * @throws FileNotFoundException
+     */
     private static void printAndLoadContent(TaskManager tasks) throws
             FileNotFoundException {
         File f = new File(FILE_PATH);
@@ -96,6 +113,13 @@ public class FileManager {
         }
     }
 
+    /**
+     * loads content in the of the description to the task list
+     *
+     * @param description the content of the storage that is to
+     *                    be stored in tasks
+     * @param tasks the task list that stores the tasks
+     */
     private static void loadContent(String description, TaskManager tasks) {
         // splits into [command, task description, status of task]
         String[] taskDescription = Parser.handleTextInputs(description);

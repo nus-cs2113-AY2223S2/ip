@@ -39,23 +39,14 @@ public abstract class UI {
 
     /**
      * runs the CLI application continuously
-     * by asking for user's input and executing
-     * those commands.
+     * by asking for user's input and executing those commands.
      * Terminate the program when the command
-     * "bye" is entered.
+     * "bye" is entered and save the content of the to-do list.
      */
     public static void run() {
         Scanner scanner = new Scanner(System.in);
         TaskManager tasks = new TaskManager();
-        try {
-            FileManager.createFile(tasks);
-            if (!Help.printHelpMessage(false)) {
-                System.out.println(Constant.DOTTED_LINE);
-            }
-        } catch (FileNotFoundException | DukeException e) {
-            System.out.println(e.getMessage());
-            System.exit(-1);
-        }
+        createAndLoadStorageFiles(tasks);
         String userInput;
         boolean isRepeat = true;
 
@@ -82,6 +73,24 @@ public abstract class UI {
     }
 
     /**
+     * creates the storage file to store tasks in to-do lists
+     * and load those tasks in the task list when program first starts.
+     *
+     * @param tasks task lists to store the tasks in the storage file
+     */
+    private static void createAndLoadStorageFiles(TaskManager tasks) {
+        try {
+            FileManager.createFile(tasks);
+            if (!Help.printHelpMessage(false)) {
+                System.out.println(Constant.DOTTED_LINE);
+            }
+        } catch (FileNotFoundException | DukeException e) {
+            System.out.println(e.getMessage());
+            System.exit(-1);
+        }
+    }
+
+    /**
      * prints a goodbye message
      * after the program has terminated.
      */
@@ -91,6 +100,10 @@ public abstract class UI {
         System.out.println(Constant.DOTTED_LINE);
     }
 
+    /**
+     * saves the tasks in the lists
+     * @param tasks the tasks list that contains the list of tasks
+     */
     public static void save(TaskManager tasks) {
         try {
             String filePath = FileManager.getFilePath();
