@@ -31,6 +31,8 @@ public class Ui {
     private static final String TASK_NO_OUT_OF_RANGE_ERR = " WHOOPS! There is no such task number.";
     private static final String WRITE_FILE_ERR = "Error writing to file\n";
     private static final String LOAD_FILE_ERR = "File not found/empty file. Creating new empty task list...\n";
+    private static final String LIST_FOUND_TASK_DESC = "Here are the matching tasks in your list:\n";
+    private static final String EMPTY_KEYWORD_ERR = " WHOOPS! The keyword of find cannot be empty.";
 
     private Scanner in;
 
@@ -51,33 +53,44 @@ public class Ui {
         showToUser(EXIT_MESSAGE);
     }
 
-    public void showTaskAdded(ArrayList<Task> taskItems) {
-        String taskAdded = ADD_TASK_DESC + taskItems.get(taskItems.size() - 1)
-                + CUR_NO_OF_TASK_START_DESC + taskItems.size() + CUR_NO_OF_TASK_END_DESC;
+    public void showTaskAdded(ArrayList<Task> tasks) {
+        String taskAdded = ADD_TASK_DESC + tasks.get(tasks.size() - 1)
+                + CUR_NO_OF_TASK_START_DESC + tasks.size() + CUR_NO_OF_TASK_END_DESC;
         showToUser(taskAdded);
     }
 
-    public void showTaskDeleted(ArrayList<Task> taskItems, int taskItemNo) {
-        String taskDeleted = DELETE_TASK_DESC + taskItems.get(taskItemNo)
-                + CUR_NO_OF_TASK_START_DESC + (taskItems.size() - 1) + CUR_NO_OF_TASK_END_DESC;
+    public void showTaskDeleted(ArrayList<Task> tasks, int taskNo) {
+        String taskDeleted = DELETE_TASK_DESC + tasks.get(taskNo)
+                + CUR_NO_OF_TASK_START_DESC + (tasks.size() - 1) + CUR_NO_OF_TASK_END_DESC;
         showToUser(taskDeleted);
     }
 
-    public void showTaskCompleted(ArrayList<Task> taskItems, int taskItemNo) {
-        String taskCompleted = MARK_TASK_DESC + taskItems.get(taskItemNo);
+    public void showTaskCompleted(ArrayList<Task> tasks, int taskNo) {
+        String taskCompleted = MARK_TASK_DESC + tasks.get(taskNo);
         showToUser(taskCompleted);
     }
 
-    public void showTaskIncomplete(ArrayList<Task> taskItems, int taskItemNo) {
-        String taskIncomplete = UNMARK_TASK_DESC + taskItems.get(taskItemNo);
+    public void showTaskIncomplete(ArrayList<Task> tasks, int taskNo) {
+        String taskIncomplete = UNMARK_TASK_DESC + tasks.get(taskNo);
         showToUser(taskIncomplete);
     }
 
-    public void listTask(ArrayList<Task> taskItems) {
+    public void listTask(ArrayList<Task> tasks) {
         System.out.print(TOP_DIVIDER + LIST_TASK_DESC);
 
-        for (int itemNo = 0; itemNo < taskItems.size(); itemNo++) {
-            String printItem = " " + (itemNo + 1) + "." + taskItems.get(itemNo) + System.lineSeparator();
+        for (int itemNo = 0; itemNo < tasks.size(); itemNo++) {
+            String printItem = " " + (itemNo + 1) + "." + tasks.get(itemNo) + System.lineSeparator();
+            System.out.print(printItem);
+        }
+
+        System.out.print(LIST_TASK_BOTTOM_DIVIDER);
+    }
+
+    public void listFoundTask(ArrayList<Task> tasks) {
+        System.out.print(TOP_DIVIDER + LIST_FOUND_TASK_DESC);
+
+        for (int itemNo = 0; itemNo < tasks.size(); itemNo++) {
+            String printItem = " " + (itemNo + 1) + "." + tasks.get(itemNo) + System.lineSeparator();
             System.out.print(printItem);
         }
 
@@ -120,8 +133,11 @@ public class Ui {
         showToUser(WRITE_FILE_ERR);
     }
 
+    public void showEmptyKeywordErr() {
+        showToUser(EMPTY_KEYWORD_ERR);
+    }
+
     private void showToUser(String message) {
         System.out.print(TOP_DIVIDER + message + BOTTOM_DIVIDER);
     }
-
 }
