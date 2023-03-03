@@ -1,15 +1,22 @@
+package bro;
+
 import bro.tasks.Task;
 import bro.tasks.Deadline;
 import bro.tasks.Event;
 import bro.tasks.ToDo;
+import static bro.Messages.IO_ERROR;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Save {
-    static ArrayList<Task> getSavedTasks(ArrayList<Task> taskList) throws FileNotFoundException {
-        Scanner scanner = new Scanner(new File(Bro.PATH_NAME));
+public class Storage {
+    private final static String PATH_NAME = "docs/tasks.txt";
+    public static TaskList load(TaskList taskListObject) throws FileNotFoundException {
+        Scanner scanner = new Scanner(new File(PATH_NAME));
         while (scanner.hasNext()) {
             String[] line = scanner.nextLine().split("\\|");
             for (int i = 0; i < line.length; i++) {
@@ -18,29 +25,30 @@ public class Save {
             String type = line[0];
             switch (type) {
             case "T":
-                taskList.add(new ToDo(line[2], Boolean.parseBoolean(line[1])));
+                taskListObject.add(new ToDo(line[2], Boolean.parseBoolean(line[1])));
                 break;
             case "D":
-                taskList.add(new Deadline(line[2], Boolean.parseBoolean(line[1]), line[3]));
+                taskListObject.add(new Deadline(line[2], Boolean.parseBoolean(line[1]), line[3]));
                 break;
             case "E":
-                taskList.add(new Event(line[2], Boolean.parseBoolean(line[1]), line[3], line[4]));
+                taskListObject.add(new Event(line[2], Boolean.parseBoolean(line[1]), line[3], line[4]));
                 break;
             default:
                 throw new IllegalArgumentException(); // throw an unchecked exception
             }
         }
-        return taskList;
+        return taskListObject;
     }
-    static void saveToFile(ArrayList<Task> taskList) {
+    public static void save(TaskList taskListObject) {
         try {
+            ArrayList<Task> taskList = taskListObject.getTaskList();
             updateTasks(taskList);
         } catch (IOException e){
-            System.out.println(Bro.IO_ERROR);
+            System.out.println(IO_ERROR);
         }
     }
-    static void updateTasks(ArrayList<Task> taskList) throws IOException {
-        FileWriter fileWriter = new FileWriter(Bro.PATH_NAME);
+    private static void updateTasks(ArrayList<Task> taskList) throws IOException {
+        FileWriter fileWriter = new FileWriter(PATH_NAME);
         StringBuilder output = new StringBuilder();
         for (Task currentTask : taskList) {
             String type = currentTask.getType();
