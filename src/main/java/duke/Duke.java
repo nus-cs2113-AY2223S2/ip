@@ -21,7 +21,7 @@ public class Duke {
     public static void main(String[] args) {
         TaskList list = new TaskList();
         Storage.loadData("./data.txt", list.getTasksList());
-        initDuke(list);
+        initDuke();
         while (isInUse) {
             String userInput = getUserInput(inputReader);
             String[] informationNeededForPerformingUserRequest = Parser.parseUserInput(userInput);
@@ -31,12 +31,10 @@ public class Duke {
     }
 
     /**
-     * Initializes Duke where it makes Duke greet the user, displays a task list based on the user's local save file (if
+     * Initializes Duke where it makes Duke greet the user, loads a task list based on the user's local save file (if
      * there is one) and instantiates a Scanner so that Duke can start receiving inputs from the user.
-     *
-     * @param list The task list used by Duke to help the user track his/her tasks.
      */
-    public static void initDuke(TaskList list) {
+    public static void initDuke() {
         Ui.greetUser();
         inputReader = new Scanner(System.in);
     }
