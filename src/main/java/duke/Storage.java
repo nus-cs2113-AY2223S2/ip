@@ -49,7 +49,7 @@ public class Storage {
         FileWriter fw = new FileWriter(file);
 
         for (Task task : tasks) {
-            String textToAdd = task.toFile();
+            String textToAdd = task.toFile() + "\n";
             fw.write(textToAdd);
         }
 

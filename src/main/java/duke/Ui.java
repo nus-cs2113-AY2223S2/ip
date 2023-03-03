@@ -63,7 +63,7 @@ public class Ui {
     }
 
     public void showTaskIncomplete(ArrayList<Task> taskItems, int taskItemNo) {
-        String taskIncomplete = TOP_DIVIDER + UNMARK_TASK_DESC + taskItems.get(taskItemNo) + BOTTOM_DIVIDER;
+        String taskIncomplete = UNMARK_TASK_DESC + taskItems.get(taskItemNo);
         showToUser(taskIncomplete);
     }
 
