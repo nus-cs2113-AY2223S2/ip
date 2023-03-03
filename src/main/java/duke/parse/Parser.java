@@ -28,10 +28,27 @@ public abstract class Parser {
     public static final String COMMAND_FIND = "find";
     private static Command c;
 
+    /**
+     * Initialises an instance of Parser.
+     */
     public Parser() {
 
     }
 
+    /**
+     * Parses user input from CLI.
+     * Creates command based on user input.
+     *
+     * @param input User input enter via CLI.
+     * @return A command instance based on user input.
+     * @throws UnknownCommandException if user enters command unknown to Duke.
+     * @throws IndexOutOfBoundsException if user did not enter a task no or entered a task no outside the range of
+     * the task list when using mark/unmark/delete command
+     * @throws NumberFormatException if user enters a non integer task no when using mark/unmark/delete command.
+     * @throws EmptyDeadlineDescriptionException if user enters an incomplete deadline command.
+     * @throws EmptyToDoDescriptionException if user enters an incomplete to do command.
+     * @throws EmptyEventDescriptionException if user enters an incomplete event command.
+     */
     public static Command parse(String input) throws UnknownCommandException,
             IndexOutOfBoundsException, NumberFormatException, EmptyDeadlineDescriptionException,
             EmptyToDoDescriptionException, EmptyEventDescriptionException, EmptyKeywordException {
@@ -84,12 +101,27 @@ public abstract class Parser {
         return c;
     }
 
+    /**
+     * Retrieves command from user input.
+     *
+     * @param input User input enter via CLI.
+     * @return Command.
+     */
     private static String getCommand(String input) {
         String[] words = input.split(" ", 2);
         String command = words[0];
         return command;
     }
 
+    /**
+     * Retrieves task no from user input.
+     *
+     * @param input User input enter via CLI.
+     * @return Task no.
+     * @throws IndexOutOfBoundsException if user did not enter a task no or entered a task no outside the range of
+     * the task list when using mark/unmark/delete command.
+     * @throws NumberFormatException if user enters a non integer task no when using mark/unmark/delete command.
+     */
     private static int getTaskNo(String input) throws IndexOutOfBoundsException,
             NumberFormatException {
         String[] words = input.split(" ", 2);
@@ -98,6 +130,13 @@ public abstract class Parser {
         return taskNo;
     }
 
+    /**
+     * Retrieves deadline task name and end date/time from user input.
+     *
+     * @param input User input enter via CLI.
+     * @return A string array of deadline details containing task name and end date/time.
+     * @throws EmptyDeadlineDescriptionException if user enters an incomplete deadline command.
+     */
     private static String[] getDeadlineDetails(String input) throws EmptyDeadlineDescriptionException {
         String[] words = input.split(" ", 2);
 
@@ -119,6 +158,13 @@ public abstract class Parser {
         return deadlineDetails;
     }
 
+    /**
+     * Retrieves event task name, start date/time and end date/time from user input.
+     *
+     * @param input User input enter via CLI.
+     * @return A string array of event details containing task name, start date/time, end date/time.
+     * @throws EmptyEventDescriptionException if user enters an incomplete event command.
+     */
     private static String[] getEventDetails(String input) throws EmptyEventDescriptionException {
         String[] words = input.split(" ", 2);
 
@@ -147,6 +193,13 @@ public abstract class Parser {
         return eventDetails;
     }
 
+    /**
+     * Retrieves to do task name from user input.
+     *
+     * @param input User input enter via CLI.
+     * @return To do task name.
+     * @throws EmptyToDoDescriptionException if user enters an incomplete to do command.
+     */
     private static String getToDoTaskName(String input) throws EmptyToDoDescriptionException {
         String[] words = input.split(" ", 2);
 
