@@ -15,9 +15,9 @@ public class Task extends Command {
     public String formattedTask;
 
 
-    public Task(String taskDescription) {
+    public Task(String taskDescription, String taskStatus) {
         this.taskDescription = taskDescription;
-        this.status = "[ ]";
+        this.status = taskStatus;
     }
 
     /**
@@ -25,7 +25,7 @@ public class Task extends Command {
      */
 
     public void setDone() {
-        status = "[X]";
+        this.status = "[X]";
         setFormattedTask();
     }
 
@@ -34,7 +34,7 @@ public class Task extends Command {
      */
 
     public void setUndone() {
-        status = "[ ]";
+        this.status = "[ ]";
         setFormattedTask();
     }
 

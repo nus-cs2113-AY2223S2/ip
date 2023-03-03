@@ -12,8 +12,8 @@ public class ToDo extends Task {
     public static final String MESSAGE_ADD_TODO_SUCCESS = "Added todo: %1$s";
     public ToDo addToDo;
 
-    public ToDo(String taskDescription) {
-        super(taskDescription);
+    public ToDo(String taskDescription, String taskStatus) {
+        super(taskDescription, taskStatus);
         this.taskChar = "[T]";
         setFormattedTask();
     }

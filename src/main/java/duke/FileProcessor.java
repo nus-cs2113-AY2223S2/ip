@@ -1,5 +1,6 @@
 package duke;
 
+import duke.commands.IncorrectCommand;
 import duke.commands.task.Deadline;
 import duke.commands.task.Event;
 import duke.commands.task.Task;
@@ -26,7 +27,6 @@ public class FileProcessor {
             if (dukeTextFile.createNewFile()) {
                 System.out.println("File created: " + dukeTextFile.getName());
             } else {
-                System.out.println("File already exists.");
                 BufferedReader reader = new BufferedReader(new FileReader("duke.txt"));
                 String line = reader.readLine();
                 while (line != null) {
@@ -48,18 +48,23 @@ public class FileProcessor {
      */
 
     public void addToList(ArrayList<Task> taskList, String[] parameters) {
+        Task toAdd;
         switch (parameters[0]) {
         case ("[T]"):
-            taskList.add(new ToDo(parameters[2]));
+            toAdd = new ToDo(parameters[2], parameters[1]);
+            taskList.add(toAdd);
             break;
         case ("[D]"):
-            taskList.add(new Deadline(parameters[2], parameters[3]));
+            toAdd = new Deadline(parameters[2], parameters[1], parameters[3]);
+            taskList.add(toAdd);
             break;
         case ("[E]"):
-            taskList.add(new Event(parameters[2], parameters[3], parameters[4]));
+            toAdd = new Event(parameters[2], parameters[1], parameters[3], parameters[4]);
+            taskList.add(toAdd);
             break;
         }
     }
+
 
     /**
      * Writes all task in the task list provided in a standardised format into the open file "duke.txt"

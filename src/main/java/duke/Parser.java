@@ -30,7 +30,7 @@ public class Parser {
         case DeleteCommand.COMMAND_WORD: case UnmarkCommand.COMMAND_WORD: case MarkCommand.COMMAND_WORD:
             return prepareCommand(commandWord, intermediateInput[1]);
         case ToDo.COMMAND_WORD:
-            return new ToDo(intermediateInput[1]);
+            return new ToDo(intermediateInput[1], "[ ]");
         case Deadline.COMMAND_WORD:
             return prepareDeadline(intermediateInput[1]);
         case Event.COMMAND_WORD:
@@ -93,14 +93,14 @@ public class Parser {
             String taskDescriptor = arguments.substring(0, fromIndex - 1);
             String taskFrom = arguments.substring(fromIndex + 6, toIndex - 1);
             String taskTo = arguments.substring(toIndex + 4);
-            return new Event(taskDescriptor, taskFrom, taskTo);
+            return new Event(taskDescriptor, "[ ]", taskFrom, taskTo);
         } catch (IndexOutOfBoundsException e) {
             return new IncorrectCommand(1);
         }
     }
 
     /**
-     * Processes an string expected to contain the task description
+     * Processes a string expected to contain the task description
      * and the "by" information of a deadline task
      * @param arguments contains task details
      * @return command
@@ -111,7 +111,7 @@ public class Parser {
         try {
             String taskDescriptor = arguments.substring(0, byIndex - 1);
             String taskBy = arguments.substring(byIndex + 4);
-            return new Deadline(taskDescriptor, taskBy);
+            return new Deadline(taskDescriptor, "[ ]", taskBy);
         } catch (IndexOutOfBoundsException e) {
             return new IncorrectCommand(1);
         }

@@ -13,8 +13,8 @@ public class Deadline extends Task {
     public Deadline addDeadline;
     public String by;
 
-    public Deadline(String taskDescription, String by) {
-        super(taskDescription);
+    public Deadline(String taskDescription, String taskStatus, String by) {
+        super(taskDescription, taskStatus);
         this.taskChar = "[D]";
         this.by = by;
         setFormattedTask();
