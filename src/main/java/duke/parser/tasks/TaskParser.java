@@ -41,7 +41,8 @@ public interface TaskParser {
         Matcher matcher = pattern.matcher(input.trim());
         boolean isEmptyString = input.trim().isEmpty();
         boolean isWrongFormat = !matcher.find();
-        if (isEmptyString || isWrongFormat) {
+        boolean isInvalidFormat = isEmptyString || isWrongFormat;
+        if (isInvalidFormat) {
             throw new InvalidTaskFormatException(taskType);
         }
     }

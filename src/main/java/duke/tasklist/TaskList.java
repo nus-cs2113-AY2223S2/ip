@@ -49,7 +49,8 @@ public class TaskList {
      * @throws InvalidInputIDException If the given ID is invalid
      */
     public Task delete(int id) throws InvalidInputIDException {
-        if (id < 1 || id > tasks.size()) {
+        boolean isInvalidID = id < 1 || id > tasks.size();
+        if (isInvalidID) {
             throw new InvalidInputIDException();
         }
         Task temp = tasks.get(id - 1);
