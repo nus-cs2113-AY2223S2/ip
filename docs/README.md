@@ -90,8 +90,7 @@ Example: `list`
 Expected output:
 ```
 ________________________________________
-list
-Here are the tasks in your list: 
+Here are the tasks in your list:
 1. [T] [ ] Buy apples
 2. [D] [ ] CS2113 Homework (by: tomorrow)
 3. [E] [ ] Birthday Party (from: Tuesday to: Sunday)
@@ -101,7 +100,7 @@ ________________________________________
 
 ### Mark a task: `mark`
 
-Mark an unmarked tasks
+Mark an unmarked task
 
 Usage: `mark TASK_INDEX`
 
@@ -110,27 +109,25 @@ Example: `mark 3`
 Expected output:
 ```
 ________________________________________
-mark 3
 Great! I've marked it as done!
-[X] Birthday Party 
+[X] Birthday Party
 ________________________________________
 ```
 
 
 ### Unmark a task: `unmark`
 
-Mark an unmarked tasks
+Unmark a marked task
 
 Usage: `unmark TASK_INDEX`
 
-Example: `mark 3`
+Example: `unmark 3`
 
 Expected output:
 ```
 ________________________________________
-unmark 3
 Alright, I've marked the task as undone.
-[ ] Birthday Party 
+[ ] Birthday Party
 ________________________________________
 ```
 
@@ -138,6 +135,7 @@ ________________________________________
 ### Find tasks: `find`
 
 Find tasks based on a letter, word or phrase
+Note that the statement after the find function is case sensitive.
 
 Usage: `find STATEMENT`
 
@@ -183,5 +181,40 @@ Expected output:
 ```
 I have saved your tasks.
 Bye. Hope to see you again soon!
+________________________________________
+```
+
+## Running Duke for the first time vs subsequent times
+### Running Duke for the first time:
+
+As there is no saved text file to load the tasks from. Duke will only create the text file after the command `find` or `bye` is used.
+Expected output:
+```
+________________________________________
+Hello! I'm Duke
+________________________________________
+Please wait, I am attempting to retrieve your saved tasks...
+Hmm.. I can't seem to locate a saved file...
+No worries, I have just created a new file for you:D
+Add your first task!
+________________________________________
+```
+
+### Running Duke again:
+
+The saved tasks will be loaded the moment you open Duke again.
+
+Expected output:
+```
+________________________________________
+Hello! I'm Duke
+________________________________________
+Please wait, I am attempting to retrieve your saved tasks...
+________________________________________
+________________________________________
+Here are the tasks in your list:
+1. [T] [ ] Buy apples
+2. [D] [ ] CS2113 Homework (by: tomorrow)
+________________________________________
 ________________________________________
 ```
