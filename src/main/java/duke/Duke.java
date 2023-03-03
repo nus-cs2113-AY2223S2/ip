@@ -111,15 +111,20 @@ public class Duke {
         int totalNumberOfTasks = tasks.size();
         if (totalNumberOfTasks > 0) {
             ui.showDisplayListHeaderMessage();
-            for (int index = 0; index < totalNumberOfTasks; index += 1) {
-                Task currentTask = tasks.get(index);
-                System.out.print(index + 1 + ". ");
-                displayTask(currentTask);
-            }
+            iterateThroughListAndDisplayTasks(tasks);
         } else {
             ui.showNoTasksToDisplayMessage();
         }
         ui.horizontalLine();
+    }
+
+    public static void iterateThroughListAndDisplayTasks(ArrayList<Task> tasks) {
+        int totalNumberOfTasks = tasks.size();
+        for (int index = 0; index < totalNumberOfTasks; index += 1) {
+            Task currentTask = tasks.get(index);
+            System.out.print(index + 1 + ". ");
+            displayTask(currentTask);
+        }
     }
 
     public static void displayTask(Task currentTask) {
