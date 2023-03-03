@@ -1,9 +1,9 @@
-package duke;
+package duke.storage;
 
-import duke.task.Deadline;
-import duke.task.Event;
-import duke.task.Task;
-import duke.task.Todo;
+import duke.tasklist.task.Deadline;
+import duke.tasklist.task.Event;
+import duke.tasklist.task.Task;
+import duke.tasklist.task.Todo;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -20,15 +20,23 @@ public class Storage {
         file = new File(filePath);
     }
 
-    private void createFile() throws IOException {
-        if (file.exists()) {
-            return;
+    public ArrayList<Task> load() throws IOException {
+        ArrayList<String> data = readFile();
+        ArrayList<Task> tasks = parse(data);
+
+        return tasks;
+    }
+
+    public void writeFile(ArrayList<Task> tasks) throws IOException {
+        createFile();
+        FileWriter fw = new FileWriter(file);
+
+        for (Task task : tasks) {
+            String textToAdd = task.toFile() + "\n";
+            fw.write(textToAdd);
         }
 
-        if (!file.getParentFile().exists()) {
-            file.getParentFile().mkdirs();
-        }
-        file.createNewFile();
+        fw.close();
     }
 
     private ArrayList<String> readFile() throws IOException {
@@ -44,24 +52,17 @@ public class Storage {
         return data;
     }
 
-    public void writeFile(ArrayList<Task> tasks) throws IOException {
-        createFile();
-        FileWriter fw = new FileWriter(file);
-
-        for (Task task : tasks) {
-            String textToAdd = task.toFile() + "\n";
-            fw.write(textToAdd);
+    private void createFile() throws IOException {
+        if (file.exists()) {
+            return;
         }
 
-        fw.close();
+        if (!file.getParentFile().exists()) {
+            file.getParentFile().mkdirs();
+        }
+        file.createNewFile();
     }
 
-    public ArrayList<Task> load() throws IOException {
-        ArrayList<String> data = readFile();
-        ArrayList<Task> tasks = parse(data);
-
-        return tasks;
-    }
 
     private ArrayList<Task> parse(ArrayList<String> data) {
         ArrayList<Task> tasks = new ArrayList<>();

@@ -1,12 +1,8 @@
-package duke.task;
+package duke.tasklist.task;
 
-public class Task {
-    protected static final String OPEN_SQUARE_BRACKET = "[";
-    protected static final String CLOSE_SQUARE_BRACKET = "]";
-    protected static final String WHITESPACE = " ";
-
-    protected String taskName;
-    protected boolean isCompleted;
+public abstract class Task {
+    private String taskName;
+    private boolean isCompleted;
 
     public Task(String taskName) {
         this.taskName = taskName;
@@ -41,8 +37,7 @@ public class Task {
 
     @Override
     public String toString() {
-        return OPEN_SQUARE_BRACKET + getTaskStatus() + CLOSE_SQUARE_BRACKET
-                + WHITESPACE + getTaskName();
+        return "[" + getTaskStatus() + "] " + getTaskName();
     }
 
     public String toFile() {

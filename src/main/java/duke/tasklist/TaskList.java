@@ -1,9 +1,9 @@
-package duke;
+package duke.tasklist;
 
-import duke.task.Deadline;
-import duke.task.Event;
-import duke.task.Task;
-import duke.task.Todo;
+import duke.tasklist.task.Deadline;
+import duke.tasklist.task.Event;
+import duke.tasklist.task.Task;
+import duke.tasklist.task.Todo;
 
 import java.util.ArrayList;
 
