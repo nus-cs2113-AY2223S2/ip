@@ -12,14 +12,28 @@ import duke.parser.Parser;
 import duke.task.Task;
 import duke.tasklist.TaskList;
 
+/**
+ * The Storage class deals with reading from and writing to a file to save and retrieve Task objects.
+ */
 public class Storage {
     private String filePath;
     private Parser parser = new Parser();
 
+    /**
+     * Constructs a Storage object that stores and retrieves Tasks from a given file path.
+     *
+     * @param filePath the file path where the Tasks are stored and retrieved from
+     */
     public Storage(String filePath) {
         this.filePath = filePath;
     }
 
+    /**
+     * Writes the Tasks in a TaskList to the file specified by the file path.
+     *
+     * @param taskList the TaskList containing the Tasks to be written to file
+     * @throws IOException if there is an error writing to the file
+     */
     public void writeToFile(TaskList taskList) throws IOException {
         ArrayList<Task> tasks = taskList.getTasks();
         FileWriter fw = new FileWriter(filePath);
@@ -32,6 +46,12 @@ public class Storage {
         info.close();
     }
 
+    /**
+     * Reads the contents of the file specified by the file path and returns an ArrayList of Task objects.
+     *
+     * @return an ArrayList of Task objects stored in the file
+     * @throws IOException if there is an error reading the file
+     */
     public ArrayList<Task> readFileContents() throws IOException {
         ArrayList<Task> tasks = new ArrayList<Task>();
         Task task;

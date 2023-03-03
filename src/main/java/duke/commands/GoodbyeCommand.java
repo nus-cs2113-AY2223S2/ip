@@ -11,6 +11,12 @@ public class GoodbyeCommand implements Command {
         ui.showGoodbye();
     }
 
+    /**
+     * Returns a boolean value indicating if the command is an exit command.
+     *
+     * @return true since this command is an exit command.
+     */
+    @Override
     public boolean isExit() {
         return true;
     }

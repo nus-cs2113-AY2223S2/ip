@@ -14,6 +14,7 @@ import duke.commands.DeleteCommand;
 import duke.commands.FindByDateCommand;
 import duke.commands.FindByKeywordCommand;
 import duke.commands.GoodbyeCommand;
+import duke.commands.IncorrectCommand;
 import duke.commands.ListCommand;
 import duke.commands.MarkCommand;
 import duke.commands.UnmarkCommand;
@@ -23,9 +24,24 @@ import duke.task.Task;
 import duke.task.Todo;
 import duke.ui.TextUi;
 
+/**
+ * The Parser class is responsible for parsing user input and file content
+ * into commands or tasks. It contains methods to parse the following:
+ * - user commands
+ * - deadline and event tasks
+ * - task indices
+ * - date and date-time values
+ * - file content
+ */
 public class Parser {
     TextUi ui = new TextUi();
 
+    /**
+     * Parses user input and returns the corresponding command object.
+     *
+     * @param userInput the user input to parse
+     * @return the corresponding command object
+     */
     public static Command parseCommand(String userInput) {
         String[] words = userInput.trim().split(" ", 2);
         if (words.length == 0) {
@@ -72,6 +88,12 @@ public class Parser {
         }
     }
 
+    /**
+     * Parses a deadline task description and end time from a string.
+     *
+     * @param arguments the string to parse
+     * @return an array containing the description and end time, or null if the string is in the wrong format
+     */
     public String[] parseDeadline(String arguments) {
         try {
             int dividerPosition = arguments.indexOf("/by");
@@ -85,6 +107,12 @@ public class Parser {
 
     }
 
+    /**
+     * Parses an event task description, start time, and end time from a string.
+     *
+     * @param arguments the string to parse
+     * @return an array containing the description, start time, and end time, or null if the string is in the wrong format
+     */
     public String[] parseEvent(String arguments) {
         try {
             int divider1Position = arguments.indexOf("/from");
@@ -100,6 +128,12 @@ public class Parser {
 
     }
 
+    /**
+     * Parses a task index from a string.
+     *
+     * @param arguments the string to parse
+     * @return the task index, or -1 if the string is not an integer
+     */
     public int parseIndex(String arguments) {
         try {
             return Integer.parseInt(arguments) - 1;
@@ -109,6 +143,12 @@ public class Parser {
         }
     }
 
+    /**
+     * Parses a date from a string.
+     *
+     * @param arguments the string to parse
+     * @return the date as a LocalDateTime object, or null if the string is in the wrong format
+     */
     public LocalDateTime parseDate(String arguments) {
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
@@ -122,6 +162,12 @@ public class Parser {
         }
     }
 
+    /**
+     * Parses a date-time value from a string.
+     *
+     * @param arguments the string to parse
+     * @return the date-time value as a LocalDateTime object, or null if the string is in the wrong format
+     */
     public LocalDateTime parseDateTime(String arguments) {
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
@@ -135,6 +181,12 @@ public class Parser {
         }
     }
 
+    /**
+     * Parses a task from a string representing its contents in the format used in the save file.
+     *
+     * @param text the string to parse
+     * @return the parsed task object, or null if the string is in the wrong format
+     */
     public Task parseFileContent(String text) {
         Task readTask = null;
         try {
@@ -183,6 +235,12 @@ public class Parser {
         return readTask;
     }
 
+    /**
+     * Converts a task object into a string representing its contents in the format used in the save file.
+     *
+     * @param task the task to convert
+     * @return the string representing the task's contents
+     */
     public String parseTaskToWrite(Task task) {
         Boolean isDone = task.getStatus();
         String taskType = task.getTaskType();
