@@ -7,8 +7,14 @@ import nano.task.Event;
 import nano.task.Task;
 import nano.task.Todo;
 
-import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.Scanner;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 public class Nano {
     private static final int HORIZONTAL_LINE_LENGTH = 100;
     private static final int COMMAND_INDEX = 0;
@@ -39,6 +45,7 @@ public class Nano {
     public static final String MESSAGE_HELP_HELP = "/help : Displays list of all commands";
     public static final String MESSAGE_HELP_EXIT = "/exit : Exit chatbot";
     private static ArrayList<Task> tasks;
+    private static final File taskFile = new File("data/tasks.txt");
 
     public static void main(String[] args) {
         //chatbot startup
@@ -50,13 +57,23 @@ public class Nano {
             String userInput = getUserInput();
             try {
                 executeCommand(userInput);
+                saveTaskFile();
             } catch (NanoCommandException commandException) {
-                System.out.println("unknown command");
+                System.out.println("Unknown command!");
                 displayHelpMessage();
+            } catch (IOException e) {
+                System.out.println("Error saving file.");
             }
         }
     }
 
+    private static void saveTaskFile() throws  IOException {
+        FileWriter fileWriter = new FileWriter(taskFile);
+        for (Task task : tasks) {
+            fileWriter.write(task.toString() + System.lineSeparator());
+        }
+        fileWriter.close();
+    }
     private static void executeCommand(String userInput) throws NanoCommandException {
         String[] userInputs;
         try {
@@ -137,9 +154,9 @@ public class Nano {
     }
 
     private static int getTaskIndex(String taskName) {
-        for (Task t : tasks) {
-            if (t.getTaskName().equals(taskName)) {
-                return tasks.indexOf(t);
+        for (Task task : tasks) {
+            if (task.getTaskName().equals(taskName)) {
+                return tasks.indexOf(task);
             }
         }
         return TASK_INDEX_ERROR;
@@ -169,8 +186,8 @@ public class Nano {
     }
 
     private static boolean isInList(String taskName) {
-        for (Task t : tasks) {
-            if (t.getTaskName().equals(taskName)) {
+        for (Task task : tasks) {
+            if (task.getTaskName().equals(taskName)) {
                 return true;
             }
         }
@@ -228,15 +245,15 @@ public class Nano {
     private static void getEvent(String userInput, String[] userInputs) {
         userInputs[TASK_TYPE_INDEX] = "event";
         userInputs[TASK_NAME_INDEX] = userInput.substring(userInput.indexOf(" "), userInput.indexOf("from/")).trim();
-        userInputs[TASK_START_DATE_INDEX] = userInput.substring(userInput.indexOf("from/"),
-                userInput.indexOf("to/")).replaceFirst("/", "").trim();
-        userInputs[TASK_END_DATE_INDEX] = userInput.substring(userInput.indexOf("to/")).replaceFirst("/", "");
+        userInputs[TASK_START_DATE_INDEX] = userInput.substring(userInput.indexOf("from/") + 5,
+                userInput.indexOf("to/")).trim();
+        userInputs[TASK_END_DATE_INDEX] = userInput.substring(userInput.indexOf("to/") + 3).trim();
     }
 
     private static void getDeadline(String userInput, String[] userInputs) {
         userInputs[TASK_TYPE_INDEX] = "deadline";
         userInputs[TASK_NAME_INDEX] = userInput.substring(userInput.indexOf(" "), userInput.indexOf("by/")).trim();
-        userInputs[TASK_DUE_DATE_INDEX] = userInput.substring(userInput.indexOf("by/"));
+        userInputs[TASK_DUE_DATE_INDEX] = userInput.substring(userInput.indexOf("by/") + 3).trim();
     }
 
     private static boolean isDeadline(String task) {
@@ -250,8 +267,8 @@ public class Nano {
     private static void displayTaskList() {
         System.out.println("You have completed " + Task.getCompletedTaskCount() + " tasks. " +
                 Task.getUncompletedTaskCount() + " more to go!");
-        for (Task t : tasks) {
-            System.out.println(t.toString());
+        for (Task task : tasks) {
+            System.out.println(task.toString());
         }
     }
 
@@ -262,6 +279,72 @@ public class Nano {
     //creates a list of task (1-index)
     private static void initialiseTaskList() {
         tasks = new ArrayList<>();
+        getUserData();
+    }
+
+    private static void getUserData(){
+        if (taskFile.exists()) {
+            try {
+                Scanner s = new Scanner(taskFile);
+                while (s.hasNext()) {
+                    readTaskFile(s.nextLine());
+                }
+            } catch (FileNotFoundException e) {
+                System.out.println("Error reading task file.");
+            }
+        } else {
+            System.out.println("User task file not detected. Creating new task file.....");
+            createTaskFile();
+        }
+    }
+
+    private static void readTaskFile(String taskDetails) {
+        Task newTask;
+        String taskName;
+        if (taskDetails.charAt(taskDetails.length() - 1) == ')') {
+            taskName = taskDetails.substring(taskDetails.indexOf(" ") + 1, taskDetails.lastIndexOf(" ("));
+        } else {
+            taskName = taskDetails.substring(taskDetails.indexOf(" ") + 1);
+        }
+
+        switch (taskDetails.substring(1, 2)) {
+        case "D":
+            newTask = new Deadline(taskName, taskDetails.substring(taskDetails.indexOf("by:") + 4,
+                    taskDetails.lastIndexOf(')')));
+            break;
+        case "E":
+            newTask = new Event(taskName, taskDetails.substring(taskDetails.indexOf("from:") + 5,
+                    taskDetails.indexOf(", to:")).trim(),
+                    taskDetails.substring(taskDetails.indexOf("to:") + 4, taskDetails.lastIndexOf(')')).trim());
+            break;
+        default:
+            newTask = new Todo(taskName);
+            break;
+        }
+        tasks.add(newTask);
+
+        if (taskDetails.contains("[x]")) {
+            tasks.get(tasks.size() - 1).setDone();
+        }
+    }
+    private static void createTaskFile() {
+        try {
+            if (taskFile.getParentFile().mkdirs()) {
+                System.out.println("Creating directories.....");
+            } else {
+                System.out.println("Unable to create directories. User data may not be saved.");
+            }
+
+            if (taskFile.createNewFile()) {
+                System.out.println("Task file created!");
+            } else {
+                System.out.println("Unable to create task file. User data may not be saved.");
+            }
+
+        } catch (IOException e) {
+            System.out.println("Error detected while creating user task file. User data may not be saved.");
+        }
+        printHorizontalLine();
     }
 
     private static String getUserInput() {

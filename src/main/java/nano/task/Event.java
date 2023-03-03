@@ -12,6 +12,6 @@ public class Event extends Task {
     }
 
     public String toString() {
-        return TASK_TYPE_TAG + super.toString() + " (" + startDate + " " + endDate + ")";
+        return TASK_TYPE_TAG + super.toString() + " (from: " + startDate + ", to: " + endDate + ")";
     }
 }
