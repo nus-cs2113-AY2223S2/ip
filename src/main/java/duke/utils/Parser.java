@@ -32,7 +32,7 @@ public class Parser {
             break;
         case "list":
             ui.printListTasksMessage();
-            taskList.printAllTasks(taskList.matchingTasksNum);
+            taskList.printAllTasks(taskList.currentTaskNum);
             break;
         case "todo":
             taskList.addTodo(content);
