@@ -1,4 +1,4 @@
-package nano.task;
+package nano.data.task;
 
 public class Task {
     public static final String TASK_COMPLETED_MARK = "[x] ";

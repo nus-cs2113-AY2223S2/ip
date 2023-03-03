@@ -1,4 +1,4 @@
-package nano.task;
+package nano.data.task;
 
 public class Todo extends Task{
     private static final String TASK_TYPE_TAG = "[T]";
