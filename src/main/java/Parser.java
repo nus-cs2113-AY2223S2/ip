@@ -1,4 +1,6 @@
-
+/**
+ * Represents an entity to handle and interpret user commands in order to execute the corresponding methods to reflect the program's intended behaviour.
+ */
 public class Parser {
     private static final String DIVIDER  = "______________________________";
     private boolean isFinished = false; //to return to main program
@@ -13,6 +15,12 @@ public class Parser {
     static final String COMMAND_DELETE = "delete";
     static final String COMMAND_FIND = "find";
 
+    /**
+     * Takes in user commands and executes the relevant operations to modify the user's list of tasks according to the command.
+     *
+     * @param input The input that the user provided to the program.
+     * @param taskList the task manager handling the user's current list of tasks.
+     */
     public void parse(String input, TaskList taskList) {
         String[] inputText = input.split(" ");
         String command = inputText[0];
@@ -141,6 +149,11 @@ public class Parser {
             break;
         }
     }
+
+    /**
+     * Returns the boolean variable isFinished to determine the termination of the program.
+     * @return Boolean isFinished acts as a signal to terminate program
+     */
     public boolean checkProgrammeCompletion() {
         return isFinished;
     }
