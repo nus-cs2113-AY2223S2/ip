@@ -1,7 +1,14 @@
+package buddy.commands.actionCommands;
+
+import buddy.messages.Messages;
+import buddy.commands.Command;
+import buddy.tasks.*;
+
 import java.util.ArrayList;
+
 import static java.util.stream.Collectors.toList;
 
-public class FindTaskCommand extends Command{
+public class FindTaskCommand extends Command {
     @Override
     public void executeCommand(TaskList taskList, String input) {
         String keyword = input.split(" ")[1].trim().toLowerCase();
@@ -10,13 +17,13 @@ public class FindTaskCommand extends Command{
                 .filter(t -> t.getTaskName().trim().toLowerCase().contains(keyword)).collect(toList());
         System.out.println(Messages.DIVIDER);
         if (!matchedTasks.isEmpty()){
-            System.out.println("Well, here is the list of tasks matching your keyword!");
+            System.out.println("Well, here is the list of buddy.tasks matching your keyword!");
         }
         for (Task task : matchedTasks){
             System.out.println(task);
         }
         if (matchedTasks.isEmpty()){
-            System.out.println("Oops, there are no tasks matching the keyword! Try again with another keyword");
+            System.out.println("Oops, there are no buddy.tasks matching the keyword! Try again with another keyword");
         }
         System.out.println(Messages.DIVIDER);
 

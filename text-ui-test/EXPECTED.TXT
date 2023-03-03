@@ -1,5 +1,5 @@
 ________________________________________________________________________________
-Hello there! I'm Buddy
+Hello there! I'm buddy
 How may I assist you?
 Here are the possible commands: todo, deadline, event, list, mark, unmark, find, bye
 Type <help> if you are unsure of what these commands do!
@@ -12,12 +12,12 @@ ________________________________________________________________________________
 ________________________________________________________________________________
 Got it! I have added this task!
 [D][ ] cg mod (Please do by: Dec 1 2023!)
-Now you have 2 tasks remaining! Let's finish them faster and relax!
+Now you have 2 buddy.tasks remaining! Let's finish them faster and relax!
 ________________________________________________________________________________
 ________________________________________________________________________________
 Got it! I have added this task!
 [E][ ] exam (from: 2pm to: 5pm)
-Now you have 3 tasks remaining! Let's finish them faster and relax!
+Now you have 3 buddy.tasks remaining! Let's finish them faster and relax!
 ________________________________________________________________________________
 ________________________________________________________________________________
 Great work on completing this task! Marked as done! :)
@@ -32,11 +32,11 @@ Come on, don't procrastinate! Marked as undone!
 [T][ ] cs2113
 ________________________________________________________________________________
 ________________________________________________________________________________
-Here is the list of tasks you have remaining! Come on Buddy!
+Here is the list of buddy.tasks you have remaining! Come on buddy!
 1.[T][ ] cs2113
 2.[D][X] cg mod (Please do by: Dec 1 2023!)
 3.[E][ ] exam (from: 2pm to: 5pm)
 ________________________________________________________________________________
 ________________________________________________________________________________
-Hope I was of help to you! Have a great day and see you again, Buddy :)
+Hope I was of help to you! Have a great day and see you again, buddy :)
 ________________________________________________________________________________

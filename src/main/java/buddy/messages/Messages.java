@@ -1,3 +1,5 @@
+package buddy.messages;
+
 public class Messages {
     public static final String DIVIDER = "________________________________________________________________________________";
     public static final String GREETING = "Hello there! I'm Buddy\n"
@@ -6,7 +8,7 @@ public class Messages {
     public static final String EXITMESSAGE = "Hope I was of help to you! Have a great day and see you again, Buddy :)";
     public static final String HELPMESSAGE =
             "These are the various commands and their functions. Please type in the FORMAT that is stated below\n" +
-            "There are 3 add task commands which add 3 kinds of tasks: todo, deadline and event\n" +
+            "There are 3 add task commands which add 3 kinds of buddy.tasks: todo, deadline and event\n" +
             "todo: Adds a todo to your task list\n" +
             "FORMAT: todo <todo name>\n" +
             "deadline: Adds a deadline to your task list\n" +
@@ -15,7 +17,7 @@ public class Messages {
             "event: Adds an event to your task list\n" +
             "FORMAT: event <event name> /from <start> /to <end>\n" +
             "There are 5 other action commands: list, mark, unmark, find and bye\n" +
-            "list: lists all the tasks that you have remaining\n" +
+            "list: lists all the buddy.tasks that you have remaining\n" +
             "FORMAT: list\n" +
             "mark: marks a task as done with an X\n" +
             "FORMAT: mark <task number on the list>\n" +

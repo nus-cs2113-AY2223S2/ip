@@ -1,26 +1,29 @@
+package buddy.storage;
+
+import buddy.Buddy;
+import buddy.tasks.TaskList;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Scanner;
-import java.text.ParseException;
-import java.util.zip.DataFormatException;
-
+import buddy.tasks.*;
 
 public class Storage {
 
-    public static void createFile() {
-        //File directory = new File("Buddy.txt");
-        File newFile = new File("Buddy.txt");
+    private final String filePath;
+    public Storage(String filePath){
+        this.filePath = filePath;
+    }
+    public void createFile(){
+        //File directory = new File(filePath);
+        File newFile = new File(filePath);
 
         try {
-            //if(directory.mkdirs()){
-            //    System.out.println("Directory has been created :)");
-            // }
-            //else {
-            //     System.out.println("Directory exists already!");
-            // }
+           /* if (!directory.exists()){
+                System.out.println("Directory has been created :)");
+             }*/
 
             if (newFile.createNewFile()) {
                 System.out.println("File has been created :)");
@@ -33,13 +36,8 @@ public class Storage {
         }
     }
 
-    public static void updateFile(TaskList taskList) throws IOException {
-        /*try {
-            createFile();
-        } catch (IOException e) {
-            System.out.println("Error occurred as the file probably exists");
-        }*/
-        FileWriter overwriteFile = new FileWriter("Buddy.txt");
+    public void updateFile(TaskList taskList) throws IOException {
+        FileWriter overwriteFile = new FileWriter(filePath);
         for (Task task : taskList) {
             String taskType = task.getType();
             String taskName = task.getTaskName();
@@ -65,8 +63,8 @@ public class Storage {
     }
 
 
-    public static void loadFile(TaskList taskList) throws FileNotFoundException {
-        File file = new File("Buddy.txt");
+    public void loadFile(TaskList taskList) throws FileNotFoundException {
+        File file = new File(filePath);
         Scanner s = new Scanner(file);
         while (s.hasNext()) {
             String line = s.nextLine();

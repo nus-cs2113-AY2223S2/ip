@@ -1,9 +1,16 @@
+package buddy.commands.actionCommands;
+
+import buddy.Buddy;
+import buddy.messages.Messages;
+import buddy.commands.Command;
+import buddy.tasks.*;
+
 public class ListCommand extends Command {
     @Override
     public void executeCommand(TaskList taskList, String input) {
         System.out.println(Messages.DIVIDER);
         if (!taskList.isEmpty()){
-            System.out.println("Here is the list of tasks you have remaining! Come on Buddy!");
+            System.out.println("Here is the list of buddy.tasks you have remaining! Come on Buddy!");
 
         }
         int index = 1;                                              // index which shows numbers the task

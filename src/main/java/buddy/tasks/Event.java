@@ -1,3 +1,5 @@
+package buddy.tasks;
+
 public class Event extends Task {
 
     protected String from;

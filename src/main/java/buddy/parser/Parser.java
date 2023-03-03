@@ -1,4 +1,12 @@
+package buddy.parser;
+
 import java.io.IOException;
+import buddy.commands.*;
+import buddy.commands.actionCommands.*;
+import buddy.commands.addTaskCommands.*;
+import buddy.exception.InvalidCommandException;
+import buddy.storage.Storage;
+import buddy.tasks.*;
 
 public class Parser {
 
@@ -6,7 +14,7 @@ public class Parser {
         return input.equals("bye");
     }
 
-    public void executeInput(TaskList taskList, String input) {
+    public void executeInput(TaskList taskList, String input, Storage storage) {
         String[] inputSplit = input.split(" ", 2);
         String commandName = inputSplit[0].trim();
         try {
@@ -65,7 +73,7 @@ public class Parser {
         }
 
         try{
-            Storage.updateFile(taskList);
+            storage.updateFile(taskList);
         }catch (IOException e){
             System.out.println("IO Error");
         }

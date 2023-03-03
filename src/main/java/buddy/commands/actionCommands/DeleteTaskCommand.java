@@ -1,6 +1,9 @@
-import java.io.IOException;
+package buddy.commands.actionCommands;
 
-public class DeleteTaskCommand extends Command{
+import buddy.commands.Command;
+import buddy.tasks.*;
+
+public class DeleteTaskCommand extends Command {
 
     @Override
     public void executeCommand(TaskList taskList, String input) {
