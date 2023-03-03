@@ -77,6 +77,7 @@ ____________________________________________________________
 ## Feature - Event
 - This function will add an event that the user need to attend, with a tickbox to mark if the user have attended or not.
 - Example:
+
 ```
 >>> event Open House /on Sunday
 ____________________________________________________________
