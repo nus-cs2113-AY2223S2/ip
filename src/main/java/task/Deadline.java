@@ -1,5 +1,8 @@
 package task;
 
+/**
+ * This class is for the Deadline task which is a subclass of task.
+ */
 public class Deadline extends Task {
     private String byDate;
 

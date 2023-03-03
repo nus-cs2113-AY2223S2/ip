@@ -2,6 +2,9 @@ package duke;
 
 import java.util.Scanner;
 
+/**
+ * This class contains the UI for the CLI.
+ */
 public class Ui {
 
     public String getUserInput() {

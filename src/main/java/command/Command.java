@@ -1,5 +1,9 @@
 package command;
 
+/**
+ * This class contains the list of valid commands words that can be inputted by the user to
+ * use the Duke program.
+ */
 public class Command {
     public static final String COMMAND_BYE = "bye";
     public static final String COMMAND_LIST = "list";

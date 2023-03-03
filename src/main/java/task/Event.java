@@ -1,5 +1,8 @@
 package task;
 
+/**
+ * This class is for the Event task which is a subclass of task.
+ */
 public class Event extends Task {
     private String fromDate;
     private String toDate;

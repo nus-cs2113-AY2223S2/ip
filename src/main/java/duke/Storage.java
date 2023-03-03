@@ -12,17 +12,25 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+/**
+ * This class deals with the opening, reading and writing of the saveFile.
+ */
 public class Storage {
 
     public static final File FILE_PATH = new File("./data/duke.txt");
     public static final File FILE_DIR = new File("./data");
 
+    /**
+     * This method opens file based on path. Then it will cll the readFile method to initialise the task list.
+     *
+     * @param taskList The list where tasks are stored. We will be initialising it later.
+     */
     public void openFile(TaskList taskList) {
         File file = new File(String.valueOf(FILE_PATH));
         readFile(file, taskList);
     }
 
-    public void readFile(File file, TaskList taskList) {
+    private void readFile(File file, TaskList taskList) {
         try {
             java.io.FileReader fr = new java.io.FileReader(file);
             BufferedReader br = new BufferedReader(fr);
@@ -38,6 +46,12 @@ public class Storage {
         }
     }
 
+    /**
+     * This method does the checking of file path and directory and rectify any issues encountered before calling
+     * the writeTaskToFile method to input data into the save file.
+     *
+     * @param taskList The list of task to transfer the data from.
+     */
     public void writeToFile(TaskList taskList) {
         try {
             PrintWriter pw = new PrintWriter(FILE_PATH);
@@ -64,7 +78,7 @@ public class Storage {
         }
     }
 
-    public void writeTaskToFile(PrintWriter pw, TaskList taskList) {
+    private void writeTaskToFile(PrintWriter pw, TaskList taskList) {
         for (Task t : taskList.tasks) {
             pw.println(t.printToFile());
         }

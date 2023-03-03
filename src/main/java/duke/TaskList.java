@@ -14,7 +14,11 @@ public class TaskList {
     private final Ui ui = new Ui();
     public ArrayList<Task> tasks = new ArrayList<>();
 
-
+    /**
+     * Reads the saveFile and initialise the list of task based on it.
+     *
+     * @param line Line of text from the saveFile.
+     */
     public void initialiseTaskList(String line) {
         String[] task = line.split("[|\\-]");
 
@@ -34,7 +38,11 @@ public class TaskList {
             break;
         }
 
-        if (task[1].contains("X")) {
+        initialiseTaskStatus(task[1]);
+    }
+
+    private void initialiseTaskStatus(String task) {
+        if (task.contains("X")) {
             try {
                 markTaskDone(tasks.size()-1);
             } catch (NumberFormatException e) {
@@ -47,6 +55,9 @@ public class TaskList {
         }
     }
 
+    /**
+     * Prints to CLI the list of task.
+     */
     public void printTaskList() {
         if (tasks.size() == 0) {
             ui.printEmptyTaskList();
@@ -60,6 +71,12 @@ public class TaskList {
     }
 
 
+    /**
+     * Marks task based on taskIndex as 'done'.
+     *
+     * @param taskIndex The position of task in the task list.
+     * @throws InvalidTaskNumberException Task number inputted exceeds the range of the task list.
+     */
     public void markTaskDone(Integer taskIndex) throws InvalidTaskNumberException {
         if (taskIndex < 0 || taskIndex > tasks.size()) {
             throw new InvalidTaskNumberException();
@@ -68,7 +85,12 @@ public class TaskList {
         }
     }
 
-
+    /**
+     * Marks task based on taskIndex as 'undone'.
+     *
+     * @param taskIndex The position of task in the task list.
+     * @throws InvalidTaskNumberException Task number inputted exceeds the range of the task list.
+     */
     public void markTaskUndone(Integer taskIndex) throws InvalidTaskNumberException {
         if (taskIndex < 0 || taskIndex > tasks.size()) {
             throw new InvalidTaskNumberException();
@@ -77,7 +99,12 @@ public class TaskList {
         }
     }
 
-
+    /**
+     * Adds todo task to the task list.
+     *
+     * @param task Description of task.
+     * @throws EmptyTaskException Description of task is empty.
+     */
     public void addTodoTask(String task) throws EmptyTaskException {
         if (task.equals("")) {
             throw new EmptyTaskException();
@@ -86,20 +113,41 @@ public class TaskList {
         }
     }
 
-
+    /**
+     * Adds deadline task to the task list.
+     *
+     * @param task Description of task.
+     * @param deadline Deadline of task.
+     */
     public void addDeadlineTask(String task, String deadline) {
         tasks.add(new Deadline(task, deadline));
     }
 
+    /**
+     * Adds event task to the task list.
+     *
+     * @param task Description of task.
+     * @param fromDate Start date of event.
+     * @param byDate End date of event.
+     */
     public void addEventTask(String task, String fromDate, String byDate) {
         tasks.add(new Event(task, fromDate, byDate));
     }
 
+    /**
+     * Prints message to show that task has been added successfully.
+     */
     public void printTaskAdded() {
         System.out.println("Got it. I've added this task:\n " + tasks.get(tasks.size()-1)
                 + "\nNow you have " + tasks.size() + " tasks in the list.");
     }
 
+    /**
+     * Delete task based on taskIndex.
+     *
+     * @param taskIndex The position of task in the list.
+     * @throws InvalidTaskNumberException Task number inputted exceeds the range of the task list.
+     */
     public void deleteTask(int taskIndex) throws InvalidTaskNumberException {
         if (taskIndex < 0 || taskIndex >= tasks.size()) {
             throw new InvalidTaskNumberException();
