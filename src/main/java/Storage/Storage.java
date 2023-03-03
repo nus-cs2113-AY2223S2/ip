@@ -28,7 +28,6 @@ public class Storage {
      */
     public ArrayList<Task> readFromFile(Path filePath) throws DukeException {
         //Frome https://www.sghill.net/2014/how-do-i-make-cross-platform-file-paths-in-java/
-//        Path path = this.path;
         byte[] tasksInByteForm = new byte[1000000];
         ArrayList<Task> list = new ArrayList<Task>();
         if (Files.exists(path)) {
@@ -39,8 +38,6 @@ public class Storage {
             }
             String tasksInStringForm = new String(tasksInByteForm);
             String[] arrayOfTasks = tasksInStringForm.split("\n");
-
-//            System.out.println(arrayOfTasks);
             for (String task : arrayOfTasks) {
                 Task recreatedTask = createTaskFromString(task);
                 if (recreatedTask == null) {
@@ -138,7 +135,6 @@ public class Storage {
                     break;
             }
             taskInLineForm = taskInLineForm.concat("\n");
-//            System.out.println(taskInLineForm);
             try {
                 Files.write(path, taskInLineForm.getBytes(StandardCharsets.UTF_8), StandardOpenOption.APPEND);
             } catch (IOException e) {
@@ -155,7 +151,6 @@ public class Storage {
         for (String item : items) {
             taskInStringForm = taskInStringForm.concat(item + "|");
         }
-//        System.out.println(taskInStringForm);
         return taskInStringForm;
     }
 }

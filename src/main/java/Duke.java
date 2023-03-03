@@ -66,19 +66,4 @@ public class Duke {
         System.out.println("Hello! I'm Duke\n" + "What can I do for you?");
         return ui;
     }
-
-    // The bulk of the logic (should change name soon)
-
-
-    //Code not needed for Level-1
-    public static void dukeEcho(Scanner inputScanner) {
-        while (true) {
-            String echo = inputScanner.nextLine();
-            if (echo.equals("bye")) {
-                System.out.println("Bye. Hope to see you again soon!");
-                return;
-            }
-            System.out.println(echo);
-        }
-    }
 }
