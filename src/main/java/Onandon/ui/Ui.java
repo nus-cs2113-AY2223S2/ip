@@ -7,7 +7,11 @@ import Onandon.exception.OnandonUnknownException;
 
 import java.util.Scanner;
 
-// Class for maintaining UI of the chatbot.
+/**
+ * Class for constructing UI of the program.
+ *
+ * All of the UI, printing message, interaction with user are managed in this class.
+ */
 public class Ui {
     public static final String underline = "\t____________________________________________________________";
     public static final String todo = "\t Got it. I've added this task:";
@@ -19,7 +23,9 @@ public class Ui {
     public static final String find = "\tHere are the matching tasks in your list:";
 
 
-    // Prints underline : ----------------------------
+    /**
+     * Print underline '--------' to distinct message.
+     */
     public static void printUnderline(){
         System.out.println(underline);
     }
@@ -55,7 +61,9 @@ public class Ui {
         System.out.println(find);
     }
 
-    // Greeting
+    /**
+     * Print greeting message at the beginning of the program.
+     */
     public static void printGreet(){
         printUnderline();
         System.out.println("\t Hello! I'm onandon");
@@ -63,14 +71,20 @@ public class Ui {
         printUnderline();
     }
 
-    // Say bye
+    /**
+     * Print farewell message at the end of the program.
+     */
     public static void printBye(){
         printUnderline();
         System.out.println("\t Bye. Hope to see you again soon!");
         printUnderline();
     }
 
-    // Prints exception message.
+    /**
+     * Print exception message by the specified error type.
+     *
+     * @param e Exception class program should print.
+     */
     public static void printException(OnandonException e){
         if(e instanceof OnandonUnknownException){
             printUnderline();

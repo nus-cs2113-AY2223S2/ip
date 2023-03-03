@@ -5,7 +5,9 @@ import Onandon.module.*;
 import Onandon.ui.Ui;
 import Onandon.storage.Storage;
 
-// This is main class of the chatbot.
+/**
+ * Main class of the Onandon chatbot.
+ */
 public class Onandon {
     private TaskList tasks;
     private ExceptionChecker error;
@@ -15,7 +17,14 @@ public class Onandon {
         error = new ExceptionChecker();
     }
 
-    // runs the chatbot.
+    /**
+     * Run the program.
+     *
+     * 1) Get the command from the user
+     * 2) Parse the command and execute it.
+     * 3) Print the right message.
+     * 4) Repeat above process until 'exit' command is given by the user.
+     */
     public void run(){
         Ui.printGreet();
         String fullCommand;

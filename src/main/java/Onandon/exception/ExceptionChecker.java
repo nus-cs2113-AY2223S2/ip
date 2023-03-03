@@ -1,6 +1,9 @@
 package Onandon.exception;
 
-// This class is for maintaining and checking the exceptions which occur during executing the program.
+/**
+ * Class for checking whether there would be exception that occurs during the execution
+ * of the program.
+ */
 public class ExceptionChecker {
     protected Boolean isNotTodo;
     protected Boolean isNotDeadline;
@@ -12,7 +15,14 @@ public class ExceptionChecker {
     protected Boolean isNotExit;
     protected Boolean isNotFind;
 
-    // checks whether there would be exception, and throws the exception.
+    /**
+     * Check whether there would be any exception and throw the exception if there is any.
+     *
+     * @param inputText Full String command given by the user.
+     * @throws OnandonNotaskException If there is no description in the command.
+     * @throws OnandonEmptyException If the length of the command is 0.
+     * @throws OnandonUnknownException If the command type is out of range of this program or unknown.
+     */
     public void checkException(String inputText) throws OnandonEmptyException, OnandonUnknownException, OnandonNotaskException {
         String[] split = inputText.split(" ");
         String tgt = inputText.split(" ")[0];
@@ -28,7 +38,16 @@ public class ExceptionChecker {
 
         if(inputText.length() == 0){
             throw new OnandonEmptyException();
-        } else if(this.isNotTodo && this.isNotDeadline && this.isNotEvent && this.isNotMark && this.isNotUnmark && this.isNotList && this.isNotDelete && this.isNotExit && this.isNotFind){
+        } else if(this.isNotTodo &&
+                this.isNotDeadline &&
+                this.isNotEvent &&
+                this.isNotMark &&
+                this.isNotUnmark &&
+                this.isNotList &&
+                this.isNotDelete &&
+                this.isNotExit &&
+                this.isNotFind
+        ){
             throw new OnandonUnknownException();
         } else if(split.length <= 1 && this.isNotList && this.isNotExit){
             throw new OnandonNotaskException();

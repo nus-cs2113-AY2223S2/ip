@@ -5,12 +5,25 @@ import Onandon.module.*;
 
 import java.util.ArrayList;
 
-// This class is for storing and loading current state of the tasks.
+/**
+ * Representation of the store/load function.
+ * This clas contains 2 functions :
+ * 1) one stores the current status of the list of the tasks into 'checkpoint.txt' file.
+ * 2) The other loads stored status of the tasks list and allocates into TaskList class.
+ *
+ * This class allow user to store/load their schedule so that they can easily continue to
+ * edit even if the program is terminated.
+ */
 public class Storage {
     protected static final String PATH = System.getProperty("user.dir");
     protected static final String CHECKPOINT = "/checkpoint.txt";
 
-    // storing current state of the tasks in a 'checkpoint.txt' file.
+    /**
+     * Stores the current status of the list of the tasks into 'checkpoint.txt' file
+     * so that user can keep their plan list eventhough the program is terminated.
+     *
+     * @param tasks ArrayList of the tasks.
+     */
     public static void storeCheckpoint(TaskList tasks){
         String store = "";
 
@@ -36,7 +49,24 @@ public class Storage {
         }
     }
 
-    // loading current state of the tasks from 'checkpoint.txt' file.
+    /**
+     * Set the status of the isDone variable of the task with referring the 'sen' String.
+     *
+     * @param sen String indicates whether this task is done.
+     * @param tasks ArrayList of the tasks.
+     * @param index Index of the task user want to process
+     */
+    public static void setIsDone(String sen, TaskList tasks, int index){
+        if(sen.equals("X"))
+            tasks.get(index).markAsDone();
+        else if(sen.equals(" "))
+            tasks.get(index).markAsUnDone();
+    }
+
+    /**
+     * Loads the 'checkpoint.txt' file and allocates into of ArrayList.
+     * User can continue their management from their previous one.
+     */
     public static TaskList recallCheckpoint() {
         ArrayList<Task> taskArray = new ArrayList<Task>(100);
         TaskList tasks = new TaskList(taskArray, 0);
@@ -66,26 +96,17 @@ public class Storage {
                 switch(sen[0]){
                 case "T":
                     tasks.add(new Todo(sen[2]));
-                    if(sen[1].equals("X"))
-                        tasks.get(cnt).markAsDone();
-                    else if(sen[1].equals(" "))
-                        tasks.get(cnt).markAsUnDone();
+                    setIsDone(sen[1], tasks, cnt);
                     cnt += 1;
                     break;
                 case "D":
                     tasks.add(new Deadline(sen[2], sen[3]));
-                    if(sen[1].equals("X"))
-                        tasks.get(cnt).markAsDone();
-                    else if(sen[1].equals(" "))
-                        tasks.get(cnt).markAsUnDone();
+                    setIsDone(sen[1], tasks, cnt);
                     cnt += 1;
                     break;
                 case "E":
                     tasks.add(new Event(sen[2], sen[3], sen[4]));
-                    if(sen[1].equals("X"))
-                        tasks.get(cnt).markAsDone();
-                    else if(sen[1].equals(" "))
-                        tasks.get(cnt).markAsUnDone();
+                    setIsDone(sen[1], tasks, cnt);
                     cnt += 1;
                     break;
                 }

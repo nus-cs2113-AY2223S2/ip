@@ -4,7 +4,9 @@ import Onandon.storage.Storage;
 import Onandon.module.*;
 import Onandon.ui.Ui;
 
-// This class is for executing parsed command
+/**
+ * Representation of the configuration for the parsed command.
+ */
 public class Command {
     protected String commandType;
     protected String description;
@@ -14,7 +16,26 @@ public class Command {
     protected String find;
     protected int index;
 
-    public Command(String commandType, String description, String by, String from, String to, int index, String find) {
+    /**
+     * Create new Command class with the specified command type.
+     *
+     * @param commandType Command type of the given command, e.g, todo, event, deadline, and etc.
+     * @param description Description of the command.
+     * @param by 'by' for the deadline command.
+     * @param from 'from' for the event command.
+     * @param to 'to' for the event command.
+     * @param index Index of the task you want to process in the mark, unmark, delete command.
+     * @param find Search key you want to find in the find command.
+     */
+    public Command(
+            String commandType,
+            String description,
+            String by,
+            String from,
+            String to,
+            int index,
+            String find
+    ) {
         this.commandType = commandType;
         this.description = description;
         this.by = by;
@@ -24,7 +45,12 @@ public class Command {
         this.find = find;
     }
 
-    // Executing command by the case of the tasks
+    /**
+     * Executes the command by the specified command type.
+     * Returns boolean value for .
+     *
+     * @param tasks ArrayList of the tasks
+     */
     public Boolean execute(TaskList tasks) {
         int num;
         Boolean exit = false;
@@ -77,7 +103,7 @@ public class Command {
             Ui.printDelete();
             System.out.println("\t\t" + tasks.get(this.index).toString());
             tasks.remove(this.index);
-            tasks.substractNum();
+            tasks.subtractNum();
             System.out.println("\t Now you have " + tasks.getNum() + " tasks in the list.");
             Ui.printUnderline();
             Storage.storeCheckpoint(tasks);
