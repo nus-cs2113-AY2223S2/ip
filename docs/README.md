@@ -206,8 +206,8 @@ ____________________________________________________________
 
 ### Feature - Exit
 This will close Duke.
-### `command` - todo
-Format: [command] [task description]
+### `command` - bye
+Format: [command]
 
 Sample input:
 ```
