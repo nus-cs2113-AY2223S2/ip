@@ -14,8 +14,8 @@ chatbot program is properly executed.
    ```
 
 There are 5 types of command you can give to this chatbot.
-1. `todo` : You can register todo task by typing `todo {description of the todo}` and
-   press the enter key. Then, you will see the resulting message like below.
+1. `todo` : You can register todo task by typing `todo {description of the todo}`.
+   You will see the resulting message like below after pres the `Enter` key.
    ```
    todo read book
       ____________________________________________________________
@@ -28,8 +28,8 @@ There are 5 types of command you can give to this chatbot.
    and `[ ]` means that this task is not done yet. If the task was already done, it is indicated like
    `[X]`.
    
-2. `deadline` : You can register deadline task by typing `deadline {description of the deadline} \by {due date}` and
-   press the enter key. Then, you will see the resulting message like below.
+2. `deadline` : You can register deadline task by typing `deadline {description of the deadline} \by {due date}`.
+   You will see the resulting message like below after pres the `Enter` key.
    ```
    deadline paper submission /by 2023-03-08
       ____________________________________________________________
@@ -38,7 +38,7 @@ There are 5 types of command you can give to this chatbot.
        Now you have 2 tasks in the list.
       ____________________________________________________________
    ```
-   In the line of `[T][ ] read book`, `[D]` means this task is created from `deadline` command.
+   In the line of `[D][ ] paper submission (by: Mar 08 2023)`, `[D]` means this task is created from `deadline` command.
    Also, if you type the due date of the task, you should follow the specified format of `YYYY-MM-dd`
    just like the example above. If you don't, the program would be terminated with the error message.
 
