@@ -155,6 +155,8 @@ public class Duke {
     public static ToDo createToDo(String messageFromUser) {
         // Remove the word "todo" from message
         String[] messageComponents = messageFromUser.split(" ", 2);
+        // Add space in front of todo task for formatting
+        messageComponents[1] = " " + messageComponents[1];
         return new ToDo(messageComponents[1]);
     }
 
