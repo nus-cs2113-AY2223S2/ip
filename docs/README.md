@@ -39,6 +39,8 @@ Example of usage:
 
 `todo <description>`
 
+`description` can be up to 50 characters long, and allow for alphanumeric characters. `/` specifically is not allowed as it is used as a delimiter for keywords.
+
 Expected outcome:
 
 A Todo task is added to the list and written to file
@@ -57,7 +59,9 @@ Example of usage:
 
 `deadline <description> /by <date>`
 
-Date is in the format of `YYYY-MM-DD`
+`description` can be up to 50 characters long, and allow for alphanumeric characters. `/` specifically is not allowed as it is used as a delimiter for keywords.
+
+`date` is in the format of `YYYY-MM-DD`
 
 Expected outcome:
 
@@ -76,6 +80,10 @@ Events have a `from` and `to` date, which can be used to indicate the start and 
 Example of usage:
 
 `event <description> /from <start_date> /to <end_date>`
+
+`description` can be up to 50 characters long, and allow for alphanumeric characters. `/` specifically is not allowed as it is used as a delimiter for keywords.
+
+`start_date` and `end_date` are in the format of `YYYY-MM-DD`
 
 Expected outcome:
 
