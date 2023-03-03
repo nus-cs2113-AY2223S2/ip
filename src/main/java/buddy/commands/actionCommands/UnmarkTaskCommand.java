@@ -5,6 +5,13 @@ import buddy.tasks.TaskList;
 import buddy.tasks.Task;
 
 public class UnmarkTaskCommand extends Command {
+
+    /**
+     * Processes UnmarkTaskCommand by marking the task as not done
+     *
+     * @param taskList List of tasks
+     * @param input Command inputted by user
+     */
     @Override
     public void executeCommand(TaskList taskList, String input) {
         try{

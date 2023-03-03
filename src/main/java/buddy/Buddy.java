@@ -7,9 +7,8 @@ import buddy.tasks.TaskList;
 import buddy.ui.Ui;
 
 /**
- * The main of the application which executes the program.
+ * The part which executes the entire program
  */
-
 public class Buddy {
     private final Storage storage;
     private static TaskList taskList;
@@ -18,6 +17,7 @@ public class Buddy {
 
     /**
      * Constructor for Buddy class
+     *
      * @param filePath The filepath of the file
      */
     public Buddy(String filePath){
@@ -27,7 +27,7 @@ public class Buddy {
     }
 
     /**
-     * This function runs the program till 
+     * This function runs the program till completion (till a "bye" is inputted)
      */
     public void run(){
         ui.loadFileOrCreateFile(taskList, storage);
@@ -43,6 +43,8 @@ public class Buddy {
         }
         ui.sayByeToUser();
     }
+
+
     public static void main(String[] args){
         new Buddy("./Data").run();
 

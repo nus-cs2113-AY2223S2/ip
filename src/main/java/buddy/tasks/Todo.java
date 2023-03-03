@@ -1,10 +1,16 @@
 package buddy.tasks;
 
 public class Todo extends Task {
-    protected boolean isDone;
+
+    /**
+     * Constructor for Todo - a type of Task
+     *
+     * @param description Description of todo
+     */
     public Todo(String description) {
-        super(description);  // don't need isDone as isDone is already in Task class
+        super(description);
     }
+
 
     @Override
     public String getType(){

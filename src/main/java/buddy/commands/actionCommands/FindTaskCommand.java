@@ -8,6 +8,14 @@ import java.util.ArrayList;
 import static java.util.stream.Collectors.toList;
 
 public class FindTaskCommand extends Command {
+
+    /**
+     * Process FindTaskCommand by user and finds and outputs the matching task to keyword
+     * If there are no matching tasks, tells user that there are none
+     *
+     * @param taskList List of tasks
+     * @param input Command inputted by user
+     */
     @Override
     public void executeCommand(TaskList taskList, String input) {
         String keyword = input.split(" ")[1].trim().toLowerCase();

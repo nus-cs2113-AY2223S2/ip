@@ -15,9 +15,19 @@ import buddy.tasks.Event;
 public class Storage {
 
     private final String filePath;
+
+    /**
+     * Constructor for Storage class
+     *
+     * @param filePath Path to the file where it is stored
+     */
     public Storage(String filePath){
         this.filePath = filePath;
     }
+
+    /**
+     * Creates a new directory and a new file if they don't exist
+     */
     public void createFile(){
         File directory = new File(filePath);
         File newFile = new File(filePath + "/BuddyTaskList.txt");
@@ -38,6 +48,12 @@ public class Storage {
         }
     }
 
+    /**
+     * Updates the file by overwriting it with the updated task list
+     *
+     * @param taskList List of tasks
+     * @throws IOException If there is an error with the hard disk
+     */
     public void updateFile(TaskList taskList) throws IOException {
         FileWriter overwriteFile = new FileWriter(filePath + "/BuddyTaskList.txt");
         for (Task task : taskList) {
@@ -64,7 +80,12 @@ public class Storage {
 
     }
 
-
+    /**
+     * Loads the existing file with the task list
+     *
+     * @param taskList List of tasks
+     * @throws FileNotFoundException If there is no file found
+     */
     public void loadFile(TaskList taskList) throws FileNotFoundException {
         File file = new File(filePath + "/BuddyTaskList.txt");
         Scanner s = new Scanner(file);
