@@ -4,6 +4,7 @@ import java.io.IOException;
 
 public class Storage {
     public static final String TASKLIST_EXPORT_PATH = "TaskList.txt";
+    public static final String WRITTEN_TO_PATH = "Written to: " + TASKLIST_EXPORT_PATH;
     public static final String SUCCESS_EXPORT = "Successfully exported TaskList!";
     public static final String EXPORT_ERROR_PREFIX = "Error occurred while writing to ";
     public static void writeToTaskList() {
@@ -17,7 +18,7 @@ public class Storage {
             }
             writeTaskList.close();
             System.out.println(SUCCESS_EXPORT);
-            System.out.println("Written to: " + TASKLIST_EXPORT_PATH);
+            System.out.println(WRITTEN_TO_PATH);
         } catch (IOException e) {
             System.out.println(EXPORT_ERROR_PREFIX + exportTaskList.getAbsolutePath());
         }
