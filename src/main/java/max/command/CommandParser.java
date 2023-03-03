@@ -4,6 +4,10 @@ import java.util.HashMap;
 
 public class CommandParser {
 
+    private static final int ZERO_INDEX_START = 0;
+    private static final int ONE_INDEX_START = 1;
+    private static final int ONE_INDEX_OFFSET = 1;
+
     /**
      * Constructs a CommandParser.
      * <br>
@@ -74,7 +78,7 @@ public class CommandParser {
      */
     private static String extractArgumentFromCommand(String command) {
         String[] words = command.split(" ");
-        return words[0];
+        return words[ZERO_INDEX_START];
     }
 
     /**
@@ -90,9 +94,9 @@ public class CommandParser {
 
         String[] words = command.split(" ");
         String subcommandText = "";
-        for (int i = 1; i < words.length; ++i) {
+        for (int i = ONE_INDEX_START; i < words.length; ++i) {
             subcommandText = subcommandText.concat(words[i]);
-            if (i != words.length - 1) {
+            if (i != words.length - ONE_INDEX_OFFSET) {
                 subcommandText = subcommandText.concat(" ");
             }
         }

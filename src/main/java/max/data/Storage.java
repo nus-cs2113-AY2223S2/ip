@@ -23,6 +23,15 @@ public class Storage {
     private static final int TASK_START_DATE_INDEX = 3;
     private static final int TASK_DUE_DATE_INDEX = 3;
     private static final int TASK_END_DATE_INDEX = 4;
+
+    // Index and size integer constants
+    private static final int SIZE_EMPTY = 0;
+    private static final int ZERO_INDEX_START = 0;
+    private static final int ONE_INDEX_START = 1;
+    private static final int MIN_TASK_ARG_LENGTH = 3;
+    private static final int EMPTY_FILE_TASK_LENGTH = 1;
+
+    // Delimiter constants
     private static final String TASK_NEWLINE_TOKEN = "\n";
     private static final String TASK_DONE_TOKEN = "1";
     private static final String TASK_UNDONE_TOKEN = "0";
@@ -54,8 +63,8 @@ public class Storage {
         // Create data directory if it does not exist
         try {
             Files.createDirectories(maxDataDirectory);
-        } catch (IOException e) {
-            ui.printError(e.getMessage());
+        } catch (IOException exception) {
+            ui.printError(exception.getMessage());
         }
     }
 
@@ -119,13 +128,13 @@ public class Storage {
     }
 
     private void printErrorMessages(ArrayList<String> errors) {
-        if (errors.size() == 0) {
+        if (errors.size() == SIZE_EMPTY) {
             return;
         }
         ui.notifyImportant();
         ui.printError(MESSAGE_TASK_FAIL_LOAD);
         ui.printMessage(MESSAGE_TASK_REINPUT);
-        int count = 1;
+        int count = ONE_INDEX_START;
         for (String error : errors) {
             ui.printMessage(count + MESSAGE_COLON_SEPARATOR + error);
             ++count;
@@ -154,7 +163,7 @@ public class Storage {
         String[] tasks = tokenizedString.split(TASK_NEWLINE_TOKEN);
 
         // Edge case: Handle empty file
-        if (tasks.length == 1 && tasks[0].length() == 0) {
+        if (tasks.length == EMPTY_FILE_TASK_LENGTH && tasks[ZERO_INDEX_START].length() == SIZE_EMPTY) {
             return taskArrayList;
         }
 
@@ -165,7 +174,7 @@ public class Storage {
 
             // Sanity check - taskComponents should minimally have 3 arguments
             // Its task label, done status and description
-            if (taskComponents.length < 3) {
+            if (taskComponents.length < MIN_TASK_ARG_LENGTH) {
                 String errorMessage = buildErrorMessage(EXCEPTION_BAD_TASK_LEN, taskString);
                 badTaskStrings.add(errorMessage);
                 continue;
