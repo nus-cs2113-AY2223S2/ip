@@ -52,6 +52,7 @@ public class Duke {
         return (isToDo || isDeadline || isEvent);
     }
 
+    // Input has been checked that only the todo, deadline or event commands are passed into this function
     public static Task handleTaskCreation(String messageFromUser) {
         Task newTask;
         if (messageFromUser.startsWith("todo")) {
