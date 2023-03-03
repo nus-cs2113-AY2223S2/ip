@@ -17,7 +17,7 @@ import java.util.Scanner;
  */
 public class Storage {
     /**
-     * The method loads tasks stored in the .txt file when the project starts.
+     * The method loads tasks from the .txt file when the project starts.
      *
      * @param path The path of the .txt file
      * @return the task list stored in the .txt file
@@ -48,6 +48,12 @@ public class Storage {
         return tasks;
     }
 
+    /**
+     * The method generates the content that need to be written to the .txt file based on the given task list.
+     *
+     * @param tasks The task list
+     * @return Content that will be written to the .txt file
+     */
     private static String fileContent(ArrayList<Task> tasks) {
         String content = "";
         for(Task task : tasks) {
@@ -63,6 +69,12 @@ public class Storage {
         return content;
     }
 
+    /**
+     * The method saves the task list in a .txt file
+     *
+     * @param path The path of the .txt file
+     * @param tasks The task list
+     */
     public static void saveFile(String path, ArrayList<Task> tasks) {
         File file = new File(path);
         if (!file.exists()) {

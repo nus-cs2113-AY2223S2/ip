@@ -34,6 +34,12 @@ public class TaskList {
         tasks.remove(taskNum);
     }
 
+    /**
+     * The method collects all the tasks that contains the given keyword in the task list.
+     *
+     * @param keyword the keyword the user searches
+     * @return the relevant list that consists the tasks containing the keyword searched by user
+     */
     public ArrayList<Task> relevantTask(String keyword){
         ArrayList<Task> relevantList = new ArrayList<>();
         for(Task task : tasks){
@@ -44,10 +50,20 @@ public class TaskList {
         return relevantList;
     }
 
+    /**
+     * Mark the task at the given index as done.
+     *
+     * @param taskNum the index that the user wants to mark
+     */
     public void MarkTheTask(int taskNum){
         tasks.get(taskNum).markAsDone();
     }
 
+    /**
+     * Unmark the task at the given index as not done.
+     *
+     * @param taskNum the index that the user wants to unmark
+     */
     public void UnmarkTheTask(int taskNum){
         tasks.get(taskNum).unmarkAsDone();
     }
