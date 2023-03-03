@@ -14,7 +14,7 @@ public class Task implements Serializable {
     protected static final String INCOMPLETE_SERIALIZED_OBJECT_STRING = " Incomplete data found in my past memory... Am I getting memory loss?";
     protected static final String DATA_STRING_SEPARATOR = " | ";
     protected static final String DATA_STRING_SEPARATOR_REGEX = "\\s\\|\\s";
-    protected static final String UNKNOWN_SERIALIZED_OBJECT_TYPE = " What type of task is this... You didn't teach me how to handle it LOL";
+    protected static final String UNKNOWN_SERIALIZED_OBJECT_TYPE = " Did you touch my memories? What Tasks am I finding saved within them LOL";
     protected static final String WRONG_SERIALIZED_OBJECT_TYPE = " Hmm this task from my past memory is... Not my type xD";
     protected final String description;
 
@@ -39,8 +39,10 @@ public class Task implements Serializable {
      * @return Instance of Task with the previously saved state
      * @throws RicaSerializationException If too few state variables were saved
      *   within the String representation, which implies an invalid saved state
+     * @throws RicaStorageException If the String represents a Task that Rica doesn't
+     *   recognise
      */
-    public static Task deserializeObject(String objectData) throws RicaSerializationException {
+    public static Task deserializeObject(String objectData) throws RicaSerializationException, RicaStorageException {
         String[] variables = objectData.split(Task.DATA_STRING_SEPARATOR_REGEX);
         if (variables.length < Task.NUM_OF_SERIALIZED_DATA) {
             throw new RicaSerializationException(Task.INCOMPLETE_SERIALIZED_OBJECT_STRING);
