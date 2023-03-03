@@ -1,3 +1,6 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 import java.util.Arrays;
 import java.util.ArrayList;
@@ -10,13 +13,25 @@ import bro.tasks.ToDo;
 import bro.tasks.Deadline;
 import bro.tasks.Event;
 public class Bro {
-    public static final String HORIZONTAL_LINE = "\n───────────────────────────────────────────────────────────────\n";
+    public static final String HORIZONTAL_LINE = "\n─────────────────────────────────────────────────────────────────────────────────────────────\n";
+    static final String PATH_NAME = "saved_tasks.txt";
     public static final String GREETING = " Sup bro. I'm Bro.\n" + " What do you want?";
     public static final String TASK_DOES_NOT_EXIST = " Bro that task number does not exist...";
-    public static ArrayList<Task> taskList = Save.getSavedTasks();
-    public static void main(String[] args) {
-        System.out.println(HORIZONTAL_LINE + GREETING + HORIZONTAL_LINE);
+//    static final String FILE_NOT_FOUND = "File not found";
+    static final String IO_ERROR = "Error in reading/writing saved tasks file";
 
+    public static void main(String[] args) throws IOException {
+        ArrayList<Task> taskList;
+        try {
+            taskList = Save.getSavedTasks(new ArrayList<>());
+        } catch (FileNotFoundException e) {     // create a new file to save the list of tasks
+            File f = new File(PATH_NAME);
+            if (f.createNewFile()) {                  // throws IOException
+                System.out.println(" New File \"saved_tasks.txt\" created at: " + f.getAbsolutePath());
+            }
+            taskList = Save.getSavedTasks(new ArrayList<>());
+        }
+        System.out.println(HORIZONTAL_LINE + GREETING + HORIZONTAL_LINE);
         // User Input
         String line;
         StringBuilder reply;  // Use StringBuilder as we concatenate Strings in a loop later on
@@ -26,19 +41,20 @@ public class Bro {
             line = in.nextLine();
             String[] arrayOfInputs = line.split(" ");
             switch (arrayOfInputs[0]) {
-            case "bye" -> {
+            case "bye":
                 reply = new StringBuilder(" Bye bye bro.");
                 haveInput = false;
-            }
-            case "list" -> {
+                break;
+            case "list":
                 reply = new StringBuilder(" Your tasks:\n");
                 for (int i = 0; i < taskList.size(); ++i) {
                     Task currentTask = taskList.get(i);
                     String mark = currentTask.mark();
                     reply.append(" ").append(i + 1).append(".[").append(currentTask.getType()).append("][").append(mark).append("] ").append(currentTask).append("\n");
                 }
-            } // Fallthrough
-            case "mark", "unmark" -> {
+                break;
+            case "mark": // Fallthrough
+            case "unmark":
                 boolean markAsComplete = arrayOfInputs[0].equals("mark");   // this boolean decides if the following `markComplete()` marks the task as Completed or Uncompleted
                 try {
                     reply = markComplete(markAsComplete, taskList, arrayOfInputs);
@@ -47,25 +63,25 @@ public class Bro {
                 } catch (invalidTaskIndexException e) {
                     reply = new StringBuilder(TASK_DOES_NOT_EXIST);
                 }
-                Save.saveToFile();
-            }
-            case "todo" -> {
+                Save.saveToFile(taskList);
+                break;
+            case "todo":
                 try {
                     reply = createToDo(taskList, arrayOfInputs);
                 } catch (invalidInputFormat e) {
                     reply = new StringBuilder(e.toString());
                 }
-                Save.saveToFile();
-            }
-            case "deadline" -> {
+                Save.saveToFile(taskList);
+                break;
+            case "deadline":
                 try {
                     reply = createDeadline(taskList, arrayOfInputs);
                 } catch (invalidInputFormat e) {
                     reply = new StringBuilder(e.toString());
                 }
-                Save.saveToFile();
-            }
-            case "event" -> {
+                Save.saveToFile(taskList);
+                break;
+            case "event":
                 StringBuilder eventName = new StringBuilder();
                 StringBuilder startTime = new StringBuilder();
                 StringBuilder endTime = new StringBuilder();
@@ -83,9 +99,9 @@ public class Bro {
                 Task event = new Event(eventName.toString().trim(), startTime.toString().trim(), endTime.toString().trim());
                 taskList.add(event);
                 reply = new StringBuilder(" added: " + event);
-                Save.saveToFile();
-            }
-            case "delete" -> {
+                Save.saveToFile(taskList);
+                break;
+            case "delete":
                 try {
                     reply = deleteTask(taskList, arrayOfInputs);
                 } catch (invalidInputFormat e) {
@@ -93,9 +109,10 @@ public class Bro {
                 } catch (invalidTaskIndexException e) {
                     reply = new StringBuilder(TASK_DOES_NOT_EXIST);
                 }
-                Save.saveToFile();
-            }
-            default -> reply = new StringBuilder(" Not a valid command bro...");
+                Save.saveToFile(taskList);
+                break;
+            default:
+                reply = new StringBuilder(" Not a valid command bro...");
             }
             System.out.println(HORIZONTAL_LINE + reply + HORIZONTAL_LINE);  // Output reply
         }
@@ -107,7 +124,6 @@ public class Bro {
      * @param taskList List of all tasks
      * @param arrayOfInputs Array of input words
      * @return Bro's reply
-     * @throws invalidInputFormat If
      */
     private static StringBuilder createToDo(ArrayList<Task> taskList, String[] arrayOfInputs) throws invalidInputFormat {
         StringBuilder todoName = new StringBuilder();
