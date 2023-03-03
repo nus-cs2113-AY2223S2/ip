@@ -26,6 +26,6 @@ public class Task {
         if (this.isDone) {
             save = 1;
         }
-        return "taskType" + save +  " | " +  this.description + "\n";
+        return "taskType" + description +  " | " +  save + "\n";
     }
 }

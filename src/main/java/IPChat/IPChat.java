@@ -1,12 +1,17 @@
 package IPChat;
 
 import ipchatExceptions.IPChatExceptions;
+
+import java.util.Locale;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.io.*;
+import java.time.format.DateTimeParseException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class IPChat {
     public static ArrayList<Task> tasks = new ArrayList<>();
@@ -90,15 +95,15 @@ public class IPChat {
 
     // Create a list of the task
     public static void listTasks(String statements) throws IPChatExceptions {
-        if (statements.length() == 4) {
-            if (tasksCount > 0) {
-                System.out.println("------------------------------------------");
-                System.out.println("Here is the list of tasks for the day! All the best :) \n");
-                for (int i = 0; i < tasksCount; i += 1) {
-                    System.out.println((i + 1) + "." + "[" + tasks.get(i).getStatusIcon() + "] " + tasks.get(i).toString());
-                }
-                System.out.println("------------------------------------------");
+        if (tasksCount == 0) {
+            throw new IPChatExceptions("Please give an input");
+        } else {
+            System.out.println("------------------------------------------");
+            System.out.println("Here is the list of tasks for the day! All the best :) \n");
+            for (int i = 0; i < tasksCount; i += 1) {
+                System.out.println((i + 1) + ". " + "[" + tasks.get(i).getStatusIcon() + "] " + tasks.get(i).toString());
             }
+            System.out.println("------------------------------------------");
         }
     }
 
@@ -110,6 +115,7 @@ public class IPChat {
                 tasks.get(taskIndex).markAsDone();
                 System.out.println("I have marked the task as done");
                 System.out.println("------------------------------------------");
+                System.out.println("  " + tasks.get(taskIndex).toString() + "\n");
             } catch (NullPointerException e) {
                 System.out.println("Invalid Task Number");
             }
@@ -138,15 +144,19 @@ public class IPChat {
     public static void deadlineTasks(String statements) {
         if (statements.length() == 8) {
             System.out.println("Please provide correct input");
-        } else if (statements.contains("/")) {
-            System.out.println("Please provide correct deadline");
         } else {
+            int end = statements.indexOf("/");
+            String deadlineName = statements.substring(9, end);
             int deadlineLength = statements.length();
-            String deadlineName = statements.substring(9, statements.lastIndexOf("/"));
-            String by = statements.substring((statements.lastIndexOf("/") + 4), deadlineLength);
+            String by = statements.substring(end + 4, deadlineLength);
+            LocalDate date = LocalDate.parse(by);
+            LocalDate day = LocalDate.parse(by);
             tasks.add(tasksCount, new Deadline(deadlineName, by));
             System.out.println("------------------------------------------");
-            System.out.println("Got it. I've added this task:\n" + tasks.get(tasksCount).toString() + "\n");
+            System.out.println("Date of deadline: " + date.format(DateTimeFormatter.ofPattern("MMM d yyyy")) + "\n");
+            System.out.println("Day of deadline: " + day.getDayOfWeek());
+            System.out.println("Got it. I've added this task:\n");
+            System.out.println(tasks.get(tasksCount).toString());
             tasksCount += 1;
             System.out.println("Now you have " + tasksCount + " tasks in the list.\n");
             System.out.println("------------------------------------------");
@@ -160,13 +170,16 @@ public class IPChat {
         } else if (!statements.contains("/")) {
             System.out.println("Please provide timings");
         } else {
-            int eventLength = statements.length();
-            String eventName = statements.substring(6, statements.lastIndexOf("/"));
-            int index = statements.lastIndexOf("/") + 4;
-            String to = statements.substring(index, eventLength);
-            tasks.add(tasksCount, new Event(eventName, to));
+            int fromStart = statements.indexOf(" /from");
+            int toStart = statements.indexOf(" /to");
+
+            String eventName = statements.substring(5, fromStart);
+            String fromBegin = statements.substring(fromStart + 7, toStart);
+            String toBegin = statements.substring(toStart + 5);
+
+            tasks.add(tasksCount, new Event(eventName, fromBegin, toBegin));
             System.out.println("------------------------------------------");
-            System.out.println("Got it. I'e added this task:\n" + tasks.get(tasksCount).toString() + "\n");
+            System.out.println("Got it. I've added this task:\n" + tasks.get(tasksCount).toString());
             tasksCount += 1;
             System.out.println("Now you have " + tasksCount + " tasks in the list.\n");
             System.out.println("------------------------------------------");
@@ -193,8 +206,30 @@ public class IPChat {
         }
     }
 
+    public static void findTasks (String statements) {
+        String[] contents = statements.split(" ", 2);
+        String mainWord = contents[1];
+        int matchCount = 0;
+
+        ArrayList<String> neededTasks = new ArrayList<>();
+        for (Task currentTasks: tasks) {
+            if (currentTasks.toString().contains(mainWord)) {
+                neededTasks.add(currentTasks.toString());
+                matchCount += 1;
+            }
+        }
+
+        if (matchCount != 0) {
+            System.out.println("Here are the matching tasks as requested");
+            System.out.println("------------------------------------------");
+            for (int i = 0 ; i < neededTasks.size(); i += 1) {
+                System.out.println((i + 1) + ". " + neededTasks.get(i) + "\n");
+            }
+        }
+    }
+
     // Compilation
-    public static void mySequence() throws IPChatExceptions, IOException{
+    public static void mySequence() throws IPChatExceptions {
         while (checkInput == 0) {
             Scanner input = new Scanner(System.in);
             String statements = input.nextLine();
@@ -204,7 +239,11 @@ public class IPChat {
                 sayBye(statements);
                 break;
             case "list":
-                listTasks(statements);
+                try {
+                    listTasks(statements);
+                } catch (IPChatExceptions e) {
+                    System.out.println("Please give an input");
+                }
                 break;
             case "done":
                 markDone(statements);
@@ -215,8 +254,12 @@ public class IPChat {
                 saveContent(tasks);
                 break;
             case "deadline":
-                deadlineTasks(statements);
-                saveContent(tasks);
+                try {
+                    deadlineTasks(statements);
+                    saveContent(tasks);
+                } catch (DateTimeParseException d) {
+                    System.out.println("Please enter the correct date format yyyy-mm-dd");
+                }
                 break;
             case "event":
                 eventTasks(statements);
@@ -225,6 +268,9 @@ public class IPChat {
             case "delete":
                 deleteTasks(statements);
                 saveContent(tasks);
+                break;
+            case "find":
+                findTasks(statements);
                 break;
             default:
                 System.out.println("------------------------------------------");

@@ -1,14 +1,16 @@
 package IPChat;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 public class Deadline extends Task {
 
     protected String by;
 
     public Deadline (String description, String by) {
         super(description);
-        if (by.contains("/by")) {
-            this.by = by;
-        }
+        LocalDate time = LocalDate.parse(by);
+        this.by = time.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     }
 
     @Override
