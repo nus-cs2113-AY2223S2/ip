@@ -1,4 +1,9 @@
-package duke;
+package duke.parser;
+
+import duke.command.Command;
+import duke.command.CommandInputs;
+import duke.command.CommandType;
+import duke.exception.*;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

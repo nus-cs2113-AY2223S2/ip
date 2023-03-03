@@ -1,13 +1,13 @@
-package duke;
+package duke.command;
 
 /**
- * Type representing a command after it is parsed by the parser
+ * Class representing a command after it is parsed by the parser
  */
 public class Command {
     private CommandType commandType;
     private String[] additionalParameters;
 
-    Command(CommandType commandType, String[] additionalParameters){
+    public Command(CommandType commandType, String[] additionalParameters){
         this.commandType = commandType;
         this.additionalParameters = additionalParameters;
     }

@@ -1,6 +1,11 @@
 package duke;
 
+import duke.command.Command;
+import duke.exception.DukeException;
+import duke.parser.Parser;
+import duke.storage.Storage;
 import duke.task.*;
+import duke.ui.UI;
 
 import java.io.IOException;
 import java.util.ArrayList;

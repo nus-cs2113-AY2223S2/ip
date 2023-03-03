@@ -1,5 +1,8 @@
-package duke;
+package duke.command;
 
+/**
+ * Enum representing the command type of the parsed command
+ */
 public enum CommandType {
     ADD_TODO_COMMAND,
     ADD_DEADLINE_COMMAND,

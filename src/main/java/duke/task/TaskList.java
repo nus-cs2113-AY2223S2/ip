@@ -1,8 +1,9 @@
-package duke;
+package duke.task;
 
-import duke.task.*;
+import duke.ui.UI;
+import duke.exception.DukeException;
+import duke.exception.TaskNumberException;
 
-import java.sql.Array;
 import java.util.ArrayList;
 
 /**
@@ -10,7 +11,7 @@ import java.util.ArrayList;
  */
 public class TaskList {
     private ArrayList<Task> tasks;
-    TaskList(ArrayList<Task> tasks){
+    public TaskList(ArrayList<Task> tasks){
         this.tasks = tasks;
     }
 

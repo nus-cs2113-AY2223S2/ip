@@ -1,5 +1,8 @@
-package duke;
+package duke.command;
 
+/**
+ * Class representing the commands typed by the user and understood by the program
+ */
 public class CommandInputs {
     public static final String ADD_TODO_COMMAND_INPUT = "todo";
     public static final String ADD_DEADLINE_COMMAND_INPUT = "deadline";
