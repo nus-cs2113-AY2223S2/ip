@@ -26,7 +26,7 @@ Allows the user to mark or unmark a task as done or undone from the list
 
 ### Find tasks using keyword
 
-Allows the user to find all tasks within the list that contains a keyword
+Allows the user to find all tasks within the list whose description contains a keyword
 
 ### Saving Capabilities
 
@@ -115,7 +115,7 @@ You can call
 Expected outcome:
 ```
 Pikapi has deleted the task: 
-  [T][ ]Do IP Project 
+  [D][ ]Do IP Project 
 Pikapi sees that now you have 1 tasks in the list
 ```
 ____________________________________________________________
@@ -149,7 +149,6 @@ Then call the list function
 
 Expected outcome:
 ```
-Pikapi has marked the task as done
 Pikapi has marked the task as done
 
 [X]  Do TP project
@@ -193,7 +192,6 @@ For example:
 
 With this list:
 ```
-Here is your list:
 Here is your list:
 1. [T][ ] Do CS2113 Homework
 2. [T][ ] Do TP project
@@ -302,4 +300,9 @@ Expected output:
 ```
 Pikapi is unable to find that command, please type in a correct command
 ```
+____________________________________________________________
+Last but not least...
 
+### It sounds like a cute Pikachu!
+
+Or at least I tried to. I hope you enjoy!

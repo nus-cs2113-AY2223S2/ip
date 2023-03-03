@@ -49,7 +49,7 @@ public class TaskDeleter extends ErrorMessages {
 
 
     private void deleteTask(ArrayList<Task> listOfTasks, int indexToDelete) throws DeleteTaskError {
-        if (verifyMarkAction(listOfTasks, indexToDelete)) {
+        if (ensureIndexWithinTaskSize(listOfTasks, indexToDelete)) {
             listOfTasks.remove(indexToDelete - MANAGE_ZERO_INDEXING);
         }
     }
@@ -62,7 +62,7 @@ public class TaskDeleter extends ErrorMessages {
      * @return Returns true if the mark index is within the size of the tasklist
      * @throws DeleteTaskError
      */
-    private boolean verifyMarkAction(ArrayList<Task> taskList, int indexToDelete) throws DeleteTaskError {
+    private boolean ensureIndexWithinTaskSize(ArrayList<Task> taskList, int indexToDelete) throws DeleteTaskError {
         if (taskList.size() == ZERO) {
             throw new DeleteTaskError(errorEmptyListText());
         } else if (indexToDelete > taskList.size()) {

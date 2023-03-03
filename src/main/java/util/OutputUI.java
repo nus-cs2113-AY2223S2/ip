@@ -85,7 +85,20 @@ public class OutputUI {
      */
     public void printDeleteTaskMessage(Task task, int numTasks) {
         printLine();
-        System.out.println("Pikapi has deleted the task: " + "\n" + "  [T]["
+        String taskSymbol;
+        if (task instanceof Todo)
+        {
+            taskSymbol = "T";
+        }
+        else if (task instanceof Deadline) {
+            taskSymbol = "D";
+        }
+        else {
+            taskSymbol = "E";
+        }
+
+
+        System.out.println("Pikapi has deleted the task: " + "\n" + "  ["+ taskSymbol + "]["
                 + task.getStatusIcon() + "]" + task.getDescription());
         System.out.println("Pikapi sees that now you have " + numTasks + " tasks in the list");
     }
@@ -103,7 +116,7 @@ public class OutputUI {
      * @param output
      */
     public void printTaskListWithKeyword(ArrayList<Task> output) {
-        System.out.println("Pikapi has found  list of things pertaining to your keyword");
+        System.out.println("Pikapi has found a list of things pertaining to your keyword");
         printList(output, output.size());
     }
 
