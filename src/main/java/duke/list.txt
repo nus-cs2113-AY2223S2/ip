@@ -1,0 +1,1 @@
+class duke.Event | Manoj attend CS2113 lecture | false | Friday 17 Feb 2023 4pm | 6pm
