@@ -1,12 +1,15 @@
-# User Guide
+# DukeBot User Guide
 
+DukeBot is a personal Chatbot that helps you keep track of your tasks!
 ## Features 
 
-### Feature-ABC
+DukeBot can help you add, delete, list, find and mark or unmark tasks!
 
-Description of the feature.
+### Add
 
-### Feature-XYZ
+
+
+### Delete
 
 Description of the feature.
 
