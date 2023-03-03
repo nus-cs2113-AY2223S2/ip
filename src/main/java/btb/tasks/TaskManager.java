@@ -127,6 +127,13 @@ public class TaskManager {
         printNumberOfTasks();
     }
 
+    /**
+     * saves the content of tasks in task lists to the storage file
+     *
+     * @param filePath the filePath of the tasks.txt file that stores the
+     *                 content of the task list
+     * @throws IOException
+     */
     public void saveList(String filePath) throws IOException {
         try (FileWriter fw = new FileWriter(filePath)) {
             fw.write("Here are the tasks in your list:\n");
@@ -137,6 +144,13 @@ public class TaskManager {
         }
     }
 
+    /**
+     * finds tasks that contains the keyword toFind and
+     * prints them out.
+     *
+     * @param toFind the keyword that user is trying to search for a match
+     * @throws EmptyTaskDescriptionException
+     */
     public void find(String toFind) throws EmptyTaskDescriptionException {
         if (toFind.equals("")) {
             throw new EmptyTaskDescriptionException();
