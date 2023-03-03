@@ -151,19 +151,20 @@ public class TaskList {
      */
     public static void findTask(String line) {
         String query = line.substring(4).trim();
-        ArrayList<Task> matchList = new ArrayList<>();
+        boolean matchFound = false;
+        ArrayList<String> matchList = new ArrayList<>();
         for (Task task : taskList) {
             if (task.getDescription().contains(query)) {
-                matchList.add(task);
+                int i = taskList.indexOf(task);
+                String match = String.format("%d. %s", i + 1, task);
+                matchList.add(match);
+                matchFound = true;
             }
         }
-        if (!matchList.isEmpty()) {
+        if (matchFound) {
             Ui.taskFoundMessage();
-            for (Task task : matchList) {
-                int i = matchList.indexOf(task);
-                System.out.print(i + 1);
-                System.out.print(". ");
-                System.out.println(task.toString());
+            for (String task : matchList) {
+                System.out.println(task);
             }
         } else {
             Ui.taskNotFoundMessage();
