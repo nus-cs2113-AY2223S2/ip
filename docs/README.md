@@ -124,3 +124,29 @@ Exit from the program.
 ```
 That's all from me! Goodbye!
 ```
+
+# Note
+
+## Test - Echo
+
+Echo is a command that you can use to test if the chatbot is responding!
+
+**`Format`**: echo {description}
+
+*Sample Input Command*: **`echo 1`**
+
+*Output*:
+```
+1
+```
+# Additional Note
+
+## Flags
+
+Do not use the character '/'. It is solely reserved for flags.
+Example of the flags include:
+Deadline by flag: "/by "
+Event from flag: "/from "
+Event to flag: "/to "
+
+Thank you!
