@@ -118,13 +118,14 @@ public class Duke {
         System.out.println("     ");
 
         //Save list data into text file on disk
-        PrintWriter fw = new PrintWriter("out\\list.txt");
+        PrintWriter fw = new PrintWriter("docs\\list.txt");
         for (int i = 0; i < counter; i++) {
             String classType = String.valueOf(tasks.get(i).getClass());
             if(classType.equalsIgnoreCase("Class Duke.Todo")) {
                 fw.println("todo " + tasks.get(i).getDescription());
             } else if (classType.equalsIgnoreCase("Class Duke.Event")) {
-                fw.println("event " + tasks.get(i).getDescription() + "/" + tasks.get(i).getBy() + "|" + tasks.get(i).getEnd());
+                fw.println("event " + tasks.get(i).getDescription() + "/" + tasks.get(i).getBy() + "|"
+                            + tasks.get(i).getEnd());
             } else if (classType.equalsIgnoreCase("Class Duke.Deadline")) {
                 fw.println("deadline " + tasks.get(i).getDescription() + "/" + tasks.get(i).getBy());
             }
@@ -161,14 +162,35 @@ public class Duke {
         System.out.println("    _________________________________________");
         System.out.println("     ");
     }
-    
+
+    /**
+     * Returns lateral location of the specified position.
+     * If the position is unset, NaN is returned.
+     *
+     * @param tasks list of tasks already added.
+     * @param counter number of tasks in the list.
+     * @return counter number of tasks in the list.
+     * @throws FileNotFoundException If .txt file is not found at specified file path.
+     */
     private static int initializeList(ArrayList<Todo> tasks, int counter) throws FileNotFoundException {
         String inputString;
         String task = null;
         String taskType;
-        Scanner scanner = new Scanner(new File("out\\list.txt"));
-        Scanner in = new Scanner(System.in);
 
+        try {
+            File myFile = new File("docs\\list.txt");
+            if (myFile.createNewFile()) {
+                System.out.println("New List backup is created! List items will be saved to " +
+                                    "disk after you exit the program!");
+            } else {
+                System.out.println("List backup already exists and has been initialized.");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Scanner scanner = new Scanner(new File("docs\\list.txt"));
+        Scanner in = new Scanner(System.in);
 
         while (scanner.hasNextLine()) {
             inputString = scanner.nextLine();
@@ -210,9 +232,7 @@ public class Duke {
                 counter++;
                 break;
             }
-
         }
-
             scanner.close();
         return counter;
     }
