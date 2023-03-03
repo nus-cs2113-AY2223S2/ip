@@ -1,5 +1,6 @@
 package io.github.haoyangw.rica.task;
 
+import io.github.haoyangw.rica.exception.RicaSerializationException;
 import io.github.haoyangw.rica.exception.RicaStorageException;
 import io.github.haoyangw.rica.exception.RicaTaskException;
 import io.github.haoyangw.rica.ui.TextUi;
@@ -164,7 +165,7 @@ public class TaskManager {
     public void initialise() {
         try {
             tasks = storageManager.getSavedTasks();
-        } catch (RicaStorageException exception) {
+        } catch (RicaSerializationException | RicaStorageException exception) {
             textUi.printImportantErrorMessage(exception);
             textUi.printFooter();
         }
