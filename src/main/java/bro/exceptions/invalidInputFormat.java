@@ -36,6 +36,11 @@ public class invalidInputFormat extends Exception {
                     " \"delete {Index of Task in the list}\"\n" +
                     " e.g. delete 2";
             break;
+        case FIND:
+            result = " Bro please follow this format:\n" +
+                    " \"find {single keyword to search [Case insensitive]}\"\n" +
+                    " e.g. find book";
+            break;
         default:
             break;
         }
