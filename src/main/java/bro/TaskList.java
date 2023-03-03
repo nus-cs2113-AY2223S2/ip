@@ -11,6 +11,7 @@ import static bro.Ui.printReply;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.lang.String;
 
 public class TaskList {
     private final ArrayList<Task> taskList;
@@ -116,5 +117,22 @@ public class TaskList {
         taskList.remove(taskIndex);
         printReply(" Ok bro I remove this task:\n" + "   [" + currentTask.getType() + "][" + currentTask.mark() + "] " + currentTask +
                 "\n Now you have " + taskList.size() + " tasks in the list.");
+    }
+
+    public void find(TaskList taskListObject, String[] arrayOfInputs) throws invalidInputFormat {
+        ArrayList<Task> taskList = taskListObject.getTaskList();
+        if (arrayOfInputs.length <= 1) {
+            throw new invalidInputFormat(Type.FIND);
+        }
+        String toFind = arrayOfInputs[1].toLowerCase();
+        StringBuilder reply = new StringBuilder(" Here are the matching tasks in your list:\n");
+        int count = 0;
+        for (Task currentTask : taskList) {
+            if (currentTask.toString().toLowerCase().contains(toFind)) {
+                String mark = currentTask.mark();
+                reply.append(" ").append(++count).append(".[").append(currentTask.getType()).append("][").append(mark).append("] ").append(currentTask).append("\n");
+            }
+        }
+        printReply(reply.toString());
     }
 }

@@ -5,5 +5,6 @@ public enum Type {
     TODO,
     DEADLINE,
     EVENT,
-    DELETE
+    DELETE,
+    FIND
 }

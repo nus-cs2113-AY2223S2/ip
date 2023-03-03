@@ -75,6 +75,13 @@ public class Parser {
             }
             Storage.save(taskList);
             break;
+        case "find":
+            try {
+                taskList.find(taskList, arrayOfInputs);
+            } catch (invalidInputFormat e) {
+                printException(e);
+            }
+            break;
         default:
             printReply(INVALID_COMMAND);
         }
