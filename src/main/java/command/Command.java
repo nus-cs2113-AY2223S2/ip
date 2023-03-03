@@ -4,9 +4,12 @@ import exceptions.IncompleteInputException;
 import parser.Parser;
 import tasks.Deadline;
 import tasks.Event;
+import tasks.Task;
 import tasks.TaskList;
 import tasks.ToDo;
 import ui.Ui;
+
+import java.util.ArrayList;
 
 public class Command {
     private final CommandType type;
@@ -106,7 +109,21 @@ public class Command {
             }
             break;
         case FIND:
-            System.out.println("\nFeature to be implemented in next Level.\n");
+            try {
+                ArrayList<Task> findTaskResults = new ArrayList<>();
+                String keywords = fullDescription;
+                if (keywords.isEmpty()) {
+                    throw new IncompleteInputException("Find is missing KEYWORDS!");
+                }
+                for (Task task : taskList.getTasksList()) {
+                    if (task.getDescription().contains(keywords)) {
+                        findTaskResults.add(task);
+                    }
+                }
+                Ui.showFindResults(findTaskResults, keywords);
+            } catch (Exception e) {
+                Ui.showFindingTaskErrorMessage(e);
+            }
             break;
         case HELP:
             Ui.showHelp();
