@@ -1,7 +1,16 @@
 import java.util.ArrayList;
 
 public class TaskList {
+    //Data
     protected ArrayList<Task> list;
+
+    //Commands
+    static final String COMMAND_TODO = "todo";
+    static final String COMMAND_EVENT = "event";
+    static final String EVENT_START = "/from";
+    static final String EVENT_END = "/to";
+    static final String DEADLINE_BY = "/by";
+
     private static final String DIVIDER  = "______________________________";
 
     public TaskList() {
@@ -58,5 +67,30 @@ public class TaskList {
         System.out.println(acknowledgement);
         System.out.println("Now you have " + (getSize()) + " task(s) in the list."
                 + System.lineSeparator() + DIVIDER);
+    }
+
+    public void addTodo(String userInput) {
+        list.add(new Todo(userInput));
+    }
+
+    public void addEvent(String userInput) {
+        //use string.split to split the string into their different descriptions
+        String[] eventInput = userInput.split(EVENT_START);
+        //split into task description and duration
+        String eventTaskDesc = eventInput[0];
+        String eventDuration = eventInput[1];
+        String[] eventStartAndEnd = eventDuration.split(EVENT_END);
+        String eventStart = eventStartAndEnd[0];
+        String eventEnd = eventStartAndEnd[1];
+        list.add(new Event(eventTaskDesc,eventStart,eventEnd));
+    }
+
+    public void addDeadline(String userInput) {
+        //use string.split to split the string into their different descriptions
+        String[] deadlineInput = userInput.split(DEADLINE_BY);
+        //split into task description and duration
+        String deadlineTaskDesc = deadlineInput[0];
+        String deadlineDuration = deadlineInput[1];
+        list.add(new Deadline(deadlineTaskDesc, deadlineDuration));
     }
 }

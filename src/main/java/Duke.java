@@ -29,8 +29,7 @@ public class Duke {
     //Data
     static TaskList taskList = new TaskList();
 
-    //Text file Commands ***
-
+    //Text file Commands
     private static void updateFile() {
         for (Task currentTask : taskList.list) {
             String statusNum = currentTask.getStatusNum();
@@ -192,7 +191,9 @@ public class Duke {
                     if (taskDesc.length() == 0) {
                         throw new EmptyDescriptionException();
                     }
-                    taskList.addTask(new Todo(taskDesc));
+                    //OLD COMMAND
+                    //taskList.addTask(new Todo(taskDesc));
+                    taskList.addTodo(taskDesc);
                     taskList.acknowledgementMessage();
                 } catch (EmptyDescriptionException e) {
                     Ui.emptyDescriptionTodo();
@@ -203,7 +204,8 @@ public class Duke {
                     if (taskDesc.length() == 0) {
                         throw new EmptyDescriptionException();
                     }
-                    //use string.split to split the string into their different descriptions
+                    //Old command for adding event
+                    /*//use string.split to split the string into their different descriptions
                     String[] eventInput = taskDesc.split(COMMAND_FROM);
                     //split into task description and duration
                     String eventTaskDesc = eventInput[0];
@@ -211,14 +213,18 @@ public class Duke {
                     String[] eventStartAndEnd = eventDuration.split(COMMAND_TO);
                     String eventStart = eventStartAndEnd[0];
                     String eventEnd = eventStartAndEnd[1];
-                    taskList.addTask(new Event(eventTaskDesc, eventStart, eventEnd));
+                    taskList.addTask(new Event(eventTaskDesc, eventStart, eventEnd));*/
+
+                    //NEW COMMAND HERE
+                    taskList.addEvent(taskDesc);
                     taskList.acknowledgementMessage();
                 } catch (EmptyDescriptionException e) {
                     Ui.emptyDescriptionEvent();
                 } catch (ArrayIndexOutOfBoundsException e) {
                     System.out.println(DIVIDER + System.lineSeparator()
                             + "The event you keyed in was invalid!" + System.lineSeparator()
-                            + "Please key in a valid event!" + System.lineSeparator() + DIVIDER);
+                            + "Key in a valid event by including description followed by /from and /to keywords!"
+                            + System.lineSeparator() + DIVIDER);
                 }
                 break;
             case COMMAND_DEADLINE:
@@ -226,19 +232,24 @@ public class Duke {
                     if (taskDesc.length() == 0) {
                         throw new EmptyDescriptionException();
                     }
-                    //use string.split to split the string into their different descriptions
+                    //old command
+                    /*//use string.split to split the string into their different descriptions
                     String[] deadlineInput = taskDesc.split(COMMAND_BY);
                     //split into task description and duration
                     String deadlineTaskDesc = deadlineInput[0];
                     String deadlineDuration = deadlineInput[1];
-                    taskList.addTask(new Deadline(deadlineTaskDesc, deadlineDuration));
+                    taskList.addTask(new Deadline(deadlineTaskDesc, deadlineDuration));*/
+
+                    //NEW COMMAND HERE
+                    taskList.addDeadline(taskDesc);
                     taskList.acknowledgementMessage();
                 } catch (EmptyDescriptionException e) {
                     Ui.emptyDescriptionDeadline();
                 } catch (ArrayIndexOutOfBoundsException e) {
                     System.out.println(DIVIDER + System.lineSeparator()
                             + "The deadline you keyed in was invalid!" + System.lineSeparator()
-                            + "Please key in a valid deadline!" + System.lineSeparator() + DIVIDER);
+                            + "Key in a valid deadline by including description followed by /by keyword!"
+                            + System.lineSeparator() + DIVIDER);
                 }
                 break;
             case COMMAND_DELETE:
@@ -273,24 +284,46 @@ public class Duke {
 
         //comment out saving first, do other stuff.
         try {
-            clearFile();
+            //clearFile();
+            Storage.clearFile();
         } catch (IOException e){
             System.out.println(e.getMessage());
         }
-        updateFile();
+        //updateFile();
+        Storage.updateFile(taskList);
     }
 
     public static void main(String[] args) {
         try {
             //readFileContents("C:\\Lip Kuang\\NUS\\Year 2\\Y2S2\\CS2113\\Individual Project\\ip\\src\\main\\java\\data\\duke.txt");
-            readFileContents("duke.txt");
+            //OLD command
+            //readFileContents("duke.txt");
+            Storage.loadFile(taskList, "duke.txt");
+            System.out.println("File loaded!");
         } catch (FileNotFoundException e) {
-            System.out.println("File not found!");
+            System.out.println("File not found! File will be created on termination");
         }
 
         Ui.printLogo();
         Ui.greetUser();
-        taskManager();
+        //taskManager();
+        Parser parser = new Parser();
+        boolean isFinished = false;
+        while (!isFinished) {
+            String command = Ui.getUserCommand();
+            parser.parse(command, taskList);
+            isFinished = parser.checkProgrammeCompletion();
+        }
+
+        //save file after programme ends
+        try {
+            //clearFile();
+            Storage.clearFile();
+        } catch (IOException e){
+            System.out.println(e.getMessage());
+        }
+        //updateFile();
+        Storage.updateFile(taskList);
         Ui.sayByeToUser();
     }
 }

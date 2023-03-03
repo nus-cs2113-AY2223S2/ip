@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class Ui {
     private static final String DIVIDER  = "______________________________";
     public static void printLogo() {
@@ -57,5 +59,11 @@ public class Ui {
         String errorMessage = DIVIDER + System.lineSeparator() +
                 "☹ OOPS!!! The task number cannot be empty." + System.lineSeparator() + DIVIDER;
         System.out.println(errorMessage);
+    }
+
+    public static String getUserCommand() {
+        Scanner input = new Scanner(System.in);
+        String command = input.nextLine();
+        return command;
     }
 }

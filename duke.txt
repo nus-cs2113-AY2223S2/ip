@@ -1,6 +1,5 @@
-T:1: read book
-T:0: cehck 2
 T:1: play game
-T:0: play game
-E:1: play this /from now /to later
-T:0: do something
+E:0: play dota /from now /to later
+E:1: play more games /from now /to later
+D:1: play game /by tmr
+T:1: more
