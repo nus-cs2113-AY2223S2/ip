@@ -4,6 +4,7 @@ import exceptions.IncompleteInputException;
 import parser.Parser;
 import tasks.Deadline;
 import tasks.Event;
+import tasks.Task;
 import tasks.TaskList;
 import tasks.ToDo;
 import ui.Ui;
@@ -126,14 +127,28 @@ public class Command {
                     throw new IncompleteInputException("The index of " + type + " cannot be empty.\n");
                 }
                 taskListIndex = Integer.parseInt(fullDescription);
+                Ui.showTaskDeleted(taskList.getTaskFromList(taskListIndex), taskList.getCurrTaskNumber() - 1);
                 taskList.deleteTask(taskListIndex);
-                Ui.showTaskDeleted(taskList.getNewestTask(), taskList.getCurrTaskNumber());
             } catch (Exception e) {
                 Ui.showDeletingTaskErrorMessage(e, type);
             }
             break;
         case FIND:
-            System.out.println("\nFeature to be implemented in next Level.\n");
+            try {
+                ArrayList<Task> findTaskResults = new ArrayList<>();
+                String keywords = fullDescription;
+                if (keywords.isEmpty()) {
+                    throw new IncompleteInputException("Find is missing KEYWORDS!");
+                }
+                for (Task task : taskList.getTasksList()) {
+                    if (task.getDescription().contains(keywords)) {
+                        findTaskResults.add(task);
+                    }
+                }
+                Ui.showFindResults(findTaskResults, keywords);
+            } catch (Exception e) {
+                Ui.showFindingTaskErrorMessage(e);
+            }
             break;
         case HELP:
             Ui.showHelp();
