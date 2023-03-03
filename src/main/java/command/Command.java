@@ -1,4 +1,4 @@
-package duke.command;
+package command;
 
 public class Command {
     public static final String COMMAND_BYE = "bye";
@@ -9,5 +9,7 @@ public class Command {
     public static final String COMMAND_DEADLINE = "deadline";
     public static final String COMMAND_EVENT = "event";
     public static final String COMMAND_DELETE = "delete";
+
+    public static final String COMMAND_FIND = "find";
 }
 

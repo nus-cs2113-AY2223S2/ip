@@ -1,4 +1,4 @@
-package duke.task;
+package task;
 
 public class Task {
     protected final String description;
@@ -33,9 +33,16 @@ public class Task {
     public String getStatusIcon() {
         return (isDone ? "X" : " ");
     }
+    public String saveStatusIcon() {
+        return (isDone ? "X" : "O");
+    }
 
     public String printToFile() {
         return "";
+    }
+
+    public boolean containsTask(String task) {
+        return description.contains(task);
     }
 
     @Override
