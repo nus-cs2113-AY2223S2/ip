@@ -24,7 +24,7 @@ public class TaskList {
         return "\t" + "Now you have " + count + " unmarked " + printTasksOrTask(count) + " in the list.";
     }
 
-    private static String printTasksOrTask(int num) {
+    public static String printTasksOrTask(int num) {
         return ((num == 1) ? "task" : "tasks");
     }
 }
