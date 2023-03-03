@@ -26,7 +26,7 @@ After listing (see list), your list should have:
 
 ### `Keyword` - deadline
 
-Creates a task with a deadline. Ability to mark tasks as completed and delete them. The deadline is defined by any character after the first delimiter "/".
+Creates a task with a deadline. Ability to mark tasks as completed and delete them. The deadline is defined by any characters after the first delimiter "/".
 
 Example of usage: 
 
@@ -37,7 +37,23 @@ After listing (see list), your list should have:
 0. [T] [ ] task0
 1. [D] [ ] task1 (by: tomorrow)
 
-Expected outcome:
+
+
+### `Keyword` - event
+
+Creates a task with a start and deadline. Ability to mark tasks as completed and delete them. The start is defined by any characters after the first delimiter "/" and before the second delimiter "/". The end is defined as any characters after the second delimiter "/".
+
+Example of usage: 
+
+event task2 /start /end
+
+After listing (see list), your list should have:
+
+0. [T] [ ] task0
+1. [D] [ ] task1 (by: tomorrow)
+2. [E] [ ] task2 (from: start to: end)
+
+
 
 Description of the outcome.
 
