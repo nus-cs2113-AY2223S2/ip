@@ -8,6 +8,7 @@ import duke.tasks.Task;
 import duke.tasks.ToDo;
 import duke.ui.Ui;
 
+import java.lang.reflect.Array;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.io.File;
@@ -34,21 +35,8 @@ public class Duke {
             String messageFromUser;
             messageFromUser = in.nextLine();
             try {
-                if (hasTaskKeyword(messageFromUser)) {
-                    Task newTask = handleTaskCreation(messageFromUser);
-                    addToList(newTask, tasks);
-                } else if (messageFromUser.startsWith("mark") || messageFromUser.startsWith("unmark")) {
-                    changeTaskStatus(messageFromUser, tasks);
-                } else if (messageFromUser.equals("list")) {
-                    displayList(tasks);
-                } else if (messageFromUser.equals("bye")) {
-                    saveAndExit(tasks, FILE_PATH);
-                    isExit = true;
-                } else if (messageFromUser.startsWith("delete")) {
-                    deleteFromList(messageFromUser, tasks);
-                } else {
-                    throw new DukeException();
-                }
+                isExit = isExitCommandGiven(messageFromUser);
+                handleMessageFromUser(messageFromUser, tasks);
             } catch (IndexOutOfBoundsException e) {
                 ui.showMissingAttributesMessage();
             } catch (DukeException e) {
@@ -211,6 +199,30 @@ public class Duke {
         } else {
             ui.showNoTasksToDisplayMessage();
             ui.horizontalLine();
+        }
+    }
+
+    public static boolean isExitCommandGiven(String messageFromUser) {
+        if (messageFromUser.equals("bye")) {
+            return true;
+        }
+        return false;
+    }
+
+    public static void handleMessageFromUser(String messageFromUser, ArrayList<Task> tasks) throws DukeException {
+        if (hasTaskKeyword(messageFromUser)) {
+            Task newTask = handleTaskCreation(messageFromUser);
+            addToList(newTask, tasks);
+        } else if (messageFromUser.startsWith("mark") || messageFromUser.startsWith("unmark")) {
+            changeTaskStatus(messageFromUser, tasks);
+        } else if (messageFromUser.equals("list")) {
+            displayList(tasks);
+        } else if (messageFromUser.equals("bye")) {
+            saveAndExit(tasks, FILE_PATH);
+        } else if (messageFromUser.startsWith("delete")) {
+            deleteFromList(messageFromUser, tasks);
+        } else {
+            throw new DukeException();
         }
     }
 
