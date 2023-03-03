@@ -80,6 +80,7 @@ public class Duke {
                 tasks.add(new Deadline(taskName, deadline));
                 tasks.get(counter).print();
                 counter++;
+                System.out.println("    Now you have " + counter + " tasks in your list!");
                 break;
 
             case "event":
@@ -92,6 +93,7 @@ public class Duke {
                 tasks.add(new Event(taskName, deadlineStart, deadlineEnd));
                 tasks.get(counter).print();
                 counter++;
+                System.out.println("    Now you have " + counter + " tasks in your list!");
                 break;
 
             case "delete":
@@ -109,6 +111,7 @@ public class Duke {
                 for (int i = 0; i < tasks.size(); i++) {
                     String taskDescription = tasks.get(i).getDescription();
                     if (taskDescription.contains(task)) {
+                        System.out.print("    " + (tasks.indexOf(tasks.get(i)) + 1) + ".");
                         tasks.get(i).printInList();
                     }
                 }
