@@ -29,6 +29,9 @@ public class Duke {
                 break;
             }
             try {
+                /*
+                    This function will help in listing down all the tasks in your list
+                    */
                 if (response.equals("list")) {
                     int size = list.size();
                     if (size == 0) {
@@ -40,6 +43,9 @@ public class Duke {
                         System.out.println((i + 1) + "." + list.get(i).toString());
                     }
                     continue;
+                    /*
+                    This function will help in marking task in your list
+                    */
                 } else if (response.startsWith("mark")) {
                     int tasknumber = Integer.parseInt(response.split(" ")[1]);
                     if (tasknumber > 0 && tasknumber <= list.size()) {
@@ -51,6 +57,9 @@ public class Duke {
                         continue;
                     }
                     continue;
+                    /*
+                    This function will help in unmarking task in your list
+                    */
                 } else if (response.startsWith("unmark")) {
                     int tasknumber = Integer.parseInt(response.split(" ")[1]);
                     if (tasknumber > 0) {
@@ -62,6 +71,9 @@ public class Duke {
                         continue;
                     }
                     continue;
+                    /*
+                    This function will help in adding a Deadline task in your list
+                    */
                 } else if (response.startsWith("deadline")) {
                     try {
                         String splitresponse = response.split(" ", 2)[1];
@@ -71,6 +83,9 @@ public class Duke {
                     } catch (IndexOutOfBoundsException e) {
                         throw new DukeException();
                     }
+                    /*
+                    This function will help in adding a Event task in your list
+                    */
                 } else if (response.startsWith("event")) {
                     try {
                         String splitresponse = response.split(" ", 2)[1];
@@ -82,6 +97,9 @@ public class Duke {
                     } catch (IndexOutOfBoundsException e) {
                         throw new DukeException();
                     }
+                    /*
+                    This function will help in adding a ToDo task in your list
+                    */
                 } else if (response.startsWith("todo")) {
                     try {
                         String description = response.split(" ", 2)[1];
@@ -89,6 +107,9 @@ public class Duke {
                     } catch (IndexOutOfBoundsException e) {
                         throw new DukeException();
                     }
+                    /*
+                    This function will help in deleting a task in your list
+                    */
                 } else if (response.startsWith("delete")) {
                     try {
                         int tasknumber = Integer.parseInt(response.split(" ")[1]);
@@ -105,7 +126,9 @@ public class Duke {
                         throw new DukeException();
                     }
 
-
+                    /*
+                    This function will help in finding a task in your list
+                    */
                 } else if (response.startsWith("find")) {
                     try {
                         String splitresponse = response.split(" ", 2)[1];
@@ -128,6 +151,9 @@ public class Duke {
                 } else {
                     throw new DukeException();
                 }
+                /*
+                This will tell you how mnay is in your list and what will be added to the list
+                 */
                 int size = list.size();
                 System.out.println("Got it. I've added this task:");
                 System.out.println(list.get(size - 1).toString());
@@ -138,7 +164,9 @@ public class Duke {
         }
 
     }
-
+/*
+This function is used to save the data in local
+ */
     private static void saveData(List<Task> list, String filePath) throws IOException {
         FileWriter fw = new FileWriter(filePath);
         for (Task t : list) {
