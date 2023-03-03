@@ -10,12 +10,12 @@ public class DeleteCommand extends Command {
     public DeleteCommand(int dIdx) {
         this.dIdx = dIdx;
     }
-    public void cmd(int dIdx) {
+    public void cmd() {
         try {
-            Task tmp = tasks.getTask(dIdx);
-            tasks.delete(dIdx);
+            Task tmp = tasks.getTask(this.dIdx);
+            tasks.delete(this.dIdx);
             System.out.println("\tNoted. I've removed this task:");
-            System.out.println("\t  " + tmp);
+            System.out.println("\t  " + tmp.getDescription());
             System.out.println("\tNow you have " + tasks.getSize() + " tasks in the list.");
             Storage.saveTasks(tasks);
         } catch (IndexOutOfBoundsException ioe) {

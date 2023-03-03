@@ -12,10 +12,8 @@ public class UnMarkCommand extends Command {
     }
     public void cmd() {
         tasks.getTask(this.idx).unMark();
-        System.out.println(LINE_SPACING);
         System.out.println("\tOK, I've marked this task as not done yet:");
         System.out.println("\t  " + tasks.getTask(this.idx));
-        System.out.println(LINE_SPACING);
         Storage.saveTasks(tasks);
     }
 }

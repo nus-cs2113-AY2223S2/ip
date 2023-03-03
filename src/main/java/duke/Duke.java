@@ -266,7 +266,7 @@ public class Duke extends Command {
     private Storage storage;
     public static final String LINE_SPACING =  "\t____________________________________________________________";
 
-    private Ui ui;
+    private final Ui ui;
 
     public Duke(String filePath) {
         ui = new Ui();

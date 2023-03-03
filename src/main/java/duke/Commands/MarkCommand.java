@@ -12,10 +12,8 @@ public class MarkCommand extends Command{
     }
     public void cmd() {
         tasks.getTask(this.idx).mark();
-        System.out.println(LINE_SPACING);
-        System.out.println("\tNice! I've marked this task as done:");
+        System.out.println("\tNice! I'velis marked this task as done:");
         System.out.println("\t  " + tasks.getTask(this.idx));
-        System.out.println(LINE_SPACING);
         Storage.saveTasks(tasks);
     }
 

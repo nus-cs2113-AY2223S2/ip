@@ -13,14 +13,14 @@ public class Parser {
         String cmd = cmds[0];
         Command tmpCommand = null;
         boolean isParse = true;
-        System.out.println(cmd);
+
         switch (cmd) {
         case DeadLineCommand.COMMAND_WORD:
                 tmpCommand = parseDeadline(cmds[1]);
                 break;
         case DeleteCommand.COMMAND_WORD:
-             tmpCommand = parseDelete(cmds[1]);
-             break;
+            tmpCommand = parseDelete(cmds[1]);
+            break;
         case EventCommand.COMMAND_WORD:
              tmpCommand = parseEvent(cmds[1]);
              break;
@@ -36,14 +36,12 @@ public class Parser {
         case UnMarkCommand.COMMAND_WORD:
              tmpCommand = parseUnMark(cmds[1]);
              break;
-
         case ToDoCommand.COMMAND_WORD:
             System.out.println(cmds[1]);
              tmpCommand = parseToDo(cmds[1]);
              break;
         default:
-             Command c = new Command();
-             return c;
+            return new Command();
         }
 
         return tmpCommand;

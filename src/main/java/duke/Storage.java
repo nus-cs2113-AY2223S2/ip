@@ -22,7 +22,8 @@ public class Storage {
 
 
     public static void saveTasks(TaskList tasks) {
-
+        Ui ui = new Ui();
+        ui.showLine();
         Storage.writeFile(tasks);
     }
 

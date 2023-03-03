@@ -15,9 +15,6 @@ public class Command {
         System.out.println("\tGot it. I've added this task:");
         System.out.println("\t  " + tsk.toString());
         System.out.println("\tNow you have " + tasks.getSize() + " tasks in the list.");
-        System.out.println(LINE_SPACING);
-        Storage.saveTasks(tasks);
-
     }
     public Task getTask(int idx) {
         return tasks.getTask(idx);
