@@ -200,7 +200,7 @@ public class Command {
         System.out.println("Below are the tasks that contains " + keyword + ": ");
         for (int i = 0; i < tasks.size(); i += 1) {
             if (tasks.get(i).description.contains(keyword)) {
-                System.out.print(i);
+                System.out.print(i+1);
                 System.out.print(". ");
                 System.out.println(tasks.get(i).toString());
             }

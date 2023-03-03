@@ -19,10 +19,12 @@ public class Ui {
         System.out.println("Example: \n" + ">> todo read book\n" + ">> Got it. I've added this task: read book");
         System.out.println("Format: \n" + ">> [event] <something> [from:] <when> [to:] <when>" +
                 ", and the system will add a new event to your list");
+        System.out.println("Please enter the <when> in yyyy-mm-dd format :)");
         System.out.println("Example: \n" + ">> event read book from: 2022-02-02 to: 2022-02-03\n"
                 + ">> Got it. I've added this task: read book (from: 2022-02-02, to: 2022-02-03)");
         System.out.println("Format: \n" + ">> [deadline] <something> [by:] <when>" +
                 ", and the system will add a new deadline to your list");
+        System.out.println("Please enter the <when> in yyyy-mm-dd format :)");
         System.out.println("Example: \n" + ">> deadline read book by: 2022-02-02\n"
                 + ">> Got it. I've added this task: read book (by: 2022-02-02)");
         System.out.println("Format: \n" + ">> [find] <keyword>" +
