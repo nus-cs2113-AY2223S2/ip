@@ -6,13 +6,19 @@ import storage.Storage;
 import tasks.Task;
 import ui.Ui;
 
-import java.util.HashMap;
-
+/**
+ * Represents "add" command - creates generic task when executed
+ */
 public class AddCommand extends Command{
     String name;
+
+    /**
+     * @param name
+     */
     public AddCommand(String name) {
         this.name = name;
     }
+
     @Override
     public void execute(TasksList tasksList, Ui ui, Storage storage) throws SherlockException {
 

@@ -6,11 +6,18 @@ import storage.Storage;
 import tasks.Deadline;
 import ui.Ui;
 
+/**
+ * Represents "deadline" command - creates deadline task when executed
+ */
 public class DeadlineCommand extends Command {
     String name;
     String by;
-    public DeadlineCommand(String name, String by) {
 
+    /**
+     * @param name
+     * @param by
+     */
+    public DeadlineCommand(String name, String by) {
         this.name = name;
         this.by = by;
     }
