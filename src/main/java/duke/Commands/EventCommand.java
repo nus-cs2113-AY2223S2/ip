@@ -41,7 +41,8 @@ public class EventCommand extends Command {
     private final String end;
 
     /**
-     * Constructs an EventCommand object with the specified description, completion status, start and end times of the event.
+     * Constructs an EventCommand object with the specified description,
+     * completion status, start and end times of the event.
      *
      * @param desc   The description of the event.
      * @param isMark The completion status of the event.
@@ -56,8 +57,10 @@ public class EventCommand extends Command {
     }
 
     /**
-     * Executes the EventCommand by creating a new Event object with the specified description, completion status, start and end times,
-     * adding it to the task list, and printing out a message indicating that the event has been added to the list.
+     * Executes the EventCommand by creating a new Event object with the
+     * specified description, completion status, start and end times,
+     * adding it to the task list, and printing out a message
+     * indicating that the event has been added to the list.
      *
      * @throws DukeException if there is an error creating the Event object.
      */

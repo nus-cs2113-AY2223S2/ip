@@ -44,10 +44,10 @@ public class Duke extends Command {
         while (!isExit) {
             try {
                 String fullCommand = ui.readCommand();
-                ui.showLine(); // show the divider line ("_______")
+                ui.showLine();
                 Command c = Parser.parse(fullCommand);
                 c.cmd();
-                isExit = c.isExit();
+                isExit = c.getExit();
             } catch (DukeException e) {
                 System.out.println("error interrpetting input");
             } finally {

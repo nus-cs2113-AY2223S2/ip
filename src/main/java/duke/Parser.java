@@ -20,6 +20,12 @@ public class Parser {
         String[] cmds = command.split(" ", 2);
         String cmd = cmds[0];
         Command tmpCommand = null;
+        if ((!cmd.equals(ExitCommand.COMMAND_WORD) &&
+                cmd.equals(ListCommand.COMMAND_WORD) == false) &&
+                cmds.length == 1) {
+            System.out.print("Malformed input, ");
+            return new Command();
+        }
         boolean isParse = true;
         switch (cmd) {
         case DeadLineCommand.COMMAND_WORD:

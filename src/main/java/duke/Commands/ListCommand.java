@@ -5,7 +5,6 @@ import static duke.Duke.LINE_SPACING;
 /*
  * Rerepsents a ListCommand that is sued to display all tasks
  * inherits from Command
- *
  */
 public class ListCommand extends Command {
     /**

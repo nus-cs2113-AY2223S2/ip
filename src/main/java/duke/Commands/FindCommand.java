@@ -25,7 +25,8 @@ public class FindCommand extends Command {
     }
 
     /**
-     * Executes the FindCommand by searching for tasks in the task list that contain the specified keyword and printing them out.
+     * Executes the FindCommand by searching for tasks in the task list
+     * that contain the specified keyword and printing them out.
      */
     public void cmd() {
         Ui ui = new Ui();

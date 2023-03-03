@@ -4,12 +4,12 @@ import duke.Storage;
 
 import static duke.Duke.LINE_SPACING;
 
-/*
+/**
  * Represents a Command to unmar a task
- * inherits from Command
- * */
+ * inherits from Command.
+ */
 public class UnMarkCommand extends Command {
-    /*
+    /**
      * The keyword that denotes the command to unmark a task*/
     public static final String COMMAND_WORD = "unmark";
     /*

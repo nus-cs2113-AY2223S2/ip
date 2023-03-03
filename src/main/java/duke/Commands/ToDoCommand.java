@@ -7,7 +7,7 @@ import tasks.Todo;
 /*
  * Represents adding a todo task
  * extends Command
- * */
+ */
 public class ToDoCommand extends Command {
     /**
      * The string representing the command word for this command.

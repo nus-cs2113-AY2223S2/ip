@@ -45,7 +45,7 @@ public class TaskList {
         size--;
     }
 
-    /*
+    /**
      * returns the size of the list tasks
      */
     public int getSize() {

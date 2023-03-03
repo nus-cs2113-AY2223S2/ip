@@ -7,7 +7,8 @@ import tasks.Task;
 import static duke.Duke.LINE_SPACING;
 
 /**
- * The Command class is an abstract class that serves as the base class for all types of commands in Duke.
+ * The Command class is an abstract class that serves
+ * as the base class for all types of commands in Duke.
  */
 public class Command {
 
@@ -57,7 +58,7 @@ public class Command {
      *
      * @return A boolean flag indicating whether the program should exit.
      */
-    public boolean isExit() {
+    public boolean getExit() {
         return isExit;
     }
 }

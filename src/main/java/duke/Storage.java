@@ -47,7 +47,6 @@ public class Storage {
             myWriter.flush();
             String strTask = "";
             for (int i = 0; i < tasks.getSize(); i++) {
-//                myWriter.write(tasks.getTask(i).toString() + "\n");
                 if (tasks.getTask(i).toString().contains("[T]")) {
                     strTask = "todoSplitFactString" + tasks.getTask(i).getDescription() +
                             "SplitFactString" + tasks.getTask(i).getMarked();
@@ -81,8 +80,9 @@ public class Storage {
      */
     public static void readFile(TaskList tasks) {
         try {
+            String filePath = "./data/duke.txt";
             ArrayList<String> tmpStrTasks = new ArrayList<>();
-            tmpStrTasks = (ArrayList<String>) Files.readAllLines(Paths.get("./data/duke.txt"), StandardCharsets.UTF_8);
+            tmpStrTasks = (ArrayList<String>) Files.readAllLines(Paths.get(filePath), StandardCharsets.UTF_8);
             for (int i = 0; i < tmpStrTasks.size(); i++) {
                 String[] strTask = tmpStrTasks.get(i).split("SplitFactString");
                 boolean isMark = false;

@@ -2,7 +2,6 @@ package duke.Commands;
 
 /*
  * ThRepresents the Exit Command that is used to terminate the program
- *
  */
 
 import static duke.Duke.LINE_SPACING;
