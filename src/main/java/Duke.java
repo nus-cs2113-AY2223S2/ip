@@ -48,23 +48,25 @@ public class Duke {
             System.out.println("Something went wrong: " + ex.getMessage());
         }
     }
-    public static void printAddTodo(Todo print, int taskCounter) {
+    public static void printAddTodo(Todo print) {
         System.out.println("Got it. I've added this task:");
         System.out.print("   "); System.out.println(print);
         System.out.println("Now you have " + tasks.size() + " task in the list");
     }
-    public static void printAddDeadline(Deadline print, int taskCounter) {
+    public static void printAddDeadline(Deadline print) {
         System.out.println("Got it. I've added this task:");
         System.out.print("   "); System.out.println(print);
         System.out.println("Now you have " + tasks.size() + " task in the list");
     }
-    public static void printAddEvent(Event print, int taskCounter) {
+    public static void printAddEvent(Event print) {
         System.out.println("Got it. I've added this task:");
         System.out.print("   "); System.out.println(print);
         System.out.println("Now you have " + tasks.size() + " task in the list");
     }
     /**
      * Parses Todo Input
+     *
+     * @param inputs The inputs from the user in string array
      */
     public static String parseInput(String[] inputs){
         String todoInput = "";
@@ -74,12 +76,11 @@ public class Duke {
         }
         return todoInput;
     }
-    public static void inputTodo(String[] inputs, int taskCounter) {
+    public static void inputTodo(String[] inputs) {
         String todoInput = parseInput(inputs);
         Todo todo = new Todo(todoInput);
         tasks.add(todo);
-        taskCounter += 1;
-        printAddTodo(todo, taskCounter);
+        printAddTodo(todo);
     }
     /**
      * Executes the find command
@@ -168,7 +169,7 @@ public class Duke {
                 if (inputs.length == 1) {
                     throw new EmptyInputException();
                 }
-                inputTodo(inputs, taskCounter);
+                inputTodo(inputs);
                 break;
             case "deadline":
                 if (inputs.length == 1) {
@@ -194,7 +195,7 @@ public class Duke {
                 Deadline deadline = new Deadline(deadlineInput, deadlineDeadline);
                 tasks.add(deadline);
                 taskCounter += 1;
-                printAddDeadline(deadline, taskCounter);
+                printAddDeadline(deadline);
                 break;
             case "event":
                 if (inputs.length == 1) {
@@ -229,7 +230,7 @@ public class Duke {
                 Event event = new Event(eventInput, eventFrom, eventTo);
                 tasks.add(event);
                 taskCounter += 1;
-                printAddEvent(event, taskCounter);
+                printAddEvent(event);
                 break;
             case "delete":
                 if (inputs.length == 1) {
