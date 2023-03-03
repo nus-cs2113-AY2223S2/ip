@@ -1,5 +1,6 @@
 package io.github.haoyangw.rica.storage;
 
+import io.github.haoyangw.rica.exception.RicaSerializationException;
 import io.github.haoyangw.rica.exception.RicaStorageException;
 import io.github.haoyangw.rica.task.Task;
 import io.github.haoyangw.rica.ui.TextUi;
@@ -21,6 +22,7 @@ import java.util.Scanner;
  *   Tasks(if any) from storage.
  */
 public class StorageManager {
+    private static final String CANNOT_CLEAR_DATA_ERROR = " What a day, can't even clear my memory from your storage ;( Sorry if it's taking up space oops!";
     private static final String CANNOT_SAVE_DATA_ERROR = " Died while saving my data to your storage, I'm sorry if I come back an empty shell next time xP";
     private static final String DEFAULT_DATA_PATH = "data/tasks.txt";
     private static final String DATA_FILE_HAS_NO_PARENT_ERROR = " My data file is placed in the void? Please don't give me amnesia :O (contact Mr Stark!!)";
@@ -40,6 +42,21 @@ public class StorageManager {
         this.textUi = new TextUi();
     }
 
+    /**
+     * Clears the content of the data file. Useful when the data file contains
+     *   garbage, or in other extreme scenarios.
+     */
+    private void clearDataFile() {
+        FileWriter dataFile;
+        try {
+            dataFile = new FileWriter(this.getDataPath(), false);
+            String BLANK_FILE_STRING = "";
+            dataFile.write(BLANK_FILE_STRING);
+            dataFile.close();
+        } catch (IOException exception) {
+            throw new RicaStorageException(StorageManager.CANNOT_CLEAR_DATA_ERROR);
+        }
+    }
 
     /**
      * Creates all directories along the data file path if they don't already exist.
@@ -108,6 +125,10 @@ public class StorageManager {
             throw new RicaStorageException(StorageManager.INVALID_DATA_PATH_GIVEN_ERROR);
         } catch (FileNotFoundException exception) {
             throw new RicaStorageException(StorageManager.STILL_NO_DATA_FILE_ERROR);
+        } catch (RicaSerializationException | RicaStorageException exception) {
+            // Data file contains garbage, clear it to prevent future errors
+            this.clearDataFile();
+            throw exception;
         }
         return savedTasks;
     }
