@@ -108,7 +108,7 @@ public class Storage {
             fw.close();
 
         } catch (IOException e) {
-            throw new SherlockException("Couldn't add a change to file " + filepath);
+            throw new SherlockException("Couldn't add a change to the file " + filepath);
         }
 
     }
