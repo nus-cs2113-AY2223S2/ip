@@ -9,6 +9,9 @@ public class Deadlines extends Task {
     private String endTime;
     private String taskLabel = "[D]";
 
+    /**
+     * Represents a Deadlines object which is identified by the type D. Contains description and deadline info.
+     */
     public Deadlines(String input) throws EmptyDeadlineException {
         super(input.substring(DEADLINE_INDEX, input.indexOf('/') - 1)); // Sanitize input by removing "deadline" at the start
         super.setTaskLabel(taskLabel);
@@ -20,6 +23,12 @@ public class Deadlines extends Task {
 
     // Method of StringBuffer operation taken from
     // https://www.geeksforgeeks.org/insert-a-string-into-another-string-in-java/
+    /**
+     * Returns the deadline of the task.
+     *
+     * @param input user input to be parsed.
+     * @return deadline of the tasked from parsing.
+     */
     @Override
     public String getEndTime(String input) {
         String deadline = input.substring(input.indexOf('/') + 1); // endTime of task is the string after '/'

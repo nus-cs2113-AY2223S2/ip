@@ -1,5 +1,9 @@
 package Duke.Task;
 
+/**
+ * Represents a Task object which is identified by the type of task it is (taskLabel), its content (description)
+ * and whether it is completed or not (mark).
+ */
 public class Task {
     protected String taskLabel;
     protected String description;

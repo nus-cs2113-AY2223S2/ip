@@ -6,6 +6,14 @@ import Duke.Task.Task;
 public class Parser {
     private boolean isRunning = true;
 
+    /**
+     * Parse the input from user to determine what to do with the given input by appending
+     * a characteristic letter in front.
+     *
+     * @param line input from user to be parsed.
+     * @return a string of user's input with characteristic letter appended to the front.
+     * @throws NullCommandException If input is in invalid format.
+     */
     public String parseCommand(String line) {
         if (line.equals("bye")) {
             return "B";
@@ -31,18 +39,26 @@ public class Parser {
                 } else {
                     throw new NullCommandException();
                 }
-            } catch (StringIndexOutOfBoundsException e) {
-                return "XIOB";
             } catch (NullCommandException e) {
                 return "XNC";
             }
         }
     }
 
+    /**
+     * Gets the boolean value of parser object, for termination check of program
+     *
+     * @return boolean value of isRunning.
+     */
     public boolean getIsRunning() {
         return this.isRunning;
     }
 
+    /**
+     * Sets the boolean value of parser object, to terminate the program
+     *
+     * @param bool boolean value of parser object to be set.
+     */
     public void setIsRunning(boolean bool) {
         this.isRunning = bool;
     }

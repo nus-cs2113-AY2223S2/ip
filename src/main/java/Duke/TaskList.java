@@ -20,6 +20,9 @@ public class TaskList {
     private static final int FIND_INDEX = 5;
     public static ArrayList<Task> list;
 
+    /**
+     * Represents an arraylist of Task objects that can be modified.
+     */
     public TaskList(String filepath) {
         try {
             list = Storage.stringToArraylistConverter(Storage.parseFileContentsToString(filepath));
@@ -28,6 +31,15 @@ public class TaskList {
         }
     }
 
+    /**
+     * Adds a Task object to the TaskList.
+     *
+     * @param line input from user indicating the task to be added.
+     * @throws EmptyToDoException If line is empty.
+     * @throws EmptyDeadlineException If line is empty.
+     * @throws EmptyEventsException If line is empty.
+     * @throws IndexOutOfBoundsException If line's input format violates that of Deadlines or Events object.
+     */
     public void addTask(String line) {
         Ui.addTaskSuccess();
         try {
@@ -38,8 +50,6 @@ public class TaskList {
                 newTask = new Deadlines(line);
             } else if (line.startsWith("event")) {
                 newTask = new Events(line);
-            } else {
-                throw new NullCommandException();
             }
             this.list.add(newTask);
             Ui.printTask(newTask);
@@ -53,12 +63,14 @@ public class TaskList {
             System.out.println("Sire, your event is unclear. Please specify.");
         } catch (StringIndexOutOfBoundsException e) {
             System.out.println("Don't hold back Sire. I am here to serve.");
-        } catch (NullCommandException e) {
-            System.out.println("Sire, I am not trained to understand gibberish.");
         }
     }
 
-
+    /**
+     * Deletes the Task object from the TaskList.
+     *
+     * @param task input from user indicating the task to be deleted.
+     */
     public void delete(String task) {
         String indexOfTask = task.substring(DELETE_INDEX);
         Ui.deleteSuccess(this.list, indexOfTask);
@@ -67,6 +79,11 @@ public class TaskList {
         Storage.dukeDataStorage(Storage.arraylistToStringConverter(this.list));
     }
 
+    /**
+     * Marks the Task object in the TaskList as done.
+     *
+     * @param task input from user indicating the task to be marked.
+     */
     public void mark(String task) {
         String indexOfTask = task.substring(MARK_INDEX); // get the number of task to be marked
         Task taskToBeMarked = this.list.get(Integer.parseInt(indexOfTask) - 1); // convert from 1-based to 0-based
@@ -75,6 +92,11 @@ public class TaskList {
         Storage.dukeDataStorage(Storage.arraylistToStringConverter(this.list));
     }
 
+    /**
+     * Unmarks the Task object in the TaskList as undone.
+     *
+     * @param task input from user indicating the task to be unmarked.
+     */
     public void unmark(String task) {
         String indexOfTask = task.substring(UNMARK_INDEX);
         Task taskToBeUnmarked = this.list.get(Integer.parseInt(indexOfTask) - 1);
@@ -83,6 +105,11 @@ public class TaskList {
         Storage.dukeDataStorage(Storage.arraylistToStringConverter(this.list));
     }
 
+    /**
+     * Prints the Task object in the TaskList.
+     *
+     * @param task task object to be printed.
+     */
     public void printTasksFound (String task) {
         String taskToBeFound = task.substring(FIND_INDEX);
         Ui.findSuccess();
@@ -93,6 +120,9 @@ public class TaskList {
         }
     }
 
+    /**
+     * Prints the current TaskList.
+     */
     public void printCurrentList() {
         Ui.printCurrentList(this.list);
     }

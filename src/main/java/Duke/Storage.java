@@ -22,12 +22,19 @@ public class Storage {
     private static final int SECONDBRACKET_FRONT = 3;
     private static final int SECONDBRACKET_BACK = 6;
 
+
     private static void writeToFile(String filePath, String textToAdd) throws IOException {
         FileWriter fw = new FileWriter(filePath);
         fw.write(textToAdd);
         fw.close();
     }
 
+    /**
+     * Write the data to the default file location
+     *
+     * @param taskToBeStored info to be written to the file.
+     * @throws IOException If default file location is invalid.
+     */
     public static void dukeDataStorage(String taskToBeStored) {
         File f = new File("dukeData.txt");
         try {
@@ -36,24 +43,17 @@ public class Storage {
             }
             writeToFile("dukeData.txt", taskToBeStored);
         } catch (IOException e) {
-
             System.out.println("File creation of writing invalid");
         }
     }
 
-    public static void printFileContents(String filePath) throws FileNotFoundException {
-        File f = new File(filePath); // create a File for the given file path
-        if (!f.exists()) { // for first log in, there is no file
-            return;
-        }
-        System.out.println("Good day sire, I have listed down your current plan below for you:");
-        Scanner s = new Scanner(f); // create a Scanner using the File as the source
-        while (s.hasNext()) {
-            String taskStored = s.nextLine();
-            System.out.println(taskStored);
-        }
-    }
-
+    /**
+     * Parse data stored in file into String object.
+     *
+     * @param filePath file path of data file to be read.
+     * @return String object representing all the data in the data file.
+     * @throws FileNotFoundException If file path is invalid.
+     */
     public static String parseFileContentsToString(String filePath) throws FileNotFoundException {
         File f = new File(filePath); // create a File for the given file path
         String fileContent = "";
@@ -68,6 +68,13 @@ public class Storage {
         return fileContent;
     }
 
+    /**
+     * Parse data stored in an arraylist to a single String object to be stored in data file. Used
+     * in writing to data file.
+     *
+     * @param list arraylist to be parsed.
+     * @return String object representing all the data in the data file.
+     */
     public static String arraylistToStringConverter(ArrayList<Task> list) {
         String output = "";
         for (Task t : list) {
@@ -76,6 +83,15 @@ public class Storage {
         return output;
     }
 
+    /**
+     * Parse data stored as a single String object into an arrayList. Used in reading from data file.
+     *
+     * @param fileContent a String object representing data in the file.
+     * @return arraylist which stores all the tasks stored in file as elements.
+     * @throws EmptyDeadlineException If task read is empty.
+     * @throws EmptyToDoException If task read is empty.
+     * @throws EmptyEventsException If task read is empty.
+     */
     public static ArrayList<Task> stringToArraylistConverter(String fileContent) {
         ArrayList<Task> list = new ArrayList<>();
         if (fileContent.equals("")) {
