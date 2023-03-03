@@ -1,0 +1,16 @@
+list
+todo Tutorials
+deadline
+deadline Lab
+deadline Lab /
+deadline Lab /Tuesday morning
+event Career Fair
+event Career Fair /
+event Career Fair /18 Jan 11am /18 Jan 5pm
+list
+mark 99
+mark 3
+list
+unmark 99
+unmark 3
+list

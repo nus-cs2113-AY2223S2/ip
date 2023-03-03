@@ -1,7 +1,73 @@
-Hello from
- ____        _        
-|  _ \ _   _| | _____ 
-| | | | | | | |/ / _ \
-| |_| | |_| |   <  __/
-|____/ \__,_|_|\_\___|
-
+___________________________________________________________________
+ Woof Woof! I'm Inu! Your personal Shib-Assistant ^.^
+ What can I do for you today?
+___________________________________________________________________
+___________________________________________________________________
+ Woof Woof! Your task list is empty! ^.^
+___________________________________________________________________
+___________________________________________________________________
+added: [T][ ] Tutorials
+Now you have 1 tasks in your list.
+___________________________________________________________________
+___________________________________________________________________
+ Sorry! You need a space between your command and task input!
+Please enter your task as such: <todo/deadline/event> <your task> ^.^
+___________________________________________________________________
+___________________________________________________________________
+ Sorry! Please indicate the deadline first
+And its corresponding due date with </>! 
+Format: deadline <your deadline> /<due date>
+___________________________________________________________________
+___________________________________________________________________
+ Sorry! Please provide some information on your deadline
+Namely, when it is due following the </> symbol! ^.^
+___________________________________________________________________
+___________________________________________________________________
+added: [D][ ] Lab (by: Tuesday morning)
+Now you have 2 tasks in your list.
+___________________________________________________________________
+___________________________________________________________________
+ Sorry! Please indicate your event first, following with when it starts and ends with </>!
+Format: event <My Task> /<from when> /<to when>
+___________________________________________________________________
+___________________________________________________________________
+ Sorry! Please provide some information on your event
+Namely, when it starts and ends after following the </> symbol respectively! ^.^
+For example: /<from when> /<to when>
+___________________________________________________________________
+___________________________________________________________________
+added: [E][ ] Career Fair (from: 18 Jan 11am to: 18 Jan 5pm)
+Now you have 3 tasks in your list.
+___________________________________________________________________
+___________________________________________________________________
+ Woof! Here are your current tasks ^.^:
+1. [T][ ] Tutorials
+2. [D][ ] Lab (by: Tuesday morning)
+3. [E][ ] Career Fair (from: 18 Jan 11am to: 18 Jan 5pm)
+___________________________________________________________________
+___________________________________________________________________
+ Sorry! This task does not exist in your list! ^.^
+___________________________________________________________________
+___________________________________________________________________
+ Woof! I've marked this task as completed for you:
+[E][X] Career Fair (from: 18 Jan 11am to: 18 Jan 5pm)
+___________________________________________________________________
+___________________________________________________________________
+ Woof! Here are your current tasks ^.^:
+1. [T][ ] Tutorials
+2. [D][ ] Lab (by: Tuesday morning)
+3. [E][X] Career Fair (from: 18 Jan 11am to: 18 Jan 5pm)
+___________________________________________________________________
+___________________________________________________________________
+ Sorry! This task does not exist in your list! ^.^
+___________________________________________________________________
+___________________________________________________________________
+ Woof! I've marked this task as incompleted for you:
+[E][ ] Career Fair (from: 18 Jan 11am to: 18 Jan 5pm)
+___________________________________________________________________
+___________________________________________________________________
+ Woof! Here are your current tasks ^.^:
+1. [T][ ] Tutorials
+2. [D][ ] Lab (by: Tuesday morning)
+3. [E][ ] Career Fair (from: 18 Jan 11am to: 18 Jan 5pm)
+___________________________________________________________________
