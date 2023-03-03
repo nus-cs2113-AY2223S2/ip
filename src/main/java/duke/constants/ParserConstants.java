@@ -17,7 +17,7 @@ public final class ParserConstants {
     public static final String COMMAND_LIST = "list";
     public static final String COMMAND_TODO = "todo";
     public static final String COMMAND_UNMARK = "unmark";
-    public static final String JSON_KEY_TYPE = "type";
+    public static final String JSON_KEY_TYPE = "taskType";
     public static final String KEYWORD_BY = "/by";
     public static final String KEYWORD_FROM = "/from";
     public static final String KEYWORD_TO = "/to";
