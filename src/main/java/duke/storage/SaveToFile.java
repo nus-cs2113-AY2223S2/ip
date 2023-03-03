@@ -71,7 +71,7 @@ public class SaveToFile {
      * @throws IOException If fwAppend.write encounters an error
      */
     private void writeSpecificTaskToFile(FileWriter fwAppend, String taskType, Task currentTask,
-                                                int isTaskDone, String taskInfo) throws IOException {
+                                         int isTaskDone, String taskInfo) throws IOException {
         switch (taskType) {
         case "T":
             fwAppend.write(taskType + "/" + isTaskDone + "/" + taskInfo + System.lineSeparator());
