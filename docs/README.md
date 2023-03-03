@@ -1,4 +1,4 @@
-# DukeMain.Duke project template
+## Duke User Guide
 
    ```
    Hello from
@@ -8,7 +8,6 @@
    | |_| | |_| |   <  __/
    |____/ \__,_|_|\_\___|
    ```
-## Duke User Guide
 
 # Features
 
@@ -48,6 +47,7 @@ How to use Duke and What features are available:
 2. `mark` command: <a name = "markIt"></a>
    --> adds an "X" to indicate that a task is completed
    --> format: mark <index of item to mark>
+   
       ```
       >>mark 1
       Item has been marked
@@ -58,6 +58,7 @@ How to use Duke and What features are available:
 3. `unmark` Command: <a name = "unmark"></a>
    --> unmarks an item in the todolist by removing the "X"
    --> format: umark <index of item to unmark>
+   
       ```
       >>unmark 1
       Item has been unmarked
@@ -75,6 +76,7 @@ How to use Duke and What features are available:
       Added: [T][ ] eat breakfast
       now you have: 4 tasks in this list.
       ```
+      
 # deadline
 5. `deadline` command <a name = "deadline"></a>
    --> adds a Deadline item
@@ -103,13 +105,16 @@ How to use Duke and What features are available:
 7. `delete` Command: <a name = "delete"></a>
    --> deletes item from the todo list
    --> format: delete <index of item to delete>
+   
       ```
       >>delete 2
       i have deleted the task: buy book
       ```
+      
 # find
 8. `find` Command <a name = "find"></a>
    --> searches for todo items that contain the search key term
+   
       ```
       >>find buy
       -------TODO-LIST------
