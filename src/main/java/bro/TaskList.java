@@ -25,6 +25,13 @@ public class TaskList {
         taskList.add(task);
     }
 
+    /**
+     * Creates a ToDo Task and adds it to the list of tasks.
+     *
+     * @param taskListObject Instance of TaskList that contains all tasks
+     * @param arrayOfInputs Array of Strings containing the user input
+     * @throws invalidInputFormat If index of task is not provided, throw an exception
+     */
     public void createToDo(TaskList taskListObject, String[] arrayOfInputs) throws invalidInputFormat {
         ArrayList<Task> taskList = taskListObject.getTaskList();
         StringBuilder todoName = new StringBuilder();
@@ -98,7 +105,17 @@ public class TaskList {
         return taskIndex;
     }
 
-    public void markComplete(boolean markAsComplete, ArrayList<Task> taskList, String[] arrayOfInputs) throws invalidInputFormat, invalidTaskIndexException {
+    /**
+     * Marks a task in the list of all tasks as complete or incomplete.
+     *
+     * @param markAsComplete If true, the task is marked as complete. If False, the method is marked as not complete.
+     * @param taskListObject Instance of TaskList that contains all tasks
+     * @param arrayOfInputs Array of Strings containing the user input
+     * @throws invalidInputFormat If index of task given is not a number, throw an exception.
+     * @throws invalidTaskIndexException If index of task given is out of bounds of the list of all tasks, throw an exception.
+     */
+    public void markComplete(boolean markAsComplete, TaskList taskListObject, String[] arrayOfInputs) throws invalidInputFormat, invalidTaskIndexException {
+        ArrayList<Task> taskList = taskListObject.getTaskList();
         int taskIndex = checkAndGetValidTaskIndex(Type.MARK, taskList.size(), arrayOfInputs);
         if (markAsComplete){   // mark as Completed
             taskList.get(taskIndex).setCompleted();
@@ -110,6 +127,14 @@ public class TaskList {
         }
     }
 
+    /**
+     * Deletes a task from the list of all tasks.
+     *
+     * @param taskListObject Instance of TaskList that contains all tasks
+     * @param arrayOfInputs Array of Strings containing the user input
+     * @throws invalidInputFormat If index of task given is not a number, throw an exception.
+     * @throws invalidTaskIndexException If index of task given is out of bounds of the list of all tasks, throw an exception.
+     */
     public void deleteTask(TaskList taskListObject, String[] arrayOfInputs) throws invalidInputFormat, invalidTaskIndexException {
         ArrayList<Task> taskList = taskListObject.getTaskList();
         int taskIndex = checkAndGetValidTaskIndex(Type.DELETE, taskList.size(), arrayOfInputs);
