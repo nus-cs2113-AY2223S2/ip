@@ -19,28 +19,28 @@ ___
 - [Quick Start](#quick-start)
 - [Features](#features)
     + [Adding a Task](#adding-a-task)
-        1. [Todo: `todo`](#1-todo-todo)
-        2. [Event: `event`](#2-event-event)
-        3. [Deadline: `deadline`](#3-deadline-deadline)
-    + [List all tasks: `list`](#list-all-tasks-list)
-    + [Mark a task: `mark`](#mark-a-task-mark)
-    + [Unmark a task: `unmark`](#unmark-a-task-unmark)
-    + [Delete a task: `delete`](#delete-a-task-delete)
-    + [Find a task: `find`](#find-a-task-find)
-    + [Exit the program: `bye`](#exit-the-program-bye)
-    + [Saving the data](#saving-the-data)
-    + [Editing the data file](#editing-the-data-file)
+        1. [Todo: `todo`](#todo)
+        2. [Event: `event`](#event)
+        3. [Deadline: `deadline`](#deadline)
+    + [List all tasks: `list`](#list)
+    + [Mark a task: `mark`](#mark)
+    + [Unmark a task: `unmark`](#unmark)
+    + [Delete a task: `delete`](#delete)
+    + [Find a task: `find`](#find)
+    + [Exit the program: `bye`](#bye)
+    + [Saving the data](#saving)
+    + [Editing the data file](#editing)
 - [FAQ](#faq)
 - [Command Summary](#command-summary)
 
 ___
 
 <!-- Quick Start guide -->
-## <span style="color:DarkMagenta">Quick Start</span> ⚙️
+## <span id="quick-start" style="color:DarkMagenta">Quick Start</span> ⚙️
 1. Ensure you have Java 11 or above installed in your Computer.
-2. Download the latest `king.jar`.
+2. Download the latest `king.jar` [here](https://github.com/bentohset/ip/releases/download/A-Release/king-0.2.jar).
 3. Copy the file to the folder you want to use as the home folder for your King.
-4. Open a command terminal, cd into the folder you put the jar file in, and use the java -jar king.jar command to run the application.
+4. Open a command terminal, cd into the folder you put the jar file in, and use the `java -jar king.jar` command to run the application.
 5. Type the command in the command box and press Enter to execute it.
     <br/>Some example commands you can try:
     - `list`: Lists all tasks.
@@ -52,12 +52,12 @@ ___
 ___
 
 <!-- Feature List -->
-## <span style="color:DarkMagenta">Features</span> 👾
+## <span id="features" style="color:DarkMagenta">Features</span> 👾
 
-### Adding a Task:
+### Adding a Task<a id='adding-a-task'></a>:
 _3 types of tasks supported - Todo, Event and Deadline:_
 
-### 1. Todo: `todo`
+### 1. Todo: `todo`<a id='todo'></a>
 Adds a todo task to the task list.<br/>
 Format: `todo TASK_NAME`
 - `TASK_NAME` accepts a String of multiple words
@@ -69,7 +69,7 @@ todo complete CS2113 ip level
 todo read
 ```
 
-### 2. Event: `event`
+### 2. Event: `event`<a id='event'></a>
 Adds an event task to the task list.<br/>
 Format: `event TASK_NAME /by BY_DATE`
 - `TASK_NAME` accepts a String of multiple words and is **compulsory**.
@@ -88,7 +88,7 @@ deadline apply BTO /by 2025-08-01 1200
 ```
 
 
-### 3. Deadline: `deadline`
+### 3. Deadline: `deadline`<a id='deadline'></a>
 Adds a deadline task to the task list. <br/>
 Format: `deadline TASK_NAME /from FROM_DATE /to TO_DATE`
 - `TASK_NAME` accepts a String of multiple words and is **compulsory**.
@@ -107,13 +107,13 @@ event valorant comp /from 2025-04-01 0800 /to 2025-04-10 1600
 
 <br/>
 
-### List all tasks: `list`
+### List all tasks: `list`<a id='list'></a>
 Shows a list of all tasks in the task list.<br/>
 Format: `list`
 
 <br/>
 
-### Mark a task: `mark`
+### Mark a task: `mark`<a id='mark'></a>
 Marks a specific task as done.<br/>
 Format: `mark TASK_NUMBER`
 - `TASK_NUMBER` accepts positive integer from 1 to N (the number of tasks in the list)
@@ -124,7 +124,7 @@ Examples:
 
 <br/>
 
-### Unmark a task: `unmark`
+### Unmark a task: `unmark`<a id='unmark'></a>
 Unmarks a specific task as not done.<br/>
 Format: `unmark TASK_NUMBER`
 - `TASK_NUMBER` accepts positive integer from 1 to N (the number of tasks in the list)
@@ -136,7 +136,7 @@ Examples:
 
 <br/>
 
-### Delete a task: `delete`
+### Delete a task: `delete`<a id='delete'></a>
 Deletes a specific task in the task list.<br/>
 Format: `delete TASK_NUMBER`
 - `TASK_NUMBER` accepts positive integer from 1 to N (the number of tasks in the list)
@@ -148,7 +148,7 @@ Examples:
 
 <br/>
 
-### Find a task: `find`
+### Find a task: `find`<a id='find'></a>
 Searches the task list for all tasks containing the entered keyword.<br/>
 Format: `find KEYWORD`
 - `KEYWORD` accepts a snlge `String` or multiple `Strings`
@@ -165,35 +165,34 @@ find event
 
 <br/>
 
-### Exit the program: `bye`
+### Exit the program: `bye`<a id='bye'></a>
 Exits the program.<br/>
 Format: `bye`
 
 <br/>
 
-### Saving the data
-King data are saved in the hard disk automatically after exiting the program. <br/>
+### Saving the data<a id='saving'></a>
+King's data are saved in the hard disk automatically after exiting the program. <br/>
 There is no need to save manually.
 
 <br/>
 
-### Editing the data file
-King data are saved as a .txt file in `[JAR file location]
-/data/king.txt`. <br/>
+### Editing the data file<a id='editing'></a>
+King's data are saved as a .txt file in `[JAR file location]/data/king.txt`. <br/>
 Edits must be made according to the formatting of the data.
 
 <br/>
 
 ___
 <!-- FAQs -->
-## <span style="color:DarkMagenta">FAQ</span> 💻
+## <span id="faq" style="color:DarkMagenta">FAQ</span> 💻
 > Q: How do I transfer my data to another Computer?
 >
 > A: In your new application folder in the new Computer, paste the copied `/data/king.txt` file from your old Computer into the same folder as the new `king.jar`.
 
 ___
 <!-- Summary of Commands -->
-## <span style="color:DarkMagenta">Command Summary</span> 🔑
+## <span id="command-summary" style="color:DarkMagenta">Command Summary</span> 🔑
 
 | Command      | Format                                        |
 |--------------|-----------------------------------------------|
