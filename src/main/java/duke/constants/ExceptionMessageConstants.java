@@ -12,7 +12,9 @@ public final class ExceptionMessageConstants {
     public static final String EXCEPTION_INVALID_COMMAND = "Unrecognised command, try again.";
     public static final String EXCEPTION_INVALID_DATE_TIME = "Invalid date or time format. Please use the following format:"
             + System.lineSeparator()
-            + "<" + DateTimeParser.getFormatDateTime() + "> and ensure that time is in 24-hour format";
+            + "<" + DateTimeParser.getFormatDateTime() + "> and ensure that time is in 24-hour format."
+            + System.lineSeparator()
+            + "If entering an event, ensure that the end date and time is after the start date and time.";
     public static final String EXCEPTION_INVALID_ID = "Invalid task ID entered.";
     public static final String EXCEPTION_INVALID_FORMAT_HEADER = "Invalid input format!" + System.lineSeparator()
             + "Use the following format to create a new task:" + System.lineSeparator();

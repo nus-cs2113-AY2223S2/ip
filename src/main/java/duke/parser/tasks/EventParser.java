@@ -19,6 +19,10 @@ public class EventParser implements TaskParser {
         String toString = input.substring(toStartIndex + ParserConstants.KEYWORD_TO.length()).trim();
         LocalDateTime fromDateTime = DateTimeParser.parse(fromString);
         LocalDateTime toDateTime = DateTimeParser.parse(toString);
+        // check if end date and time is after start date and time
+        if (fromDateTime.compareTo(toDateTime) >= 0) {
+            throw new InvalidDateTimeException();
+        }
         return new Event(description, fromDateTime, toDateTime);
     }
 }
