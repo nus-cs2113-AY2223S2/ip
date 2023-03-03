@@ -3,14 +3,12 @@ import java.util.ArrayList;
 public class TaskList {
     //Data
     protected ArrayList<Task> list;
-
     //Commands
     static final String EVENT_START = "/from";
     static final String EVENT_END = "/to";
     static final String DEADLINE_BY = "/by";
-
     private static final String DIVIDER  = "______________________________";
-
+    //Functions
     public TaskList() {
         this.list = new ArrayList<>();
     }
@@ -123,10 +121,12 @@ public class TaskList {
                     + "There are no matching tasks in the list."
                     + System.lineSeparator() + DIVIDER);
         } else {
+            System.out.println(DIVIDER);
             for (Task item: foundList) {
                 System.out.println((foundList.indexOf(item) + 1)
                         + "." + item.toString());
             }
+            System.out.println(DIVIDER);
         }
     }
 }
