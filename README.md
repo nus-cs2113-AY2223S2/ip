@@ -1,4 +1,4 @@
-# Onandon project template
+# 🎧 Onandon project template
 
 This is the Onandon chatbot project repo for the AY2223S2-CS2113, NUS.
 
