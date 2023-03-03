@@ -17,7 +17,7 @@
 
 ## Quick Start
 1. Ensure that Java 11 is installed. This can be confirmed by entering `java --version` in the terminal.
-2. Download the `Duke.jar` file from [here](https://github.com/ysl-28/ip/releases/tag/v0.2).
+2. Download the `Duke.jar` file from [here](https://github.com/ysl-28/ip/releases/tag/v0.3).
 3. Move the `Duke.jar` file to one's preferred location.
 4. Run the file with the command `java -jar Duke.jar`. If successful, the welcome message below should be shown.
 5. Enter commands to Duke in the terminal.
