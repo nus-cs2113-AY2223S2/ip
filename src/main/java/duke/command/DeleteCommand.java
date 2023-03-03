@@ -35,11 +35,14 @@ public class DeleteCommand extends Command {
             ui.printDeleteTask();
             ui.printTask(task);
             tasks.removeTask(taskNumber);
+            ui.printSeparator();
             storage.saveData(tasks, ui);
         } catch (IndexOutOfBoundsException e) {
             ui.printInvalidTaskNumber();
+            ui.printSeparator();
         } catch (IOException e) {
             ui.printSavingError();
+            ui.printSeparator();
         }
     }
 }

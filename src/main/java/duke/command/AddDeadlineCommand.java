@@ -40,9 +40,11 @@ public class AddDeadlineCommand extends Command {
             ui.printAddTask();
             ui.printTask(task);
             ui.printNoOfTasks(tasks.getSize());
+            ui.printSeparator();
             storage.saveData(tasks, ui);
         } catch (IOException e) {
             ui.printSavingError();
+            ui.printSeparator();
         }
 
     }

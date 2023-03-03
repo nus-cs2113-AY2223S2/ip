@@ -68,6 +68,7 @@ public class Storage {
             fileWriter.close();
         } catch (IOException | JsonIOException e) {
             ui.printSavingError();
+            ui.printSeparator();
         }
     }
 
@@ -125,6 +126,7 @@ public class Storage {
             }
         } catch (NullPointerException e) {
             ui.printNoTasksToLoad();
+            ui.printSeparator();
         }
     }
 }

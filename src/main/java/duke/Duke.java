@@ -18,6 +18,7 @@ public class Duke {
     public static void main(String[] args) throws IOException {
 
         ui.printWelcome();
+        ui.printSeparator();
         start();
 
         String input;
@@ -38,6 +39,7 @@ public class Duke {
 
             } catch (NullPointerException e) {
                 ui.printCommandExecutionFailure();
+                ui.printSeparator();
             }
         }
     }
@@ -51,6 +53,7 @@ public class Duke {
 
         } catch (IOException e) {
             ui.printLoadingError();
+            ui.printSeparator();
         }
     }
 }

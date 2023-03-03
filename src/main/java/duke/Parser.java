@@ -109,8 +109,9 @@ public class Parser {
             return new DeleteCommand((taskNumberToDelete));
         } catch (NumberFormatException e) {
             ui.printTaskNumberWarning();
-            return null;
+
         }
+        return null;
     }
 
     /**

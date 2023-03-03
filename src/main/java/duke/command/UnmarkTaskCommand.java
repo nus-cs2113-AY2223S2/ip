@@ -36,16 +36,20 @@ public class UnmarkTaskCommand extends Command {
             task.markAsNotDone();
             ui.printMarkNotDone();
             ui.printTask(task);
+            ui.printSeparator();
         } catch (IndexOutOfBoundsException e) {
             ui.printInvalidTaskNumber();
+            ui.printSeparator();
         } catch (DukeException e) {
             ui.printTaskAlreadyUnmarked();
+            ui.printSeparator();
         }
 
         try {
             storage.saveData(tasks, ui);
         } catch (IOException e) {
             ui.printSavingError();
+            ui.printSeparator();
         }
     }
 }

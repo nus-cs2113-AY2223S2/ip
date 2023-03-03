@@ -36,16 +36,20 @@ public class MarkTaskCommand extends Command {
             task.markAsDone();
             ui.printMarkDone();
             ui.printTask(task);
+            ui.printSeparator();
         } catch (IndexOutOfBoundsException e) {
             ui.printInvalidTaskNumber();
+            ui.printSeparator();
         } catch (DukeException e) {
             ui.printTaskAlreadyMarked();
+            ui.printSeparator();
         }
 
         try {
             storage.saveData(tasks, ui);
         } catch (IOException e) {
             ui.printSavingError();
+            ui.printSeparator();
         }
     }
 }

@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 public class UI {
     public static final Scanner in = new Scanner(System.in);
+    private static final String separator = "===========================================";
 
     /**
      * Prints all the tasks in the task list.
@@ -149,7 +150,8 @@ public class UI {
      * does not provide a description of the task.
      */
     public void printEmptyDescriptionError() {
-        System.out.println("Not a valid command. Please specify more details about the task.");
+        System.out.println("The command was not a valid word (todo/event/deadline/mark/unmark/delete/list/bye/find) ");
+        System.out.println("or the task description was not specified.");
     }
 
     /**
@@ -185,7 +187,7 @@ public class UI {
      * Prints message if there are no tasks to be loaded from the hard disk.
      */
     public void printNoTasksToLoad() {
-        System.out.println("There are no tasks to load");
+        System.out.println("There are no tasks to load.");
     }
 
     /**
@@ -203,6 +205,12 @@ public class UI {
     }
 
     /**
+     * Prints separator characters between commands when needed for readability.
+     */
+    public void printSeparator() {
+        System.out.println("============================================");
+    }
+    /**
      * Prints welcome message when program first starts.
      */
     public void printWelcome() {
@@ -212,7 +220,7 @@ public class UI {
                 + "| |_| | |_| |   <  __/\n"
                 + "|____/ \\__,_|_|\\_\\___|\n";
         System.out.println("Hello from\n" + logo);
-        System.out.println("Hello! I'm Duke");
+        System.out.println("I'm Duke.");
         System.out.println("What can I do for you?");
     }
 }

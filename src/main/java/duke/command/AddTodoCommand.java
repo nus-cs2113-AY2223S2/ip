@@ -36,9 +36,11 @@ public class AddTodoCommand extends Command {
             tasks.addTask(task);
             ui.printTask(task);
             ui.printNoOfTasks(tasks.getSize());
+            ui.printSeparator();
             storage.saveData(tasks, ui);
         } catch (IOException e) {
             ui.printSavingError();
+            ui.printSeparator();
         }
     }
 }
