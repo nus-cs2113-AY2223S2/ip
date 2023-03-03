@@ -89,7 +89,7 @@ public class TaskList {
             Deadline newDeadline = new Deadline (contents, by);
             taskArray.add(newDeadline);
             totalTaskNum++;
-            taskStorage.writeDeadlineToFile(newDeadline);
+            taskStorage.writeToFile(this.toString());
         } catch(Exception e){
             UI.printEmptyDescriptionComment("deadline");
             return false;
@@ -106,7 +106,7 @@ public class TaskList {
             Event newEvent = new Event(contents, from, to);
             taskArray.add(newEvent);
             totalTaskNum++;
-            taskStorage.writeEventToFile(newEvent);
+            taskStorage.writeToFile(this.toString());
         } catch(Exception e){
             UI.printEmptyDescriptionComment("event");
             return false;

@@ -7,10 +7,10 @@ public class AddDeadlineCommand extends Command{
         originalInput = originalInput.replaceAll(" / ", "");
         originalInput = originalInput.replaceAll("/", "");
 
-        int byBeginIndex = originalInput.indexOf("by");
+        int byBeginIndex = originalInput.lastIndexOf("by ");
         super.content = originalInput.substring(0, byBeginIndex).strip();
         try{
-            super.by = LocalDate.parse(originalInput.substring(byBeginIndex).replace("by", "").trim());
+            super.by = LocalDate.parse(originalInput.substring(byBeginIndex).replace("by ", "").trim());
         } catch(Exception e){
             UI.printDateFormatErrorComment();
         }
