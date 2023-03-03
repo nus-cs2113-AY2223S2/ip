@@ -1,6 +1,5 @@
 import java.io.FileNotFoundException;
 import java.util.Scanner;
-import java.util.ArrayList;
 import java.io.IOException;
 import java.io.FileWriter;
 import java.io.File;
@@ -28,51 +27,12 @@ public class Duke {
     static final String DEADLINE_ICON = "D";
 
     //Data
-    static ArrayList<Task> list = new ArrayList<>();
+    static TaskList taskList = new TaskList();
 
-    private static void printList() {
-        String listMessage = DIVIDER + System.lineSeparator() + "Here are the tasks in your list:";
-        System.out.println(listMessage);
-        for (int i = 0; i < list.size(); i++) {
-            System.out.println((i+1) + "." + list.get(i).toString());
-        }
-        System.out.println(DIVIDER);
-    }
+    //Text file Commands ***
 
-    private static void markTask(int taskNum) {
-        list.get(taskNum-1).markAsDone();
-        System.out.println("Nice! I've marked this task as done:");
-        System.out.println(DIVIDER + System.lineSeparator() + list.get(taskNum-1).toString()
-                + System.lineSeparator() + DIVIDER);
-    }
-
-    private static void unmarkTask(int taskNum) {
-        list.get(taskNum-1).markAsNotDone();
-        System.out.println("OK, I've marked this task as not done yet:");
-        System.out.println(DIVIDER + System.lineSeparator() + list.get(taskNum-1).toString()
-                + System.lineSeparator() + DIVIDER);
-    }
-
-    private static void acknowledgementMessage() {
-        String acknowledgement = DIVIDER + System.lineSeparator()
-                + "Got it. I've added this task: " + System.lineSeparator()
-                + list.get(list.size()-1).toString();
-        System.out.println(acknowledgement);
-        System.out.println("Now you have " + (list.size()) + " task(s) in the list."
-                + System.lineSeparator() + DIVIDER);
-    }
-
-    private static void deleteTask(int taskNum) {
-        String acknowledge = DIVIDER + System.lineSeparator() + "Noted. I've removed this task: "
-                + System.lineSeparator() + list.get(taskNum-1).toString() + System.lineSeparator()
-                + "Now you have " + (list.size()-1) + " tasks in the list." + System.lineSeparator() + DIVIDER;
-        System.out.println(acknowledge);
-        list.remove(taskNum-1);
-    }
-
-    //Update the file
     private static void updateFile() {
-        for (Task currentTask : list) {
+        for (Task currentTask : taskList.list) {
             String statusNum = currentTask.getStatusNum();
             String taskDesc = currentTask.getTask();
             String taskType = currentTask.getTaskIcon();
@@ -138,13 +98,13 @@ public class Duke {
 
             switch (taskType) {
             case TODO_ICON:
-                list.add(new Todo(taskName));
+                taskList.addTask(new Todo(taskName));
                 break;
             case DEADLINE_ICON:
                 String[] deadlineSeparator = taskName.split(COMMAND_BY);
                 String deadlineTask = deadlineSeparator[0];
                 String deadlineBy = deadlineSeparator[1];
-                list.add(new Deadline(deadlineTask, deadlineBy));
+                taskList.addTask(new Deadline(deadlineTask, deadlineBy));
                 break;
             case EVENT_ICON:
                 String[] eventSeparator = taskName.split(COMMAND_FROM);
@@ -153,14 +113,14 @@ public class Duke {
                 String[] eventDurationSeparator = eventDuration.split(COMMAND_TO);
                 String eventStart = eventDurationSeparator[0];
                 String eventEnd = eventDurationSeparator[1];
-                list.add(new Event(eventTask, eventStart, eventEnd));
+                taskList.addTask(new Event(eventTask,eventStart,eventEnd));
                 break;
             default:
                 System.out.println("Error.");
                 break;
             }
             if (taskMark.equals("1")) {
-                list.get(list.size() - 1).markAsDone();
+                taskList.getTask(taskList.getSize() - 1).markAsDone();
             }
         }
     }
@@ -185,7 +145,9 @@ public class Duke {
                 isFinished = true;
                 break;
             case COMMAND_LIST:
-                printList();
+                taskList.printList();
+                //old command commented out.
+                //printList();
                 break;
             case COMMAND_MARK:
                 try {
@@ -193,10 +155,10 @@ public class Duke {
                         throw new EmptyDescriptionException();
                     }
                     taskNum = Integer.parseInt(inputText[1]);
-                    if (taskNum > list.size() || taskNum <= 0) {
+                    if (taskNum > taskList.getSize() || taskNum <= 0) {
                         throw new ArrayIndexOutOfBoundsException();
                     }
-                    markTask(taskNum);
+                    taskList.markTask(taskNum);
                 } catch (EmptyDescriptionException e) {
                     Ui.emptyDescriptionNumber();
                 } catch (ArrayIndexOutOfBoundsException e) {
@@ -212,10 +174,10 @@ public class Duke {
                         throw new EmptyDescriptionException();
                     }
                     taskNum = Integer.parseInt(inputText[1]);
-                    if (taskNum > list.size() || taskNum <= 0) {
+                    if (taskNum > taskList.getSize() || taskNum <= 0) {
                         throw new ArrayIndexOutOfBoundsException();
                     }
-                    unmarkTask(taskNum);
+                    taskList.unmarkTask(taskNum);
                 } catch (EmptyDescriptionException e) {
                     Ui.emptyDescriptionNumber();
                 } catch (ArrayIndexOutOfBoundsException e) {
@@ -230,8 +192,8 @@ public class Duke {
                     if (taskDesc.length() == 0) {
                         throw new EmptyDescriptionException();
                     }
-                    list.add(new Todo(taskDesc));
-                    acknowledgementMessage();
+                    taskList.addTask(new Todo(taskDesc));
+                    taskList.acknowledgementMessage();
                 } catch (EmptyDescriptionException e) {
                     Ui.emptyDescriptionTodo();
                 }
@@ -249,8 +211,8 @@ public class Duke {
                     String[] eventStartAndEnd = eventDuration.split(COMMAND_TO);
                     String eventStart = eventStartAndEnd[0];
                     String eventEnd = eventStartAndEnd[1];
-                    list.add(new Event(eventTaskDesc, eventStart, eventEnd));
-                    acknowledgementMessage();
+                    taskList.addTask(new Event(eventTaskDesc, eventStart, eventEnd));
+                    taskList.acknowledgementMessage();
                 } catch (EmptyDescriptionException e) {
                     Ui.emptyDescriptionEvent();
                 } catch (ArrayIndexOutOfBoundsException e) {
@@ -269,8 +231,8 @@ public class Duke {
                     //split into task description and duration
                     String deadlineTaskDesc = deadlineInput[0];
                     String deadlineDuration = deadlineInput[1];
-                    list.add(new Deadline(deadlineTaskDesc, deadlineDuration));
-                    acknowledgementMessage();
+                    taskList.addTask(new Deadline(deadlineTaskDesc, deadlineDuration));
+                    taskList.acknowledgementMessage();
                 } catch (EmptyDescriptionException e) {
                     Ui.emptyDescriptionDeadline();
                 } catch (ArrayIndexOutOfBoundsException e) {
@@ -285,10 +247,10 @@ public class Duke {
                         throw new EmptyDescriptionException();
                     }
                     taskNum = Integer.parseInt(inputText[1]);
-                    if (taskNum > list.size() || taskNum <= 0) {
+                    if (taskNum > taskList.getSize() || taskNum <= 0) {
                         throw new ArrayIndexOutOfBoundsException();
                     }
-                    deleteTask(taskNum);
+                    taskList.deleteTask(taskNum);
                 } catch (EmptyDescriptionException e) {
                     Ui.emptyDescriptionNumber();
                 } catch (ArrayIndexOutOfBoundsException e) {
@@ -309,6 +271,7 @@ public class Duke {
             }
         }
 
+        //comment out saving first, do other stuff.
         try {
             clearFile();
         } catch (IOException e){

@@ -14,7 +14,7 @@ public class Ui {
         String greeting = DIVIDER + System.lineSeparator() + "Hello! I'm Jarvis!"
                 + System.lineSeparator() + "What can I do for you?"
                 + System.lineSeparator() + DIVIDER + System.lineSeparator();
-        System.out.println(greeting);
+        System.out.print(greeting);
     }
 
     public static void sayByeToUser() {
