@@ -38,7 +38,6 @@ public class Duke {
      */
     public static void initDuke(TaskList list) {
         Ui.greetUser();
-        Ui.listTasks(list.getTasksList(), "list");
         inputReader = new Scanner(System.in);
     }
 
