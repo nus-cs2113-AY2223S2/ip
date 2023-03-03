@@ -5,9 +5,9 @@ their tasks.
 ## Quick Start
 1. Ensure that Java 11 is installed in your computer, if not proceed to download from the link:
    https://www.oracle.com/sg/java/technologies/javase/jdk11-archive-downloads.html
-2. Verify that you have a copy of "ip.jar" in your computer
+2. Verify that you have a copy of "duke.jar" in your computer
 3. After that, locate folder containing ip.jar in your computer, right-click it, and choose "Open in Terminal".
-4. In the terminal, type: java -jar ip.jar, and press enter. The Duke Task Manager will start up.
+4. In the terminal, type: java -jar duke.jar, and press enter. The Duke Task Manager will start up.
 
 ## Features Overview
 1. Startup
