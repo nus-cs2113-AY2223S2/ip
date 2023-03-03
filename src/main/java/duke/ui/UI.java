@@ -21,6 +21,8 @@ public class UI {
             + "To learn more about each command and view the full user guide, "
             + "visit https://jinxuan-owyong.github.io/ip/" + System.lineSeparator();
     private static final String MESSAGE_LOGO = "Hello from";
+    private static final String MESSAGE_SAVE_FAILED = "Warning: Save operation failed." + System.lineSeparator()
+            + "Any data added from the most recent command will not be saved.";
 
     public void greet() {
         print(MESSAGE_GREET);
@@ -43,6 +45,7 @@ public class UI {
     public void printExit() {
         print(MESSAGE_EXIT);
         printLine();
+        print(System.lineSeparator());
     }
 
     public void printHelp() {
@@ -61,6 +64,11 @@ public class UI {
 
     public void printLogo() {
         print(MESSAGE_LOGO + System.lineSeparator() + LOGO);
+        printLine();
+    }
+
+    public void printSaveFailed() {
+        print(MESSAGE_SAVE_FAILED);
         printLine();
     }
 

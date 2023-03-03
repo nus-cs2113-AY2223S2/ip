@@ -7,6 +7,8 @@ import duke.tasklist.TaskList;
 import duke.storage.Storage;
 import duke.ui.UI;
 
+import java.io.IOException;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 /**
@@ -22,6 +24,18 @@ public class Duke {
         try {
             String json = storage.read();
             tasks = new TaskList(json);
+
+            // handle shutdown event
+            TaskList finalTasks = tasks;
+            Thread shutdownThread = new Thread(() -> {
+                try {
+                    storage.save(finalTasks.toJson());
+                    ui.printExit();
+                } catch (IOException e) {
+                    ui.printSaveFailed();
+                }
+            });
+            Runtime.getRuntime().addShutdownHook(shutdownThread);
         } catch (CorruptSaveDataException e) {
             ui.print(e.getMessage());
             tasks = new TaskList();
@@ -37,11 +51,15 @@ public class Duke {
         do {
             try {
                 input = scan.nextLine();
-                ui.printLine();
                 Command command = inputParser.parse(input);
+                ui.printLine();
                 // tasks saved after every command execution
                 command.execute(tasks, ui, storage);
                 isExit = command.isExit();
+            } catch (NoSuchElementException e) {
+                // empty catch, prevents No line found output
+            } catch (IOException e) {
+                ui.printSaveFailed();
             } catch (Exception e) {
                 ui.print(e.getMessage());
                 ui.printLine();
