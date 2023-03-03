@@ -9,6 +9,7 @@ public class AddTodoCommand extends Command {
 
     /**
      * Process Todo command by user and adds todo
+     * Throws exception if command is in wrong format
      *
      * @param taskList List of tasks
      * @param input    Command inputted by user
@@ -16,7 +17,7 @@ public class AddTodoCommand extends Command {
     @Override
     public void executeCommand(TaskList taskList, String input) {
         try {
-            if (input.equals("todo")){
+            if (!input.contains(" ")){
                 throw new InvalidCommandException();
             }
             String[] todoSplit = input.split(" ", 2);

@@ -10,6 +10,7 @@ public class AddEventCommand extends Command {
 
     /**
      * Process Event command by user and adds event
+     * Throws exception if command is in wrong format
      *
      * @param taskList List of tasks
      * @param input    Command inputted by user
@@ -17,7 +18,7 @@ public class AddEventCommand extends Command {
     @Override
     public void executeCommand(TaskList taskList, String input) {
         try {
-            if (input.equals("event")){
+            if ( !(input.contains("/from") && input.contains("/to")) ){
                 throw new InvalidCommandException();
             }
             String[] eventSplit = input.split("/", 3);
