@@ -30,7 +30,8 @@ public class Ui {
 
 
     /**
-     * Rolex says bye to the user at the end of the program.
+     * Rolex says bye to the user at the end of the program. If there are any tasks,
+     * it gets saved into the text file.
      */
     public static void rolexSaysBye() {
         printLines();
