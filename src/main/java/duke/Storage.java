@@ -106,22 +106,20 @@ public class Storage {
      * Convert the information of the task into the correct format that will be stored in the file
      * The format tells us the type of task, the status of it and the name of the task, split with "|"
      *
-     * @param tasks the array of tasks
-     * @return a String of the Task in the correct format
+     * @param task
+     * @return a String of the task in the correct format
      * @throws NullPointerException
      */
-    public static String formatTask(ArrayList<Task> tasks) throws NullPointerException {
+    public static String formatTask(Task task) throws NullPointerException {
         String text = null;
-        for (Task i : tasks) {
-            if (i.getType().equals("todo")) {
-                text = "T" + " | " + getNumberIcon(i) + " | " + i.getDescription();
-            }
-            if (i.getType().equals("deadline")) {
-                text = "D" + " | " + getNumberIcon(i) + " | " + i.getDescription() + " | " + i.getEnd();
-            }
-            if (i.getType().equals("event")) {
-                text = "E" + " | " + getNumberIcon(i) + " | " + i.getDescription() + " | " + i.getStart() + "-" + i.getEnd();
-            }
+        if (task.getType().equals("todo")) {
+            text = "T" + " | " + getNumberIcon(task) + " | " + task.getDescription();
+        }
+        if (task.getType().equals("deadline")) {
+            text = "D" + " | " + getNumberIcon(task) + " | " + task.getDescription() + " | " + task.getEnd();
+        }
+        if (task.getType().equals("event")) {
+            text = "E" + " | " + getNumberIcon(task) + " | " + task.getDescription() + " | " + task.getStart() + "-" + task.getEnd();
         }
         return text;
     }
@@ -137,8 +135,10 @@ public class Storage {
         FileWriter fw = null;
         try {
             fw = new FileWriter(filepath);
-            String textToAdd = formatTask(tasks);
-            fw.write(textToAdd);
+            for (Task i : tasks) {
+                String textToAdd = formatTask(i);
+                fw.write(textToAdd);
+            }
         } finally {
             fw.close();
         }
