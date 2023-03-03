@@ -14,25 +14,25 @@ import java.util.ArrayList;
 public class ReadFromFile {
 
     /**
-     * This function determines the task type of an existing line in the text file and calls the corresponding function
-     * to format the task accordingly.
-     * @param line
-     * @param tasks
-     * @param filePath
+     * This function determines the whether the task from a line in the text file is a ToDo, Deadline or Event and
+     * calls the corresponding function to format the task accordingly.
+     * @param line String from text file
+     * @param tasks ArrayList of tasks to store the task objects
      */
-    public static void copyToArrayList(String line, ArrayList<Task> tasks, String filePath) {
+    public static void copyToArrayList(String line, ArrayList<Task> tasks) {
         switch (line.substring(0, 1)) {
         case "T":
-            copyTodoToArrayList("T", line.substring(2), tasks);
+            copyTodoToArrayList(line.substring(2), tasks);
             break;
         case "D":
-            copyDeadlineToArrayList("D", line.substring(2), tasks);
+            copyDeadlineToArrayList(line.substring(2), tasks);
             break;
         case "E":
-            copyEventToArrayList("E", line.substring(2), tasks);
+            copyEventToArrayList(line.substring(2), tasks);
             break;
         case "S":
-            // Saved data text on the first line (initialisation step)
+            // First line is: "Saved data" text
+            // To ignore the first line (initialisation step)
             break;
         default:
             System.out.println("Unknown task type detected...");
@@ -43,11 +43,10 @@ public class ReadFromFile {
     /**
      * Formats task of type ToDo so that it can be added to ArrayList.
      * Checks and updates the task status accordingly based on whether it was marked as done in the text file.
-     * @param taskType
-     * @param taskInfo
-     * @param tasks
+     * @param taskInfo Task description
+     * @param tasks ArrayList that stores task objects
      */
-    private static void copyTodoToArrayList(String taskType, String taskInfo, ArrayList<Task> tasks) {
+    private static void copyTodoToArrayList(String taskInfo, ArrayList<Task> tasks) {
         // Parse line to split task status and task info
         String[] messageComponents = taskInfo.split("/", 2);
         // Create new todo with task info
@@ -66,11 +65,10 @@ public class ReadFromFile {
     /**
      * Formats tasks of type deadline so that it can be stored in ArrayList.
      * Checks and updates the task status accordingly based on whether it was marked as done in the text file.
-     * @param taskType
-     * @param taskInfo
-     * @param tasks
+     * @param taskInfo Task description
+     * @param tasks ArrayList that stores task objects
      */
-    private static void copyDeadlineToArrayList(String taskType, String taskInfo, ArrayList<Task> tasks) {
+    private static void copyDeadlineToArrayList(String taskInfo, ArrayList<Task> tasks) {
         String[] messageComponents = taskInfo.split("/", 3);
         Deadline newDeadline = new Deadline(messageComponents[1], messageComponents[2]);
         tasks.add(newDeadline);
@@ -85,11 +83,10 @@ public class ReadFromFile {
     /**
      * Formats tasks of type event so that it can be stored in ArrayList.
      * Checks and updates the task status accordingly based on whether it was marked as done in the text file.
-     * @param taskType
-     * @param taskInfo
-     * @param tasks
+     * @param taskInfo Task description
+     * @param tasks ArrayList that stores task objects
      */
-    private static void copyEventToArrayList(String taskType, String taskInfo, ArrayList<Task> tasks) {
+    private static void copyEventToArrayList(String taskInfo, ArrayList<Task> tasks) {
         String[] messageComponents = taskInfo.split("/", 4);
         Event newEvent = new Event(messageComponents[1], messageComponents[2], messageComponents[3]);
         tasks.add(newEvent);
