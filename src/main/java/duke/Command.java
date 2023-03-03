@@ -38,6 +38,9 @@ public class Command {
             case "bye":
                 this.type = CommandType.EXIT;
                 break;
+            case "find":
+                this.type = CommandType.FIND;
+                break;
             default:
                 throw new IllegalCommandException(IllegalCommandExceptionType.COMMAND_DOES_NOT_EXIST, commandString);
         }
@@ -48,7 +51,8 @@ public class Command {
                 this.type == CommandType.CREATE_EVENT ||
                 this.type == CommandType.DELETE ||
                 this.type == CommandType.MARK ||
-                this.type == CommandType.UNMARK
+                this.type == CommandType.UNMARK ||
+                this.type == CommandType.FIND
         ) {
             try {
                 this.value = splitInput[0].split(" ", 2)[1];
@@ -116,6 +120,10 @@ public class Command {
             Task unmarkedTask = tasks.unmarkTaskByDisplayedIndex(displayedIndex);
             storage.save(tasks);
             ui.showUnmarkedTask(unmarkedTask);
+        } else if (type == CommandType.FIND) {
+            String keyword = value;
+            ArrayList<Task> foundTasks = tasks.findTasksByKeyword(keyword);
+            ui.showFoundTasks(foundTasks, keyword);
         }
     }
 
@@ -125,5 +133,5 @@ public class Command {
 }
 
 enum CommandType {
-    LIST, MARK, UNMARK, CREATE_TODO, CREATE_DEADLINE, CREATE_EVENT, DELETE, EXIT
+    LIST, MARK, UNMARK, CREATE_TODO, CREATE_DEADLINE, CREATE_EVENT, DELETE, EXIT, FIND
 }
