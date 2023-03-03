@@ -136,4 +136,26 @@ public class TaskManager {
             }
         }
     }
+
+    public void find(String toFind) throws EmptyTaskDescriptionException {
+        if (toFind.equals("")) {
+            throw new EmptyTaskDescriptionException();
+        }
+
+        int index = 1;
+        System.out.println("\t Here are the matching tasks in your list:");
+        boolean hasFound = false;
+
+        for (Task task : tasks) {
+            if (task.description.contains(toFind)) {
+                System.out.printf("\t\t%d.%s\n", index, task);
+                index++;
+                hasFound = true;
+            }
+        }
+
+        if (!hasFound) {
+            System.out.println("\t\tOops..., no matches found");
+        }
+    }
 }

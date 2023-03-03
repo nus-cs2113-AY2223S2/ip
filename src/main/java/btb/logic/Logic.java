@@ -75,6 +75,9 @@ public class Logic {
                 Help.setDisabled(false);
                 System.out.println("\t You have enabled help messages from showing every time application boots.");
                 break;
+            case "find":
+                tasks.find(description);
+                break;
             case "":
                 System.out.println("\t Please enter some commands");
                 break;
