@@ -1,9 +1,12 @@
 package Duke;
 
+import Duke.Tasks.Task;
+
 import java.io.IOException;
 
 
 public class Parser {
+
     private static final String listCommand = "list";
     private static final String findCommand = "find";
     private static final String byeCommand = "bye";
@@ -14,13 +17,17 @@ public class Parser {
     private static final String deadlineCommand = "deadline";
     private static final String eventCommand = "event";
 
-
+    /***
+     * Takes in user input and carries out respective method based on command type.
+     * @return true if bye command is issued, else returns false
+     */
     static boolean handleInput(String inputString) throws IOException, DukeException {
         String[] command = inputString.split(" ", 2);
 
         switch (command[0]) {
+
         case listCommand:
-            Ui.doList(TaskList.taskList, TaskList.numberOfTasks);
+            TaskList.doList();
             break;
 
         case findCommand:
@@ -32,33 +39,37 @@ public class Parser {
             Storage.saveTaskList(TaskList.taskList, TaskList.numberOfTasks);
             return true;
 
-        case deleteCommand:
-            TaskList.deleteTask(TaskList.taskList, Integer.parseInt(command[1]) - 1, TaskList.numberOfTasks);
+
+        case "delete":
+            TaskList.deleteTask(Integer.parseInt(command[1]) - 1);
             TaskList.numberOfTasks -= 1;
             break;
 
         //mark/unmark command
-        case markCommand:
-        case unmarkCommand:
-            TaskList.doMarkOrUnmarked(TaskList.taskList, TaskList.numberOfTasks, command);
+
+        case "mark":
+        case "unmark":
+            TaskList.doMarkOrUnmarked(command);
             break;
 
-        //add task to list
-        case todoCommand:
-            TaskList.addTodo(TaskList.taskList, TaskList.numberOfTasks, command);
+        case "todo":
+            TaskList.addTodo(command);
             TaskList.numberOfTasks += 1;
             break;
 
-        case deadlineCommand:
-            TaskList.addDeadline(TaskList.taskList, TaskList.numberOfTasks, command);
+        case "deadline":
+            TaskList.addDeadline(command);
             TaskList.numberOfTasks += 1;
             break;
 
-        case eventCommand:
-            TaskList.addEvent(TaskList.taskList, TaskList.numberOfTasks, command);
+        case "event":
+            TaskList.addEvent(command);
             TaskList.numberOfTasks += 1;
             break;
 
+        /**
+         * Prints unknown command issued when command not detected
+         */
         default:
             System.out.println("Unknown command issued");
 
