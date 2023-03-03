@@ -11,6 +11,7 @@ import tasks.ToDo;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -28,8 +29,8 @@ public class Ui {
             + "What can I do for you today? \n \n"
             + "You can start by adding items to a task list that I can generate, simply follow the format below: \n \n"
             + "Todos      : \"todo <insert todo task description>\" \n"
-            + "Deadlines  : \"deadline <insert deadline task description> /by <insert date/time> \" \n"
-            + "Events     : \"event <insert event description> /from <insert start date/time> /to <insert end date/time>\" \n \n"
+            + "Deadlines  : \"deadline <insert deadline task description> /by <insert date in \"YYYY-MM-DD\" format> \" \n"
+            + "Events     : \"event <insert event description> /from <insert date in \"YYYY-MM-DD\" format> /to <insert date in \"YYYY-MM-DD\" format>\" \n \n"
             + "If you wish to view the full list of commands, simply type \"help\"! \n";
     private final static String HELP = "\nNO WORRIES! Help is here! You may find the list of commands below useful. \n \n \n"
             + "COMMANDS LIST: \n \n \n"
@@ -43,12 +44,12 @@ public class Ui {
             + "Example use : \"todo eat dinner\" \n \n"
             + "## Deadlines ## \n"
             + "Description : Adds a new task with ONE time element indicating the due date in the task list. \n"
-            + "Format      : \"deadline <insert deadline task description> /by <insert date/time> \" \n"
-            + "Example use : \"deadline CS2040C Kattis Week 6 /by 2359hrs tmr\" \n \n"
+            + "Format      : \"deadline <insert deadline task description> /by <insert date in \"YYYY-MM-DD\" format> \" \n"
+            + "Example use : \"deadline CS2040C Kattis Week 6 /by 2023-03-02\" \n \n"
             + "## Events ## \n"
             + "Description : Adds a new task with TWO time elements indicating the starting date/time and the ending date/time. \n"
-            + "Format      : \"event <insert event description> /from <insert start date/time> /to <insert end date/time>\" \n"
-            + "Example use : \"event Recess Week /from 20th Feb 2023 /to 24th Feb 2023\" \n \n"
+            + "Format      : \"event <insert event description> /from <insert date in \"YYYY-MM-DD\" format> /to <insert date in \"YYYY-MM-DD\" format>\" \n"
+            + "Example use : \"event Recess Week /from 2023-03-02 /to 2023-03-05\" \n \n"
             + "## Find ## \n"
             + "Description : Finds all tasks containing keywords inputted in the description. Requires keywords as an input. \n"
             + "Format      : \"find <insert keywords>\" \n"
@@ -93,13 +94,15 @@ public class Ui {
     private final static String TASK_FINDING_DEFAULT_ERROR = "\nError in finding task!"
                                                             + "\nException occurred: ";
     private final static String FORMAT_CONVERT_ERROR = "\nError in inputs!"
-                                                     + "\nException occurred: The number is too big to process or the inputs contains words when it is supposed to be numbers.\n"
-                                                     + "If it is the former I can only process up to 2,147,483,647 for now... Please lower your expectations!\n"
-                                                     + "As for the latter, please provide me with proper inputs!\n";
-    private final static String MISSING_DESCRIPTION_ERROR = "\nError in inputs!\n"
-                                                          + "Exception occurred: ";
-    private final static String PARSING_STRING_ERROR = "\nError in parsing!\n"
-                                                     + "Exception occurred: ";
+                                                     + "\nException occurred: The number is too big to process or the inputs contains words when it is supposed to be numbers."
+                                                     + "\nIf it is the former I can only process up to 2,147,483,647 for now... Please lower your expectations!"
+                                                     + "\nAs for the latter, please provide me with proper inputs!\n";
+    private final static String MISSING_DESCRIPTION_ERROR = "\nError in description of inputs!"
+                                                          + "\nException occurred: ";
+    private final static String PARSING_STRING_ERROR = "\nError in parsing string!"
+                                                     + "\nException occurred: ";
+    private final static String PARSING_DATE_ERROR = "\nError in date format!"
+                                                   + "\nException occurred: ";
     private final static String FILE_NOT_FOUND_ERROR = "\nError in finding file!"
                                                      + "\nException occurred: ";
     private final static String FILE_PARSE_READING_ERROR = "\nError in reading file!"
@@ -226,6 +229,8 @@ public class Ui {
             System.out.println(MISSING_DESCRIPTION_ERROR + e);
         } else if (e instanceof StringIndexOutOfBoundsException) {
             System.out.println(PARSING_STRING_ERROR + e);
+        } else if (e instanceof DateTimeParseException) {
+            System.out.println(PARSING_DATE_ERROR + e);
         } else {
             System.out.println(TASK_ADDING_DEFAULT_ERROR + e);
         }
