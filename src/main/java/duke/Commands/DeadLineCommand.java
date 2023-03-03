@@ -50,11 +50,9 @@ public class DeadLineCommand extends Command {
      * @throws DukeException If an error occurs while executing the command.
      */
     public void cmd() throws DukeException {
-
         Deadline dL = new Deadline(this.desc, this.isMark, this.by);
         tasks.add(dL);
         addTaskPrint(tasks, dL);
         Storage.saveTasks(tasks);
-
     }
 }

@@ -49,7 +49,7 @@ public class Command {
      * @throws DukeException If an error occurs while executing the command.
      */
     public void cmd() throws DukeException {
-        System.out.println("Please enter in a valid command");
+        System.out.println("Please enter in a valid command.");
     }
 
     /**

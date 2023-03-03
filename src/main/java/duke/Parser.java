@@ -74,6 +74,10 @@ public class Parser {
      * @return a ToDoCommand for Duke to execute
      */
     public static Command parseToDo(String input) {
+        if (input.equals("")) {
+            System.out.println("Todo description is empty :(");
+            return new Command();
+        }
         return new ToDoCommand(input, false);
     }
 
@@ -85,10 +89,17 @@ public class Parser {
      */
     public static Command parseDeadline(String input) {
         int idx = input.indexOf("/by");
+        if (idx == -1) {
+            System.out.println("Deadline by time is empty :(");
+            return new Command();
+        }
         System.out.println(input);
         String desc = input.substring(0, idx);
         String by = input.substring(idx + 3);
         Deadline tsk = null;
+        if (desc.equals("")) {
+            System.out.println("Deadline description is empty :(");
+        }
         return new DeadLineCommand(desc, false, by);
     }
 
@@ -99,6 +110,10 @@ public class Parser {
      * @return a DeleteCommand for Duke to execute
      */
     public static Command parseDelete(String input) {
+        if (input.equals("")) {
+            System.out.println("No valid index found");
+            return new Command();
+        }
         int dIdx = Integer.parseInt(input);
         return new DeleteCommand(dIdx - 1);
     }
@@ -110,11 +125,26 @@ public class Parser {
      * @return an EventCommand for Duke to execute
      */
     public static Command parseEvent(String input) {
+        if (input.equals("")) {
+            return new Command();
+        }
         int idx = input.indexOf("/from");
+        if (idx == -1) {
+            System.out.println("Event from time is empty :(");
+            return new Command();
+        }
         int idx1 = input.indexOf("/to");
+        if (idx1 == -1) {
+            System.out.println("Event to time is empty :(");
+            return new Command();
+        }
         String desc = input.substring(0, idx);
         String start = input.substring(idx + 5, idx1);
         String end = input.substring(idx1 + 3);
+        if (desc.equals("")) {
+            System.out.println("Event description is empty :(");
+            return new Command();
+        }
         return new EventCommand(desc, false, start, end);
     }
 
@@ -143,6 +173,10 @@ public class Parser {
      * @return An instance of MarkCommand.
      */
     public static Command parseMark(String input) {
+        if (input.equals("")) {
+            System.out.println("No valid index found");
+            return new Command();
+        }
         int dIdx = Integer.parseInt(input);
         return new MarkCommand(dIdx - 1);
     }
@@ -154,6 +188,10 @@ public class Parser {
      * @return An instance of UnMarkCommand.
      */
     public static Command parseUnMark(String input) {
+        if (input.equals("")) {
+            System.out.println("No valid index found");
+            return new Command();
+        }
         int dIdx = Integer.parseInt(input);
         return new UnMarkCommand(dIdx - 1);
     }
