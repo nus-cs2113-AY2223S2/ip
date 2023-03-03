@@ -4,7 +4,7 @@ import io.github.haoyangw.rica.exception.RicaCommandException;
 import io.github.haoyangw.rica.task.TaskManager;
 
 public class UnmarkCommand extends Command {
-    private static final String NOT_A_NUMBER_ERROR = " Hmm I don't think that's a Task number? Hope my CPU is working xP";
+    private static final String NOT_A_NUMBER_ERROR = " Hmm I don't think that's a task number? Hope my CPU is working xP";
 
     public UnmarkCommand(String command, TaskManager taskManager) {
         super(command, taskManager);

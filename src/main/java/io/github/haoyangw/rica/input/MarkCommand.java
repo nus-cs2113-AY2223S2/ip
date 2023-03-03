@@ -4,7 +4,7 @@ import io.github.haoyangw.rica.exception.RicaCommandException;
 import io.github.haoyangw.rica.task.TaskManager;
 
 public class MarkCommand extends Command {
-    private static final String NOT_A_NUMBER_ERROR = " That's not a Task number is it? Or are you from another dimension hmm";
+    private static final String NOT_A_NUMBER_ERROR = " That's not a task number is it? Or are you from another dimension hmm";
 
     public MarkCommand(String command, TaskManager taskManager) {
         super(command, taskManager);
