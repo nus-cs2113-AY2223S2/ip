@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * Represents the class that deals with interactions with the user.
  */
 public class Ui {
-    public static final String LINE = "__________________________________________________________";
+    public static final String LINE = "_______________________________________________________________________";
 
 
     /**
