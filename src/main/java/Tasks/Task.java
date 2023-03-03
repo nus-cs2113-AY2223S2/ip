@@ -19,12 +19,14 @@ public class Task {
     }
 
     public void markAsDone() {
-
         this.isDone = true;
     }
 
-    public void markAsUnDone()
-    {
+    public boolean isDone() {
+        return isDone;
+    }
+
+    public void markAsUnDone() {
         this.isDone = false;
     }
 
@@ -35,6 +37,10 @@ public class Task {
     @Override
     public String toString(){
         return "[T]" + this.getStatusIcon() + " " + getDescription();
+    }
+
+    public String toFile() {
+        return this.getStatusIcon() + " : " +"T"+ " : " + this.description;
     }
 }
 

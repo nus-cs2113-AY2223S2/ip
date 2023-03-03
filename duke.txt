@@ -1,0 +1,3 @@
+[ ] : T : study
+[X] : E : study (From:now To:later)
+[ ] : D : study (By:later)

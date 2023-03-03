@@ -1,44 +1,32 @@
-import Commands.Text;
-import Commands.command;
-import Commands.error;
 import Tasks.Task;
-import java.io.File;
+import User.Parser;
+import User.Storage;
+import User.TaskList;
+import User.UI;
 import java.io.FileNotFoundException;
-import java.util.Scanner;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Duke {
-    public static void main(String[] args) {
-        Text.printLogo();
+
+    public static void main(String[] args) throws IOException {
+        try{
+            TaskList.taskList = Storage.readFile("duke.txt");
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found, a new one will be created shortly!");
+        }
+        UI.printLogo();
         Scanner myObj = new Scanner(System.in);
         String userInput;
         userInput = myObj.nextLine();
-        ArrayList<Task> taskList = new ArrayList<Task>(100);
-        while (!userInput.equals("bye")) {
-            if (userInput.equals("list")) {
-                command.printList(taskList);
-            }
-            else if(userInput.contains("delete")){
-                command.deleteItem(userInput, taskList);
-            } else if(userInput.contains("mark")) {
-                if (userInput.contains("unmark")) {
-                    command.unMarkItem(userInput, taskList);
-                } else {
-                    command.markItem(userInput, taskList);
-                }
-            } else if (userInput.contains("event")){
-                command.createEvent(userInput,taskList);
-            } else if (userInput.contains("deadline")) {
-                command.createDeadline(userInput, taskList);
-            } else if (userInput.contains("todo")){
-                command.createToDo(userInput,taskList);
-            } else {
-               error.invalidCommand();
-               Text.printHelp();
-            }
+        while (!userInput.equals("bye")) { //if user inputs "bye" the loop will break
+            Parser.parsing(userInput);
             System.out.println("What would you like to do?");
-            userInput = myObj.nextLine();
+            userInput = myObj.nextLine(); //to take in next input
         }
-        Text.printBye();
+        Storage.clearFile();
+        Storage.updateFile(TaskList.taskList);
+        UI.printBye();
     }
 }

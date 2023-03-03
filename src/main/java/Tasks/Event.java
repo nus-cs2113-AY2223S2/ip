@@ -1,7 +1,5 @@
 package Tasks;
 
-import Tasks.Task;
-
 public class Event extends Task {
     protected String from;
     protected String to;
@@ -11,7 +9,7 @@ public class Event extends Task {
         super(description);
         this.from = from;
         this.to = to;
-        this.description = description + "(" + from + to + ")";
+        this.description = description + "(From:" + this.from + "To:" + this.to + ")";
     }
 
     @Override
@@ -19,17 +17,13 @@ public class Event extends Task {
         return symbol;
     }
 
-    public String getFrom() {
-        return from;
-    }
-
-    public String getTo() {
-        return to;
-    }
 
     @Override
     public String toString(){
-        return "[E]" +  super.getStatusIcon() + super.getDescription() + "(" + from + to + ")";
+        return "[E]" +  super.getStatusIcon() + super.getDescription();
     }
-
+    @Override
+    public String toFile() {
+        return this.getStatusIcon() + " : " + "E" + " :" + this.description;
+    }
 }

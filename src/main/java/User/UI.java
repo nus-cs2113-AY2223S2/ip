@@ -1,15 +1,13 @@
-package Commands;
+package User;
 
-public class Text {
+public class UI {
     static String logo = " ____        _        \n"
             + "|  _ \\ _   _| | _____ \n"
             + "| | | | | | | |/ / _ \\\n"
             + "| |_| | |_| |   <  __/\n"
             + "|____/ \\__,_|_|\\_\\___|\n";
-
     static String line = "____________________________________________________________\n";
     static String greeting = (line + "Hello! I'm Duke\n" + "What can I do for you?\n" + line);
-
     static String goodBye = (line + "Bye. Hope to see you again soon!\n" + line);
 
     public static void printLogo(){
@@ -34,5 +32,26 @@ public class Text {
         System.out.println("8. bye (to terminate the programme)");
         System.out.println(line);
     }
+    public static void emptyDescription(){
+        System.out.println("Please do not leave the description empty!");
+        System.out.println(line);
+    }
+
+    public static void invalidCommand(){
+        System.out.println("Please enter a valid command!");
+        System.out.println("Enter command 'help' to see the list of available commands!");
+        System.out.println(line);
+    }
+
+    public static void indexNotFound(){
+        System.out.println("Please ensure the number you have entered is within the list!");
+        System.out.println(line);
+    }
+
+    public static void listIsEmpty(){
+        System.out.println("Invalid command! The list is empty!");
+        System.out.println(line);
+    }
+
 
 }

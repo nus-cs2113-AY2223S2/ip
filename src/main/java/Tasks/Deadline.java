@@ -18,11 +18,15 @@ public class Deadline extends Task {
     public Deadline(String description, String by) {
         super(description);
         this.by = by;
-        this.description = description + "(" + by + ")";
+        this.description = description + "(By:" + by + ")";
     }
 
     @Override
     public String toString() {
         return "[D]" + super.getStatusIcon() + super.getDescription() ;
+    }
+    @Override
+    public String toFile() {
+        return this.getStatusIcon() + " : " +"D"+ " :" + this.description;
     }
 }
