@@ -54,8 +54,9 @@ public class Help {
             System.out.println("\t\t7. delete <task number>: to delete task indicated by <task number> in the todo list");
             System.out.println("\t\t8. bye: terminate the program");
             System.out.println("\t\t9. help: prints the help messages");
-            System.out.println("\t\t10. disableHelp: stop showing the help messages everytime the program boots up");
-            System.out.println("\t\t11. enableHelp: shows the help messages everytime the program boots up");
+            System.out.println("\t\t10. find <keyword>: finds tasks from the list that contains the keyword.");
+            System.out.println("\t\t11. disableHelp: stop showing the help messages everytime the program boots up");
+            System.out.println("\t\t12. enableHelp: shows the help messages everytime the program boots up");
         }
         return isDisabled;
     }

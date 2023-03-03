@@ -45,10 +45,12 @@ Prerequisites: JDK 11, update Intellij to the most recent version.
      7. delete <task number>: to delete task indicated by <task number> in the todo list
      8. bye: terminate the program
      9. help: prints the help messages
-     10. disableHelp: stop showing the help messages everytime the program boots up
-     11. enableHelp: shows the help messages everytime the program boots up
+     10. find <keyword>: finds tasks from the list that contains the keyword.
+     11. disableHelp: stop showing the help messages everytime the program boots up
+     12. enableHelp: shows the help messages everytime the program boots up
  --------------------------------------------------
 ```
+
 ## Features
 
 ### Feature - Greet
@@ -233,8 +235,9 @@ Expected outcome:
      7. delete <task number>: to delete task indicated by <task number> in the todo list
      8. bye: terminate the program
      9. help: prints the help messages
-     10. disableHelp: stop showing the help messages everytime the program boots up
-     11. enableHelp: shows the help messages everytime the program boots up
+     10. find <keyword>: finds tasks from the list that contains the keyword.
+     11. disableHelp: stop showing the help messages everytime the program boots up
+     12. enableHelp: shows the help messages everytime the program boots up
  --------------------------------------------------
 ```
 
@@ -324,8 +327,9 @@ The next time you open the program after enabling the help message, you should g
      7. delete <task number>: to delete task indicated by <task number> in the todo list
      8. bye: terminate the program
      9. help: prints the help messages
-     10. disableHelp: stop showing the help messages everytime the program boots up
-     11. enableHelp: shows the help messages everytime the program boots up
+     10. find <keyword>: finds tasks from the list that contains the keyword.
+     11. disableHelp: stop showing the help messages everytime the program boots up
+     12. enableHelp: shows the help messages everytime the program boots up
  --------------------------------------------------
 ```
 
