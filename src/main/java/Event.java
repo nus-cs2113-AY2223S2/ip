@@ -12,6 +12,6 @@ public class Event extends Task{
     }
     @Override
     public String getUpdate() {
-        return "event " + super.description + " /from " + startTime + " /to " + endTime;
+        return "event " + super.description + "/from " + startTime + "/to " + endTime;
     }
 }

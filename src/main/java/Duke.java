@@ -30,7 +30,7 @@ public class Duke {
     public static void updateFile() {
         String list = "";
         for (int index = 0; index < tasks.size(); index += 1) {
-            list += tasks.get(index).getUpdate();
+            list += tasks.get(index).getUpdate() + "\n";
         }
         try {
             writeToFile(FILE_PATH, list);
@@ -42,17 +42,17 @@ public class Duke {
     public static void printAddTodo(Todo print, int taskCounter) {
         System.out.println("Got it. I've added this task:");
         System.out.print("   "); System.out.println(print);
-        System.out.println("Now you have " + Integer.toString(taskCounter) + " task in the list");
+        System.out.println("Now you have " + tasks.size() + " task in the list");
     }
     public static void printAddDeadline(Deadline print, int taskCounter) {
         System.out.println("Got it. I've added this task:");
         System.out.print("   "); System.out.println(print);
-        System.out.println("Now you have " + Integer.toString(taskCounter) + " task in the list");
+        System.out.println("Now you have " + tasks.size() + " task in the list");
     }
     public static void printAddEvent(Event print, int taskCounter) {
         System.out.println("Got it. I've added this task:");
         System.out.print("   "); System.out.println(print);
-        System.out.println("Now you have " + Integer.toString(taskCounter) + " task in the list");
+        System.out.println("Now you have " + tasks.size() + " task in the list");
     }
     public static String parseInput(String[] inputs){
         String todoInput = "";
@@ -228,20 +228,29 @@ public class Duke {
     public static void main(String[] args) {
         printWelcomeMessage();
         File f = new File(FILE_PATH);
+        File directory = new File("data");
+        boolean isFileFound = true;
         //populate
         try {
             printFileContents(FILE_PATH);
         }
         catch (FileNotFoundException e) {
-            System.out.println("File not found! Creating new file for you!");
+            isFileFound = false;
+            System.out.println("File not found!\n");
+        }
+        if (!isFileFound) {
+            System.out.printf("Creating a new File for you!\n");
+            if (!directory.exists()) {
+                directory.mkdirs();
+            }
             try {
-                writeToFile(FILE_PATH, "");
+                f.createNewFile();
             }
             catch (IOException ex) {
                 System.out.println("Something went wrong: " + ex.getMessage());
             }
+            System.out.printf("Created a new File!\n");
         }
-
         boolean isBye = false;
         while (!isBye) {
             try {

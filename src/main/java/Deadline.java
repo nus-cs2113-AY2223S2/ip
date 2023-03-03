@@ -11,6 +11,6 @@ public class Deadline extends Task{
     }
     @Override
     public String getUpdate() {
-        return "event " + super.description + " /by " + day;
+        return "deadline " + super.description + "/by " + day;
     }
 }
