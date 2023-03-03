@@ -65,15 +65,19 @@ public class InputValidity {
      *         sufficient parameters
      */
     protected static void checkValidEvent(String input) throws DukeException {
-        if ((!input.contains(EVENT_FROM_DELIMITER) || !input.contains(EVENT_TO_DELIMITER))
-                || (input.indexOf(EVENT_FROM_DELIMITER) > input.indexOf(EVENT_TO_DELIMITER))) {
-            Error.throwError(ErrorTypes.INVALID_EVENT_COMMAND);
-        }
         String[] arrayInput = input.split(" ");
         if (arrayInput.length < MINIMUM_EVENT_LENGTH) {
             Error.throwError(ErrorTypes.INSUFFICIENT_EVENT_ARGUMENT);
         }
-        if (arrayInput[1].equals(EVENT_FROM_DELIMITER.trim())) {
+        boolean isTaskNameAbsent = arrayInput[1].equals(EVENT_FROM_DELIMITER.trim());
+        boolean isToDateAbsent = arrayInput[arrayInput.length - 1].equals(EVENT_TO_DELIMITER.trim());
+        if ((!input.contains(EVENT_FROM_DELIMITER) || !input.contains(EVENT_TO_DELIMITER))
+                || (input.indexOf(EVENT_FROM_DELIMITER) > input.indexOf(EVENT_TO_DELIMITER)) || isTaskNameAbsent
+                || isToDateAbsent) {
+            Error.throwError(ErrorTypes.INVALID_EVENT_COMMAND);
+        }
+        String fromDate = input.split(EVENT_FROM_DELIMITER)[1].split(EVENT_TO_DELIMITER)[0].trim();
+        if (fromDate.isEmpty()) {
             Error.throwError(ErrorTypes.INVALID_EVENT_COMMAND);
         }
     }
