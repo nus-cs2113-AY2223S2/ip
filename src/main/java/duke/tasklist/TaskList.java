@@ -77,6 +77,9 @@ public class TaskList {
      * @throws IndexOutOfBoundsException if task to be marked is out of bounds.
      */
     public static void markValidTask(String[] userInput) throws IndexOutOfBoundsException {
+        if (userInput.length < 2) {
+            throw new NumberFormatException();
+        }
         try {
             int taskNum = Integer.parseInt(userInput[1]);
             if (tasks.get(taskNum - 1) == null || tasks.size() == 0) {
@@ -84,7 +87,7 @@ public class TaskList {
             }
             tasks.get(taskNum - 1).markAsDone(userInput[0]);
         } catch (NumberFormatException e) {
-            System.out.println("This is not a valid index... unable to mark the task for you.");
+            Ui.printMessage(Ui.CommandType.NUMBERFORMAT);
         }
     }
 
@@ -169,17 +172,25 @@ public class TaskList {
      * @param userInput Command by user to execute.
      *                  Should include the index of the task.
      * @throws IndexOutOfBoundsException if index of task user puts is out of bounds.
+     * @throws NumberFormatException if user did not input index of task.
      */
-    public static void deleteTask(String userInput) throws IndexOutOfBoundsException {
+    public static void deleteTask(String userInput) throws IndexOutOfBoundsException, NumberFormatException {
         String taskNum = userInput.substring(userInput.length()-1);
-        int taskNumber = Integer.parseInt(taskNum);
-        if (tasks.get(taskNumber-1) == null || tasks.size() == 0) {
-            throw new IndexOutOfBoundsException();
+        if (taskNum == null) {
+            throw new NumberFormatException();
         }
-        Task temp = tasks.get(taskNumber-1);
-        tasks.remove(taskNumber-1);
-        numTasks = tasks.size();
-        Ui.printMessage(temp, Ui.CommandType.DELETE);
+        try {
+            int taskNumber = Integer.parseInt(taskNum);
+            if (tasks.get(taskNumber - 1) == null || tasks.size() == 0) {
+                throw new IndexOutOfBoundsException();
+            }
+            Task temp = tasks.get(taskNumber - 1);
+            tasks.remove(taskNumber - 1);
+            numTasks = tasks.size();
+            Ui.printMessage(temp, Ui.CommandType.DELETE);
+        } catch (NumberFormatException e) {
+            Ui.printMessage(Ui.CommandType.NUMBERFORMAT);
+        }
     }
 
     /**

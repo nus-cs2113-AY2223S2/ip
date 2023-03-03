@@ -89,6 +89,8 @@ public class Parser {
             }
         } catch (IndexOutOfBoundsException e) {
             Ui.printMessage(Ui.CommandType.INDEXOUTOFBOUNDS);
+        } catch (NumberFormatException e) {
+            Ui.printMessage(Ui.CommandType.NUMBERFORMAT);
         }
     }
 

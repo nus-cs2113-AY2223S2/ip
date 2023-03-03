@@ -18,7 +18,7 @@ public class Ui {
      */
     public enum CommandType {
         TODO, DEADLINE, EVENT, LIST, MARK, UNMARK, DELETE, INDEXOUTOFBOUNDS, FIND, DUKEEXCEPTION,
-        NULLPOINTER, IOEXCEPTION
+        NULLPOINTER, IOEXCEPTION, FILENOTFOUND, RUNTIMEEXCEPTION, NUMBERFORMAT
     }
 
     /**
@@ -107,7 +107,16 @@ public class Ui {
             System.out.println("Can't remember what was saved :(");
             break;
         case IOEXCEPTION:
-            System.out.println("IOException here.. Process interrupted :(");
+            System.out.println("IOException here.. Process interrupted and I don't have the ability to execute :(");
+            break;
+        case FILENOTFOUND:
+            System.out.println("I can't seem to find an existing list :( Creating a new one now.");
+            break;
+        case RUNTIMEEXCEPTION:
+            System.out.println("I can't find what you want :( try something else");
+            break;
+        case NUMBERFORMAT:
+            System.out.println("Missing a number.. Key in the index of the task!!");
             break;
         }
         System.out.println(LINE);

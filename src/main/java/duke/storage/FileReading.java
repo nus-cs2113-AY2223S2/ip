@@ -21,16 +21,15 @@ public class FileReading {
      * @throws IOException if stream to file cannot be written.
      */
     public static void createFile() throws IOException {
-        File newFolder = new File("data");
+        File newFolder = new File(System.getProperty("user.dir"),"data");
         if (!newFolder.exists()) {
-            newFolder.createNewFile();
+            newFolder.mkdirs();
         } else {
             newFolder.delete();
-            newFolder.createNewFile();
+            newFolder.mkdirs();
         }
-        newFolder.mkdirs();
 
-        File newFile = new File("data/duke.txt");
+        File newFile = new File(System.getProperty("user.dir"),"data/duke.txt");
         if (!newFile.exists()) {
             newFile.createNewFile();
         } else {
@@ -46,6 +45,12 @@ public class FileReading {
     public static void getFileContents() throws FileNotFoundException {
         File file = new File(filePath);
         if (!file.exists()) {
+            try {
+                createFile();
+            } catch (IOException e) {
+                Ui.printMessage(Ui.CommandType.IOEXCEPTION);
+                throw new RuntimeException(e);
+            }
             throw new FileNotFoundException();
         }
 

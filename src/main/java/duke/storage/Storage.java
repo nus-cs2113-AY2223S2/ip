@@ -1,5 +1,7 @@
 package duke.storage;
 
+import duke.ui.Ui;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
@@ -15,7 +17,9 @@ public class Storage {
         try {
             FileReading.getFileContents();
         } catch (FileNotFoundException e) {
-            System.out.println("I can't find what you want :(");
+            Ui.printMessage(Ui.CommandType.FILENOTFOUND);
+        } catch (RuntimeException e) {
+            Ui.printMessage(Ui.CommandType.RUNTIMEEXCEPTION);
         }
     }
 
@@ -26,7 +30,7 @@ public class Storage {
         try {
             FileReading.writeToFile();
         } catch (IOException e) {
-            System.out.println("This is out of my ability to execute...");
+            Ui.printMessage(Ui.CommandType.IOEXCEPTION);
         }
     }
 }
