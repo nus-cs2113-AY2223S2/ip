@@ -12,7 +12,14 @@ import Task.Todo;
 import UI.Ui;
 
 public class Duke {
-
+    /**
+     * Constructor to initiate the program
+     *
+     * @param filePath the path to the file
+     * @throws DukeException
+     * @throws IOException
+     * 
+     */
     public Duke(String filePath) throws DukeException, IOException {
         Ui.greet();
         DukeStorage storage = new DukeStorage(filePath);
@@ -103,6 +110,13 @@ public class Duke {
         storage.saveTaskList(taskList.getTasks());
     }
 
+    /**
+     * main function
+     *
+     * @throws DukeException
+     * @throws IOException
+     * 
+     */
     public static void main(String[] args) throws DukeException, IOException {
         new Duke("data/duke.txt");
     }

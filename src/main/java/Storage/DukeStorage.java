@@ -1,4 +1,5 @@
 package Storage;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -12,12 +13,24 @@ import Task.Todo;
 import Task.Event;
 
 public class DukeStorage {
+    // filePath of the file
     private static String filePath;
 
+    /**
+     * Constructor
+     *
+     * @param filePath the path to the file
+     */
     public DukeStorage(String filePath) {
         DukeStorage.filePath = filePath;
     }
 
+    /**
+     * This method save the task list.
+     *
+     * @param tasks the task list
+     * 
+     */
     public void saveTaskList(ArrayList<Task> tasks) {
         try {
             File file = new File(filePath);
@@ -35,6 +48,12 @@ public class DukeStorage {
         }
     }
 
+    /**
+     * This method loads the task list.
+     *
+     * @return the task list
+     * @throws IOException
+     */
     public static ArrayList<Task> loadTaskList() throws IOException {
         ArrayList<Task> tasks = new ArrayList<>();
         try {
