@@ -13,12 +13,10 @@ public class Buddy {
     private final Ui ui;
     public static int taskCount = 0;
 
-
     public Buddy(String filePath){
         taskList = new TaskList();
         storage = new Storage(filePath);
         ui = new Ui();
-
     }
     public void run(){
         ui.loadFileOrCreateFile(taskList, storage);
