@@ -52,6 +52,14 @@ public class Ui {
         System.out.println("There are no tasks to display.");
     }
 
+    public void printNumberOfTasks(int currentIndex) {
+        if (currentIndex == 1) {
+            System.out.println("You have 1 task!");
+        } else {
+            System.out.println("You currently have " + currentIndex + " tasks in the list.");
+        }
+    }
+
     public void horizontalLine() {
         System.out.println("________________________________________");
     }

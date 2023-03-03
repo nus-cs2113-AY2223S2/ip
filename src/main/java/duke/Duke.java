@@ -82,7 +82,7 @@ public class Duke {
         ui.showTaskAddedMessage();
         displayTask(newTask);
         tasks.add(newTask);
-        printNumberOfTasks(tasks.size());
+        ui.printNumberOfTasks(tasks.size());
         ui.horizontalLine();
     }
 
@@ -98,7 +98,7 @@ public class Duke {
         tasks.remove(indexToDelete);
         ui.showTaskRemovedMessage();
         displayTask(taskToDelete);
-        printNumberOfTasks(tasks.size());
+        ui.printNumberOfTasks(tasks.size());
         ui.horizontalLine();
     }
 
@@ -162,13 +162,7 @@ public class Duke {
         }
     }
 
-    public static void printNumberOfTasks(int currentIndex) {
-        if (currentIndex == 1) {
-            System.out.println("You have 1 task!");
-        } else {
-            System.out.println("You currently have " + currentIndex + " tasks in the list.");
-        }
-    }
+
 
     public static ToDo createToDo(String messageFromUser) {
         // Remove the word "todo" from message
