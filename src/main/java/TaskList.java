@@ -1,5 +1,17 @@
+/**
+ * Represents all tasks that will be saved
+ * to a TaskList.
+ * Handles all operations related to the task
+ * such as list, find, mark, unmark, delete
+ * and add ToDos, Events and Deadlines
+ */
 public class TaskList {
 
+    /**
+     * @param description Description given by user
+     * @return Returns true if description is empty
+     *         Else, return false
+     */
     public static boolean isDesEmpty(String description) {
         boolean isEmpty;
         isEmpty = true;
@@ -13,6 +25,10 @@ public class TaskList {
         return isEmpty;
     }
 
+    /**
+     * Prints out every task that is
+     * stored in the list
+     */
     public static void listTask() {
         Ui.printDash();
         System.out.println("Tasks in list:");
@@ -26,6 +42,12 @@ public class TaskList {
         Ui.printDash();
     }
 
+    /**
+     * Unmarks a task that is currently marked
+     * by user
+     * @param list The task that user wants to
+     *             unmark
+     */
     public static void unmarkTask(String[] list) {
         try {
             int pt;
@@ -57,6 +79,11 @@ public class TaskList {
         }
     }
 
+    /**
+     * Marks a task that is currently unmarked
+     * @param list The task that user wants
+     *             to mark
+     */
     public static void markTask(String[] list) {
         try {
             int pt;
@@ -88,6 +115,12 @@ public class TaskList {
         }
     }
 
+    /**
+     * Deletes a task that is currently in
+     * the list
+     * @param list The task that user wants
+     *             to delete
+     */
     public static void deleteTask(String[] list) {
         try {
             int pt;
@@ -121,6 +154,12 @@ public class TaskList {
         }
     }
 
+    /**
+     * Creates a task that is a deadline
+     * to be added to the list
+     * @param list Deadline task that user wants to
+     *             add to the list
+     */
     public static void makeDeadline(String[] list) {
         try {
             if (isDesEmpty(list[1])) {
@@ -145,6 +184,12 @@ public class TaskList {
         }
     }
 
+    /**
+     * Creates a task that is a To Do
+     * to be added to the list
+     * @param list To Do task that user wants to
+     *             add to the list
+     */
     public static void makeToDo(String[] list) {
         try {
             if (isDesEmpty(list[1])) {
@@ -167,6 +212,12 @@ public class TaskList {
         }
     }
 
+    /**
+     * Creates a task that is an event
+     * to be added to the list
+     * @param list Event task that user wants to
+     *             add to the list
+     */
     public static void makeEvent(String[] list) {
         try {
             if (isDesEmpty(list[1])) {
@@ -188,6 +239,40 @@ public class TaskList {
         } catch (DukeException | IndexOutOfBoundsException e) {
             Ui.printDash();
             System.out.println("☹ OOPS!!! Date of event or description cannot be empty. Try again.\nFollow the following format: event [description] /from [start] /to [end]");
+            Ui.printDash();
+        }
+    }
+
+    /**
+     * Finds for a specific keyword that user intends
+     * to view
+     * @param list Keyword that user is finding for
+     */
+    public static void findTask(String[] list) {
+        try {
+            String word, s;
+            int k, matches;
+            Ui.printDash();
+            word = list[1];
+            System.out.println("The keyword is found in these tasks:");
+            k = 1;
+            matches = 0;
+
+            for (Task command : Task.tasks) {
+                s = "" + command;
+
+                if (s.contains(word)) {
+                    System.out.println(k + "." + command);
+                    matches += 1;
+                    k += 1;
+                }
+            }
+            if (0 == matches) {
+                System.out.println("No task contains that keyword!");
+            }
+            Ui.printDash();
+        } catch (IndexOutOfBoundsException err) {
+            System.out.println("☹ OOPS!!! Please enter a keyword");
             Ui.printDash();
         }
     }
