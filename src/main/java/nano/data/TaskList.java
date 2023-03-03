@@ -114,4 +114,31 @@ public class TaskList {
     public ArrayList<Task> getTaskList() {
         return tasks;
     }
+
+    public void findTasks(String keyword) {
+
+        if (isInvalidKeyword(keyword)) {
+            Ui.displayKeywordError();
+            return;
+        }
+
+        keyword = keyword.trim();
+        ArrayList<Task> searchList = new ArrayList<>();
+        for (Task task : tasks) {
+            if (task.getTaskName().contains(keyword)) {
+                searchList.add(task);
+            }
+        }
+
+        Ui.displayFindTaskMessage(searchList.size(), keyword);
+        Ui.displayTaskList(searchList);
+    }
+
+    private static boolean isInvalidKeyword(String keyword) {
+        if (keyword == null) {
+            return true;
+        }
+
+        return keyword.trim().length() == 0;
+    }
 }

@@ -27,11 +27,20 @@ public class Ui {
     private static final String MESSAGE_HELP_UNMARK_TASK = "/unmark <task> : set task as undone";
     private static final String MESSAGE_HELP_HELP = "/help : Displays list of all commands";
     private static final String MESSAGE_HELP_EXIT = "/exit : Exit chatbot";
+    public static final String MESSAGE_INVALID_KEYWORD = "Invalid keyword entered!";
 
     private final Scanner in;
     public Ui() {
         this.in = new Scanner(System.in);
         displayWelcomeMessage();
+    }
+
+    public static void displayFindTaskMessage(int numOfTask, String keyword) {
+        System.out.println("There are " + numOfTask + " tasks with \"" + keyword +"\":");
+    }
+
+    public static void displayKeywordError() {
+        System.out.println(MESSAGE_INVALID_KEYWORD);
     }
 
     public String getUserInput() {
@@ -54,11 +63,17 @@ public class Ui {
     }
 
     public static void displayTaskList(ArrayList<Task> tasks) {
+        int counter = 1;
+        for (Task task : tasks) {
+            System.out.println(counter + ". " +task.toString());
+            counter += 1;
+        }
+    }
+
+    public static void displayTaskListMessage(ArrayList<Task> tasks) {
         System.out.println("You have completed " + Task.getCompletedTaskCount() + " tasks. " +
                 Task.getUncompletedTaskCount() + " more to go!");
-        for (Task task : tasks) {
-            System.out.println(task.toString());
-        }
+        displayTaskList(tasks);
     }
 
     public static void displayExitMessage() {
