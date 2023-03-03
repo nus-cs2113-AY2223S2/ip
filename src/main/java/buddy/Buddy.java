@@ -6,6 +6,9 @@ import buddy.storage.Storage;
 import buddy.tasks.TaskList;
 import buddy.ui.Ui;
 
+/**
+ * The main of the application which executes the program.
+ */
 
 public class Buddy {
     private final Storage storage;
@@ -13,11 +16,19 @@ public class Buddy {
     private final Ui ui;
     public static int taskCount = 0;
 
+    /**
+     * Constructor for Buddy class
+     * @param filePath The filepath of the file
+     */
     public Buddy(String filePath){
         taskList = new TaskList();
         storage = new Storage(filePath);
         ui = new Ui();
     }
+
+    /**
+     * This function runs the program till 
+     */
     public void run(){
         ui.loadFileOrCreateFile(taskList, storage);
         ui.greetUser();
