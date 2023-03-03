@@ -29,6 +29,7 @@ public class Duke {
 
         Scanner scan = new Scanner(System.in);
         ui.printLogo();
+        ui.printHelp();
         ui.greet();
 
         String input;
