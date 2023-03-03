@@ -8,6 +8,7 @@ import Duke.DukeFunction.DukeStorage;
 import Duke.DukeFunction.DukeUI;
 
 public class DukeRobot {
+    private static String LOADING_MESSAGE = "Loading tasks from file...";
     private DukeUI ui;
     private DukeList tasks;
     private DukeParser parser;
@@ -27,7 +28,7 @@ public class DukeRobot {
         this.storage = new DukeStorage();
         ui.printGreeting();
         try {
-            System.out.println("Loading tasks from file...");
+            System.out.println(LOADING_MESSAGE);
             storage.loadTask(tasks);
         } catch (DukeException e) {
             ui.printString(e.getMessage());

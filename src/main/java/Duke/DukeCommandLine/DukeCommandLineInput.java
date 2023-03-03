@@ -8,6 +8,8 @@ import Duke.DukeTask.DukeEvent;
 import Duke.DukeTask.DukeTask;
 
 public class DukeCommandLineInput {
+    private static final String INVALID_ID_MESSAGE = "Sorry, the id is invalid!";
+    private static final String WRONG_TYPE_MESSAGE = "Sorry, I don't know what that means :-( ";
     private static final String COMMAND_LIST = "list";
     private static final String COMMAND_BYE = "bye";
     private static final String COMMAND_MARK = "mark";
@@ -31,14 +33,13 @@ public class DukeCommandLineInput {
         return this.commandMessage;
     }
     public boolean isExit() {
-        return this.commandType.equals("bye");
+        return this.commandType.equals(COMMAND_BYE);
     }
     public void execute(DukeList tasks, DukeUI ui,
                         DukeParser parser, DukeStorage storage) throws DukeException {
         int id;
         switch (this.commandType){
         case COMMAND_BYE:
-            ui.printString("Bye. Hope to see you again soon!");
             ui.printGoodbyeLogo();
             break;
         case COMMAND_LIST:
@@ -48,7 +49,7 @@ public class DukeCommandLineInput {
             try {
                 id = Integer.parseInt(this.commandMessage);
             } catch (NumberFormatException integerException) {
-                throw new DukeException("Sorry, the id is invalid!");
+                throw new DukeException(INVALID_ID_MESSAGE);
             }
             tasks.markDone(id-1);
             break;
@@ -56,7 +57,7 @@ public class DukeCommandLineInput {
             try {
                 id = Integer.parseInt(this.commandMessage);
             } catch (NumberFormatException integerException) {
-                throw new DukeException("Sorry, the id is invalid!");
+                throw new DukeException(INVALID_ID_MESSAGE);
             }
             tasks.unmarkDone(id-1);
             break;
@@ -64,7 +65,7 @@ public class DukeCommandLineInput {
             try {
                 id = Integer.parseInt(this.commandMessage);
             } catch (NumberFormatException integerException) {
-                throw new DukeException("Sorry, the id is invalid!");
+                throw new DukeException(INVALID_ID_MESSAGE);
             }
             tasks.deleteTask(id-1);
             break;
@@ -102,9 +103,8 @@ public class DukeCommandLineInput {
         case COMMAND_FIND:
             tasks.findTask(this.commandMessage);
             break;
-        default: // invalid command
-            throw new DukeException("Sorry, I don't know what that means :-( ("
-                    + this.commandType + ")");
+        default:
+            throw new DukeException(WRONG_TYPE_MESSAGE + "(" + this.commandType + ")");
         }
         storage.saveTask(tasks);
     }

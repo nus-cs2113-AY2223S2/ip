@@ -12,6 +12,10 @@ import java.util.Scanner;
 
 public class DukeStorage {
     private static final String FILE_PATH = "data/list.txt";
+    private static final String NO_FILE_MESSAGE = "No file to load!";
+    private static final String WRONG_FORMAT_MESSAGE = "Sorry, I can't read the file, the format is wrong";
+    private static final String IO_EXCEPTION_MESSAGE = "[IOException] Sorry, I can't load the file, ";
+    private static final String MESSAGE_INTERVAL = " \\| ";
     private static final int TASK_TYPE_INDEX = 0;
     private static final int TASK_STATUS_INDEX = 1;
     private static final int TASK_NAME_INDEX = 2;
@@ -52,13 +56,13 @@ public class DukeStorage {
         File file = new File(FILE_PATH);
         try {
             if(!file.exists()) {
-                throw new DukeException("No file to load!");
+                throw new DukeException(NO_FILE_MESSAGE);
             }
             Scanner fileReader = new Scanner(file);
             String TaskLine;
             while(fileReader.hasNextLine()) {
                 TaskLine = fileReader.nextLine();
-                String[] taskInfo = TaskLine.split(" \\| ");
+                String[] taskInfo = TaskLine.split(MESSAGE_INTERVAL);
                 String taskType = taskInfo[TASK_TYPE_INDEX].trim();
                 String taskStatus = taskInfo[TASK_STATUS_INDEX].trim();
                 String taskName = taskInfo[TASK_NAME_INDEX].trim();
@@ -88,11 +92,11 @@ public class DukeStorage {
                     tasks.addTask(event);
                     break;
                 default:
-                    throw new DukeException("Sorry, I can't read the file, the format is wrong");
+                    throw new DukeException(WRONG_FORMAT_MESSAGE);
                 }
             }
         } catch (IOException e) {
-            throw new DukeException("[IOException] Sorry, I can't load the file, " + e.getMessage());
+            throw new DukeException(IO_EXCEPTION_MESSAGE + e.getMessage());
         }
     }
 
