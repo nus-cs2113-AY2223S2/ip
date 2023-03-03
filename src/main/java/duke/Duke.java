@@ -7,8 +7,6 @@ import duke.storage.Storage;
 import duke.tasklist.TaskList;
 import duke.ui.UI;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.Scanner;
 
 /**

@@ -3,11 +3,6 @@ package duke.storage;
 import duke.parser.Parser;
 import duke.task.Task;
 import duke.tasklist.TaskList;
-import duke.ui.UI;
-import duke.task.Deadline;
-import duke.task.Event;
-import duke.task.Todo;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -37,9 +32,12 @@ public class Storage {
     private static ArrayList<Task> tasks = new ArrayList<>();
 
 
-
+    /**
+     * Check for file access and load the data from the text file
+     *
+     * @return the task list saved on the file
+     */
     public static ArrayList<Task> storageInit() {
-//        ArrayList<Task> tasks = new ArrayList<>();
         try {
             checkFileAccess();
             load();
@@ -53,7 +51,6 @@ public class Storage {
     /**
      * Updates tasklist with data from existing save file if it exists
      *
-     * @return the task list saved on the file
      * @throws FileNotFoundException if unable to access the text file
      */
     public static void load() throws FileNotFoundException {
@@ -80,7 +77,7 @@ public class Storage {
     /**
      * Creates a new directory and text file if it does not exist
      *
-     * @throws IOException if error during file creation/access checking
+     * @throws IOException if error occurs during file creation/access checking
      */
     public static void checkFileAccess() throws IOException {
         File dir = new File(dirPath);
@@ -93,19 +90,17 @@ public class Storage {
         }
     }
 
-
     /**
      * Updates the text file with data from the tasklist
      *
      * @param tasks the task-list that contains all the tasks
-     * @throws IOException if error during the writing/appending of the file
      */
     public static void updateFile(TaskList tasks) {
         ArrayList<Task> tasksList = tasks.returnTasks();
         try {
             writeToFile("");
-            for (Task t : tasksList) {
-                appendToFile(t.textToSave() + System.lineSeparator());
+            for (Task task : tasksList) {
+                appendToFile(task.textToSave() + System.lineSeparator());
             }
         } catch (IOException err) {
             System.out.println("Something went wrong: " + err.getMessage());

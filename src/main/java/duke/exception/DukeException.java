@@ -9,6 +9,13 @@ import java.util.Arrays;
  * Exception handler class that catches error
  */
 public class DukeException extends Exception {
+
+    /**
+     * Tries to catch error in the user input
+     *
+     * @param input input that might contain error
+     * @return boolean of whether there is an error
+     */
     public static boolean hasError(String input) {
         try {
             catchError(input);

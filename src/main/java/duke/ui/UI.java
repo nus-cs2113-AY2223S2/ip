@@ -1,12 +1,14 @@
 package duke.ui;
 
 import duke.constants.textImage;
+import duke.exception.DukeException;
 import duke.task.Task;
 import duke.tasklist.TaskList;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 /**
  * UI which deals with interactions with the user
