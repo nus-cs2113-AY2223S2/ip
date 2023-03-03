@@ -102,7 +102,7 @@ Description of the outcome.
 ```
         ==========================================
         Got it. I've added this task:
-        Eat buffet
+        Eat buffet (by: thursday)
         You have a total of 5 tasks in the list   
         ==========================================
 ```
@@ -123,11 +123,11 @@ Expected outcome: Event task is added to the task list.
 Description of the outcome.
 
 ```
-        ==========================================
+        ==========================================        
         Got it. I've added this task:
-        Celebrate holidays
-        You have a total of 5 tasks in the list   
-        ==========================================
+        [E][ ] Celebrate holidays (from: today to: thursday)
+        You have a total of 4 tasks in the list
+        ========================================== 
 ```
 ### `mark` - Marks a task in the task list as done
 
@@ -148,7 +148,7 @@ Description of the outcome.
 ```
         ==========================================
         Nice! I've marked this task as done:      
-        [E][X] Celebrate holidays
+        [E][X] Celebrate holidays (from: today to: thursday)
         ==========================================
 ```
 ### `unmark` - Marks a task in the task list as not done
@@ -170,7 +170,7 @@ Description of the outcome.
 ```
         ==========================================
         OK, I've marked this task as not done yet:
-        [E][ ] Celebrate holidays
+        [E][ ] Celebrate holidays (from: today to: thursday)
         ==========================================
 ```
 ### `delete` - Deletes a task in the task list
@@ -185,15 +185,14 @@ Example of usage:
 
 `delete 2`
 
-Expected outcome: Task Number 2 is deleted from the task list.  
+Expected outcome: Task Number 2 is deleted from the task list.   
 
 Description of the outcome.
 
 ```
         ==========================================
         Woosh! This task is now gone:
-        [D][ ] Eat Buffet
-        You have a total of 5 tasks in the list
+        [D][ ] study CS2113 (by:  Friday)
         ==========================================
 ```
 ### `find` - Finds all tasks in the task list which match the specified keyword

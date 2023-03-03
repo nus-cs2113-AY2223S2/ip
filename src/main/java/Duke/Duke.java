@@ -96,7 +96,7 @@ public class Duke {
                 }
             } catch (NumberFormatException nfe) {
                 // Mark/Unmark is not followed by an Integer
-                System.out.println("mark/unmark should be followed by an integer! Please try again.");
+                System.out.println("This command should be followed by an integer! Please try again.");
             } catch (InvalidTaskNumberException itne) {
                 // mark/unmark is followed by an integer which is either too small or too large
                 System.out.println("The number you entered is out of range! Please try again");

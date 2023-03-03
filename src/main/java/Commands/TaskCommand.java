@@ -149,7 +149,7 @@ public class TaskCommand {
     /**
      * Checks if a todo command is valid
      * 
-     * @param command
+     * @param command String[] of the user's input
      * @return true if the command is a valid todo
      */
     public static boolean isValidTodo(String[] command) {
@@ -164,7 +164,7 @@ public class TaskCommand {
      * Checks if a deadine command is valid, and in the correct format with all
      * required parameters
      * 
-     * @param command
+     * @param command String[] of the user's input
      * @return true if the command is a valid deadline
      */
     public static boolean isValidDeadline(String[] command) {
@@ -182,7 +182,7 @@ public class TaskCommand {
      * Checks if an event command is valid, and in the correct format with all
      * required parameters
      * 
-     * @param command
+     * @param command String[] of the user's input
      * @return true if the command is a valid event
      */
     public static boolean isValidEvent(String[] command) {
@@ -203,9 +203,9 @@ public class TaskCommand {
     /**
      * Deletes the task at the taskIndex index from the ArrayList taskList
      * 
-     * @param taskList
-     * @param command
-     * @param taskIndex
+     * @param taskList the ArrayList of the user's tasks
+     * @param command String[] of the user's input
+     * @param taskIndex index of the task to be deleted
      * @throws InvalidTaskNumberException
      */
     public static void deleteTask(ArrayList<Task> taskList, String[] command, int taskIndex)
@@ -215,7 +215,6 @@ public class TaskCommand {
             throw new InvalidTaskNumberException("Invalid task index");
         }
         PrintCommands.printDeleteMessage(taskList, taskIndex);
-        PrintCommands.printNumberOfTasks(taskList);
         PrintCommands.printLine();
         taskList.remove(taskIndex); // delete the specified task number
     }
@@ -223,8 +222,8 @@ public class TaskCommand {
     /**
      * Finds the tasks that the user specified
      * 
-     * @param taskList
-     * @param command
+     * @param taskList the ArrayList of the user's tasks
+     * @param command String[] of the user's input
      * @throws InvalidFindStringException
      */
     public static void findTask(ArrayList<Task> taskList, String[] command) throws InvalidFindStringException{

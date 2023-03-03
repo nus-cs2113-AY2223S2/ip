@@ -40,7 +40,7 @@ public class PrintCommands {
     /**
      * Prints the taskList line by line
      * 
-     * @param taskList
+     * @param taskList the ArrayList of the user's tasks
      */
     public static void printList(ArrayList<Task> taskList) {
         printLine();
@@ -58,7 +58,7 @@ public class PrintCommands {
     /**
      * Prints the number of tasks in the task list
      * 
-     * @param taskList
+     * @param taskList the ArrayList of the user's tasks
      */
     public static void printNumberOfTasks(ArrayList<Task> taskList) {
         if (taskList.size() == 1) {
@@ -71,8 +71,8 @@ public class PrintCommands {
     /**
      * Prints the relevant message for tasks of type "todo"
      * 
-     * @param taskList
-     * @param todoDescription
+     * @param taskList the ArrayList of the user's tasks
+     * @param todoDescription description of the task, of type todo
      */
     public static void printTodoMessage(ArrayList<Task> taskList) {
         printLine();
@@ -85,8 +85,8 @@ public class PrintCommands {
     /**
      * Prints the relevant message for tasks of type "deadline"
      * 
-     * @param taskList
-     * @param deadlineDescription
+     * @param taskList the ArrayList of the user's tasks
+     * @param deadlineDescription description of the task, of type deadline
      */
     public static void printDeadlineMessage(ArrayList<Task> taskList) {
         printLine();
@@ -99,8 +99,8 @@ public class PrintCommands {
     /**
      * Prints the relevant message for tasks of type "event"
      * 
-     * @param taskList
-     * @param eventDescription
+     * @param taskList the ArrayList of the user's tasks
+     * @param eventDescription description of the task, of type event
      */
     public static void printEventMessage(ArrayList<Task> taskList) {
         printLine();
@@ -119,22 +119,21 @@ public class PrintCommands {
     /**
      * Prints the relevant message after deleting a task from the task list
      * 
-     * @param taskList
-     * @param taskIndex
+     * @param taskList the ArrayList of the user's tasks
+     * @param taskIndex index of the task to be marked as done
      */
     public static void printDeleteMessage(ArrayList<Task> taskList, int taskIndex) {
         printLine();
         System.out.println("\tWoosh! This task is now gone: ");
         System.out.println(
-                "\t" + taskList.get(taskIndex).getType() + taskList.get(taskIndex).getStatusIcon()
-                        + taskList.get(taskIndex).description);
+                "\t" + taskList.get(taskIndex).getDescription());
     }
 
     /**
      * Prints the tasks that contain the keyword which the user had specified
      * 
-     * @param taskList
-     * @param command
+     * @param taskList the ArrayList of the user's tasks
+     * @param command String[] of the user's input
      * @throws InvalidFindStringException
      */
     public static void printFindMessage(ArrayList<Task> taskList, String[] command) throws InvalidFindStringException {
