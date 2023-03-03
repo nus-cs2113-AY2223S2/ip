@@ -10,6 +10,6 @@ public class Deadline extends Task{
 
 
     public String toString() {
-        return TASK_TYPE_TAG + super.toString() + " (" + dueDate + ")";
+        return TASK_TYPE_TAG + super.toString() + " (by: " + dueDate + ")";
     }
 }

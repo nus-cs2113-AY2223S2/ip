@@ -9,6 +9,11 @@ import nano.task.Todo;
 
 import java.util.Scanner;
 
+import java.io.IOException;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+
 public class Nano {
     private static final int HORIZONTAL_LINE_LENGTH = 100;
     private static final int MAX_TASK_COUNT = 100;
@@ -38,9 +43,11 @@ public class Nano {
     public static final String MESSAGE_HELP_MARK_TASK = "/mark <task> : set task as completed";
     public static final String MESSAGE_HELP_UNMARK_TASK = "/unmark <task> : set task as undone";
     public static final String MESSAGE_HELP_HELP = "/help : Displays list of all commands";
-    public static final String MEESAGE_HELP_EXIT = "/exit : Exit chatbot";
+    public static final String MESSAGE_HELP_EXIT = "/exit : Exit chatbot";
 
     private static Task[] tasks;
+
+    private static final File taskFile = new File("data/tasks.txt");
 
     public static void main(String[] args) {
         //chatbot startup
@@ -52,13 +59,23 @@ public class Nano {
             String userInput = getUserInput();
             try {
                 executeCommand(userInput);
+                saveTaskFile();
             } catch (NanoCommandException commandException) {
-                System.out.println("unknown command");
+                System.out.println("Unknown command!");
                 displayHelpMessage();
+            } catch (IOException e) {
+                System.out.println("Error saving file.");
             }
         }
     }
 
+    private static void saveTaskFile() throws  IOException {
+        FileWriter fileWriter = new FileWriter(taskFile);
+        for (int i = 1; i <= Task.getTaskCount(); i += 1) {
+            fileWriter.write(tasks[i].toString() + System.lineSeparator());
+        }
+        fileWriter.close();
+    }
     private static void executeCommand(String userInput) throws NanoCommandException {
         String[] userInputs;
         try {
@@ -175,7 +192,7 @@ public class Nano {
         System.out.println(MESSAGE_HELP_MARK_TASK);
         System.out.println(MESSAGE_HELP_UNMARK_TASK);
         System.out.println(MESSAGE_HELP_HELP);
-        System.out.println(MEESAGE_HELP_EXIT);
+        System.out.println(MESSAGE_HELP_EXIT);
     }
     private static void displayHelpMessage() {
         System.out.println(MESSAGE_HELP_COMMAND);
@@ -216,15 +233,15 @@ public class Nano {
     private static void getEvent(String userInput, String[] userInputs) {
         userInputs[TASK_TYPE_INDEX] = "event";
         userInputs[TASK_NAME_INDEX] = userInput.substring(userInput.indexOf(" "), userInput.indexOf("from/")).trim();
-        userInputs[TASK_START_DATE_INDEX] = userInput.substring(userInput.indexOf("from/"),
-                userInput.indexOf("to/")).replaceFirst("/", "").trim();
-        userInputs[TASK_END_DATE_INDEX] = userInput.substring(userInput.indexOf("to/")).replaceFirst("/", "");
+        userInputs[TASK_START_DATE_INDEX] = userInput.substring(userInput.indexOf("from/") + 5,
+                userInput.indexOf("to/")).trim();
+        userInputs[TASK_END_DATE_INDEX] = userInput.substring(userInput.indexOf("to/") + 3).trim();
     }
 
     private static void getDeadline(String userInput, String[] userInputs) {
         userInputs[TASK_TYPE_INDEX] = "deadline";
         userInputs[TASK_NAME_INDEX] = userInput.substring(userInput.indexOf(" "), userInput.indexOf("by/")).trim();
-        userInputs[TASK_DUE_DATE_INDEX] = userInput.substring(userInput.indexOf("by/"));
+        userInputs[TASK_DUE_DATE_INDEX] = userInput.substring(userInput.indexOf("by/") + 3).trim();
     }
 
     private static boolean isDeadline(String task) {
@@ -250,6 +267,72 @@ public class Nano {
     //creates a list of task (1-index)
     private static void initialiseTaskList() {
         tasks = new Task[MAX_TASK_COUNT + 1];
+        getUserData();
+    }
+
+    private static void getUserData(){
+        if (taskFile.exists()) {
+            try {
+                Scanner s = new Scanner(taskFile);
+                while (s.hasNext()) {
+                    readTaskFile(s.nextLine());
+                }
+            } catch (FileNotFoundException e) {
+                System.out.println("Error reading task file.");
+            }
+        } else {
+            System.out.println("User task file not detected. Creating new task file.....");
+            createTaskFile();
+        }
+    }
+
+    private static void readTaskFile(String taskDetails) {
+        Task newTask;
+        String taskName;
+        if (taskDetails.charAt(taskDetails.length() - 1) == ')') {
+            taskName = taskDetails.substring(taskDetails.indexOf(" ") + 1, taskDetails.lastIndexOf(" ("));
+        } else {
+            taskName = taskDetails.substring(taskDetails.indexOf(" ") + 1);
+        }
+
+        switch (taskDetails.substring(1, 2)) {
+        case "D":
+            newTask = new Deadline(taskName, taskDetails.substring(taskDetails.indexOf("by:") + 4,
+                    taskDetails.lastIndexOf(')')));
+            break;
+        case "E":
+            newTask = new Event(taskName, taskDetails.substring(taskDetails.indexOf("from:") + 5,
+                    taskDetails.indexOf(", to:")).trim(),
+                    taskDetails.substring(taskDetails.indexOf("to:") + 4, taskDetails.lastIndexOf(')')).trim());
+            break;
+        default:
+            newTask = new Todo(taskName);
+            break;
+        }
+        tasks[Task.getTaskCount()] = newTask;
+
+        if (taskDetails.contains("[x]")) {
+            tasks[Task.getTaskCount()].setDone();
+        }
+    }
+    private static void createTaskFile() {
+        try {
+            if (taskFile.getParentFile().mkdirs()) {
+                System.out.println("Creating directories.....");
+            } else {
+                System.out.println("Unable to create directories. User data may not be saved.");
+            }
+
+            if (taskFile.createNewFile()) {
+                System.out.println("Task file created!");
+            } else {
+                System.out.println("Unable to create task file. User data may not be saved.");
+            }
+
+        } catch (IOException e) {
+            System.out.println("Error detected while creating user task file. User data may not be saved.");
+        }
+        printHorizontalLine();
     }
 
     private static String getUserInput() {
