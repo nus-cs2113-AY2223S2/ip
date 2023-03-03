@@ -1,15 +1,17 @@
 public class Ui {
 
-    public void greetUser(){
+    public static void greetUser(){
+        System.out.println(Messages.DIVIDER);
         System.out.println(Messages.GREETING);
-    }
-    public void giveIntroToUser(){
         System.out.println(Messages.INTRODUCTION);
+        System.out.println(Messages.DIVIDER);
     }
-    public void displayHelpMessage(){
+    public static void displayHelpMessage(){
         System.out.println(Messages.HELPMESSAGE);
     }
-    public void sayByeToUser(){
+    public static void sayByeToUser(){
+        System.out.println(Messages.DIVIDER);
         System.out.println(Messages.EXITMESSAGE);
+        System.out.println(Messages.DIVIDER);
     }
 }

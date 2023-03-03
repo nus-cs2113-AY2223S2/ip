@@ -6,7 +6,7 @@ public class Parser {
         return input.equals("bye");
     }
 
-    public void executeLine(TaskList taskList, String input) throws IOException {
+    public void executeInput(TaskList taskList, String input) {
         String[] inputSplit = input.split(" ", 2);
         String commandName = inputSplit[0].trim();
         try {

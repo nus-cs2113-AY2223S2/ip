@@ -26,7 +26,4 @@ public class Messages {
              "bye: exits the application\n" +
              "FORMAT: bye\n" +
              "Hope that this was useful!";
-
-
-
 }

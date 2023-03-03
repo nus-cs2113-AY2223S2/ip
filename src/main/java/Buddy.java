@@ -6,11 +6,14 @@ import java.util.Scanner;
 
 
 public class Buddy {
-    
+    private Storage storage;
+    private TaskList taskList;
+    private Ui ui;
     public static int taskCount = 0;
 
 
-    public static void main(String[] args) throws IOException {
+
+    public static void main(String[] args){
         TaskList taskList = new TaskList();
         try {
             Storage.loadFile(taskList);
@@ -18,27 +21,18 @@ public class Buddy {
         } catch (FileNotFoundException e) {
             System.out.println("File not found");
             Storage.createFile();
-
         }
 
-        System.out.println(Messages.DIVIDER);
-        System.out.println(Messages.GREETING);
-        System.out.println(Messages.INTRODUCTION);
-        System.out.println(Messages.DIVIDER);
-
-
+        Ui.greetUser();
         String input;
         Scanner in = new Scanner(System.in);
         input = in.nextLine();
         Parser processAllCommands = new Parser();
 
         while (! processAllCommands.isExit(input)) {
-            processAllCommands.executeLine(taskList, input);
+            processAllCommands.executeInput(taskList, input);
             input = in.nextLine();
         }
-        System.out.println(Messages.DIVIDER);
-        System.out.println(Messages.EXITMESSAGE);
-        System.out.println(Messages.DIVIDER);
-
+        Ui.sayByeToUser();
     }
 }
