@@ -28,6 +28,11 @@ public class Ui {
         System.out.println(dividingLine + "Bye. Hope to see you again soon!" + dividingLine);
     }
 
+    /**
+     * The method prints the task marked by the user on the screen.
+     *
+     * @param task the task marked
+     */
     public static void printMark(String task) {
         System.out.println(dividingLine);
         System.out.println("Nice! I've marked this task as done:");
@@ -35,6 +40,11 @@ public class Ui {
         System.out.println(dividingLine);
     }
 
+    /**
+     * The method prints the task unmarked by the user on the screen.
+     *
+     * @param task the task unmarked
+     */
     public static void printUnmark(String task) {
         System.out.println(dividingLine);
         System.out.println("Noted. I've unmarked this task:");
@@ -54,7 +64,11 @@ public class Ui {
         System.out.println("Now you have " + size + " tasks in the list." + System.lineSeparator() + dividingLine);
     }
 
-
+    /**
+     * The method lists all the tasks in the task list
+     *
+     * @param tasks the task list
+     */
     public static void listTasks(ArrayList<Task> tasks) {
         if (tasks.size() == 0) {
             System.out.println(dividingLine);
@@ -69,6 +83,9 @@ public class Ui {
         System.out.println("Now you have " + tasks.size() + " tasks in the list." + dividingLine);
     }
 
+    /**
+     * The method executes when unrecognised command is input by the user
+     */
     public static void printUnrecognisableCommand(){
         System.out.println(dividingLine + "☹ OOPS!!! I'm sorry, but I don't know what that means :-("
                 + dividingLine);

@@ -15,11 +15,24 @@ public class Parser {
 
     protected static String[] commands;
 
+
+    /**
+     * The method gets command from the input by user
+     *
+     * @param line the input by user
+     * @return the commands
+     */
     public static String getCommand(String line) {
         commands = line.split(" ", 2);
         return commands[0];
     }
 
+    /**
+     * The method determines whether the task list has tasks or not.
+     *
+     * @param tasks the task list
+     * @return false, if the task list has no task, and vice-versa
+     */
     public static boolean hasTask(TaskList tasks) {
         if (tasks.getSize() == 0) {
             return false;
@@ -27,6 +40,11 @@ public class Parser {
         return true;
     }
 
+    /**
+     * The method inspects whether the command carries enough information.
+     *
+     * @return false, if the command carries enough information, and vice-versa
+     */
     public static boolean hasInfo() {
         if (commands.length == 1 || commands[1].equals("")) {
             return false;
@@ -34,14 +52,28 @@ public class Parser {
         return true;
     }
 
+    /**
+     * The method checks whether the task list contains the index that user aims to operate on.
+     *
+     * @param index the index the user aims to operate on
+     * @param tasks the task list
+     * @return true, if the task list has the wanted index, and vice-versa
+     */
     public static boolean hasIndex(int index, TaskList tasks) {
-        if (tasks.getSize() < index) {
+        if (tasks.getSize() < index || index < 0) {
             return false;
         }
         return true;
     }
 
-
+    /**
+     * The method processes users operations.
+     *
+     * @param line the input by user
+     * @param tasks the task list
+     * @param path the path of the .txt file
+     * @return if the user wants to exit the project
+     */
     public static boolean processTask(String line, TaskList tasks, String path) {
         String command = Parser.getCommand(line);
         boolean isBye = false;
@@ -59,7 +91,7 @@ public class Parser {
                 if (!hasIndex(index, tasks)) {
                     throw new MarkIndexException();
                 }
-                if(!hasInfo()){
+                if (!hasInfo()) {
                     throw new TaskInfoException();
                 }
                 tasks.MarkTheTask(index);
