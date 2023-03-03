@@ -1,18 +1,16 @@
 import java.util.ArrayList;
-import java.io.File;
-import java.io.FileWriter;
-import java.util.Scanner;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class Storage {
-
-    public final static String FILEPATH = "./duke.txt";
+    static String home = System.getProperty("user.home");
+    static java.nio.file.Path path = Paths.get(home, "duke.txt");
 
     public Storage(){
         try {
-            File file = new File(FILEPATH);
-            if (file.createNewFile()) {
-                UI.printFileCreatedComment(file.getName());
+            if (!Files.exists(path)) {
+                UI.printFileCreatedComment(Files.createFile(path).toString());
             }
         } catch(IOException e){
             UI.printFileNotCreatedComment();
@@ -21,22 +19,15 @@ public class Storage {
     }
 
     public static ArrayList<String> scanData() throws IOException {
-        File file = new File(FILEPATH);
-        Scanner scanner = new Scanner(file);
         ArrayList<String> existingTasks = new ArrayList<>();
-        while(scanner.hasNext()){
-            existingTasks.add(scanner.nextLine());
-        }
+        existingTasks.addAll(Files.readAllLines(path));
         return existingTasks;
     }
 
 
     public void writeToFile(String textAdded){
         try {
-            File file = new File(FILEPATH);
-            FileWriter fw = new FileWriter(file);
-            fw.write(textAdded);
-            fw.close();
+            Files.writeString(path, textAdded);
         } catch (IOException e){
             UI.printSaveErrorComment();
             System.out.println(e.getMessage());
