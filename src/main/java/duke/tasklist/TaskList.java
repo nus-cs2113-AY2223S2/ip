@@ -26,10 +26,10 @@ public class TaskList {
     /**
      * Initialise the object using JSON string.
      *
-     * @param json String to be deserialized
+     * @param tasksJson String to be deserialized
      */
-    public TaskList(String json) throws CorruptSaveDataException {
-        tasks = JsonParser.fromJson(json);
+    public TaskList(String tasksJson) throws CorruptSaveDataException {
+        tasks = JsonParser.fromJson(tasksJson);
     }
 
     /**
@@ -44,32 +44,32 @@ public class TaskList {
     /**
      * Delete a task from the list.
      *
-     * @param id 1-based ID corresponding to the task
+     * @param taskId 1-based ID corresponding to the task
      * @return Copy of the task deleted
      * @throws InvalidInputIDException If the given ID is invalid
      */
-    public Task delete(int id) throws InvalidInputIDException {
-        boolean isInvalidID = id < 1 || id > tasks.size();
+    public Task delete(int taskId) throws InvalidInputIDException {
+        boolean isInvalidID = taskId < 1 || taskId > tasks.size();
         if (isInvalidID) {
             throw new InvalidInputIDException();
         }
-        Task temp = tasks.get(id - 1);
-        tasks.remove(id - 1);
-        return temp;
+        Task deletedTask = tasks.get(taskId - 1);
+        tasks.remove(taskId - 1);
+        return deletedTask;
     }
 
     /**
      * Searches for the keyword specified by the user.
      *
-     * @param keyword The string to be searched (Supports RegEx format, search is case-insensitive)
+     * @param userQuery The string to be searched (Supports RegEx format, search is case-insensitive)
      * @return String containing matching tasks
      * @throws NoTaskException If there are no tasks in the list
      */
-    public String find(String keyword) throws NoTaskException {
+    public String findTasks(String userQuery) throws NoTaskException {
         ArrayList<Task> matchingTasks = new ArrayList<>();
-        Pattern pattern = Pattern.compile(keyword, Pattern.CASE_INSENSITIVE);
+        Pattern pattern = Pattern.compile(userQuery, Pattern.CASE_INSENSITIVE);
         for (Task task : tasks) {
-            Matcher matcher = pattern.matcher(task.describe());
+            Matcher matcher = pattern.matcher(task.describeTask());
             if (matcher.find()) {
                 matchingTasks.add(task);
             }
@@ -112,7 +112,7 @@ public class TaskList {
         for (int i = 0; i < tasks.size(); ++i) {
             output.append(i + 1)
                   .append(".") // number
-                  .append(tasks.get(i).describe())
+                  .append(tasks.get(i).describeTask())
                   .append(System.lineSeparator());
         }
 
@@ -122,22 +122,22 @@ public class TaskList {
     /**
      * Set the completion status of a task
      *
-     * @param id          1-based ID corresponding to the task
+     * @param taskId          1-based ID corresponding to the task
      * @param isCompleted The completion status
      * @return String describing the action completed and task changed
      * @throws NoTaskException         If the list is empty
      * @throws InvalidInputIDException If the given ID is invalid
      */
-    public String setStatus(int id, boolean isCompleted) throws NoTaskException, InvalidInputIDException {
+    public String setStatus(int taskId, boolean isCompleted) throws NoTaskException, InvalidInputIDException {
         try {
             if (tasks.size() == 0) {
                 throw new NoTaskException();
             }
-            tasks.get(id).setIsCompleted(isCompleted);
+            tasks.get(taskId).setIsCompleted(isCompleted);
             String output = isCompleted
                             ? MESSAGE_TASKS_MARKED + System.lineSeparator()
                             : MESSAGE_TASKS_UNMARKED + System.lineSeparator();
-            output += tasks.get(id).describe();
+            output += tasks.get(taskId).describeTask();
             return output;
         } catch (IndexOutOfBoundsException e) {
             throw new InvalidInputIDException();
@@ -149,7 +149,7 @@ public class TaskList {
      *
      * @return Integer
      */
-    public int size() {
+    public int getSize() {
         return tasks.size();
     }
 

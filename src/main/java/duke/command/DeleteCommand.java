@@ -18,6 +18,6 @@ public class DeleteCommand extends Command {
     @Override
     public void executor(TaskList tasks, UI ui) throws Exception {
         Task toDelete = tasks.delete(deleteId);
-        ui.printTaskDeleted(toDelete.describe(), tasks.size());
+        ui.printTaskDeleted(toDelete.describeTask(), tasks.getSize());
     }
 }

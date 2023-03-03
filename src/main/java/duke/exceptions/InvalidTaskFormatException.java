@@ -16,17 +16,17 @@ public class InvalidTaskFormatException extends Exception {
             + "/to <" + DATE_FORMAT + ">"
             + System.lineSeparator();
     private static final String FORMAT_TODO = "Todo - todo <task details>" + System.lineSeparator();
-    private final TaskEnum id;
+    private final TaskEnum taskType;
     private static final String MESSAGE_HEADER = "Invalid input format!" + System.lineSeparator()
             + "Use the following format to create a new task:" + System.lineSeparator();
 
     /**
      * Class constructor for the task the user is trying to create.
      *
-     * @param t TaskEnum corresponding to the task type
+     * @param taskType TaskEnum corresponding to the task type
      */
-    public InvalidTaskFormatException(TaskEnum t) {
-        this.id = t;
+    public InvalidTaskFormatException(TaskEnum taskType) {
+        this.taskType = taskType;
     }
 
     /**
@@ -36,18 +36,18 @@ public class InvalidTaskFormatException extends Exception {
      */
     @Override
     public String getMessage() {
-        String msg = MESSAGE_HEADER;
-        switch (id) {
+        String errorMessage = MESSAGE_HEADER;
+        switch (taskType) {
         case TODO:
-            msg += FORMAT_TODO;
+            errorMessage += FORMAT_TODO;
             break;
         case DEADLINE:
-            msg += FORMAT_DEADLINE;
+            errorMessage += FORMAT_DEADLINE;
             break;
         case EVENT:
-            msg += FORMAT_EVENT;
+            errorMessage += FORMAT_EVENT;
             break;
         }
-        return msg;
+        return errorMessage;
     }
 }

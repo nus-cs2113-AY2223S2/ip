@@ -20,9 +20,9 @@ public class Storage {
      */
     private static void checkSaveDir() {
         // check if file/directory exists
-        File dir = new File(SAVE_DIR.toUri());
-        if (!dir.exists()) { // create directory if required
-            dir.mkdir();
+        File saveDir = new File(SAVE_DIR.toUri());
+        if (!saveDir.exists()) { // create directory if required
+            saveDir.mkdir();
         }
     }
 
@@ -35,7 +35,7 @@ public class Storage {
         checkSaveDir();
         try {
             return Files.readString(SAVE_FILE);
-        } catch (IOException err) {
+        } catch (IOException e) {
             return "";
         }
     }
@@ -59,8 +59,8 @@ public class Storage {
      */
     private static void writeToFile(String filePath, String textToAdd) throws IOException {
         checkSaveDir();
-        FileWriter fw = new FileWriter(filePath);
-        fw.write(textToAdd);
-        fw.close();
+        FileWriter fileWriter = new FileWriter(filePath);
+        fileWriter.write(textToAdd);
+        fileWriter.close();
     }
 }

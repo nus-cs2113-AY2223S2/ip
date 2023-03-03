@@ -6,11 +6,11 @@ import java.time.LocalDateTime;
 
 public class Deadline extends Task {
     public static final String MARKER = "D";
-    private final LocalDateTime by;
+    private final LocalDateTime byDateTime;
 
-    public Deadline(String description, LocalDateTime by) {
+    public Deadline(String description, LocalDateTime byDateTime) {
         super(description, TaskEnum.DEADLINE);
-        this.by = by;
+        this.byDateTime = byDateTime;
     }
 
     /**
@@ -19,10 +19,10 @@ public class Deadline extends Task {
      * @return String describing the task
      */
     @Override
-    public String describe() {
+    public String describeTask() {
         return getCheckbox(true, MARKER)
-                + super.describe()
-                + " (by: " + by.format(DateTimeParser.getFormatter())
+                + super.describeTask()
+                + " (by: " + byDateTime.format(DateTimeParser.getFormatter())
                 + ")";
     }
 }

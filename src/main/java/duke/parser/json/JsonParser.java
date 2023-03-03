@@ -30,49 +30,49 @@ public class JsonParser {
     /**
      * Convert the JSON string into the corresponding task. If the data is corrupted, a generic Task object is returned.
      *
-     * @param json Task to be deserialized
+     * @param taskJson Task to be deserialized
      * @return Task object corresponding to the JSON string
      */
-    public static Task deserializeJSON(String json) throws CorruptSaveDataException {
-        Task t;
+    public static Task deserializeJSON(String taskJson) throws CorruptSaveDataException {
+        Task savedTask;
         try {
-            JsonObject j = GSON.fromJson(json, JsonObject.class);
-            JsonElement taskType = j.get("type");
+            JsonObject jsonObject = GSON.fromJson(taskJson, JsonObject.class);
+            JsonElement taskType = jsonObject.get("type");
             if (taskType == null) {
-                throw new CorruptSaveDataException(json);
+                throw new CorruptSaveDataException(taskJson);
             }
 
             switch (taskType.getAsString()) {
             case TASK_TODO:
-                t = GSON.fromJson(j, ToDo.class);
+                savedTask = GSON.fromJson(jsonObject, ToDo.class);
                 break;
             case TASK_EVENT:
-                t = GSON.fromJson(j, Event.class);
+                savedTask = GSON.fromJson(jsonObject, Event.class);
                 break;
             case TASK_DEADLINE:
-                t = GSON.fromJson(j, Deadline.class);
+                savedTask = GSON.fromJson(jsonObject, Deadline.class);
                 break;
             default:
-                throw new CorruptSaveDataException(json);
+                throw new CorruptSaveDataException(taskJson);
             }
         } catch (JsonSyntaxException e) {
-            throw new CorruptSaveDataException(json);
+            throw new CorruptSaveDataException(taskJson);
         }
-        return t;
+        return savedTask;
     }
 
     /**
      * Deserializes the given string in JSON format.
      *
-     * @param json Tasks to be deserialized
+     * @param tasksJson Tasks to be deserialized
      * @return ArrayList containing Task objects corresponding to the saved data
      */
-    public static ArrayList<Task> fromJson(String json) throws CorruptSaveDataException {
-        Scanner scanner = new Scanner(json);
+    public static ArrayList<Task> fromJson(String tasksJson) throws CorruptSaveDataException {
+        Scanner scanner = new Scanner(tasksJson);
         ArrayList<Task> savedTasks = new ArrayList<>();
         while (scanner.hasNextLine()) {
-            String task = scanner.nextLine();
-            savedTasks.add(deserializeJSON(task));
+            String taskJson = scanner.nextLine();
+            savedTasks.add(deserializeJSON(taskJson));
         }
         return savedTasks;
     }
@@ -85,9 +85,9 @@ public class JsonParser {
      */
     public static String toJson(ArrayList<Task> tasks) {
         StringBuilder saveData = new StringBuilder();
-        for (Task t : tasks) {
-            String json = GSON.toJson(t);
-            saveData.append(json);
+        for (Task task : tasks) {
+            String taskJson = GSON.toJson(task);
+            saveData.append(taskJson);
             saveData.append(System.lineSeparator());
         }
         return saveData.toString();

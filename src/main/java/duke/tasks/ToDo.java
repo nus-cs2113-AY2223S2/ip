@@ -13,7 +13,7 @@ public class ToDo extends Task {
      * @return String describing the task
      */
     @Override
-    public String describe() {
-        return getCheckbox(true, MARKER) + super.describe();
+    public String describeTask() {
+        return getCheckbox(true, MARKER) + super.describeTask();
     }
 }

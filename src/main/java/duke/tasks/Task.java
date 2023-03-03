@@ -6,19 +6,19 @@ package duke.tasks;
 public class Task {
     private static final String MARKER = "X";
     private boolean isCompleted;
-    private final String name;
-    private final TaskEnum type;
+    private final String taskName;
+    private final TaskEnum taskType;
 
     /**
      * Initialise the Task object.
      *
-     * @param name Description of the task
-     * @param type TaskEnum, for deserializing from JSON
+     * @param taskName Description of the task
+     * @param taskType TaskEnum, for deserializing from JSON
      */
-    public Task(String name, TaskEnum type) {
-        this.name = name;
+    public Task(String taskName, TaskEnum taskType) {
+        this.taskName = taskName;
         isCompleted = false;
-        this.type = type;
+        this.taskType = taskType;
     }
 
     /**
@@ -26,38 +26,38 @@ public class Task {
      *
      * @return String describing the task
      */
-    public String describe() {
-        return getCheckbox(isCompleted) + " " + name;
+    public String describeTask() {
+        return getCheckbox(isCompleted) + " " + taskName;
     }
 
     /**
      * A helper function which visualises the task status, uses the default marker X.
      *
-     * @param checked Status of the task
+     * @param isChecked Status of the task
      * @return String visualising if the task is checked [X] or not [ ]
      */
-    public static String getCheckbox(boolean checked) {
-        return "[" + (checked ? MARKER : " ") + "]";
+    public static String getCheckbox(boolean isChecked) {
+        return "[" + (isChecked ? MARKER : " ") + "]";
     }
 
     /**
      * A helper function which visualises the task status, uses the marker provided.
      * Is also used for showing the type of the task - [T], [D], [E].
      *
-     * @param checked Status of the checkbox
-     * @param marker  Marker to be shown
+     * @param isChecked Status of the checkbox
+     * @param checkboxMarker  Marker to be shown
      * @return String showing checkbox with marker if true, without if false
      */
-    public static String getCheckbox(boolean checked, String marker) {
-        return "[" + (checked ? marker : " ") + "]";
+    public static String getCheckbox(boolean isChecked, String checkboxMarker) {
+        return "[" + (isChecked ? checkboxMarker : " ") + "]";
     }
 
     /**
      * Set whether the task is completed or not.
      *
-     * @param state true if task is completed, false otherwise
+     * @param taskState true if task is completed, false otherwise
      */
-    public void setIsCompleted(boolean state) {
-        isCompleted = state;
+    public void setIsCompleted(boolean taskState) {
+        isCompleted = taskState;
     }
 }
