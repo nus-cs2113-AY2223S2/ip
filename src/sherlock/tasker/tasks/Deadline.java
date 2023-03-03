@@ -6,19 +6,20 @@ import parser.Parser;
 import java.time.DateTimeException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+
 /**
  * Represents Deadline task
  */
 public class Deadline extends Task {
 
     private LocalDateTime by;
+
     /**
-     *
      * @param name
      * @param isDone
-     * @param by deadline date (dd-MM-yyyy HH:mm)
+     * @param by     deadline date (dd-MM-yyyy HH:mm)
      */
-    public Deadline(String name, Boolean isDone, String by) throws SherlockException{
+    public Deadline(String name, Boolean isDone, String by) throws SherlockException {
         super(name, isDone);
         this.by = Parser.parseDateTime(by);
     }
@@ -32,7 +33,6 @@ public class Deadline extends Task {
     }
 
     /**
-     *
      * @return String representation of the deadline for the CLI output
      */
     public String toString() {
@@ -41,7 +41,6 @@ public class Deadline extends Task {
     }
 
     /**
-     *
      * @return String representation of the deadline for the file output
      */
     @Override

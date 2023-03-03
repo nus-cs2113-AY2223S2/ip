@@ -9,7 +9,7 @@ import ui.Ui;
 /**
  * Represents "delete" command - removes given task by its index from the list when executed
  */
-public class DeleteCommand extends  Command {
+public class DeleteCommand extends Command {
     int taskIndex;
 
     /**

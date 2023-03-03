@@ -10,6 +10,7 @@ import java.time.format.DateTimeParseException;
 public class Parser {
     /**
      * Parses typed command
+     *
      * @param fullCommand
      * @return one of the existing Command classes
      * @throws SherlockException

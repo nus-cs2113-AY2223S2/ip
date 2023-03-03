@@ -13,6 +13,7 @@ public class Ui {
 
     /**
      * Displays given lines between two dividers - serves as a standard program output
+     *
      * @param lines
      */
     public void printLines(String... lines) {
@@ -25,7 +26,8 @@ public class Ui {
 
     /**
      * Displays task for a user
-     * @param task task to display
+     *
+     * @param task      task to display
      * @param tasksList current tasks list
      */
     public void printAddedTask(Task task, TasksList tasksList) {
@@ -54,6 +56,7 @@ public class Ui {
 
     /**
      * Reads user command
+     *
      * @return typed command
      */
     public String readCommand() {
@@ -66,6 +69,7 @@ public class Ui {
 
     /**
      * Displays error to the user
+     *
      * @param message
      */
     public void showError(String message) {

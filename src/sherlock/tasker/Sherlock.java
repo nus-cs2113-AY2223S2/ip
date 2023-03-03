@@ -14,7 +14,6 @@ public class Sherlock {
     private Ui ui;
 
     /**
-     *
      * @param filePath
      */
     public Sherlock(String filePath) {
@@ -50,6 +49,7 @@ public class Sherlock {
 
     /**
      * Entry point - starts the Sherlock program
+     *
      * @param args
      */
     public static void main(String[] args) {

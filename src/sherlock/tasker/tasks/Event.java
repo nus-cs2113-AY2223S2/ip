@@ -6,13 +6,15 @@ import parser.Parser;
 import java.time.DateTimeException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+
 /**
  * Represents Event task
  */
-public class Event extends Task{
+public class Event extends Task {
     private LocalDateTime from;
     private LocalDateTime to;
-    public Event(String name, Boolean isDone, String from, String to) throws SherlockException{
+
+    public Event(String name, Boolean isDone, String from, String to) throws SherlockException {
         super(name, isDone);
         this.from = Parser.parseDateTime(from);
         this.to = Parser.parseDateTime(to);
@@ -42,7 +44,6 @@ public class Event extends Task{
     }
 
     /**
-     *
      * @return String representation of the event for the file output
      */
     @Override

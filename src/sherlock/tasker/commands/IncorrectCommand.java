@@ -7,7 +7,7 @@ import ui.Ui;
 /**
  * Represents invalid state of the commands - displays error message to the user
  */
-public class IncorrectCommand extends Command{
+public class IncorrectCommand extends Command {
     String feedback;
 
     /**
