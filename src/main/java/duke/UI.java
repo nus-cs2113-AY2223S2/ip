@@ -83,14 +83,14 @@ public class Ui {
     public static void showDelete(String task, int size) {
         System.out.println(LINE + System.lineSeparator() + "Noted. I've removed this task:");
         System.out.println("   > " + task);
-        System.out.println("Now you have " + Integer.toString(size) + " tasks in the list."
+        System.out.println("Now you have " + Integer.toString(size-1) + " tasks in the list."
                 + System.lineSeparator() + LINE);
     }
 
     public static void showAddTask(String taskDiscription, int size) {
         System.out.println(LINE + System.lineSeparator() + "Got it. I've added this task:");
         System.out.println("   > " + taskDiscription);
-        System.out.println("Now you have " + Integer.toString(size) + " tasks in the list."
+        System.out.println("Now you have " + Integer.toString(size-1) + " tasks in the list."
                 + System.lineSeparator() + LINE);
     }
 }
