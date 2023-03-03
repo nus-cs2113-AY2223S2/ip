@@ -19,6 +19,15 @@ public class Event extends Task{
         this.endDateTime = endDateTime;
     }
 
+    /**
+     * Class constructor with <code>description</code> and
+     * <code>start</code> and <code>end</code> as
+     * parameters for initialization.
+     *
+     * @param description the description of the task.
+     * @param start the start date of the task.
+     * @param end the end date of the task.
+     */
     public Event(String description, String start, String end) {
         super(description, "E");
         startDateTime = start;

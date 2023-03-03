@@ -4,7 +4,19 @@ import exceptions.IncompleteInputException;
 import command.Command;
 import command.CommandType;
 
+/**
+ * The class contains parsing methods which separates user input into commands
+ * and description.
+ */
 public class Parser {
+    /**
+     * Returns a <code>Command</code> type which contains the command to be
+     * executed and its full description to support its execution. It takes
+     * in a string representing the user input.
+     *
+     * @param line the input line by user.
+     * @return a <code>Command</code> containing the command to be executed.
+     */
     public static Command parseCommands(String line) {
         String[] lineSpaced = line.split(" ");
         String fullDescription = "";
@@ -52,6 +64,14 @@ public class Parser {
         return new Command(type, fullDescription);
     }
 
+    /**
+     * Returns an Array of Strings containing the parsed full description
+     * of a <code>Deadline</code> task into its description and due date.
+     *
+     * @param description the full description of the <code>Deadline</code> task.
+     * @return parsed Array of Strings containing the deadline's description and due date.
+     * @throws IncompleteInputException if full description input is missing the description or due date or both.
+     */
     public static String[] parseDeadline(String description) throws IncompleteInputException {
         String[] parsed = description.split(" /by ");
         if (parsed.length < 2) {
@@ -66,6 +86,15 @@ public class Parser {
         return parsed;
     }
 
+    /**
+     * Returns an Array of Strings containing the parsed full description
+     * of a <code>Event</code> task into its description, start date and end date.
+     *
+     * @param description the full description of the <code>Event</code> task.
+     * @return parsed Array of Strings containing the deadline's description, start date and end date.
+     * @throws IncompleteInputException if full description input is missing the description or start
+     * date or end date or all three.
+     */
     public static String[] parseEvent(String description) throws IncompleteInputException {
         String[] parsed = description.split(" /", 3);
         if (parsed.length < 3) {

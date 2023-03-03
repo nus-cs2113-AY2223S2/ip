@@ -11,6 +11,13 @@ public class Deadline extends Task{
         this.by = by;
     }
 
+    /**
+     * Class constructor with <code>description</code> and
+     * <code>doneby</code> as parameters for initialization.
+     *
+     * @param description the description of the task.
+     * @param doneBy the due date of the task.
+     */
     public Deadline(String description, String doneBy) {
         super(description, "D");
         by = doneBy;

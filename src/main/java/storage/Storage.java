@@ -13,15 +13,30 @@ import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * The <code>Storage</code> class contains various methods which involves
+ * handling of the saved file. For instance, file reading, file writing and saving.
+ */
 public class Storage {
 
     private static final String SEPARATOR = " I:I ";
-
     private static String filePath;
+
+    /**
+     * Sets the <code>filePath</code> to a specific value.
+     *
+     * @param filePath the String containing the location of the file path to be created.
+     */
     public static void setFilePath(String filePath) {
         Storage.filePath = filePath;
     }
 
+    /**
+     * Creates a new file and directory to store
+     * save file, if it does not already exist.
+     *
+     * @throws IOException if an I/O error has occurred.
+     */
     public static void createSavedFile() throws IOException {
         File f = new File(filePath); // filePath == "data/taskList.txt"
         File directory = new File("data");
@@ -38,6 +53,15 @@ public class Storage {
         System.out.println();
     }
 
+    /**
+     * Returns an Array of Strings with each index containing a <code>String</code> format
+     * of a <code>Task</code> present in the <code>taskList</code> input.
+     * <p></p>
+     * This is to be used to store the current list of tasks in a text file.
+     *
+     * @param taskList the list of tasks to be encoded into Strings.
+     * @return an Array of Strings containing all the <code>Task</code> present in <code>taskList</code>.
+     */
     public static ArrayList<String> encodeTasksToString(ArrayList<Task> taskList) {
         ArrayList<String> dataToStore = new ArrayList<>();
         String type, status, description, by, from, to, index;
@@ -74,6 +98,16 @@ public class Storage {
         return dataToStore;
     }
 
+    /**
+     * Decodes an encoded <code>Task</code> present in the input <code>str</code>.
+     * Returns the <code>Task</code> from the input <code>str</code>.
+     * <p></p>
+     * This helps in the storing of the current list of tasks in a text file.
+     *
+     * @param str the encoded String containing <code>Task</code>.
+     * @return a <code>Task</code> decoded from the input <code>str</code>.
+     * @throws FileParseReadingException if <code>str</code> not encoded properly.
+     */
     public static Task decodeTaskFromStrings(String str) throws FileParseReadingException {
         String[] parsed = str.split(SEPARATOR);
         Task task;
@@ -98,8 +132,11 @@ public class Storage {
         return task;
     }
 
-    //File reading and writing function
-
+    /**
+     * Prints the contents of the <code>taskList.txt</code> if it exists.
+     *
+     * @throws FileNotFoundException if <code>filePath</code> not found or saved file does not exist.
+     */
     public static void showFileContents() throws FileNotFoundException {
         File f = new File(filePath); // create a File for the given file path
         Scanner s = new Scanner(f); // create a Scanner using the File as the source
@@ -109,21 +146,37 @@ public class Storage {
         }
     }
 
+    /**
+     * Reads the contents of the task list stored in the saved file
+     * specified by the <code>filePath</code>. Returns the contents
+     * as a instance of a <code>TaskList</code> class;
+     *
+     * @return a instance of <code>TaskList</code> with its contents
+     *         filled by the contents of the specified file.
+     * @throws FileParseReadingException if the <code>Strings</code> in file not encoded properly.
+     * @throws FileNotFoundException if the <code>filePath</code> cannot be found.
+     */
     public static TaskList readFileContents() throws FileNotFoundException, FileParseReadingException {
         ArrayList<Task> list = new ArrayList<>();
-        Task temp;
+        Task tempTask;
         File f = new File(filePath); // create a File for the given file path
         Scanner s = new Scanner(f); // create a Scanner using the File as the source
         if (s.hasNext()) {
             s.nextLine(); // to filter out the title of the file
         }
         while (s.hasNext()) {
-            temp = decodeTaskFromStrings(s.nextLine());
-            list.add(temp);
+            tempTask = decodeTaskFromStrings(s.nextLine());
+            list.add(tempTask);
         }
         return new TaskList(list);
     }
 
+    /**
+     * Writes the contents of the input <code>textToAdd</code> into the
+     * file specified by <code>filePath</code>.
+     *
+     * @throws IOException if an I/O error has occurred.
+     */
     public static void writeToFile(ArrayList<String> textToAdd) throws IOException {
         FileWriter fw = new FileWriter(filePath);
         for (String str : textToAdd) {
@@ -132,6 +185,13 @@ public class Storage {
         fw.close();
     }
 
+    /**
+     * Writes the contents of the input <code>taskList</code> into the
+     * file specified by <code>filePath</code> after encoding the
+     * <code>Task</code> into <code>Strings</code>.
+     *
+     * @throws IOException if an I/O error has occurred.
+     */
     public static void saveToFile(TaskList taskList) throws IOException {
         ArrayList<String> linesToWrite;
         linesToWrite = Storage.encodeTasksToString(taskList.getTasksList());
