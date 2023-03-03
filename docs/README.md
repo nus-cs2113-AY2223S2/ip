@@ -11,6 +11,7 @@
 ### Add a Task into the List
 1. ``todo``
 - this command allows users to add a task that does not specify a time or date
+
 #### Format of Input
 
 ```
@@ -26,6 +27,7 @@ You currently have 1 tasks in your list.
 
 2. ``deadline``
 - This command allows users to add a task that needs to be done before a specific date or time
+
 #### Format of Input
 
 ```
@@ -41,6 +43,7 @@ You currently have 1 tasks in your list.
 
 3. ``event``
 - This command allows users to add a task that starts and ends at a specific date or time
+
 #### Format of Input
 
 ```
@@ -58,6 +61,7 @@ You currently have 1 tasks in your list.
 ``delete``
 - This command allows users to delete a task from the list
 - The number after the command is the index of the task in the list
+
 #### Format of Input
 
 ```
@@ -76,6 +80,7 @@ You currently have 2 tasks in your list.
 - This command allows users to mark a task as done
 - The number after the command is the index of the task in the list
 - The task on the list will be updated from `[ ]` to `[X]`
+
 #### Format of Input
 
 ```
@@ -93,6 +98,7 @@ Here are the tasks in your list:
 - This command allows users to mark a task as not done
 - The number after the command is the index of the task in the list
 - The task on the list will be updated from `[X]` to `[ ]`
+
 #### Format of Input
 
 ```
@@ -112,6 +118,7 @@ Here are the tasks in your list:
   - Task of type `todo` will be displayed: `[T][ ] TASK_NAME`
   - Task of type `deadline` will be displayed: `[D][ ] TASK_NAME (by: DATE)`
   - Task of type `event` will be displayed: `[E][ ] TASK_NAME (from: START_DATE to: END_DATE)`
+
 #### Format of Input
 
 ```
@@ -129,6 +136,7 @@ Here are the tasks in your list:
 ### Finding a Task in the List
 ``find``
 - This command allows users to see all tasks that contains the keyword in their list
+
 #### Format of Input
 
 ```
@@ -145,6 +153,7 @@ Here are the matching tasks in your list:
 ### Exiting Duke
 ``bye``
 - This command allows users to exit the programme
+
 #### Format of Input
 
 ```
