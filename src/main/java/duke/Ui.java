@@ -114,4 +114,11 @@ public class Ui {
         System.out.println("    Bye. Hope to see you again soon!");
         showLine();
     }
+
+    public void showFoundTasks(ArrayList<Task> tasks, String keyword) {
+        System.out.println("    Here are the tasks containing '" + keyword + "':");
+        for (int i = 0; i < tasks.size(); i++) {
+            System.out.println("    " + tasks.get(i).getLabel());
+        }
+    }
 }
