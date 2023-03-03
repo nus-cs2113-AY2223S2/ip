@@ -45,14 +45,15 @@ todo rent car
     _________________________________________
     
     Now you have 1 tasks in your list!
-```
-#
+```      
 
+<br>
+    
 ### `Deadline` - add a Deadline task to the list
 
 The user can add Deadline-type tasks to the list.
 Deadline-type tasks have deadlines.
-A '/' needs to be added to separate the task name and deadline.
+A `/` needs to be added to separate the task name and deadline.
 
 Example of usage: `deadline <task name/deadline>`
 
