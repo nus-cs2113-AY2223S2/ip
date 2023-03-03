@@ -56,7 +56,7 @@ public class TaskDeleter extends ErrorMessages {
 
 
     /**
-     *
+     * This function checks whether the index provided is within the size of the list of tasks
      * @param taskList Delete a task from this list. Only bringing the tasklist in for it's size here
      * @param indexToDelete Connotates which task to delete
      * @return Returns true if the mark index is within the size of the tasklist
