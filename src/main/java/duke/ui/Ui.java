@@ -136,4 +136,18 @@ public class Ui {
     public static void printEmptyFilterMessage(){
         System.out.println("Please enter a keyword. The keyword cannot be left empty.");
     }
+
+    /**
+     * Displays an error message when user enters a command in the wrong format.
+     */
+    public static void printInvalidFormatMessage(){
+        System.out.println("The command is in the wrong format. Please try again.");
+    }
+
+    /**
+     * Displays an error message when user leaves the description of the command empty.
+     */
+    public static void printEmptyDescriptionMessage(){
+        System.out.println("The description of the command is empty. Please try again.");
+    }
 }

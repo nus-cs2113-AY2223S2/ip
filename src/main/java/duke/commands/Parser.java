@@ -1,9 +1,6 @@
 package duke.commands;
 
-import duke.exception.EmptyCommandException;
-import duke.exception.EmptyFilterException;
-import duke.exception.EmptyIndexException;
-import duke.exception.InvalidIndexException;
+import duke.exception.*;
 
 import duke.tasks.*;
 import duke.ui.Ui;
@@ -53,6 +50,10 @@ public class Parser {
             Ui.printEmptyIndexMessage();
         } catch (EmptyFilterException e) {
             Ui.printEmptyFilterMessage();
+        } catch (InvalidFormatException e) {
+            Ui.printInvalidFormatMessage();
+        } catch (EmptyDescriptionException e) {
+            Ui.printEmptyDescriptionMessage();
         }
         return null;
     }

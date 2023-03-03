@@ -20,7 +20,7 @@ public class MarkTaskCommand extends Command{
      * @param taskList The task list to be referenced from for the marking of the task.
      *                 Checks for whether the index is out of bounds.
      * @throws InvalidIndexException The exception thrown when user enters an invalid index.
-     * @throws EmptyCommandException The exception thrown when user did not input the index.
+     * @throws EmptyIndexException The exception thrown when user did not input the index.
      */
     public MarkTaskCommand (String[] cases, TaskList taskList) throws InvalidIndexException, EmptyIndexException {
         if (cases.length == 1){

@@ -1,6 +1,7 @@
 package duke.commands;
 
 import duke.exception.EmptyCommandException;
+import duke.exception.EmptyDescriptionException;
 import duke.tasks.Task;
 import duke.tasks.TaskList;
 import duke.tasks.Todo;
@@ -17,8 +18,9 @@ public class CreateTodoCommand extends Command{
      *
      * @param cases Array that contains the task and description.
      * @throws EmptyCommandException The exception thrown when user enters a command with no description.
+     *
      */
-    public CreateTodoCommand(String[] cases) throws EmptyCommandException {
+    public CreateTodoCommand(String[] cases) throws EmptyCommandException{
         if (cases.length == 1) {
             throw new EmptyCommandException();
         }

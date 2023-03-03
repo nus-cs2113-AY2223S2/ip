@@ -19,7 +19,7 @@ public class DeleteTaskCommand extends Command{
      * @param taskList The task list to be referenced from for the deleting of the task at the index.
      *                 Used for identifying if the index is out of bounds.
      * @throws InvalidIndexException The exception thrown when user enters an invalid index.
-     * @throws EmptyCommandException The exception thrown when user did not input the index.
+     * @throws EmptyIndexException The exception thrown when user did not input the index.
      */
     public DeleteTaskCommand(String[] cases, TaskList taskList) throws InvalidIndexException, EmptyIndexException {
         if (cases.length == 1){
