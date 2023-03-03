@@ -19,6 +19,9 @@ public class Duke {
         storage.openFile(taskList);
     }
 
+    /**
+     * Process user inputs as commands and terminates only when 'bye' is inputted by the user.
+     */
     public void run() {
         ui.printStartMessage();
 
