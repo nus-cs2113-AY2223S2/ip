@@ -202,6 +202,7 @@ public class TaskList {
                 }
 
             }
+            System.out.println(HORIZONTAL);
 
         } catch (ArrayIndexOutOfBoundsException e) {
             showEmptyListNumMsg();
