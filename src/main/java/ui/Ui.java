@@ -17,7 +17,7 @@ import java.util.Scanner;
 
 public class Ui {
 
-    private final static String logo = "____   _   _  ____   _____   -        \n"
+    private final static String logo = "____   _   _  ____   _____   _        \n"
                              + "|  _ \\ | | | ||  _ \\ |  ___| | |    \n"
                              + "| | | || | | || | | || |__   | |      \n"
                              + "| | | || | | || | | ||  __|  | |      \n"
