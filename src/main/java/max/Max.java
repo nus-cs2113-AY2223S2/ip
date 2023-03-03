@@ -124,14 +124,12 @@ public class Max {
     }
 
     public static void main(String[] args) {
-        ui = new Ui();
-        ui.greet();
-
         // Init task subsystem (Controller)
         taskManager = new TaskManager();
         taskManager.loadData();
 
         // Greet when data has been loaded and problematic saved data has been highlighted
+        ui = new Ui();
         ui.greet();
         setIsListening(true);
 
