@@ -8,6 +8,10 @@ import duke.exceptions.UnknownCommandException;
 import java.io.IOException;
 import java.util.ArrayList;
 
+
+/**
+ * Main class of Duke that contains code for Duke to function
+ */
 public class Duke {
 
     public static void main(String[] args) {

@@ -1,5 +1,9 @@
 package duke.tasks;
 
+/**
+ * Represents tasks set by user
+ * Keeps track of the task type, description, dates and status
+ */
 public class Task {
 
     protected String description;
@@ -11,9 +15,11 @@ public class Task {
     public String getDescription() {
         return description;
     }
+
     public String getType() {
         return type;
     }
+
     public String getStart() {
         return start;
     }
@@ -27,10 +33,6 @@ public class Task {
         this.isDone = false;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public void setDone() {
         this.isDone = true;
     }
@@ -39,10 +41,18 @@ public class Task {
         this.isDone = false;
     }
 
+    /**
+     * Checks whether the task is done and returns the correct icon to represent the status of the task
+     * @return 'X' if the task is done and ' ' if task is not done
+     */
     public String getStatusIcon() {
-        return (isDone ? "X" : " "); // mark done task with X
+        return (isDone ? "X" : " ");
     }
 
+    /**
+     * Prints the Task in the correct format required in the list
+     * The format is determined by the type of task
+     */
     public void printTask() {
         System.out.println("task");
     }
