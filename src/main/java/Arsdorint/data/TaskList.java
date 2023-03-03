@@ -4,6 +4,7 @@ import Arsdorint.task.Task;
 
 import java.util.ArrayList;
 
+/* Represent the TaskList, and some functions to deal with messages */
 public class TaskList {
     public TaskList() {
     }

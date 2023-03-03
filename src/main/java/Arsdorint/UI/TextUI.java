@@ -19,6 +19,9 @@ public class TextUI {
         this.output = System.out;
     }
 
+    /**
+     * Get user command and filter blank lines
+     */
     public String getUserCommand() {
         output.print(UI_PROMPT);
         String userInput = input.nextLine();
@@ -28,16 +31,29 @@ public class TextUI {
         return userInput;
     }
 
+    /**
+     * Ignore if there is an empty line
+     */
     public boolean shouldIgnore(String input) {
         return input.trim().isEmpty();
     }
 
+    /**
+     * Display multiple messages, separated by newline
+     *
+     * @param messages String array of message need to be displayed.
+     */
     public static void showToUser(String... messages) {
         for (String m : messages) {
             System.out.println(m);
         }
     }
 
+    /**
+     * Show the message and the tasks affected by the command
+     *
+     * @param res Result of a command
+     */
     public void showResToUser(CommandRes res) {
         output.println(MessageList.MESSAGE_DIVIDER);
         showToUser(res.messageTop);

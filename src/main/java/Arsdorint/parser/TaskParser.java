@@ -16,9 +16,26 @@ import static Arsdorint.MessageList.*;
 import static Arsdorint.MessageList.MESSAGE_DIVIDER;
 import static Arsdorint.data.Storage.save;
 
+/**
+ * A class that handle the parsing of command
+ */
+
 public class TaskParser {
-    public TaskParser() {
+    private TaskList taskList;
+
+    /**
+     * Parser instance take in the taskList to be manipulated
+     */
+    public TaskParser(TaskList taskList) {
+        this.taskList = taskList;
     }
+
+    /**
+     * Parse user input string
+     *
+     * @param input The user input string
+     * @return Command and its arguments
+     */
     public Command parsedCommand(String input) {
         String[] command = input.split(" ");
         if (command.length == 0) {

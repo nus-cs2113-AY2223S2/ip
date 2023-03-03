@@ -37,7 +37,7 @@ public class Storage {
             File file = new File(STORAGE_FILE_NAME);
             Scanner fileRead = new Scanner(file);
             while (fileRead.hasNext()) {
-                new TaskParser().fileParser(fileRead.nextLine());
+                new TaskParser(new TaskList()).fileParser(fileRead.nextLine());
             }
             fileRead.close();
             return MESSAGE_LOAD_FILE;
