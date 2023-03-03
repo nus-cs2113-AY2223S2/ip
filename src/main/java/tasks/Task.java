@@ -15,15 +15,19 @@ public class Task {
         return isDone;
     }
 
-
-    // class initialization
+    /**
+     * Class constructor with <code>description</code> and
+     * <code>type</code> parameters for initialization.
+     *
+     * @param description the description of the task.
+     * @param type the category of task.
+     */
     public Task(String description, String type) {
         this.description = description;
         this.isDone = false;
         this.type = type;
     }
 
-    // class modifiers
     public void markAsDone() {
         this.isDone = true;
     }
@@ -32,7 +36,6 @@ public class Task {
         this.isDone = false;
     }
 
-    // returning status icon
     public String getStatusIcon() {
         return (isDone ? "X" : " ");
     }

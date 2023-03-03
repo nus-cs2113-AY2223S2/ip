@@ -9,19 +9,44 @@ import tasks.TaskList;
 import tasks.ToDo;
 import ui.Ui;
 
-import java.util.ArrayList;
-
+/**
+ * Represents a particular command to be carried out consisting of the
+ * command type and command description.
+ * <p></p>
+ * A <code>Command</code> object corresponds to a particular command represented
+ * by <code>type</code> and <code>fullDescription</code> (e.g. <code>DELETE,6</code>)
+ */
 public class Command {
     private final CommandType type;
     private final String fullDescription;
 
+    /**
+     * Class constructor specifying the type of command and its follow-up description.
+     *
+     * @param type an Enum that represents a particular command.
+     * @param fullDescription a String that contains the follow-up description for the command.
+     */
     public Command(CommandType type, String fullDescription) {
         this.type = type;
         this.fullDescription = fullDescription;
     }
+
+    /**
+     * Returns if the command type is <code>CommandType.EXIT</code>
+     * in order to terminate the programme.
+     *
+     * @return      if the command is the exit command type.
+     */
     public boolean isExit() {
         return this.type == CommandType.EXIT;
     }
+
+    /**
+     * Based on the <code>type</code>, carries out different tasks assigned
+     * while fully checking for any exceptions that may occur along the way.
+     *
+     * @param taskList the current list of tasks to be modified or used.
+     */
     public void execute(TaskList taskList) {
         boolean isChangedMarking = false;
         String description;

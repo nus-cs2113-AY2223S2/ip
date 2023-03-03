@@ -16,6 +16,16 @@ public class Event extends Task{
         return end;
     }
 
+    /**
+     * Class constructor with <code>description</code> and
+     * <code>start</code> and <code>end</code> as
+     * parameters for initialization.
+     *
+     * @param description the description of the task.
+     * @param start the start date of the task.
+     * @param end the end date of the task.
+     * @throws DateTimeException if the date is given in the wrong format.
+     */
     public Event(String description, String start, String end) throws DateTimeException {
         super(description, "E");
         this.start = start;
