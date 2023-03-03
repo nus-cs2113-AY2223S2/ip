@@ -7,6 +7,7 @@ public class Parser {
     private DeleteCommand delete;
     private MarkCommand mark;
     private UnMarkCommand unmark;
+    private FindCommand find;
     private Ui ui;
     private Storage store;
     private TaskList arrayLL;
@@ -48,7 +49,10 @@ public class Parser {
             String tempi = arr[1];
             this.add = new AddCommand(ui, store, arrayLL, type);
             add.complete(tempi);
-
+        }
+        if (arr.length>1 && arr[0].equals("find")){
+            this.find = new FindCommand(ui, store, arrayLL);
+            find.complete(arr[1]);
         }
         if (arr.length > 1 && arr[0].equals("todo")) {
             type = 2;
