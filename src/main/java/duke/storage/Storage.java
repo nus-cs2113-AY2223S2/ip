@@ -64,8 +64,8 @@ public class Storage {
 
     private void addSavedTasksToList(String[] splitTask) {
         String taskType = splitTask[0];
-        boolean isDone = Boolean.parseBoolean(splitTask[1]);
         if (taskType.equals("T") || taskType.equals("D") || taskType.equals("E")) {
+            boolean isDone = Boolean.parseBoolean(splitTask[1]);
             String taskDescription = splitTask[2];
             if (taskType.equals("T")) {
                 tasks.addTodo(taskDescription, isDone);
@@ -99,9 +99,9 @@ public class Storage {
             String taskStatus = task.getStatusIcon();
             String taskDescription = task.getDescription();
             if (taskStatus.equals("X")) {
-                taskStatus = "1";
+                taskStatus = "true";
             } else {
-                taskStatus = "0";
+                taskStatus = "false";
             }
             if (taskType.equals("T")) {
                 formattedTask += taskType + " | " + taskStatus + " | " + taskDescription + System.lineSeparator();

@@ -8,7 +8,7 @@ Add a ```todo```, ```deadline```, or ```event``` task to list.
 
 ### Delete Task 
 
-Users can ```delete``` a todo, deadline, or event to list. 
+Users can ```delete``` a task in the list. 
 
 ### Manage Task
 
