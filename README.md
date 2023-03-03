@@ -228,14 +228,14 @@ Exits the program.
 Format: ```bye```
 
 ## Command Summary 
-| **Action**   | **Format, Examples**                                                                                            |
-|--------------|-----------------------------------------------------------------------------------------------------------------|
-| Add To-do    | ```todo TASK_DESCRIPTION```<br/>e.g.,```todo read book```                                                       |
-| Add Deadline | ```deadline TASK_DESCRIPTION /by DATE_TIME```<br/> ```deadline assignment 1 /by Thursday 10pm```                |
-| Add Event    | ```event TASK_DESCRIPTION /from START_DATE_TIME /to END_DATE_TIME```<br/> ```event lecture /from 2pm /to 5pm``` |
-| Delete Task  | ```delete INDEX```<br/>e.g.,```delete 5```                                                                      |
-| Mark Task    | ```mark INDEX```<br/>e.g.,```mark 1```                                                                          |
-| Unmark Task  | ```unmark INDEX```<br/>e.g.,`- ```unmark 3```                                                                   |
-| Find Task    | ```find KEYWORDS [MORE_KEYWORDS]```<br/>e.g.,```find cs2113```                                                  |
-| List         | ```list```                                                                                                      |
-| Exit         | ```bye```                                                                                                       |
+| **Action**   | **Format, Examples**                                                            |
+|--------------|---------------------------------------------------------------------------------|
+| Add To-do    | `todo TASK_DESCRIPTION`<br/>e.g.,`todo read book`                               |
+| Add Deadline | `deadline TASK_DESCRIPTION /by DATE_TIME`<br/> `deadline assignment 1 /by Thursday 10pm` |
+| Add Event    | `event TASK_DESCRIPTION /from START_DATE_TIME /to END_DATE_TIME`<br/> `event lecture /from 2pm /to 5pm` |
+| Delete Task  | `delete INDEX`<br/>e.g.,`delete 5`                                              |
+| Mark Task    | `mark INDEX`<br/>e.g.,`mark 1`                                                  |
+| Unmark Task  | `unmark INDEX`<br/>e.g., `unmark 3`                                             |
+| Find Task    | `find KEYWORDS [MORE_KEYWORDS]`<br/>e.g.,`find cs2113`                          |
+| List         | `list`                                                                          |
+| Exit         | `bye`                                                                           |
