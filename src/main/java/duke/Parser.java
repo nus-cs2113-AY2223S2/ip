@@ -6,10 +6,25 @@ import duke.task.Deadline;
 import duke.task.Task;
 
 public class Parser {
+
+    /**
+     * Splits the user input based on the splitter string
+     * into n items.
+     * @param line line to split
+     * @param splitter String to split with.
+     * @param n number of items to split into.
+     * @return
+     */
     public static String[] splitCommand(String line, String splitter, int n){
         return line.split(splitter, n);
     }
 
+    /**
+     * Creates an event item based on descriptions given by the user.
+     * @param words the task description.
+     * @return the event item to be created.
+     * @throws MissingDescriptionException description is empty.
+     */
     public static Event parseEvent (String[] words) throws MissingDescriptionException {
         if (words.length != 2) {
             throw new MissingDescriptionException();
@@ -26,6 +41,12 @@ public class Parser {
         return event;
     }
 
+    /**
+     * Creates a deadline item based on descriptions given by the user.
+     * @param words the task description.
+     * @return the deadline item to be created.
+     * @throws MissingDescriptionException description is empty.
+     */
     public static Deadline parseDeadline (String[] words) throws MissingDescriptionException {
         if (words.length != 2) {
             throw new MissingDescriptionException();
@@ -38,6 +59,12 @@ public class Parser {
         return deadline;
     }
 
+    /**
+     * Creates a task item based on descriptions given by the user.
+     * @param words the task description.
+     * @return the task item to be created.
+     * @throws MissingDescriptionException description is empty.
+     */
     public static Task parseTodo (String[] words) throws MissingDescriptionException {
         if (words.length != 2) {
             throw new MissingDescriptionException();

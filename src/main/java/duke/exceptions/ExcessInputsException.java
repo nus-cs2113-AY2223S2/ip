@@ -1,6 +1,5 @@
 package duke.exceptions;
 
 public class ExcessInputsException extends Exception {
-//no input
-    
+// When more than the required amount of params is passed into the command.
 }

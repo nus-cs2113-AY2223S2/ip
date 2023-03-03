@@ -1,8 +1,6 @@
 package duke;
 
 import duke.exceptions.EmptyFindException;
-import duke.exceptions.EmptyListException;
-import duke.exceptions.ExcessInputsException;
 import duke.exceptions.MissingDescriptionException;
 import duke.task.Deadline;
 import duke.task.Event;
@@ -34,6 +32,14 @@ public class TaskList {
         }
         Ui.printMatchingList(matchingTasks);
     }
+
+    /**
+     * Sets the completion status of the task based on its index number
+     * in the list as well as the user command.
+     * @param tasks the task list.
+     * @param words the task description.
+     * @param command the command given by user.
+     */
     public static void editMarkStatus(ArrayList<Task> tasks, String[] words, String command) {
         int index = Integer.parseInt(words[1]) - 1;
         if (command.equals("unmark")) {
@@ -46,21 +52,44 @@ public class TaskList {
         System.out.print(tasks.get(index).toString() + "\n" + LINE);
     }
 
+    /**
+     * Adds an event item to the task list.
+     * @param tasks the task list.
+     * @param words the task description.
+     * @throws MissingDescriptionException Missing parameters.
+     */
     public static void addEvent(ArrayList<Task> tasks, String[] words) throws MissingDescriptionException {
         Event event = Parser.parseEvent(words);
         tasks.add(event);
     }
 
+    /**
+     * Adds a deadline item to the task list.
+     * @param tasks the task list.
+     * @param words the task description.
+     * @throws MissingDescriptionException Missing parameters.
+     */
     public static void addDeadline(ArrayList<Task> tasks, String[] words) throws MissingDescriptionException {
         Deadline deadline = Parser.parseDeadline(words);
         tasks.add(deadline);
     }
 
+    /**
+     * Adds a todo item to the task list.
+     * @param tasks the task list.
+     * @param words the task description.
+     * @throws MissingDescriptionException Missing parameters.
+     */
     public static void addTodo(ArrayList<Task> tasks, String[] words) throws MissingDescriptionException {
         Task todo = Parser.parseTodo(words);
         tasks.add(todo);
     }
 
+    /**
+     * Deletes a task from the task list.
+     * @param tasks the task list.
+     * @param words the task description.
+     */
     public static void deleteTask(ArrayList<Task> tasks, String[] words) {
         int index = Integer.parseInt(words[1]) - 1;
         System.out.print(LINE + "    Noted. I've removed this task:\n      " +

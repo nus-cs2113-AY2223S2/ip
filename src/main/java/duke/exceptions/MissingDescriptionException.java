@@ -1,5 +1,5 @@
 package duke.exceptions;
 
 public class MissingDescriptionException extends Throwable {
-//no inputs
+//When user input misses one or more parameters required for the command.
 }

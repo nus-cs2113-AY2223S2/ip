@@ -30,6 +30,10 @@ public class Storage {
         outputWriter.close();
     }
 
+    /**
+     * Catches errors when writing changes to the data file.
+     * @param tasks the task list.
+     */
     public void saveChanges(ArrayList<Task> tasks) {
         try {
             writeToFile(tasks);
@@ -38,12 +42,6 @@ public class Storage {
         }
     }
 
-    /**
-     * Reads data stored in the data.txt file, then processes and stores the data in
-     * the ArrayList<Task></Task> tasks.
-     * @param tasks the list of tasks the user has stored.
-     * @throws IOException The exception will be thrown if the data file cannot be found or read.
-     */
     private static void readFile(ArrayList<Task> tasks) throws IOException {
         String line;
         File f = new File(FILEPATH);
@@ -77,11 +75,6 @@ public class Storage {
         }
     }
 
-    /**
-     * Checks if a data file exists in the default file path. If not a new data file will be
-     * created at the default file path.
-     * @throws IOException The exception will be thrown if there is errors in creating the new file.
-     */
     private static void createFile() throws IOException {
         File file = new File(FILEPATH);
         if (file.createNewFile()) {
@@ -91,6 +84,12 @@ public class Storage {
         }
     }
 
+    /**
+     * Checks if the data file exists. Creates it if it does not.
+     * Then it will read the data stored in the data file and add
+     * data to task list accordingly.
+     * @param tasks the task list.
+     */
     public static void load(ArrayList<Task> tasks){
         try {
             createFile();
