@@ -3,6 +3,7 @@ package duke.parser;
 import duke.command.DeleteCommand;
 import duke.command.MarkCommand;
 import duke.command.UnmarkCommand;
+import duke.command.AddCommand;
 import duke.error.DukeException;
 import duke.error.ErrorTypes;
 import duke.error.Error;
@@ -129,5 +130,25 @@ public class InputValidity {
         if (!isAtLeastTwoWord) {
             Error.throwError(ErrorTypes.INVALID_FIND_COMMAND);
         }
+    }
+
+    /**
+     * Only called during parsing of deadline and event command, to check whether a task name is present
+     *
+     * @param input input provided by user, without the deadline or event word
+     * @param command command of the input, "deadline" or "event"
+     * @throws DukeException when task name is absent
+     */
+    protected static void checkTaskName(String input, String command) throws DukeException {
+        String[] inputArray = input.split(" ");
+        ErrorTypes error;
+        if (command.equals(AddCommand.COMMAND_DEADLINE) && inputArray[0].equals(DEADLINE_DELIMITER.trim())) {
+            error = ErrorTypes.INVALID_DEADLINE_COMMAND;
+        } else if (command.equals(AddCommand.COMMAND_EVENT) && inputArray[0].equals(EVENT_FROM_DELIMITER.trim())) {
+            error = ErrorTypes.INVALID_EVENT_COMMAND;
+        } else {
+            return;
+        }
+        Error.throwError(error);
     }
 }

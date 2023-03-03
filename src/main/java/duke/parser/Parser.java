@@ -101,6 +101,7 @@ public class Parser {
         try {
             InputValidity.checkDeadline(input);
             input = input.replaceFirst(AddCommand.COMMAND_DEADLINE, "").trim();
+            InputValidity.checkTaskName(input, AddCommand.COMMAND_DEADLINE);
             String taskName = input.split(InputValidity.DEADLINE_DELIMITER, 2)[0].trim();
             String deadline = input.split(InputValidity.DEADLINE_DELIMITER, 2)[1].trim();
             return new DeadlineCommand(taskName, deadline);
@@ -119,6 +120,7 @@ public class Parser {
         try {
             InputValidity.checkValidEvent(input);
             input = input.replaceFirst(AddCommand.COMMAND_EVENT, "").trim();
+            InputValidity.checkTaskName(input, AddCommand.COMMAND_EVENT);
             String taskName = input.split(InputValidity.EVENT_FROM_DELIMITER, 2)[0].trim();
             input = input.replaceFirst(taskName + InputValidity.EVENT_FROM_DELIMITER, "").trim();
             String startDate = input.split(InputValidity.EVENT_TO_DELIMITER, 2)[0].trim();
