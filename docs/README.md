@@ -4,6 +4,13 @@
 
 This is Duke, a chatbot. He is here to assist you in compiling a task list that you can reference to.
 
+## `Download`
+
+1) Make sure that your computer supports Java 11 or above.  
+2) Download this [jar file](https://github.com/geraldkoh4/ip/releases/download/A-Release/Duke.jar).  
+3) Copy the file path.  
+4) Go into your console and enter `"java -jar {file path}"`.   
+
 ## `Features` 
 
 1) Add a Task  
@@ -17,9 +24,9 @@ This is Duke, a chatbot. He is here to assist you in compiling a task list that 
 
 Add a "To Do" Task to the list. 
 
-`Format`: todo {description} 
+**`Format`**: todo {description} 
 
-*Sample Input Command*: `todo Fly a Kite`
+*Sample Input Command*: **`todo Fly a Kite`**
 
 *Output*:
 ```
@@ -139,7 +146,6 @@ Echo is a command that you can use to test if the chatbot is responding!
 ```
 1
 ```
-# Additional Note
 
 ## Flags
 
