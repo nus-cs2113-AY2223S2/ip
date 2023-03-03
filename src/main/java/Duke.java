@@ -229,7 +229,6 @@ public class Duke {
                 if (!(isTo && isFrom)) throw new IllegalInputException();
                 Event event = new Event(eventInput, eventFrom, eventTo);
                 tasks.add(event);
-                taskCounter += 1;
                 printAddEvent(event);
                 break;
             case "delete":
