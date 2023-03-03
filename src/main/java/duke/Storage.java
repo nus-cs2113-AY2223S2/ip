@@ -108,9 +108,9 @@ public class Storage {
      *
      * @param tasks the array of tasks
      * @return a String of the Task in the correct format
-     * @throws IOException when file does not exist
+     * @throws NullPointerException
      */
-    public static String formatTask(ArrayList<Task> tasks) throws IOException {
+    public static String formatTask(ArrayList<Task> tasks) throws NullPointerException {
         String text = null;
         for (Task i : tasks) {
             if (i.getType().equals("todo")) {
@@ -131,11 +131,16 @@ public class Storage {
      *
      * @param tasks an array of tasks that will be added to the file
      * @throws IOException when file does not exist
+     * @throws NullPointerException
      */
-    public static void updateFile(ArrayList<Task> tasks) throws IOException {
-        FileWriter fw = new FileWriter(filepath);
-        String textToAdd = formatTask(tasks);
-        fw.write(textToAdd);
-        fw.close();
+    public static void updateFile(ArrayList<Task> tasks) throws IOException, NullPointerException {
+        FileWriter fw = null;
+        try {
+            fw = new FileWriter(filepath);
+            String textToAdd = formatTask(tasks);
+            fw.write(textToAdd);
+        } finally {
+            fw.close();
+        }
     }
 }
