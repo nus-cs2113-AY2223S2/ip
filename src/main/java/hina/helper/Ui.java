@@ -1,6 +1,14 @@
 package hina.helper;
 
+import hina.task.Task;
+
+/**
+ * Contains methods to print messages to the user.
+ */
 public class Ui {
+    /**
+     * Class constructor.
+     */
     public Ui() {
     }
 
@@ -28,5 +36,24 @@ public class Ui {
     }
     public static void showDateTimeError() {
         System.out.println("Please use dd-MMM-yyyy HH:mm format!");
+    }
+    public static void emptyListMessage() {
+        System.out.println("There are no items on the list :o");
+    }
+    public static void taskAdded(Task task) {
+        System.out.println("Noted! This task has been added:");
+        System.out.println(task);
+    }
+    public static void saveFound() {
+        System.out.println("Saved list found, loading saved list...");
+    }
+    public static void saveNotFound() {
+        System.out.println("Save file not found! Creating new file...");
+    }
+    public static void saveCreated() {
+        System.out.println("Save file created!");
+    }
+    public static void fileCreateError() {
+        System.out.println("T.T Ahh! Something went wrong, could not create file!");
     }
 }
