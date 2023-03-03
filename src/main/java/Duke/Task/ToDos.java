@@ -1,6 +1,7 @@
 package Duke.Task;
 
 import Duke.Exception.EmptyToDoException;
+import Duke.Ui;
 
 public class ToDos extends Task {
     private static final int TODOS_INDEX = 5;
