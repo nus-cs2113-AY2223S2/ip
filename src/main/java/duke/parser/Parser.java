@@ -84,7 +84,7 @@ public class Parser {
     private Command prepareTodoCommand(String input) {
         try {
             InputValidity.checkTodo(input);
-            String taskName = input.replace(AddCommand.COMMAND_TODO, "").trim();
+            String taskName = input.replaceFirst(AddCommand.COMMAND_TODO, "").trim();
             return new TodoCommand(taskName);
         } catch (DukeException e) {
             return new InvalidCommand(ErrorTypes.INVALID_TODO);
@@ -100,7 +100,7 @@ public class Parser {
     private Command prepareDeadlineCommand(String input) {
         try {
             InputValidity.checkDeadline(input);
-            input = input.replace(AddCommand.COMMAND_DEADLINE, "").trim();
+            input = input.replaceFirst(AddCommand.COMMAND_DEADLINE, "").trim();
             String taskName = input.split(InputValidity.DEADLINE_DELIMITER, 2)[0].trim();
             String deadline = input.split(InputValidity.DEADLINE_DELIMITER, 2)[1].trim();
             return new DeadlineCommand(taskName, deadline);
@@ -118,9 +118,9 @@ public class Parser {
     private Command prepareEventCommand(String input) {
         try {
             InputValidity.checkValidEvent(input);
-            input = input.replace(AddCommand.COMMAND_EVENT, "").trim();
+            input = input.replaceFirst(AddCommand.COMMAND_EVENT, "").trim();
             String taskName = input.split(InputValidity.EVENT_FROM_DELIMITER, 2)[0].trim();
-            input = input.replace(taskName + InputValidity.EVENT_FROM_DELIMITER, "").trim();
+            input = input.replaceFirst(taskName + InputValidity.EVENT_FROM_DELIMITER, "").trim();
             String startDate = input.split(InputValidity.EVENT_TO_DELIMITER, 2)[0].trim();
             String endDate = input.split(InputValidity.EVENT_TO_DELIMITER, 2)[1].trim();
             return new EventCommand(taskName, startDate, endDate);
@@ -151,7 +151,7 @@ public class Parser {
     private Command prepareFindCOmmand(String input) {
         try {
             InputValidity.checkValidFind(input);
-            String keyword = input.replace("find ", "").trim();
+            String keyword = input.replaceFirst("find ", "").trim();
             return new FindCommand(keyword);
         } catch (DukeException e) {
             return new InvalidCommand(ErrorTypes.INVALID_FIND_COMMAND);
@@ -166,7 +166,7 @@ public class Parser {
     */
     private Command prepareDateCommand(String input) {
         try {
-            input = input.replace(DateCommand.COMMAND_WORD, "");
+            input = input.replaceFirst(DateCommand.COMMAND_WORD, "");
             LocalDate date = LocalDate.parse(input.trim(), DateTime.inputDateFormat);
             return new DateCommand(date);
         } catch (Exception e) {
