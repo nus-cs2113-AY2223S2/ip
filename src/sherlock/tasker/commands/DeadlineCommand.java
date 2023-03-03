@@ -6,11 +6,14 @@ import storage.Storage;
 import tasks.Deadline;
 import ui.Ui;
 
+import java.time.LocalDateTime;
+
 public class DeadlineCommand extends Command {
     String name;
-    String by;
-    public DeadlineCommand(String name, String by) {
 
+    String by;
+
+    public DeadlineCommand(String name, String by) {
         this.name = name;
         this.by = by;
     }

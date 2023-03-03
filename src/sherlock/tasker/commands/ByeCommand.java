@@ -4,9 +4,9 @@ import data.TasksList;
 import storage.Storage;
 import ui.Ui;
 
-public class ByeCommand extends Command{
+public class ByeCommand extends Command {
     @Override
-    public  boolean isExit() {
+    public boolean isExit() {
         return true;
     }
 

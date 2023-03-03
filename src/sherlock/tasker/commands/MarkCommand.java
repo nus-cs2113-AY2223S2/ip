@@ -10,26 +10,22 @@ public class MarkCommand extends Command {
 
     private boolean isDone;
     private int taskIndex;
+
     public MarkCommand(boolean isDone, int taskIndex) {
         this.taskIndex = taskIndex;
         this.isDone = isDone;
     }
+
     @Override
     public void execute(TasksList tasksList, Ui ui, Storage storage) throws SherlockException {
-        {
-            String successMessage = isDone ? "Nice! I've marked this task as done:"
-                    : "OK, I've marked this task as not done yet:";
+        String successMessage = isDone ? "Nice! I've marked this task as done:"
+                : "OK, I've marked this task as not done yet:";
 
-            try {
-                Task task = tasksList.getTasks().get(taskIndex);
-                task.setIsDone(isDone);
+        Task markedTask = tasksList.markTask(taskIndex, isDone);
 
-                ui.printLines(successMessage, task.toString());
-
-                storage.writeToFile(tasksList);
-            } catch (IndexOutOfBoundsException e) {
-                ui.printLines("No task at such index!");
-            }
-        }
+        storage.writeToFile(tasksList);
+        ui.printLines(successMessage, markedTask.toString());
     }
 }
+
+
