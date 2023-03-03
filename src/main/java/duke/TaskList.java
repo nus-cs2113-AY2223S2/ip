@@ -53,13 +53,20 @@ public class TaskList {
         taskList.add(newtodo);
         listSize++;
     }
-
-    public void addTaskWithTime(String description, Datetime dt, String tasktype) {
+    
+    /**
+     * add a event or deadline
+     * 
+     * @param description the description (apart from time) of the task
+     * @param dateAndTime the time information of the task
+     * @param tasktype the type of the task
+     */
+    public void addTaskWithTime(String description, Datetime dateAndTime, String tasktype) {
         if (tasktype.equals("deadline")) {
-            Deadline newDeadline = new Deadline(description, dt);
+            Deadline newDeadline = new Deadline(description, dateAndTime);
             taskList.add(newDeadline);
         } else {
-            Event newEvent = new Event(description, dt);
+            Event newEvent = new Event(description, dateAndTime);
             taskList.add(newEvent);
         }
         listSize++;
@@ -73,6 +80,12 @@ public class TaskList {
         return this.taskList;
     }
 
+    /**
+     * search for relevant tasks
+     * 
+     * @param keyword the keyword used for searching
+     * @return A arrarList containing details of relevant tasks
+     */
     public ArrayList<Task> searchRelaventTask(String keyword) {
         ArrayList<Task> result = new ArrayList<>();
         for(Task cur: taskList) {

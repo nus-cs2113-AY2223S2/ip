@@ -26,6 +26,13 @@ public class Storage {
         return taskInfo;
     }
 
+    /**
+     * converts the datetime information in String to DateTime type
+     * 
+     * @param datetime the time information read in String type
+     * @param formatter the DateTime Formatter
+     * @return DateTime information in DateTime type
+     */
     private static Datetime convertToDT(String datetime, DateTimeFormatter formatter) {
         String[] splittedDatetime = datetime.split(" ");
         if (splittedDatetime.length == 1) {
@@ -36,6 +43,12 @@ public class Storage {
         }
     }
 
+    /**
+     * import tasks from the local file
+     * 
+     * @param path the path of th elocal file
+     * @return A ArrayList which store tasks from local file
+     */
     public static ArrayList<Task> loadFile(String path) {
         ArrayList<Task> task = new ArrayList<>();
         DateTimeFormatter loadingFormatter = DateTimeFormatter.ofPattern("MMM/dd/yyyy");
@@ -63,6 +76,12 @@ public class Storage {
         return task;
     }
 
+    /**
+     * convert the list of task into a String that can be written into the locally stored file
+     * 
+     * @param tasks the current lis of task
+     * @return A String which contains all the information of current tasklist
+     */
     private static String changeDescriptionForSaving(ArrayList<Task> tasks) {
         String content = "";
         for (int i = 0; i < tasks.size(); i++) {
@@ -84,6 +103,13 @@ public class Storage {
         return content;
     }
 
+    /**
+     * save the current list of tasks.
+     * 
+     * @param tasks the tasks
+     * @param path the path of the loal file
+     * @throws IOException
+     */
     public static void autoSave(ArrayList<Task> tasks, String path) throws IOException {
         File f = new File(path);
         if (!f.getParentFile().exists()) {
