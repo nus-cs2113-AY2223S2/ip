@@ -15,6 +15,11 @@ public class UnMarkCommand extends Command {
         this.stor = stor;
         this.arrayLL = arrayLL;
     }
+    /**
+     * If the user inputs the word mark depending on the line the functions unmarks
+     * @param line It contains the input of the line that we want to unmark
+     * @throws IOException so that the requirements are meant by user input and there is no error
+     */
 
     void complete(String line) throws IOException {
         int index = line.indexOf(" ");

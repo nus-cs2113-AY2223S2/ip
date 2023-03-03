@@ -14,6 +14,11 @@ public class DeleteCommand extends Command {
         this.store = store;
         this.arrayLL = arrayLL;
     }
+    /**
+     * This function deletes the command depending on the line input by the user
+     * @param line it is the line input by the user telling delete and which line
+     */
+
     void complete(String line) throws IOException {
         int index = line.indexOf(" ");
         if (!line.equals("delete")) {
