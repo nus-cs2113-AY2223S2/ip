@@ -8,10 +8,9 @@ import nano.task.Task;
 import nano.task.Todo;
 
 import java.util.Scanner;
-
+import java.util.ArrayList;
 public class Nano {
     private static final int HORIZONTAL_LINE_LENGTH = 100;
-    private static final int MAX_TASK_COUNT = 100;
     private static final int COMMAND_INDEX = 0;
     private static final int TASK_NAME_INDEX = 1;
     private static final int TASK_TYPE_INDEX = 2;
@@ -38,9 +37,8 @@ public class Nano {
     public static final String MESSAGE_HELP_MARK_TASK = "/mark <task> : set task as completed";
     public static final String MESSAGE_HELP_UNMARK_TASK = "/unmark <task> : set task as undone";
     public static final String MESSAGE_HELP_HELP = "/help : Displays list of all commands";
-    public static final String MEESAGE_HELP_EXIT = "/exit : Exit chatbot";
-
-    private static Task[] tasks;
+    public static final String MESSAGE_HELP_EXIT = "/exit : Exit chatbot";
+    private static ArrayList<Task> tasks;
 
     public static void main(String[] args) {
         //chatbot startup
@@ -76,6 +74,9 @@ public class Nano {
         case "add":
             addTask(userInputs);
             break;
+        case "delete":
+            deleteTask(userInputs[TASK_NAME_INDEX]);
+            break;
         case "mark":
             markTask(userInputs[TASK_NAME_INDEX]);
             break;
@@ -94,6 +95,17 @@ public class Nano {
         printHorizontalLine();
     }
 
+    private static void deleteTask(String taskName) {
+        int taskIndex = getTaskIndex(taskName);
+        if (taskIndex == TASK_INDEX_ERROR) {
+            System.out.println(MESSAGE_TASK_NOT_FOUND);
+            return;
+        }
+
+        tasks.remove(taskIndex);
+        Task.deleteTask();
+        System.out.println("Deleted " + taskName);
+    }
     private static void unmarkTask(String taskName) {
         int taskIndex = getTaskIndex(taskName);
         if (taskIndex == TASK_INDEX_ERROR) {
@@ -101,8 +113,8 @@ public class Nano {
             return;
         }
 
-        if (tasks[taskIndex].isCompleted()) {
-            tasks[taskIndex].setUndone();
+        if (tasks.get(taskIndex).isCompleted()) {
+            tasks.get(taskIndex).setUndone();
             System.out.println(taskName + MESSAGE_TASK_UNMARKED);
         } else {
             System.out.println(taskName + MESSAGE_TASK_ALREADY_UNDONE);
@@ -116,8 +128,8 @@ public class Nano {
             return;
         }
 
-        if (!tasks[taskIndex].isCompleted()) {
-            tasks[taskIndex].setDone();
+        if (!tasks.get(taskIndex).isCompleted()) {
+            tasks.get(taskIndex).setDone();
             System.out.println(MESSAGE_TASK_MARKED + taskName);
         } else {
             System.out.println(taskName + MESSAGE_TASK_ALREADY_DONE);
@@ -125,9 +137,9 @@ public class Nano {
     }
 
     private static int getTaskIndex(String taskName) {
-        for (int i = 1; i <= Task.getTaskCount(); i += 1) {
-            if (tasks[i].getTaskName().equals(taskName)) {
-                return i;
+        for (Task t : tasks) {
+            if (t.getTaskName().equals(taskName)) {
+                return tasks.indexOf(t);
             }
         }
         return TASK_INDEX_ERROR;
@@ -152,13 +164,13 @@ public class Nano {
             newTask = new Todo(taskDetails[TASK_NAME_INDEX]);
             break;
         }
-        tasks[Task.getTaskCount()] = newTask;
+        tasks.add(newTask);
         System.out.println("Added " + taskDetails[TASK_NAME_INDEX]);
     }
 
     private static boolean isInList(String taskName) {
-        for (int i = 1; i <= Task.getTaskCount(); i += 1) {
-            if (tasks[i].getTaskName().equals(taskName)) {
+        for (Task t : tasks) {
+            if (t.getTaskName().equals(taskName)) {
                 return true;
             }
         }
@@ -175,7 +187,7 @@ public class Nano {
         System.out.println(MESSAGE_HELP_MARK_TASK);
         System.out.println(MESSAGE_HELP_UNMARK_TASK);
         System.out.println(MESSAGE_HELP_HELP);
-        System.out.println(MEESAGE_HELP_EXIT);
+        System.out.println(MESSAGE_HELP_EXIT);
     }
     private static void displayHelpMessage() {
         System.out.println(MESSAGE_HELP_COMMAND);
@@ -238,8 +250,8 @@ public class Nano {
     private static void displayTaskList() {
         System.out.println("You have completed " + Task.getCompletedTaskCount() + " tasks. " +
                 Task.getUncompletedTaskCount() + " more to go!");
-        for (int i = 1; i <= Task.getTaskCount(); i += 1) {
-            System.out.println(tasks[i].toString());
+        for (Task t : tasks) {
+            System.out.println(t.toString());
         }
     }
 
@@ -249,7 +261,7 @@ public class Nano {
 
     //creates a list of task (1-index)
     private static void initialiseTaskList() {
-        tasks = new Task[MAX_TASK_COUNT + 1];
+        tasks = new ArrayList<>();
     }
 
     private static String getUserInput() {
