@@ -63,7 +63,7 @@ public class Ui {
 
     public static String getUserCommand() {
         Scanner input = new Scanner(System.in);
-        String command = input.nextLine();
-        return command;
+        //String command = input.nextLine();
+        return input.nextLine();
     }
 }

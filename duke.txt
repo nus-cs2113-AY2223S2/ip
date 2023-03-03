@@ -1,5 +1,5 @@
-T:1: play game
-E:0: play dota /from now /to later
-E:1: play more games /from now /to later
-D:1: play game /by tmr
-T:1: more
+E:0: play more games /from now /to later
+T:0: more
+T:1: read stuff
+E:1: play games /from now /to night
+T:0: shit

@@ -29,8 +29,6 @@ public class Parser {
             break;
         case COMMAND_LIST:
             taskList.printList();
-            //old command commented out.
-            //printList();
             break;
         case COMMAND_MARK:
             try {
@@ -75,8 +73,6 @@ public class Parser {
                 if (taskDesc.length() == 0) {
                     throw new EmptyDescriptionException();
                 }
-                //OLD COMMAND
-                //taskList.addTask(new Todo(taskDesc));
                 taskList.addTodo(taskDesc);
                 taskList.acknowledgementMessage();
             } catch (EmptyDescriptionException e) {
@@ -88,18 +84,6 @@ public class Parser {
                 if (taskDesc.length() == 0) {
                     throw new EmptyDescriptionException();
                 }
-                //Old command for adding event
-                    /*//use string.split to split the string into their different descriptions
-                    String[] eventInput = taskDesc.split(COMMAND_FROM);
-                    //split into task description and duration
-                    String eventTaskDesc = eventInput[0];
-                    String eventDuration = eventInput[1];
-                    String[] eventStartAndEnd = eventDuration.split(COMMAND_TO);
-                    String eventStart = eventStartAndEnd[0];
-                    String eventEnd = eventStartAndEnd[1];
-                    taskList.addTask(new Event(eventTaskDesc, eventStart, eventEnd));*/
-
-                //NEW COMMAND HERE
                 taskList.addEvent(taskDesc);
                 taskList.acknowledgementMessage();
             } catch (EmptyDescriptionException e) {
@@ -116,15 +100,6 @@ public class Parser {
                 if (taskDesc.length() == 0) {
                     throw new EmptyDescriptionException();
                 }
-                //old command
-                    /*//use string.split to split the string into their different descriptions
-                    String[] deadlineInput = taskDesc.split(COMMAND_BY);
-                    //split into task description and duration
-                    String deadlineTaskDesc = deadlineInput[0];
-                    String deadlineDuration = deadlineInput[1];
-                    taskList.addTask(new Deadline(deadlineTaskDesc, deadlineDuration));*/
-
-                //NEW COMMAND HERE
                 taskList.addDeadline(taskDesc);
                 taskList.acknowledgementMessage();
             } catch (EmptyDescriptionException e) {

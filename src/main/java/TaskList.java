@@ -5,8 +5,6 @@ public class TaskList {
     protected ArrayList<Task> list;
 
     //Commands
-    static final String COMMAND_TODO = "todo";
-    static final String COMMAND_EVENT = "event";
     static final String EVENT_START = "/from";
     static final String EVENT_END = "/to";
     static final String DEADLINE_BY = "/by";
@@ -47,7 +45,7 @@ public class TaskList {
 
     public void unmarkTask(int taskNum) {
         getTask(taskNum-1).markAsNotDone();
-        System.out.println("Nice! I've marked this task as done:");
+        System.out.println("OK, I've marked this task as not done:");
         System.out.println(DIVIDER + System.lineSeparator() + getTask(taskNum-1).toString()
                 + System.lineSeparator() + DIVIDER);
     }
