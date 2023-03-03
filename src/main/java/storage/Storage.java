@@ -54,13 +54,13 @@ public class Storage {
     }
 
     /**
-     * Returns an Array of Strings with each index containing a <code>String</code> format
+     * Returns a list of Strings with each index containing a <code>String</code> format
      * of a <code>Task</code> present in the <code>taskList</code> input.
      * <p></p>
      * This is to be used to store the current list of tasks in a text file.
      *
      * @param taskList the list of tasks to be encoded into Strings.
-     * @return an Array of Strings containing all the <code>Task</code> present in <code>taskList</code>.
+     * @return a list of Strings containing all the <code>Task</code> present in <code>taskList</code>.
      */
     public static ArrayList<String> encodeTasksToString(ArrayList<Task> taskList) {
         ArrayList<String> dataToStore = new ArrayList<>();
@@ -149,9 +149,9 @@ public class Storage {
     /**
      * Reads the contents of the task list stored in the saved file
      * specified by the <code>filePath</code>. Returns the contents
-     * as a instance of a <code>TaskList</code> class;
+     * as an instance of a <code>TaskList</code> class;
      *
-     * @return a instance of <code>TaskList</code> with its contents
+     * @return an instance of <code>TaskList</code> with its contents
      *         filled by the contents of the specified file.
      * @throws FileParseReadingException if the <code>Strings</code> in file not encoded properly.
      * @throws FileNotFoundException if the <code>filePath</code> cannot be found.

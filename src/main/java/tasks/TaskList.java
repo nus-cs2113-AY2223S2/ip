@@ -71,7 +71,7 @@ public class TaskList {
      * Removes a new task from the <code>taskList</code> and
      * decreases the number of tasks for <code>currentTaskNumber</code>
      *
-     * @param task task to be removed from  the list.
+     * @param index the index of the task to be removed from the list.
      * @throws TaskListEmptyError if <code>taskList</code> is empty.
      */
     public void deleteTask(int index) throws TaskListEmptyError {

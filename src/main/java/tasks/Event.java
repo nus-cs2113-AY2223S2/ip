@@ -4,17 +4,20 @@ import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * The <code>Event</code> class contains key variables that
+ * is present in <code>Task</code> class with the addition of
+ * <code>start</code>, <code>end</code>, <code>startDate</code>,
+ * <code>endDate</code> variables. The first two stores the
+ * <code>String</code> of the start and end dates while the
+ * other two are stored in date format.
+ * <p></p>
+ * There are also methods that could modify and retrieve the
+ * task variables present in the class.
+ */
 public class Event extends Task{
     protected String start, end;
     protected LocalDate startDate, endDate;
-
-    public String getStart() {
-        return start;
-    }
-
-    public String getEnd() {
-        return end;
-    }
 
     /**
      * Class constructor with <code>description</code> and
@@ -32,6 +35,12 @@ public class Event extends Task{
         this.end = end;
         startDate = LocalDate.parse(start);
         endDate = LocalDate.parse(end);
+    }
+    public String getStart() {
+        return start;
+    }
+    public String getEnd() {
+        return end;
     }
     @Override
     public String toString() {

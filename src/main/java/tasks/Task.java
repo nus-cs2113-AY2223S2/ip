@@ -1,5 +1,12 @@
 package tasks;
 
+/**
+ * The <code>Task</code> class contains key variables indicating
+ * the description, category and status of a particular task.
+ * <p></p>
+ * There are also methods that could modify and retrieve the
+ * task variables present in the class.
+ */
 public class Task {
 
     protected String type;

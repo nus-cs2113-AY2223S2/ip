@@ -4,21 +4,23 @@ import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * The <code>Deadline</code> class contains key variables that
+ * is present in <code>Task</code> class with the addition of
+ * a <code>by</code> variable storing the <code>String</code> of the due date
+ * and a <code>byDate</code> storing the date format of the
+ * due date.
+ * <p></p>
+ * There are also methods that could modify and retrieve the
+ * task variables present in the class.
+ */
 public class Deadline extends Task{
     protected String by;
     protected LocalDate byDate;
 
-    public String getBy() {
-        return by;
-    }
-
-    public void setBy(String by) {
-        this.by = by;
-    }
-
     /**
      * Class constructor with <code>description</code> and
-     * <code>doneby</code> as parameters for initialization.
+     * <code>doneBy</code> as parameters for initialization.
      *
      * @param description the description of the task.
      * @param doneBy the due date of the task.
@@ -28,6 +30,9 @@ public class Deadline extends Task{
         super(description, "D");
         by = doneBy;
         byDate = LocalDate.parse(doneBy);
+    }
+    public String getBy() {
+        return by;
     }
     @Override
     public String toString() {
