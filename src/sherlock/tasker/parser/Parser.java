@@ -36,6 +36,8 @@ public class Parser {
                     boolean intendedDoneValue = command.equals("mark");
                     return constructMarkCommand(arguments, intendedDoneValue);
                 }
+                case "find":
+                    return this.constructFindCommand(arguments);
 
                 case "delete":
                     return this.constructDeleteCommand(arguments);
@@ -113,6 +115,12 @@ public class Parser {
         } catch (NumberFormatException e) {
             return new IncorrectCommand("Please provide a valid index");
         }
+    }
+
+    private Command constructFindCommand(String arguments) {
+        String term = arguments;
+
+        return new FindCommand(term);
     }
 
     private Command constructDeleteCommand(String arguments) {
