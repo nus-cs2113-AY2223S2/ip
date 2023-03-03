@@ -6,6 +6,8 @@ import duke.task.Event;
 import duke.task.Task;
 import duke.task.Todo;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -19,26 +21,45 @@ public class Duke {
         goodbye();
     }
 
-    private static void markingAsDone(String echoInput, int counter, Task[] storedTask) {
+    private static int selectTask(String echoInput, int counter, ArrayList<Task> storedTask) {
         try {
-            String stringListNumber = echoInput.substring(5, echoInput.length());
-            int listNumber = Integer.parseInt(stringListNumber);
-
-            storedTask[listNumber-1].setIsDone(true);
-            listTasks(counter, storedTask);
+            if (echoInput.startsWith("mark")) {
+                String stringListNumber = echoInput.substring(5, echoInput.length());
+                int index = Integer.parseInt(stringListNumber) - 1;
+                storedTask.get(index).setIsDone(true);
+                listTasks(counter, storedTask);
+            }
+            else if (echoInput.startsWith("delete")) {
+                String stringListNumber = echoInput.substring(7, echoInput.length());
+                int index = Integer.parseInt(stringListNumber) - 1;
+                deleteTask(index, storedTask);
+                return counter - 1;
+            }
         } catch (NumberFormatException ex) {
             printMarkError();
         } catch (ArrayIndexOutOfBoundsException ex) {
             printMarkError();
+        } catch (IndexOutOfBoundsException ex) {
+            printMarkError();
         } catch (NullPointerException ex) {
             printMarkError();
         }
+        return counter;
+    }
+
+    private static void deleteTask(int removeIndex, ArrayList<Task> storedTask) {
+        System.out.println("____________________________________________________________");
+        System.out.println("Noted. I've removed this task:\n" +
+                "       " + storedTask.get(removeIndex).toString() + "\n" +
+                "Now you have " + (storedTask.size() - 1) + " tasks in the list.");
+        System.out.println("____________________________________________________________\n");
+        storedTask.remove(removeIndex);
     }
 
     private static void manageInput() {
         Scanner scanner = new Scanner(System.in);
         String input = "";
-        Task[] storedTask = new Task[100];
+        ArrayList<Task> storedTask = new ArrayList<Task>();
         int counter = 0;
 
         while (!input.equals("bye")) {
@@ -49,16 +70,16 @@ public class Duke {
                 } else if (input.equals("list")) {
                     listTasks(counter, storedTask);
                 } else if (input.startsWith("mark")) {
-                    markingAsDone(input, counter, storedTask);
+                    selectTask(input, counter, storedTask);
                 } else if (input.startsWith("todo")) {
                     blankTodo(input);
                     Task tempTask = new Todo(input);
-                    storedTask[counter] = tempTask;
+                    storedTask.add(tempTask);
                     counter = counter + 1;
                     printTaskInput(tempTask, counter);
                 } else if (input.startsWith("deadline") && input.contains("/")) {
                     Task tempTask = new Deadline(input, input.substring(input.lastIndexOf("/") + 1));
-                    storedTask[counter] = tempTask;
+                    storedTask.add(tempTask);
                     counter = counter + 1;
                     printTaskInput(tempTask, counter);
                 } else if (input.startsWith("event") && input.matches(".*/.*/.*")) {
@@ -67,9 +88,11 @@ public class Duke {
                     String toString = tempInput.substring(tempInput.lastIndexOf("/") + 1);
 
                     Task tempTask = new Event(input, fromString, toString);
-                    storedTask[counter] = tempTask;
+                    storedTask.add(tempTask);
                     counter = counter + 1;
                     printTaskInput(tempTask, counter);
+                } else if (input.startsWith("delete")) {
+                    counter = selectTask(input, counter, storedTask);
                 } else {
                     invalidInput();
                 }
@@ -89,11 +112,11 @@ public class Duke {
         throw new DukeException("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
     }
 
-    private static void listTasks(int counter, Task[] storedTask) {
+    private static void listTasks(int counter, ArrayList<Task> storedTask) {
         System.out.println("____________________________________________________________");
         System.out.println("Here are the tasks in your list:");
         for (int i = 0; i < counter; i++) {
-            System.out.println((i + 1) + ". " + storedTask[i].toString());
+            System.out.println((i + 1) + ". " + storedTask.get(i).toString());
         }
         System.out.println("____________________________________________________________\n");
     }
