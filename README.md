@@ -1,19 +1,58 @@
-# Duke project template
+# Arsdorint chatbot
 
-This is a project template for a greenfield Java project. It's named after the Java mascot _Duke_. Given below are instructions on how to use it.
+This is Arsdorint chatbot, a member of Arsdorint Team, and an adaptation application of CS2113 Project Duke) 
 
-## Setting up in Intellij
+## User Guide
 
-Prerequisites: JDK 11, update Intellij to the most recent version.
+1. To download the application, click on this link.
+2. The chatbot contains the following feature
+ + List
+ + Todo
+ + Deadline
+ + Event
+ + Mark
+ + Unmark
+ + Date
+ + Find
+ + Bye
 
-1. Open Intellij (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project first)
-1. Open the project into Intellij as follows:
-   1. Click `Open`.
-   1. Select the project directory, and click `OK`.
-   1. If there are any further prompts, accept the defaults.
-1. Configure the project to use **JDK 11** (not other versions) as explained in [here](https://www.jetbrains.com/help/idea/sdk.html#set-up-jdk).<br>
-   In the same dialog, set the **Project language level** field to the `SDK default` option.
-3. After that, locate the `src/main/java/Duke.java` file, right-click it, and choose `Run Duke.main()` (if the code editor is showing compile errors, try restarting the IDE). If the setup is correct, you should see something like the below as the output:
+## Feature - List
+- This function will list all the tasks inputed by the user.
+- Example: 
+
+## Feature - Todo
+- This function will add a task that the user want to do, with a tickbox to mark if the task is done yet or not.
+- Example:
+
+## Feature - Deadline
+- This function will add a deadline that the user need to complete, with a tickbox to mark if the deadline is finished or not.
+- Example:
+
+## Feature - Event
+- This function will add an event that the user need to attend, with a tickbox to mark if the user have attended or not.
+- Example:
+
+## Feature - Mark
+- This function will mark a task as done by tick a "X" into the tickbox.
+- Example:
+
+## Feature - Unmark
+- This function will mark a task as not done yet by leaving the tickbox empty.
+- Example: 
+
+## Feature - Date
+- This function will find if a date is in the task list yet. The date should be in the format of YYYY-MM-DD with YYYY is the year, MM is the month and DD is the day.
+- Example
+
+## Feature - Find
+- This function will find if the task the user want to search is in the list yet, and list all task with that name
+- Example:
+
+## Feature - Bye
+ - This function will help the chatbot to say bye to the user, and end up the conversation.
+ - Example: 
+
+### That's all about Arsdorint chatbot! Hope you enjoy our product, and leave some comments to help us improve the chatbot! Thank you so much!
    ```
    Hello from
     ____        _        
