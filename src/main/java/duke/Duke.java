@@ -141,7 +141,18 @@ public class Duke {
             printNumTask();
             tasks = addTaskToFile(tasks, tempTask, file);
 
-        } else {
+        } else if (action.startsWith("find")) {
+            int dividerPos = action.indexOf(" ");
+            String taskToFind = action.substring(5);
+            System.out.println(DIVIDER_LINE + "Here are the matching tasks in your list:");
+            for (Task t : tasks) {
+                if (t.description.contains(taskToFind)) {
+                    System.out.println(t.toString());
+                }
+            }
+            System.out.println(DIVIDER_LINE);
+
+        }  else {
             throw new DukeException();
         }
         return tasks;
