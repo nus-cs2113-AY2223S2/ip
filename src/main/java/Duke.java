@@ -12,6 +12,11 @@ public class Duke {
 
         printGreetingMessage();
 
+        String workingDirectory = System.getProperty("user.dir");
+        String filename = "list.txt";
+        String absoluteFilePath = "";
+        absoluteFilePath = workingDirectory + File.separator + filename;
+
         //Read in input from user
         String inputString;
 
@@ -24,7 +29,7 @@ public class Duke {
         boolean exit = false;
 
         //Initialize list with saved data
-        counter = initializeList(tasks, counter);
+        counter = initializeList(tasks, counter, absoluteFilePath);
 
         while (!exit) {
             String taskType;
@@ -126,7 +131,7 @@ public class Duke {
         exitMessage();
 
         //Save list data into text file on disk
-        PrintWriter fw = new PrintWriter("docs\\list.txt");
+        PrintWriter fw = new PrintWriter(absoluteFilePath);
         for (int i = 0; i < counter; i++) {
             String classType = String.valueOf(tasks.get(i).getClass());
             writeToFile(tasks, fw, i, classType);
@@ -202,13 +207,14 @@ public class Duke {
      * @return counter number of tasks in the list.
      * @throws FileNotFoundException If .txt file is not found at specified file path.
      */
-    private static int initializeList(ArrayList<Todo> tasks, int counter) throws FileNotFoundException {
+    private static int initializeList(ArrayList<Todo> tasks, int counter, String absoluteFilePath) throws FileNotFoundException {
         String inputString;
         String task = null;
         String taskType;
 
         try {
-            File myFile = new File("docs\\list.txt");
+
+            File myFile = new File(absoluteFilePath);
             if (myFile.createNewFile()) {
                 System.out.println("New List backup is created! List items will be saved to " +
                         "disk after you exit the program!");
@@ -220,7 +226,7 @@ public class Duke {
         }
 
 
-        Scanner scanner = new Scanner(new File("docs\\list.txt"));
+        Scanner scanner = new Scanner(new File(absoluteFilePath));
         Scanner in = new Scanner(System.in);
 
         while (scanner.hasNextLine()) {
