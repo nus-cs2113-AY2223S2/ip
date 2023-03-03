@@ -4,7 +4,7 @@ package duke.task;
  * Template for a task object.
  */
 public class Task {
-    protected String description;
+    public String description;
     protected boolean isDone;
     String LINE = "────────────────────────────────────────────────────────────────────────\n";
     public Task(String description) {

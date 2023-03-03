@@ -19,6 +19,9 @@ import static duke.utils.Ui.LINE;
 public class TaskList {
     Ui ui = new Ui();
     public ArrayList<Task> list = new ArrayList<>();
+    public ArrayList<String> taskDescriptions= new ArrayList<>();
+    public ArrayList<Task> matchingList = new ArrayList<>();
+    public int matchingTasksNum;
 
     public int currentTaskNum;
 
@@ -42,6 +45,31 @@ public class TaskList {
             }
         }
         System.out.println(LINE);
+    }
+
+    public void findMatchingTasks(String keyword) {
+        for (Task task : list) {
+            taskDescriptions.add(task.description);
+        }
+        int i = 0;
+        for (String taskDescription : taskDescriptions) {
+            if (taskDescription.contains(keyword)) {
+                matchingList.add(list.get(i));
+            };
+            i++;
+        }
+    }
+
+    public void printMatchingTasks() {
+        int index = 1;
+        System.out.println("Here are the matching tasks in your list:");
+        for (Task matchingTask : matchingList) {
+            System.out.println(index + ". " + matchingTask.toString());
+            index++;
+        }
+        System.out.println(System.lineSeparator() + Ui.LINE);
+        taskDescriptions.clear();
+        matchingList.clear();
     }
 
     /**
@@ -95,7 +123,7 @@ public class TaskList {
      */
     public void deleteTask(String content) {
         list.remove(Integer.parseInt(content) - 1);
-        currentTaskNum--;
+        matchingTasksNum--;
     }
 
     /**
@@ -108,7 +136,7 @@ public class TaskList {
      */
     public void toggleMark(String content, boolean shouldMarkAsDone) throws DukeException {
         int posOfMark = Integer.parseInt(content) - 1;
-        if (!(posOfMark >= 0 && posOfMark <= currentTaskNum)) {
+        if (!(posOfMark >= 0 && posOfMark <= matchingTasksNum)) {
             ui.printErrorMessage(INVALID_NUM_ERROR_MESSAGE);
             throw new DukeException();
         } else {

@@ -194,7 +194,7 @@ public class Storage {
 
     private String[] getEventDuration(String taskDescription) {
         String[] temp = taskDescription.split("to: ", 2);
-        String to = temp[1];
+        String to = temp[1].replace(")", "");
         String from = temp[0].split("from: ", 2)[1];
         temp[1] = "/to" + to;
         temp[0] = "/from" + from;
