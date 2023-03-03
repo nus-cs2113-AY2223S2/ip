@@ -3,6 +3,7 @@ package duke;
 import duke.command.Command;
 import duke.exception.EmptyDeadlineDescriptionException;
 import duke.exception.EmptyEventDescriptionException;
+import duke.exception.EmptyKeywordException;
 import duke.exception.EmptyToDoDescriptionException;
 import duke.exception.UnknownCommandException;
 import duke.parse.Parser;
@@ -73,6 +74,8 @@ public class Duke {
                 ui.showEmptyTaskNoErr();
             } catch (IndexOutOfBoundsException e) {
                 ui.showTaskNoOutOfRangeErr();
+            } catch (EmptyKeywordException e) {
+                ui.showEmptyKeywordErr();
             }
         }
 

@@ -1,6 +1,7 @@
 package duke.parse;
 
-import duke.ui.Ui;
+import duke.command.FindCommand;
+import duke.exception.EmptyKeywordException;
 import duke.command.AddDeadlineCommand;
 import duke.command.AddEventCommand;
 import duke.command.AddToDoCommand;
@@ -24,6 +25,7 @@ public abstract class Parser {
     private static final String COMMAND_ADD_DEADLINE = "deadline";
     private static final String COMMAND_ADD_EVENT = "event";
     private static final String COMMAND_DELETE = "delete";
+    public static final String COMMAND_FIND = "find";
     private static Command c;
 
     /**
@@ -49,7 +51,7 @@ public abstract class Parser {
      */
     public static Command parse(String input) throws UnknownCommandException,
             IndexOutOfBoundsException, NumberFormatException, EmptyDeadlineDescriptionException,
-            EmptyToDoDescriptionException, EmptyEventDescriptionException {
+            EmptyToDoDescriptionException, EmptyEventDescriptionException, EmptyKeywordException {
         String command = getCommand(input);
 
         switch (command) {
@@ -79,11 +81,15 @@ public abstract class Parser {
             String eventTaskName = eventDetails[0];
             String from = eventDetails[1];
             String to = eventDetails[2];
-            c = new AddEventCommand(eventTaskName, from , to);
+            c = new AddEventCommand(eventTaskName, from, to);
             break;
         case COMMAND_ADD_TODO:
             String toDoTaskName = getToDoTaskName(input);
             c = new AddToDoCommand(toDoTaskName);
+            break;
+        case COMMAND_FIND:
+            String keyword = getKeyword(input);
+            c = new FindCommand(keyword);
             break;
         case COMMAND_EXIT:
             c = new ExitCommand();
@@ -116,7 +122,7 @@ public abstract class Parser {
      * the task list when using mark/unmark/delete command.
      * @throws NumberFormatException if user enters a non integer task no when using mark/unmark/delete command.
      */
-    private static int getTaskNo (String input) throws IndexOutOfBoundsException,
+    private static int getTaskNo(String input) throws IndexOutOfBoundsException,
             NumberFormatException {
         String[] words = input.split(" ", 2);
         int taskNo = Integer.parseInt(words[1]) - 1;
@@ -163,7 +169,7 @@ public abstract class Parser {
         String[] words = input.split(" ", 2);
 
         if (words.length != 2) {
-            throw  new EmptyEventDescriptionException();
+            throw new EmptyEventDescriptionException();
         }
 
         words = words[1].split(" /from ");
@@ -204,5 +210,17 @@ public abstract class Parser {
         String toDoTaskName = words[1];
 
         return toDoTaskName;
+    }
+
+    private static String getKeyword(String input) throws EmptyKeywordException {
+        String[] words = input.split(" ", 2);
+
+        if (words.length != 2) {
+            throw new EmptyKeywordException();
+        }
+
+        String keyword = words[1];
+
+        return keyword;
     }
 }
