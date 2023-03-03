@@ -21,6 +21,7 @@ public interface Parser {
      * Handles the various command type and parse accordingly
      *
      * @param input the information that requires parsing
+     * @throws NumberFormatException if error occurred due to user not providing a number where expected
      * @return command type that would represent what to execute
      */
     public static Command parse(String input) throws NumberFormatException{

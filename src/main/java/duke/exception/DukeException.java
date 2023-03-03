@@ -57,7 +57,7 @@ public class DukeException extends Exception {
      * @throws EmptyListError if error occurred due to empty list in the tasklist
      */
     public static void catchIndexCommandError(int index, TaskList tasks) throws InvalidIndexError, EmptyListError {
-        if (index < 0 | index > tasks.sizeOfList()){
+        if (index < 0 | index >= tasks.sizeOfList()){
             throw new InvalidIndexError();
         }
     }
