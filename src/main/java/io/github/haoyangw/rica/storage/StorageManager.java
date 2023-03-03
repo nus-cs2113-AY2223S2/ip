@@ -21,6 +21,7 @@ import java.util.Scanner;
  *   Tasks(if any) from storage.
  */
 public class StorageManager {
+    private static final String CANNOT_SAVE_DATA_ERROR = " Died while saving my data to your storage, I'm sorry if I come back an empty shell next time xP";
     private static final String DEFAULT_DATA_PATH = "data/tasks.txt";
     private static final String DATA_FILE_HAS_NO_PARENT_ERROR = " My data file is placed in the void? Please don't give me amnesia :O (contact Mr Stark!!)";
     private static final String DATA_FILE_NOT_FOUND_ERROR = " Cannot find the data file, you're gonna have to deal with my amnesia today my friend xP";
@@ -38,6 +39,7 @@ public class StorageManager {
         this.dataPath = dataPath;
         this.textUi = new TextUi();
     }
+
 
     /**
      * Creates all directories along the data file path if they don't already exist.
@@ -129,7 +131,7 @@ public class StorageManager {
             }
             dataFile.close();
         } catch (IOException exception) {
-            throw new RicaStorageException();
+            throw new RicaStorageException(StorageManager.CANNOT_SAVE_DATA_ERROR);
         }
     }
 }
