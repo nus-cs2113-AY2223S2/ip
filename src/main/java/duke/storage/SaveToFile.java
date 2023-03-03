@@ -8,8 +8,19 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * This class contains the methods needed for the tasks stored in the ArrayList to be copied over to the text file
+ * so that when the user exits the programme, the tasks are still saved.
+ */
 public class SaveToFile {
 
+    /**
+     * Overwrites all the tasks in the existing file specified by filePath. If there is no existing file, a new file
+     * is created.
+     * This is done by writing "Saved tasks: " followed by a newline.
+     * @param tasks
+     * @param filePath
+     */
     public static void initialiseWritingToFile(ArrayList<Task> tasks, String filePath) {
         try {
             FileWriter fw = new FileWriter(filePath);
@@ -23,7 +34,16 @@ public class SaveToFile {
         }
     }
 
-
+    /**
+     * Iterates through the ArrayList and determines the task type, status as well as the task information.
+     * Passes these arguments to writeSpecificTaskToFile method.
+     * taskType refers to either ToDo, Deadline or Event.
+     * taskStatus refers to whether the task is completed or not.
+     * isTaskDone is an integer to represent whether a task is completed or incomplete
+     * @param fwAppend
+     * @param tasks
+     * @throws IOException
+     */
     private static void writeTasksToFile(FileWriter fwAppend, ArrayList<Task> tasks) throws IOException {
         int totalNumberOfTasks = tasks.size();
         for (int index = 0; index < totalNumberOfTasks; index += 1) {
@@ -32,12 +52,23 @@ public class SaveToFile {
             String taskStatus = currentTask.getStatus();
             int isTaskDone = taskStatus.substring(1, 2).equals("X") ? 1 : 0;
             String taskInfo = currentTask.getTaskInfo();
-            writeSpecificTaskToFile(fwAppend, taskType, currentTask, taskStatus, isTaskDone, taskInfo);
+            writeSpecificTaskToFile(fwAppend, taskType, currentTask, isTaskDone, taskInfo);
         }
     }
 
+    /**
+     * Based on the specific task type, this function formats the task info.
+     * Since todo, deadline and event task types have different parameters this function formats the task info
+     * according to their respective parameters to the text file for storage.
+     * @param fwAppend
+     * @param taskType of todo, deadline or event
+     * @param currentTask
+     * @param isTaskDone whether the task is completed or not
+     * @param taskInfo
+     * @throws IOException
+     */
     private static void writeSpecificTaskToFile(FileWriter fwAppend, String taskType, Task currentTask,
-                                                String taskStatus, int isTaskDone, String taskInfo) throws IOException {
+                                                int isTaskDone, String taskInfo) throws IOException {
         String additionalTaskInfo = "";
         switch (taskType) {
         case "T":
