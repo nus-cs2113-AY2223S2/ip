@@ -72,11 +72,9 @@ public class Duke {
      * @return Nothing
      * @exception IOException On input error, ClassNotFoundException
      */
-
     public static void main(String[] args) throws IOException, ClassNotFoundException {
 
         new Duke().run();
 
     }
-
 }

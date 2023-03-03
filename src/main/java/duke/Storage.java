@@ -20,7 +20,6 @@ import java.util.Scanner;
  * @version 1.0
  * @since   2023-03-03
  */
-
 public class Storage {
     protected static String filepath;
     public Storage(String filepath) {
@@ -37,7 +36,6 @@ public class Storage {
      * @return Nothing
      * @exception IOException On input error
      */
-
     public static void loadTasksToFile() throws IOException {
         // @@author tangphi-reused
         // Reused from www.w3schools.com/java/java_files_create.asp
