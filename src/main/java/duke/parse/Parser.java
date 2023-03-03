@@ -1,6 +1,7 @@
 package duke.parse;
 
-import duke.ui.Ui;
+import duke.command.FindCommand;
+import duke.exception.EmptyKeywordException;
 import duke.command.AddDeadlineCommand;
 import duke.command.AddEventCommand;
 import duke.command.AddToDoCommand;
@@ -24,15 +25,16 @@ public abstract class Parser {
     private static final String COMMAND_ADD_DEADLINE = "deadline";
     private static final String COMMAND_ADD_EVENT = "event";
     private static final String COMMAND_DELETE = "delete";
+    public static final String COMMAND_FIND = "find";
     private static Command c;
 
     public Parser() {
 
     }
 
-    public static Command parse(String input, Ui ui) throws UnknownCommandException,
+    public static Command parse(String input) throws UnknownCommandException,
             IndexOutOfBoundsException, NumberFormatException, EmptyDeadlineDescriptionException,
-            EmptyToDoDescriptionException, EmptyEventDescriptionException {
+            EmptyToDoDescriptionException, EmptyEventDescriptionException, EmptyKeywordException {
         String command = getCommand(input);
 
         switch (command) {
@@ -40,33 +42,37 @@ public abstract class Parser {
             c = new ListCommand();
             break;
         case COMMAND_MARK_TASK:
-            int markTaskNo = getTaskNo(input, ui);
+            int markTaskNo = getTaskNo(input);
             c = new MarkCommand(markTaskNo);
             break;
         case COMMAND_UNMARK_TASK:
-            int unmarkTaskNo = getTaskNo(input, ui);
+            int unmarkTaskNo = getTaskNo(input);
             c = new UnMarkCommand(unmarkTaskNo);
             break;
         case COMMAND_DELETE:
-            int delTaskNo = getTaskNo(input, ui);
+            int delTaskNo = getTaskNo(input);
             c = new DeleteCommand(delTaskNo);
             break;
         case COMMAND_ADD_DEADLINE:
-            String[] deadlineDetails = getDeadlineDetails(input, ui);
+            String[] deadlineDetails = getDeadlineDetails(input);
             String deadlineTaskName = deadlineDetails[0];
             String by = deadlineDetails[1];
             c = new AddDeadlineCommand(deadlineTaskName, by);
             break;
         case COMMAND_ADD_EVENT:
-            String[] eventDetails = getEventDetails(input, ui);
+            String[] eventDetails = getEventDetails(input);
             String eventTaskName = eventDetails[0];
             String from = eventDetails[1];
             String to = eventDetails[2];
-            c = new AddEventCommand(eventTaskName, from , to);
+            c = new AddEventCommand(eventTaskName, from, to);
             break;
         case COMMAND_ADD_TODO:
-            String toDoTaskName = getToDoTaskName(input, ui);
+            String toDoTaskName = getToDoTaskName(input);
             c = new AddToDoCommand(toDoTaskName);
+            break;
+        case COMMAND_FIND:
+            String keyword = getKeyword(input);
+            c = new FindCommand(keyword);
             break;
         case COMMAND_EXIT:
             c = new ExitCommand();
@@ -84,7 +90,7 @@ public abstract class Parser {
         return command;
     }
 
-    private static int getTaskNo (String input, Ui ui) throws IndexOutOfBoundsException,
+    private static int getTaskNo(String input) throws IndexOutOfBoundsException,
             NumberFormatException {
         String[] words = input.split(" ", 2);
         int taskNo = Integer.parseInt(words[1]) - 1;
@@ -92,7 +98,7 @@ public abstract class Parser {
         return taskNo;
     }
 
-    private static String[] getDeadlineDetails(String input, Ui ui) throws EmptyDeadlineDescriptionException {
+    private static String[] getDeadlineDetails(String input) throws EmptyDeadlineDescriptionException {
         String[] words = input.split(" ", 2);
 
         if (words.length != 2) {
@@ -113,11 +119,11 @@ public abstract class Parser {
         return deadlineDetails;
     }
 
-    private static String[] getEventDetails(String input, Ui ui) throws EmptyEventDescriptionException {
+    private static String[] getEventDetails(String input) throws EmptyEventDescriptionException {
         String[] words = input.split(" ", 2);
 
         if (words.length != 2) {
-            throw  new EmptyEventDescriptionException();
+            throw new EmptyEventDescriptionException();
         }
 
         words = words[1].split(" /from ");
@@ -141,7 +147,7 @@ public abstract class Parser {
         return eventDetails;
     }
 
-    private static String getToDoTaskName(String input, Ui ui) throws EmptyToDoDescriptionException {
+    private static String getToDoTaskName(String input) throws EmptyToDoDescriptionException {
         String[] words = input.split(" ", 2);
 
         if (words.length != 2) {
@@ -151,5 +157,17 @@ public abstract class Parser {
         String toDoTaskName = words[1];
 
         return toDoTaskName;
+    }
+
+    private static String getKeyword(String input) throws EmptyKeywordException {
+        String[] words = input.split(" ", 2);
+
+        if (words.length != 2) {
+            throw new EmptyKeywordException();
+        }
+
+        String keyword = words[1];
+
+        return keyword;
     }
 }
