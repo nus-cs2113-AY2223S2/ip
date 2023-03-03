@@ -1,16 +1,11 @@
 package duke;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.FileWriter;
 
 import java.util.ArrayList;
-import java.util.NoSuchElementException;
-import java.util.Scanner;
 
 public class Tasklist {
-
   private static final String STORAGE_FILE_NAME = "./data/Duke.txt";
 
   private static ArrayList<Tasks> listOfTasks = new ArrayList<Tasks>();
@@ -58,6 +53,9 @@ public class Tasklist {
 
   }
 
+  /**
+   * Prints out the tasks in the list
+   */
   public static void list() {
     if (listOfTasks.isEmpty()) {
       System.out.println("There are no tasks listed currently");
@@ -69,6 +67,12 @@ public class Tasklist {
     }
   }
 
+  /**
+   * Deletes a task according to its index in the list
+   *
+   * @param index The index of the task.
+   * @throws IndexOutOfBoundsException If index provided is not within the list
+   */
   public static void delete(int index) {
     try {
       Tasks currentTask = listOfTasks.get(index - 1);
@@ -83,31 +87,12 @@ public class Tasklist {
     }
   }
 
-  public static void findFile() {
-    try {
-      File file = new File(STORAGE_FILE_NAME);
-      Scanner scan = new Scanner(file);
-      while (scan.hasNext()) {
-        System.out.println(scan.nextLine());
-      }
-      scan.close();
-    } catch (FileNotFoundException | NoSuchElementException e) {
-      System.out.println("Error: File not found. Please try again");
-    }
-  }
-
-  public static void saveFile() {
-    try {
-      FileWriter writer = new FileWriter(STORAGE_FILE_NAME);
-      for (int i = 0; i < listOfTasks.size(); i++) {
-        writer.write(listOfTasks.get(i).toString() + '\n');
-      }
-      writer.close();
-    } catch (IOException e) {
-      System.out.println("Error: Tasks were not saved. Please try again");
-    }
-  }
-
+  /**
+   * Find tasks that matches a specific keyword in you
+   *
+   * @param keyword The keyword of the t
+   * 
+   */
   public static void find(String keyword) {
     if (listOfTasks.isEmpty()) {
       System.out.println("There are no tasks listed currently");
@@ -142,6 +127,18 @@ public class Tasklist {
       System.out.println(listOfTasks.get(index - 1).toString());
     } catch (IndexOutOfBoundsException e) {
       System.out.println(":( There is an error (Index is out of bounds/negative)");
+    }
+  }
+
+  public static void saveFile() {
+    try {
+      FileWriter writer = new FileWriter(STORAGE_FILE_NAME);
+      for (int i = 0; i < listOfTasks.size(); i++) {
+        writer.write(listOfTasks.get(i).toString() + '\n');
+      }
+      writer.close();
+    } catch (IOException e) {
+      System.out.println("Error: Tasks were not saved. Please try again");
     }
   }
 

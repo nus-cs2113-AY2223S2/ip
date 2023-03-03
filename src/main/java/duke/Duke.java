@@ -5,7 +5,7 @@ public class Duke {
     public static void main(String[] args) {
         Ui ui = new Ui();
         ui.greet_user();
-        Tasklist.findFile();
+        Storage.findFile();
 
         String[] command = Parser.getCommand();
 
