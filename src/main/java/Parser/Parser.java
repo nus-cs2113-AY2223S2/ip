@@ -3,14 +3,27 @@ package Parser;
 import Task.Task;
 
 public class Parser {
-
+    // Error String
     public static final String ERROR_MESSAGE = "Invalid input.";
 
+    /**
+     * This method splits the input with spaces.
+     * Maximum length is two.
+     * 
+     * @param input the input string
+     * @return the splitted string in a string array
+     */
     public static String[] processInput(String input) {
         String[] inputs = input.split(" ", 2);
         return inputs;
     }
 
+    /**
+     * This method checks the validity of input.
+     *
+     * @param input the input string array
+     * @return the index of the tasks desired, else -1 if invalid
+     */
     public static int checkActionInputValidity(String[] input) {
         try {
             if (input.length == 1) {
@@ -30,7 +43,13 @@ public class Parser {
             return -1;
         }
     }
-    
+
+    /**
+     * This method checks the validity of find input.
+     *
+     * @param input the input string
+     * @return the keyword, else an empty string if invalid
+     */
     public static String processFindString(String input) {
         try {
             String findString = input.split("find")[1].trim();
@@ -45,6 +64,12 @@ public class Parser {
         }
     }
 
+    /**
+     * This method checks the validity of todo input.
+     *
+     * @param input the input string
+     * @return the todo task, else an empty string if invalid
+     */
     public static String processTodoString(String input) {
         try {
             String task = input.split("todo")[1].trim();
@@ -59,6 +84,12 @@ public class Parser {
         }
     }
 
+    /**
+     * This method checks the validity of deadline input.
+     *
+     * @param input the input string
+     * @return the deadline info in string array, else an empty string if invalid
+     */
     public static String[] processDeadlineString(String input) {
         try {
             String deadlineDesc = input.split("/")[0].split("deadline")[1].trim();
@@ -79,6 +110,12 @@ public class Parser {
         }
     }
 
+    /**
+     * This method checks the validity of event input.
+     *
+     * @param input the input string
+     * @return the event info in string array, else an empty string if invalid
+     */
     public static String[] processEventString(String input) {
         try {
             String eventDesc = input.split("/")[0].split("event")[1].trim();
