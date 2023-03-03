@@ -1,6 +1,10 @@
 package User;
 
 public class Parser {
+    /**
+     * Takes in the users command and carries out the corresponding action
+     * @param userInput the command that the user inputs
+     */
     public static void parsing(String userInput){
         String[] inputParts;
         inputParts = userInput.split(" ",2);

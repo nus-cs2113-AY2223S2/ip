@@ -1,6 +1,12 @@
 package User;
 
 public class UI {
+
+    /**
+     *These are the list of prompts/greetings/error messages that will be presented to the user at the
+     * appropriate times
+     */
+
     static String logo = " ____        _        \n"
             + "|  _ \\ _   _| | _____ \n"
             + "| | | | | | | |/ / _ \\\n"
