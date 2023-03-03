@@ -22,7 +22,9 @@ todo task0
 
 After listing (see list), your list should have:
 
+```
 0. [T] [ ] task0
+```
 
 ### `Keyword` - deadline
 
@@ -34,10 +36,10 @@ deadline task1 /tomorrow
 
 After listing (see list), your list should have:
 
+```
 0. [T] [ ] task0
 1. [D] [ ] task1 (by: tomorrow)
-
-
+```
 
 ### `Keyword` - event
 
@@ -49,10 +51,11 @@ event task2 /start /end
 
 After listing (see list), your list should have:
 
+```
 0. [T] [ ] task0
 1. [D] [ ] task1 (by: tomorrow)
 2. [E] [ ] task2 (from: start to: end)
-
+```
 
 
 
@@ -82,9 +85,10 @@ delete 2
 
 After listing (see list), your list should have:
 
+```
 0. [T] [ ] task0
 1. [D] [ ] task1 (by: tomorrow)
-
+```
 
 ### `Keyword` - mark
 
@@ -96,6 +100,7 @@ mark 0
 
 After listing (see list), your list should have:
 
+```
 0. [T] [X] task0
 1. [D] [ ] task1 (by: tomorrow)
-
+```
