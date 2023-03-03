@@ -66,7 +66,7 @@ public class Ui {
      */
     public static void printGreet(){
         printUnderline();
-        System.out.println("\t Hello! I'm onandon");
+        System.out.println("\t Hello! I'm onandon.");
         System.out.println("\t What can I do for you?");
         printUnderline();
     }
