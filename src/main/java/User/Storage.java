@@ -43,7 +43,7 @@ public class Storage {
                 tempTasks.add(event);
                 break;
             default:
-                UI.printHelp();
+                UI.errorReadingFile();
                 break;
             }
             if (newInput[0].equals("[X]")) {

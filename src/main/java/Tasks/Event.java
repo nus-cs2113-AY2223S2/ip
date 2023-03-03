@@ -20,10 +20,10 @@ public class Event extends Task {
 
     @Override
     public String toString(){
-        return "[E]" +  super.getStatusIcon() + super.getDescription();
+        return "[E]" +  super.getStatusIcon() + " " + super.getDescription();
     }
     @Override
     public String toFile() {
-        return this.getStatusIcon() + " : " + "E" + " :" + this.description;
+        return this.getStatusIcon() + " : " + "E" + " : " + this.description;
     }
 }

@@ -53,5 +53,8 @@ public class UI {
         System.out.println(line);
     }
 
-
+    public static void errorReadingFile(){
+        System.out.println("Error reading file!");
+        System.out.println(line);
+    }
 }
