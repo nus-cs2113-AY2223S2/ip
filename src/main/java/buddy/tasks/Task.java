@@ -6,7 +6,6 @@ import buddy.messages.Messages;
 public class Task {
     protected String description;
     protected boolean isDone;
-    protected String type;
 
     public Task(String description) {
         this.description = description;
@@ -55,7 +54,7 @@ public class Task {
             System.out.println("Got it! I have added this task!: \n" + this + "\n" + "Now you have " + Buddy.taskCount + " task remaining! Almost there, buddy!");
         }
         else{
-            System.out.println("Got it! I have added this task! \n" + this + "\n" + "Now you have " + Buddy.taskCount + " buddy.tasks remaining! Let's finish them faster and relax!");
+            System.out.println("Got it! I have added this task! \n" + this + "\n" + "Now you have " + Buddy.taskCount + " tasks remaining! Let's finish them faster and relax!");
 
         }
 
@@ -67,7 +66,7 @@ public class Task {
         } else if (Buddy.taskCount == 1) {
             System.out.println("YAY ONE LESS TO GO! I have deleted this task!:  \n" + this + "\n" + "Now you have JUST " + Buddy.taskCount + " task remaining! CHOP CHOP FINISH IT");
         } else{
-            System.out.println("YAY ONE LESS TO GO! I have deleted this task!:  \n" + this + "\n" + "Now you have " + Buddy.taskCount + " buddy.tasks remaining! Type list to see remaining buddy.tasks");
+            System.out.println("YAY ONE LESS TO GO! I have deleted this task!:  \n" + this + "\n" + "Now you have " + Buddy.taskCount + " tasks remaining! Type list to see remaining tasks");
 
         }
     }

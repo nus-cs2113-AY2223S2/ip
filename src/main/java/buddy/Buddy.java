@@ -33,7 +33,7 @@ public class Buddy {
             processAllCommands.executeInput(taskList, input, storage);
             input = in.nextLine();
         }
-        Ui.sayByeToUser();
+        ui.sayByeToUser();
     }
     public static void main(String[] args){
         new Buddy("./buddy.txt").run();
