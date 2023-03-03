@@ -80,7 +80,6 @@ public class Storage {
             ArrayList<String> dataItems = readFile();
             tasks = parse(dataItems);
         } catch (FileNotFoundException e) {
-            System.out.println(Ui.LINE + e);
             try {
                 createFile();
             } catch (IOException error) {

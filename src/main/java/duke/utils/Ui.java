@@ -16,10 +16,11 @@ public class Ui {
     public static String DEADLINE_TIME_ERROR_MESSAGE = LINE
             + "There is no deadline for this task. "
             + "Please try again by using the keywords /by! (=O^O=)\n" + LINE;
-    public static String LOGO = "  ／l、     meow    \n"
-            + "（ﾟ､ ｡ ７         \n"
-            + "  l  ~ヽ       \n"
-            + "  じしf_,)ノ ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀";
+    public static String LOGO = "  /\\_/\\  (\n" +
+            " ( ^.^ ) _)\n" +
+            "   \\\"/  (\n" +
+            " ( | | )\n" +
+            "(__d b__)";
     public static String GREETING = LINE
             + " Meow! I'm Ashy n(=^-^=)n\n"
             + " What can I do for you?\n"
