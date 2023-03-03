@@ -47,7 +47,7 @@ Events have a 'from' and 'to' datetime to include.
 
 <h5> Expected outcome: </h5>
 
-DukeBot will add the event task 'birthday party' as an event task in the list with 'from' and 'to' datetime parameters in brackets!
+DukeBot will add the event task 'birthday party' as an event task in the list with the 'from' and 'to' datetime parameters in brackets!
 
 ```
         Got it! Added this task: 
@@ -69,7 +69,7 @@ Deadlines have a 'by' datetime to include.
 
 <h5> Expected outcome: </h5>
 
-DukeBot will add the deadline task 'CS2113 assignment' as a deadline task in the list with 'by' datetime parameter in brackets!
+DukeBot will add the deadline task 'CS2113 assignment' as a deadline task in the list with the 'by' datetime parameter in brackets!
 
 ```
         Got it! Added this task: 
@@ -200,7 +200,7 @@ Exits the DukeBot program.
 
 <h5> Expected outcome: </h5>
 
-DukeBot program will stop execution until it is run again.
+DukeBot program will display a goodbye message to the user and stop receiving input until it is run again.
 
 ```
         Goodbye! Hope to see you again soon ^^!

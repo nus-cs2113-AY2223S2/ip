@@ -1,2 +1,2 @@
-[E] [ ] birthday party (from:  Friday 6pm  to:  Friday 10pm)
-[D] [ ] CS2113 assignment (by:  March 3 11:59pm)
+[T] [ ] eat food
+[T] [ ] eat more food
