@@ -49,6 +49,10 @@ public class Ui {
             + "Description : Adds a new task with TWO time elements indicating the starting date/time and the ending date/time. \n"
             + "Format      : \"event <insert event description> /from <insert start date/time> /to <insert end date/time>\" \n"
             + "Example use : \"event Recess Week /from 20th Feb 2023 /to 24th Feb 2023\" \n \n"
+            + "## Find ## \n"
+            + "Description : Finds all tasks containing keywords inputted in the description. Requires keywords as an input. \n"
+            + "Format      : \"find <insert keywords>\" \n"
+            + "Example use : \"find books\" \n \n"
             + "## Delete ## \n"
             + "Description : Removes a task from the task list, if it exists. Requires the task index on the list as an input. \n"
             + "Format      : \"delete <insert task index number>\" \n"
@@ -67,6 +71,9 @@ public class Ui {
             + "Example use : \"bye\" \n \n \n"
             + "Hope this list has been informational to you! \n";
     private final static String BYE_MESSAGE = "\nBye. Hope to see you again soon!\n";
+    private final static String EMPTY_LIST_MESSAGE = "\nMATE! Your list is empty!\n";
+    private final static String NO_MATCHING_FIND_RESULTS_MESSAGE = "\nSeems like you do not have any tasks matching: ";
+
     private final static String DUDE_MAIN_ERROR = "\nError in my run method!"
                                                 + "\nException occurred : ";
     private final static String UNRECOGNIZABLE_ERROR = "\nOOPS!!! I'm sorry, but I don't know what that means"
@@ -82,6 +89,8 @@ public class Ui {
     private final static String TASK_ADDING_DEFAULT_ERROR = "\nError in adding task!"
                                                           + "\nException occurred: ";
     private final static String TASK_DELETING_DEFAULT_ERROR = "\nError in deleting task!"
+                                                            + "\nException occurred: ";
+    private final static String TASK_FINDING_DEFAULT_ERROR = "\nError in finding task!"
                                                             + "\nException occurred: ";
     private final static String FORMAT_CONVERT_ERROR = "\nError in inputs!"
                                                      + "\nException occurred: The number is too big to process or the inputs contains words when it is supposed to be numbers.\n"
@@ -106,14 +115,27 @@ public class Ui {
         Scanner in = new Scanner(System.in);
         return in.nextLine();
     }
-    public static void showTaskList(ArrayList<Task> l1) {
-        if (l1.size() == 0) {
-            System.out.println('\n' + "MATE! \uD83D\uDE24 Your list is empty!" + '\n');
+    public static void  showFindResults(ArrayList<Task> list, String keywords) {
+        if (list.size() == 0) {
+            System.out.println(NO_MATCHING_FIND_RESULTS_MESSAGE + keywords + '\n');
+            return;
+        }
+        System.out.println("\nHere are the matching tasks in your list:\n");
+        int i = 1;
+        for (Task t : list) {
+            System.out.println(i + ". " + t.toString());
+            i += 1;
+        }
+        System.out.println();
+    }
+    public static void showTaskList(ArrayList<Task> list) {
+        if (list.size() == 0) {
+            System.out.println(EMPTY_LIST_MESSAGE);
             return;
         }
         System.out.println("\nTASKS LIST\n");
         int i = 1;
-        for (Task t : l1) {
+        for (Task t : list) {
             System.out.println(i + ". " + t.toString());
             i += 1;
         }
@@ -215,6 +237,13 @@ public class Ui {
             System.out.println(PREFIX_EMPTY_LIMIT_LIST_ERROR + type + SUFFIX_EMPTY_LIMIT_LIST_ERROR);
         } else {
             System.out.println(TASK_DELETING_DEFAULT_ERROR + e);
+        }
+    }
+    public static void showFindingTaskErrorMessage(Exception e) {
+        if (e instanceof IncompleteInputException) {
+            System.out.println(MISSING_INPUTS_ERROR + e);
+        } else {
+            System.out.println(TASK_FINDING_DEFAULT_ERROR + e);
         }
     }
 }
