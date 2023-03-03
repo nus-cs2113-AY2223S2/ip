@@ -68,7 +68,7 @@ deadline return car/4pm
     
     Now you have 2 tasks in your list!
 ```
-#
+<br>
 
 ### `Event` - add a Event task to the list
 
@@ -92,7 +92,7 @@ event topup petrol/4pm|6pm
     Now you have 3 tasks in your list!
 ```
 
-#
+<br>
 
 ### `list` - lists the tasks added to the list
 
@@ -120,7 +120,7 @@ list
     _________________________________________
 ```
 
-#
+<br>
 
 ### `mark` - marks a task as done
 
@@ -140,7 +140,7 @@ mark 1
 
 ```
 
-#
+<br>
 
 ### `unmark` - unmarks a task that was previously set as "done"
 
@@ -158,7 +158,7 @@ unmark 1
     1.[ ] rent car
     _________________________________________
 ```
-#
+<br>
 
 ### `delete` - deletes a task from the list
 
@@ -204,7 +204,7 @@ delete 1
     _________________________________________
 ```
 
-#
+<br>
 
 ### `find` - Returns tasks that match the keyword specified by the user
 
@@ -221,7 +221,7 @@ find car
     2. [D][ ] return car (by 4pm)
 ```
 
-#
+<br>
 
 ### `bye` - Exits the program
 
