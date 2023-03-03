@@ -57,14 +57,14 @@ public abstract class Task {
     /**
      * Get the character representing the task's type.
      *
-     * @return "T" if task is Todo, "E" if task if Event, and "D" if task is Deadline.
+     * @return "T" if task is Todo, "E" if task is Event, and "D" if task is Deadline.
      */
     public abstract String getTaskType();
 
     /**
      * Get the summary of the task in the format used to store in duke.txt.
      *
-     * @return the summary of the task in the format used to store in duke.txt.
+     * @return the summary of the task in storage duke.txt format.
      */
     public String getDataSummary() {
         return getTaskType() + " | " + getStatusNum() + " | " + getDescription();
@@ -73,7 +73,7 @@ public abstract class Task {
     /**
      * Get the summary of the task in the format used to display to the user.
      *
-     * @return the summary of the task in the format used to display to the user.
+     * @return the summary of the task in UI display format.
      */
     public String getSummary() {
         return "[" + getTaskType() + "][" + getStatusIcon() + "] " + getDescription();

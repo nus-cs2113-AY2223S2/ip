@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 /**
- * Represent a Personal Assistant Chatbot named Duke that helps a person to keep track of various things.
+ * Represent a Personal Assistant Chat bot named Duke that helps a person to keep track of various things.
  */
 public class Duke {
     private Ui ui;
@@ -34,7 +34,7 @@ public class Duke {
         storage = new Storage();
         storage.loadData(ui, taskList);
     }
-    
+
     /**
      * Creates a Duke object and calls its run method.
      *
@@ -44,11 +44,20 @@ public class Duke {
         new Duke().run();
     }
 
+    /**
+     * Prints farewell message and exit from Duke.
+     */
     private void exitDuke() {
         ui.byeUser();
         System.exit(EXIT_SUCCESS);
     }
 
+    /**
+     * Creates a Command Object using a list of arguments.
+     *
+     * @param commands The list of arguments used to create the Command Object.
+     * @return The Command Object created using the list of arguments.
+     */
     private Command createCommandObject(ArrayList<String> commands) {
         String command = commands.get(COMMAND_INDEX);
         Command commandObject = null;
@@ -81,21 +90,51 @@ public class Duke {
         return commandObject;
     }
 
+    /**
+     * Run the command.
+     *
+     * @param commands The list containing the command and its arguments.
+     * @throws DukeException if the command is invalid
+     * @throws IOException   if an I/O error occurs in the execution of command.
+     */
     private void runCommand(ArrayList<String> commands) throws DukeException, IOException {
-        Command commandObject = createCommandObject(commands);
-        String result = commandObject.doCommand(taskList);
-        storage.updateData(taskList);
-        ui.printCommandResult(result);
+        switch (commands.get(COMMAND_INDEX)) {
+        case "bye":
+            isDone = true;
+            break;
+        case "list":
+            // Fallthrough
+        case "mark":
+            // Fallthrough
+        case "unmark":
+            // Fallthrough
+        case "todo":
+            // Fallthrough
+        case "deadline":
+            // Fallthrough
+        case "event":
+            // Fallthrough
+        case "delete":
+            // Fallthrough
+        case "find":
+            Command commandObject = createCommandObject(commands);
+            String result = commandObject.doCommand(taskList);
+            storage.updateData(taskList);
+            ui.printCommandResult(result);
+            break;
+        default:
+            throw new DukeException("OOPS!!! I'm sorry, but I don't know what that means :-(");
+        }
     }
 
+    /**
+     * Read in a command from user input and parse it.
+     *
+     * @return The parsed command.
+     */
     private ArrayList<String> getCommands() throws DukeException {
         String input = ui.getNextLineInput();
         return Parser.parse(input);
-    }
-
-    private void handleDukeException(Exception e) {
-        String errorMessage = e.getMessage();
-        ui.printErrorMessage(errorMessage);
     }
 
     /**
@@ -106,32 +145,10 @@ public class Duke {
         while (!isDone) {
             try {
                 ArrayList<String> commands = getCommands();
-                switch (commands.get(COMMAND_INDEX)) {
-                case "bye":
-                    isDone = true;
-                    continue;
-                case "list":
-                    // Fallthrough
-                case "mark":
-                    // Fallthrough
-                case "unmark":
-                    // Fallthrough
-                case "todo":
-                    // Fallthrough
-                case "deadline":
-                    // Fallthrough
-                case "event":
-                    // Fallthrough
-                case "delete":
-                    // Fallthrough
-                case "find":
-                    runCommand(commands);
-                    break;
-                default:
-                    throw new DukeException("OOPS!!! I'm sorry, but I don't know what that means :-(");
-                }
+                runCommand(commands);
             } catch (DukeException | IOException e) {
-                handleDukeException(e);
+                String errorMessage = e.getMessage();
+                ui.printErrorMessage(errorMessage);
             }
         }
         exitDuke();

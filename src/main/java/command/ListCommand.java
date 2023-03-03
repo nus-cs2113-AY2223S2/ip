@@ -12,6 +12,7 @@ public class ListCommand extends Command {
     /**
      * List all Duke's tasks and their properties.
      *
+     * @param taskList The TaskList of Duke.
      * @return The list of Duke's tasks and their properties.
      */
     @Override

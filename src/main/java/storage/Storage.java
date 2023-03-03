@@ -31,6 +31,11 @@ public class Storage {
     private final int SECOND_PARAMETER = 4;
     private final String STATUS_DONE = "1";
 
+    /**
+     * Repeatedly read in data from storage, parse the data and append a corresponding task to Duke's TaskList.
+     *
+     * @param taskList The TaskList of Duke
+     */
     private void loadTasks(TaskList taskList) throws DukeException {
         while (this.ui.hasNextLineInput()) {
             String data = this.ui.getNextLineInput();
@@ -40,6 +45,12 @@ public class Storage {
         }
     }
 
+    /**
+     * Create a directory named "./data" create a file in that directory.
+     *
+     * @param file The file object to be created in "./data".
+     * @throws IOException if I/O error occurs in File.
+     */
     private void createFile(File file) throws IOException {
         Path dirPath = Paths.get(DIR_PATH);
         createDirectories(dirPath);
@@ -70,6 +81,13 @@ public class Storage {
         }
     }
 
+    /**
+     * Create a Task Object from a given set of arguments.
+     *
+     * @param parameters The arguments used to create the Task Object.
+     * @return A Task Object create using the set of arguments given.
+     * @throws DukeException if an argument to create Task object is invalid.
+     */
     private Task createTask(String[] parameters) throws DukeException {
         Task newTask;
         switch (parameters[TASK_TYPE]) {

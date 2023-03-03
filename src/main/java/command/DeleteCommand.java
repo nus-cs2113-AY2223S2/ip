@@ -2,6 +2,7 @@ package command;
 
 import exception.DukeException;
 import taskList.TaskList;
+
 import java.util.ArrayList;
 
 public class DeleteCommand extends Command {
@@ -14,7 +15,9 @@ public class DeleteCommand extends Command {
     /**
      * Delete a specific task from Duke's TaskList.
      *
+     * @param taskList The TaskList of Duke.
      * @return The message indicating the successful deletion of the task.
+     * @throws DukeException if task number is invalid
      */
     @Override
     public String doCommand(TaskList taskList) throws DukeException {

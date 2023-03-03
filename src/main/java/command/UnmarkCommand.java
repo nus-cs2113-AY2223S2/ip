@@ -15,7 +15,9 @@ public class UnmarkCommand extends Command {
     /**
      * Mark a task as not done.
      *
+     * @param taskList The TaskList of Duke.
      * @return The message indicating the successful marking of a task as not done.
+     * @throws DukeException if task number is invalid
      */
     @Override
     public String doCommand(TaskList taskList) throws DukeException {

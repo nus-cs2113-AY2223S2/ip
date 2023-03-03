@@ -27,6 +27,7 @@ public abstract class Command {
     /**
      * Execute the command using its arguments.
      *
+     * @param taskList The TaskList of Duke.
      * @return The result from executing the command as a string.
      */
     public abstract String doCommand(TaskList taskList) throws DukeException;

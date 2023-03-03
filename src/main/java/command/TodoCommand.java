@@ -15,6 +15,7 @@ public class TodoCommand extends Command {
     /**
      * Add a Todo Task to Duke's TaskList.
      *
+     * @param taskList The TaskList of Duke.
      * @return The message indicating the addition of a Todo Task into Duke's TaskList.
      */
     @Override

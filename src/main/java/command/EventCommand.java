@@ -18,6 +18,7 @@ public class EventCommand extends Command {
     /**
      * Add an Event Task to Duke's TaskList.
      *
+     * @param taskList The TaskList of Duke.
      * @return The message indicating the addition of an Event Task into Duke's TaskList.
      */
     @Override

@@ -30,12 +30,21 @@ public class Event extends Task {
         return "E";
     }
 
+    /**
+     * Get the summary of the Event in the format used to display to the user.
+     *
+     * @return the summary of the Event in UI display format.
+     */
     @Override
     public String getSummary() {
-        return super.getSummary() + " (from: " + getStart() + " " +
-                "to: " + getEnd() + ")";
+        return super.getSummary() + " (from: " + getStart() + " " + "to: " + getEnd() + ")";
     }
 
+    /**
+     * Get the summary of the Event in the format used to store in duke.txt.
+     *
+     * @return the summary of the Event in storage duke.txt format.
+     */
     @Override
     public String getDataSummary() {
         return super.getDataSummary() + " | " + getStart() + " | " + getEnd();

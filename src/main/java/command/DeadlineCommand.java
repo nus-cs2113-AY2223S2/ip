@@ -2,6 +2,7 @@ package command;
 
 import task.Deadline;
 import taskList.TaskList;
+
 import java.util.ArrayList;
 
 public class DeadlineCommand extends Command {
@@ -15,6 +16,7 @@ public class DeadlineCommand extends Command {
     /**
      * Add a Deadline Task to Duke's TaskList.
      *
+     * @param taskList The TaskList of Duke.
      * @return The message indicating the addition of a Deadline Task into Duke's TaskList.
      */
     @Override

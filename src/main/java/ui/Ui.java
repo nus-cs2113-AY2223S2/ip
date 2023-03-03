@@ -11,6 +11,12 @@ import java.util.Scanner;
 public class Ui {
     private final String LINE = "____________________________________________________________";
     private final Scanner IN;
+    private final String HELLO_MSG = LINE + "\nHello! I'm Duke\nWhat can I do for you?\n" + LINE;
+    private final String BYE_MSG = LINE + "\nBye. Hope to see you again soon!\n" + LINE;
+    private final String DATA_LOAD_SUCCESS_MSG = LINE + '\n' + "\"./data/duke.txt\" found.\nData loaded into "
+            + "Duke!" + '\n' + LINE;
+    private final String FILE_CREATED_MSG = LINE + '\n' + "No existing data found.\nCreated new file \"./data/duke"
+            + ".txt\"" + '\n' + LINE;
 
     public Ui(InputStream in) {
         this.IN = new Scanner(in);
@@ -24,14 +30,14 @@ public class Ui {
      * Prints the greeting message.
      */
     public void greetUser() {
-        System.out.println(LINE + "\nHello! I'm Duke\nWhat can I do for you?\n" + LINE);
+        System.out.println(HELLO_MSG);
     }
 
     /**
      * Prints the farewell message.
      */
     public void byeUser() {
-        System.out.println(LINE + "\nBye. Hope to see you again soon!\n" + LINE);
+        System.out.println(BYE_MSG);
     }
 
     /**
@@ -47,14 +53,14 @@ public class Ui {
      * Prints the message that indicates a successful data load.
      */
     public void printDataLoadSuccess() {
-        System.out.println(LINE + '\n' + "\"./data/duke.txt\" found.\nData loaded into Duke!" + '\n' + LINE);
+        System.out.println(DATA_LOAD_SUCCESS_MSG);
     }
 
     /**
      * Prints the message that indicates a successful data file creation.
      */
     public void printFileCreated() {
-        System.out.println(LINE + '\n' + "No existing data found.\nCreated new file \"./data/duke.txt\"" + '\n' + LINE);
+        System.out.println(FILE_CREATED_MSG);
     }
 
     /**
