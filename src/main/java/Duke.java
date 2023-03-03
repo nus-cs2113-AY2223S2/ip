@@ -8,6 +8,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.FileWriter;
+
+/**
+ * @author : Steven A. O. Waskito
+ * @mailto : e0851459@u.nus.edu
+ * @created : 3 February 2023
+ *
+ * This is the main Java driver and has most of the important methods
+ *
+ **/
 public class Duke {
     protected static final String FILE_PATH = "data/input.txt";
     private static ArrayList<Task> tasks = new ArrayList<>();
@@ -54,6 +63,9 @@ public class Duke {
         System.out.print("   "); System.out.println(print);
         System.out.println("Now you have " + tasks.size() + " task in the list");
     }
+    /**
+     * Parses Todo Input
+     */
     public static String parseInput(String[] inputs){
         String todoInput = "";
         for (int i = 1; i < inputs.length; i ++) {
@@ -69,6 +81,11 @@ public class Duke {
         taskCounter += 1;
         printAddTodo(todo, taskCounter);
     }
+    /**
+     * Executes the find command
+     *
+     * @param input The word that needs to be found
+     */
     public static void findID(String input) {
         for (int index = 0; index < tasks.size(); index += 1) {
             Task currentTask = tasks.get(index);
@@ -77,6 +94,17 @@ public class Duke {
             }
         }
     }
+    /**
+     * Read all of the inputs typed in by users and the input.txt file
+     * Commands are entered in each new line
+     * Each new command starts from first character
+     *
+     * There are 9 types of commands: bye, list, find, mark, unmark, todo, deadline, event, delete
+     *
+     * @param s The line submitted by the user / input.txt
+     * @throws EmptyInputException if there is no description after the input
+     * @throws IllegalInputException if the command is not following the format
+     */
     private static boolean readInput(String s) throws EmptyInputException, IllegalInputException {
         String input = "";
         if (s.equals("in")) {
@@ -224,6 +252,11 @@ public class Duke {
         else
             return true;
     }
+    /**
+     * Scans all of the input.txt file and calls readInput to read it.
+     * @param filePath The file path
+     * @throws FileNotFoundException if there is no file input.txt in /data/
+     */
     private static void printFileContents(String filePath) throws FileNotFoundException {
         File f = new File(filePath); // create a File for the given file path
         Scanner s = new Scanner(f); // create a Scanner using the File as the source
@@ -243,11 +276,26 @@ public class Duke {
         printList(0);
         printLine();
     }
+    /**
+     * Writes to file input.txt to save the tasks.
+     *
+     * @param filePath The file path
+     * @param textToAdd The tasks to be written to input.txt
+     * @throws IOException if there is I/O error occured
+     */
     private static void writeToFile(String filePath, String textToAdd) throws IOException {
         FileWriter fw = new FileWriter(filePath);
         fw.write(textToAdd);
         fw.close();
     }
+    /**
+     * The main driver of Duke.java
+     *
+     * Allows user to input commands and duke will process it according to the commands given
+     *
+     * Handles file creation if no input.txt is found
+     * Handles Empty Input Exception and Illegal Input Exception Error Messages
+     */
     public static void main(String[] args) {
         printWelcomeMessage();
         File f = new File(FILE_PATH);
