@@ -1,5 +1,6 @@
 package utility;
 
+
 /**
  * Represents a class used to check for proper usage of commands.
  * It serves to accept the inputs after it has been broken down, and check for relevant fields to be filled.
@@ -16,6 +17,17 @@ public class commandChecker {
     private static final String DEFAULT_LIST_EMPTY_ERROR = "list is currently empty!";
     private static final String DEFAULT_DELETE_ERROR = "you may only delete one task at a time";
     private static final String DEFAULT_OUT_OF_BOUND_ERROR = "out of bounds!";
+
+    private static final String DEFAULT_DEADLINE_FLAG_ERROR = "Please use / only for flags! "
+            + "e.g. deadline {description} /by {date/time}";
+
+    private static final String DEFAULT_EVENT_FLAG_ERROR = "Please use / only for flags! "
+            + "e.g event {description} /from {date/time} /to {date/time} ";
+    private static final String DEFAULT_DEADLINE_FLAG = "by ";
+
+    private static final String DEFAULT_EVENT_FROM_FLAG = "from ";
+
+    private static final String DEFAULT_EVENT_TO_FLAG = "to ";
 
     private final String[] decisions;
 
@@ -122,11 +134,19 @@ public class commandChecker {
             currentException.setDescription(DEFAULT_EVENT_ERROR_MESSAGE);
             throw currentException;
         }
+        if (!isCorrectEventFlags()) {
+            currentException.setDescription(DEFAULT_EVENT_FLAG_ERROR);
+            throw currentException;
+        }
     }
 
     private void validateDeadline(DukeException currentException) throws DukeException {
         if (dates.length < 2) {
             currentException.setDescription(DEFAULT_DEADLINE_ERROR_MESSAGE);
+            throw currentException;
+        }
+        if (!isCorrectDeadlineFlag()) {
+            currentException.setDescription(DEFAULT_DEADLINE_FLAG_ERROR);
             throw currentException;
         }
     }
@@ -201,6 +221,33 @@ public class commandChecker {
             currentException.setDescription(DEFAULT_LIST_EMPTY_ERROR);
             throw currentException;
         }
+    }
+
+    private boolean isCorrectDeadlineFlag() {
+        boolean hasCorrectFlag = false;
+        try {
+            String flagChecker = dates[1].substring(0, 3);
+            if (flagChecker.equals(DEFAULT_DEADLINE_FLAG)) {
+                hasCorrectFlag = true;
+            }
+        } catch (StringIndexOutOfBoundsException e) {
+            return false;
+        }
+        return hasCorrectFlag;
+    }
+
+    private boolean isCorrectEventFlags() {
+        boolean hasCorrectFlags = false;
+        try {
+            String fromFlagChecker = dates[1].substring(0, 5);
+            String toFlagChecker = dates[2].substring(0, 3);
+            if (fromFlagChecker.equals(DEFAULT_EVENT_FROM_FLAG) && toFlagChecker.equals(DEFAULT_EVENT_TO_FLAG)) {
+                hasCorrectFlags = true;
+            }
+        } catch (StringIndexOutOfBoundsException e) {
+            return false;
+        }
+        return hasCorrectFlags;
     }
 
 }
