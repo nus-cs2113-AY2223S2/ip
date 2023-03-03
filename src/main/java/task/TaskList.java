@@ -26,6 +26,7 @@ public class TaskList {
         list.remove(index);
         int size = list.size();
         System.out.println("Now you have " + size + " tasks in the list");
+        System.out.println(LINE);
     }
 
     /**
