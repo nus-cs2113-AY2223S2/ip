@@ -3,6 +3,10 @@ package Duke.DukeTask;
 import java.time.LocalDate;
 
 public class DukeTask {
+    public static final String TASK_ICON_FINISHED = "X";
+    public static final String TASK_ICON_UNFINISHED = " ";
+    private static final String MARK_WARNS = "[Warning] This task is already done!";
+    private static final String UNMARK_WARNS = "[Warning] This task is not done yet!";
     protected String taskName;
     protected boolean isDone;
 
@@ -20,7 +24,7 @@ public class DukeTask {
      * @return the task status icon, with X if done, else with space.
      */
     public String getStatusIcon() {
-        return (this.isDone ? "X" : " ");
+        return (this.isDone ? TASK_ICON_FINISHED : TASK_ICON_UNFINISHED);
     }
 
     /**
@@ -28,17 +32,17 @@ public class DukeTask {
      */
     public void markAsDone() {
         if(this.isDone) {
-            System.out.println("[Warning] This task is already done!");
+            System.out.println(MARK_WARNS);
         }
         this.isDone = true;
     }
 
     /**
-     * Unmarks the particular task as done (withdrawing the done status).
+     * Marks the particular task as undone (withdrawing the done status).
      */
     public void unmarkAsDone() {
         if(!this.isDone) {
-            System.out.println("[Warning] This task is not done yet!");
+            System.out.println(UNMARK_WARNS);
         }
         this.isDone = false;
     }

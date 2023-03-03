@@ -43,7 +43,6 @@ public class DukeDeadline extends DukeTask {
      * Prints the task in the format of:
      * "[Task Type] [Status Icon] Task Name (by: deadline)".
      * If the date can be parsed into LocalDate, it will be printed in the format of MMM d yyyy.
-     * @param id the id of the task in the list.
      */
     @Override
     public void printTask() {

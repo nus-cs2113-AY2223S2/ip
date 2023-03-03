@@ -1,7 +1,7 @@
 T | 0 | join sports club
 T | 0 | borrow book
 T | 0 | swimming
-D | 0 | running | 2019-10-15
+D | 1 | running | 2019-10-15
 D | 0 | jumping | not decided yet
 D | 1 | homework | 2019-12-02-1800
 E | 1 | greeting | 2019-10-14 | 2019-10-16
