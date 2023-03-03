@@ -1,24 +1,38 @@
-# Duke project template
+# Duke
+Welcome to Duke! This is a user guide for the task tracker Duke.
 
-This is a project template for a greenfield Java project. It's named after the Java mascot _Duke_. Given below are instructions on how to use it.
+## Installation
+Requires: JDK 11
+1. Download the jar file for Duke under "Releases"
+2. Extract it to an empty folder
+3. Run the jar file
+4. Enjoy!
 
-## Setting up in Intellij
+### Commands
+Below are the list of commands that can be used with Duke  
+Please remember to follow the input format strictly!
 
-Prerequisites: JDK 11, update Intellij to the most recent version.
+1. list || (to see the current tasks saved)
+2. `todo <task>` || Adds a task with no particular time to take note of
+3. `event <task> /from <start time of event> /to <end time of event>` || Adds an event with a start and end time
+4. `deadline <task> /by <deadline of task>` || Adds a task with a deadline
+5. `mark <task number>` || To mark a task as done
+6. `unmark <task number>` || To mark a task as not done
+7. `delete <task number>` || To remove a task from the list
+8. `bye` || To terminate the programme
 
-1. Open Intellij (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project first)
-1. Open the project into Intellij as follows:
-   1. Click `Open`.
-   1. Select the project directory, and click `OK`.
-   1. If there are any further prompts, accept the defaults.
-1. Configure the project to use **JDK 11** (not other versions) as explained in [here](https://www.jetbrains.com/help/idea/sdk.html#set-up-jdk).<br>
-   In the same dialog, set the **Project language level** field to the `SDK default` option.
-3. After that, locate the `src/main/java/Duke.java` file, right-click it, and choose `Run Duke.main()` (if the code editor is showing compile errors, try restarting the IDE). If the setup is correct, you should see something like the below as the output:
-   ```
-   Hello from
-    ____        _        
-   |  _ \ _   _| | _____ 
-   | | | | | | | |/ / _ \
-   | |_| | |_| |   <  __/
-   |____/ \__,_|_|\_\___|
-   ```
+## Usage
+
+Example of usage:
+
+`event study /from 2pm /tp 4pm`
+
+Expected outcome:
+```
+Got it. I've added this task: 
+[E][ ] study (From: 2pm to To: 4pm)
+Now you have 1 tasks in the list. 
+____________________________________________________________
+
+What would you like to do?
+```

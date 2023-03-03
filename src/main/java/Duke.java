@@ -1,11 +1,9 @@
-import Tasks.Task;
 import User.Parser;
 import User.Storage;
 import User.TaskList;
 import User.UI;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Duke {
@@ -20,10 +18,10 @@ public class Duke {
         Scanner myObj = new Scanner(System.in);
         String userInput;
         userInput = myObj.nextLine();
-        while (!userInput.equals("bye")) { //if user inputs "bye" the loop will break
+        while (!userInput.equals("bye")) {
             Parser.parsing(userInput);
             System.out.println("What would you like to do?");
-            userInput = myObj.nextLine(); //to take in next input
+            userInput = myObj.nextLine();
         }
         Storage.clearFile();
         Storage.updateFile(TaskList.taskList);

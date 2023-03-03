@@ -17,11 +17,19 @@ public class Event extends Task {
         return symbol;
     }
 
-
+    /**
+     * Returns the string in a format to be presented to the user
+     * @return the formatted string output
+     */
     @Override
     public String toString(){
         return "[E]" +  super.getStatusIcon() + " " + super.getDescription();
     }
+
+    /**
+     * Returns the string in a format to be stored in the text file
+     * @return the formatted string to be stored in the text file
+     */
     @Override
     public String toFile() {
         return this.getStatusIcon() + " : " + "E" + " : " + this.description;

@@ -1,3 +1,1 @@
-[ ] : T : eat
-[ ] : D : duke(By:2359)
-[X] : E : study(From:now To:later)
+[X] : T : eat
