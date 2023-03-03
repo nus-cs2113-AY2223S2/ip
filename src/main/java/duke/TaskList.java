@@ -30,9 +30,13 @@ public abstract class TaskList{
     }
 
     /**
-     * Prints all the task in the list when the user sends a "list" command
+     * Prints all the task in the list when the user sends a "list" command. If list is empty, a message will be
+     * printed to inform the user
      */
     public static void printTaskList() {
+        if (getTaskSize() == 0) {
+            System.out.println("list is empty, please add some tasks");
+        }
         for (int i = 0; i < getTaskSize(); i++) {
             System.out.println((i + 1) + "." + tasks.get(i).toString());
         }
@@ -89,7 +93,7 @@ public abstract class TaskList{
      */
     public static void deleteTask(int index) {
         Ui.printRemoval(tasks.get(index - 1).toString(), TaskList.getTaskSize() - 1);
-        tasks.remove(index);
+        tasks.remove(index - 1);
     }
 
     /**
@@ -116,6 +120,12 @@ public abstract class TaskList{
         System.out.println(tasks.get(index - 1).printTask());
     }
 
+    /**
+     * Finds tasks in the task list that matches the keyword specified by the user. A message will be sent to the user
+     * if there are no matches found
+     *
+     * @param input the input by the user that specifies the keyword
+     */
     public static void findTask(String input) {
         int matchCount = 1;
         System.out.println("Here are the matching tasks in your list:");
@@ -124,6 +134,9 @@ public abstract class TaskList{
                 System.out.println(matchCount + "." + tasks.get(i).toString());
                 matchCount ++;
             }
+        }
+        if (matchCount == 0) {
+            System.out.println("no matches found");
         }
     }
 }
