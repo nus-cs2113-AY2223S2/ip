@@ -1,6 +1,16 @@
 package duke.parser;
 
-import duke.command.*;
+import duke.command.AddTaskCommand;
+import duke.command.Command;
+import duke.command.DeleteCommand;
+import duke.command.ExitCommand;
+import duke.command.FindCommand;
+import duke.command.HelpCommand;
+import duke.command.ListCommand;
+import duke.command.MarkCommand;
+import duke.command.UnmarkCommand;
+import duke.constants.Config;
+import duke.constants.ParserConstants;
 import duke.exceptions.InvalidCommandException;
 import duke.exceptions.InvalidDateTimeException;
 import duke.exceptions.InvalidInputIDException;
@@ -17,19 +27,6 @@ import java.util.Scanner;
  * Processes user input
  */
 public class InputParser {
-    private static final String CHAR_SPACE = " ";
-    private static final String COMMAND_BYE = "bye";
-    private static final String COMMAND_DEADLINE = "deadline";
-    private static final String COMMAND_DELETE = "delete";
-    private static final String COMMAND_EVENT = "event";
-    private static final String COMMAND_EXIT = "exit";
-    private static final String COMMAND_FIND = "find";
-    private static final String COMMAND_HELP = "help";
-    private static final String COMMAND_LIST = "list";
-    private static final String COMMAND_MARK = "mark";
-    private static final String COMMAND_TODO = "todo";
-    private static final String COMMAND_UNMARK = "unmark";
-
     /**
      * Reads the task ID input by the user.
      *
@@ -48,40 +45,40 @@ public class InputParser {
      * Reads the user input and creates the corresponding task.
      *
      * @param input User input
-     * @param type  TaskEnum, for deserializing from JSON
+     * @param taskType  TaskEnum, for deserializing from JSON
      * @return The Task object corresponding to user input
      * @throws InvalidTaskFormatException If user input does not match the required format.
      *                                    Exception message will describe the required format.
      */
-    private static Task getTaskFromInput(Scanner input, TaskEnum type) throws InvalidTaskFormatException, InvalidDateTimeException {
+    private static Task getTaskFromInput(Scanner input, TaskEnum taskType) throws InvalidTaskFormatException, InvalidDateTimeException {
         // validate input
         if (!input.hasNextLine()) {
-            throw new InvalidTaskFormatException(type);
+            throw new InvalidTaskFormatException(taskType);
         }
         String taskDetails = input.nextLine().trim();
 
-        Task task;
-        switch (type) {
+        Task savedTask;
+        switch (taskType) {
         case DEADLINE:
             DeadlineParser deadlineParser = new DeadlineParser();
-            task = deadlineParser.parseInput(taskDetails);
+            savedTask = deadlineParser.parseInput(taskDetails);
             break;
         case EVENT:
             EventParser eventParser = new EventParser();
-            task = eventParser.parseInput(taskDetails);
+            savedTask = eventParser.parseInput(taskDetails);
             break;
         case TODO:
             ToDoParser todoParser = new ToDoParser();
-            task = todoParser.parseInput(taskDetails);
+            savedTask = todoParser.parseInput(taskDetails);
             break;
         default:
             if (taskDetails.isEmpty()) {
                 throw new InvalidTaskFormatException(TaskEnum.UNDEFINED);
             }
-            task = new Task(taskDetails, TaskEnum.UNDEFINED);
+            savedTask = new Task(taskDetails, TaskEnum.UNDEFINED);
         }
 
-        return task;
+        return savedTask;
     }
 
     /**
@@ -93,9 +90,9 @@ public class InputParser {
      * @throws InvalidInputIDException    If the given ID is invalid
      * @throws InvalidCommandException    If the command does not match any supported commands
      */
-    public Command parse(String input) throws Exception {
-        final String keyword = input.split(CHAR_SPACE)[0];
-        boolean isExit = keyword.equals(COMMAND_BYE) || keyword.equals(COMMAND_EXIT);
+    public Command parseInput(String input) throws Exception {
+        final String inputFirstWord = input.split(Config.CHAR_SPACE)[0];
+        boolean isExit = inputFirstWord.equals(ParserConstants.COMMAND_BYE) || inputFirstWord.equals(ParserConstants.COMMAND_EXIT);
         if (isExit) {
             return new ExitCommand();
         }
@@ -105,41 +102,41 @@ public class InputParser {
         }
 
         Scanner scanner = new Scanner(input);
-        String command = scanner.next().toLowerCase();
+        String inputCommand = scanner.next().toLowerCase();
 
-        Command result;
-        switch (command) {
-        case COMMAND_DEADLINE:
-            result = new AddTaskCommand(getTaskFromInput(scanner, TaskEnum.DEADLINE));
+        Command commandObj;
+        switch (inputCommand) {
+        case ParserConstants.COMMAND_DEADLINE:
+            commandObj = new AddTaskCommand(getTaskFromInput(scanner, TaskEnum.DEADLINE));
             break;
-        case COMMAND_DELETE:
-            result = new DeleteCommand(getID(scanner));
+        case ParserConstants.COMMAND_DELETE:
+            commandObj = new DeleteCommand(getID(scanner));
             break;
-        case COMMAND_EVENT:
-            result = new AddTaskCommand(getTaskFromInput(scanner, TaskEnum.EVENT));
+        case ParserConstants.COMMAND_EVENT:
+            commandObj = new AddTaskCommand(getTaskFromInput(scanner, TaskEnum.EVENT));
             break;
-        case COMMAND_FIND:
-            result = new FindCommand(scanner.nextLine());
+        case ParserConstants.COMMAND_FIND:
+            commandObj = new FindCommand(scanner.nextLine());
             break;
-        case COMMAND_HELP:
-            result = new HelpCommand();
+        case ParserConstants.COMMAND_HELP:
+            commandObj = new HelpCommand();
             break;
-        case COMMAND_LIST:
-            result = new ListCommand();
+        case ParserConstants.COMMAND_LIST:
+            commandObj = new ListCommand();
             break;
-        case COMMAND_MARK:
-            result = new MarkCommand(getID(scanner));
+        case ParserConstants.COMMAND_MARK:
+            commandObj = new MarkCommand(getID(scanner));
             break;
-        case COMMAND_TODO:
-            result = new AddTaskCommand(getTaskFromInput(scanner, TaskEnum.TODO));
+        case ParserConstants.COMMAND_TODO:
+            commandObj = new AddTaskCommand(getTaskFromInput(scanner, TaskEnum.TODO));
             break;
-        case COMMAND_UNMARK:
-            result = new UnmarkCommand(getID(scanner));
+        case ParserConstants.COMMAND_UNMARK:
+            commandObj = new UnmarkCommand(getID(scanner));
             break;
         default:
             throw new InvalidCommandException();
         }
 
-        return result;
+        return commandObj;
     }
 }

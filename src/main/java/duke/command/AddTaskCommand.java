@@ -17,6 +17,6 @@ public class AddTaskCommand extends Command {
     @Override
     public void executor(TaskList tasks, UI ui) {
         tasks.add(taskObj);
-        ui.printTaskAdded(taskObj.describe(), tasks.size());
+        ui.printTaskAdded(taskObj.describeTask(), tasks.getSize());
     }
 }

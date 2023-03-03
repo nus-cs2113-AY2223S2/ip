@@ -7,6 +7,8 @@ import duke.tasklist.TaskList;
 import duke.storage.Storage;
 import duke.ui.UI;
 
+import java.io.IOException;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 /**
@@ -20,33 +22,50 @@ public class Duke {
         InputParser inputParser = new InputParser();
         TaskList tasks;
         try {
-            String json = storage.read();
-            tasks = new TaskList(json);
+            String tasksJson = storage.read();
+            tasks = new TaskList(tasksJson);
+
+            // handle shutdown event
+            TaskList finalTasks = tasks;
+            Thread shutdownThread = new Thread(() -> {
+                try {
+                    storage.save(finalTasks.toJson());
+                    ui.printExit();
+                } catch (IOException e) {
+                    ui.printSaveFailed();
+                }
+            });
+            Runtime.getRuntime().addShutdownHook(shutdownThread);
         } catch (CorruptSaveDataException e) {
-            ui.print(e.getMessage());
+            ui.printString(e.getMessage());
             tasks = new TaskList();
         }
 
-        Scanner scan = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
         ui.printLogo();
-        ui.greet();
+        ui.printHelp();
+        ui.printWelcomeMessage();
 
         String input;
         boolean isExit = false;
         do {
             try {
-                input = scan.nextLine();
+                input = scanner.nextLine();
+                Command command = inputParser.parseInput(input);
                 ui.printLine();
-                Command command = inputParser.parse(input);
                 // tasks saved after every command execution
                 command.execute(tasks, ui, storage);
                 isExit = command.isExit();
+            } catch (NoSuchElementException e) {
+                // empty catch, prevents No line found output
+            } catch (IOException e) {
+                ui.printSaveFailed();
             } catch (Exception e) {
-                ui.print(e.getMessage());
+                ui.printString(e.getMessage());
                 ui.printLine();
             }
         } while (!isExit);
 
-        scan.close();
+        scanner.close();
     }
 }

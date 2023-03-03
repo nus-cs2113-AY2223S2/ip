@@ -1,5 +1,6 @@
 package duke.parser.datetime;
 
+import duke.constants.TasksConstants;
 import duke.exceptions.InvalidDateTimeException;
 
 import java.time.LocalDateTime;
@@ -10,8 +11,7 @@ import java.time.format.DateTimeParseException;
  * Helper class for parsing LocalDateTime object
  */
 public class DateTimeParser {
-    private static final String FORMAT = "yyyy-MM-dd HHmm";
-    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern(FORMAT);
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern(TasksConstants.FORMAT_DATE_TIME);
 
     /**
      * Convert the user input date into LocalDateTime object.
@@ -31,8 +31,8 @@ public class DateTimeParser {
         return dateTime;
     }
 
-    public static String getFormat() {
-        return FORMAT;
+    public static String getFormatDateTime() {
+        return TasksConstants.FORMAT_DATE_TIME;
     }
 
     public static DateTimeFormatter getFormatter() {

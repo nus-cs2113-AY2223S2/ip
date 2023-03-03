@@ -1,29 +1,15 @@
 package duke.ui;
 
+import duke.constants.Config;
+
 import java.util.Scanner;
 
 /**
  * Handles all UI outputs
  */
 public class UI {
-    private static final String INDENT = "    ";
-    private static final String LINE = "____________________________________________________________";
-    private static final String LOGO = " ____        _        \n"
-            + "|  _ \\ _   _| | _____ \n"
-            + "| | | | | | | |/ / _ \\\n"
-            + "| |_| | |_| |   <  __/\n"
-            + "|____/ \\__,_|_|\\_\\___|\n";
-    private static final String MESSAGE_EXIT = "Bye. Hope to see you again soon!";
-    private static final String MESSAGE_GREET = "Hello! I'm Duke\nWhat can I do for you?";
-    private static final String MESSAGE_HELP = "Welcome to Duke." + System.lineSeparator()
-            + "Duke is a task managing application optimised for the Command-Line Interface." + System.lineSeparator()
-            + "Commands: bye, deadline, event, exit, find, help, list, mark, todo, unmark" + System.lineSeparator()
-            + "To learn more about each command and view the full user guide, "
-            + "visit https://jinxuan-owyong.github.io/ip/" + System.lineSeparator();
-    private static final String MESSAGE_LOGO = "Hello from";
-
-    public void greet() {
-        print(MESSAGE_GREET);
+    public void printWelcomeMessage() {
+        printString(Config.MESSAGE_WELCOME);
         printLine();
     }
 
@@ -32,35 +18,41 @@ public class UI {
      *
      * @param output String to be printed
      */
-    public void print(String output) {
+    public void printString(String output) {
         Scanner scan = new Scanner(output);
         while (scan.hasNextLine()) { // add indentation
-            System.out.println(INDENT + scan.nextLine());
+            System.out.println(Config.INDENT + scan.nextLine());
         }
         scan.close();
     }
 
     public void printExit() {
-        print(MESSAGE_EXIT);
+        printString(Config.MESSAGE_EXIT);
         printLine();
+        printString(System.lineSeparator());
     }
 
     public void printHelp() {
-        print(MESSAGE_HELP);
+        printString(Config.MESSAGE_HELP);
         printLine();
     }
 
     public void printLine() {
-        print(LINE + "\n");
+        printString(Config.LINE + System.lineSeparator());
     }
 
     public void printLine(String text) {
-        print(text);
+        printString(text);
         printLine();
     }
 
     public void printLogo() {
-        print(MESSAGE_LOGO + System.lineSeparator() + LOGO);
+        printString(Config.MESSAGE_LOGO + System.lineSeparator() + Config.LOGO);
+        printLine();
+    }
+
+    public void printSaveFailed() {
+        printString(Config.MESSAGE_SAVE_FAILED);
         printLine();
     }
 
@@ -71,10 +63,10 @@ public class UI {
      * @param numTasks    Number of tasks in the list
      */
     public void printTaskAdded(String description, int numTasks) {
-        String output = "Got it. I've added this task:\n"
-                + INDENT + description + "\n"
+        String output = "Got it. I've added this task:" + System.lineSeparator()
+                + Config.INDENT + description + System.lineSeparator()
                 + "Now you have " + numTasks + " tasks in the list";
-        print(output);
+        printString(output);
         printLine();
     }
 
@@ -85,10 +77,10 @@ public class UI {
      * @param numTasks    Number of tasks in the list
      */
     public void printTaskDeleted(String description, int numTasks) {
-        String output = "Noted. I have removed this task:\n"
-                + INDENT + description + "\n"
+        String output = "Noted. I have removed this task:" + System.lineSeparator()
+                + Config.INDENT + description + System.lineSeparator()
                 + "Now you have " + numTasks + " tasks in the list.";
-        print(output);
+        printString(output);
         printLine();
     }
 
@@ -99,8 +91,8 @@ public class UI {
      * @param tasks The matching tasks
      */
     public void printTasksFound(String query, String tasks) {
-        print("Showing matches for query: " + query + "\n");
-        print(tasks);
+        printString(Config.MESSAGE_TASKS_FOUND + query + System.lineSeparator());
+        printString(tasks);
         printLine();
     }
 }

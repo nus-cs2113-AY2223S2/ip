@@ -13,6 +13,6 @@ public class ExitCommand extends Command {
 
     @Override
     public void executor(TaskList tasks, UI ui) {
-        ui.printExit();
+        // exit message will be handled by shutdown hook
     }
 }

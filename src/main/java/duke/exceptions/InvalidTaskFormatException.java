@@ -1,30 +1,22 @@
 package duke.exceptions;
 
-import duke.parser.datetime.DateTimeParser;
+import duke.constants.ExceptionMessageConstants;
+import duke.constants.TasksConstants;
 import duke.tasks.TaskEnum;
 
 /**
  * Exception when the input task command does not follow the required format.
  */
 public class InvalidTaskFormatException extends Exception {
-    private static final String DATE_FORMAT = DateTimeParser.getFormat();
-    private static final String FORMAT_DEADLINE = "Deadline - deadline <task details> "
-            + "/by <" + DATE_FORMAT + ">\n";
-    private static final String FORMAT_EVENT = "Event - event <task details>"
-            + "/from <" + DATE_FORMAT + "> "
-            + "/to <" + DATE_FORMAT + ">\n";
-    private static final String FORMAT_TODO = "Todo - todo <task details>\n";
-    private final TaskEnum id;
-    private static final String MESSAGE_HEADER = "Invalid input format!\n"
-            + "Use the following format to create a new task:\n";
+    private final TaskEnum taskType;
 
     /**
      * Class constructor for the task the user is trying to create.
      *
-     * @param t TaskEnum corresponding to the task type
+     * @param taskType TaskEnum corresponding to the task type
      */
-    public InvalidTaskFormatException(TaskEnum t) {
-        this.id = t;
+    public InvalidTaskFormatException(TaskEnum taskType) {
+        this.taskType = taskType;
     }
 
     /**
@@ -34,18 +26,18 @@ public class InvalidTaskFormatException extends Exception {
      */
     @Override
     public String getMessage() {
-        String msg = MESSAGE_HEADER;
-        switch (id) {
+        String errorMessage = ExceptionMessageConstants.EXCEPTION_INVALID_FORMAT_HEADER;
+        switch (taskType) {
         case TODO:
-            msg += FORMAT_TODO;
+            errorMessage += TasksConstants.FORMAT_TODO;
             break;
         case DEADLINE:
-            msg += FORMAT_DEADLINE;
+            errorMessage += TasksConstants.FORMAT_DEADLINE;
             break;
         case EVENT:
-            msg += FORMAT_EVENT;
+            errorMessage += TasksConstants.FORMAT_EVENT;
             break;
         }
-        return msg;
+        return errorMessage;
     }
 }
