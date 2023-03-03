@@ -2,11 +2,20 @@ package duke;
 
 import java.util.ArrayList;
 
+/**
+ * Class representing a command and its parameters. Must be created using a command string.
+ */
 public class Command {
     private final CommandType type;
     private String value = "";
     private final ArrayList<Parameter> parameters;
 
+    /**
+     * Constructor for a command.
+     * @param input the full string of the entered command, including parameters
+     * @throws IllegalCommandException command is invalid
+     * @throws IllegalParameterException command is valid but parameter requirements are not satisfied
+     */
     public Command(String input) throws IllegalCommandException, IllegalParameterException {
         String[] splitInput = input.split(" /");
 
@@ -77,6 +86,12 @@ public class Command {
         }
     }
 
+    /**
+     * Gets the string value of the specified parameter type.
+     * @param type the type of the parameter to query
+     * @return the string value of the queried parameter type
+     * @throws IllegalCommandException the command is missing the queried parameter type
+     */
     public String getParameterValueByType(ParameterType type) throws IllegalCommandException {
         for (Parameter parameter : parameters) {
             if (parameter.getParameterType() == type) {
@@ -86,6 +101,13 @@ public class Command {
         throw new IllegalCommandException(IllegalCommandExceptionType.MISSING_PARAMETER, type.toString().toLowerCase());
     }
 
+    /**
+     * Executes the command.
+     * @param tasks the list of tasks
+     * @param ui the ui object
+     * @param storage the storage object
+     * @throws Exception some kind of error occurred
+     */
     public void execute(TaskList tasks, Ui ui, Storage storage) throws Exception {
         if (type == CommandType.CREATE_TODO) {
             Task addedTask = tasks.addTask(new Todo(value));
@@ -127,6 +149,10 @@ public class Command {
         }
     }
 
+    /**
+     * Check if the command is the exit command.
+     * @return boolean indicating if the program should exit
+     */
     public boolean isExit() {
         return type == CommandType.EXIT;
     }

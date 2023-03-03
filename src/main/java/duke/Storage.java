@@ -4,15 +4,27 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Class to handle storage
+ */
 public class Storage {
     private final String filePath;
 
     private final String divider = " / ";
 
+    /**
+     * Constructor for a new storage object
+     * @param filePath location for the storage file
+     */
     public Storage(String filePath) {
         this.filePath = filePath;
     }
 
+    /**
+     * Reads the storage file and loads the data into a task list
+     * @return an ArrayList of the loaded tasks
+     * @throws Exception error encountered when loading data
+     */
     public ArrayList<Task> load() throws Exception {
         ArrayList<Task> tasks = new ArrayList<>();
 
@@ -35,6 +47,11 @@ public class Storage {
         return tasks;
     }
 
+    /**
+     * Saves the tasks in memory to the data file
+     * @param taskList the TaskList object
+     * @throws Exception error occurred when saving
+     */
     public void save(TaskList taskList) throws Exception {
         StringBuilder data = new StringBuilder();
         for (Task task : taskList.getAllTasks()) {

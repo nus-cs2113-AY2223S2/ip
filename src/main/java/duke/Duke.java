@@ -1,10 +1,17 @@
 package duke;
 
+/**
+ * Class for the main program
+ */
 public class Duke {
     private final Storage storage;
     private TaskList tasks;
     private final Ui ui;
 
+    /**
+     * Constructor for the main program
+     * @param filePath location of the storage file
+     */
     public Duke (String filePath) {
         ui = new Ui();
         storage = new Storage(filePath);
@@ -16,6 +23,9 @@ public class Duke {
         }
     }
 
+    /**
+     * Runs the main program
+     */
     public void run() {
         ui.showWelcome();
         boolean isExit = false;
