@@ -5,10 +5,10 @@ import Duke.commands.Deadline;
 import Duke.commands.Event;
 import Duke.commands.Task;
 import Duke.commands.Todo;
-public class Command {
+public class TaskList {
     protected ArrayList<Task> tasks;
 
-    public Command(ArrayList<Task> tasks){
+    public TaskList(ArrayList<Task> tasks){
         this.tasks = tasks;
     }
 

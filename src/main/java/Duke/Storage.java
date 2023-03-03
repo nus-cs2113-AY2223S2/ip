@@ -12,12 +12,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class WriteFile {
-    private static String[] loadInfo(String line) {
-        String[] taskInfo = line.split(" | ");
-        return taskInfo;
-    }
-
+public class Storage {
     public static ArrayList<Task> loadFile(String path) {
         ArrayList<Task> tasks = new ArrayList<>();
         try {
@@ -26,13 +21,15 @@ public class WriteFile {
 
             while (scanner.hasNextLine()) {
                 task = scanner.nextLine();
-                String[] taskInfo = loadInfo(task);
+                String[] taskInfo = task.split(" [|] ");
                 if (taskInfo[0].equals("T")) {
                     tasks.add(new Todo(taskInfo[2]));
-                } else if (taskInfo[0].equals("E"))
+                } else if (taskInfo[0].equals("E")) {
                     tasks.add(new Event(taskInfo[2], taskInfo[3], taskInfo[4]));
-                else
+                } else {
                     tasks.add(new Deadline(taskInfo[2], taskInfo[3]));
+                }
+
                 if (taskInfo[1].equals("1"))
                     tasks.get(tasks.size() - 1).markAsDone();
             }
@@ -42,27 +39,22 @@ public class WriteFile {
         return tasks;
     }
 
-    private static String fileContent(Task task) {
+    private static String fileContent(ArrayList<Task> tasks) {
         String content = "";
-        if (task.getClass().getName().equals("Duke.commands.Todo")) {
-            content += "T | ";
-        }
-        if (task.getClass().getName().equals("duke.commands.Event")) {
-            content += "E | ";
-        }
-        if (task.getClass().getName().equals("duke.commands.Deadline")){
-            content += "D | ";
-        }
-        content += ((task.getStatusIcon().equals("X") ? "1" : "0") + " | " + task.getDescription());
-        if (task.getClass().getName().equals("duke.commands.Deadline")){
-            content += (" | " + task.getDueTime());
-        }
-        if(task.getClass().getName().equals("duke.commands.Event")){
-            content +=(" | " + task.getStartTime() + " | " + task.getDueTime());
+        for(Task task : tasks) {
+            if (task.getClass().getName().equals("Duke.commands.Todo")) {
+                content += "T | " +((task.getStatusIcon().equals("X") ? "1" : "0") + " | " + task.getDescription());
+            } else if (task.getClass().getName().equals("Duke.commands.Event")) {
+                content += "E | " +((task.getStatusIcon().equals("X") ? "1" : "0") + " | " + task.getDescription())+(" | " + task.getStartTime() + " | " + task.getDueTime());
+            } else if (task.getClass().getName().equals("Duke.commands.Deadline")) {
+                content += "D | " +((task.getStatusIcon().equals("X") ? "1" : "0") + " | " + task.getDescription())+(" | " + task.getDueTime());
+            }
+            content += System.lineSeparator();
         }
         return content;
     }
-    private static void saveFile(String path, ArrayList<Task> tasks) {
+
+    public static void saveFile(String path, ArrayList<Task> tasks) {
         File file = new File(path);
         if (!file.exists()) {
             System.out.println("File not exists, create it ...");
@@ -79,10 +71,7 @@ public class WriteFile {
 
         try {
             FileWriter fl = new FileWriter(path);
-            for (Task task : tasks) {
-                fl.write(fileContent(task));
-                fl.write(System.lineSeparator());
-            }
+            fl.write(fileContent(tasks));
             fl.close();
         } catch (IOException e) {
             e.printStackTrace();
