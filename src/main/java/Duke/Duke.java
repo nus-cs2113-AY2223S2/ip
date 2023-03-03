@@ -1,18 +1,20 @@
 package Duke;
 
-import Duke.Exceptions.DukeException;
-
 import java.util.Scanner;
-
 import java.io.IOException;
 
 public class Duke {
     public static void main(String[] args) {
         Ui.printWelcome();
-        TaskList.initializeTaskNumber(TaskList.taskList);
+        TaskList.initializeTaskNumberAndList();
         run();
     }
-
+    /***
+     * Continuously runs and takes in commands until "bye" command has been issued.
+     * @throws IndexOutOfBoundsException when illegal index of task was issued or insufficient command arguments.
+     * @throws NumberFormatException when non-number strings were issued for number only arguments.
+     * @throws DukeException
+     */
     private static void run() {
         Scanner in = new Scanner(System.in);
         boolean isExit = false;

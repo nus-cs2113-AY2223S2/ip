@@ -27,6 +27,12 @@ public class Storage {
         fw.close();
     }
 
+    /***
+     * Iterates through save file and initializes saved data into taskList and returns
+     * @param taskList
+     * @return int representing number of tasks initialized
+     * @throws FileNotFoundException
+     */
     static int initializeTaskList(ArrayList<Task> taskList) throws FileNotFoundException {
         File f = new File(storagePath); // create a File for the given file path
         Scanner s = new Scanner(f); // create a Scanner using the File as the source
@@ -70,6 +76,12 @@ public class Storage {
         return numberOfSaves;
     }
 
+    /**
+     * Write save data of taskList to text file.
+     * @param taskList Array list of task
+     * @param numberOfTasks number of tasks in taskList
+     * @throws IOException when appendToFile gives errors
+     */
     static void saveTaskList(ArrayList<Task> taskList, int numberOfTasks) throws IOException {
         writeToFile(storagePath, "");
         for (int i = 0; i < numberOfTasks; i += 1) {

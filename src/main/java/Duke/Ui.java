@@ -5,9 +5,12 @@ import Duke.Tasks.Task;
 import java.util.ArrayList;
 
 public class Ui {
-    private static final String LINE = "____________________________________________________________";
-    private static final String BLANK = "    ";
+    static final String LINE = "____________________________________________________________";
+    static final String BLANK = "    ";
 
+    /**
+     * Prints run message when by is called
+     */
     static void printWelcome() {
         String logo = BLANK + LINE + "\n"
                 + BLANK + "Hello! I'm Duke.Duke\n"
@@ -16,15 +19,10 @@ public class Ui {
         System.out.println("\n" + logo);
     }
 
-    static void doList(ArrayList<Task> taskList, int numberOfTasks) {
-        System.out.println(BLANK + LINE);
-        for (int i = 0; i < numberOfTasks; i += 1) {
-            System.out.print(BLANK + (i + 1) + ".");
-            taskList.get(i).printTask();
-        }
-        System.out.println(BLANK + LINE);
-    }
 
+    /**
+     * Prints goodbye message when by is called
+     */
     static void doExit() {
         System.out.println(BLANK + LINE);
         System.out.println(BLANK + "Bye. Hope to see you again soon!");
