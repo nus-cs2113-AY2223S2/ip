@@ -2,11 +2,13 @@ package buddy.storage;
 
 import buddy.Buddy;
 import buddy.tasks.TaskList;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
+
 import buddy.tasks.Task;
 import buddy.tasks.Todo;
 import buddy.tasks.Deadline;
@@ -21,21 +23,21 @@ public class Storage {
      *
      * @param filePath Path to the file where it is stored
      */
-    public Storage(String filePath){
+    public Storage(String filePath) {
         this.filePath = filePath;
     }
 
     /**
      * Creates a new directory and a new file if they don't exist
      */
-    public void createFile(){
+    public void createFile() {
         File directory = new File(filePath);
         File newFile = new File(filePath + "/BuddyTaskList.txt");
 
         try {
-            if (directory.mkdirs()){
+            if (directory.mkdirs()) {
                 System.out.println("Directory has been created :)");
-             }
+            }
 
             if (newFile.createNewFile()) {
                 System.out.println("File has been created :)");
@@ -77,7 +79,6 @@ public class Storage {
             }
         }
         overwriteFile.close();
-
     }
 
     /**
@@ -131,8 +132,5 @@ public class Storage {
 
             }
         }
-
-
     }
-
 }

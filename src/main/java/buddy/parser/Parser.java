@@ -1,6 +1,7 @@
 package buddy.parser;
 
 import java.io.IOException;
+
 import buddy.commands.Command;
 import buddy.commands.actionCommands.DeleteTaskCommand;
 import buddy.commands.actionCommands.HelpCommand;
@@ -30,8 +31,8 @@ public class Parser {
      * Executes the commands inputted by the user based on what the commands are
      *
      * @param taskList List of tasks
-     * @param input Command inputted by the user
-     * @param storage Storage object to save the task list
+     * @param input    Command inputted by the user
+     * @param storage  Storage object to save the task list
      */
     public void executeInput(TaskList taskList, String input, Storage storage) {
         String[] inputSplit = input.split(" ", 2);
@@ -87,21 +88,14 @@ public class Parser {
                 default:
                     throw new InvalidCommandException();
             }
-
         } catch (InvalidCommandException e) {
             InvalidCommandException.printMessage();
         }
 
-        try{
+        try {
             storage.updateFile(taskList);
-        }catch (IOException e){
+        } catch (IOException e) {
             System.out.println("IO Error");
         }
-
-
-
-
-
     }
-
 }

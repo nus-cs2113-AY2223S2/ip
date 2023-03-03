@@ -11,7 +11,7 @@ public class Ui {
     /**
      * Prints a greeting to greet the user.
      */
-    public static void greetUser(){
+    public static void greetUser() {
         System.out.println(Messages.DIVIDER);
         System.out.println(Messages.GREETING);
         System.out.println(Messages.INTRODUCTION);
@@ -21,14 +21,14 @@ public class Ui {
     /**
      * Prints the help message
      */
-    public static void displayHelpMessage(){
+    public static void displayHelpMessage() {
         System.out.println(Messages.HELPMESSAGE);
     }
 
     /**
      * Prints the message when user types "bye" (Saying bye)
      */
-    public static void sayByeToUser(){
+    public static void sayByeToUser() {
         System.out.println(Messages.DIVIDER);
         System.out.println(Messages.EXITMESSAGE);
         System.out.println(Messages.DIVIDER);
@@ -41,7 +41,7 @@ public class Ui {
      * @param taskList The list of tasks
      * @param storage  Storage object that handles the data
      */
-    public static void loadFileOrCreateFile(TaskList taskList, Storage storage){
+    public static void loadFileOrCreateFile(TaskList taskList, Storage storage) {
         try {
             storage.loadFile(taskList);
 

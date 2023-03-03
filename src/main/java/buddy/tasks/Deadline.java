@@ -8,19 +8,19 @@ public class Deadline extends Task {
      * Constructor for Deadline class which is a type of Task
      *
      * @param description Description of deadline
-     * @param by Deadline date in YYYY-MM-DD format
+     * @param by          Deadline date in YYYY-MM-DD format
      */
     public Deadline(String description, String by) {
         super(description);
         this.by = by;
     }
 
-    public String getDeadline(){
+    public String getDeadline() {
         return by;
     }
 
     @Override
-    public String getType(){
+    public String getType() {
         return "D";
     }
 

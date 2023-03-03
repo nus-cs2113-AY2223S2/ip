@@ -22,7 +22,7 @@ public class Task {
      *
      * @return Description of task
      */
-    public String getTaskName(){
+    public String getTaskName() {
         return this.description;
     }
 
@@ -31,7 +31,7 @@ public class Task {
      *
      * @return String with type of task based on the Override
      */
-    public String getType(){
+    public String getType() {
         return "";
     }
 
@@ -57,13 +57,12 @@ public class Task {
      * Marks task as done with an "X" if task was not done previously
      * Else tells user that task has already been completed
      */
-    public void markAsDone(){
+    public void markAsDone() {
         System.out.println(Messages.DIVIDER);
-        if (!this.isDone){
+        if (!this.isDone) {
             this.isDone = true;
             System.out.println("Great work on completing this task! Marked as done! :)");
-        }
-        else{
+        } else {
             System.out.println("This task had already been marked as done previously!");
         }
         System.out.println(this);
@@ -75,15 +74,14 @@ public class Task {
      * Mark task  with a " " if task was completed previously (Marks as not done)
      * Else tells user that the task was not even completed previously
      */
-    public void markAsUndone(){
+    public void markAsUndone() {
         System.out.println(Messages.DIVIDER);
-        if (this.isDone){
+        if (this.isDone) {
             this.isDone = false;
             System.out.println("Come on, don't procrastinate! Marked as undone!");
-        }
-        else{
+        } else {
 
-            System.out.println("This task was previously not completed! Please do it properly!");
+            System.out.println("This task was previously not completed already! Please do it properly!");
         }
         System.out.println(this);
         System.out.println(Messages.DIVIDER);
@@ -100,15 +98,12 @@ public class Task {
     /**
      * Prints message to user after adding a task
      */
-    public void printAfterAddingTask(){
-        if (Buddy.taskCount == 1){
+    public void printAfterAddingTask() {
+        if (Buddy.taskCount == 1) {
             System.out.println("Got it! I have added this task!: \n" + this + "\n" + "Now you have " + Buddy.taskCount + " task remaining! Almost there, buddy!");
-        }
-        else{
+        } else {
             System.out.println("Got it! I have added this task! \n" + this + "\n" + "Now you have " + Buddy.taskCount + " tasks remaining! Let's finish them faster and relax!");
-
         }
-
     }
 
     /**
@@ -116,13 +111,11 @@ public class Task {
      */
     public void printAfterDeletingTask() {
         if (Buddy.taskCount == 0) {
-            System.out.println( "OK I have deleted this task!: \n" + this + "\n" + "CONGRATS BUDDY ON FINISHING ALL YOUR TASKS! TIME TO RELAX WITH YOUR FRIENDS AND FAMILY! :)");
+            System.out.println("OK I have deleted this task!: \n" + this + "\n" + "CONGRATS BUDDY ON FINISHING ALL YOUR TASKS! TIME TO RELAX WITH YOUR FRIENDS AND FAMILY! :)");
         } else if (Buddy.taskCount == 1) {
             System.out.println("YAY ONE LESS TO GO! I have deleted this task!:  \n" + this + "\n" + "Now you have JUST " + Buddy.taskCount + " task remaining! CHOP CHOP FINISH IT");
-        } else{
+        } else {
             System.out.println("YAY ONE LESS TO GO! I have deleted this task!:  \n" + this + "\n" + "Now you have " + Buddy.taskCount + " tasks remaining! Type list to see remaining tasks");
-
         }
     }
-
 }
