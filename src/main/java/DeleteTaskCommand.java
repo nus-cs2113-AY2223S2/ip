@@ -1,3 +1,5 @@
+import java.io.IOException;
+
 public class DeleteTaskCommand extends Command{
 
     @Override
@@ -11,7 +13,6 @@ public class DeleteTaskCommand extends Command{
         } catch(IndexOutOfBoundsException e){
             System.out.println("That is not a valid task to delete! Please check your list again and input a valid task");
         }
-
 
 
     }

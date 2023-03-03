@@ -33,7 +33,7 @@ public class Storage {
         }
     }
 
-    public static void updateFile(ArrayList<Task> taskList) throws IOException {
+    public static void updateFile(TaskList taskList) throws IOException {
         /*try {
             createFile();
         } catch (IOException e) {
@@ -59,14 +59,13 @@ public class Storage {
                     break;
                 default:
             }
-
         }
         overwriteFile.close();
 
     }
 
 
-    public static void loadFile(ArrayList<Task> taskList) throws FileNotFoundException {
+    public static void loadFile(TaskList taskList) throws FileNotFoundException {
         File file = new File("Buddy.txt");
         Scanner s = new Scanner(file);
         while (s.hasNext()) {

@@ -35,15 +35,7 @@ public class Buddy {
         while (! processAllCommands.isExit(input)) {
             processAllCommands.executeLine(taskList, input);
             input = in.nextLine();
-
         }
-        try {
-            Storage.updateFile(taskList);
-
-        } catch (IOException e) {
-            System.out.println("Error occurred");
-        }
-
         System.out.println(Messages.DIVIDER);
         System.out.println(Messages.EXITMESSAGE);
         System.out.println(Messages.DIVIDER);

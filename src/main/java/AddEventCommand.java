@@ -1,3 +1,5 @@
+import java.io.IOException;
+
 public class AddEventCommand extends Command {
     @Override
     public void executeCommand(TaskList taskList, String input) {
@@ -14,6 +16,7 @@ public class AddEventCommand extends Command {
             }
             Event eventBeingAdded = new Event(eventName, start, end);
             taskList.addTask(eventBeingAdded);
+
 
         }catch(InvalidCommandException e){
             InvalidCommandException.printMessage();
