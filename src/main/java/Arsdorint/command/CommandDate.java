@@ -18,7 +18,7 @@ public class CommandDate extends Command {
 
     @Override
     public CommandRes execute() {
-        ArrayList<Task> task = new ArrayList<Task>(TaskList.list.stream().filter(i -> !i.isDateNull()).filter
+        ArrayList<Task> task = new ArrayList<>(TaskList.list.stream().filter(i -> !i.isDateNull()).filter
                 (i -> i.getDate().equals(this.date)).collect(Collectors.toList()));
         long count = task.stream().count();
         String messageTop = count + " tasks happen on this date";

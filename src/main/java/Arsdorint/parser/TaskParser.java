@@ -159,15 +159,6 @@ public class TaskParser {
         }
     }
 
-
-    private static void exitMessage() {
-        showToUser(MESSAGE_DIVIDER, EXIT_MESSAGE, MESSAGE_DIVIDER);
-    }
-
-    public static void showToUser(String... message) {
-        for (String i : message) System.out.println(i);
-    }
-
     private static void todoParser(String[] parsed) throws ArsdorintFileException {
 
         if (!(parsed.length == 3)) {

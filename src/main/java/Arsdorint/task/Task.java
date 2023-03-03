@@ -27,15 +27,15 @@ public class Task {
     public String getStatus() {
         return (isDone) ? "[X]" : "[ ]";
     }
-    public void printTask() {
-        System.out.println(this.toString());
-    }
+
     public int binaryRes() {
         return (isDone) ? 1 : 0;
     }
+
     public String toSave() {
         return (this.taskName + VERTICAL_BAR + binaryRes() + VERTICAL_BAR + this.description + "\n");
     }
+
     public boolean isDateNull() {
         return true;
     }
@@ -43,6 +43,7 @@ public class Task {
     public LocalDate getDate() {
         return this.date;
     }
+
     public void setIsDone(boolean status) {
         this.isDone = status;
     }

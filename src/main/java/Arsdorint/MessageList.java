@@ -10,8 +10,9 @@ public class MessageList {
                     "> Type \"mark\" follow by a number x to mark tasks x in the list. \n" +
                     "> Type \"unmark\" follow by a number y to unmark tasks y in the list. \n" +
                     "> Type \"todo\" follow by a string x to add a work that need to be done. \n" +
-                    "> Type \"deadline /x y\" with x is the type of work, y is the time or date of the deadline. \n" +
+                    "> Type \"deadline x /y\" with x is the type of work, y is the time or date of the deadline. \n" +
                     "> Type \"event x /y\" with x is the event, y is the time or date of that event. \n" +
+                    "> Type \"date YYYY-MM-DD\" to know how many tasks occurs in day DD, month MM, year YYYY. \n" +
                     "> Type \"delete\" follow by a number z to delete task z in the the list. \n" +
                     "> Type \"bye\" to exit. \n";
     public static final String QUESTION = " What can I do for you?";

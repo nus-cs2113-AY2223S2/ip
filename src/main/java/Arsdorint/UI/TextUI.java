@@ -32,9 +32,9 @@ public class TextUI {
         return input.trim().isEmpty();
     }
 
-    public void showToUser(String...messages) {
+    public static void showToUser(String... messages) {
         for (String m : messages) {
-            output.println(m);
+            System.out.println(m);
         }
     }
 
@@ -47,7 +47,7 @@ public class TextUI {
     }
 
     public void showExitMessage() {
-        this.showToUser(MessageList.EXIT_MESSAGE);
+        showToUser(MESSAGE_DIVIDER, EXIT_MESSAGE, MESSAGE_DIVIDER);
     }
 
     public void showUnknownMessage() {
