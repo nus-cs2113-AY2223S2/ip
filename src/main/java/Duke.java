@@ -1,6 +1,13 @@
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+/**
+ * Represents the main program. It contains the Storage class to load existing data from a
+ * text file and save the data back within the file as the user terminates the program.
+ * The instantiation of the Ui class is to facilitate user interaction while the TaskList class
+ * is to function as the overall task manager for the user.
+ */
+
 public class Duke {
     //Data
     static TaskList taskList = new TaskList();

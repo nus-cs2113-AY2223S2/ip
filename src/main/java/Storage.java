@@ -4,6 +4,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
+/**
+ * Class for loading data from file that was previously saved and to save new data into the file.
+ *
+ */
+
 public class Storage {
     //Commands
     static final String TODO_ICON = "T";
@@ -13,6 +18,11 @@ public class Storage {
     static final String EVENT_START = "/from";
     static final String EVENT_END = "/to";
 
+    /**
+     * Reads each task stored in the user's local disk and processes it to correctly set its type and done status.
+     * The tasks read are saved into a data file.
+     * @param taskList A list of the tasks retrieved from the user's local disk.
+     */
     public static void updateFile(TaskList taskList) {
         for (Task currentTask : taskList.list) {
             String statusNum = currentTask.getStatusNum();
@@ -55,6 +65,14 @@ public class Storage {
         }
     }
 
+    /**
+     * Loads the user's saved task list from the file path. If the file cannot be found,
+     * a file with the corresponding name is created.
+     *
+     * @param taskList the empty task list created when the program initiates.
+     * @param filePath the path leading to the data file.
+     * @throws FileNotFoundException If file cannot be found during execution of loadFile
+     */
     public static void loadFile(TaskList taskList, String filePath) throws FileNotFoundException {
         //generates the text file input to new list each time user opens program.
         File f = new File(filePath); // create a File for the given file path
@@ -95,13 +113,21 @@ public class Storage {
         }
     }
 
+    /**
+     * Method to clear file contents
+     */
     public static void clearFile() throws IOException {
         FileWriter fw = new FileWriter("duke.txt");
         fw.write("");
         fw.close();
     }
 
-    public static void writeToFile(String textToAdd) throws IOException {
+    /**
+     * Method to write file contents
+     *
+     * @param textToAdd text that is to be added to the file
+     */
+    private static void writeToFile(String textToAdd) throws IOException {
         FileWriter fw = new FileWriter("duke.txt", true);
         fw.write(textToAdd+System.lineSeparator());
         fw.close();
