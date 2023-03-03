@@ -229,6 +229,7 @@ Format: ```bye```
 
 ## Command Summary
 | **Action**   | **Format, Examples**                                                                                        |
+
 |--------------|-------------------------------------------------------------------------------------------------------------|
 | Add To-do    | `todo TASK_DESCRIPTION`<br/>e.g.,`todo read book`                                                           |
 | Add Deadline | `deadline TASK_DESCRIPTION /by DATE_TIME`<br/>e.g., `deadline assignment 1 /by Thursday 10pm`               |
