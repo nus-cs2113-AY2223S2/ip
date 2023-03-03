@@ -2,6 +2,8 @@
 
 This is the Onandon chatbot project repo for the AY2223S2-CS2113, NUS.
 
+## 🤖 Getting start with Onandon chatbot!
+
 ## 🧐 How to use chatbot?
 
 If you run the chatbot, you will see the greeting message which means that
