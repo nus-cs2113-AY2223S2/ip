@@ -36,10 +36,6 @@ public class Ui {
         printLines("Hello! I'm SHERLOCK", "What can I do for you?");
     }
 
-    public void showLine() {
-        System.out.println(DIVIDER + System.lineSeparator());
-    }
-
     public String readCommand() {
         Scanner in = new Scanner(System.in);
 

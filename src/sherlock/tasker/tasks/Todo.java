@@ -1,8 +1,10 @@
 package tasks;
 
+import data.exceptions.SherlockException;
+
 public class Todo extends Task{
 
-    public Todo(String name, Boolean isDone) {
+    public Todo(String name, Boolean isDone) throws SherlockException {
         super(name, isDone);
     }
 

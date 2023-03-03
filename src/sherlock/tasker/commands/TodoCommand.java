@@ -15,12 +15,9 @@ public class TodoCommand extends Command {
 
     @Override
     public void execute(TasksList tasksList, Ui ui, Storage storage) throws SherlockException {
-        if (this.name.isEmpty()) {
-            ui.printLines("Please provide todo description");
-            return;
-        }
         Todo todo = new Todo(name, false);
         tasksList.addTask(todo);
+
         ui.printAddedTask(todo, tasksList);
 
         storage.writeToFile(tasksList);
