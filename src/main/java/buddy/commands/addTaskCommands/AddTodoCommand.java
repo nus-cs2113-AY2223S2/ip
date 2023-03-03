@@ -1,11 +1,18 @@
 package buddy.commands.addTaskCommands;
 
-import buddy.exception.InvalidCommandException;
+import buddy.exceptions.InvalidCommandException;
 import buddy.commands.Command;
 import buddy.tasks.TaskList;
 import buddy.tasks.Todo;
 
 public class AddTodoCommand extends Command {
+
+    /**
+     * Process Todo command by user and adds todo
+     *
+     * @param taskList List of tasks
+     * @param input Command inputted by user
+     */
     @Override
     public void executeCommand(TaskList taskList, String input) {
         try{

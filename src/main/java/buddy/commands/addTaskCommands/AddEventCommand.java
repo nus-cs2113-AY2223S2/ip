@@ -1,12 +1,19 @@
 package buddy.commands.addTaskCommands;
 
-import buddy.exception.InvalidCommandException;
+import buddy.exceptions.InvalidCommandException;
 import buddy.commands.Command;
 import buddy.tasks.TaskList;
 import buddy.tasks.Event;
 
 
 public class AddEventCommand extends Command {
+
+    /**
+     * Process Event command by user and adds event
+     *
+     * @param taskList List of tasks
+     * @param input Command inputted by user
+     */
     @Override
     public void executeCommand(TaskList taskList, String input) {
         try{

@@ -1,6 +1,15 @@
 package buddy.commands;
 import buddy.tasks.TaskList;
 
+/**
+ * Constructor for Command class
+ */
 public abstract class Command {
-    public abstract void executeCommand(TaskList taskList, String input); // executes the commands differently based on the various types of commands
+    /**
+     * Executes the commands by the user for all the different types of commands - actionCommands and addTaskCommands
+     *
+     * @param taskList List of tasks
+     * @param input Command inputted by the user
+     */
+    public abstract void executeCommand(TaskList taskList, String input);
 }

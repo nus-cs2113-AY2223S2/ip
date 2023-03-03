@@ -11,16 +11,28 @@ import buddy.commands.actionCommands.FindTaskCommand;
 import buddy.commands.addTaskCommands.AddTodoCommand;
 import buddy.commands.addTaskCommands.AddDeadlineCommand;
 import buddy.commands.addTaskCommands.AddEventCommand;
-import buddy.exception.InvalidCommandException;
+import buddy.exceptions.InvalidCommandException;
 import buddy.storage.Storage;
 import buddy.tasks.TaskList;
 
 public class Parser {
-
+    /**
+     * Tells if the program needs to exit
+     *
+     * @param input Command typed by the user
+     * @return true if the command is equals to "bye" else false
+     */
     public boolean isExit(String input) {
         return input.equals("bye");
     }
 
+    /**
+     * Executes the commands inputted by the user based on what the commands are
+     *
+     * @param taskList List of tasks
+     * @param input Command inputted by the user
+     * @param storage Storage object to save the task list
+     */
     public void executeInput(TaskList taskList, String input, Storage storage) {
         String[] inputSplit = input.split(" ", 2);
         String commandName = inputSplit[0].trim();

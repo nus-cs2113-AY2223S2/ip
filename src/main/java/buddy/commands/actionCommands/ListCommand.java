@@ -6,6 +6,13 @@ import buddy.commands.Command;
 import buddy.tasks.TaskList;
 
 public class ListCommand extends Command {
+
+    /**
+     * Process ListCommand by user and prints out the list of tasks
+     *
+     * @param taskList List of tasks
+     * @param input Command inputted by user
+     */
     @Override
     public void executeCommand(TaskList taskList, String input) {
         System.out.println(Messages.DIVIDER);

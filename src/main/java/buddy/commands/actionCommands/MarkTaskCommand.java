@@ -5,6 +5,13 @@ import buddy.tasks.TaskList;
 import buddy.tasks.Task;
 
 public class MarkTaskCommand extends Command {
+
+    /**
+     * Process MarkTaskCommand by user and marks task as done
+     *
+     * @param taskList List of tasks
+     * @param input Command inputted by user
+     */
     @Override
     public void executeCommand(TaskList taskList, String input) {
         try{

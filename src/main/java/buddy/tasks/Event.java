@@ -5,6 +5,13 @@ public class Event extends Task {
     protected String from;
     protected String to;
 
+    /**
+     * Constructor for Event class which is a type of Task
+     *
+     * @param description Description of Event
+     * @param from Start of Event
+     * @param to End of Event
+     */
     public Event(String description, String from, String to) {
         super(description);
         this.from = from;

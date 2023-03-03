@@ -1,6 +1,6 @@
 package buddy.commands.addTaskCommands;
 
-import buddy.exception.InvalidCommandException;
+import buddy.exceptions.InvalidCommandException;
 import buddy.commands.Command;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -10,6 +10,12 @@ import buddy.tasks.Deadline;
 
 public class AddDeadlineCommand extends Command {
 
+    /**
+     * Process Deadline command by user and adds deadline
+     *
+     * @param taskList List of tasks
+     * @param input Command inputted by user
+     */
     @Override
     public void executeCommand(TaskList taskList, String input) {
         try{

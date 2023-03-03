@@ -3,8 +3,15 @@ package buddy.commands.actionCommands;
 import buddy.commands.Command;
 import buddy.tasks.TaskList;
 
+
 public class DeleteTaskCommand extends Command {
 
+    /**
+     * Process DeleteTaskCommand by user and deletes task from task list
+     *
+     * @param taskList List of tasks
+     * @param input Command inputted by user
+     */
     @Override
     public void executeCommand(TaskList taskList, String input) {
         try{
