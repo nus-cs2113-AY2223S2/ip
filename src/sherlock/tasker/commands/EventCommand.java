@@ -24,6 +24,7 @@ public class EventCommand extends Command {
         this.from = from;
         this.to = to;
     }
+
     @Override
     public void execute(TasksList tasksList, Ui ui, Storage storage) throws SherlockException {
 

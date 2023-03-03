@@ -1,14 +1,17 @@
 package tasks;
+import data.exceptions.SherlockException;
 
 /**
- * Represents Todo task
+ * Represents todo tasks
  */
 public class Todo extends Task{
+
     /**
      * @param name
      * @param isDone
+     * @throws SherlockException
      */
-    public Todo(String name, Boolean isDone) {
+    public Todo(String name, Boolean isDone) throws SherlockException {
         super(name, isDone);
     }
 

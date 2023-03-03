@@ -16,6 +16,7 @@ public class IncorrectCommand extends Command{
     public IncorrectCommand(String feedback) {
         this.feedback = feedback;
     }
+
     @Override
     public void execute(TasksList tasksList, Ui ui, Storage storage) {
         ui.printLines(feedback);

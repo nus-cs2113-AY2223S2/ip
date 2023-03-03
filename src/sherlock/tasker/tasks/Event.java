@@ -1,11 +1,27 @@
 package tasks;
 
+import data.exceptions.SherlockException;
+import parser.Parser;
+
+import java.time.DateTimeException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 /**
  * Represents Event task
  */
 public class Event extends Task{
-    private String from;
-    private String to;
+    private LocalDateTime from;
+    private LocalDateTime to;
+    public Event(String name, Boolean isDone, String from, String to) throws SherlockException{
+        super(name, isDone);
+        this.from = Parser.parseDateTime(from);
+        this.to = Parser.parseDateTime(to);
+    }
+
+    @Override
+    public String getType() {
+        return "E";
+    }
 
     /**
      * @param name
@@ -17,40 +33,12 @@ public class Event extends Task{
     /**
      * @return String representation of the Event type
      */
-    public Event(String name, Boolean isDone, String from, String to) {
-        super(name, isDone);
-        this.from = from;
-        this.to = to;
-    }
-
-    @Override
-    public String getType() {
-        return "E";
-    }
-
-    public String getTo() {
-        return to;
-    }
-
-    public void setTo(String to) {
-        this.to = to;
-    }
-
-    public String getFrom() {
-        return from;
-    }
-
-    public void setFrom(String from) {
-        this.from = from;
-    }
-
-    /**
-     *
-     * @return String representation of the event for the CLI output
-     */
     @Override
     public String toString() {
-        return "[E]" + super.toString() + " (" + "from: " + from + " to: " + to + ")";
+        String from = this.from.format(DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm"));
+        String to = this.to.format(DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm"));
+
+        return "[E]" + super.toString() + " (" + "from: " + from + "; to: " + to + ")";
     }
 
     /**
@@ -58,13 +46,16 @@ public class Event extends Task{
      * @return String representation of the event for the file output
      */
     @Override
-    public String getFileFormatString() {
-        return String.format("%s | %d | %s | %s | %s",
-                this.getType(),
-                this.isDone ? 1 : 0,
-                this.name,
-                this.from,
-                this.to
-        );
+    public String getFileFormatString() throws SherlockException {
+        try {
+            return String.format("%s | %d | %s | %s | %s",
+                    this.getType(),
+                    this.isDone ? 1 : 0,
+                    this.name,
+                    this.from.format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")),
+                    this.to.format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")));
+        } catch (DateTimeException e) {
+            throw new SherlockException("event dateTime arguments cannot be formatted");
+        }
     }
 }

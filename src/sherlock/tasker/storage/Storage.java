@@ -20,7 +20,6 @@ import java.util.Scanner;
  */
 public class Storage {
     private String filepath;
-
     /**
      * @param filepath
      */
@@ -33,66 +32,57 @@ public class Storage {
      * @return list of tasks
      * @throws SherlockException
      */
-    public ArrayList<Task> loadTasks(Ui ui) throws SherlockException {
 
+    public TasksList loadTasks(Ui ui) throws SherlockException {
+        TasksList tasksList = new TasksList();
         try {
             File f = new File(filepath);
             Scanner s = new Scanner(f);
-
             int lineIndex = 1;
-            ArrayList<Task> tasks = new ArrayList<>();
 
-            lineIterator:
             while(s.hasNext()) {
-                String line = s.nextLine();
-                String[] arguments = line.split("\\|");
+                String taskLine = s.nextLine();
+                String[] arguments = taskLine.split("\\|");
 
-                // Check for empty arguments
-                int argCount = 1;
-                for (String arg: arguments) {
-                    if (arg.trim().equals("")){
-                        ui.printLines("Argument #" + argCount + " is empty on line #" + lineIndex);
-                        continue lineIterator;
-                    }
-                }
-
-                // Parse tasks from file
                 try {
-                    String taskType = arguments[0].trim();
-                    Boolean isDone = arguments[1].trim().equals("1");
-                    String name = arguments[2].trim();
-
-                    switch (taskType){
-                        case "TASK":
-                            tasks.add(new Task(name, isDone));
-                            break;
-
-                        case "T":
-                            tasks.add(new Todo(name, isDone));
-                            break;
-                        case "D":
-                            String by = arguments[3].trim();
-                            tasks.add(new Deadline(name, isDone, by));
-                            break;
-
-                        case "E":
-                            String from = arguments[3].trim();
-                            String to = arguments[4].trim();
-                            tasks.add(new Event(name, isDone, from, to));
-                            break;
-                        default:
-                            System.out.println("An invalid task type "
-                                    + taskType + " is given in input file on line #" + lineIndex);
-                    }
-
-                } catch (ArrayIndexOutOfBoundsException e) {
-                    ui.printLines("Can't parse line #" + lineIndex + ". The number of arguments is invalid");
+                    Task task = loadTask(arguments);
+                    tasksList.addTask(task);
+                } catch (SherlockException e) {
+                    // Show error and continue to the next line
+                    ui.showError(e.getMessage() + " Line index is " + lineIndex);
+                } finally {
+                    lineIndex++;
                 }
-                lineIndex++;
             }
-            return tasks;
         } catch (IOException e) {
-            throw new SherlockException("Couldn't read from file data/sherlock.txt");
+            throw new SherlockException("Error when reading " + filepath + " file");
+        }
+        return tasksList;
+    }
+    private Task loadTask(String[] arguments) throws SherlockException {
+        try {
+            String taskType = arguments[0].trim();
+            Boolean isDone = arguments[1].trim().equals("1");
+            String name = arguments[2].trim();
+
+            switch (taskType){
+            case "TASK":
+                return new Task(name, isDone);
+            case "T":
+                return new Todo(name, isDone);
+            case "D":
+                String by = arguments[3].trim();
+                return new Deadline(name, isDone, by);
+            case "E":
+                String from = arguments[3].trim();
+                String to = arguments[4].trim();
+                return new Event(name, isDone, from, to);
+
+            default:
+                throw new SherlockException("An invalid task type is given.");
+            }
+        } catch (IndexOutOfBoundsException e) {
+            throw new SherlockException("Invalid line format given.");
         }
     }
 
@@ -118,7 +108,7 @@ public class Storage {
             fw.close();
 
         } catch (IOException e) {
-            throw new SherlockException("Couldn't add a change to file data/sherlock.txt");
+            throw new SherlockException("Couldn't add a change to file " + filepath);
         }
 
     }
