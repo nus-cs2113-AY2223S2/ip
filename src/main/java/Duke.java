@@ -12,12 +12,13 @@ public class Duke {
     private TaskList tasks;
     private Storage storage;
     private UserInterface ui;
-    public Duke(Path filePath) throws Exception {
+    public Duke(Path filePath) {
         ui = dukeStart();
         storage = new Storage(filePath);
         try {
-            tasks = new TaskList(storage.readFromFile());
+            tasks = new TaskList(storage.readFromFile(filePath));
         } catch (DukeException e) {
+            System.out.println(e.getMessage());
             ui.showLoadingError();
             tasks = new TaskList(new ArrayList<Task>());
         }

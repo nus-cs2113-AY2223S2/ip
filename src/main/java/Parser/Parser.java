@@ -49,10 +49,10 @@ public class Parser {
             }
         }
     }
-    private static void dukeCommandFind(String nextLine, ArrayList<Task> list) {
+    private static void dukeCommandFind(String nextLine, ArrayList<Task> list) throws DukeException {
         String[] inputArray = nextLine.split(" ", 0);
         if (inputArray.length != 2) {
-            return;
+            throw new DukeException("Try to remove all spaces in your keyword.");
         }
         String key = inputArray[1];
         ArrayList<Task> containsSubstring = new ArrayList<Task>();
@@ -69,7 +69,7 @@ public class Parser {
         System.out.println("Here are the following Tasks that have names containing your keyword:");
         dukeCommandList(containsSubstring);
     }
-    private static void dukeSaveList(ArrayList<Task> list) {
+    private static void dukeSaveList(ArrayList<Task> list) throws DukeException {
         String home = System.getProperty("user.dir");
         java.nio.file.Path path = java.nio.file.Paths.get(home, "src", "main", "savefile");
         boolean directoryExists = java.nio.file.Files.exists(path);
@@ -78,14 +78,14 @@ public class Parser {
             try {
                 Files.createFile(path);
             } catch (IOException e) {
-                //complete
+                throw new DukeException("Unable to create filepath");
             }
         }
         try {
             Files.deleteIfExists(path);
             Files.createFile(path);
         } catch (IOException e) {
-            //TODO error catching
+            throw new DukeException("Unable to delete and then recreate file with given filepath");
         }
         for (Task task: list) {
             String taskType = String.valueOf(task.getClass());
@@ -121,7 +121,7 @@ public class Parser {
             try {
                 Files.write(path, taskInLineForm.getBytes(StandardCharsets.UTF_8), StandardOpenOption.APPEND);
             } catch (IOException e) {
-                //TODO error catching still needed
+                throw new DukeException("Unable to write the task to file, given the filepath");
             }
         }
     }
@@ -136,25 +136,23 @@ public class Parser {
     }
 
 
-    private static void dukeCommandDelete(String nextLine, List<Task> list) {
+    private static void dukeCommandDelete(String nextLine, List<Task> list) throws DukeException {
         String[] inputArray = nextLine.split(" ", 0);
         if (inputArray.length != 2) {
-            return;
+            throw new DukeException("Please just input a number after delete.");
         }
         String indexString = inputArray[1];
         int index;
         try {
             index = Integer.parseInt(indexString);
         } catch (NumberFormatException e) {
-            //throw some error here
-            return;
+            throw new DukeException("The index " + indexString +  " cannot be interpreted as an int.");
         }
-        if (list.size() < index - 1) {
-            //throw some error here
-            return;
+        try {
+            list.remove(index);
+        } catch (IndexOutOfBoundsException e) {
+            throw new DukeException("Index out of bounds, try a smaller number than " + index);
         }
-
-        list.remove(index);
         System.out.println("Removed task at " + index);
     }
 
@@ -199,16 +197,16 @@ public class Parser {
         }
     }
 
-    private static void dukeCommandMark(String nextLine, List<Task> list) {
+    private static void dukeCommandMark(String nextLine, List<Task> list) throws DukeException {
         String[] inputArray = nextLine.split(" ", 0);
         if (inputArray.length != 2) {
-            return;
+            throw new DukeException("Try to only put a number after 'mark'");
         }
         int index;
         try {
             index = Integer.parseInt(inputArray[1]);
         } catch (NumberFormatException e) {
-            return;
+            throw new DukeException("The index " + inputArray[1] +  " cannot be interpreted as an int.");
         }
         if (index > list.size() - 1) {
             return;
@@ -216,19 +214,22 @@ public class Parser {
         Task task = list.get(index);
         if (!task.isDone()) {
             task.doTask();
+            System.out.println("Task marked as complete!");
+            return;
         }
+        System.out.println("Task already marked as complete!");
     }
 
-    private static void dukeCommandEvent(String nextLine, List<Task> list) {
+    private static void dukeCommandEvent(String nextLine, List<Task> list) throws DukeException {
         String lineWithoutCommand;
         try {
             lineWithoutCommand = nextLine.split(" ", 2)[1];
         } catch (ArrayIndexOutOfBoundsException e) {
-            return;
+            throw new DukeException("Incorrect number of arguments. Please do not use '/' or '|' in your arguments");
         }
         String[] regexOutput = lineWithoutCommand.split("/", 0);
         if (regexOutput.length != 3) {
-            return;
+            throw new DukeException("Incorrect number of arguments. Please write the name of the task and then '/[start] /[deadline]'. Please do not use '/' or '|' in your arguments");
         }
         String eventName = regexOutput[0];
         String startDate = regexOutput[1];
@@ -243,11 +244,11 @@ public class Parser {
         try {
             lineWithoutCommand = nextLine.split(" ", 2)[1];
         } catch (ArrayIndexOutOfBoundsException e) {
-            return;
+            throw new DukeException("Incorrect number of arguments. Please do not use '/' or '|' in your arguments");
         }
         String[] regexOutput = lineWithoutCommand.split("/", 0);
         if (regexOutput.length != 2) {
-            throw new DukeException("Incorrect format");
+            throw new DukeException("Incorrect number of arguments. Please write the name of the task and then '/[deadline]' Please do not use '/' or '|' in your arguments");
         }
         String deadlineName = regexOutput[0];
         String deadlineDate = regexOutput[1];
@@ -255,12 +256,12 @@ public class Parser {
         list.add(deadline);
         System.out.println("deadline added");
     }
-    private static void dukeCommandToDo(String nextLine, List<Task> list) {
+    private static void dukeCommandToDo(String nextLine, List<Task> list) throws DukeException {
         String lineWithoutCommand;
         try {
             lineWithoutCommand = nextLine.split(" ", 2)[1];
         } catch (ArrayIndexOutOfBoundsException e) {
-            return;
+            throw new DukeException("Incorrect number of arguments. Please just wrte the task name.list Please do not use '/' or '|' in your arguments");
         }
         Task task = new Task(lineWithoutCommand, list.size());
         list.add(task);
