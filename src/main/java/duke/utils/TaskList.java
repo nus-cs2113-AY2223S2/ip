@@ -3,9 +3,19 @@ import duke.task.Deadline;
 import duke.task.Event;
 import duke.task.Task;
 import duke.task.Todo;
-import java.util.ArrayList;
-import static duke.utils.Ui.*;
 
+import java.util.ArrayList;
+
+import static duke.utils.Ui.DEADLINE_TIME_ERROR_MESSAGE;
+import static duke.utils.Ui.EVENT_TIME_ERROR_MESSAGE;
+import static duke.utils.Ui.INVALID_NUM_ERROR_MESSAGE;
+import static duke.utils.Ui.LINE;
+
+/**
+ * Represents all the task data in the application.
+ * Contains all the methods for handling the data in task list.
+ * Calls message from a Ui object to interact with user.
+ */
 public class TaskList {
     Ui ui = new Ui();
     public ArrayList<Task> list = new ArrayList<>();
@@ -13,7 +23,15 @@ public class TaskList {
     public ArrayList<Task> matchingList = new ArrayList<>();
     public int matchingTasksNum;
 
-    public void printAllTasks(int currentTaskNum) {
+    public int currentTaskNum;
+
+    /**
+     * Prints all the current tasks in the order in which they were added.
+     * Puts an index in front of the task data.
+     *
+     * @param currentTaskNum The current number of tasks in the task list.
+     */
+    public void printList(int currentTaskNum) {
         int currentPrintedTask = 0;
         int placeHolder = currentTaskNum;
         System.out.println(LINE);
@@ -54,6 +72,13 @@ public class TaskList {
         matchingList.clear();
     }
 
+    /**
+     * Creates a new Event type object and adds the event to the task list.
+     * Separates the task description with the event start and end time.
+     * Prints error message if the content from user input is invalid.
+     *
+     * @param content The task description from user input.
+     */
     public void addEvent(String content) {
         String[] phrases;
         phrases = content.split("/");
@@ -64,6 +89,13 @@ public class TaskList {
         }
     }
 
+    /**
+     * Creates a new Deadline type object and adds the object to the task list.
+     * Separates the task description with the deadline.
+     * Prints error message if the content from user input is invalid.
+     *
+     * @param content The task description from user input.
+     */
     public void addDeadline(String content) {
         String[] phrases;
         phrases = content.split("/by ");
@@ -74,15 +106,34 @@ public class TaskList {
         }
     }
 
+    /**
+     * Creates a new Todo type object and adds the task to the task list.
+     *
+     * @param content The task description from user input.
+     */
     public void addTodo(String content) {
         list.add(new Todo(content));
     }
 
+    /**
+     * Deletes a task according to the index user entered as a string.
+     * Decreases the total number of tasks after deletion.
+     *
+     * @param content The string representation of the task index from user input.
+     */
     public void deleteTask(String content) {
         list.remove(Integer.parseInt(content) - 1);
         matchingTasksNum--;
     }
 
+    /**
+     * Toggles the status of a task and prints the updated task data.
+     *
+     * @param content A string representation of the task index.
+     * @param shouldMarkAsDone A boolean representation of whether the task status
+     *                         should be changed to "done" or "not done"
+     * @throws DukeException If the index is invalid or out of bound.
+     */
     public void toggleMark(String content, boolean shouldMarkAsDone) throws DukeException {
         int posOfMark = Integer.parseInt(content) - 1;
         if (!(posOfMark >= 0 && posOfMark <= matchingTasksNum)) {
@@ -90,9 +141,9 @@ public class TaskList {
             throw new DukeException();
         } else {
             if (shouldMarkAsDone) {
-                list.get(posOfMark).markAsDone();
+                list.get(posOfMark).printSetDoneMessage();
             } else {
-                list.get(posOfMark).markAsUndone();
+                list.get(posOfMark).printSetUndoneMessage();
             }
         }
     }
@@ -100,10 +151,10 @@ public class TaskList {
     public void printAddTaskMessage() {
         System.out.println(LINE + "Got it. I've added this task:\n"
                 + "  "
-                + this.list.get(matchingTasksNum).toString()
+                + this.list.get(currentTaskNum).toString()
                 + System.lineSeparator());
-        matchingTasksNum++;
-        printTotalTasksNum(matchingTasksNum);
+        currentTaskNum++;
+        printTotalNumOfTasks(currentTaskNum);
     }
 
     public void printDeleteTaskMessage(int taskNum) {
@@ -113,13 +164,18 @@ public class TaskList {
                 + System.lineSeparator());
     }
 
-    public void printTotalTasksNum(int currentTaskNum) {
+    /**
+     * Prints the message containing the total number of tasks in the task list.
+     *
+     * @param currentTaskNum The current number of tasks in the task list.
+     */
+    public void printTotalNumOfTasks(int currentTaskNum) {
         if (currentTaskNum == 1) {
             System.out.println("Now you have " + currentTaskNum + " task in the list."
-                    + System.lineSeparator() + Ui.LINE);
+                    + System.lineSeparator() + LINE);
         } else {
             System.out.println("Now you have " + currentTaskNum + " tasks in the list."
-                    + System.lineSeparator() + Ui.LINE);
+                    + System.lineSeparator() + LINE);
         }
     }
 }
