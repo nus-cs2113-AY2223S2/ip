@@ -1,7 +1,24 @@
 import java.util.Scanner;
 
+/**
+ * Represents a parser that will obtain
+ * user input and perform as requested
+ */
 public class Parser {
 
+    /**
+     * Obtains user input and interprets
+     * what needs to be performed by
+     * certain keywords.
+     *
+     * Checks if user wants to
+     * List, Find, Mark, Unmark, Delete or To-do
+     * Deadline or Event and calls the method to
+     * perform the function as requested.
+     *
+     * Check if user input is valid, if not throws
+     * an error message
+     */
     public static void cmdToExcecute() {
 
         Scanner in = new Scanner(System.in);
