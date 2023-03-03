@@ -1,6 +1,4 @@
 package Arsdorint.command;
-
-import Arsdorint.MessageList;
 import Arsdorint.data.TaskList;
 import Arsdorint.task.Task;
 
@@ -15,8 +13,7 @@ public class CommandDate extends Command {
         this.date = date;
     }
     public static final String COMMAND_NAME = "delete";
-    public static final String SYNTAX = "TODO";
-    public static final String MESSAGE_TOP = "TODO";
+    public static final String SYNTAX = "Syntax for date\n\t>>>date <yyyy-mm-dd>";
     public LocalDate date;
 
     @Override

@@ -14,19 +14,20 @@ public class CommandUnmark extends Command {
     }
 
     public static final String COMMAND_NAME = "unmark";
-    public static final String SYNTAX = "TODO";
-    public static final String MESSAGE_TOP = "TODO";
+    public static final String SYNTAX = "Syntax for unmark\n\t" +
+            ">>> unmark <item index number> \n" + "Note: item index must exist in the current list";
+    public static final String MESSAGE_TOP = "\nGot it. I've marked this task as not done yet:\n" + "\t";
     public int[] idx;
 
     @Override
     public CommandRes execute() {
         for (int i = 0; i < idx.length; i++) {
-            TaskList.list.get(idx[i]).setIsDone(true);
+            TaskList.list.get(idx[i]).setIsDone(false);
         }
         ArrayList<Task> task = new ArrayList<Task>(IntStream.range(0, TaskList.list.size()).filter
                 (i -> contains(idx, i)).mapToObj(i -> TaskList.list.get(i)).collect(Collectors.toList()));
 
-        return new CommandRes(MESSAGE_TOP, task, TaskList.getAllMessage());
+        return new CommandRes(MESSAGE_TOP, task, TaskList.getMarkedMessage());
     }
 }
 

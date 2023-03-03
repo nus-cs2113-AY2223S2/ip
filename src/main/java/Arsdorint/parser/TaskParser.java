@@ -53,9 +53,6 @@ public class TaskParser {
             return delete(arguments);
         } else if (lowerCaseLine.equalsIgnoreCase("date")) {
             return addDate(arguments);
-            /*} else if (lowerCaseLine.equalsIgnoreCase("save")) {
-            //save();
-            return new CommandExit();*/
         } else {
             return new CommandWrong(MESSAGE_UNKNOWN, COMMAND_LIST_MESSAGE);
         }
@@ -70,19 +67,13 @@ public class TaskParser {
         }
         switch (parsedLine[0]) {
             case Todo.TYPE_TODO:
-                toDoList.add(new Todo(parsedLine[2]));
-                toDoList.get(Task.numOfTasks - 1).isDone = Boolean.valueOf(parsedLine[1]);
-                addTaskMessage();
+                todoParser(parsedTrim);
                 break;
             case Deadline.TYPE_DEADLINE:
-                toDoList.add(new Deadline(parsedLine[2], parsedLine[3]));
-                toDoList.get(Task.numOfTasks - 1).isDone = Boolean.valueOf(parsedLine[1]);
-                addTaskMessage();
+                deadlineParser(parsedTrim);
                 break;
             case Event.TYPE_EVENT:
-                toDoList.add(new Event(parsedLine[2], parsedLine[3]));
-                toDoList.get(Task.numOfTasks - 1).isDone = Boolean.valueOf(parsedLine[1]);
-                addTaskMessage();
+                eventParser(parsedTrim);
                 break;
             default:
                 throw new ArsdorintFileException();
@@ -107,26 +98,18 @@ public class TaskParser {
             if (parsed.length < 1) {
                 throw new ArsdorintException();
             //System.out.println("OK, I've marked this task as not done yet: \n");
-            } return new CommandMark(strToIntArr(parsed));
+            } return new CommandUnmark(strToIntArr(parsed));
         } catch (NumberFormatException | IndexOutOfBoundsException | ArsdorintException err) {
             return new CommandWrong(CommandUnmark.SYNTAX);
     }
 }
-
-    public static void removeTaskMessage(int idx) {
-        showToUser(MESSAGE_DIVIDER);
-        System.out.println("\t");
-        toDoList.get(idx).printTask();
-        System.out.println("\t" + "Now you have " + --Task.numOfTasks + " tasks in the list.");
-        showToUser(MESSAGE_DIVIDER);
-    }
 
     public Command delete(String command) {
         try {
             String[] parsed = command.split(" ");
             if (parsed.length < 1) {
                 throw new ArsdorintException();
-            } return new CommandMark(strToIntArr(parsed));
+            } return new CommandDelete(strToIntArr(parsed));
         } catch (NumberFormatException | IndexOutOfBoundsException | ArsdorintException err) {
             return new CommandWrong(CommandDelete.SYNTAX);
         }
@@ -184,6 +167,29 @@ public class TaskParser {
     public static void showToUser(String... message) {
         for (String i : message) System.out.println(i);
     }
+
+    private static void todoParser(String[] parsed) throws ArsdorintFileException {
+
+        if (!(parsed.length == 3)) {
+            throw new ArsdorintFileException();
+        }
+        TaskList.list.add(new Todo(Boolean.valueOf(parsed[1]), parsed[2]));
+    }
+
+    private static void deadlineParser(String[] parsed) throws ArsdorintFileException {
+        if (!(parsed.length == 4)) {
+            throw new ArsdorintFileException();
+        }
+        TaskList.list.add(new Deadline(Boolean.valueOf(parsed[1]), parsed[2], parsed[3]));
+    }
+
+    private static void eventParser(String[] parsed) throws ArsdorintFileException {
+        if (!(parsed.length == 4)) {
+            throw new ArsdorintFileException();
+        }
+        TaskList.list.add(new Event(Boolean.valueOf(parsed[1]), parsed[2], parsed[3]));
+    }
+
 
     private int[] strToIntArr(String[] parsed) throws ArsdorintException {
         int[] intArr = new int[parsed.length];

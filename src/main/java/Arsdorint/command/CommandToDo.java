@@ -14,8 +14,8 @@ public class CommandToDo extends Command {
     }
 
     public static final String COMMAND_NAME = "todo";
-    public static final String SYNTAX = "TODO";
-    public static final String MESSAGE_TOP = "TODO";
+    public static final String SYNTAX = "Syntax for todo\n\t>>> todo <task>";
+    public static final String MESSAGE_TOP = "\nGot it. I've added this task:\n" + "\t";
     public String description;
 
     public ArrayList<Task> task = new ArrayList<Task>();

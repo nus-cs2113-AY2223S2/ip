@@ -14,8 +14,8 @@ public class CommandDeadline extends Command {
     }
 
     public static final String COMMAND_NAME = "deadline";
-    public static final String SYNTAX = "TODO";
-    public static final String MESSAGE_TOP = "TODO";
+    public static final String SYNTAX = "Syntax for deadline\n\t>>> deadline <task> /<date of deadline";
+    public static final String MESSAGE_TOP = "\nGot it. I've added this task:\n" + "\t";
     public String description;
     public String date;
     public ArrayList<Task> task = new ArrayList<Task>();

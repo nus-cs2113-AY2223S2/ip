@@ -16,8 +16,9 @@ public class CommandMark extends Command {
     }
 
     public static final String COMMAND_NAME = "mark";
-    public static final String SYNTAX = "TODO";
-    public static final String MESSAGE_TOP = "TODO";
+    public static final String SYNTAX = "Syntax for mark\n\t" +
+            ">>> mark <item index number> \n" + "Note: item index must exist in the current list";
+    public static final String MESSAGE_TOP = "\nGot it. I've marked this task as done:\n" + "\t";
     public int[] idx;
 
     @Override
@@ -28,7 +29,7 @@ public class CommandMark extends Command {
         ArrayList<Task> task = new ArrayList<Task>(IntStream.range(0, TaskList.list.size()).filter
                 (i -> contains(idx, i)).mapToObj(i -> TaskList.list.get(i)).collect(Collectors.toList()));
 
-        return new CommandRes(MESSAGE_TOP, task, TaskList.getAllMessage());
+        return new CommandRes(MESSAGE_TOP, task, TaskList.getUnmarkedMessage());
     }
 }
 

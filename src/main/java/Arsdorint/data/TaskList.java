@@ -11,17 +11,17 @@ public class TaskList {
     public static ArrayList<Task> list = new ArrayList<Task>(MAX_NUM_OF_TASKS);
     public static String getAllMessage() {
         int count = TaskList.list.size();
-        return "\t" + "Now you have " + count + printTasksOrTask(count) + " in the list.";
+        return "\t" + "Now you have " + count + " " + printTasksOrTask(count) + " in the list.";
     }
 
     public static String getMarkedMessage() {
-        int count = TaskList.list.size();
-        return "\t" + "Now you have " + count + "marked" + printTasksOrTask(count) + " in the list.";
+        int count = (int) TaskList.list.stream().filter(i-> i.isDone).count();
+        return "\t" + "Now you have " + count + " marked " + printTasksOrTask(count) + " in the list.";
     }
 
     public static String getUnmarkedMessage() {
-        int count = TaskList.list.size();
-        return "\t" + "Now you have " + count + "unmarked" + printTasksOrTask(count) + " in the list.";
+        int count = (int) TaskList.list.stream().filter(i-> !i.isDone).count();
+        return "\t" + "Now you have " + count + " unmarked " + printTasksOrTask(count) + " in the list.";
     }
 
     private static String printTasksOrTask(int num) {

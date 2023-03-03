@@ -2,7 +2,6 @@ package Arsdorint.UI;
 
 import Arsdorint.MessageList;
 import Arsdorint.command.CommandRes;
-import Arsdorint.data.Message;
 
 import java.io.PrintStream;
 import java.util.Scanner;
@@ -58,7 +57,6 @@ public class TextUI {
     }
     public void showHelloMessage() {
         System.out.println("Hello from\n" + logo);
-        //showToUser(MESSAGE_DIVIDER, HELLO_MESSAGE, COMMAND_LIST_MESSAGE, QUESTION, MESSAGE_DIVIDER);
-        this.showToUser(HELLO_MESSAGE);
+        showToUser(MESSAGE_DIVIDER, HELLO_MESSAGE, COMMAND_LIST_MESSAGE, QUESTION, MESSAGE_DIVIDER);
     }
 }

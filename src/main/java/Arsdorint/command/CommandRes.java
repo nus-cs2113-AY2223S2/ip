@@ -20,18 +20,12 @@ public class CommandRes {
         this.task = task;
     }
 
-    public CommandRes() {
-
-    }
-
     public String[] printTask() {
         if (task == null) {
             return new String[]{};
         } else if (messageTop.equals(MessageList.MESSAGE_DIVIDER_LIST)) {
             return IntStream.range(0, task.size()).mapToObj(i ->
-            {
-                return (i + MessageList.OFFSET + "." + task.get(i)).toString();
-            }).toArray(String[]::new);
+                    (i + MessageList.OFFSET + "." + task.get(i))).toArray(String[]::new);
         } else {
             return task.stream().map(Task::toString).toArray(String[]::new);
         }

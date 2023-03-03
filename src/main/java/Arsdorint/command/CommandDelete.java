@@ -17,8 +17,8 @@ public class CommandDelete extends Command {
         this.idx = idx;
     }
     public static final String COMMAND_NAME = "delete";
-    public static final String SYNTAX = "TODO";
-    public static final String MESSAGE_TOP = "TODO";
+    public static final String SYNTAX = "Syntax for delete item \n\t>>> delete <item index number> \n";
+    public static final String MESSAGE_TOP = "\nGot it. I've deleted this task:\n" + "\t";
     public int[] idx;
 
     @Override
@@ -27,7 +27,7 @@ public class CommandDelete extends Command {
                 (i -> contains(idx, i)).mapToObj(i -> TaskList.list.get(i)).collect(Collectors.toList()));
         Arrays.sort(idx);
         for (int i = idx.length - MessageList.OFFSET; i > -MessageList.OFFSET; i--) {
-            TaskList.list.remove(idx[1]);
+            TaskList.list.remove(idx[i]);
         }
         return new CommandRes(MESSAGE_TOP, task, TaskList.getAllMessage());
     }
