@@ -14,22 +14,23 @@
 
 ### Supports addition of 3 types of tasks.
 
-* `todo` - Adds a Todo task (tasks with no deadline, do at your own pace)
-* `deadline` - Adds a deadline (Task with an end date but no interval or start date)
-* `event` - adds an event (Task with both a start and end date)
+* [`todo`](#todo) - Adds a Todo task (tasks with no deadline, do at your own pace)
+* [`deadline`](#deadline) - Adds a deadline (Task with an end date but no interval or start date)
+* [`event`](#event) - adds an event (Task with both a start and end date)
 
 ### Edit commands
 
-* `mark` - ticks a task as done by marking it with an 'X'
-* `unmark` - unticks a task as undone by removing the 'X' mark
-* `delete` - deletes a todo item completely
-* `list` - displays all the added tasks in a list format
-* `find` - finds all the task that contains teh search query
-* `bye` - Quits program
+* [`mark`](#mark) - ticks a task as done by marking it with an 'X'
+* [`unmark`](#unmark) - unticks a task as undone by removing the 'X' mark
+* [`delete`](#delete) - deletes a todo item completely
+* [`list`](#itemList) - displays all the added tasks in a list format
+* [`find`](#find) - finds all the task that contains teh search query
+* [`bye`](#bye) - Quits program
 
 How to use Duke and What features are available:
 
-1. `list` command:
+# List
+1. `list` command: <a name = "itemList"></a>
    --> renders a list of all the items in the Todo List
 
       ```
@@ -43,7 +44,8 @@ How to use Duke and What features are available:
       
       ```
 
-2. `mark` command:
+# Mark
+2. `mark` command: <a name = "markIt"></a>
    --> adds an "X" to indicate that a task is completed
    --> format: mark <index of item to mark>
       ```
@@ -52,7 +54,8 @@ How to use Duke and What features are available:
       1. [T][X]  buy book
       ```
 
-3. `unmark` Command:
+# unmark
+3. `unmark` Command: <a name = "unmark"></a>
    --> unmarks an item in the todolist by removing the "X"
    --> format: umark <index of item to unmark>
       ```
@@ -61,7 +64,8 @@ How to use Duke and What features are available:
       1. [T][ ]  buy book
       ```
 
-4. `todo` command:
+# todo
+4. `todo` command: <a name = "todo"></a>
    --> adds a todo item
    --> format: todo <task_description>
 
@@ -71,8 +75,8 @@ How to use Duke and What features are available:
       Added: [T][ ] eat breakfast
       now you have: 4 tasks in this list.
       ```
-
-5. `deadline` command
+# deadline
+5. `deadline` command <a name = "deadline"></a>
    --> adds a Deadline item
    --> format: deadline <task_description> /by <date in YYYY-MM-DD format>
 
@@ -83,7 +87,8 @@ How to use Duke and What features are available:
       now you have: 4 tasks in this list.
       ```
 
-6. `event` command:
+# event
+6. `event` command: <a name = "event"></a>
    --> adds an Event item
    --> format: event <task_description> /from <start_date> /to <end_date>
 
@@ -94,15 +99,16 @@ How to use Duke and What features are available:
       now you have: 5 tasks in this list.
       ```
 
-7. `delete` Command:
+# delete
+7. `delete` Command: <a name = "delete"></a>
    --> deletes item from the todo list
    --> format: delete <index of item to delete>
       ```
       >>delete 2
       i have deleted the task: buy book
       ```
-
-8. `find` Command
+# find
+8. `find` Command <a name = "find"></a>
    --> searches for todo items that contain the search key term
       ```
       >>find buy
@@ -112,8 +118,9 @@ How to use Duke and What features are available:
       2. [T][ ]  buy phone
       ----------------------
       ```
-
-9. `bye` Command:
+   
+# bye
+9. `bye` Command: <a name = "bye"></a>
    --> exits the program
 
    ```
