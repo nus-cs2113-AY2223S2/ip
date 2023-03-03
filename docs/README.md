@@ -55,8 +55,47 @@ After listing (see list), your list should have:
 
 
 
-Description of the outcome.
+
+### `Keyword` - list
+
+Lists all tasks currently in the tasklist
+
+Example of usage: 
+
+list
 
 ```
-expected output
+Here are the tasks in your list:
+0. [T] [ ] task0
+1. [D] [ ] task1 (by: tomorrow)
+2. [E] [ ] task2 (from: start to: end)
 ```
+
+
+### `Keyword` - delete
+
+Deletes task based on index on list. 
+
+Example of usage: 
+
+delete 2
+
+After listing (see list), your list should have:
+
+0. [T] [ ] task0
+1. [D] [ ] task1 (by: tomorrow)
+
+
+### `Keyword` - mark
+
+Marks task as complete based on index on list. 
+
+Example of usage: 
+
+mark 0
+
+After listing (see list), your list should have:
+
+0. [T] [X] task0
+1. [D] [ ] task1 (by: tomorrow)
+
