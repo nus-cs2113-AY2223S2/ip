@@ -4,7 +4,7 @@ Duke is a personal task manager designed to help you stay organized and on top o
 
 ## Usage
 
-###todo {Task} - Add a Todo Task
+### todo {Task} - Add a Todo Task
 Example: `todo return book`
 Expected outcome:
    ```
@@ -12,7 +12,7 @@ Expected outcome:
    [T][ ]  return book
    ```
    
-###deadline {Task} /by {Date/Time} - Add a Deadline Task
+### deadline {Task} /by {Date/Time} - Add a Deadline Task
 Example: `deadline return book /by Sun`
 Expected outcome:
    ```
@@ -20,7 +20,7 @@ Expected outcome:
    [D][ ]  return book (by Sun)
    ```
 
-###event {Task} /from {Date/Time} /to {Date/Time} - Add a Event Task
+### event {Task} /from {Date/Time} /to {Date/Time} - Add a Event Task
 Example: `event party /from Fri 6pm /to 8pm`
 Expected outcome:
    ```
