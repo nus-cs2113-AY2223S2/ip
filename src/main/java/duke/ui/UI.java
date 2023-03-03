@@ -2,6 +2,7 @@ package duke.ui;
 
 import duke.constants.textImage;
 import duke.exception.DukeException;
+import duke.exception.EmptyListError;
 import duke.task.Task;
 import duke.tasklist.TaskList;
 
@@ -21,11 +22,16 @@ public interface UI {
      *
      * @param task the newly added task
      * @param tasks the current task-list
+     * @throws EmptyListError if error occurred due to empty list
      */
     public static void printAddedTask(Task task, TaskList tasks){
-        System.out.println("Got it. I've added this task:");
-        System.out.println(" " + task);
-        System.out.println("Now you have " + tasks.sizeOfList() + " tasks in the list.");
+        try {
+            System.out.println("Got it. I've added this task:");
+            System.out.println(" " + task);
+            System.out.println("Now you have " + tasks.sizeOfList() + " tasks in the list.");
+        } catch (EmptyListError err){
+            System.out.println("The task-list is empty");
+        }
     }
 
     /**
@@ -83,9 +89,11 @@ public interface UI {
      * @param taskNum the index of the task that has been deleted
      */
     public static void printDeleteMessage(TaskList tasks, int taskNum) {
-        System.out.println("Noted. I've removed this task:");
-        System.out.println(" " + tasks.getString(taskNum));
-        System.out.println("Now you have " + tasks.sizeOfList() + " tasks in the list.");
+        try{
+            System.out.println("Now you have " + tasks.sizeOfList() + " tasks in the list.");
+        } catch (EmptyListError err){
+            System.out.println("There are no tasks in the your list now");
+        }
     }
     /**
      * Print welcome message when the user runs program

@@ -1,6 +1,7 @@
 package duke.parser;
 
 import duke.command.*;
+import duke.exception.InvalidIndexError;
 import duke.task.Deadline;
 import duke.task.Event;
 import duke.task.Task;
@@ -22,7 +23,7 @@ public interface Parser {
      * @param input the information that requires parsing
      * @return command type that would represent what to execute
      */
-    public static Command parse(String input){
+    public static Command parse(String input) {
         String[] inputWords = input.split(" ");
         String command = inputWords[0];
         String taskField = input.replaceFirst(command, "").trim();

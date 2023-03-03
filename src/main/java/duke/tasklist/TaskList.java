@@ -1,6 +1,7 @@
 package duke.tasklist;
 
 import duke.exception.EmptyListError;
+import duke.exception.InvalidIndexError;
 import duke.task.Task;
 import duke.ui.UI;
 
@@ -20,11 +21,14 @@ public class TaskList {
         tasksList.add(task);
     }
 
-    public int sizeOfList() {
+    public int sizeOfList() throws EmptyListError {
+        if (tasksList.isEmpty()){
+            throw new EmptyListError();
+        }
         return tasksList.size();
     }
 
-    public void mark(int index){
+    public void mark(int index) {
         tasksList.get(index).markAsDone();
     }
 
@@ -44,8 +48,10 @@ public class TaskList {
         tasksList.remove(index);
     }
 
-
-    public String getString(int index){
+    public String getString(int index) throws EmptyListError{
+        if (tasksList.isEmpty()){
+            throw new EmptyListError();
+        }
         return tasksList.get(index).toString();
     }
 
