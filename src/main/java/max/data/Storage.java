@@ -13,6 +13,12 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Storage is the interface for MAX to load/save data.
+ * <p>
+ * Internally, Storage has functions to tokenize & de-tokenize task data from MAX.
+ * Storage will automatically create a data folder to store data for persistence.
+ */
 public class Storage {
     private static final String DELIMITER = " -- ";
 
