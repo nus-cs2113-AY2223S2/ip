@@ -13,7 +13,7 @@ chatbot program is properly executed.
       ____________________________________________________________
    ```
 
-There are 5 types of command you can give to this chatbot.
+There are 9 types of command you can give to this chatbot.
 1. `todo` : You can register todo task by typing `todo {description of the todo}`.
    You will see the resulting message like below after pres the `Enter` key.
    ```
