@@ -5,6 +5,9 @@ import exception.DukeException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * Represent a Parser that parses commands.
+ */
 public class Parser {
     private static final int COMMAND_ARG = 0;
     private static final int FIRST_ARG = 1;
@@ -98,6 +101,12 @@ public class Parser {
         }
     }
 
+    /**
+     * Parse an input string to resolve it into a command and its argument.
+     *
+     * @param input The input string to be parsed.
+     * @return The command and its argument(s) as an ArrayList of Strings.
+     */
     public static ArrayList<String> parse(String input) throws DukeException {
         ArrayList<String> commands = new ArrayList<>();
         ArrayList<String> inputs = splitInputString(input);

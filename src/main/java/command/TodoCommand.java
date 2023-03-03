@@ -12,6 +12,11 @@ public class TodoCommand extends Command {
         super(commands);
     }
 
+    /**
+     * Add a Todo Task to Duke's TaskList.
+     *
+     * @return The message indicating the addition of a Todo Task into Duke's TaskList.
+     */
     @Override
     public String doCommand(TaskList taskList) {
         StringBuilder result = new StringBuilder();

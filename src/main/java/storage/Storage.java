@@ -16,6 +16,9 @@ import java.nio.file.Paths;
 
 import static java.nio.file.Files.createDirectories;
 
+/**
+ * Represent a data storage for the tasks of Duke.
+ */
 public class Storage {
     private Ui ui;
     private final String DIR_PATH = "." + File.separator + "data";
@@ -43,6 +46,12 @@ public class Storage {
         file.createNewFile();
     }
 
+    /**
+     * Load data from duke.txt into Duke's TaskList.
+     *
+     * @param dukeUi   The UI of Duke.
+     * @param taskList The TaskList of Duke.
+     */
     public void loadData(Ui dukeUi, TaskList taskList) {
         try {
             File file = new File(FILE_PATH);
@@ -82,6 +91,12 @@ public class Storage {
         return newTask;
     }
 
+    /**
+     * Update the data in duke.txt to the current TaskList of Duke.
+     *
+     * @param taskList The TaskList of Duke.
+     * @throws IOException if an I/O error occurs in FileWriter.
+     */
     public void updateData(TaskList taskList) throws IOException {
         StringBuilder content = new StringBuilder();
         for (Task task : taskList.getTasks()) {

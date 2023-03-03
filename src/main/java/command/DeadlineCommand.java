@@ -12,6 +12,11 @@ public class DeadlineCommand extends Command {
         super(commands);
     }
 
+    /**
+     * Add a Deadline Task to Duke's TaskList.
+     *
+     * @return The message indicating the addition of a Deadline Task into Duke's TaskList.
+     */
     @Override
     public String doCommand(TaskList taskList) {
         StringBuilder result = new StringBuilder();
