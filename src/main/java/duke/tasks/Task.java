@@ -6,12 +6,22 @@ public class Task {
     private boolean isDone;
     private String taskType = " ";
 
+    /**
+     * Initialises a Task object.
+     * Sets the initial value of the task as undone.
+     * @param taskInfo
+     * @param taskType
+     */
     public Task(String taskInfo, String taskType) {
         setTaskInfo(taskInfo);
         this.isDone = false;
         setTaskType(taskType);
     }
 
+    /**
+     * Checks is a task is marked as done. If it is, it informs the user that the task was already marked as done.
+     * If the task was not marked as done, it marks the task as done and informs the user.
+     */
     public void markTaskAsDone() {
         if (isDone) {
             System.out.println("Task was already marked as done!");
@@ -26,6 +36,11 @@ public class Task {
         isDone = true;
     }
 
+    /**
+     * Checks is a task is not marked as done. If it is marked as done, it sets the task to be undone and informs
+     * the user.
+     * If it is not marked as done, it informs the user that the task was not marked as done before.
+     */
     public void markTaskAsUndone() {
         if (!isDone) {
             System.out.println("Task was already marked as undone!");
