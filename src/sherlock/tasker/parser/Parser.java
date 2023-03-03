@@ -1,5 +1,11 @@
+package parser;
+
 import commands.*;
+import common.Utils;
 import data.exceptions.SherlockException;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
 
 public class Parser {
     public Command parse(String fullCommand) throws SherlockException {
@@ -46,17 +52,20 @@ public class Parser {
         }
     }
 
-    private Command constructAddCommand(String arguments) {
-        if (arguments.isEmpty())
-            return new IncorrectCommand("Please provide task name");
+    public static LocalDateTime parseDateTime(String arg) throws SherlockException {
+        try {
+            return LocalDateTime.parse(arg, Utils.dateTimeFormatter);
+        } catch (DateTimeParseException e) {
+            throw new SherlockException("DateTime argument is of incorrect format. " +
+                    "Expected: \"dd-mm-yyyy (required) HH:mm (optional)\".");
+        }
+    }
 
+    private Command constructAddCommand(String arguments) {
         return new AddCommand(arguments);
     }
 
     private Command constructTodoCommand(String arguments) {
-        if (arguments.isEmpty())
-            return new IncorrectCommand("Please provide todo name");
-
         return new TodoCommand(arguments);
     }
 
@@ -68,12 +77,6 @@ public class Parser {
 
         String name = arguments.substring(0, byFlagIndex).trim();
         String byArgumentValue = arguments.substring(byFlagIndex).substring("/by".length()).trim();
-
-        if (name.isEmpty())
-            return new IncorrectCommand("Please provide name argument");
-
-        if (byArgumentValue.isEmpty())
-            return new IncorrectCommand("Please provide /by argument");
 
         return new DeadlineCommand(name, byArgumentValue);
     }
@@ -95,16 +98,6 @@ public class Parser {
 
         String toArgumentValue = arguments.substring(toFlagIndex)
                 .substring("/to".length()).trim();
-
-        // Arguments Validation
-        if (name.isEmpty())
-            return new IncorrectCommand("Please provide the name argument");
-
-        if (fromArgumentValue.isEmpty())
-            return new IncorrectCommand("Please provide the /from argument");
-
-        if (toArgumentValue.isEmpty())
-            return new IncorrectCommand("Please provide the /to argument");
 
         return new EventCommand(name, fromArgumentValue, toArgumentValue);
     }

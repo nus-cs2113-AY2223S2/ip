@@ -1,4 +1,5 @@
 import commands.Command;
+import parser.Parser;
 import data.TasksList;
 import data.exceptions.SherlockException;
 import storage.Storage;
@@ -12,23 +13,13 @@ public class Sherlock {
         ui = new Ui();
         storage = new Storage(filePath);
         try {
-            tasksList = new TasksList(storage.loadTasks(ui));
+            tasksList = storage.loadTasks(ui);
+            ui.showLoadingSuccessful();
         } catch (SherlockException e) {
             ui.showError(e.getMessage());
             tasksList = new TasksList();
         }
     }
-//    public static void main(String[] args) {
-//        TasksList tasksList = new TasksList();
-//        Storage tasksLoader = new Storage(tasksList);
-//        tasksLoader.loadTasks();;
-//
-//        TaskListener.greet();
-//
-//
-//        TaskListener taskListener = new TaskListener(tasksList, tasksLoader);
-//        taskListener.listen();
-//    }
 
     public void run() {
         ui.showWelcome();

@@ -1,11 +1,16 @@
 package tasks;
 
+import data.exceptions.SherlockException;
+
 public class Task {
     protected String name;
     protected Boolean isDone;
 
 
-    public Task (String name, Boolean isDone) {
+    public Task (String name, Boolean isDone) throws SherlockException{
+        if (name.isEmpty()) {
+            throw new SherlockException("Name argument cannot be empty");
+        }
         this.name = name;
         this.isDone = isDone;
     }
@@ -35,7 +40,7 @@ public class Task {
         return checker + " " + this.name;
     }
 
-    public String getFileFormatString() {
+    public String getFileFormatString() throws SherlockException {
         return String.format("%s | %d | %s", getType(), isDone ? 1 : 0, name);
     }
 }
