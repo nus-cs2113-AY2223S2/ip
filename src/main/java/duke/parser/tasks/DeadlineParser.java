@@ -8,7 +8,7 @@ import duke.tasks.TaskEnum;
 
 import java.time.LocalDateTime;
 
-public class DeadlineParser implements TaskParser{
+public class DeadlineParser implements TaskParser {
     private static final String KEYWORD_BY = "/by";
 
     public Deadline parseInput(String input) throws InvalidTaskFormatException, InvalidDateTimeException {

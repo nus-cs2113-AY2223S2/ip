@@ -17,7 +17,7 @@ public class InvalidTaskFormatException extends Exception {
             + System.lineSeparator();
     private static final String FORMAT_TODO = "Todo - todo <task details>" + System.lineSeparator();
     private final TaskEnum id;
-    private static final String MESSAGE_HEADER = "Invalid input format!"+ System.lineSeparator()
+    private static final String MESSAGE_HEADER = "Invalid input format!" + System.lineSeparator()
             + "Use the following format to create a new task:" + System.lineSeparator();
 
     /**
