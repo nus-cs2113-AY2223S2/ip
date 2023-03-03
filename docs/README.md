@@ -2,28 +2,25 @@
 
 ## Features 
 
-### Feature-ABC
+### Feature-Save your tasks
 
-Description of the feature.
-
-### Feature-XYZ
-
-Description of the feature.
+It will help you list down all your task, deadline, events and todo into a txt document.
 
 ## Usage
 
-### `Keyword` - Describe action
+### `List` - It will help you list down your arguments
 
-Describe the action and its outcome.
+It will display all of your task in your list
 
 Example of usage: 
 
-`keyword (optional arguments)`
+`list`
 
 Expected outcome:
 
-Description of the outcome.
+
 
 ```
-expected output
+Here are the tasks in your list:
+1.[T][X] read book
 ```
