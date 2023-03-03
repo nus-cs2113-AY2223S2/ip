@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Storage {
-    private final static String PATH_NAME = "docs/tasks.txt";
+    private final static String PATH_NAME = "tasks.txt";
 
     /**
      * Loads an Instance of TaskList with all tasks saved in the storage file.

@@ -19,9 +19,9 @@ public class Bro {
             tasks = Storage.load(new TaskList());
         } catch (FileNotFoundException e) {     // create a new file to save the list of tasks
             printReply(FILE_NOT_FOUND);
-            File f = new File("docs/tasks.txt");
+            File f = new File("tasks.txt");
             if (f.createNewFile()) {                  // throws IOException
-                printReply(" New File \"saved_tasks.txt\" created at: " + f.getAbsolutePath());
+                printReply(" New File \"tasks.txt\" created at: " + f.getAbsolutePath());
             }
             tasks = Storage.load(new TaskList());
         }
