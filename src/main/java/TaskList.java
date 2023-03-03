@@ -191,4 +191,33 @@ public class TaskList {
             Ui.printDash();
         }
     }
+
+    public static void findTask(String[] list) {
+        try {
+            String word, s;
+            int k, matches;
+            Ui.printDash();
+            word = list[1];
+            System.out.println("The keyword is found in these tasks:");
+            k = 1;
+            matches = 0;
+
+            for (Task command : Task.tasks) {
+                s = "" + command;
+
+                if (s.contains(word)) {
+                    System.out.println(k + "." + command);
+                    matches += 1;
+                    k += 1;
+                }
+            }
+            if (0 == matches) {
+                System.out.println("No task contains that keyword!");
+            }
+            Ui.printDash();
+        } catch (IndexOutOfBoundsException err) {
+            System.out.println("☹ OOPS!!! Please enter a keyword");
+            Ui.printDash();
+        }
+    }
 }

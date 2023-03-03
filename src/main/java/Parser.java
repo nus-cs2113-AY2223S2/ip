@@ -27,6 +27,8 @@ public class Parser {
                     TaskList.makeDeadline(list);
                 } else if (list[0].equals("delete")) {
                     TaskList.deleteTask(list);
+                } else if (list[0].equals("find")) {
+                    TaskList.findTask(list);
                 } else {
                     Ui.printDash();
                     System.out.println("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
