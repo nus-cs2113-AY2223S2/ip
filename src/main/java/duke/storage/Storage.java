@@ -16,10 +16,22 @@ import java.util.ArrayList;
 public class Storage {
     private File file;
 
+    /**
+     * Initialises an instance of Storage.
+     * Create and store a file object into the instance of Storage.
+     *
+     * @param filePath File path of duke.txt.
+     */
     public Storage(String filePath) {
         file = new File(filePath);
     }
 
+    /**
+     * Read data from duke.txt and parses the data into a task array list.
+     *
+     * @return Task array list loaded from duke.txt.
+     * @throws IOException if duke.txt is an empty file or does not exist.
+     */
     public ArrayList<Task> load() throws IOException {
         ArrayList<String> data = readFile();
         ArrayList<Task> tasks = parse(data);
@@ -27,6 +39,13 @@ public class Storage {
         return tasks;
     }
 
+    /**
+     * Writes task array list into duke.txt.
+     * Creates ./data/duke.txt if it does not exist.
+     *
+     * @param tasks Task array list
+     * @throws IOException if there is an error creating ./data/duke.txt or writing task array list to duke.txt.
+     */
     public void writeFile(ArrayList<Task> tasks) throws IOException {
         createFile();
         FileWriter fw = new FileWriter(file);
@@ -39,6 +58,12 @@ public class Storage {
         fw.close();
     }
 
+    /**
+     * Reads data from duke.txt and stores it in a string array list.
+     *
+     * @return Data from duke.txt formatted as a string array list.
+     * @throws IOException if duke.txt is an empty file or does not exist.
+     */
     private ArrayList<String> readFile() throws IOException {
         if (!file.exists()) {
             throw new FileNotFoundException();
@@ -52,6 +77,11 @@ public class Storage {
         return data;
     }
 
+    /**
+     * Creates ./data/duke.txt if it does not exist.
+     *
+     * @throws IOException if there is an error creating ./data/duke.txt.
+     */
     private void createFile() throws IOException {
         if (file.exists()) {
             return;
@@ -64,6 +94,12 @@ public class Storage {
     }
 
 
+    /**
+     * Parses data read from duke.txt into a task array list.
+     *
+     * @param data Data from duke.txt formatted as a string array list.
+     * @return Task array list
+     */
     private ArrayList<Task> parse(ArrayList<String> data) {
         ArrayList<Task> tasks = new ArrayList<>();
 
@@ -99,23 +135,49 @@ public class Storage {
 
         return tasks;
     }
+
+    /**
+     * Retrieves task type from data string array list.
+     *
+     * @param line An entry in the data string array list.
+     * @return Task type.
+     */
     private String getTaskType(String line) {
         String[] words = line.split(" \\| ", 2);
         String taskType = words[0];
         return taskType;
     }
 
+    /**
+     * Retrieves task status from data string array list.
+     *
+     * @param line An entry in the data string array list.
+     * @return Task status.
+     */
     private String getTaskStatus(String line) {
         String[] words = line.split(" \\| ", 3);
         String taskStatus = words[1];
         return taskStatus;
     }
 
+    /**
+     * Retrieves to do task name from data string array list.
+     *
+     * @param line An entry in the data string array list.
+     * @return To do task name.
+     */
     private String getToDoTaskName(String line) {
         String[] words = line.split(" \\| ", 3);
         String toDoTaskName = words[2];
         return toDoTaskName;
     }
+
+    /**
+     * Retrieves deadline task name and end date/time from data string array list.
+     *
+     * @param line An entry in the data string array list.
+     * @return A string array of deadline details containing task name and end date/time.
+     */
     private String[] getDeadlineDetails(String line) {
         String[] words = line.split(" \\| ", 4);
         String deadlineTaskName = words[2];
@@ -125,6 +187,12 @@ public class Storage {
         return deadlineDetails;
     }
 
+    /**
+     * Retrieves event task name, start date/time and end date/time from data string array list.
+     *
+     * @param line An entry in the data string array list.
+     * @return A string array of event details containing task name, start date/time, end date/time.
+     */
     private String[] getEventDetails(String line) {
         String[] words = line.split(" \\| ", 5);
         String eventTaskName = words[2];
