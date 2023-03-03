@@ -3,6 +3,7 @@ package duke;
 import duke.command.Command;
 import duke.exception.EmptyDeadlineDescriptionException;
 import duke.exception.EmptyEventDescriptionException;
+import duke.exception.EmptyKeywordException;
 import duke.exception.EmptyToDoDescriptionException;
 import duke.exception.UnknownCommandException;
 import duke.parse.Parser;
@@ -39,7 +40,7 @@ public class Duke {
         while (!isExit) {
             try {
                 String input = ui.getInput();
-                Command c = Parser.parse(input, ui);
+                Command c = Parser.parse(input);
                 c.execute(tasks, ui, storage);
                 isExit = c.isExit();
             } catch (UnknownCommandException e) {
@@ -58,6 +59,8 @@ public class Duke {
                 ui.showEmptyTaskNoErr();
             } catch (IndexOutOfBoundsException e) {
                 ui.showTaskNoOutOfRangeErr();
+            } catch (EmptyKeywordException e) {
+                ui.showEmptyKeywordErr();
             }
         }
 
