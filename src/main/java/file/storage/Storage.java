@@ -63,17 +63,17 @@ public class Storage {
                 line = in.nextLine();
                 decisions = line.split(Ui.DEFAULT_FLAG_SEPARATOR);
                 switch (decisions[0]) {
-                    case DEFAULT_TODO_SYMBOL:
-                        setUpToDo(decisions, actions);
-                        break;
-                    case DEFAULT_DEADLINE_SYMBOL:
-                        setUpDeadline(decisions, actions);
-                        break;
-                    case DEFAULT_EVENT_SYMBOL:
-                        setUpEvent(decisions, actions);
-                        break;
-                    default:
-                        Ui.print(FILE_CORRUPTED_MESSAGE);
+                case DEFAULT_TODO_SYMBOL:
+                    setUpToDo(decisions, actions);
+                    break;
+                case DEFAULT_DEADLINE_SYMBOL:
+                    setUpDeadline(decisions, actions);
+                    break;
+                case DEFAULT_EVENT_SYMBOL:
+                    setUpEvent(decisions, actions);
+                    break;
+                default:
+                    Ui.print(FILE_CORRUPTED_MESSAGE);
                 }
             }
         } catch (IOException e) {

@@ -41,7 +41,7 @@ public class Task {
      * Allows the user to mark the tasks.
      * The mark and unmark method is used specifically so that users can mark or unmark tasks more simply.
      * By using setMark and getMark, it will allow the user to unmark a marked task accidentally.
-     *
+     * <p>
      * Can be performed even if the task is already marked.
      */
     public void mark() {

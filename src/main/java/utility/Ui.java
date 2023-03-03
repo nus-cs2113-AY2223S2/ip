@@ -62,7 +62,7 @@ public class Ui {
      * Prints an element of a list of Tasks with proper formatting.
      *
      * @param iterator The iterator or index or the list you are accessing.
-     * @param action The list of Tasks that the user wishes to do.
+     * @param action   The list of Tasks that the user wishes to do.
      */
     public static void printListElement(int iterator, Task action) {
         int correctListElementNumber = iterator + 1;
@@ -77,11 +77,12 @@ public class Ui {
     public static void printDoneMarkingTasks(Task action) {
         Ui.print(DEFAULT_ACKNOWLEDGEMENT + System.lineSeparator() + action.toString());
     }
+
     /**
      * It prints the acknowledgement after a task has been added.
      * It then reminds the user how many tasks are currently in the list.
      *
-     * @param action The list of Tasks that the user wishes to do.
+     * @param action        The list of Tasks that the user wishes to do.
      * @param actionCounter The current size of the list action.
      */
     public static void printAcknowledgement(Task action, int actionCounter) {
@@ -100,7 +101,7 @@ public class Ui {
      * It prints the acknowledgement after a task has been deleted.
      * It then reminds the user how many tasks are currently in the list.
      *
-     * @param action The list of Tasks that the user wishes to do.
+     * @param action        The list of Tasks that the user wishes to do.
      * @param actionCounter The current size of the list action.
      */
     public static void printDeleteAcknowledgement(Task action, int actionCounter) {

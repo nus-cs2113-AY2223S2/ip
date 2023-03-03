@@ -38,7 +38,6 @@ public class DukeSession {
      * hasErrors will then validate the inputs and then notify DukeSession of any errors caught.
      * If there are no errors detected, it will call the method handleInputs where they are processed.
      * If errors are detected, user input is discarded.
-     *
      */
     public void execute() {
         String line;
@@ -61,37 +60,37 @@ public class DukeSession {
 
     private void handleInputs(String line, String[] decisions, String[] dates) {
         switch (decisions[0]) {
-            case Ui.DEFAULT_ECHO:
-                System.out.println(findTaskDetails(line));
-                break;
-            case Ui.DEFAULT_TODO:
-                handleToDo(line);
-                break;
-            case Ui.DEFAULT_EVENT:
-                handleEvent(dates);
-                break;
-            case Ui.DEFAULT_DEADLINE:
-                handleDeadline(dates);
-                break;
-            case Ui.DEFAULT_MARK_TASK:
-                handleMarkTask(decisions);
-                break;
-            case Ui.DEFAULT_UNMARK_TASK:
-                handleUnmarkTask(decisions);
-                break;
-            case Ui.DEFAULT_LIST_ALL_TASKS:
-                handleList();
-                break;
-            case Ui.DEFAULT_DELETE:
-                handleDeleteTask(decisions);
-                break;
-            case Ui.DEFAULT_FIND:
-                handleFindTask(line);
-                break;
-            case Ui.DEFAULT_EXIT:
-                break;
-            default:
-                Ui.printCurrentSupportedActions();
+        case Ui.DEFAULT_ECHO:
+            System.out.println(findTaskDetails(line));
+            break;
+        case Ui.DEFAULT_TODO:
+            handleToDo(line);
+            break;
+        case Ui.DEFAULT_EVENT:
+            handleEvent(dates);
+            break;
+        case Ui.DEFAULT_DEADLINE:
+            handleDeadline(dates);
+            break;
+        case Ui.DEFAULT_MARK_TASK:
+            handleMarkTask(decisions);
+            break;
+        case Ui.DEFAULT_UNMARK_TASK:
+            handleUnmarkTask(decisions);
+            break;
+        case Ui.DEFAULT_LIST_ALL_TASKS:
+            handleList();
+            break;
+        case Ui.DEFAULT_DELETE:
+            handleDeleteTask(decisions);
+            break;
+        case Ui.DEFAULT_FIND:
+            handleFindTask(line);
+            break;
+        case Ui.DEFAULT_EXIT:
+            break;
+        default:
+            Ui.printCurrentSupportedActions();
         }
     }
 

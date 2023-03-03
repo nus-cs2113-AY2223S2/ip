@@ -29,8 +29,8 @@ public class commandChecker {
      * Initialise the commandChecker class. It takes in filtered and broken down inputs that are parsed through
      * by DukeSession.
      *
-     * @param decisions The parsed input that contains important information about the type of action.
-     * @param dates The parsed input that contains important information about the dates of the task.
+     * @param decisions     The parsed input that contains important information about the type of action.
+     * @param dates         The parsed input that contains important information about the dates of the task.
      * @param actionCounter The current size of the list action.
      */
     public commandChecker(String[] decisions, String[] dates, int actionCounter) {
@@ -68,38 +68,38 @@ public class commandChecker {
     private void validateCommand() throws DukeException {
         DukeException currentException = new DukeException();
         switch (decisions[0]) {
-            case Ui.DEFAULT_ECHO:
-                validateEcho(currentException);
-                break;
-            case Ui.DEFAULT_TODO:
-                validateToDo(currentException);
-                break;
-            case Ui.DEFAULT_EVENT:
-                validateEvent(currentException);
-                break;
-            case Ui.DEFAULT_DEADLINE:
-                validateDeadline(currentException);
-                break;
-            case Ui.DEFAULT_MARK_TASK:
-                validateMarkTask(currentException);
-                break;
-            case Ui.DEFAULT_UNMARK_TASK:
-                validateUnmarkTask(currentException);
-                break;
-            case Ui.DEFAULT_LIST_ALL_TASKS:
-                validateList(currentException);
-                break;
-            case Ui.DEFAULT_DELETE:
-                validateDeleteTask(currentException);
-                break;
-            case Ui.DEFAULT_FIND:
-                validateFindTask(currentException);
-                break;
-            case Ui.DEFAULT_EXIT:
-                break;
-            default:
-                currentException.setDescription(DEFAULT_INPUT_ERROR_MESSAGE);
-                throw currentException;
+        case Ui.DEFAULT_ECHO:
+            validateEcho(currentException);
+            break;
+        case Ui.DEFAULT_TODO:
+            validateToDo(currentException);
+            break;
+        case Ui.DEFAULT_EVENT:
+            validateEvent(currentException);
+            break;
+        case Ui.DEFAULT_DEADLINE:
+            validateDeadline(currentException);
+            break;
+        case Ui.DEFAULT_MARK_TASK:
+            validateMarkTask(currentException);
+            break;
+        case Ui.DEFAULT_UNMARK_TASK:
+            validateUnmarkTask(currentException);
+            break;
+        case Ui.DEFAULT_LIST_ALL_TASKS:
+            validateList(currentException);
+            break;
+        case Ui.DEFAULT_DELETE:
+            validateDeleteTask(currentException);
+            break;
+        case Ui.DEFAULT_FIND:
+            validateFindTask(currentException);
+            break;
+        case Ui.DEFAULT_EXIT:
+            break;
+        default:
+            currentException.setDescription(DEFAULT_INPUT_ERROR_MESSAGE);
+            throw currentException;
         }
     }
 

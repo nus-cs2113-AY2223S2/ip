@@ -20,7 +20,7 @@ public class Deadline extends Task {
      * Initialises an object of the Class Deadline.
      *
      * @param description Contains the description of the deadline that the user wants to do.
-     * @param by Contains the time or date of the due date of the deadline task.
+     * @param by          Contains the time or date of the due date of the deadline task.
      */
     public Deadline(String description, String by) {
         super(description);

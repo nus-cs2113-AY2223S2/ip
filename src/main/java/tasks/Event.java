@@ -24,8 +24,8 @@ public class Event extends Task {
      * Initialises an object of the Class Event.
      *
      * @param description Contains the description of the event that the user wants to do.
-     * @param from Contains the starting date or time of the event.
-     * @param to Contains the ending date or time of the event.
+     * @param from        Contains the starting date or time of the event.
+     * @param to          Contains the ending date or time of the event.
      */
     public Event(String description, String from, String to) {
         super(description);
