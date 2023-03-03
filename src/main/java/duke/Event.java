@@ -10,6 +10,10 @@ public class Event extends Task{
         this.start = start;
         this.end = end;
     }
+    /**
+     * It formats the code depending on the time input by the user
+     * @return it formats the code so that it displays like for example Oct 24 2019
+     */
 
     @Override
     public String toString() {

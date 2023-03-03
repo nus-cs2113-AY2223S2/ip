@@ -14,6 +14,10 @@ public class FindCommand extends Command{
         this.store = store;
         this.arrayLL = arrayLL;
     }
+    /**
+     * This function find the command depending on the line input by the user
+     * @param line it is the line input by the user telling find and which words
+     */
 
     @Override
     void complete(String line) throws IOException {

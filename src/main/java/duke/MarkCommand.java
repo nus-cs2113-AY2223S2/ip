@@ -16,6 +16,12 @@ public class MarkCommand extends Command {
         this.arrayLL = arrayLL;
     }
 
+    /**
+     * If the user inputs the word mark depending on the line the functions marks
+     * @param line It contains the input of the line that we want to mark
+     * @throws IOException so that the requirements are meant by user input and there is no error
+     */
+
     @Override
     void complete(String line) throws IOException {
         int index = line.indexOf(" ");
