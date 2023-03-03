@@ -12,7 +12,7 @@ public class Ui {
     private final String LINE = "____________________________________________________________";
     private final Scanner IN;
     private final String HELLO_MSG = LINE + "\nHello! I'm Duke\nWhat can I do for you?\n" + LINE;
-    private final String BYE_MSG = LINE + "\nBye. Hope to see you again soon!\n" + LINE;
+    private final String BYE_MSG = LINE + "\nBye. Hope to see you again soon!\n" + LINE + "\n";
     private final String DATA_LOAD_SUCCESS_MSG = LINE + '\n' + "\"./data/duke.txt\" found.\nData loaded into "
             + "Duke!" + '\n' + LINE;
     private final String FILE_CREATED_MSG = LINE + '\n' + "No existing data found.\nCreated new file \"./data/duke"

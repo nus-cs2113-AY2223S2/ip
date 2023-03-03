@@ -28,7 +28,7 @@ FC .\data\duke.txt EXPECTED_duke.TXT
 
 REM ------ Rerun Duke to test if data loaded correctly ------
 
-REM run the program, feed commands from input.txt file and redirect the output to the ACTUAL.TXT
+REM run the program, feed commands from input2.txt file and redirect the output to the ACTUAL2.TXT
 java -classpath ..\bin Duke < input2.txt > ACTUAL2.TXT
 
 REM compare the output to the expected output

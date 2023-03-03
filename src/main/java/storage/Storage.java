@@ -39,6 +39,10 @@ public class Storage {
     private void loadTasks(TaskList taskList) throws DukeException {
         while (this.ui.hasNextLineInput()) {
             String data = this.ui.getNextLineInput();
+            // skip empty lines
+            if (data.equals("")) {
+                continue;
+            }
             String[] parameters = data.split(DATA_SEPARATOR);
             Task task = createTask(parameters);
             taskList.add(task);
@@ -121,6 +125,7 @@ public class Storage {
             content.append(task.getDataSummary());
             content.append("\n");
         }
+        content.append("\n"); // end file content with newline
         FileWriter fileWriter = new FileWriter(FILE_PATH, false);
         fileWriter.write(content.toString());
         fileWriter.close();
