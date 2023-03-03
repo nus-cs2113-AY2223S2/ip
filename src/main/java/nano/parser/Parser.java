@@ -28,7 +28,7 @@ public class Parser {
 
         switch (userInputs[COMMAND_INDEX]) {
         case "list":
-            Ui.displayTaskList(tasks.getTaskList());
+            Ui.displayTaskListMessage(tasks.getTaskList());
             break;
         case "add":
             tasks.addTask(Arrays.copyOfRange(userInputs, 1, USER_INPUT_MAX_ARG_COUNT + 1));
@@ -41,6 +41,9 @@ public class Parser {
             break;
         case "unmark":
             tasks.unmarkTask(userInputs[TASK_NAME_INDEX]);
+            break;
+        case "find":
+            tasks.findTasks(userInputs[TASK_NAME_INDEX]);
             break;
         case "help":
             Ui.displayCommandList();
