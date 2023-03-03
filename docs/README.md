@@ -41,6 +41,8 @@ Example:
 [X][X] this is my task (these are the task details)
 ```
 
+`NOTE:` task description and details should not contain the character `"/"`
+
 #### Todo
 A todo task is marked with the `<task_character>: "[T]"` and contains a task description.
 
