@@ -98,9 +98,9 @@ public class Duke {
         taskNumber--;
         Task currentTask = tasks.get(taskNumber);
         if (words[0].trim().equals("mark")) {
-            currentTask.markAsDone();
+            currentTask.markTaskAsDone();
         } else {
-            currentTask.markAsUndone();
+            currentTask.markTaskAsUndone();
         }
         ui.horizontalLine();
     }

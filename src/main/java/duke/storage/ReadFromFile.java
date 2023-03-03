@@ -43,7 +43,7 @@ public class ReadFromFile {
         // Mark task as done if task status was stored as 1
         if (messageComponents[0].equals("1")) {
             Task currentTask = tasks.get(currentTaskIndex);
-            currentTask.markAsDone();
+            currentTask.copyCompletedTask();
         }
     }
 
@@ -54,7 +54,7 @@ public class ReadFromFile {
         int currentTaskIndex = tasks.size() - 1;
         if (messageComponents[0].equals("1")) {
             Task currentTask = tasks.get(currentTaskIndex);
-            currentTask.markAsDone();
+            currentTask.copyCompletedTask();
         }
     }
 
@@ -65,7 +65,8 @@ public class ReadFromFile {
         int currentTaskIndex = tasks.size() - 1;
         if (messageComponents[0].equals("1")) {
             Task currentTask = tasks.get(currentTaskIndex);
-            currentTask.markAsDone();
+            currentTask.copyCompletedTask();
         }
     }
+
 }

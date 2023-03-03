@@ -12,7 +12,7 @@ public class Task {
         setTaskType(taskType);
     }
 
-    public void markAsDone() {
+    public void markTaskAsDone() {
         if (isDone) {
             System.out.println("Task was already marked as done!");
         } else {
@@ -22,7 +22,11 @@ public class Task {
         }
     }
 
-    public void markAsUndone() {
+    public void copyCompletedTask() {
+        isDone = true;
+    }
+
+    public void markTaskAsUndone() {
         if (!isDone) {
             System.out.println("Task was already marked as undone!");
         } else {
