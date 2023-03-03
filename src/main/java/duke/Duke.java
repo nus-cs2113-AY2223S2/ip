@@ -41,6 +41,9 @@ public class Duke {
                 ui.showMissingAttributesMessage();
             } catch (DukeException e) {
                 ui.showIncorrectCommandWarning();
+            } catch (FileNotFoundException e) {
+                ui.showFileNotFoundMessage();
+                ui.showNewFileCreationMessage();
             }
         }
     }
@@ -217,7 +220,7 @@ public class Duke {
         return false;
     }
 
-    public static void handleMessageFromUser(String messageFromUser, ArrayList<Task> tasks) throws DukeException {
+    public static void handleMessageFromUser(String messageFromUser, ArrayList<Task> tasks) throws DukeException, FileNotFoundException {
         if (hasTaskKeyword(messageFromUser)) {
             Task newTask = handleTaskCreation(messageFromUser);
             addToList(newTask, tasks);
@@ -229,8 +232,39 @@ public class Duke {
             saveAndExit(tasks, FILE_PATH);
         } else if (messageFromUser.startsWith("delete")) {
             deleteFromList(messageFromUser, tasks);
+        } else if (messageFromUser.startsWith("find")) {
+            findTask(messageFromUser, tasks, FILE_PATH);
         } else {
             throw new DukeException();
+        }
+    }
+
+    public static void findTask(String messageFromUser, ArrayList<Task> tasks, String filePath) throws FileNotFoundException {
+        String[] messageComponents = messageFromUser.split(" ", 2);
+        ArrayList<Task> similarTasks = new ArrayList<>();
+        SaveToFile saveToFile = new SaveToFile();
+        saveToFile.initialiseWritingToFile(tasks, filePath);
+        File f = new File(filePath);
+        ReadFromFile readFromFile = new ReadFromFile();
+
+        Scanner s = new Scanner(f);
+        while (s.hasNext()) {
+            String lineInFile = s.nextLine();
+            if (lineInFile.contains(messageComponents[1])) {
+                readFromFile.copyToArrayList(lineInFile, similarTasks, filePath);
+            }
+        }
+
+        Ui ui = new Ui();
+        if (similarTasks.size() > 0) {
+            ui.horizontalLine();
+            ui.showMessageForSimilarTasksFound();
+            iterateThroughListAndDisplayTasks(similarTasks);
+            ui.horizontalLine();
+        } else {
+            ui.horizontalLine();
+            ui.showMessageForNoSimilarTasksFound();
+            ui.horizontalLine();
         }
     }
 

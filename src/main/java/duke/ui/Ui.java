@@ -60,6 +60,14 @@ public class Ui {
         }
     }
 
+    public void showMessageForSimilarTasksFound() {
+        System.out.println("Here are the matching tasks I found: ");
+    }
+
+    public void showMessageForNoSimilarTasksFound() {
+        System.out.println("I couldn't find any matching tasks :/ ");
+    }
+
     public void horizontalLine() {
         System.out.println("________________________________________");
     }
