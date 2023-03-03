@@ -25,7 +25,6 @@ public class TodoCommand extends Command {
         tasksList.addTask(todo);
 
         ui.printAddedTask(todo, tasksList);
-
         storage.writeToFile(tasksList);
     }
 }

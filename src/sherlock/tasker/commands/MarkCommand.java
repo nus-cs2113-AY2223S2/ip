@@ -31,8 +31,8 @@ public class MarkCommand extends Command {
 
         Task markedTask = tasksList.markTask(taskIndex, isDone);
 
-        storage.writeToFile(tasksList);
         ui.printLines(successMessage, markedTask.toString());
+        storage.writeToFile(tasksList);
     }
 }
 

@@ -26,8 +26,7 @@ public class AddCommand extends Command{
 
         tasksList.addTask(task);
 
-        storage.writeToFile(tasksList);
-
         ui.printAddedTask(task, tasksList);
+        storage.writeToFile(tasksList);
     }
 }

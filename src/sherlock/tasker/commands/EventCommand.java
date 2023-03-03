@@ -32,7 +32,6 @@ public class EventCommand extends Command {
         tasksList.addTask(event);
 
         ui.printAddedTask(event, tasksList);
-
         storage.writeToFile(tasksList);
     }
 

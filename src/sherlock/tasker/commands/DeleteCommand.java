@@ -32,7 +32,6 @@ public class DeleteCommand extends Command {
                 "Now you have " + tasksList.getTasksCount() + tasksWord + "in the list.";
 
         ui.printLines(successMessage);
-
         storage.writeToFile(tasksList);
     }
 }
