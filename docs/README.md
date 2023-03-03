@@ -144,9 +144,9 @@ Echo is a command that you can use to test if the chatbot is responding!
 ## Flags
 
 Do not use the character '/'. It is solely reserved for flags.
-Example of the flags include:
-Deadline by flag: "/by "
-Event from flag: "/from "
-Event to flag: "/to "
+Example of the flags include:  
+Deadline by flag: "/by "  
+Event from flag: "/from "  
+Event to flag: "/to "  
 
 Thank you!
