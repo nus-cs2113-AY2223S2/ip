@@ -54,6 +54,11 @@ public class Parser {
         }
     }
 
+    private static void parseFindCommand(ArrayList<String> commands, ArrayList<String> inputs) throws DukeException {
+        String description = getArg("keyword", "Find", inputs, 1, inputs.size() - 1);
+        commands.add(description);
+    }
+
     private static void parseTodoCommand(ArrayList<String> commands, ArrayList<String> inputs) throws DukeException {
         String description = getArg("description", "todo", inputs, 1, inputs.size() - 1);
         commands.add(description);
@@ -90,6 +95,9 @@ public class Parser {
         case "event":
             parseEventCommand(commands, inputs);
             break;
+        case "find":
+            parseFindCommand(commands, inputs);
+            break;
         }
     }
 
@@ -118,6 +126,8 @@ public class Parser {
         case "deadline":
             // Fallthrough
         case "event":
+            // Fallthrough
+        case "find":
             parseStringArgumentsCommand(inputs.get(COMMAND_ARG), commands, inputs);
             break;
         }
