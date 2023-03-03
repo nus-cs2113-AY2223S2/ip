@@ -1,0 +1,4 @@
+T | 1 | list
+D | 1 | x | y
+D | 0 | abc | z
+T | 1 | x
