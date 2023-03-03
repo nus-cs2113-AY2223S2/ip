@@ -1,5 +1,8 @@
 package duke.commons;
 
+/**
+ * The Messages class contains messages used by other class.
+ */
 public class Messages {
     public static final String MESSAGE_ERROR_FORMAT_DATE = "OOPS!!! Please enter the correct date format (dd-mm-yyyy)";
     public static final String MESSAGE_ERROR_FORMAT_DATE_TIME = "OOPS!!! Please enter the correct date time format (dd-mm-yyyy HH:mm)";
