@@ -41,6 +41,20 @@ There are 5 types of command you can give to this chatbot.
    In the line of `[D][ ] paper submission (by: Mar 08 2023)`, `[D]` means this task is created from `deadline` command.
    Also, if you type the due date of the task, you should follow the specified format of `YYYY-MM-dd`
    just like the example above. If you don't, the program would be terminated with the error message.
+   
+3. `event` : You can register event task by typing `event {description of the event} \from {start date}
+   \to {end date}`. You will see the resulting message like below after pres the `Enter` key.
+   ```
+   event take midterm /from 2023-03-01 /to 2023-03-03
+      ____________________________________________________________
+       Got it. I've added this task:
+         [E][ ] take midterm (from: Mar 03 2023 to: Mar 01 2023)
+       Now you have 3 tasks in the list.
+      ____________________________________________________________
+   ```
+   In the line of `[D][ ] paper submission (by: Mar 08 2023)`, `[D]` means this task is created from `deadline` command.
+   Also, if you type the due date of the task, you should follow the specified format of `YYYY-MM-dd`
+   just like the example above. If you don't, the program would be terminated with the error message.
 
 
 ## 🧑🏻‍💻 Setting up in Intellij
