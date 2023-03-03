@@ -1,5 +1,5 @@
 package Onandon.module;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 
@@ -8,8 +8,8 @@ import java.time.format.DateTimeFormatter;
  */
 public class Event extends Task {
 
-    protected LocalDateTime to;
-    protected LocalDateTime from;
+    protected LocalDate to;
+    protected LocalDate from;
     protected String dateFormat = "yyyy-MM-dd";
     protected String printDateFormat = "MMM dd yyyy";
 
@@ -22,8 +22,8 @@ public class Event extends Task {
      */
     public Event(String description, String to, String from) {
         super(description);
-        this.to = LocalDateTime.parse(to, DateTimeFormatter.ofPattern(dateFormat));
-        this.from = LocalDateTime.parse(from, DateTimeFormatter.ofPattern(dateFormat));
+        this.to = LocalDate.parse(to, DateTimeFormatter.ofPattern(dateFormat));
+        this.from = LocalDate.parse(from, DateTimeFormatter.ofPattern(dateFormat));
     }
 
     /**
