@@ -1,15 +1,14 @@
 package duke;
 
+import duke.exception.InvalidCommandException;
+import duke.exception.EmptyCommandException;
 import duke.task.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.io.File;
-import java.io.FileWriter;
+
 import static duke.Storage.*;
-import static duke.Ui.*;
-import static duke.Parser.*;
 
 /**
  * <h1>DUKE THE CHATBOT</h1>
@@ -70,9 +69,9 @@ public class Duke {
      * This is the main method which makes use of run method.
      * @param args Unused
      * @return Nothing
-     * @exception IOException On input error, ClassNotFoundException
+     * @exception IOException On input error, ClassNotFoundException, InvalidCommandException, EmptyCommandException
      */
-    public static void main(String[] args) throws IOException, ClassNotFoundException {
+    public static void main(String[] args) throws IOException, ClassNotFoundException, InvalidCommandException, EmptyCommandException {
 
         new Duke().run();
 
