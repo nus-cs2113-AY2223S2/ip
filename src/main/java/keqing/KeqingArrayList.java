@@ -104,7 +104,7 @@ public class KeqingArrayList {
             int indexOfBy = content.indexOf("/by");
             if (indexOfBy + 3 < content.length()) {
                 String description = content.substring(0, indexOfBy).trim();
-                String by = content.substring(indexOfBy + 3).trim();
+                String by = content.substring(indexOfBy + 3).trim();    // 3 is the length of "/by"
                 Deadline deadlineTask = new Deadline(description, by);
                 tasks.add(deadlineTask);
                 ui.echoAdd();
@@ -131,8 +131,8 @@ public class KeqingArrayList {
             int indexOfTo = content.indexOf("/to");
             if (indexOfFrom < indexOfTo) {
                 String description = content.substring(0, indexOfFrom).trim();
-                String from = content.substring(indexOfFrom + 5, indexOfTo).trim();
-                String to = content.substring(indexOfTo + 3).trim();
+                String from = content.substring(indexOfFrom + 5, indexOfTo).trim();    // 5 is the length of "/from"
+                String to = content.substring(indexOfTo + 3).trim();    // 3 is the length of "/to"
                 Event eventTask = new Event(description, from, to);
                 tasks.add(eventTask);
                 ui.echoAdd();
@@ -164,7 +164,7 @@ public class KeqingArrayList {
         if (isNumeric(content)) {
             int index = Integer.parseInt(content) - 1;    //switch to 0-based.
             if (index <= getTaskCount()) {
-                Task.setTaskCount(getTaskCount() - 1);
+                Task.setTaskCount(getTaskCount() - 1);    //decrease the task count
                 ui.echoDelete(index);
                 tasks.remove(index);
             }
