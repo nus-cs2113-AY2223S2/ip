@@ -55,7 +55,7 @@ ___
 ## <span style="color:DarkMagenta">Features</span> 👾
 
 ### Adding a Task:
-_3 types of tasks suppoted - Todo, Event and Deadline:_
+_3 types of tasks supported - Todo, Event and Deadline:_
 
 ### 1. Todo: `todo`
 Adds a todo task to the task list.<br/>
