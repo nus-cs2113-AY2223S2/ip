@@ -45,7 +45,7 @@ public class CreateEventCommand extends Command {
         if (splitInput[1].length() < 6 || splitInput[2].length() < 4) {
             throw new InvalidFormatException();
         }
-        from = splitInput[1].substring(5);
+        from = splitInput[1].substring(5).trim();
         to = splitInput[2].substring(3);
     }
 
