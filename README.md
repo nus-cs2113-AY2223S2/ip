@@ -66,7 +66,7 @@ There are 5 types of command you can give to this chatbot.
       ____________________________________________________________
    ```
 
-5. `delete` : You can delete the task with `delete {index of the task you want to remove}' command.
+5. `delete` : You can delete the task with `delete {index of the task you want to remove}` command.
    ```
    delete 1
       ____________________________________________________________
