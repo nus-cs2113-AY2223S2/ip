@@ -16,7 +16,11 @@ public class TaskList {
 
     private static final Storage storage = new Storage();
 
-
+    /**
+     * @param input
+     * @param doIPrintOutput If false, does not print task marked/unmarked. Occurs when loading data when Duke starts
+     *                       If true, print task marked/unmarked. Occurs during the Duke session
+     */
     public void addNewTask(String input, boolean doIPrintOutput) {
         taskAdder.addTaskToList(listOfTasks, input, doIPrintOutput);
     }
@@ -34,10 +38,19 @@ public class TaskList {
         outputUI.printList(listOfTasks, listOfTasks.size());
     }
 
+    /**
+     * @param input
+     * @param doIPrintOutput If false, does not print task marked/unmarked. Occurs when loading data when Duke starts
+     *                       If true, print task marked/unmarked. Occurs during the Duke session
+     */
     public void handleMarkUnmarkAction(String input, boolean doIPrintOutput) {
         marker.markOrUnamrkTask(listOfTasks, input, doIPrintOutput);
     }
 
+    /**
+     * Starts the delete action
+     * @param input Contains the 'delete' keyword and the task index to delete
+     */
     public void handleDeleteAction(String input) {
         taskDeleter.attemptToDeleteTask(listOfTasks, input);
     }
@@ -52,7 +65,7 @@ public class TaskList {
 
     /**
      * Takes in a keyword and tries to find all tasks from current task list
-     * @param input
+     * @param input contains the find keyword and the keyword used to find tasks
      */
     public void handleFindTaskAction(String input) {
         Finder finder = new Finder();
