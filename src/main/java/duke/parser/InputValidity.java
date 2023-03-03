@@ -45,13 +45,15 @@ public class InputValidity {
      * @throws DukeException when the input provided by user is of incorrect format or does not have
      *         sufficient parameters
      */
-    protected static void checkDeadline(String input) throws DukeException {
-        if (!input.contains(DEADLINE_DELIMITER)) {
-            Error.throwError(ErrorTypes.INVALID_DEADLINE_COMMAND);
-        }
-        String[] arrayInput = input.split(" ");
+    protected static void checkValidDeadline(String input) throws DukeException {
+        String[] arrayInput = input.trim().split(" ");
         if (arrayInput.length < MINIMUM_DEADLINE_LENGTH) {
             Error.throwError(ErrorTypes.INSUFFICIENT_DEADLINE_ARGUMENT);
+        }
+        boolean isTaskNameAbsent = arrayInput[1].equals(DEADLINE_DELIMITER.trim());
+        boolean isDateAbsent = arrayInput[arrayInput.length - 1].equals(DEADLINE_DELIMITER.trim());
+        if (!input.contains(DEADLINE_DELIMITER) || isTaskNameAbsent || isDateAbsent) {
+            Error.throwError(ErrorTypes.INVALID_DEADLINE_COMMAND);
         }
     }
 
@@ -70,6 +72,9 @@ public class InputValidity {
         String[] arrayInput = input.split(" ");
         if (arrayInput.length < MINIMUM_EVENT_LENGTH) {
             Error.throwError(ErrorTypes.INSUFFICIENT_EVENT_ARGUMENT);
+        }
+        if (arrayInput[1].equals(EVENT_FROM_DELIMITER.trim())) {
+            Error.throwError(ErrorTypes.INVALID_EVENT_COMMAND);
         }
     }
 
@@ -130,25 +135,5 @@ public class InputValidity {
         if (!isAtLeastTwoWord) {
             Error.throwError(ErrorTypes.INVALID_FIND_COMMAND);
         }
-    }
-
-    /**
-     * Only called during parsing of deadline and event command, to check whether a task name is present
-     *
-     * @param input input provided by user, without the deadline or event word
-     * @param command command of the input, "deadline" or "event"
-     * @throws DukeException when task name is absent
-     */
-    protected static void checkTaskName(String input, String command) throws DukeException {
-        String[] inputArray = input.split(" ");
-        ErrorTypes error;
-        if (command.equals(AddCommand.COMMAND_DEADLINE) && inputArray[0].equals(DEADLINE_DELIMITER.trim())) {
-            error = ErrorTypes.INVALID_DEADLINE_COMMAND;
-        } else if (command.equals(AddCommand.COMMAND_EVENT) && inputArray[0].equals(EVENT_FROM_DELIMITER.trim())) {
-            error = ErrorTypes.INVALID_EVENT_COMMAND;
-        } else {
-            return;
-        }
-        Error.throwError(error);
     }
 }
