@@ -1,5 +1,10 @@
 package duke;
 
+/**
+ * Represents a <code>Event</code> task that can be added to the list. An <code>Event</code> object stores a
+ * description of the task and its duration.
+ */
+
 public class Event extends Todo {
     protected String by;
     protected String end;
