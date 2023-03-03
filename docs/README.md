@@ -1,6 +1,6 @@
 # 🎧 Onandon project template
 
-This is the Onandon chatbot project page for the AY2223S2-CS2113, NUS. To see the code, [click here](https://github.com/0nandon/ip) for github repository link.
+This is the Onandon chatbot project page for the AY2223S2-CS2113, NUS. To see the code, [click here](https://github.com/0nandon/ip) for the github repository link.
 
 ## 🧐 How to use chatbot?
 
