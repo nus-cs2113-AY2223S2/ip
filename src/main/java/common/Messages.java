@@ -8,7 +8,6 @@ public class Messages {
     public static final String MESSAGE_WELCOME = LINE +
             "Hello! I'm Duke, your to-do list manager.\n" +
             "You can add tasks to your to-do list, mark them as done, view your entire to-do list and many more!\n" +
-            "To get started, key in 'help' to check out all the functions and how to use them.\n" +
             LINE;
     public static final String MESSAGE_GOODBYE = "Thank you for using Duke. Hope to see you soon!";
     public static final String PRINT_TASK_HEADING = LINE + "Here are the tasks in your list:";
