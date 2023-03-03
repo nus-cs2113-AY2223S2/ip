@@ -107,10 +107,12 @@ public class Storage {
                 formattedTask += taskType + " | " + taskStatus + " | " + taskDescription + System.lineSeparator();
             } else if (taskType.equals("D")){
                 Deadline deadline = (Deadline) task;
-                formattedTask += taskType + " | " + taskStatus + " | " + taskDescription + " | " + deadline.getDeadline() + System.lineSeparator();
+                formattedTask += taskType + " | " + taskStatus + " | " + taskDescription + " | " +
+                        deadline.getDeadline() + System.lineSeparator();
             } else {
                 Event event = (Event) task;
-                formattedTask += taskType + " | " + taskStatus + " | " + taskDescription + " | from: " + event.getFromDate() + " to: " + event.getToDate() + System.lineSeparator();
+                formattedTask += taskType + " | " + taskStatus + " | " + taskDescription + " | from: " +
+                        event.getFromDate() + " to: " + event.getToDate() + System.lineSeparator();
             }
         }
         return formattedTask;

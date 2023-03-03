@@ -4,7 +4,6 @@ package duke.tasks;
  * Class creates a Todo type task.
  */
 public class Todo extends Task {
-    private boolean isDone;
 
     /**
      * Creates a Todo object and initializes isDone.

@@ -69,8 +69,9 @@ public class TaskList {
             if (taskDescription.length() == 0) {
                 throw new DukeException();
             } else {
+                int numSpaces = 2;
+                String description = taskDescription.substring(0, taskDescription.indexOf("by") - numSpaces);
                 int bySize = 3;
-                String description = taskDescription.substring(0, taskDescription.indexOf("by") - 2);
                 String by = taskDescription.substring(taskDescription.indexOf("by") + bySize);
                 Deadline newDeadline = new Deadline(description, by, isDone);
                 tasks.add(newDeadline);

@@ -41,7 +41,7 @@ public class Duke {
             storage.createSavedTasksFile();
             storage.loadSavedTasks();
         } catch (IOException exception) {
-            System.out.println("I/O Error! ");
+            System.out.println("I/O Error");
         }
         System.out.println("Loading complete!");
 
@@ -52,14 +52,12 @@ public class Duke {
             String[] input = scan.nextLine().split(" ");
             // parse task inputted by user
             parse.parseInput(input, tasks);
-
             // store task to file
             try {
                 storage.saveTaskToFile();
-            } catch (IOException e) {
-                System.out.println("I/O Error!");
+            } catch (IOException exception) {
+                System.out.println("I/O Error");
             }
-
             // check if user is done
             if (parse.getIsUserDone()) {
                 break;
