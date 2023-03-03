@@ -1,5 +1,3 @@
-import java.io.IOException;
-import java.util.Scanner;
 
 public class Parser {
     private static final String DIVIDER  = "______________________________";

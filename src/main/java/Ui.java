@@ -68,6 +68,7 @@ public class Ui {
     public static void emptyDescriptionKeyword() {
         String errorMessage = DIVIDER + System.lineSeparator()
                 + "☹ OOPS!!! You did not specify a keyword.";
+        System.out.println(errorMessage);
     }
 
     public static void taskAlreadyMarkedError() {

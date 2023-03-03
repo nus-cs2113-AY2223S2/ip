@@ -53,10 +53,6 @@ public class TaskList {
     }
 
     public void unmarkTask(int taskNum) throws TaskAlreadyNotMarkedException, ArrayIndexOutOfBoundsException{
-        /*getTask(taskNum-1).markAsNotDone();
-        System.out.println("OK, I've marked this task as not done:");
-        System.out.println(DIVIDER + System.lineSeparator() + getTask(taskNum-1).toString()
-                + System.lineSeparator() + DIVIDER);*/
         if (taskNum > getSize() || taskNum <= 0) {
             throw new ArrayIndexOutOfBoundsException();
         } else {
