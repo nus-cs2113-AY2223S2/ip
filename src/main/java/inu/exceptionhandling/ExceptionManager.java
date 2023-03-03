@@ -23,7 +23,7 @@ public class ExceptionManager {
      * Checks that the event starting date and time occurs before its ending date
      *
      * @param from the starting date and time of the event
-     * @param to the ending date and time of the event
+     * @param to   the ending date and time of the event
      * @throws InvalidEventFromAndToDate when the event's starting date occurs after its ending date
      */
     public static void checkValidFromAndToDate(LocalDateTime from, LocalDateTime to) throws InvalidEventFromAndToDate {
@@ -33,14 +33,16 @@ public class ExceptionManager {
     }
 
     /**
-     * Checks that the date provided for tasks is not in the past
+     * Checks that the dates provided for tasks is not in the past
      *
-     * @param date provided from user input
+     * @param dates provided from user input
      * @throws InvalidDate when the date provided is in the past, hence it is invalid.
      */
-    public static void checkCorrectDate(LocalDateTime date) throws InvalidDate {
-        if (date.isBefore(LocalDateTime.now())) {
-            throw new InvalidDate();
+    public static void checkCorrectDate(LocalDateTime... dates) throws InvalidDate {
+        for (LocalDateTime d : dates) {
+            if (d.isBefore(LocalDateTime.now())) {
+                throw new InvalidDate();
+            }
         }
     }
 }
