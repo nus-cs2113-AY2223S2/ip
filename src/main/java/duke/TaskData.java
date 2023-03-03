@@ -4,11 +4,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.concurrent.LinkedBlockingDeque;
+
 
 public class TaskData {
     private File data;
@@ -18,14 +16,6 @@ public class TaskData {
         this.fileName = fileName;
         data = new File(fileName);
     }
-
-//    public ArrayList<Task> loadData (ArrayList<Task> tasks) {
-//        try {
-//            readData(tasks);
-//        } catch (FileNotFoundException e){
-//            System.out.println("file not found!");
-//        }
-//    }
 
     public ArrayList<Task> readData (ArrayList<Task> tasks) throws FileNotFoundException {
         if (!data.exists()) {
