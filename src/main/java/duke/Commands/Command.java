@@ -28,7 +28,6 @@ public class Command {
      * @param tsk   The task that was added to the list.
      */
     public static void addTaskPrint(TaskList tasks, Task tsk) {
-        System.out.println(LINE_SPACING);
         System.out.println("\tGot it. I've added this task:");
         System.out.println("\t  " + tsk.toString());
         System.out.println("\tNow you have " + tasks.getSize() + " tasks in the list.");

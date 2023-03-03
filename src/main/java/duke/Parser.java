@@ -21,7 +21,6 @@ public class Parser {
         String cmd = cmds[0];
         Command tmpCommand = null;
         boolean isParse = true;
-        System.out.println("Here " + cmd);
         switch (cmd) {
         case DeadLineCommand.COMMAND_WORD:
             tmpCommand = parseDeadline(cmds[1]);
@@ -48,8 +47,6 @@ public class Parser {
             tmpCommand = parseToDo(cmds[1]);
             break;
         case FindCommand.COMMAND_WORD:
-            System.out.println("Here in caseFind");
-
             tmpCommand = parseFind(cmds[1]);
             break;
         default:
@@ -67,7 +64,6 @@ public class Parser {
      * @return a FindCommand for Duke to execute
      */
     public static Command parseFind(String input) {
-        System.out.println("Here in parseFind");
         return new FindCommand(input);
     }
 
