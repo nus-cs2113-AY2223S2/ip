@@ -14,7 +14,7 @@ chatbot program is properly executed.
    ```
 
 There are 5 types of command you can give to this chatbot.
-1. `todo` : You can register todo list by typing `todo {description of the todo}` and
+1. `todo` : You can register todo task by typing `todo {description of the todo}` and
    press the enter key. Then, you will see the resulting message like below.
    ```
    todo read book
@@ -27,6 +27,20 @@ There are 5 types of command you can give to this chatbot.
    In the line of `[T][ ] read book`, `[T]` means this task is created from `todo` command,
    and `[ ]` means that this task is not done yet. If the task was already done, it is indicated like
    `[X]`.
+   
+2. `deadline` : You can register deadline task by typing `deadline {description of the deadline} \by {due date}` and
+   press the enter key. Then, you will see the resulting message like below.
+   ```
+   deadline paper submission /by 2023-03-08
+      ____________________________________________________________
+       Got it. I've added this task:
+         [D][ ] paper submission (by: Mar 08 2023)
+       Now you have 2 tasks in the list.
+      ____________________________________________________________
+   ```
+   In the line of `[T][ ] read book`, `[D]` means this task is created from `deadline` command.
+   Also, if you type the due date of the task, you should follow the specified format of `YYYY-MM-dd`
+   just like the example above. If you don't, the program would be terminated with the error message.
 
 
 ## 🧑🏻‍💻 Setting up in Intellij
