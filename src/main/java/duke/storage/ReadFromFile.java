@@ -16,7 +16,8 @@ public class ReadFromFile {
     /**
      * This function determines the whether the task from a line in the text file is a ToDo, Deadline or Event and
      * calls the corresponding function to format the task accordingly.
-     * @param line String from text file
+     *
+     * @param line  String from text file
      * @param tasks ArrayList of tasks to store the task objects
      */
     public static void copyToArrayList(String line, ArrayList<Task> tasks) {
@@ -43,8 +44,9 @@ public class ReadFromFile {
     /**
      * Formats task of type ToDo so that it can be added to ArrayList.
      * Checks and updates the task status accordingly based on whether it was marked as done in the text file.
+     *
      * @param taskInfo Task description
-     * @param tasks ArrayList that stores task objects
+     * @param tasks    ArrayList that stores task objects
      */
     private static void copyTodoToArrayList(String taskInfo, ArrayList<Task> tasks) {
         // Parse line to split task status and task info
@@ -65,8 +67,9 @@ public class ReadFromFile {
     /**
      * Formats tasks of type deadline so that it can be stored in ArrayList.
      * Checks and updates the task status accordingly based on whether it was marked as done in the text file.
+     *
      * @param taskInfo Task description
-     * @param tasks ArrayList that stores task objects
+     * @param tasks    ArrayList that stores task objects
      */
     private static void copyDeadlineToArrayList(String taskInfo, ArrayList<Task> tasks) {
         String[] messageComponents = taskInfo.split("/", 3);
@@ -83,8 +86,9 @@ public class ReadFromFile {
     /**
      * Formats tasks of type event so that it can be stored in ArrayList.
      * Checks and updates the task status accordingly based on whether it was marked as done in the text file.
+     *
      * @param taskInfo Task description
-     * @param tasks ArrayList that stores task objects
+     * @param tasks    ArrayList that stores task objects
      */
     private static void copyEventToArrayList(String taskInfo, ArrayList<Task> tasks) {
         String[] messageComponents = taskInfo.split("/", 4);
