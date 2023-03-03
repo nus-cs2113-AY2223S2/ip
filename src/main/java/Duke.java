@@ -19,7 +19,7 @@ public class Duke {
         System.out.println("Hello! I'm Duke");
         System.out.println("What can I do for you?\n");
         DukeStorage storage = new DukeStorage("data/duke.txt");
-
+        Task.numberOfTasks = 0;
         ArrayList<Task> tasks = storage.loadTaskList();
         try (Scanner scan = new Scanner(System.in)) {
             String input = scan.nextLine();

@@ -36,7 +36,6 @@ public class DukeStorage {
 
     public static ArrayList<Task> loadTaskList() throws IOException {
         ArrayList<Task> tasks = new ArrayList<>();
-        Task.numberOfTasks = 0;
         try {
             File file = new File(filePath);
             if (!file.exists()) {
@@ -46,15 +45,16 @@ public class DukeStorage {
             Scanner scanner = new Scanner(file);
             while (scanner.hasNext()) {
                 String line = scanner.nextLine();
-                Task task = new Task(null);
                 if (line.startsWith("T")) {
-                    task = Todo.fromFileString(line);
+                    Task task = Todo.fromFileString(line);
+                    tasks.add(task);
                 } else if (line.startsWith("D")) {
-                    task = Deadline.fromFileString(line);
+                    Task task = Deadline.fromFileString(line);
+                    tasks.add(task);
                 } else if (line.startsWith("E")) {
-                    task = Event.fromFileString(line);
+                    Task task = Event.fromFileString(line);
+                    tasks.add(task);
                 }
-                tasks.add(task);
             }
             scanner.close();
         } catch (FileNotFoundException e) {
