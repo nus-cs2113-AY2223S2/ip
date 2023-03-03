@@ -310,7 +310,7 @@ public class Duke {
             System.out.println("File not found!\n");
         }
         if (!isFileFound) {
-            System.out.printf("Creating a new File for you!\n");
+            System.out.printf("Creating a new File for you! \n");
             if (!directory.exists()) {
                 directory.mkdirs();
             }
