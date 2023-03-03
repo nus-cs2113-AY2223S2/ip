@@ -1,5 +1,10 @@
 package duke;
 
+/**
+ * Represents a <code>Deadline</code> task that can be added to the list. A <code>Deadline</code> object stores a
+ * description of the task, as well as the deadline for it.
+ */
+
 public class Deadline extends Todo {
     protected String by;
     public Deadline(String description, String by) {
