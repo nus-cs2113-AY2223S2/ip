@@ -1,4 +1,6 @@
-T | 1 | read book
+T | 0 | read book
 D | 1 | return book | June 6th
 E | 0 | project meeting | Aug 6th 2pm | 4pm
-T | 0 | buy bread
+T | 1 | buy bread
+T | 0 | buy book
+E | 0 | bob's birthday celebration | 13th Mar 6pm | 11pm
