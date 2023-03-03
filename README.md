@@ -66,6 +66,16 @@ There are 5 types of command you can give to this chatbot.
       ____________________________________________________________
    ```
 
+5. `delete` : You can delete the task with `delete {index of the task you want to remove}' command.
+   ```
+   delete 1
+      ____________________________________________________________
+       Noted. I've removed this task:
+         [T][ ] read book
+       Now you have 2 tasks in the list.
+      ____________________________________________________________
+   ```
+
 
 
 ## 🧑🏻‍💻 Setting up in Intellij
