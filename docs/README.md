@@ -182,7 +182,7 @@ this command marks the task with index 1 as done. If the task is already marked 
 
 ### `unmark` - unmark a task 
 
-this command marks a task as unfinished. Users can check the index of tasks using `list`
+This command marks a task as unfinished. Users can check the index of tasks using `list`.
 
 - format: **unmark** [index of task]
 
@@ -190,7 +190,7 @@ this command marks a task as unfinished. Users can check the index of tasks usin
 
 > unmark 1
 
-this command the marks the task with index 1 as unfinished. If the task is not marked as done, this command will not have any effect on it.
+This command the marks the task with index 1 as unfinished. If the task is not marked as done, this command will not have any effect on it.
 
 - Expected outcome from Keqing:
 
@@ -203,7 +203,7 @@ this command the marks the task with index 1 as unfinished. If the task is not m
 
 ### `delete` - delete a task 
 
-this command marks a task as unfinished. Users can check the index of tasks using `list`
+This command marks a task as unfinished. Users can check the index of tasks using `list`.
 
 - format: **delete** [index of task]
 
@@ -211,7 +211,7 @@ this command marks a task as unfinished. Users can check the index of tasks usin
 
 > delete 4
 
-this command deletes the tasks with index 4 from the task list.
+This command deletes the tasks with index 4 from the task list.
 
 - Expected outcome from Keqing:
 
@@ -225,7 +225,7 @@ Now you have 4 tasks in the list.
 
 ### `find` - find relevant task 
 
-this command finds and shows the tasks that contain the given keyword
+This command finds and shows the tasks that contain the given keyword.
 
 - format: **find** [keyword]
 
@@ -233,7 +233,7 @@ this command finds and shows the tasks that contain the given keyword
 
 > find book
 
-this command finds all the tasks contain word "book".
+This command finds all the tasks contain word "book".
 
 - Expected outcome from Keqing:
 
@@ -246,7 +246,7 @@ this command finds all the tasks contain word "book".
 
 ### `bye` - exit the app 
 
-this command terminates the app
+This command terminates the applcation.
 
 - format: bye
 
