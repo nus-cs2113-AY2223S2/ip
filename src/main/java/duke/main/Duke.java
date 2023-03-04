@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
- * A class that acts as a CLI that keeps tracks of tasks you write and mark down
+ * A class that acts as a CLI that keeps tracks of tasks you write and mark down 
  */
 public class Duke {
 
