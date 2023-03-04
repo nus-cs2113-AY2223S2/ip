@@ -6,6 +6,7 @@ import duke.tasks.Event;
 import duke.tasks.Task;
 import duke.tasks.Todo;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import static duke.exceptions.UserInputException.inputExceptionType;
@@ -28,7 +29,7 @@ public class Duke {
     //Scanner for user input
     private static final Scanner SCANNER = new Scanner(System.in);
     //Task list
-    private static final Task[] TASK_LIST = new Task[100];
+    private static final ArrayList<Task> TASK_LIST = new ArrayList<>();
     private static int taskCount = 0;
 
     public static void main(String[] args) throws DukeException {
@@ -94,34 +95,34 @@ public class Duke {
     private static void addTask(String newTaskType, String newTaskInfo) throws DukeException {
         switch (newTaskType) {
         case COMMAND_ADD_TODO_WORD:
-            TASK_LIST[taskCount] = new Todo(newTaskInfo);
+            TASK_LIST.add(new Todo(newTaskInfo));
             break;
         case COMMAND_ADD_DEADLINE_WORD:
 
-            TASK_LIST[taskCount] = new Deadline(newTaskInfo);
+            TASK_LIST.add( new Deadline(newTaskInfo));
             break;
         case COMMAND_ADD_EVENT_WORD:
 
-            TASK_LIST[taskCount] = new Event(newTaskInfo);
+            TASK_LIST.add( new Event(newTaskInfo));
             break;
         default:
             throw new UserInputException(INVALID_TASK_TYPE);
         }
         showToUser("Got it. I've added this task:",
-                TASK_LIST[taskCount].toString(),
+                TASK_LIST.get(TASK_LIST.size()-1).toString(),
                 "Now you have " + (taskCount + 1) + (taskCount + 1 == 0 ? " task" : " tasks") + " in the list.");
         taskCount += 1;
     }
 
     private static void markAsDone(String taskNumber) {
-        Task taskToBeMarked = TASK_LIST[Integer.parseInt(taskNumber) - 1];
+        Task taskToBeMarked = TASK_LIST.get(Integer.parseInt(taskNumber) - 1);
         taskToBeMarked.toggleDone();
         showToUser("Nice! I've marked this task as done:");
         showToUser(taskToBeMarked.toString());
     }
 
     private static void markAsNotDone(String taskNumber) {
-        Task taskToBeUnmarked = TASK_LIST[Integer.parseInt(taskNumber) - 1];
+        Task taskToBeUnmarked = TASK_LIST.get(Integer.parseInt(taskNumber) - 1);
         taskToBeUnmarked.toggleDone();
         showToUser("OK, I've marked this task as not done yet:");
         showToUser(taskToBeUnmarked.toString());
@@ -130,7 +131,7 @@ public class Duke {
     private static void listTask() {
         showToUser("Here are the tasks in your list:");
         for (int i = 0; i < taskCount; i++) {
-            showToUser((i + 1) + ". " + TASK_LIST[i].toString());
+            showToUser((i + 1) + ". " + TASK_LIST.get(i).toString());
         }
     }
 
