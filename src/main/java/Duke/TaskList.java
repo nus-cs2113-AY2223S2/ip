@@ -6,6 +6,7 @@ import Duke.Tasks.Task;
 import Duke.Tasks.Todo;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class TaskList {
@@ -103,9 +104,12 @@ public class TaskList {
      */
     static void initializeTaskNumberAndList() {
         try {
+            Storage.checkFile();
             numberOfTasks += Storage.initializeTaskList(taskList);
         } catch (FileNotFoundException e) {
             System.out.println("Save file not found");
+        } catch (IOException e) {
+            System.out.println("Error with reading file");
         }
     }
 }

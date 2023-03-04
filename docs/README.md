@@ -1,21 +1,21 @@
 
-#User Guide
+# User Guide
 
 Duke is a to-do list that serves as a reminder for you to keep track of the various types of tasks you may have.
 
-##Features
+## Features
 
 Duke stores 3 types of tasks, todo, deadline and event.
 
 Todo only requires the task description, deadline additionally requires the time the task is due, and event requires the start and the end timing of the event on top of the description.
 
-##Todo list are automically saved when duke terminates
+## Todo list are automically saved when duke terminates
 
 The list of tasks is always saved when closing duke, allowing the user to close duke and reaccess the task list in the future.
 
-#Usage
+# Usage
 
-###todo - Adds a todo task into the list
+### todo - Adds a todo task into the list
 
 todo TASK_NAME
 
@@ -34,7 +34,8 @@ Adds a todo task with the label T to represent todo and an empty [ ] which indic
     ____________________________________________________________
 
 
-###`deadline` - Adds a deadline task into the list
+### `deadline` - Adds a deadline task into the list
+
 deadline TASK_NAME /by DEADLINE
 
 ###### Example of usage:
@@ -50,6 +51,7 @@ Adds a deadline task with the label D to representing deadline and an empty [ ] 
     [D][ ] Submit the final version (by:Fri, Mar 3rd 2359)
     Number of tasks: 2
     ____________________________________________________________
+
 ### `event` - Adds an event into the list
 event TASK_NAME /from START /to END.
 
@@ -61,13 +63,15 @@ event TASK_NAME /from START /to END.
 
 Adds an event into the list with an E to indicate event, [ ] indicates the status of the event.
 
+
     ____________________________________________________________
     Added to list:
     [E][ ] attend lecture (from: 16:00  to: 18:00)
     Number of tasks: 3
     ____________________________________________________________
 
-##`list` - Lists all the tasks recorded
+## `list` - Lists all the tasks recorded
+
 list
 
 ###### Example of usage:
@@ -101,7 +105,7 @@ This marks the second item in the list as complete, indicated with a [X].
     [D][X] Submit the final version (by:Fri, Mar 3rd 2359)
     ____________________________________________________________
 
-##`unmark` - Unmark specified task
+## `unmark` - Unmark specified task
 
 unmark POS_OF_TASK
 
@@ -155,6 +159,7 @@ This deletes the third task in the list.
     ____________________________________________________________
 
 ## `bye` - Shuts down Duke
+
 bye
 
 ###### Example of usage:

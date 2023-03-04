@@ -13,18 +13,26 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Storage {
-    static final String storagePath = "src/Storage.txt";
+    private static final String storagePath = "Storage.txt";
 
-    static void appendToFile(String filePath, String textToAppend) throws IOException {
+    public static void appendToFile(String filePath, String textToAppend) throws IOException {
         FileWriter fw = new FileWriter(filePath, true); // create a FileWriter in append mode
         fw.write(textToAppend);
         fw.close();
     }
 
-    static void writeToFile(String filePath, String textToAdd) throws IOException {
+    public static void writeToFile(String filePath, String textToAdd) throws IOException {
         FileWriter fw = new FileWriter(filePath);
         fw.write(textToAdd);
         fw.close();
+    }
+
+    public static void checkFile () throws IOException {
+        File storage = new File (storagePath);
+        if (!storage.exists()) {
+            storage.createNewFile();
+        }
+
     }
 
     /***
