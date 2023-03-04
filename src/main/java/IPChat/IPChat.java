@@ -112,7 +112,7 @@ public class IPChat {
     public static void markDone (String statements) throws IPChatExceptions {
         if (tasksCount != 0) {
             try {
-                int taskIndex = Integer.parseInt(statements.substring(statements.length() - 1)) - 1; // changed index to taskIndex
+                int taskIndex = Integer.parseInt(statements.substring(statements.lastIndexOf(" ") + 1)) - 1; // changed index to taskIndex
                 tasks.get(taskIndex).markAsDone();
                 System.out.println("I have marked the task as done");
                 System.out.println("------------------------------------------");
@@ -134,7 +134,7 @@ public class IPChat {
             String todoName = statements.substring(5, todoLength);
             tasks.add(tasksCount, new ToDo(todoName));
             System.out.println("------------------------------------------");
-            System.out.println("Got it. I've added this task:\n" + tasks.get(tasksCount).toString() + "\n");
+            System.out.println("Got it. I've added this task:\n" + tasks.get(tasksCount).toString());
             tasksCount += 1;
             System.out.println("Now you have " + tasksCount + " tasks in the list.\n");
             System.out.println("------------------------------------------");
