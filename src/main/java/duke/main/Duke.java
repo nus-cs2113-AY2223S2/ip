@@ -108,33 +108,38 @@ public class Duke {
         }
     }
 
-    private static void updateDukeFile(ArrayList<Task> storedTask) throws IOException {
+    private static void updateDukeFile(ArrayList<Task> storedTask) {
         writeDukeFile(storedTask.get(0), false);
         for (int i = 1; i < storedTask.size(); i++) {
             writeDukeFile(storedTask.get(i), true);
         }
     }
 
-    private static void dukeFile(ArrayList<Task> storedTask) throws IOException {
+    private static void dukeFile(ArrayList<Task> storedTask) {
         java.nio.file.Path dukeFilePath = getDukeFilePath();
         boolean fileExists = java.nio.file.Files.exists(dukeFilePath);
         java.nio.file.Path dataDirPath = getDataDirPath();
-        boolean dirExists = java.nio.file.Files.exists(dataDirPath);
+        boolean dataDirExists = java.nio.file.Files.exists(dataDirPath);
+        java.nio.file.Path srcDirPath = getSrcDirPath();
+        boolean drcDirExists = java.nio.file.Files.exists(srcDirPath);
         File dukeFile = new File(dukeFilePath.toString());
 
-        if (fileExists) {
-            readDukeFile(storedTask, dukeFile);
-        } else {
-            try {
-                if (!dirExists) {
+        try {
+            if (fileExists) {
+                readDukeFile(storedTask, dukeFile);
+            } else {
+                if (!drcDirExists) {
+                    File srcDir = new File(srcDirPath.toString());
+                    srcDir.mkdir();
+                }
+                if (!dataDirExists) {
                     File dataDir = new File(dataDirPath.toString());
                     dataDir.mkdir();
                 }
                 dukeFile.createNewFile();
-            } catch (IOException e) {
-                System.out.println("An error occurred.");
-                e.printStackTrace();
             }
+        } catch (IOException e) {
+            System.out.println("Note: data will not be saved (Duke.txt unable to be created)");
         }
     }
 
@@ -150,32 +155,40 @@ public class Duke {
         return java.nio.file.Paths.get(home, "src", "data");
     }
 
-    private static void readDukeFile(ArrayList<Task> storedTask, File dukeFile) throws IOException {
+    private static java.nio.file.Path getSrcDirPath() {
+        File f = new File("");
+        String home = f.getAbsolutePath();
+        return java.nio.file.Paths.get(home, "src");
+    }
+
+    private static void readDukeFile(ArrayList<Task> storedTask, File dukeFile) throws FileNotFoundException {
         Scanner s = new Scanner(dukeFile);
         while (s.hasNextLine()) {
             String task = s.nextLine();
-            String taskType = task.substring(0, 1);
-            boolean isMarked = task.substring(2, 3).equals("0") ? false : true;
-            String taskDesc = task.substring(4);
+            if (task.length() > 4) {
+                String taskType = task.substring(0, 1);
+                boolean isMarked = task.substring(2, 3).equals("0") ? false : true;
+                String taskDesc = task.substring(4);
 
-            if (taskType.equals("T")) {
-                Task tempTask = new Todo(taskDesc, isMarked);
-                storedTask.add(tempTask);
-            } else if (taskType.equals("D")) {
-                Task tempTask = new Deadline(taskDesc, taskDesc.substring(taskDesc.lastIndexOf("/") + 1), isMarked);
-                storedTask.add(tempTask);
-            } else if (taskType.equals("E")) {
-                String tempInput = taskDesc.substring(taskDesc.indexOf("/") + 1);
-                String fromString = tempInput.substring(0, tempInput.indexOf("/"));
-                String toString = tempInput.substring(tempInput.lastIndexOf("/") + 1);
+                if (taskType.equals("T")) {
+                    Task tempTask = new Todo(taskDesc, isMarked);
+                    storedTask.add(tempTask);
+                } else if (taskType.equals("D")) {
+                    Task tempTask = new Deadline(taskDesc, taskDesc.substring(taskDesc.lastIndexOf("/") + 1), isMarked);
+                    storedTask.add(tempTask);
+                } else if (taskType.equals("E")) {
+                    String tempInput = taskDesc.substring(taskDesc.indexOf("/") + 1);
+                    String fromString = tempInput.substring(0, tempInput.indexOf("/"));
+                    String toString = tempInput.substring(tempInput.lastIndexOf("/") + 1);
 
-                Task tempTask = new Event(taskDesc, fromString, toString, isMarked);
-                storedTask.add(tempTask);
+                    Task tempTask = new Event(taskDesc, fromString, toString, isMarked);
+                    storedTask.add(tempTask);
+                }
             }
         }
     }
 
-    private static void writeDukeFile(Task task, boolean appendFile) throws IOException {
+    private static void writeDukeFile(Task task, boolean appendFile) {
         String line = (task.getIsDone() ? "1" : "0") + "|" + task.getDescription();
         if (task instanceof Todo) {
             line = "T|" + line;
@@ -184,14 +197,16 @@ public class Duke {
         } else if (task instanceof Event) {
             line = "E|" + line;
         }
-        File dukeFile = new File(getDukeFilePath().toString());
-        FileWriter fw = new FileWriter(dukeFile, appendFile);
-        if (appendFile) {
-            fw.write("\n" + line);
-        } else {
-            fw.write(line);
-        }
-        fw.close();
+        try {
+            File dukeFile = new File(getDukeFilePath().toString());
+            FileWriter fw = new FileWriter(dukeFile, appendFile);
+            if (appendFile) {
+                fw.write("\n" + line);
+            } else {
+                fw.write(line);
+            }
+            fw.close();
+        } catch (IOException ex) {}
     }
 
     private static void blankTodo(String input) throws DukeException {
