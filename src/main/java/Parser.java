@@ -28,6 +28,9 @@ public class Parser {
         case StrIntLib.cmdDelete:
             TaskList.deleteTask(parsedInputs);
             break;
+        case StrIntLib.cmdFind:
+            TaskList.findTasks(partsList[0]);
+            break;
         default:
             Ui.invalidCommand();
             break;

@@ -10,8 +10,6 @@ public class Storage {
     protected static String fileName;
     public static Task dataReader(String saveLine) {
         String [] segments = saveLine.split(" : ");
-        System.out.println(saveLine);
-        System.out.println(Arrays.toString(segments));
         boolean taskStatus = segments[1].equals("1");
         String taskDescription = segments[2];
         switch(segments[0]) {
@@ -57,9 +55,10 @@ public class Storage {
         fileName = filePath;
         File saveFile = new File(fileName);
         File directory = new File("data");
-        directory.mkdir();
-        System.out.println(StrIntLib.saveCreated);
-
+        boolean isCreated = directory.mkdir();
+        if (isCreated) {
+            System.out.println(StrIntLib.saveCreated);
+        }
     }
 
     public static void writeSave() throws IOException {
@@ -80,6 +79,7 @@ public class Storage {
                 Task newTask = dataReader(data);
                 taskList.add(newTask);
             }
+            System.out.println(StrIntLib.saveLoaded);
             return taskList;
         } catch (FileNotFoundException e) {
             System.out.println(StrIntLib.noSaveFound);

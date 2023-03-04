@@ -15,10 +15,10 @@ public class TaskList {
             return;
         }
         System.out.println(StrIntLib.listText);
-        int ID = 1;
+        int index = 1;
         for (Task item : taskList) {
-            System.out.println(ID + "." + printIconStatus(item));
-            ID += 1;
+            System.out.println(index + "." + printIconStatus(item));
+            index = increment(index);
         }
     }
     public static String printIconStatus(Task selectedTask) {
@@ -134,7 +134,28 @@ public class TaskList {
             System.out.println(StrIntLib.taskCount1 + taskList.size() + StrIntLib.taskCount2);
         }
     }
+    public static void findTasks(String term) {
+        ArrayList<Task> matches = new ArrayList<>();
+        for (Task item : taskList) {
+            if (item.description.toLowerCase().contains(term.toLowerCase())) {
+                matches.add(item);
+            }
+        }
+        if (matches.size() == 0) {
+            System.out.println(StrIntLib.noMatches);
+        } else {
+            System.out.println(StrIntLib.matchesListText);
+            int index = 1;
+            for (Task item : matches) {
+                System.out.println(index + "." + printIconStatus(item));
+                index = increment(index);
+            }
+        }
+    }
     public static ArrayList<Task> getTaskList() {
         return taskList;
+    }
+    public static int increment(int num) {
+        return num + 1;
     }
 }
