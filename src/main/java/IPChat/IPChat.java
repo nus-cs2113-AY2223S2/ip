@@ -12,6 +12,7 @@ import static IPChat.Ui.start;
  */
 public class IPChat {
     public static void main(String[] args) throws IPChatExceptions , IOException{
+        System.out.println("Hi!! Welcome to IPChat! How can I help you");
         start();
         mySequence();
     }

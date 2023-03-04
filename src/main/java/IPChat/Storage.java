@@ -72,12 +72,7 @@ public class Storage {
                     markDone(str);
                 }
                 break;
-            case "event":
-                eventTasks(arr1[0]);
-                if (arr1[1].equals("1")) {
-                    markDone(str);
-                }
-                break;
+
             default:
             }
             taskNum += 1;
