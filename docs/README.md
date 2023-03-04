@@ -1,16 +1,22 @@
+
 #User Guide
+
 Duke is a to-do list that serves as a reminder for you to keep track of the various types of tasks you may have.
 
 ##Features
+
 Duke stores 3 types of tasks, todo, deadline and event.
 
 Todo only requires the task description, deadline additionally requires the time the task is due, and event requires the start and the end timing of the event on top of the description.
 
 ##Todo list are automically saved when duke terminates
+
 The list of tasks is always saved when closing duke, allowing the user to close duke and reaccess the task list in the future.
 
 #Usage
+
 ###todo - Adds a todo task into the list
+
 todo TASK_NAME
 
 ###### Example of usage:
@@ -77,7 +83,9 @@ Shows all the existing items in the list. In this test case, the 3 tasks added p
     2.[D][ ] Submit the final version (by:Fri, Mar 3rd 2359)
     3.[E][ ] attend lecture (from: 16:00  to: 18:00)
     ____________________________________________________________
+
 ## `mark`- Mark specified task
+
 mark TASK_INDEX
 
 ###### Example of usage:
@@ -92,7 +100,9 @@ This marks the second item in the list as complete, indicated with a [X].
     Nice! I've marked this task as done:
     [D][X] Submit the final version (by:Fri, Mar 3rd 2359)
     ____________________________________________________________
+
 ##`unmark` - Unmark specified task
+
 unmark POS_OF_TASK
 
 ###### Example of usage:
@@ -107,7 +117,9 @@ This marks the second item in the list as incomplete, indicated with a [ ].
         OK, I've marked this task as not done yet:
     [D][ ] Submit the final version (by:Fri, Mar 3rd 2359)
     ____________________________________________________________
+
 ## `find` - Find tasks that contains the keyword
+
 find KEYWORD
 
 ###### Example of usage:
@@ -123,7 +135,9 @@ Here are the matches in your list!
     2.[D][ ] Submit the final version (by:Fri, Mar 3rd 2359)
     3.[E][ ] attend the lecture (from: 16:00  to: 18:00)
     ____________________________________________________________
+
 ## `delete` - Delete task specified from duke
+
 delete POS_OF_TASK
 
 ###### Example of usage:
@@ -139,6 +153,7 @@ This deletes the third task in the list.
     [E][ ] attend the lecture (from: 16:00  to: 18:00)
     Number of tasks: 2
     ____________________________________________________________
+
 ## `bye` - Shuts down Duke
 bye
 
