@@ -6,10 +6,12 @@ import tasks.Event;
 import tasks.Task;
 import tasks.Todo;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
@@ -80,31 +82,43 @@ public class Storage {
      */
     public static void readFile(TaskList tasks) {
         try {
-            String filePath = "./data/duke.txt";
-            ArrayList<String> tmpStrTasks = new ArrayList<>();
-            tmpStrTasks = (ArrayList<String>) Files.readAllLines(Paths.get(filePath), StandardCharsets.UTF_8);
-            for (int i = 0; i < tmpStrTasks.size(); i++) {
-                String[] strTask = tmpStrTasks.get(i).split("SplitFactString");
-                boolean isMark = false;
-                if (tmpStrTasks.get(i).contains("[X]")) {
-                    isMark = true;
-                }
-                switch (strTask[0]) {
-                case "todo":
-                    Todo todo = new Todo(strTask[1], isMark);
-                    tasks.add(todo);
-                    break;
-                case "deadline":
-                    Deadline dL = new Deadline(strTask[1], isMark, strTask[3]);
-                    tasks.add(dL);
-                    break;
-                case "event":
-                    Event event = new Event(strTask[1], isMark, strTask[3], strTask[4]);
-                    break;
-                }
+            Files.createDirectories(Path.of("./data"));
+            File myObj = new File("./data/duke.txt");
+
+            if (myObj.createNewFile()) {
+                System.out.println("File created: " + myObj.getName());
+            } else {
             }
-        } catch (IOException | DukeException ioe) {
-            ioe.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+            System.out.println("An error occurred.");
+            try {
+                String filePath = "./data/duke.txt";
+                ArrayList<String> tmpStrTasks = new ArrayList<>();
+                tmpStrTasks = (ArrayList<String>) Files.readAllLines(Paths.get(filePath), StandardCharsets.UTF_8);
+                for (int i = 0; i < tmpStrTasks.size(); i++) {
+                    String[] strTask = tmpStrTasks.get(i).split("SplitFactString");
+                    boolean isMark = false;
+                    if (tmpStrTasks.get(i).contains("[X]")) {
+                        isMark = true;
+                    }
+                    switch (strTask[0]) {
+                    case "todo":
+                        Todo todo = new Todo(strTask[1], isMark);
+                        tasks.add(todo);
+                        break;
+                    case "deadline":
+                        Deadline dL = new Deadline(strTask[1], isMark, strTask[3]);
+                        tasks.add(dL);
+                        break;
+                    case "event":
+                        Event event = new Event(strTask[1], isMark, strTask[3], strTask[4]);
+                        break;
+                    }
+                }
+            } catch (IOException | DukeException ioe) {
+                ioe.printStackTrace();
+            }
         }
     }
-}
