@@ -3,6 +3,7 @@ package IPChat;
 import ipchatExceptions.IPChatExceptions;
 
 import java.util.Locale;
+import java.util.Arrays;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.nio.file.Files;
@@ -108,7 +109,7 @@ public class IPChat {
     }
 
     // Marks a task as done
-    public static void markDone(String statements) throws IPChatExceptions {
+    public static void markDone (String statements) throws IPChatExceptions {
         if (tasksCount != 0) {
             try {
                 int taskIndex = Integer.parseInt(statements.substring(statements.length() - 1)) - 1; // changed index to taskIndex
@@ -125,7 +126,7 @@ public class IPChat {
     }
 
     // tasks to do
-    public static void toDoTasks(String statements) {
+    public static void toDoTasks (String statements) {
         if (statements.length() == 4) {
             System.out.println("Please continue");
         } else {
@@ -227,7 +228,6 @@ public class IPChat {
             }
         }
     }
-
     // Compilation
     public static void mySequence() throws IPChatExceptions {
         while (checkInput == 0) {
@@ -271,7 +271,7 @@ public class IPChat {
                 break;
             case "find":
                 findTasks(statements);
-                break;
+                break; 
             default:
                 System.out.println("------------------------------------------");
                 System.out.println("Please provide accurate readings");
