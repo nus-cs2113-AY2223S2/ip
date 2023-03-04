@@ -87,7 +87,6 @@ public class Storage {
 
             if (myObj.createNewFile()) {
                 System.out.println("File created: " + myObj.getName());
-            } else {
             }
         } catch (IOException e) {
             e.printStackTrace();
