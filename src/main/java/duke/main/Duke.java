@@ -6,6 +6,8 @@ import duke.task.Event;
 import duke.task.Task;
 import duke.task.Todo;
 
+import java.io.*;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -13,19 +15,20 @@ import java.util.Scanner;
  */
 public class Duke {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         greetings();
         manageInput();
         goodbye();
     }
 
-    private static void markingAsDone(String echoInput, int counter, Task[] storedTask) {
+    private static void selectTask(String echoInput, int counter, ArrayList<Task> storedTask) {
         try {
-            String stringListNumber = echoInput.substring(5, echoInput.length());
-            int listNumber = Integer.parseInt(stringListNumber);
-
-            storedTask[listNumber-1].setIsDone(true);
-            listTasks(counter, storedTask);
+            if (echoInput.startsWith("mark")) {
+                String stringListNumber = echoInput.substring(5, echoInput.length());
+                int index = Integer.parseInt(stringListNumber) - 1;
+                storedTask.get(index).setIsDone(true);
+                listTasks(counter, storedTask);
+            }
         } catch (NumberFormatException ex) {
             printMarkError();
         } catch (ArrayIndexOutOfBoundsException ex) {
@@ -35,11 +38,13 @@ public class Duke {
         }
     }
 
-    private static void manageInput() {
+    private static void manageInput() throws IOException {
         Scanner scanner = new Scanner(System.in);
         String input = "";
-        Task[] storedTask = new Task[100];
-        int counter = 0;
+        ArrayList<Task> storedTask = new ArrayList<Task>();
+
+        dukeFile(storedTask);
+        int counter = storedTask.size();
 
         while (!input.equals("bye")) {
             try {
@@ -49,27 +54,31 @@ public class Duke {
                 } else if (input.equals("list")) {
                     listTasks(counter, storedTask);
                 } else if (input.startsWith("mark")) {
-                    markingAsDone(input, counter, storedTask);
+                    selectTask(input, counter, storedTask);
+                    updateDukeFile(storedTask);
                 } else if (input.startsWith("todo")) {
                     blankTodo(input);
-                    Task tempTask = new Todo(input);
-                    storedTask[counter] = tempTask;
-                    counter = counter + 1;
+                    Task tempTask = new Todo(input.substring(5));
+                    storedTask.add(tempTask);
+                    counter++;
                     printTaskInput(tempTask, counter);
+                    writeDukeFile(tempTask, true);
                 } else if (input.startsWith("deadline") && input.contains("/")) {
-                    Task tempTask = new Deadline(input, input.substring(input.lastIndexOf("/") + 1));
-                    storedTask[counter] = tempTask;
-                    counter = counter + 1;
+                    Task tempTask = new Deadline(input.substring(9), input.substring(input.lastIndexOf("/") + 1));
+                    storedTask.add(tempTask);
+                    counter++;
                     printTaskInput(tempTask, counter);
+                    writeDukeFile(tempTask, true);
                 } else if (input.startsWith("event") && input.matches(".*/.*/.*")) {
                     String tempInput = input.substring(input.indexOf("/") + 1);
                     String fromString = tempInput.substring(0, tempInput.indexOf("/"));
                     String toString = tempInput.substring(tempInput.lastIndexOf("/") + 1);
 
-                    Task tempTask = new Event(input, fromString, toString);
-                    storedTask[counter] = tempTask;
-                    counter = counter + 1;
+                    Task tempTask = new Event(input.substring(6), fromString, toString);
+                    storedTask.add(tempTask);
+                    counter++;
                     printTaskInput(tempTask, counter);
+                    writeDukeFile(tempTask, true);
                 } else {
                     invalidInput();
                 }
@@ -77,6 +86,92 @@ public class Duke {
                 continue;
             }
         }
+    }
+
+    private static void updateDukeFile(ArrayList<Task> storedTask) throws IOException {
+        writeDukeFile(storedTask.get(0), false);
+        for (int i = 1; i < storedTask.size(); i++) {
+            writeDukeFile(storedTask.get(i), true);
+        }
+    }
+
+    private static void dukeFile(ArrayList<Task> storedTask) throws IOException {
+        java.nio.file.Path dukeFilePath = getDukeFilePath();
+        boolean fileExists = java.nio.file.Files.exists(dukeFilePath);
+        java.nio.file.Path dataDirPath = getDataDirPath();
+        boolean dirExists = java.nio.file.Files.exists(dataDirPath);
+        File dukeFile = new File(dukeFilePath.toString());
+
+        if (fileExists) {
+            readDukeFile(storedTask, dukeFile);
+        } else {
+            try {
+                if (!dirExists) {
+                    File dataDir = new File(dataDirPath.toString());
+                    dataDir.mkdir();
+                }
+                dukeFile.createNewFile();
+            } catch (IOException e) {
+                System.out.println("An error occurred.");
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private static java.nio.file.Path getDukeFilePath() {
+        File f = new File("");
+        String home = f.getAbsolutePath();
+        return java.nio.file.Paths.get(home, "src", "data", "duke.txt");
+    }
+
+    private static java.nio.file.Path getDataDirPath() {
+        File f = new File("");
+        String home = f.getAbsolutePath();
+        return java.nio.file.Paths.get(home, "src", "data");
+    }
+
+    private static void readDukeFile(ArrayList<Task> storedTask, File dukeFile) throws IOException {
+        Scanner s = new Scanner(dukeFile);
+        while (s.hasNextLine()) {
+            String task = s.nextLine();
+            String taskType = task.substring(0, 1);
+            boolean isMarked = task.substring(2, 3).equals("0") ? false : true;
+            String taskDesc = task.substring(4);
+
+            if (taskType.equals("T")) {
+                Task tempTask = new Todo(taskDesc, isMarked);
+                storedTask.add(tempTask);
+            } else if (taskType.equals("D")) {
+                Task tempTask = new Deadline(taskDesc, taskDesc.substring(taskDesc.lastIndexOf("/") + 1), isMarked);
+                storedTask.add(tempTask);
+            } else if (taskType.equals("E")) {
+                String tempInput = taskDesc.substring(taskDesc.indexOf("/") + 1);
+                String fromString = tempInput.substring(0, tempInput.indexOf("/"));
+                String toString = tempInput.substring(tempInput.lastIndexOf("/") + 1);
+
+                Task tempTask = new Event(taskDesc, fromString, toString, isMarked);
+                storedTask.add(tempTask);
+            }
+        }
+    }
+
+    private static void writeDukeFile(Task task, boolean appendFile) throws IOException {
+        String line = (task.getIsDone() ? "1" : "0") + "|" + task.getDescription();
+        if (task instanceof Todo) {
+            line = "T|" + line;
+        } else if (task instanceof Deadline) {
+            line = "D|" + line;
+        } else if (task instanceof Event) {
+            line = "E|" + line;
+        }
+        File dukeFile = new File(getDukeFilePath().toString());
+        FileWriter fw = new FileWriter(dukeFile, appendFile);
+        if (appendFile) {
+            fw.write("\n" + line);
+        } else {
+            fw.write(line);
+        }
+        fw.close();
     }
 
     private static void blankTodo(String input) throws DukeException {
@@ -89,11 +184,11 @@ public class Duke {
         throw new DukeException("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
     }
 
-    private static void listTasks(int counter, Task[] storedTask) {
+    private static void listTasks(int counter, ArrayList<Task> storedTask) {
         System.out.println("____________________________________________________________");
         System.out.println("Here are the tasks in your list:");
         for (int i = 0; i < counter; i++) {
-            System.out.println((i + 1) + ". " + storedTask[i].toString());
+            System.out.println((i + 1) + ". " + storedTask.get(i).toString());
         }
         System.out.println("____________________________________________________________\n");
     }
@@ -120,7 +215,7 @@ public class Duke {
                 + "|____/ \\__,_|_|\\_\\___|\n";
         System.out.println("Hello from\n" + logo);
         System.out.println("____________________________________________________________");
-        System.out.println("Hello! I'm duke.main.Duke");
+        System.out.println("Hello! I'm Duke");
         System.out.println("What can I do for you?");
         System.out.println("____________________________________________________________\n");
     }
