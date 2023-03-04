@@ -4,8 +4,17 @@ import java.util.Scanner;
 import ipchatExceptions.IPChatExceptions;
 import static IPChat.Storage.saveContent;
 import static IPChat.TaskList.*;
+
+/**
+ * Class to deal with the specific user commands and perform the allotted task accordingly
+ *
+ * @author DeepanjaliDhawan
+ */
 public class Parser {
-    // Compilation
+    /**
+     * Method to compile all the user commands for respective executions
+     * @throws IPChatExceptions error message if there are no contents added in the list and the user types in the list command
+     */
     public static void mySequence() throws IPChatExceptions {
         while (checkInput == 0) {
             Scanner input = new Scanner(System.in);

@@ -4,16 +4,29 @@ import ipchatExceptions.IPChatExceptions;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+
+/**
+ * Class that contains methods of each of the tasks commanded by the user
+ *
+ * @author DeepanjaliDhawan
+ */
 public class TaskList {
     public static ArrayList<Task> tasks = new ArrayList<>();
     public static int tasksCount = 0; // used camelCase
     public static int checkInput = 0;
 
+    /**
+     * Method that checks the input and = 1 when the program is terminated by user
+     */
     public static void checkStatements() {
         checkInput = 1;
     }
 
-    // Says bye to the user and exits the program
+    /**
+     * Says bye to the user and exits the program
+     * @param statements Commands inputted by the user
+     * @throws IPChatExceptions throws exception if the bye command is written incorrectly
+     */
     public static void sayBye(String statements) throws IPChatExceptions {
         if (statements.length() != 3) {
             throw new IPChatExceptions("Too long a goodbye makes me emotional and too short a goodbye makes me feel ignored!\n");
@@ -26,7 +39,11 @@ public class TaskList {
         System.exit(0);
     }
 
-    // Create a list of the task
+    /**
+     * Create a list of the task
+     * @param statements Commands inputted by the user
+     * @throws IPChatExceptions throws exception if user commands an empty list
+     */
     public static void listTasks(String statements) throws IPChatExceptions {
         if (tasksCount == 0) {
             throw new IPChatExceptions("Please give an input");
@@ -40,7 +57,11 @@ public class TaskList {
         }
     }
 
-    // Marks a task as done
+    /**
+     * // Marks a task as done
+     * @param statements Commands inputted by the user
+     * @throws IPChatExceptions throws exception if the user enters non-existent task number
+     */
     public static void markDone (String statements) throws IPChatExceptions {
         if (tasksCount != 0) {
             try {
@@ -57,7 +78,10 @@ public class TaskList {
         }
     }
 
-    // tasks to do
+    /**
+     * tasks to do
+     * @param statements Commands inputted by the user
+     */
     public static void toDoTasks (String statements) {
         if (statements.length() == 4) {
             System.out.println("Please continue");
@@ -73,7 +97,10 @@ public class TaskList {
         }
     }
 
-    // Tasks having deadlines
+    /**
+     * Tasks having deadlines
+     * @param statements Commands inputted by the user
+     */
     public static void deadlineTasks(String statements) {
         if (statements.length() == 8) {
             System.out.println("Please provide correct input");
@@ -96,7 +123,10 @@ public class TaskList {
         }
     }
 
-    // Events of the task
+    /**
+     * / Events of the task
+     * @param statements Commands inputted by the user
+     */
     public static void eventTasks(String statements) {
         if (statements.length() == 5) {
             System.out.println("Please provide correct input");
@@ -119,7 +149,11 @@ public class TaskList {
         }
     }
 
-    // Delete a task
+    /**
+     * Delete a task
+     * @param statements Commands inputted by the user
+     * @throws IPChatExceptions throws exception if user wants to delete a non existent task number
+     */
     public static void deleteTasks(String statements) throws IPChatExceptions {
         if (tasksCount != 0) {
             try {
@@ -139,7 +173,10 @@ public class TaskList {
         }
     }
 
-    // Find the tasks by keywords
+    /**
+     *  Find the tasks by keywords
+     * @param statements Commands inputted by the user
+     */
     public static void findTasks (String statements) {
         String[] contents = statements.split(" ", 2);
         String mainWord = contents[1];
