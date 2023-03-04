@@ -8,6 +8,7 @@ ___
 ╚═════╝░░╚════╝░╚═════╝░ 
 
 Bob is a _command-line interface_ based solution to scheduling your tasks
+
 ___
 
 ## Table of Contents
@@ -164,10 +165,12 @@ Format: `mark NUMBER_ID` or `unmark NUMBER_ID`
 - `NUMBER_ID` represents the order of the `task` in the list
   - `NUMBER_ID` can be displayed using `list`
     - Example output for `list`
+    
     ````
         1.  [T][ ] this
         2.  [D][ ] that (by: Mar 2 2023)
     ````
+    
     - `1` would then be the `NUMBER_ID` for `this`
 - Only an `Integer` representing `NUMBER_ID` that already is in the list is accepted
 - A `task` that is already `marked`/`unmarked` would cause an error message to be printed
@@ -198,10 +201,12 @@ Format: `delete NUMBER_ID`
 - `NUMBER_ID` represents the order of the `task` in the list
     - `NUMBER_ID` can be displayed using `list`
         - Example output for `list`
+        
         ````
             1.  [T][ ] this
             2.  [D][ ] that (by: Mar 2 2023)
         ````
+        
   - `1` would then be the `NUMBER_ID` for `this`
 - Only an `Integer` representing `NUMBER_ID` that already is in the list is accepted
 - After `delete` is successful, the `NUMBER_ID` of all the other `tasks` in the list would 
