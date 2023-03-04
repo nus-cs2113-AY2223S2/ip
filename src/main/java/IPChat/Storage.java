@@ -10,8 +10,19 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import static IPChat.TaskList.*;
 
+/**
+ * Class to deal with saving files to the SaveInfo.txt file (offline storage) and loading from the SaveInfo.txt file when needed
+ *
+ * @author DeepanjaliDhawan
+ */
 public class Storage {
     // Saves
+
+    /**
+     * Method to save the tasks in the SaveInfo.txt file (which is an offline storage file)
+     *
+     * @param tasks store all the task of the IPChatBot
+     */
     public static void saveContent(ArrayList<Task> tasks) {
         String path = "C:\\Users\\deepa\\OneDrive\\Documents\\OneNote\\ip\\SaveInfo.txt";
         try {
@@ -29,6 +40,11 @@ public class Storage {
         }
     }
 
+    /**
+     * Method to load the saved information to the files if needed
+     * @throws FileNotFoundException exception thrown if the file does not exist
+     * @throws IPChatExceptions
+     */
     public static void loadContent() throws FileNotFoundException, IPChatExceptions {
         File currFile = new File("C:\\Users\\deepa\\OneDrive\\Documents\\OneNote\\ip\\SaveInfo.txt");
         Scanner input = new Scanner(currFile);
