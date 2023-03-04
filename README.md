@@ -2,6 +2,21 @@
 
 Duke is a personal task manager designed to help you stay organized and on top of your to-do list. With its automated features, Duke streamlines task management and can significantly improve your productivity.
 
+## Features
+
+### 3 Types of Tasks
+- `todo` - Adds a simple todo task
+- `deadline` - Adds a deadline task with a due date
+- `event` - Adds an event task with a start time and an end time
+
+### Other Functions
+- `mark` - Mark task as done
+- `unmark` - Mark task as not done
+- `list` - List all tasks
+- `find` - Find task(s) containing certain substring
+- `delete` - Delete a task
+- `bye` - Exit program
+
 ## Usage
 
 ### todo {Task} - Add a Todo Task
