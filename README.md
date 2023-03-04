@@ -5,15 +5,15 @@ Duke is a personal task manager designed to help you stay organized and on top o
 ## Usage
 
 ### todo {Task} - Add a Todo Task
-Example: `todo return book`
+Example: `todo study`   
 Expected outcome:
    ```
    Got it. I've added this task:
-   [T][ ]  return book
+   [T][ ]  study
    ```
    
 ### deadline {Task} /by {Date/Time} - Add a Deadline Task
-Example: `deadline return book /by Sun`
+Example: `deadline return book /by Sun`   
 Expected outcome:
    ```
    Got it. I've added this task:
@@ -21,55 +21,57 @@ Expected outcome:
    ```
 
 ### event {Task} /from {Date/Time} /to {Date/Time} - Add a Event Task
-Example: `event party /from Fri 6pm /to 8pm`
+Example: `event party /from Fri 6pm /to 8pm`   
 Expected outcome:
    ```
    Got it. I've added this task:
    [E][ ]  party (from Fri 6pm to 8pm)
    ```
    
-### mark {Task} /from {Date/Time} /to {Date/Time} - Add a Event Task
-Example: `event party /from Fri 6pm /to 8pm`
+### mark {Task Index} - Mark Task as Done
+Example: `mark 1`   
 Expected outcome:
    ```
-   Got it. I've added this task:
-   [E][ ]  party (from Fri 6pm to 8pm)
+   Nice! I've marked this task as done:
+   [T][X]  study
    ```
    
-### unmark {Task} /from {Date/Time} /to {Date/Time} - Add a Event Task
-Example: `event party /from Fri 6pm /to 8pm`
+### unmark {Task Index} - Mark Task as Not Done
+Example: `unmark 2`   
 Expected outcome:
    ```
-   Got it. I've added this task:
-   [E][ ]  party (from Fri 6pm to 8pm)
+   OK, I've marked this task as not done yet:
+   [D][ ]  return book (by Sun)
    ```
    
-### list {Task} /from {Date/Time} /to {Date/Time} - Add a Event Task
-Example: `event party /from Fri 6pm /to 8pm`
+### list - List All Tasks
+Example: `list`   
 Expected outcome:
    ```
-   Got it. I've added this task:
-   [E][ ]  party (from Fri 6pm to 8pm)
+   1. [T][ ]       study
+   2. [D][ ]       return book (by Sun)
+   3. [E][ ]       party (from Fri 6pm to 8pm)
    ```
    
-### find {Task} /from {Date/Time} /to {Date/Time} - Add a Event Task
-Example: `event party /from Fri 6pm /to 8pm`
+### find {Keyword} - Find Task(s) Containing Certain Keyword
+Example: `find book`   
 Expected outcome:
    ```
-   Got it. I've added this task:
-   [E][ ]  party (from Fri 6pm to 8pm)
+   Here are the matching tasks in your list:
+   1. [T][ ]       read book
+   2. [D][ ]       return book (by Sun)
    ```
    
-### delete {Task} /from {Date/Time} /to {Date/Time} - Add a Event Task
-Example: `event party /from Fri 6pm /to 8pm`
+### delete {Task Index} - Delete Task
+Example: `delete 4`   
 Expected outcome:
    ```
-   Got it. I've added this task:
-   [E][ ]  party (from Fri 6pm to 8pm)
+   Noted. I've removed this task:
+   [T][ ]  read book
    ```
    
-### bye - Leave program
-Example: `bye`
+### bye - Leave Program
+Example: `bye`   
 Expected outcome:
    ```
    Bye. Hope to see you again soon.
