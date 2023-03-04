@@ -24,9 +24,9 @@ Duke is a Command Line Interface (CLI) Personal Assistant Chatbot that helps you
 <!-- TOC -->
 
 ## Quick start
-1. Ensure that you have Java 11 or above installed in your computer </br> Click [here](https://www.java.com/en/download/help/version_manual.html) for steps on how to check your Java version </br> Click [here](https://docs.oracle.com/en/java/javase/11/install/overview-jdk-installation.html#GUID-8677A77F-231A-40F7-98B9-1FD0B48C346A) for the guide on installing Java 11
+1. Ensure that you have Java 11 or above installed in your computer. Click [here](https://www.java.com/en/download/help/version_manual.html) for steps on how to check your Java version. Click [here](https://docs.oracle.com/en/java/javase/11/install/overview-jdk-installation.html#GUID-8677A77F-231A-40F7-98B9-1FD0B48C346A) for the guide on installing Java 11
 2. Download Duke [here](https://github.com/lil1n/ip/releases)
-3. Move the Duke.jar file to the file directory of your choice </br> You can move the jar file by right-clicking on Duke.jar, select cut, then go to the directory of choice and right-clicking and pasting it
+3. Move the Duke.jar file to the file directory of your choice <br> You can move the jar file by right-clicking on Duke.jar, select cut, then go to the directory of choice and right-clicking and pasting it
 4. Right-click on the directory with Duke.jar and select "open in terminal", type `java -jar Duke.jar` and press Enter on your keyboard to start the program
 5. Start using the program by typing `help` and pressing Enter on your keyboard to get the list of commands supported
 
@@ -36,7 +36,7 @@ Duke is a Command Line Interface (CLI) Personal Assistant Chatbot that helps you
 Displays a message showing the commands available, and their usage.
 
 ### Adding todo task: `todo` [task]
-Adds a todo task to the task list. </br> A task type of todo only keeps track of:
+Adds a todo task to the task list. <br> A task type of todo only keeps track of:
 - Task name
 - Status of task: done or not done
 
@@ -45,7 +45,7 @@ Example:
 - `todo charge phone`
 
 ### Adding deadline task: `deadline` [task] `/by` [date]
-Adds a deadline task to the task list. </br> A task type of deadline only keeps track of:
+Adds a deadline task to the task list. <br> A task type of deadline only keeps track of:
 - Task name
 - Status of task: done or not done
 - Date to be tagged with task
@@ -60,7 +60,7 @@ Tip: Duke understands valid date in the format of yyyy/mm/dd, hence supplying a 
 ```
 
 ### Adding event task: `event` [task] `/from` [start date] `/to` [end date]
-Adds an event task to the task list. </br> A task type of event only keeps track of:
+Adds an event task to the task list. <br> A task type of event only keeps track of:
 - Task name
 - Status of task: done or not done
 - Start date to be tagged with task
@@ -76,35 +76,35 @@ Tip: Duke understands valid date in the format of yyyy/mm/dd, hence supplying a 
 ```
 
 ### Delete a task: `delete` [task number]
-Deletes a task by the task number in the task list. </br> Example:
+Deletes a task by the task number in the task list. <br> Example:
 - `delete 1`
 - `delete 2`
 
 ### Saving the task list and exiting the program: `bye`
-Exits the program and saves the data in the list into a text file that is stored in a file named data that is stored in the file where Duke.jar is stored. </br> Example:
+Exits the program and saves the data in the list into a text file that is stored in a file named data that is stored in the file where Duke.jar is stored. <br> Example:
 - `bye`
 
 ### Search task by date: `date` [yyyy/mm/dd]
-Shows the tasks that contains the date in its task information. </br> Example:
+Shows the tasks that contains the date in its task information. <br> Example:
 - `date 2023/01/25`
 - `date 2023/02/01`
 
 ### Find tasks by keyword(s): `find` [keyword(s)]
-Shows the tasks that contains the keyword(s) in the task name of the task. </br> Example:
+Shows the tasks that contains the keyword(s) in the task name of the task. <br> Example:
 - `find bread`
 - `find sale`
 
 ### View all tasks: `list`
-Shows all the tasks in the list. </br> Example: 
+Shows all the tasks in the list. <br> Example: 
 - `list`
 
 ### Marking a task done: `mark` [task number]
-Marks a task as done by the task number in the task list. </br> Example:
+Marks a task as done by the task number in the task list. <br> Example:
 - `mark 1`
 - `mark 2`
 
 ### Marking a task not done: `unmark` [task number]
-Marks a task as not done by the task number in the task list. </br> Example:
+Marks a task as not done by the task number in the task list. <br> Example:
 - `unmark 1`
 - `unmark 2`
 
@@ -249,29 +249,29 @@ ________________________________________________________________________________
 ```
 
 ## FAQ
-**Question**: </br> 
-How do I transfer data to other device? </br>
-**Answer**: </br> 
-Copy the folder named "data" that is in the same directory as Duke.jar to the new device and location that Duke.jar is going to be stored in</br></br>
+**Question**: <br> 
+How do I transfer data to other device? <br>
+**Answer**: <br> 
+Copy the folder named "data" that is in the same directory as Duke.jar to the new device and location that Duke.jar is going to be stored in<br><br>
 
-**Question**: </br>
-How do I save the data? </br>
-**Answer**: </br> 
-Data is saved when the command `bye` is given to Duke </br></br>
+**Question**: <br>
+How do I save the data? <br>
+**Answer**: <br> 
+Data is saved when the command `bye` is given to Duke <br><br>
 
-**Question**: </br> 
-I am receiving: </br>
+**Question**: <br> 
+I am receiving: <br>
 ```
 ________________________________________________________________________________
  Failed to set up, exiting
  Duke exiting...
 ________________________________________________________________________________
 ```
-upon starting Duke and the program ends immediately </br>
-What is happening and how do I fix it? </br>
-**Answer**: </br>
-The error message shown above happens when the saved data is corrupted or when the data saved not in the correct format. </br>
-To try to retrieve the data previously saved, you could: </br>
+upon starting Duke and the program ends immediately <br>
+What is happening and how do I fix it? <br>
+**Answer**: <br>
+The error message shown above happens when the saved data is corrupted or when the data saved not in the correct format. <br>
+To try to retrieve the data previously saved, you could:
 1. Navigate to the file directory where Duke.jar is stored
 2. Access the file directory "data" by double-clicking on it
 3. Open the duke.txt file 
@@ -281,19 +281,19 @@ T | 1 | eat bread
 D | 0 | buy bread | today
 E | 1 | make bread | today to tomorrow
 ```
-* The format of the data is stored as follows: </br> 
-* For a todo task: `T | [status] | [task name] </br>`
-* For a deadline task: `D | [status] | [task name] | [deadline]` </br>
+* The format of the data is stored as follows: 
+* For a todo task: `T | [status] | [task name]` 
+* For a deadline task: `D | [status] | [task name] | [deadline]` 
 * For an event task: `E | [status] | [task name] | [start date] to [end date]`
-* `[status]`: `1` indicates done, `0` indicates not done </br>
+* `[status]`: `1` indicates done, `0` indicates not done 
 5. Try to fix the format of the data to the one describe above
 6. If the error still occurs after the above steps, you could consider carrying out the following steps
 
-To run the program without any data, you could fix the issue by: </br>
+To run the program without any data, you could fix the issue by:
 1. Navigating to the file directory where Duke.jar is stored
 2. Delete the folder named "data"
 
-The program will be able to run properly now. </br>
+The program will be able to run properly now. <br>
 
 ## Command Summary
 
