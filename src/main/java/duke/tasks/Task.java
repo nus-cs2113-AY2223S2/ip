@@ -17,6 +17,9 @@ public abstract class Task {
 
     protected Task() {
     }
+    public String getDescription(){
+        return description;
+    }
 
     public void toggleDone(){
         isDone = !isDone;
