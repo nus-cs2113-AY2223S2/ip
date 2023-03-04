@@ -10,7 +10,6 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Objects;
 import java.util.Scanner;
 
 public class Duke {
@@ -203,7 +202,6 @@ public class Duke {
                    System.out.println("Invalid inout, please enetr a valid command");
                }
 
-
             }
 
         } catch (IOException e) {
@@ -231,7 +229,6 @@ public class Duke {
             }
         }
     }
-
 
     public static void main(String[] args) {
         greeting();
