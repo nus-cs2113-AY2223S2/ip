@@ -94,6 +94,7 @@ public class TaskList {
         Event event = new Event(command);
         event.setTaskType("E");
         Task task = new Task(command);
+        System.out.println(LINE);
         taskNameList.add(event);
         String outputForEvent = event.guideline()
                 + event.getState()
@@ -127,6 +128,7 @@ public class TaskList {
     public static void deleteCommand(String command, ArrayList<Task> taskNameList){
         int indexTask = Integer.parseInt(command);
         Task task = new Task(command);
+
         System.out.println(LINE);
         System.out.print("     Noted. I've removed this task:"
                 + System.lineSeparator()
