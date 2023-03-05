@@ -1,6 +1,3 @@
-E:1: play more games /from now /to later
-T:1: more
-T:0: read stuff
-E:1: play games /from now /to night
 D:0: finish cs2113 assignment /by 2359
-T:0: play
+T:0: read book
+D:0: return book /by Sunday
