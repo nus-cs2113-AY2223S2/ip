@@ -1,0 +1,57 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'checkstyle'
+    id 'com.github.johnrengelman.shadow' version '5.1.0'
+}
+
+//Everything below here is a task
+//Each task is a method, with instructions to follow
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.5.0'
+    testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.5.0'
+}
+
+test {
+    useJUnitPlatform()
+
+    testLogging {
+        events "passed", "skipped", "failed"
+
+        showExceptions true
+        exceptionFormat "full"
+        showCauses true
+        showStackTraces true
+        showStandardStreams = false
+    }
+}
+
+application {
+    //Shows where the main class is, changes depends on the directory of your project
+    //In this case, the main class is inside the folder java > org.utils > MyUtils
+    mainClassName = "Duke"
+}
+
+//Thin Jar represents a compiled and packaged application code (business logic) of the project together with the
+// third party libraries it depends on. Compared to Fat, it does not contain application server runtime by default,
+// so the size of a Thin archive is much smaller.
+
+//A fat jar file handles all the third parties by retrieving all the jar files that it needs from the internet
+//Has all the dependencies that are there, anyone with this fat jar file can execute my code
+shadowJar {
+    archiveBaseName = "ip"
+    archiveClassifier = null
+}
+
+checkstyle {
+    toolVersion = '8.23'
+}
+
+run{
+    standardInput = System.in
+}
