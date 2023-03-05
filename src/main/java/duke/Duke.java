@@ -6,6 +6,9 @@ import java.io.IOException;
 
 import static duke.Ui.SEPARATOR;
 
+/**
+ * Driver class for Duke, a task manager which is able to add, mark, unmark, delete and find tasks
+ */
 public class Duke {
     private final Storage storage;
     private final TaskList tasks;

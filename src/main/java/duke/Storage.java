@@ -14,6 +14,9 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
 
+/**
+ * Driver class for loading and storing task list data
+ */
 public class Storage {
     File data;
 
