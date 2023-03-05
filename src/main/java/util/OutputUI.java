@@ -94,7 +94,6 @@ public class OutputUI {
             taskSymbol = "E";
         }
 
-
         System.out.println("Pikapi has deleted the task: " + "\n" + "  [" + taskSymbol + "]["
                 + task.getStatusIcon() + "]" + task.getDescription());
         System.out.println("Pikapi sees that now you have " + numTasks + " tasks in the list");
@@ -107,13 +106,14 @@ public class OutputUI {
         System.out.println("Pikapi is surprised to see you go, see you soon friend\n");
     }
 
-
     /**
-     * Prints a list when queried for tasks for a specific keyword with the corresponding flavour text
+     * Prints a list when queried for tasks for a specific keyword with the
+     * corresponding flavour text
+     * 
      * @param output
      */
     public void printTaskListWithKeyword(ArrayList<Task> output) {
-        System.out.println("Pikapi has found a list of things pertaining to your keyword");
+        System.out.println("Pikapi has found  list of things pertaining to your keyword");
         printList(output, output.size());
     }
 

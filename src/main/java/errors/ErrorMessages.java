@@ -18,16 +18,12 @@ public class ErrorMessages {
         return "You did not include the /by parameter, please split include it for Pikapi!";
     }
 
-    public static String errorDeadlineMissingDescriptionOrDeadline() {
-        return "You either did not include a description or a deadline for this deadline task";
-    }
-
     public String errorTaskEmptyDescriptionForDeadlineText() {
         return "Description cannot be empty :<, please write a description after the word deadline";
     }
 
     public String errorTaskEmptyDueDateDeadlineText() {
-        return "DueDate cannot be empty :<, please write a the due date of a deadline";
+        return "DueDate cannot be empty :<, please write a the description of a deadline";
     }
 
     public String errorTaskEmptyStartDateEventText() {
@@ -55,7 +51,7 @@ public class ErrorMessages {
      */
     public String errorEmptyListText() {
         return "PIKAPII the list is currently empty! "
-                + "You can't access an empty list! "
+                + "You can't mark/unmark an empty list! "
                 + "Please input some tasks for Pikapi to add :3";
     }
 
@@ -75,7 +71,7 @@ public class ErrorMessages {
     }
 
     public String errorNoNumberText() {
-        return "PIKAPII you did not input a number beside your mark/unmark action!";
+        return "PIKAPII you did not input a number beside your marking action!";
     }
 
     /**
