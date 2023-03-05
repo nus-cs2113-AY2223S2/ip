@@ -9,12 +9,14 @@ import tasks.Event;
 import tasks.Task;
 import tasks.Todo;
 
+
 /**
  * Handles Adding tasks to a list
- */
+ * */
 public class TaskAdder extends ErrorMessages {
     private static final String BLANK = "";
-
+    private static final String SPACE = " ";
+    private static final String OR_SYMBOL = "|";
     private static final String TODO_TASK = "todo";
     private static final String DEADLINE_TASK = "deadline";
     private static final String EVENT_TASK = "event";
@@ -22,37 +24,39 @@ public class TaskAdder extends ErrorMessages {
     private static final String BY_SPLIT = "/by";
     private static final String FROM_SPLIT = "/from";
     private static final String TO_SPLIT = "/to";
-    private static final String[] EVENT_PARAMS = { FROM_SPLIT, TO_SPLIT };
+    private static final Integer CORRECT_TASK_INPUT_LENGTH = 2;
+    private static final Integer CORRECT_DEADLINE_INPUT_LENGTH = 2;
+    private static final Integer CORRECT_EVENT_INPUT_LENGTH = 3;
+    private static final String[] EVENT_PARAMS = {FROM_SPLIT, TO_SPLIT};
 
     private final OutputUI outputUI = new OutputUI();
 
     /**
-     * @param listOfTasks      TaskList to add task to
-     * @param description      Description of new task
-     * @param loadFromSaveData Whether to output the new task or not,
-     *                         Mainly to be differentiated when saving or during a
-     *                         Duke session
+     * @param listOfTasks TaskList to add task to
+     * @param description Description of new task
+     * @param loadedFromSaveData Whether to output the new task or not,
+     *                         Mainly to be differentiated when saving or during a Duke session
      */
-    public void addTaskToList(ArrayList<Task> listOfTasks, String description, boolean loadFromSaveData) {
+    public void addTaskToList(ArrayList<Task> listOfTasks, String description, boolean loadedFromSaveData) {
         String[] taskDescription = description.split(CHAR_SPACE, 2);
         try {
-            if (taskDescription.length != 2) {
+            if (taskDescription.length != CORRECT_TASK_INPUT_LENGTH) {
                 throw new TaskAddError(errorTaskEmptyDescriptionText());
             }
             switch (taskDescription[0]) {
-                case TODO_TASK:
-                    addTodoTask(listOfTasks, taskDescription[1], loadFromSaveData);
-                    break;
-                case DEADLINE_TASK:
-                    addDeadlineTask(listOfTasks, taskDescription[1], loadFromSaveData);
-                    break;
-                case EVENT_TASK:
-                    addEventTask(listOfTasks, taskDescription[1], loadFromSaveData);
-                    break;
-                default:
-                    if (!loadedFromSaveData) {
-                        throw new TaskAddError(errorWrongTaskNameText());
-                    }
+            case TODO_TASK:
+                addTodoTask(listOfTasks, taskDescription[1], loadedFromSaveData);
+                break;
+            case DEADLINE_TASK:
+                addDeadlineTask(listOfTasks, taskDescription[1], loadedFromSaveData);
+                break;
+            case EVENT_TASK:
+                addEventTask(listOfTasks, taskDescription[1], loadedFromSaveData);
+                break;
+            default:
+                if (!loadedFromSaveData) {
+                    throw new TaskAddError(errorWrongTaskNameText());
+                }
 
             }
         } catch (TaskAddError e) {
@@ -67,12 +71,13 @@ public class TaskAdder extends ErrorMessages {
         if (descriptionBlankCheck.equals(BLANK)) {
             throw new TaskAddError(errorTaskEmptyDescriptionText());
         }
-        Todo todoTask = new Todo(" " + description.trim());
+        Todo todoTask = new Todo(BLANK + description.trim());
         listOfTasks.add(todoTask);
         if (!hideOutput) {
             outputUI.addToListMessage(todoTask, listOfTasks.size());
         }
     }
+
 
     private void addDeadlineTask(ArrayList<Task> listOfTasks, String description, boolean hideOutput)
             throws TaskAddError {
@@ -84,8 +89,8 @@ public class TaskAdder extends ErrorMessages {
             throw new TaskAddError(errorTaskEmptyDescriptionText());
         }
         String[] deadlineInput = description.split(BY_SPLIT);
-        if (deadlineInput.length != 2) {
-            throw new TaskAddError(errorTaskEmptyDescriptionText());
+        if (deadlineInput.length != CORRECT_DEADLINE_INPUT_LENGTH) {
+            throw new TaskAddError(errorDeadlineMissingDescriptionOrDeadline());
         }
         String deadlineDescription = deadlineInput[0].trim();
         String deadlineFinishByDate = deadlineInput[1].trim();
@@ -98,20 +103,21 @@ public class TaskAdder extends ErrorMessages {
         }
     }
 
+
     private void addEventTask(ArrayList<Task> listOfTasks, String description, boolean hideOutput) throws TaskAddError {
-        if (!containsEventParams(description, EVENT_PARAMS)) {
+        if (!containsEventParams(description)) {
             throw new TaskAddError(errorTaskWrongEventParamsText());
         }
         String descriptionBlankCheck = clearBlankSpaces(description);
         if (descriptionBlankCheck.equals(BLANK)) {
             throw new TaskAddError(errorTaskEmptyDescriptionText());
         }
-        String[] eventData = description.split(FROM_SPLIT + "|" + TO_SPLIT);
+        String[] eventData = description.split(FROM_SPLIT + OR_SYMBOL + TO_SPLIT);
 
         String eventDescription;
         String eventFrom;
         String eventTo;
-        if (eventData.length == 3) {
+        if (eventData.length == CORRECT_EVENT_INPUT_LENGTH) {
             eventDescription = eventData[0].trim();
             eventFrom = eventData[1].trim();
             eventTo = eventData[2].trim();
@@ -137,9 +143,9 @@ public class TaskAdder extends ErrorMessages {
         return true;
     }
 
-    private static boolean containsEventParams(String inputString, String[] items) {
+    private static boolean containsEventParams(String inputString) {
         boolean found = true;
-        for (String item : items) {
+        for (String item : EVENT_PARAMS) {
             if (!inputString.contains(item)) {
                 found = false;
                 break;
@@ -163,6 +169,6 @@ public class TaskAdder extends ErrorMessages {
     }
 
     private static String clearBlankSpaces(String inputString) {
-        return inputString.replaceAll(" ", "");
+        return inputString.replaceAll(SPACE, BLANK);
     }
 }
