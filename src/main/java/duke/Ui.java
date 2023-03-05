@@ -25,6 +25,7 @@ public class Ui {
     static final String COMMAND_ADD_DEADLINE_WORD = "deadline";
     static final String COMMAND_ADD_EVENT_WORD = "event";
     static final String COMMAND_DELETE_WORD = "delete";
+    static final String COMMAND_FIND_WORD = "find";
     static final String COMMAND_EXIT_WORD = "bye";
     static final String LINE_PREFIX = "    ";
     //Scanner for user input
@@ -104,6 +105,15 @@ public class Ui {
                 showToUser("Noted. I've removed this task:");
                 showToUser(taskToBeRemoved);
                 showToUser("Now you have " + (taskList.getTaskListSize() + (taskList.getTaskListSize() == 1 ? " task" : " tasks") + " in the list."));
+                break;
+            case COMMAND_FIND_WORD:
+                ArrayList<Task> taskArrayList = taskList.getTASK_LIST();
+                showToUser("Here are the matching tasks in your list:");
+                for (int i = 0; i < taskArrayList.size(); i++){
+                    if (taskArrayList.get(i).getDescription().contains(commandArgs)){
+                        showToUser((i + 1) + ". " + taskArrayList.get(i).toString());
+                    }
+                }
                 break;
             default:
                 throw new UserInputException(INVALID_TASK_TYPE);
