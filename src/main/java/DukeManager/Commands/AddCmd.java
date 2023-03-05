@@ -1,16 +1,16 @@
 package DukeManager.Commands;
 
+import DukeManager.Storage.Storage;
+import DukeManager.Ui.TextUi;
 import DukeManager.data.DukeErrors.IllegalValueException;
 import DukeManager.data.TaskList;
 import DukeManager.data.Tasks.Task;
 
 public class AddCmd extends Cmd {
-	public static final String COMMAND_WORD = "add";
+	public static final String MSG_USAGE = "";
 
-	public static final String MESSAGE_USAGE = "";
-
-	public static final String MESSAGE_SUCCESS = "New task added: %1$s";
-	public static final String MESSAGE_DUPLICATE_PERSON = "This task already exists in the tasklist";
+	public static final String MSG_SUCCESS = "New task added: %1$s";
+	public static final String MSG_DUPLICATE_PERSON = "This task already exists in the tasklist";
 
 	private final Task toAdd;
 
@@ -28,12 +28,12 @@ public class AddCmd extends Cmd {
 	}
 
 	@Override
-	public CmdResult execute() {
+	public CmdResult execute(TaskList tasks, TextUi ui, Storage storage) {
 		try {
 			taskList.addTask(toAdd);
-			return new CmdResult(String.format(MESSAGE_SUCCESS, toAdd));
+			return new CmdResult(String.format(MSG_SUCCESS, toAdd));
 		} catch (TaskList.DuplicateTaskException dpe) {
-			return new CmdResult(MESSAGE_DUPLICATE_PERSON);
+			return new CmdResult(MSG_DUPLICATE_PERSON);
 		}
 	}
 }

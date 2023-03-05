@@ -1,21 +1,14 @@
 package DukeManager;// packages import
 import DukeManager.Commands.Cmd;
+import DukeManager.Parser.Parser;
+import DukeManager.Storage.Storage;
 import DukeManager.Ui.TextUi;
-import DukeManager.data.DukeErrors.BlankListException;
 import DukeManager.data.TaskList;
-import DukeManager.data.Tasks.Deadline;
-import DukeManager.data.Tasks.Event;
-import DukeManager.data.Tasks.Task;
-import DukeManager.data.Tasks.Todo;
-import org.w3c.dom.Text;
+
+import java.io.FileNotFoundException;
 
 // java library import
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Scanner;
+
 
 public class Duke {
 
@@ -33,35 +26,7 @@ public class Duke {
 		}
 	}
 
-	private static void loadListFromFile() {
-		try (Scanner reader = new Scanner(new File(FILE_PATH))) {
-			String line;
-			while (reader.hasNext()) {
-				line = reader.nextLine();
-				String[] parts = line.split(" ", 2);
-				String taskType = parts[0];
-				boolean status = parts[1].charAt(1) == 'X';
-				String taskDesc = parts[1].substring(4);
-				switch (taskType) {
-				case ("[D]"):
-					deadlineAdd(taskDesc);
-					break;
-				case ("[E]"):
-					eventAdd(taskDesc);
-					break;
-				case ("[T]"):
-					todoAdd(taskDesc);
-					break;
-				default:
-				}
-				Task task = taskList.get(taskList.size() - 1);
-				task.setDone(status);
-			}
-			System.out.println("\t  Saved list loaded. Welcome back!");
-		} catch (FileNotFoundException e) {
-			System.out.println("\t  Welcome, new user. How may I help you?");
-		}
-	}
+
 
 	public static void takeUserInput() {
 		String userInput = in.nextLine();
@@ -281,18 +246,21 @@ public class Duke {
 	private static void invalidCmd() {
 		System.out.print(INVALID_CMD);
 	}*/
-	private Storage storage;
+	private final Storage storage;
 	private TaskList tasks;
-	private Ui ui;
+	private TextUi ui;
+	private Parser parser;
 
 	public Duke(String filePath) {
 		ui = new TextUi();
 		storage = new Storage(filePath);
 		try {
 			tasks = new TaskList(storage.load());
-		} catch (DukeException e) {
-			ui.showLoadingError();
+		} catch (FileNotFoundException e) {
+			ui.showNoSaveFileError();
 			tasks = new TaskList();
+		} finally {
+			ui.showUserReturn();
 		}
 	}
 
@@ -302,19 +270,17 @@ public class Duke {
 		while (!isExit) {
 			try {
 				String fullCommand = ui.readCommand();
-				ui.showLine(); // show the divider line ("_______")
 				Cmd c = Parser.parse(fullCommand);
 				c.execute(tasks, ui, storage);
 				isExit = c.isExit();
 			} catch (DukeException e) {
 				ui.showError(e.getMessage());
-			} finally {
-				ui.showLine();
 			}
 		}
+		ui.showFarewellMessage();
 	}
 
 	public static void main(String[] args) {
-		new Duke("data/tasks.txt").run();
+		new Duke("tasks.txt").run();
 	}
 }

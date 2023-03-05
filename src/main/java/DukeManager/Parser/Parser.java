@@ -2,22 +2,26 @@ package DukeManager.Parser;
 
 
 import DukeManager.Commands.*;
-import DukeManager.data.DukeErrors.BlankListException;
+import DukeManager.data.DukeErrors.IllegalValueException;
+import DukeManager.data.Tasks.Deadline;
+import DukeManager.data.Tasks.Event;
+import DukeManager.data.Tasks.Todo;
 
-import static DukeManager.common.Messages.CMD_FORMAT_ERROR;
-import static DukeManager.common.Messages.EMPTY_LIST_ERROR_MSG;
+import static DukeManager.common.Messages.MSG_CMD_FORMAT_ERROR;
+import static DukeManager.common.Messages.MSG_INVALID_TASK_DISPLAYED_INDEX;
 
 public class Parser {
+
 	/**
 	 * Parses user input into command for execution.
 	 *
 	 * @param userInput full user input string
 	 * @return the command based on the user input
 	 */
-	public Cmd parseCommand(String userInput) {
+	public static Cmd parse(String userInput) {
 		String[] words = userInput.trim().split(" ", 2);  // split the input into command and arguments
 		if (words.length == 0) {
-			return new IncorrectCmd(String.format(CMD_FORMAT_ERROR, HelpCommand.MESSAGE_USAGE));
+			return new IncorrectCmd(String.format(MSG_CMD_FORMAT_ERROR, HelpCmd.MSG_USAGE));
 		}
 
 		final String cmdWord = words[0];
@@ -28,46 +32,129 @@ public class Parser {
 			return new HelpCmd();
 		case "list":
 			return new ListCmd();
-			break;
 		case "mark":
 			return prepMarkCmd(args, true);
 		case "unmark":
 			return prepMarkCmd(args, false);
 		case "todo":
-			return prepAdd(args, "todo");
+			return prepAddTodo(args);
 		case "deadline":
-			return prepAdd(args, "deadline");
+			return prepAddDeadline(args);
 		case "event":
-			return prepAdd(args, "event");
+			return prepAddEvent(args);
 		case "delete":
 			return prepDeleteCmd(args);
 		case "bye":
 			return new ExitCmd();
 		default:
-			return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
+			return new IncorrectCmd(String.format(MSG_CMD_FORMAT_ERROR, HelpCmd.MSG_USAGE));
 		}
-
 	}
 
-	private Cmd prepAdd(String args, String taskType) {
-		switch (taskType) {
-		case "todo":
-
-		String[] parts = args.split("p/");
-		// Validate arg string format
-		if (parts.length != 2) {
-			return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+	/**
+	 * Parses arguments in the context of the add todo command.
+	 *
+	 * @param args full command args string
+	 * @return the prepared command
+	 */
+	private Cmd prepAddTodo(String args) {
+		if (args == null) {
+			return new IncorrectCmd(String.format(MSG_CMD_FORMAT_ERROR, AddCmd.MSG_USAGE_TODO));
 		}
 		try {
-			return new AddCommand(
-					parts[0].trim(),
-					parts[1].trim()
-			);
+			return new AddCmd(new Todo (args));
 		} catch (IllegalValueException ive) {
-			return new IncorrectCommand(ive.getMessage());
+			return new IncorrectCmd(ive.getMessage());
 		}
 	}
+
+	/**
+	 * Parses arguments in the context of the add deadline command.
+	 *
+	 * @param args full command args string
+	 * @return the prepared command
+	 */
+	private Cmd prepAddDeadline(String args) {
+		String[] parts = args.split("/by");
+		// Validate arg string format
+		if (parts.length != 2) {
+			return new IncorrectCmd(String.format(MSG_CMD_FORMAT_ERROR, AddCmd.MSG_USAGE_DEADLINE));
+		}
+		try {
+			return new AddCmd(new Deadline(
+					parts[0].trim(),
+					parts[1].trim())
+			);
+		} catch (IllegalValueException ive) {
+			return new IncorrectCmd(ive.getMessage());
+		}
 	}
+
+	/**
+	 * Parses arguments in the context of the add event command.
+	 *
+	 * @param args full command args string
+	 * @return the prepared command
+	 */
+	private Cmd prepAddEvent(String args) {
+		String[] parts1 = args.split("/from");
+		// Validate arg string format
+		if (parts1.length != 2) {
+			return new IncorrectCmd(String.format(MSG_CMD_FORMAT_ERROR, AddCmd.MSG_USAGE_EVENT));
+		}
+
+		String[] parts2 = parts1[1].split("/to");
+		if (parts2.length != 2) {
+			return new IncorrectCmd(String.format(MSG_CMD_FORMAT_ERROR, AddCmd.MSG_USAGE_EVENT));
+		}
+
+		try {
+			return new AddCmd(new Event(
+					parts1[0].trim(),
+					parts2[0].trim(),
+					parts2[1].trim())
+			);
+		} catch (IllegalValueException ive) {
+			return new IncorrectCmd(ive.getMessage());
+		}
+	}
+
+
+	/**
+	 * Parses arguments in the context of the delete person command.
+	 *
+	 * @param args full command args string
+	 * @return the prepared command
+	 */
+	private Cmd prepDeleteCmd(String args) {
+		try {
+			final int targetIndex = parseArgsAsDisplayedIndex(args);
+			return new DeleteCmd(targetIndex);
+		} catch (ParseException pe) {
+			return new IncorrectCmd(String.format(MSG_CMD_FORMAT_ERROR,DeleteCmd.MSG_USAGE));
+		} catch (NumberFormatException nfe) {
+			return new IncorrectCmd(MSG_INVALID_TASK_DISPLAYED_INDEX);
+		}
+	}
+
+	/**
+	 * Parses arguments in the context of the delete person command.
+	 *
+	 * @param args full command args string
+	 * @return the prepared command
+	 */
+	private Cmd prepMarkCmd(String args, boolean isDone) {
+		try {
+			final int targetIndex = parseArgsAsDisplayedIndex(args);
+			return new MarkCmd(targetIndex, isDone);
+		} catch (ParseException pe) {
+			return new IncorrectCmd(String.format(MSG_CMD_FORMAT_ERROR,MarkCmd.MSG_USAGE));
+		} catch (NumberFormatException nfe) {
+			return new IncorrectCmd(MSG_INVALID_TASK_DISPLAYED_INDEX);
+		}
+	}
+
+
 	/**
 	 * Parses the given arguments string as a single index number.
 	 *

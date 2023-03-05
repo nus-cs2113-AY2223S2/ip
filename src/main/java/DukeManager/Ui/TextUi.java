@@ -1,6 +1,9 @@
 package DukeManager.Ui;
 
+import DukeManager.Commands.CmdResult;
 import DukeManager.common.Messages;
+import DukeManager.data.Tasks.Task;
+
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.List;
@@ -83,11 +86,18 @@ public class TextUi {
 			out.println(m);
 		}
 	}
-	public void showResultToUser(CommandResult result) {
-		final List<Person> resultPersons = result.getRelevantPersons();
-		if (resultPersons != null) {
-			showPersonListView(resultPersons);
+
+	public void showNoSaveFileError() {
+		showToUser("\t  Welcome, new user. How may I help you?");
+	}
+	public void showUserReturn() {
+		showToUser("\t  Saved list loaded. Welcome back!");
+	}
+	public void showResultToUser(CmdResult result) {
+		final List<Task> resultTasks = result.getRelevantTasks();
+		if (resultTasks != null) {
+			showTaskListView(resultTasks);
 		}
-		showToUser(result.feedbackToUser, DIVIDER);
+		showToUser(result.feedbackToUser, LINE_PARTITION);
 	}
 }
