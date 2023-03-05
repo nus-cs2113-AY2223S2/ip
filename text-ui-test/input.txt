@@ -1,0 +1,8 @@
+todo cs2113
+deadline cg mod /by 2023-12-01
+event exam /from 2pm /to 5pm
+mark 1
+mark 2
+unmark 1
+list
+bye
