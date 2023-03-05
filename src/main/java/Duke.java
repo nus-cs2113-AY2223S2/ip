@@ -37,14 +37,13 @@ public class Duke {
                     if (first_Word_Array.length == 1) { 
                         throw new todoMissingException();
                     }
-                    // todo_Word is "borrow book"
                     // input_Command is "todo borrow book"
                     Todo todo_Word = new Todo(first_Word_Array[1]);
+                    // todo_Word is "borrow book"
                     //list_Items.add(counter, todo_Word);
-                    list_Items.add(counter, new Task(input_Command));
-                    //list_Items.add(counter, new Task(first_Word_Array[1]));
-                    // index 0: read book
-                    // index 1: return book
+                    //list_Items.add(counter, new Task(input_Command)); // [X] todo borrow book
+                    //list_Items.add(counter, new Task(first_Word_Array[1])); // [X] borrow book
+                    list_Items.add(counter, todo_Word);
                     //task_Array[counter] = todo_Word;
                     counter = counter + 1;
                     System.out.println("Got it. I've added this task:");
@@ -52,8 +51,8 @@ public class Duke {
                     System.out.println("Now you have " + counter + " tasks in the list.");
                     //task_Array[counter] = new Task(input_Command);
                     //list_Items.add(counter, new Task(input_Command));
-                    //System.out.println(list_Items.get(counter - 1));
-                    //System.out.println(list_Items.get(counter));
+                    //System.out.println(list_Items.get(counter - 1)); // counter = 0
+                    // System.out.println(list_Items.get(counter)); // counter == 1
                     } catch (todoMissingException exception){
                      System.out.println("OOPS!!! The description of a todo cannot be empty.");
                 }
@@ -67,7 +66,7 @@ public class Duke {
                 //task_Array[counter] = deadline_Word;
                 counter = counter + 1;
                 System.out.println("Got it. I've added this task:");
-                System.out.println(" " + deadline_Word + " (by:" + get_Weekday[1] + ")");
+                System.out.println("  " + deadline_Word + " (by:" + get_Weekday[1] + ")");
                 System.out.println("Now you have " + counter + " tasks in the list.");
                 //task_Array[counter] = new Task(input_Command);
                 list_Items.add(counter, new Task(input_Command));
@@ -86,7 +85,7 @@ public class Duke {
                 //task_Array[counter] = meeting_Type;
                 counter = counter + 1;
                 System.out.println("Got it. I've added this task:");
-                System.out.println(" " + meeting_Type + "(from: " + meeting_From[1] + "to: " + meeting_To[1] + ")");
+                System.out.println("  " + meeting_Type + "(from: " + meeting_From[1] + "to: " + meeting_To[1] + ")");
                 System.out.println("Now you have " + counter + " tasks in the list.");
                 //task_Array[counter] = new Task(input_Command);
                 list_Items.add(counter, new Task(input_Command));
