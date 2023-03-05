@@ -13,6 +13,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Class used to deal with loading tasks from the file and saving tasks in the file
+ */
 public class Storage {
     private String filePath;
 
@@ -20,13 +23,17 @@ public class Storage {
         this.filePath = filePath;
     }
 
+    /**
+     * Load or creates the data file into an array list of task
+     *
+     * @return loaded array list of task
+     * @throws DukeException if data will not be saved
+     */
     public ArrayList<Task> load() throws DukeException {
-
         String[] filePathArr = filePath.split("/");
-        String tempFilePath = filePath.substring(0, filePath.indexOf("/"));
         ArrayList<Task> tasks = new ArrayList<Task>();
-
         String tempPath = filePathArr[0];
+
         for (int i = 0; i < filePathArr.length; i++) {
             if (i != 0) {
                 tempPath = tempPath + "/" + filePathArr[i];
@@ -50,6 +57,34 @@ public class Storage {
             }
         }
         return tasks;
+    }
+
+    public void updateDukeFile(TaskList taskList) {
+        writeDukeFile(taskList.getTask(0), false);
+        for (int i = 1; i < taskList.taskSize(); i++) {
+            writeDukeFile(taskList.getTask(i), true);
+        }
+    }
+
+    public void writeDukeFile(Task task, boolean appendFile) {
+        String line = (task.getIsDone() ? "1" : "0") + "|" + task.getDescription();
+        if (task instanceof Todo) {
+            line = "T|" + line;
+        } else if (task instanceof Deadline) {
+            line = "D|" + line;
+        } else if (task instanceof Event) {
+            line = "E|" + line;
+        }
+        try {
+            File dukeFile = new File(getPath(this.filePath).toString());
+            FileWriter fw = new FileWriter(dukeFile, appendFile);
+            if (appendFile) {
+                fw.write("\n" + line);
+            } else {
+                fw.write(line);
+            }
+            fw.close();
+        } catch (IOException ex) {}
     }
 
     private void readDukeFile(ArrayList<Task> tasks, File dukeFile) throws FileNotFoundException {
@@ -83,33 +118,5 @@ public class Storage {
         File f = new File("");
         String home = f.getAbsolutePath();
         return java.nio.file.Paths.get(home, path);
-    }
-
-    public void updateDukeFile(TaskList taskList) {
-        writeDukeFile(taskList.getTask(0), false);
-        for (int i = 1; i < taskList.taskSize(); i++) {
-            writeDukeFile(taskList.getTask(i), true);
-        }
-    }
-
-    public void writeDukeFile(Task task, boolean appendFile) {
-        String line = (task.getIsDone() ? "1" : "0") + "|" + task.getDescription();
-        if (task instanceof Todo) {
-            line = "T|" + line;
-        } else if (task instanceof Deadline) {
-            line = "D|" + line;
-        } else if (task instanceof Event) {
-            line = "E|" + line;
-        }
-        try {
-            File dukeFile = new File(getPath(this.filePath).toString());
-            FileWriter fw = new FileWriter(dukeFile, appendFile);
-            if (appendFile) {
-                fw.write("\n" + line);
-            } else {
-                fw.write(line);
-            }
-            fw.close();
-        } catch (IOException ex) {}
     }
 }

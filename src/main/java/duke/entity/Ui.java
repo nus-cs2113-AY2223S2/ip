@@ -9,13 +9,21 @@ import duke.task.Todo;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Interacts with user and outputs information given a response to users inputs
+ */
 public class Ui {
     private Parser parser = new Parser();
 
+    /**
+     * Takes input from user's command and processes it depending on their request
+     *
+     * @param taskList list of tasks
+     * @param storage storage object
+     * @return true if continue program, false otherwise
+     */
     public boolean manageInput(TaskList taskList, Storage storage) {
         Scanner scanner = new Scanner(System.in);
-        int counter = taskList.taskSize();
-
         try {
             String input = scanner.nextLine();
             this.parser.setInput(input);
@@ -23,29 +31,31 @@ public class Ui {
             if (input.equals("bye")) {
                 return false;
             } else if (input.equals("list")) {
-                listTasks(counter, taskList.getTaskArrayList());
+                listTasks(taskList.getTaskArrayList());
             } else if (input.startsWith("mark")) {
                 selectTask(input, taskList);
-                listTasks(counter, taskList.getTaskArrayList());
+                listTasks(taskList.getTaskArrayList());
                 storage.updateDukeFile(taskList);
             } else if (input.startsWith("todo")) {
-                blankTodo(input);
+                blankDescription(input);
                 Task tempTask = new Todo(input.substring(5));
                 taskList.addTask(tempTask);
-                printAddedTask(tempTask, counter);
+                printAddedTask(tempTask, taskList.taskSize());
                 storage.writeDukeFile(tempTask, true);
             } else if (input.startsWith("deadline") && input.contains("/")) {
                 Task tempTask = new Deadline(input.substring(9), parser.parseDeadlineBy());
                 taskList.addTask(tempTask);
-                printAddedTask(tempTask, counter);
-               storage.writeDukeFile(tempTask, true);
+                printAddedTask(tempTask, taskList.taskSize());
+                storage.writeDukeFile(tempTask, true);
             } else if (input.startsWith("event") && parser.validateEventInput()) {
                 Task tempTask = new Event(input.substring(6), parser.parseEventFrom(), parser.parseEventTo());
                 taskList.addTask(tempTask);
-                printAddedTask(tempTask, counter);
+                printAddedTask(tempTask, taskList.taskSize());
                 storage.writeDukeFile(tempTask, true);
             } else if (input.startsWith("delete")) {
                 selectTask(input, taskList);
+            } else if (input.startsWith("find")) {
+                findTasks(input, taskList);
             } else {
                 invalidInput();
             }
@@ -53,6 +63,31 @@ public class Ui {
             System.out.println(ex.toString());
         }
         return true;
+    }
+
+    /**
+     * Prints goodbye message
+     */
+    public void goodbye() {
+        System.out.println("____________________________________________________________");
+        System.out.println("Bye. Hope to see you again soon!");
+        System.out.println("____________________________________________________________\n");
+    }
+
+    /**
+     * Prints greeting message
+     */
+    public void greetings() {
+        String logo = " ____        _        \n"
+                + "|  _ \\ _   _| | _____ \n"
+                + "| | | | | | | |/ / _ \\\n"
+                + "| |_| | |_| |   <  __/\n"
+                + "|____/ \\__,_|_|\\_\\___|\n";
+        System.out.println("Hello from\n" + logo);
+        System.out.println("____________________________________________________________");
+        System.out.println("Hello! I'm Duke");
+        System.out.println("What can I do for you?");
+        System.out.println("____________________________________________________________\n");
     }
 
     private void selectTask(String input, TaskList taskList) {
@@ -74,10 +109,10 @@ public class Ui {
         }
     }
 
-    private void listTasks(int counter, ArrayList<Task> storedTask) {
+    private void listTasks(ArrayList<Task> storedTask) {
         System.out.println("____________________________________________________________");
         System.out.println("Here are the tasks in your list:");
-        for (int i = 0; i < counter; i++) {
+        for (int i = 0; i < storedTask.size(); i++) {
             System.out.println((i + 1) + ". " + storedTask.get(i).toString());
         }
         System.out.println("____________________________________________________________\n");
@@ -92,7 +127,19 @@ public class Ui {
         taskList.removeTask(removeIndex);
     }
 
-    private void blankTodo(String input) throws DukeException {
+    private void findTasks(String input, TaskList taskList) throws DukeException {
+        blankDescription(input);
+        ArrayList<Task> foundTaskList = taskList.findTaskArrayList(input.substring(5));
+
+        System.out.println("____________________________________________________________");
+        System.out.println("Here are the matching tasks in your list:");
+        for (int i = 0; i < foundTaskList.size(); i++) {
+            System.out.println((i + 1) + ". " + foundTaskList.get(i).toString());
+        }
+        System.out.println("____________________________________________________________\n");
+    }
+
+    private void blankDescription(String input) throws DukeException {
         if (input.length() == 4 || input.substring(4).isBlank()) {
             throw new DukeException("☹ OOPS!!! Must have a description.\n");
         }
@@ -112,26 +159,7 @@ public class Ui {
         System.out.println("____________________________________________________________");
         System.out.println("Got it. I've added this task:");
         System.out.println(task.toString());
-        System.out.println("Now you have " + (counter + 1) + " tasks in the list.");
-        System.out.println("____________________________________________________________\n");
-    }
-
-    public void goodbye() {
-        System.out.println("____________________________________________________________");
-        System.out.println("Bye. Hope to see you again soon!");
-        System.out.println("____________________________________________________________\n");
-    }
-
-    public void greetings() {
-        String logo = " ____        _        \n"
-                + "|  _ \\ _   _| | _____ \n"
-                + "| | | | | | | |/ / _ \\\n"
-                + "| |_| | |_| |   <  __/\n"
-                + "|____/ \\__,_|_|\\_\\___|\n";
-        System.out.println("Hello from\n" + logo);
-        System.out.println("____________________________________________________________");
-        System.out.println("Hello! I'm Duke");
-        System.out.println("What can I do for you?");
+        System.out.println("Now you have " + counter + " tasks in the list.");
         System.out.println("____________________________________________________________\n");
     }
 }
