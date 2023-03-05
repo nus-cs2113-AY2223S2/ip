@@ -8,6 +8,7 @@ public class Task {
     protected String checkComplete;
     protected String taskType;
 
+    protected String taskName;
     protected String taskList;
     public Task(String description) {
         this.description = description;
@@ -19,10 +20,6 @@ public class Task {
 
     public void unMark() {
         this.isDone = false;
-    }
-
-    public String getDescription() {
-        return description;
     }
 
     public String getStatusIcon() {
@@ -37,6 +34,10 @@ public class Task {
     }
     public String getTaskType(){
         return taskType;
+    }
+
+    public String getTaskName(){
+        return taskName;
     }
     public String guideline(){
        return "     Here are the task in your list: "

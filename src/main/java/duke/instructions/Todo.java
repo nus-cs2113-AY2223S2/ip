@@ -1,8 +1,16 @@
 package duke.instructions;
 
 public class Todo extends Task{
+
+    protected String taskType;
     public Todo(String description) {
         super(description);
+        this.taskType = description;
+    }
+
+    @Override
+    public String getTaskName(){
+        return this.taskName;
     }
 
     @Override
@@ -26,6 +34,7 @@ public class Todo extends Task{
     public void setTaskType(String taskType) {
         this.taskType = taskType;
     }
+
 
    @Override
     public String getTaskList(){

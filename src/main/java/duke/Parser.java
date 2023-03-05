@@ -22,25 +22,28 @@ public class Parser {
         String[] command = input.split("\\s+");
         switch (command[0]) {
         case "list":
-            TaskList.listMain(input);
+            TaskList.listCommand(input);
             break;
         case "mark":
-            TaskList.markMain(command);
+            TaskList.markCommand(command);
             break;
         case "ummark":
-            TaskList.unMarkMain(command);
+            TaskList.unMarkCommand(command);
             break;
         case "todo":
-            TaskList.toDoMain(input);
+            TaskList.toDoCommand(input);
             break;
         case "deadline":
-            TaskList.deadlineMain(input);
+            TaskList.deadlineCommand(input);
             break;
         case "event":
-            TaskList.eventMain(input);
+            TaskList.eventCommand(input);
             break;
         case "delete":
-            TaskList.deleteMain(input);
+            TaskList.deleteCommand(input);
+            break;
+        case "find":
+            TaskList.findCommand(input);
             break;
         default:
             throw new DukeException(UNRECOGNISED_INPUT);

@@ -6,9 +6,7 @@ public class Delete extends Task{
         super(description);
     }
 
-    public void deleteTask(){
 
-    }
 
     @Override
     public String guideline(){

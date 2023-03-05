@@ -4,11 +4,13 @@ package duke.instructions;
 public class Event extends Task{
     protected  String input;
     protected String taskType;
+    protected String taskName;
 
     public Event(String input) {
         super(input);
         this.input = input;
         this.taskType = "E";
+        this.taskName = input;
     }
 
     @Override
@@ -42,6 +44,10 @@ public class Event extends Task{
     public void setTaskType(String taskType) {
         this.taskType = taskType;
     }
+    public String getTaskName(){
+        return this.taskName;
+    }
+
 
     @Override
     public String getTaskList(){

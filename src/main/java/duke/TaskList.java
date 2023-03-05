@@ -14,7 +14,7 @@ public class TaskList {
     public static final String EMPTY_DESCRIPTION = "     ☹ OOPS!!! The description cannot be empty.";
 
 
-    public static void listMain(String command) {
+    public static void listCommand(String command) {
         Task task = new Task(command);
         System.out.println(LINE);
         System.out.print(task.guideline());
@@ -26,7 +26,7 @@ public class TaskList {
 
     }
 
-    public static void markMain(String[] command) {
+    public static void markCommand(String[] command) {
         int indexTask = Integer.parseInt(command[1]);
         System.out.println(LINE);
         taskNameList.get(indexTask - 1).mark();
@@ -36,7 +36,7 @@ public class TaskList {
         System.out.println(LINE);
     }
 
-    public static void unMarkMain(String[] command) {
+    public static void unMarkCommand(String[] command) {
         int indexOfTask = Integer.parseInt(command[1]);
         System.out.println(LINE);
         taskNameList.get(indexOfTask - 1).unMark();
@@ -47,7 +47,7 @@ public class TaskList {
 
     }
 
-    public static void toDoMain(String input) throws DukeException {
+    public static void toDoCommand(String input) throws DukeException {
         Todo toDo = new Todo(input);
         toDo.setTaskType("T");
         Task task = new Task(input);
@@ -65,7 +65,7 @@ public class TaskList {
 
     }
 
-    public static void eventMain(String input) {
+    public static void eventCommand(String input) {
         Event event = new Event(input);
         event.setTaskType("E");
         Task task = new Task(input);
@@ -78,7 +78,7 @@ public class TaskList {
 
     }
 
-    public static void deadlineMain(String command) {
+    public static void deadlineCommand(String command) {
         Deadline deadLine = new Deadline(command);
         deadLine.setTaskType("D");
         Task task = new Task(command);
@@ -91,7 +91,7 @@ public class TaskList {
         System.out.println(LINE);
 
     }
-    public static void deleteMain(String command){
+    public static void deleteCommand(String command){
         int indexTask = Integer.parseInt(command);
         Task task = new Task(command);
         System.out.println(LINE);
@@ -103,34 +103,25 @@ public class TaskList {
         System.out.println(LINE);
     }
 
-    /*public static void inputValues(String input) throws DukeException {
-        String[] command = input.split("\\s+");
-        switch (command[0]) {
-        case "list":
-            TaskList.listMain(input);
-            break;
-        case "mark":
-            TaskList.markMain(command);
-            break;
-        case "ummark":
-            TaskList.unMarkMain(command);
-            break;
-        case "todo":
-            TaskList.toDoMain(input);
-            break;
-        case "deadline":
-            TaskList.deadlineMain(input);
-            break;
-        case "event":
-            TaskList.eventMain(input);
-            break;
-        case "delete":
-            TaskList.deleteMain(input);
-            break;
-        default:
-            throw new DukeException(UNRECOGNISED_INPUT);
+    public static void findCommand(String command){
+        String keyword = command.substring(5);
 
+        ArrayList<Task> matchedTask = new ArrayList<>();
+
+        for (Task task : taskNameList) {
+            if ((task.getState()).contains(keyword)) {
+               matchedTask.add(task);
+            }
+        }
+        int numberOfFoundTasks = matchedTask.size();
+        int number0fTask = 1;
+        System.out.println("     There are " + numberOfFoundTasks + " matching tasks in your list");
+        for (Task foundTask : matchedTask) {
+            if (foundTask != null) {
+                System.out.print("     " +number0fTask + "." + foundTask.getState().trim() + System.lineSeparator());
+            }
+            number0fTask++;
         }
     }
-*/
+
 }
