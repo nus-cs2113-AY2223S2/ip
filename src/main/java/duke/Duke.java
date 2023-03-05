@@ -59,7 +59,7 @@ public class Duke {
                      String text = taskList.getTask(numOfTask-1).getType() + " | " + taskList.getTask(numOfTask-1).getStatusIconSave() + " | "+ taskList.getTask(numOfTask-1).getDescription()
                              + System.lineSeparator();
                      taskList.updateTaskLists(numOfTask,taskList.getTaskList());
-                     storage.appendToFile(text);
+                     storage.saveToFile(taskList.getTaskList());
                  } catch (ToDoException e) {
                      ui.showInvalidTodoFormatMessage();
                  }
@@ -73,7 +73,7 @@ public class Duke {
                      String text = taskList.getTask(numOfTask-1).getType() + " | " +  taskList.getTask(numOfTask-1).getStatusIconSave() + " | " + taskList.getTask(numOfTask-1).getDescription()
                              + " | " + taskList.getTask(numOfTask-1).getDeadlineSave() + System.lineSeparator();
                      taskList.updateTaskLists(numOfTask,taskList.getTaskList());
-                     storage.appendToFile(text);
+                     storage.saveToFile(taskList.getTaskList());
                  }catch (StringIndexOutOfBoundsException e){
                      ui.showInvalidDeadlineFormatMessage();
                  }
@@ -87,7 +87,7 @@ public class Duke {
                      String text =taskList.getTask(numOfTask-1).getType() + " | " + taskList.getTask(numOfTask-1).getStatusIconSave() + " | " + taskList.getTask(numOfTask-1).getDescription()
                              + " | " + taskList.getTask(numOfTask-1).getPeriodSave() + System.lineSeparator();
                      taskList.updateTaskLists(numOfTask,taskList.getTaskList());
-                     storage.appendToFile(text);
+                     storage.saveToFile(taskList.getTaskList());
                  }catch(StringIndexOutOfBoundsException e){
                      ui.showInvalidEventFormatMessage();
                  }catch(EventException e){
@@ -101,6 +101,11 @@ public class Duke {
                  numOfTask -= 1;
                  taskList.updateTaskLists(numOfTask,taskList.getTaskList());
                  storage.saveToFile(taskList.getTaskList());
+                 return false;
+             case "find":
+                 String keyword = parser.getKeyword();
+                 ui.showMatchingTasksMessage();
+                 taskList.keywordedTaskList(keyword,taskList.getTaskList());
                  return false;
              default:
                  throw new DukeException();
@@ -120,7 +125,7 @@ public class Duke {
             ui.showDukeExceptionMessage();
         }
     }
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args){
         new Duke(filePath).run();
     }
 }

@@ -2,6 +2,7 @@ package duke.parser;
 
 public class Parser {
     protected String command;
+    protected String keyword;
     protected String description;
     protected String deadline;
     protected String fromDate;
@@ -47,6 +48,9 @@ public class Parser {
                 taskNumber = inputText.substring(dividerPosition + 1, inputText.length());
                 shouldExit = false;
                 break;
+            case "find":
+                keyword = filterDescription(inputText);
+                shouldExit = false;
             default:
         }
     }
@@ -71,6 +75,8 @@ public class Parser {
                     return "event";
                 case "delete":
                     return "delete";
+                case "find":
+                    return "find";
                 default:
             }
         }
@@ -131,5 +137,8 @@ public class Parser {
     }
     public String getCommand(){
         return command;
+    }
+    public String getKeyword(){
+        return keyword;
     }
 }

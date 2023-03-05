@@ -56,7 +56,7 @@ public class Ui {
                 + taskList.getTask(indexDelete-1).getDeadline() + taskList.getTask(indexDelete-1).getPeriod());
         System.out.println("Now you have " + numOfTask + " task in the list.");
     }
-
+    public void showMatchingTasksMessage(){System.out.println(MATCHING_TASKS_MESSAGE);}
     public void showInvalidTodoFormatMessage(){
         System.out.println(INVALID_TODO_FORMAT_MESSAGE);
     }
