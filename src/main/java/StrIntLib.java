@@ -1,3 +1,6 @@
+/**
+ * The StrIntLib class contains all Strings used in Duke.
+ */
 public class StrIntLib {
     public static final String byeText = "See ya!";
     public static final String welcomeText = "Hello! I'm Duke!\nWhat can I do for you?";

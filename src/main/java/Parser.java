@@ -1,4 +1,12 @@
+/**
+ * The Parser class handles the parsing of user input.
+ */
 public class Parser {
+    /**
+     * This method interprets input and executes commands based on given input.
+     *
+     * @param input User input
+     */
     public static void parseCommand(String input){
         String[] parsedInputs = input.split(" ", 2);
         String command = parsedInputs[0];

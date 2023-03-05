@@ -3,11 +3,21 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 
+/**
+ * The Storage class is responsible for saving and loading data from the save
+ * file. The default path for the save file is ./data/duke.txt
+ */
 public class Storage {
     protected static String fileName;
+
+    /**
+     * This method interprets a line in a save, creates a task based on the line.
+     *
+     * @param saveLine
+     * @return Task This returns a task.
+     */
     public static Task dataReader(String saveLine) {
         String [] segments = saveLine.split(" : ");
         boolean taskStatus = segments[1].equals("1");
@@ -39,6 +49,13 @@ public class Storage {
         System.out.println(StrIntLib.invalidTask);
         return null;
     }
+
+    /**
+     * This method generates a String for save file for a task.
+     *
+     * @param selectedTask
+     * @return String This returns a string with the data of a task.
+     */
     public static String saveFormat(Task selectedTask) {
         String taskStatus = (selectedTask.getStatusIcon().equals("X")) ? "1" : "0";
         String formattedTask = selectedTask.getIcon() + " : " +
@@ -51,6 +68,12 @@ public class Storage {
         }
         return formattedTask;
     }
+
+    /**
+     * This method creates a directory and a save file.
+     *
+     * @param filePath
+     */
     public static void createSave(String filePath) {
         fileName = filePath;
         File saveFile = new File(fileName);
@@ -61,6 +84,11 @@ public class Storage {
         }
     }
 
+    /**
+     * This method writes into the save file.
+     *
+     * @throws IOException
+     */
     public static void writeSave() throws IOException {
         FileWriter saveWriter = new FileWriter(fileName);
         for (Task item : TaskList.getTaskList()) {
@@ -69,6 +97,11 @@ public class Storage {
         saveWriter.close();
     }
 
+    /**
+     * This method reads the save file to create a task list.
+     *
+     * @return This returns task list.
+     */
     public static ArrayList<Task> readSave(){
         ArrayList<Task> taskList = new ArrayList<>();
         try {
