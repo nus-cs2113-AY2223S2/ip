@@ -113,7 +113,7 @@ public class Storage {
     }
 
     private static String parseString(Todo todo) {
-        String done = UNMARKED;
+        String done = MARKED;
         if (todo.getDone()) {
             done = MARKED;
         }
@@ -121,7 +121,7 @@ public class Storage {
     }
 
     private static String parseString(Deadline deadline) {
-        String done = UNMARKED;
+        String done = MARKED;
         if (deadline.getDone()) {
             done = MARKED;
         }

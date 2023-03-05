@@ -8,4 +8,7 @@
  */
 
 rootProject.name = 'ip'
-include('app')
+include('Duke')
+include 'src:main:java:source'
+findProject(':src:main:java:source')?.name = 'source'
+
