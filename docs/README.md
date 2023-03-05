@@ -24,7 +24,7 @@ Keqing todo list can show the current tasks with details: description, status (d
 
 - ### delete tasks
 
-Users can delete the existing tasks in the current todo list
+Users can delete the existing tasks in the current todo list.
 
 - ### mark tasks
 
@@ -46,7 +46,7 @@ Keqing todo list can automatically store the current tasks and their status afte
 
 ### `todo` - add a todo task
 
-this command adds a `todo` task to your tasks list
+This command adds a `todo` task to your tasks list.
 
 - format: **todo** [task description]
 
@@ -54,7 +54,7 @@ this command adds a `todo` task to your tasks list
 
 > todo check mailbox
 
-this command add a todo with description `check mailbox` to the task list.
+This command add a todo with description `check mailbox` to the task list.
 
 - Expected outcome from Keqing:
 
@@ -68,7 +68,7 @@ Now you have 5 tasks in the list.
 
 ### `Event` - add a event task
 
-this command adds a `Event` task to your tasks list
+This command adds a `Event` task to your tasks list.
 
 - format: **event** [description] **/at** [YYYY-MM-DD] [hh:mm] (the specific time on that day is optional)
 
@@ -76,7 +76,7 @@ this command adds a `Event` task to your tasks list
 
 > event group meeting /at 2023-03-05 12:00
 
-this command add a event with description `group meeting` with time `2023-03-05 12:00` to the task list.
+This command add a event with description `group meeting` with time `2023-03-05 12:00` to the task list.
 
 - Expected outcome from Keqing:
 
@@ -104,7 +104,7 @@ Now you have 7 tasks in the list.
 
 ### `Deadline` - add a task with deadline
 
-this command adds a `Deadline` task to your tasks list
+This command adds a `Deadline` task to your tasks list.
 
 - format: **deadline** [description] **/by** [YYYY-MM-DD] [hh:mm] (the specific time on that day is optional)
 
@@ -112,7 +112,7 @@ this command adds a `Deadline` task to your tasks list
 
 > deadline return book /by 2023-03-09 16:00
 
-this command add a task with description `return book` with deadline `2023-03-09 16:00` to the task list.
+This command add a task with description `return book` with deadline `2023-03-09 16:00` to the task list.
 
 - Expected outcome from Keqing:
 
@@ -140,7 +140,7 @@ Now you have 9 tasks in the list.
 
 ### `list` - show all the tasks
 
-this command shows all the tasks and their status
+This command shows all the tasks and their status.
 
 - format: **list**
 
@@ -161,7 +161,7 @@ this command shows all the tasks and their status
 
 ### `mark` - mark a task 
 
-this command mark a task as finished. Users can check the index of tasks using `list`
+This command mark a task as finished. Users can check the index of tasks using `list`.
 
 - format: **mark** [index of task]
 
@@ -169,7 +169,7 @@ this command mark a task as finished. Users can check the index of tasks using `
 
 > mark 1
 
-this command marks the task with index 1 as done. If the task is already marked as finished, this command will not have any effect on it.
+This command marks the task with index 1 as done. If the task is already marked as finished, this command will not have any effect on it.
 
 - Expected outcome from Keqing:
 
