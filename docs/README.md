@@ -17,7 +17,7 @@ Prerequisites: JDK 11, update Intellij to the most recent version.
 4. After that, locate the `src/main/java/duke/Duke` file, right-click it, and choose `Run Duke.main()`
    (if the code editor is showing compile errors, try restarting the IDE).
    If the setup is correct, you should see something like the below as the output:
-```
+````
 ███████████████████████████████████████████████████████████████████████████████████████████████
 █████████░░░░░░█░░░░░░░░░░█░░░░░░░░░░░░░░█░░░░░░░░░░░░░░█░░░░░░░░░░░░░░█░░░░░░██████████░░░░░░█
 █████████░░▄▀░░█░░▄▀▄▀▄▀░░█░░▄▀▄▀▄▀▄▀▄▀░░█░░▄▀▄▀▄▀▄▀▄▀░░█░░▄▀▄▀▄▀▄▀▄▀░░█░░▄▀░░██████████░░▄▀░░█
@@ -35,21 +35,21 @@ Prerequisites: JDK 11, update Intellij to the most recent version.
 Hello! I'm Jigsaw
 
 What can I do for you?
-```
+````
 5. If you have already run the program before and to check if the previously saved data is loaded,
    type "list" into the command line and a list of your previously saved tasks will be printed.
    You should see something like the output below (task 1 to 4 in the list are only used as examples):
-```
+````
 list
 1.[T][ ] read
 2.[E][ ] write (from: 5pm to: 6pm)
 3.[D][ ] try (by: 7pm)
 4.[E][ ] read (from: 5pm to: 6pm)
-```
+````
 However, if there is no folder or file loaded, a message - "Folder not found" will be printed at the beginning of
 the startup of the program.
 You should see something like the output below:
-```
+````
 Folder not found
 ███████████████████████████████████████████████████████████████████████████████████████████████
 █████████░░░░░░█░░░░░░░░░░█░░░░░░░░░░░░░░█░░░░░░░░░░░░░░█░░░░░░░░░░░░░░█░░░░░░██████████░░░░░░█
@@ -68,10 +68,9 @@ Folder not found
 Hello! I'm Jigsaw
 
 What can I do for you?
-```
+````
 
 ## Features
-The name of this command line program is called Jigsaw.
 
 ### Feature - Greet
 
@@ -107,12 +106,12 @@ Enter the following command into the command line:
 
 Expected outcome:
 
-```
+````
 1.[T][ ] read
 2.[E][ ] write (from: 5pm to: 6pm)
 3.[D][ ] try (by: 7pm)
 4.[E][ ] read (from: 5pm to: 6pm)
-```
+````
 
 ### `todo` - Adds a new Todo task
 
@@ -127,11 +126,11 @@ Example of usage:
 
 Expected outcome:
 
-```
+````
 Got it I have added this task:
   [T][ ] read books
 Now you have 1 tasks in the list.
-```
+````
 
 ### `deadline` - Adds a new Deadline task
 
@@ -146,11 +145,11 @@ Example of usage:
 
 Expected outcome:
 
-```
+````
 Got it I have added this task:
   [D][ ] write books (by: 5pm)
 Now you have 3 tasks in the list.
-```
+````
 
 ### `event` - Adds a new Event task
 
@@ -165,11 +164,11 @@ Example of usage:
 
 Expected outcome:
 
-```
+````
 Got it I have added this task:
   [E][ ] listen to music (from: 5pm to: 6pm)
 Now you have 4 tasks in the list.
-```
+````
 
 ### `mark` - Marks a task
 
@@ -183,10 +182,10 @@ Example of usage:
 
 Expected outcome:
 
-```
+````
 Nice! I've marked this task as done:
   [X] write books
-```
+````
 
 ### `unmark` - Unmarks a task
 
@@ -200,10 +199,10 @@ Example of usage:
 
 Expected outcome:
 
-```
+````
 OK, I've marked this task as not done yet:
   [ ] write books
-```
+````
 
 ### `delete` - Deletes a task
 
@@ -217,11 +216,11 @@ Example of usage:
 
 Expected outcome:
 
-```
+````
 Noted. I've removed this task:
   [T][X] read books
 Now you have 2 tasks in the list.
-```
+````
 
 ### `find` - Find keyword
 
@@ -235,12 +234,12 @@ Example of usage:
 
 Expected outcome:
 
-```
+````
 Here are the matching tasks in your list:
 1.[E][ ] read books (from: 5pm to: 6pm)
 2.[D][ ] design books (by: monday)
 3.[T][ ] read books
-```
+````
 
 ### `bye` - Bye keyword
 
@@ -251,7 +250,7 @@ Enter the following command into the command line:
 
 Expected outcome:
 
-```
+````
 Bye. Hope to see you again soon!
 
 ─────▄██▀▀▀▀▀▀▀▀▀▀▀▀▀██▄─────
@@ -303,4 +302,4 @@ IIII||───███████████───||IIII
 ─██─────────████──────────██─
 ────────────████─────────────
 ─────────────██──────────────
-```
+````
