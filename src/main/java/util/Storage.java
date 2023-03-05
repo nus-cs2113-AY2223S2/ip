@@ -16,7 +16,7 @@ import tasks.Todo;
 /**
  * Manages Storing Data on exit
  * and Loading Data upon starting Duke
- * */
+ */
 public class Storage {
     private static final Boolean LOAD_FROM_SAVE_DATA = true;
     private static final String MARK = "mark ";
@@ -27,10 +27,9 @@ public class Storage {
 
     private static final String EMPTY = "";
 
-
     /**
-    * Finds the data file and pushes data into the current Array
-    * */
+     * Finds the data file and pushes data into the current Array
+     */
     public void loadData(ArrayList<Task> taskList) {
         File listData = new File(FILE_LOCATION);
         checkForListData(listData);
@@ -38,11 +37,12 @@ public class Storage {
     }
 
     /**
-    * Reads every line of data in listData and adds each of them into
-    * the current ArrayList of tasks
-    * If there are any corrupted/incorrect inputs in the data file,
-    * they will not be added and an error will be shown for each line of data corrupted
-    * */
+     * Reads every line of data in listData and adds each of them into
+     * the current ArrayList of tasks
+     * If there are any corrupted/incorrect inputs in the data file,
+     * they will not be added and an error will be shown for each line of data
+     * corrupted
+     */
     private void pushDataToTaskList(ArrayList<Task> taskList, File listData) {
         try {
             Scanner listDataScanner = new Scanner(listData);
@@ -50,6 +50,7 @@ public class Storage {
             Marker marker = new Marker();
             while (listDataScanner.hasNext()) {
                 String[] currentTaskInput = listDataScanner.nextLine().split(BLANK, 2);
+                listDataScanner.close();
                 taskAdder.addTaskToList(taskList, currentTaskInput[1], LOAD_FROM_SAVE_DATA);
                 try {
                     if (Integer.parseInt(currentTaskInput[0]) == 1) {
@@ -63,7 +64,6 @@ public class Storage {
             System.out.println(ErrorMessages.errorUnableToFindListData());
         }
     }
-
 
     private void checkForListData(File listData) {
         if (!listData.exists()) {
@@ -80,12 +80,13 @@ public class Storage {
     }
 
     /**
-    * Updates the listData.txt file with every single current task inside
-    * the task list.
-    * It is sorted out as if it were an normal input with a value of 1 or 0 infront of it
-    * E.g.
-    * 0 todo do a task
-    * */
+     * Updates the listData.txt file with every single current task inside
+     * the task list.
+     * It is sorted out as if it were an normal input with a value of 1 or 0 infront
+     * of it
+     * E.g.
+     * 0 todo do a task
+     */
     public void saveList(ArrayList<Task> taskList) {
         try {
             writeToFile();

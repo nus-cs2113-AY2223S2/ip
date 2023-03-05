@@ -9,6 +9,7 @@ public class Ui {
     public String getInput() {
         Scanner newScanner = new Scanner(System.in);
         String input = newScanner.nextLine();
+        newScanner.close();
         return input;
     }
 }

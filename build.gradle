@@ -1,4 +1,3 @@
-//Tells us what plugins it should provide
 plugins {
     id 'java'
     id 'application'
