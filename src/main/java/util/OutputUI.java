@@ -94,8 +94,7 @@ public class OutputUI {
             taskSymbol = "E";
         }
 
-        System.out.println("Pikapi has deleted the task: " + "\n" + "  [" + taskSymbol + "]["
-                + task.getStatusIcon() + "]" + task.getDescription());
+        System.out.println("Pikapi has deleted the task: " + "\n" + task.toString());
         System.out.println("Pikapi sees that now you have " + numTasks + " tasks in the list");
     }
 
