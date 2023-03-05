@@ -14,10 +14,7 @@ public class Duke {
     private final TaskList tasks;
     private final Ui ui;
 
-    //Task list
-
     public Duke(String folderPath, String fileName) throws DukeException, IOException {
-
         storage = new Storage(folderPath, fileName);
         tasks = new TaskList(storage.loadTaskList());
         ui = new Ui(tasks);
@@ -29,7 +26,6 @@ public class Duke {
 
     public void run() {
         ui.showWelcomeMessage();
-
         // reused from contacts Contacts1.java with modification
         while (true) {
             try {
