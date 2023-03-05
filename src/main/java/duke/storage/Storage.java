@@ -25,7 +25,7 @@ public class Storage {
     int numOfTask = 0;
 
     /** Default file path set in the event that the user doesn't provide a file name.*/
-    public static String filePath = "src/duke_list.txt";
+    public static String filePath = "duke_list.txt";
     public Path path = Paths.get(filePath);
 
     /**

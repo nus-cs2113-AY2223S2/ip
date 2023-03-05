@@ -18,7 +18,7 @@ public class Duke {
     private static Storage storage;
     private static TaskList taskList;
     private static int numOfTask = 0;
-    public static String filePath = "src/duke_list.txt";
+    public static String filePath = "duke_list.txt";
 
     /**
      * Sets up the required objects, loads up the storage file and prints the welcome message to the user.
