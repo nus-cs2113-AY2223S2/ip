@@ -50,7 +50,6 @@ public class Storage {
             Marker marker = new Marker();
             while (listDataScanner.hasNext()) {
                 String[] currentTaskInput = listDataScanner.nextLine().split(BLANK, 2);
-                listDataScanner.close();
                 taskAdder.addTaskToList(taskList, currentTaskInput[1], LOAD_FROM_SAVE_DATA);
                 try {
                     if (Integer.parseInt(currentTaskInput[0]) == 1) {

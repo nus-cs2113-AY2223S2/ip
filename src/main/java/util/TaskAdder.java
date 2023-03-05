@@ -50,7 +50,7 @@ public class TaskAdder extends ErrorMessages {
                     addEventTask(listOfTasks, taskDescription[1], loadFromSaveData);
                     break;
                 default:
-                    if (!loadedFromSaveData) {
+                    if (!loadFromSaveData) {
                         throw new TaskAddError(errorWrongTaskNameText());
                     }
 
