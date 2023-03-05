@@ -9,6 +9,7 @@ import static duke.common.Messages.LIST_TASKS_MESSAGE;
 
 public class TaskList {
     protected static ArrayList<Task> tasks = new ArrayList<>();
+    protected static ArrayList<Task> tasksTemp = new ArrayList<>();
     protected static int numOfTask = 0;
 
 
@@ -44,5 +45,21 @@ public class TaskList {
     public void updateTaskLists(int num, ArrayList<Task> taskList){
         numOfTask = num;
         tasks = taskList;
+    }
+    public void keywordedTaskList(String keyword, ArrayList<Task> tasks){
+        tasksTemp = tasks;
+        String[] descriptionWords;
+        int numOfMatchingTasks = 0;
+        for(int i = 1; i <= numOfTask; i+= 1){
+            descriptionWords = tasksTemp.get(i-1).getDescription().trim().split(" ");
+            for (int j = 0; j < descriptionWords.length;j+=1 ) {
+                if(descriptionWords[j].equals(keyword)) {
+                    numOfMatchingTasks += 1;
+                    System.out.println(numOfMatchingTasks + "." + "[" + tasksTemp.get(i - 1).getType() + "]" + "[" + tasksTemp.get(i - 1).getStatusIcon() + "] " + tasksTemp.get(i - 1).getDescription()
+                            + tasksTemp.get(i - 1).getDeadline() + tasksTemp.get(i - 1).getPeriod());
+                    break;
+                }
+            }
+        }
     }
 }

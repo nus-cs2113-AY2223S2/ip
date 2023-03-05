@@ -17,6 +17,7 @@ public class Messages {
     public static final String LOADING_FILE_MESSAGE = "We have loaded your file and this is the current state of your list.";
     public static final String INVALID_TASK_NUMBER_MESSAGE = "This task number does not exist!";
     public static final String DUKE_EXCEPTION_MESSAGE = "I'm sorry I'm not sure what this means!";
+    public static final String MATCHING_TASKS_MESSAGE = "Here's the list of tasks in your list that matches your keyword: ";
     public static final String WELCOME_MESSAGE =  " ___       __   _______   ___       ________  ________  _____ ______   _______ \n" +
             "|\\  \\     |\\  \\|\\  ___ \\ |\\  \\     |\\   ____\\|\\   __  \\|\\   _ \\  _   \\|\\  ___ \\ \n" +
             "\\ \\  \\    \\ \\  \\ \\   __/|\\ \\  \\    \\ \\  \\___|\\ \\  \\|\\  \\ \\  \\\\\\__\\ \\  \\ \\   __/|\n" +
