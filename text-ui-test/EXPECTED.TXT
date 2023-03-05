@@ -10,7 +10,7 @@ Hi! I'm Mike, your personal assistant! How can I help you today?
 
 We have loaded your file and this is the current state of your list.
 Here are the tasks in your list:
-You have a total of 0 tasks.
+You have a total of 0 task(s).
 
 Got it. I've added this task:
   [T][ ] borrow book
