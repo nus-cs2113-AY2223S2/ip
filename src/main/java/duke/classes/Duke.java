@@ -99,7 +99,7 @@ public class Duke {
         ui.showWelcome();
 
         try {
-            File file = new File("src/duke_list.txt");
+            File file = new File("duke_list.txt");
             if (file.createNewFile()) {
                 ui.showFileCreated();
             } else {
@@ -109,7 +109,7 @@ public class Duke {
             e.printStackTrace();
         }
         int count = 0;
-        String filePath = "src/duke_list.txt";
+        String filePath = "duke_list.txt";
         foundationList(filePath, listOfTask);
         Storage storage = new Storage(filePath, listOfTask);
 
@@ -119,7 +119,7 @@ public class Duke {
 
         try {
             ui.showFileContent();
-            storage.printFile("src/duke_list.txt");
+            storage.printFile("duke_list.txt");
         } catch (FileNotFoundException e) {
             ui.showFileNotFoundError();
         }
