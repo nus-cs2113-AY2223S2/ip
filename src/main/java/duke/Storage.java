@@ -29,7 +29,10 @@ public class Storage {
         fw.close();
     }
 
-    File f = new File("\"/Users/navya/Documents/Navya/NUS/data/Duke.txt");
+    String home = System.getProperty("user.home");
+    java.nio.file.Path path = java.nio.file.Paths.get(home, "data.txt");
+    String absolute_filepath = path.toString();
+    File f = new File(absolute_filepath);
 
     public void Storedata(Task task) throws IOException {
         //Task task = new Task(inp);

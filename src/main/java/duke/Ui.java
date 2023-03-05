@@ -4,6 +4,7 @@ public class Ui {
     protected String inp;
     public Ui() {}
     public void printStart() {
+
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
                 + "| | | | | | | |/ / _ \\\n"

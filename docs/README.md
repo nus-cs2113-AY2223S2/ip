@@ -46,12 +46,12 @@ Also adds due date for task
 
 **Command format**
 
-`deadline [task description] /by [due date]`
+`deadline [task description] /by [due date YYYY-MM-DD]`
 
 Examples
 
 ```
-deadline attend her wedding by: Nov 10 2019
+deadline attend her wedding /by 2019-12-10
 ```
 
 ---
@@ -63,12 +63,12 @@ Also adds start and end details of event
 
 **Command format**
 
-`event [task description] /by [start date]  [end date]`
+`event [task description] /by [start date YYYY-MM-DD]  [end date YYYY-MM-DD]`
 
 Examples
 
 ```
-attend the wedding from: Oct 29 2019 to: Oct 31 2019
+attend the wedding /by 2019-10-12  2019-10-17
 ```
 
 _____
