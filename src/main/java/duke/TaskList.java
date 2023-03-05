@@ -89,7 +89,6 @@ public class TaskList {
                 + task.numberOfTask(taskNameList.size());
         System.out.println(outputForDeadline);
         System.out.println(LINE);
-
     }
     public static void deleteCommand(String command){
         int indexTask = Integer.parseInt(command);
@@ -102,7 +101,6 @@ public class TaskList {
         System.out.println(task.numberOfTask(taskNameList.size()));
         System.out.println(LINE);
     }
-
     public static void findCommand(String command){
         String keyword = command.substring(5);
 
