@@ -1,332 +1,127 @@
 package duke;
 import duke.exceptions.*;
-import org.w3c.dom.Text;
 
 import java.util.Scanner;
-import java.util.ArrayList;
-import java.io.FileWriter;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileOutputStream;
+import duke.parser.Parser;
+import duke.storage.Storage;
+import duke.tasklist.TaskList;
+import duke.ui.Ui;
 public class Duke {
-    private static ArrayList<Task> tasks = new ArrayList<>();
+    private static Ui ui;
+    private static Storage storage;
+    private static TaskList taskList;
     private static int numOfTask = 0;
-    // Method to list out the tasks stored in the task list
-    public static void listTasks(){
-        System.out.println("Here are the tasks in your list:");
-        for(int i = 1; i <= numOfTask; i+= 1){
-            System.out.println(i + "." +"[" + tasks.get(i-1).getType() + "]" + "[" + tasks.get(i-1).getStatusIcon() + "] "+ tasks.get(i-1).getDescription()
-            + tasks.get(i-1).getDeadline() + tasks.get(i-1).getPeriod());
-        }
-    }
-    private static void printFile(String filePath) throws FileNotFoundException {
-        File f = new File(filePath); // create a File for the given file path
-        Scanner s = new Scanner(f); // create a Scanner using the File as the source
-        while (s.hasNext()) {
-            System.out.println(s.nextLine());
-        }
-    }
-
-    private static void appendToFile(String filePath, String textToAppend) throws IOException {
-        FileWriter fw = new FileWriter(filePath, true); // create a FileWriter in append mode
-        fw.write(textToAppend);
-        fw.close();
-    }
-
-    public static void replaceSelected(String filePath, String target, String replaceWith) {
+    public static String filePath = "src/duke_list.txt";
+    public Duke(String filePath){
+        ui = new Ui();
+        storage = new Storage(filePath);
         try {
-            // input the file content to the StringBuffer "input"
-            BufferedReader file = new BufferedReader(new FileReader(filePath));
-            StringBuffer inputBuffer = new StringBuffer();
-            String line;
-
-            while ((line = file.readLine()) != null) {
-                inputBuffer.append(line);
-                inputBuffer.append('\n');
-            }
-            file.close();
-            String inputStr = inputBuffer.toString();
-
-
-            inputStr = inputStr.replace(target, replaceWith);
-
-            // write the new string with the replaced line OVER the same file
-            FileOutputStream fileOut = new FileOutputStream(filePath);
-            fileOut.write(inputStr.getBytes());
-            fileOut.close();
-
-        } catch (Exception e) {
-            System.out.println("Problem reading file.");
-        }
-    }
-    public static void readTasks(File f){
-        numOfTask = 0;
-        try {
-            Scanner sc = new Scanner(f);
-            while(sc.hasNext()){
-                numOfTask += 1;
-                String task = sc.nextLine();
-                String[] taskSet = task.trim().split("\\|");
-                String type = taskSet[0].trim();
-                boolean isDone = taskSet[1].trim().equals("1");
-                String description = taskSet[2].trim();
-                switch(type){
-                    case"T":
-                        try {
-                            ToDo toDoTask = new ToDo(description,isDone);
-                            tasks.add(toDoTask);
-                        } catch (ToDoException e) {
-                            System.out.println("The description of a todo cannot be empty!");
-                        }
-                        break;
-                    case"D":
-                        String deadline = taskSet[3].trim();
-                        Deadline deadlineTask = new Deadline(description,isDone, deadline);
-                        tasks.add(deadlineTask);
-                        break;
-                    case "E":
-                        String fromDate = taskSet[3].trim();
-                        String toDate = taskSet[4].trim();
-                        try {
-                            Event eventTask = new Event(description,isDone, fromDate, toDate);
-                            tasks.add(eventTask);
-                        } catch (EventException e) {
-                            System.out.println("To field is empty!");
-                        }
-                        break;
-                    default:
-                }
-            }
+            taskList = new TaskList(storage.loadFile());
+            numOfTask = taskList.getNumOfTask();
         } catch (FileNotFoundException e) {
-            System.out.println("File not found");
+            ui.showCreatingFileMessage();
+            storage.createFile(filePath);
         }
-
+        ui.showWelcomeMessage(taskList);
     }
-
-    // Method used to filter the command word out of the input sentence
-    public static String filterCommand(String sentence){
-        String[] words = sentence.split(" ");  // splits into words
-        for(String word: words){
-            switch(word){
-                case "bye":
-                    return "bye";
-                case "list":
-                    return "list";
-                case "mark":
-                    return "mark";
-                case "unmark":
-                    return "unmark";
-                case "todo":
-                    return "todo";
-                case "deadline":
-                    return "deadline";
-                case "event":
-                    return "event";
-                case "delete":
-                    return "delete";
-                default:
-            }
-        }
-        return sentence;
-    }
-
-    // Method to remove the command word from the input and return the description
-    public static String filterDescription(String sentence) {
-        String command = filterCommand(sentence);
-        String description = sentence.replaceAll(command,"");
-        return description.trim();
-    }
-    // Method to remove the command word, deadline and return the description
-    public static String[] filterDescriptionAndDeadline(String sentence){
-        String[] output = new String[2];
-        String str = filterDescription(sentence);
-        int dividerPosition = str.indexOf("/");
-        String description = str.substring(0,dividerPosition-1);
-        output[0] = description.trim();
-        String deadline = str.substring(dividerPosition + 1,str.length());
-        String byDate = deadline.replaceAll("by", "");
-        output[1] = byDate.trim();
-        return output;
-    }
-    // Method to remove the command word, time period and return the description
-    public static String[] filterDescriptionAndTimePeriod(String sentence){
-        String[] output = new String[3];
-        String str = filterDescription(sentence);
-        int dividerPosition = str.indexOf("/");
-        String description = str.substring(0,dividerPosition-1);
-        output[0] = description.trim();
-        String deadline = str.substring(dividerPosition + 1,str.length());
-        String fromPeriod = deadline.replaceAll("from", "");
-        String fromDate = fromPeriod.substring(0,fromPeriod.indexOf("/"));
-        output[1] = fromDate.trim();
-        String toPeriod = fromPeriod.substring(fromPeriod.indexOf("/")+1, fromPeriod.length());
-        String toDate = toPeriod.replaceAll("to", "");
-        output[2] = toDate.trim();
-        return output;
-    }
-
-     public static boolean shouldExit(String args) throws DukeException {
-         String command = filterCommand(args);
-         int dividerPosition = args.indexOf(" ");
-         String taskNumber = args.substring(dividerPosition + 1, args.length());  //Used for mark and unmark command
-         String filePath = "src/duke_list.txt";
+     public static boolean shouldExit(String args) throws DukeException, IOException {
+        Parser parser = new Parser(args);
+        String command = parser.getCommand();
+         String taskNumber = parser.getTaskNumber(); //Used for mark and unmark command
          boolean isDone = false;
          switch(command){
              case "bye":
-                 System.out.println("Bye. Hope to see you again soon!");
+                 ui.showGoodByeMessage();
                  return true;
              case "list":
-                 listTasks();
+                 ui.showTaskList(taskList);
                  return false;
              case "mark":
                  int indexMark = Integer.parseInt(taskNumber);
-                 String typeM = tasks.get(indexMark-1).getType();
-                 switch(typeM) {
-                     case "T":
-                         String targetT =  tasks.get(indexMark-1).getType() + " | " +tasks.get(indexMark-1).getStatusIconSave() + " | " + tasks.get(indexMark-1).getDescription();
-                         tasks.get(indexMark-1).markAsDone();
-                         String replaceWithT =  tasks.get(indexMark-1).getType() + " | " + tasks.get(indexMark-1).getStatusIconSave() + " | " + tasks.get(indexMark-1).getDescription();
-                         replaceSelected(filePath, targetT, replaceWithT);
-                         break;
-                     case "D":
-                         String targetD =  tasks.get(indexMark-1).getType() + " | " +tasks.get(indexMark-1).getStatusIconSave() + " | " + tasks.get(indexMark-1).getDescription() + " | " +
-                                 tasks.get(indexMark-1).getDeadlineSave();
-                         tasks.get(indexMark-1).markAsDone();
-                         String replaceWithD =  tasks.get(indexMark-1).getType() + " | " +tasks.get(indexMark-1).getStatusIconSave() + " | " + tasks.get(indexMark-1).getDescription() + " | " +
-                                 tasks.get(indexMark-1).getDeadlineSave();
-                         replaceSelected(filePath, targetD,replaceWithD);
-                         break;
-                     case "E":
-                         String targetE =  tasks.get(indexMark-1).getType() + " | " +tasks.get(indexMark-1).getStatusIconSave() + " | " + tasks.get(indexMark-1).getDescription() + " | " +
-                                 tasks.get(indexMark-1).getPeriodSave();
-                         tasks.get(indexMark-1).markAsDone();
-                         String replaceWithE =  tasks.get(indexMark-1).getType() + " | " +tasks.get(indexMark-1).getStatusIconSave() + " | " + tasks.get(indexMark-1).getDescription() + " | " +
-                                 tasks.get(indexMark-1).getPeriodSave();
-                         replaceSelected(filePath, targetE, replaceWithE);
-                         break;
-                 }
-                 System.out.println("OK, I've marked this task as done:");
-                 System.out.println("  [" + tasks.get(indexMark-1).getStatusIcon() + "] " + tasks.get(indexMark-1).getDescription());
+                 taskList.getTask(indexMark-1).markAsDone();
+                 ui.showMarkedTask(taskList,indexMark);
+                 storage.saveToFile(taskList.getTaskList());
                  return false;
              case "unmark":
                  int indexUnmark = Integer.parseInt(taskNumber);
-                 String typeU = tasks.get(indexUnmark-1).getType();
-                 switch(typeU) {
-                     case "T":
-                         String targetT =  tasks.get(indexUnmark-1).getType() + " | " + tasks.get(indexUnmark-1).getStatusIconSave() + " | " + tasks.get(indexUnmark-1).getDescription() ;
-                         tasks.get(indexUnmark-1).markAsUndone();
-                         String replaceWithT =  tasks.get(indexUnmark-1).getType() + " | " + tasks.get(indexUnmark-1).getStatusIconSave() + " | " + tasks.get(indexUnmark-1).getDescription() ;
-                         replaceSelected(filePath, targetT, replaceWithT);
-                         break;
-                     case "D":
-                         String targetD =  tasks.get(indexUnmark-1).getType() + " | " + tasks.get(indexUnmark-1).getStatusIconSave() + " | " + tasks.get(indexUnmark-1).getDescription() + " | " +
-                                 tasks.get(indexUnmark-1).getDeadlineSave();
-                         tasks.get(indexUnmark-1).markAsUndone();
-                         String replaceWithD =  tasks.get(indexUnmark-1).getType() + " | " + tasks.get(indexUnmark-1).getStatusIconSave() + " | " + tasks.get(indexUnmark-1).getDescription() + " | " +
-                                 tasks.get(indexUnmark-1).getDeadlineSave();
-                         replaceSelected(filePath, targetD,replaceWithD);
-                         break;
-                     case "E":
-                         String targetE =  tasks.get(indexUnmark-1).getType() + " | " + tasks.get(indexUnmark-1).getStatusIconSave() + " | " + tasks.get(indexUnmark-1).getDescription() + " | " +
-                                 tasks.get(indexUnmark-1).getPeriodSave();
-                         tasks.get(indexUnmark-1).markAsUndone();
-                         String replaceWithE =  tasks.get(indexUnmark-1).getType() + " | " + tasks.get(indexUnmark-1).getStatusIconSave() + " | " + tasks.get(indexUnmark-1).getDescription() + " | " +
-                                 tasks.get(indexUnmark-1).getPeriodSave();
-                         replaceSelected(filePath, targetE, replaceWithE);
-                         break;
-                 }
-                 System.out.println("OK, I've marked this task as not done yet:");
-                 System.out.println("  [" + tasks.get(indexUnmark-1).getStatusIcon() + "] " + tasks.get(indexUnmark-1).getDescription());
+                 taskList.getTask(indexUnmark-1).markAsUndone();
+                 ui.showUnmarkedTask(taskList,indexUnmark);
+                 storage.saveToFile(taskList.getTaskList());
                  return false;
              case "todo":
                  try {
-                     ToDo toDoTask = new ToDo(filterDescription(args), isDone);
+                     ToDo toDoTask = new ToDo(parser.getDescription(), isDone);
                      numOfTask += 1;
-                     tasks.add(toDoTask);
-                     System.out.println(tasks.get(numOfTask-1));
-                     System.out.println("Now you have " + numOfTask + " task in the list.");
-                     String text = tasks.get(numOfTask-1).getType() + " | " + tasks.get(numOfTask-1).getStatusIconSave() + " | "+ tasks.get(numOfTask-1).getDescription()
+                     taskList.addTask(toDoTask);
+                     ui.showTodoTask(taskList,numOfTask);
+                     String text = taskList.getTask(numOfTask-1).getType() + " | " + taskList.getTask(numOfTask-1).getStatusIconSave() + " | "+ taskList.getTask(numOfTask-1).getDescription()
                              + System.lineSeparator();
-                     appendToFile(filePath, text);
+                     taskList.updateTaskLists(numOfTask,taskList.getTaskList());
+                     storage.appendToFile(text);
                  } catch (ToDoException e) {
-                     System.out.println("The description of a todo cannot be empty!");
-                 } catch (IOException e) {
-                     System.out.println("Something went wrong: " + e.getMessage());
+                     ui.showInvalidTodoFormatMessage();
                  }
                  return false;
              case "deadline":
                  try {
-                     String[] deadline = filterDescriptionAndDeadline(args);
-                     Deadline deadlineTask = new Deadline(deadline[0],isDone, deadline[1]);
+                     Deadline deadlineTask = new Deadline(parser.getDescription(),isDone, parser.getDeadline());
                      numOfTask += 1;
-                     tasks.add(deadlineTask);
-                     System.out.println(tasks.get(numOfTask - 1));
-                     System.out.println("Now you have " + numOfTask + " task in the list.");
-                     String text = tasks.get(numOfTask-1).getType() + " | " +  tasks.get(numOfTask-1).getStatusIconSave() + " | " + tasks.get(numOfTask-1).getDescription()
-                             + " | " + tasks.get(numOfTask-1).getDeadlineSave() + System.lineSeparator();
-
-                     appendToFile(filePath,text);
+                     taskList.addTask(deadlineTask);
+                     ui.showDeadlineTask(taskList,numOfTask);
+                     String text = taskList.getTask(numOfTask-1).getType() + " | " +  taskList.getTask(numOfTask-1).getStatusIconSave() + " | " + taskList.getTask(numOfTask-1).getDescription()
+                             + " | " + taskList.getTask(numOfTask-1).getDeadlineSave() + System.lineSeparator();
+                     taskList.updateTaskLists(numOfTask,taskList.getTaskList());
+                     storage.appendToFile(text);
                  }catch (StringIndexOutOfBoundsException e){
-                     System.out.println("The description of deadline and/or date of deadline cannot be empty!");
-                 } catch (IOException e) {
-                     System.out.println("Something went wrong: " + e.getMessage());
+                     ui.showInvalidDeadlineFormatMessage();
                  }
                  return false;
              case "event":
                  try {
-                     String[] event = filterDescriptionAndTimePeriod(args);
-                     Event eventTask = new Event(event[0],isDone, event[1], event[2]);
+                     Event eventTask = new Event(parser.getDescription(), isDone, parser.getFromDate(), parser.getToDate());
                      numOfTask += 1;
-                     tasks.add(eventTask);
-                     System.out.println(tasks.get(numOfTask - 1));
-                     System.out.println("Now you have " + numOfTask + " task in the list.");
-                     String text =tasks.get(numOfTask-1).getType() + " | " + tasks.get(numOfTask-1).getStatusIconSave() + " | " + tasks.get(numOfTask-1).getDescription()
-                             + " | " + tasks.get(numOfTask-1).getPeriodSave() + System.lineSeparator();
-                     appendToFile(filePath,text);
+                     taskList.addTask(eventTask);
+                     ui.showEventTask(taskList,numOfTask);
+                     String text =taskList.getTask(numOfTask-1).getType() + " | " + taskList.getTask(numOfTask-1).getStatusIconSave() + " | " + taskList.getTask(numOfTask-1).getDescription()
+                             + " | " + taskList.getTask(numOfTask-1).getPeriodSave() + System.lineSeparator();
+                     taskList.updateTaskLists(numOfTask,taskList.getTaskList());
+                     storage.appendToFile(text);
                  }catch(StringIndexOutOfBoundsException e){
-                     System.out.println("The description of the event and/or period of it cannot be empty!");
+                     ui.showInvalidEventFormatMessage();
                  }catch(EventException e){
-                     System.out.println("To field is empty!");
-                 } catch (IOException e) {
-                     System.out.println("Something went wrong: " + e.getMessage());
+                     ui.showEmptyToFieldMessage();
                  }
                  return false;
              case "delete":
-                 int index = Integer.parseInt(taskNumber);
-                 System.out.println("Noted. I've removed this task");
-                 System.out.println(index + "." +"[" + tasks.get(index-1).getType() + "]" + "[" + tasks.get(index-1).getStatusIcon() + "] "+ tasks.get(index-1).getDescription()
-                         + tasks.get(index-1).getDeadline() + tasks.get(index-1).getPeriod());
-                 tasks.remove(index-1);
+                 int indexDelete = Integer.parseInt(taskNumber);
+                 ui.showDeletedTask(taskList,indexDelete,numOfTask);
+                 taskList.removeTask(indexDelete-1);
                  numOfTask -= 1;
-                 System.out.println("Now you have " + numOfTask + " task in the list.");
+                 taskList.updateTaskLists(numOfTask,taskList.getTaskList());
+                 storage.saveToFile(taskList.getTaskList());
                  return false;
              default:
                  throw new DukeException();
          }
      }
 
-    public static void main(String[] args) {
-        Greetings welcome = new Greetings();
-        System.out.println(welcome);
-        File list = new File("src/duke_list.txt");
-        readTasks(list);
+    public void run(){
         try {
-            System.out.println("Here's the current state of your list");
-            printFile("src/duke_list.txt");
             Scanner sc = new Scanner(System.in);
             String in = sc.nextLine();
             while (shouldExit(in) == false) {
                 in = sc.nextLine();
             }
         } catch (ArrayIndexOutOfBoundsException e){
-            System.out.println("This task number does not exist!");
-        } catch (DukeException e){
-            System.out.println("Sorry I don't understand what this means!");
-        } catch (FileNotFoundException e){
-            System.out.println("Sorry this file does not exist!");
+            ui.showInvalidTaskNumberMessage();
+        } catch (DukeException | IOException e) {
+            ui.showDukeExceptionMessage();
         }
     }
+    public static void main(String[] args) throws IOException {
+        new Duke(filePath).run();
+    }
 }
+

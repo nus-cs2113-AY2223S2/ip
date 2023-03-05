@@ -1,3 +1,5 @@
-T | 0 | homework
-D | 0 | work | monday
-E | 0 | party | today | morrow
+T | 0 | works
+T | 1 | work
+T | 0 | huh
+D | 0 | workss | tmr
+E | 1 | party | tdy | tmr
