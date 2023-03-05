@@ -7,7 +7,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Ui {
+public class Ui { 
     private Scanner scanner;
 
     public Ui() {
