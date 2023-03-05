@@ -12,6 +12,9 @@ import java.util.Scanner;
 
 import static duke.exceptions.UserInputException.inputExceptionType.INVALID_TASK_TYPE;
 
+/**
+ * Driver class for user interaction, including input from user and output shown to user, and the processing involved.
+ */
 public class Ui {
     //String constants
     static final String LOGO = " ____        _        \n" + "|  _ \\ _   _| | _____ \n" + "| | | | | | | |/ / _ \\\n" + "| |_| | |_| |   <  __/\n" + "|____/ \\__,_|_|\\_\\___|\n";
@@ -34,6 +37,13 @@ public class Ui {
     public Ui(TaskList taskList){
         this.taskList = taskList;
     }
+
+    /**
+     * Returns task read from text file
+     * @param nextLine next line of task in string format
+     * @return task decoded in task format
+     * @throws DukeException if the task format is wrong in the text file
+     */
     static Task parseTask(String nextLine) throws DukeException {
         final String[] split = nextLine.trim().split("\\|", 3);
         Task nextTask;
@@ -66,6 +76,11 @@ public class Ui {
         return SCANNER.nextLine();
     }
 
+    /**
+     * Parse and execute user's input command, including list, add, mark, unmark, delete, find, and exit
+     * @param userInputString user input in string format
+     * @throws DukeException if input is invalid
+     */
     void executeCommand(String userInputString) throws DukeException {
         showToUser(SEPARATOR);
         final String[] commandTypeAndParams = splitCommandWordAndArgs(userInputString);
@@ -126,6 +141,12 @@ public class Ui {
             System.out.println(LINE_PREFIX + m);
         }
     }
+
+    /**
+     * Split user's input into two parts, in the format of array of string
+     * @param rawUserInput user input in string format
+     * @return array of string of user inputs
+     */
     String[] splitCommandWordAndArgs(String rawUserInput) {
         final String[] split = rawUserInput.trim().split("\\s+", 2);
         return split.length == 2 ? split : new String[]{split[0], ""}; // else case: no parameters

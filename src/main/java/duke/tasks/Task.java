@@ -6,6 +6,11 @@ import duke.exceptions.*;
 import static duke.exceptions.UserInputException.inputExceptionType.EMPTY_TASK_DESCRIPTION;
 
 //initial skeleton adapted from https://nus-cs2113-ay2223s2.github.io/website/schedule/week3/project.html partial solution
+
+/**
+ * Abstract class representing each task,
+ * a <code>Task</code> object contains minimally its <code>description</code> and <code>isDone</code> status
+ */
 public abstract class Task {
     String description;
     private boolean isDone;
