@@ -1,0 +1,29 @@
+{
+  "taskList": [
+    {
+      "dueBy": "17/02/2023 0101",
+      "type": "Deadline",
+      "task": "buy a cake ",
+      "isDone": true,
+      "endTime": "2023-03-02T22:54:55.9538114"
+    },
+    {
+      "startString": "monday",
+      "endString": "18/02/2023 1500",
+      "startTime": "2023-03-02T22:54:55.987072",
+      "type": "Event",
+      "task": "attend another course",
+      "isDone": false,
+      "endTime": "2023-03-02T22:54:55.987072"
+    },
+    {
+      "startString": "19/02/2023 1545",
+      "endString": "tuesday",
+      "startTime": "2023-03-02T22:54:55.987072",
+      "type": "Event",
+      "task": "attend another another course",
+      "isDone": false,
+      "endTime": "2023-03-02T22:54:55.987072"
+    }
+  ]
+}
