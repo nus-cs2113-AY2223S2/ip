@@ -1,9 +1,11 @@
 package duke.entity;
 
 import duke.task.Task;
-
 import java.util.ArrayList;
 
+/**
+ * Contains the task list with operations to manipulate tasks in the list
+ */
 public class TaskList {
     private ArrayList<Task> taskArrayList;
 
@@ -33,9 +35,13 @@ public class TaskList {
         this.taskArrayList.remove(index);
     }
 
+    /**
+     * Searches for tasks in task list that matches a given keyword
+     *
+     * @param keyword string to search for match
+     * @return contains the found/matched tasks
+     */
     public ArrayList<Task> findTaskArrayList(String keyword) {
-
-        System.out.println("KEYWORD: " + keyword);
         ArrayList<Task> tempTaskArrayList = new ArrayList<Task>();
         for (Task task : taskArrayList) {
             if (task.getDescription().matches("(.*)" + keyword + "(.*)")) {

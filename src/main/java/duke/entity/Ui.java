@@ -9,9 +9,19 @@ import duke.task.Todo;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Interacts with user and outputs information given a response to users inputs
+ */
 public class Ui {
     private Parser parser = new Parser();
 
+    /**
+     * Takes input from user's command and processes it depending on their request
+     *
+     * @param taskList list of tasks
+     * @param storage storage object
+     * @return true if continue program, false otherwise
+     */
     public boolean manageInput(TaskList taskList, Storage storage) {
         Scanner scanner = new Scanner(System.in);
         try {
@@ -36,7 +46,7 @@ public class Ui {
                 Task tempTask = new Deadline(input.substring(9), parser.parseDeadlineBy());
                 taskList.addTask(tempTask);
                 printAddedTask(tempTask, taskList.taskSize());
-               storage.writeDukeFile(tempTask, true);
+                storage.writeDukeFile(tempTask, true);
             } else if (input.startsWith("event") && parser.validateEventInput()) {
                 Task tempTask = new Event(input.substring(6), parser.parseEventFrom(), parser.parseEventTo());
                 taskList.addTask(tempTask);
@@ -53,6 +63,31 @@ public class Ui {
             System.out.println(ex.toString());
         }
         return true;
+    }
+
+    /**
+     * Prints goodbye message
+     */
+    public void goodbye() {
+        System.out.println("____________________________________________________________");
+        System.out.println("Bye. Hope to see you again soon!");
+        System.out.println("____________________________________________________________\n");
+    }
+
+    /**
+     * Prints greeting message
+     */
+    public void greetings() {
+        String logo = " ____        _        \n"
+                + "|  _ \\ _   _| | _____ \n"
+                + "| | | | | | | |/ / _ \\\n"
+                + "| |_| | |_| |   <  __/\n"
+                + "|____/ \\__,_|_|\\_\\___|\n";
+        System.out.println("Hello from\n" + logo);
+        System.out.println("____________________________________________________________");
+        System.out.println("Hello! I'm Duke");
+        System.out.println("What can I do for you?");
+        System.out.println("____________________________________________________________\n");
     }
 
     private void selectTask(String input, TaskList taskList) {
@@ -125,25 +160,6 @@ public class Ui {
         System.out.println("Got it. I've added this task:");
         System.out.println(task.toString());
         System.out.println("Now you have " + counter + " tasks in the list.");
-        System.out.println("____________________________________________________________\n");
-    }
-
-    public void goodbye() {
-        System.out.println("____________________________________________________________");
-        System.out.println("Bye. Hope to see you again soon!");
-        System.out.println("____________________________________________________________\n");
-    }
-
-    public void greetings() {
-        String logo = " ____        _        \n"
-                + "|  _ \\ _   _| | _____ \n"
-                + "| | | | | | | |/ / _ \\\n"
-                + "| |_| | |_| |   <  __/\n"
-                + "|____/ \\__,_|_|\\_\\___|\n";
-        System.out.println("Hello from\n" + logo);
-        System.out.println("____________________________________________________________");
-        System.out.println("Hello! I'm Duke");
-        System.out.println("What can I do for you?");
         System.out.println("____________________________________________________________\n");
     }
 }
