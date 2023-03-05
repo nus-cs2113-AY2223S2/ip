@@ -9,7 +9,6 @@ import duke.Task;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -17,16 +16,32 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+/**
+ * Represents the file used to store the task list data.
+ */
 public class Storage {
-
-    ArrayList<Task> tasksList = new ArrayList<>();
+    /** Task list used to store all the tasks added/ edited by the user*/
+    protected ArrayList<Task> tasksList = new ArrayList<>();
     int numOfTask = 0;
+
+    /** Default file path set in the event that the user doesn't provide a file name.*/
     public static String filePath = "src/duke_list.txt";
     public Path path = Paths.get(filePath);
+
+    /**
+     * Reassigns the default file path to the user's defined file path.
+     *
+     * @param userFilePath the user's defined file path.
+     */
     public Storage(String userFilePath){
         filePath = userFilePath;
     }
 
+    /**
+     * Loads task list data from the storage file and returns it.
+     *
+     * @throws FileNotFoundException if the file cannot be located or does not exist.
+     */
     public ArrayList<Task> loadFile () throws FileNotFoundException {
         numOfTask = 0;
         Scanner sc = null;
@@ -72,20 +87,13 @@ public class Storage {
         }
         return tasksList;
     }
-    public static void printFile() throws FileNotFoundException {
-        File f = new File(filePath); // create a File for the given file path
-        Scanner s = new Scanner(f); // create a Scanner using the File as the source
-        while (s.hasNext()) {
-            System.out.println(s.nextLine());
-        }
-    }
 
-    public void appendToFile(String textToAppend) throws IOException {
-        FileWriter fw = new FileWriter(filePath); // create a FileWriter in append mode
-        fw.write(textToAppend);
-        fw.close();
-    }
-
+    /**
+     * Creates a new storage file.
+     *
+     * @param filePath the location of the storage file.
+     * @throws IOException if there were errors creating the file.
+     */
     public void createFile(String filePath){
         try{
             File f = new File(filePath);
@@ -98,6 +106,13 @@ public class Storage {
             System.out.println("Error Occurred");
         }
     }
+
+    /**
+     * Saves changes made to the task list to the storage file by calling the writeToFile method.
+     *
+     * @param taskArrayList an Array List containing Tasks added by the user.
+     * @throws IOException if there were errors writing to the file.
+     */
     public void saveToFile(ArrayList<Task> taskArrayList){
         try{
             writeToFile(taskArrayList);
@@ -105,6 +120,13 @@ public class Storage {
             System.out.println("An error has occurred" + e.getMessage());
         }
     }
+
+    /**
+     * Writes all the data in the task list into the storage file.
+     *
+     * @param taskArrayList an Array List containing Tasks added by the user.
+     * @throws IOException if there were errors writing to the file.
+     */
     public void writeToFile(ArrayList<Task> taskArrayList) throws IOException {
         FileWriter fw = new FileWriter(filePath);
         for(Task t : taskArrayList) {

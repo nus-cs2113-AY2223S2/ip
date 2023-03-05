@@ -7,7 +7,11 @@ todo join sports club
 todo read book
 list
 mark 4
+mark 5
 list
+find book
 delete 3
+list
+unmark 3
 list
 bye
