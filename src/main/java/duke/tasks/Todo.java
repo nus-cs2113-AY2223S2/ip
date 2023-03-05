@@ -4,6 +4,9 @@ import duke.exceptions.*;
 
 import static duke.exceptions.UserInputException.inputExceptionType.EMPTY_TASK_DESCRIPTION;
 
+/**
+ * Represents a Todo task
+ */
 public class Todo extends Task{
 
     public Todo(String description) throws DukeException{

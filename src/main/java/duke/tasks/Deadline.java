@@ -5,6 +5,11 @@ import duke.exceptions.UserInputException;
 import static duke.exceptions.UserInputException.inputExceptionType.EMPTY_DEADLINE_TIME;
 import static duke.exceptions.UserInputException.inputExceptionType.EMPTY_TASK_DESCRIPTION;
 
+/**
+ * Represents a Deadline task,
+ * adding on to features of a Task object,
+ * Deadline object also has one more attribute of deadline as <code>by</code>
+ */
 //initial skeleton adapted from  https://nus-cs2113-ay2223s2.github.io/website/schedule/week4/project.html partial solution
 public class Deadline extends Task {
 

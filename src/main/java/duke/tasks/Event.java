@@ -4,6 +4,11 @@ import duke.exceptions.UserInputException;
 
 import static duke.exceptions.UserInputException.inputExceptionType.*;
 
+/**
+ * Represents an Event task,
+ * adding on to features of a Task object,
+ * Event object also has two more attributes of <code>startTime</code> and <code>endTime</code>
+ */
 public class Event extends Task {
     protected String startTime;
     protected String endTime;
