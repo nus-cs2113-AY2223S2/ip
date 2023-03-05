@@ -1,29 +1,18 @@
-# User Guide
+# Duke Program User Guide
 
-## Features 
+## Input commands 
+### Add to task
+- todo [description]
+- deadline [description]/[by]
+- event [description]/[from]/[to]
 
-### Feature-ABC
+### Manipulate tasks
+- mark [task number]
+- delete [task number]
 
-Description of the feature.
+### Get tasks
+- list
+- find [search]
 
-### Feature-XYZ
-
-Description of the feature.
-
-## Usage
-
-### `Keyword` - Describe action
-
-Describe the action and its outcome.
-
-Example of usage: 
-
-`keyword (optional arguments)`
-
-Expected outcome:
-
-Description of the outcome.
-
-```
-expected output
-```
+### Exit program
+- bye
