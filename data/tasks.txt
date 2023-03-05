@@ -1,0 +1,3 @@
+T|0|hellp
+D|1|help /monday
+T|0|fasdfsdaf
