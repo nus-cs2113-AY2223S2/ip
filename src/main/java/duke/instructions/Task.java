@@ -3,15 +3,18 @@ package duke.instructions;
 public class Task {
 
     protected String description;
-    protected boolean isDone;
+    protected boolean isDone = false;
     protected String state;
     protected String checkComplete;
-    protected String taskType;
+    protected static String taskType;
 
-    protected String taskName;
+
     protected String taskList;
     public Task(String description) {
         this.description = description;
+    }
+    public Task(){
+
     }
 
     public void mark() {
@@ -32,13 +35,11 @@ public class Task {
     public String getTaskList(){
         return taskList;
     }
-    public String getTaskType(){
+    public  String getTaskType(){
         return taskType;
     }
 
-    public String getTaskName(){
-        return taskName;
-    }
+
     public String guideline(){
        return "     Here are the task in your list: "
                + System.lineSeparator();
@@ -49,5 +50,12 @@ public class Task {
 
     }
 
+    public String taskStatus(){
+        if(getStatusIcon().equals("X")){
+            return "Done";
+        }else{
+            return "Not Done";
+        }
+    }
 }
 

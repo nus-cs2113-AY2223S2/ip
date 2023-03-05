@@ -5,19 +5,21 @@ public class Todo extends Task{
     protected String taskType;
     public Todo(String description) {
         super(description);
-        this.taskType = description;
     }
 
-    @Override
-    public String getTaskName(){
-        return this.taskName;
-    }
+
 
     @Override
     public String getState(){
-        String arrayOfTodo = this.description.substring(description.indexOf(" ") + 1);
-        return "      [T]" + "[" + getStatusIcon() + "]" +  " "
-                + arrayOfTodo + System.lineSeparator();
+        if(description.contains("|")){
+            String[] inputCommands = description.split("\\|");
+            return "      [T]" + "[" + getStatusIcon() + "]" + " "
+                    + inputCommands[2].trim() + System.lineSeparator();
+        }else {
+            String arrayOfTodo = this.description.substring(description.indexOf(" ") + 1);
+            return "      [T]" + "[" + getStatusIcon() + "]" + " "
+                    + arrayOfTodo + System.lineSeparator();
+        }
     }
 
     @Override
@@ -26,13 +28,12 @@ public class Todo extends Task{
                 + System.lineSeparator();
     }
 
-    @Override
-    public String getTaskType() {
-        return taskType;
-    }
-
     public void setTaskType(String taskType) {
         this.taskType = taskType;
+    }
+    @Override
+    public String getTaskType(){
+        return this.taskType;
     }
 
 
@@ -41,8 +42,16 @@ public class Todo extends Task{
        String arrayOfTodo = this.description.substring(description.indexOf(" ") + 1);
         return arrayOfTodo;
    }
+    public String taskStatus(){
+        if(getStatusIcon().equals("X")){
+            return "Done";
+        }else{
+            return "Not Done";
+        }
+    }
+    }
 
-}
+
 
 
 

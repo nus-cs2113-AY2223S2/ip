@@ -1,7 +1,15 @@
 package duke;
 
+/*
+    Contains the methods to display the greeting when the program start
+ */
+
 public class Ui {
     public static final String LINE = "    ____________________________________________________________";
+
+    /**
+     * For greeting
+     */
     public static void greeting() {
 
         System.out.println(LINE);

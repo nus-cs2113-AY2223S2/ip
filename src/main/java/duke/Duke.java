@@ -6,9 +6,8 @@ import java.util.Scanner;
 
 public class Duke {
 
-    private static final String FILE_PATH = "data/tasks.txt";
-    
     private static final ArrayList<Task> taskNameList = new ArrayList<>();
+    private static String filePath = "data/tasklist.txt";
 
 
     public Duke(String filePath) {
@@ -20,23 +19,20 @@ public class Duke {
         }
     }
 
-
-
     public static void run() {
 
         Ui.greeting();
         boolean isRunning = true;
 
         while (isRunning) {
-            isRunning = Parser.checkInput(taskNameList);
+            isRunning = Parser.checkInput(taskNameList, filePath);
 
         }
-        Storage.writeTaskToFile(FILE_PATH, taskNameList);
         Parser.sayBye();
 
     }
 
     public static void main(String[] args) {
-        new Duke("data/tasks.txt").run();
+        new Duke(filePath).run();
     }
 }
