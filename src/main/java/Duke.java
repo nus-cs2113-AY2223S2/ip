@@ -27,17 +27,13 @@ public class Duke {
         String input;
         while (true) {
             input = Ui.takeInput();
-            if (input.contains(StrIntLib.cmdBye)) {
+            boolean terminate = input.toLowerCase().equals(StrIntLib.cmdBye);
+            if (terminate) {
                 Ui.byeMessage();
                 return;
             }
             Parser.parseCommand(input);
-            try {
-                Storage.writeSave();
-                System.out.println(StrIntLib.saveDone);
-            } catch (IOException e) {
-                System.out.println(StrIntLib.saveError);
-            }
+            System.out.println("");
         }
     }
 }

@@ -3,7 +3,12 @@
  */
 public class StrIntLib {
     public static final String byeText = "See ya!";
-    public static final String welcomeText = "Hello! I'm Duke!\nWhat can I do for you?";
+    public static final String welcomeText = " ____        _        \n"
+                                            + "|  _ \\ _   _| | _____ \n"
+                                            + "| | | | | | | |/ / _ \\\n"
+                                            + "| |_| | |_| |   <  __/\n"
+                                            + "|____/ \\__,_|_|\\_\\___|\n"
+                                            + "Hello! I'm Duke!\nWhat can I do for you?";
     public static final String listText= "Here are the tasks in your list:";
     public static final String noItemText = "Item not found!";
     public static final String unmarkText = "OK, I've marked this task as not done yet:";
@@ -23,6 +28,7 @@ public class StrIntLib {
     public static final String cmdDeadline = "deadline";
     public static final String cmdDelete = "delete";
     public static final String cmdFind = "find";
+    public static final String cmdHelp = "help";
     public static final String to = "to ";
     public static final String toReplacement = " ";
     public static final String from = "from ";
@@ -51,4 +57,15 @@ public class StrIntLib {
     public static final String saveLoaded = "Save file loaded!";
     public static final String noMatches = "There are no matching tasks!";
     public static final String matchesListText = "Here are the matching tasks in your list:";
+    public static final String[] cmds = {"1. todo <insert task description>",
+            "2. deadline <insert task description> /by <insert deadline>",
+            "3. event <insert task description> /from <insert start time> /to <insert end time>",
+            "4. find <insert search term>",
+            "5. mark <insert task number>",
+            "6. unmark <insert task number>",
+            "7. delete <insert task number>",
+            "8. list",
+            "9. help",
+            "10. bye"
+    };
 }
