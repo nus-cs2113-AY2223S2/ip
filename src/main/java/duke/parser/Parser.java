@@ -1,6 +1,10 @@
 package duke.parser;
 
+/**
+ * Parses the user's input.
+ */
 public class Parser {
+
     protected String command;
     protected String keyword;
     protected String description;
@@ -10,9 +14,14 @@ public class Parser {
     protected String taskNumber;
     protected boolean shouldExit;
 
-    public Parser(String inputText) {
-        int dividerPosition = inputText.indexOf(" ");
-        String commandWord = filterCommand(inputText);
+    /**
+     * Parses the user's input into different commands and stores its information.
+     *
+     * @param userInput full user input string.
+     */
+    public Parser(String userInput) {
+        int dividerPosition = userInput.indexOf(" ");
+        String commandWord = filterCommand(userInput);
         command = commandWord;
         switch (commandWord) {
             case "bye":
@@ -22,41 +31,47 @@ public class Parser {
                 shouldExit = false;
                 break;
             case "mark":
-                taskNumber = inputText.substring(dividerPosition + 1, inputText.length());
+                taskNumber = userInput.substring(dividerPosition + 1, userInput.length());
                 shouldExit = false;
                 break;
             case "unmark":
-                taskNumber = inputText.substring(dividerPosition + 1, inputText.length());
+                taskNumber = userInput.substring(dividerPosition + 1, userInput.length());
                 shouldExit = false;
                 break;
             case "todo":
-                description = filterDescription(inputText);
+                description = filterDescription(userInput);
                 shouldExit = false;
                 break;
             case "deadline":
-                description = filterDescriptionAndDeadline(inputText)[0];
-                deadline = filterDescriptionAndDeadline(inputText)[1];
+                description = filterDescriptionAndDeadline(userInput)[0];
+                deadline = filterDescriptionAndDeadline(userInput)[1];
                 shouldExit = false;
                 break;
             case "event":
-                description = filterDescriptionAndTimePeriod(inputText)[0];
-                fromDate = filterDescriptionAndTimePeriod(inputText)[1];
-                toDate = filterDescriptionAndTimePeriod(inputText)[2];
+                description = filterDescriptionAndTimePeriod(userInput)[0];
+                fromDate = filterDescriptionAndTimePeriod(userInput)[1];
+                toDate = filterDescriptionAndTimePeriod(userInput)[2];
                 shouldExit = false;
                 break;
             case "delete":
-                taskNumber = inputText.substring(dividerPosition + 1, inputText.length());
+                taskNumber = userInput.substring(dividerPosition + 1, userInput.length());
                 shouldExit = false;
                 break;
             case "find":
-                keyword = filterDescription(inputText);
+                keyword = filterDescription(userInput);
                 shouldExit = false;
             default:
         }
     }
 
-    private static String filterCommand(String sentence) {
-        String[] words = sentence.split(" ");  // splits into words
+    /**
+     * Filters out the command word from the user's input string.
+     *
+     * @param userInput full user input string.
+     * @return command word based on the user's input.
+     */
+    private static String filterCommand(String userInput) {
+        String[] words = userInput.split(" ");  // splits into words
         for (String word : words) {
             switch (word) {
                 case "bye":
@@ -80,19 +95,30 @@ public class Parser {
                 default:
             }
         }
-        return sentence;
+        return userInput;
     }
 
-    public static String filterDescription(String sentence) {
-        String command = filterCommand(sentence);
-        String description = sentence.replaceAll(command, "");
+    /**
+     * Filters out the description from the user's input string.
+     *
+     * @param userInput full user input string.
+     * @return a string which is the description of the task based on the user's input.
+     */
+    public static String filterDescription(String userInput) {
+        String command = filterCommand(userInput);
+        String description = userInput.replaceAll(command, "");
         return description.trim();
     }
 
-    // Method to remove the command word, deadline and return the description
-    public static String[] filterDescriptionAndDeadline(String sentence) {
+    /**
+     * Filters out the description and the deadline date from the user's input string.
+     *
+     * @param userInput full user input string.
+     * @return a string array containing the description and deadline of the task based on the user's input.
+     */
+    public static String[] filterDescriptionAndDeadline(String userInput) {
         String[] output = new String[2];
-        String str = filterDescription(sentence);
+        String str = filterDescription(userInput);
         int dividerPosition = str.indexOf("/");
         String description = str.substring(0, dividerPosition - 1);
         output[0] = description.trim();
@@ -102,9 +128,15 @@ public class Parser {
         return output;
     }
 
-    public static String[] filterDescriptionAndTimePeriod(String sentence) {
+    /**
+     * Filters out the description and time period from the user's input string.
+     *
+     * @param userInput full user input string.
+     * @return a string array containing the description and time period of the task based on the user's input in.
+     */
+    public static String[] filterDescriptionAndTimePeriod(String userInput) {
         String[] output = new String[3];
-        String str = filterDescription(sentence);
+        String str = filterDescription(userInput);
         int dividerPosition = str.indexOf("/");
         String description = str.substring(0, dividerPosition - 1);
         output[0] = description.trim();

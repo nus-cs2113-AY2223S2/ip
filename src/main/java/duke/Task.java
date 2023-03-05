@@ -1,9 +1,18 @@
 package duke;
 
+/**
+ * Represents a task.
+ */
 public class Task {
     protected String description;
     protected boolean isDone;
 
+    /**
+     * Sets the descriptions of the task and its done status .
+     *
+     * @param description description of the task.
+     * @param isDone done status of the task.
+     */
     public Task(String description, boolean isDone) {
         this.description = description;
         this.isDone = isDone;

@@ -1,4 +1,0 @@
-T | 0 | work
-T | 0 | homework
-T | 0 | homework
-T | 0 | homework

@@ -8,12 +8,23 @@ import duke.parser.Parser;
 import duke.storage.Storage;
 import duke.tasklist.TaskList;
 import duke.ui.Ui;
+
+/**
+ * Entry point of the Mike application.
+ * Initialises the application and begins interaction with the user.
+ */
 public class Duke {
     private static Ui ui;
     private static Storage storage;
     private static TaskList taskList;
     private static int numOfTask = 0;
     public static String filePath = "src/duke_list.txt";
+
+    /**
+     * Sets up the required objects, loads up the storage file and prints the welcome message to the user.
+     *
+     * @param filePath the location of the storage file.
+     */
     public Duke(String filePath){
         ui = new Ui();
         storage = new Storage(filePath);
@@ -26,10 +37,19 @@ public class Duke {
         }
         ui.showWelcomeMessage(taskList);
     }
-     public static boolean shouldExit(String args) throws DukeException, IOException {
-        Parser parser = new Parser(args);
+
+    /**
+     * Processes the user inputs and executes it until the user issues the exit command.
+     *
+     * @param userInput full user input string.
+     * @return true if bye command is issued by user, false otherwise.
+     * @throws DukeException if command issued by user is not recognized.
+     * @throws IOException if user input string is not recognized.
+     */
+     public static boolean shouldExit(String userInput) throws DukeException, IOException {
+        Parser parser = new Parser(userInput);
         String command = parser.getCommand();
-         String taskNumber = parser.getTaskNumber(); //Used for mark and unmark command
+         String taskNumber = parser.getTaskNumber();
          boolean isDone = false;
          switch(command){
              case "bye":
@@ -56,8 +76,6 @@ public class Duke {
                      numOfTask += 1;
                      taskList.addTask(toDoTask);
                      ui.showTodoTask(taskList,numOfTask);
-                     String text = taskList.getTask(numOfTask-1).getType() + " | " + taskList.getTask(numOfTask-1).getStatusIconSave() + " | "+ taskList.getTask(numOfTask-1).getDescription()
-                             + System.lineSeparator();
                      taskList.updateTaskLists(numOfTask,taskList.getTaskList());
                      storage.saveToFile(taskList.getTaskList());
                  } catch (ToDoException e) {
@@ -70,8 +88,6 @@ public class Duke {
                      numOfTask += 1;
                      taskList.addTask(deadlineTask);
                      ui.showDeadlineTask(taskList,numOfTask);
-                     String text = taskList.getTask(numOfTask-1).getType() + " | " +  taskList.getTask(numOfTask-1).getStatusIconSave() + " | " + taskList.getTask(numOfTask-1).getDescription()
-                             + " | " + taskList.getTask(numOfTask-1).getDeadlineSave() + System.lineSeparator();
                      taskList.updateTaskLists(numOfTask,taskList.getTaskList());
                      storage.saveToFile(taskList.getTaskList());
                  }catch (StringIndexOutOfBoundsException e){
@@ -84,8 +100,6 @@ public class Duke {
                      numOfTask += 1;
                      taskList.addTask(eventTask);
                      ui.showEventTask(taskList,numOfTask);
-                     String text =taskList.getTask(numOfTask-1).getType() + " | " + taskList.getTask(numOfTask-1).getStatusIconSave() + " | " + taskList.getTask(numOfTask-1).getDescription()
-                             + " | " + taskList.getTask(numOfTask-1).getPeriodSave() + System.lineSeparator();
                      taskList.updateTaskLists(numOfTask,taskList.getTaskList());
                      storage.saveToFile(taskList.getTaskList());
                  }catch(StringIndexOutOfBoundsException e){
@@ -112,6 +126,13 @@ public class Duke {
          }
      }
 
+    /**
+     * Runs the program until termination condition has been satisfied.
+     *
+     * @throws ArrayIndexOutOfBoundsException if task number provided does not exist.
+     * @throws DukeException if command issued by user is not recognized.
+     * @throws IOException is user input string is not recognized.
+     */
     public void run(){
         try {
             Scanner sc = new Scanner(System.in);
