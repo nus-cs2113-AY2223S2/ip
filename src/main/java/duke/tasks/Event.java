@@ -7,7 +7,12 @@ import static duke.exceptions.UserInputException.inputExceptionType.*;
 public class Event extends Task {
     protected String startTime;
     protected String endTime;
-
+    public String getStartTime(){
+        return startTime;
+    }
+    public String getEndTime(){
+        return endTime;
+    }
     public Event(String newTaskInfo) throws UserInputException {
         final String[] eventSplit = newTaskInfo.trim().split("/+", 3);
         if (eventSplit[0].equals("")){

@@ -12,6 +12,7 @@ public class Todo extends Task{
             throw new UserInputException(EMPTY_TASK_DESCRIPTION,"todo");
         }
     }
+
     @Override
     public String toString() {
         return "[T]" + super.toString();

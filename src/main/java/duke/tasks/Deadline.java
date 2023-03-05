@@ -10,6 +10,10 @@ public class Deadline extends Task {
 
     protected String by;
 
+    public String getBy() {
+        return by;
+    }
+
     public Deadline(String newTaskInfo) throws UserInputException {
         final String[] deadlineSplit = newTaskInfo.trim().split("/by", 2);
         if (deadlineSplit[0].equals("")){
