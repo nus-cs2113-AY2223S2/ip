@@ -1,7 +1,11 @@
 package Duke.Task;
 
 import Duke.Exception.EmptyToDoException;
+import Duke.Ui;
 
+/**
+ * Represents a ToDos object which is identified by the type of task T. Contains only description.
+ */
 public class ToDos extends Task {
     private static final int TODOS_INDEX = 5;
     private String taskLabel = "[T]";

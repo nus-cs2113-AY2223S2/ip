@@ -8,6 +8,10 @@ public class Events extends Task {
     private static final int SECOND_COLON_INDEX = 2;
     private String timeLine;
     private String taskLabel = "[E]";
+    /**
+     * Represents an Events object which is identified by the type E. Contains description, start time
+     * and end time.
+     */
     public Events(String input) throws EmptyEventsException {
         super(input.substring(EVENT_INDEX, input.indexOf('/') - 1));
         super.setTaskLabel(taskLabel);
@@ -22,6 +26,12 @@ public class Events extends Task {
         return inputAfterSplit;
     }
 
+    /**
+     * Returns the starting time of the task.
+     *
+     * @param input user input to be parsed.
+     * @return starting time of the tasked from parsing.
+     */
     @Override
     public String getStartTime(String input) {
         String[] inputAfterSplit = splitInput(input);
@@ -31,6 +41,12 @@ public class Events extends Task {
         return startTimeCorrectFormat.toString();
     }
 
+    /**
+     * Returns the ending time of the task.
+     *
+     * @param input user input to be parsed.
+     * @return ending time of the tasked from parsing.
+     */
     @Override
     public String getEndTime(String input) {
         String[] inputAfterSplit = splitInput(input);
