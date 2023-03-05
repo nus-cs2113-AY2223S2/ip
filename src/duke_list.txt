@@ -1,0 +1,5 @@
+T | 0 | works
+T | 1 | work
+T | 0 | huh
+D | 0 | workss | tmr
+E | 1 | party | tdy | tmr
