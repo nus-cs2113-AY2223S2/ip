@@ -24,13 +24,13 @@ public class Duke {
     private static final String COMMAND_ADD_TODO_WORD = "todo";
     private static final String COMMAND_ADD_DEADLINE_WORD = "deadline";
     private static final String COMMAND_ADD_EVENT_WORD = "event";
+    private static final String COMMAND_DELETE_WORD = "delete";
     private static final String COMMAND_EXIT_WORD = "bye";
     private static final String LINE_PREFIX = "    ";
     //Scanner for user input
     private static final Scanner SCANNER = new Scanner(System.in);
     //Task list
     private static final ArrayList<Task> TASK_LIST = new ArrayList<>();
-    private static int taskCount = 0;
 
     public static void main(String[] args) throws DukeException {
         // reused from contacts Contacts1.java with modification
@@ -80,6 +80,9 @@ public class Duke {
         case COMMAND_ADD_EVENT_WORD:
             addTask(commandType, commandArgs);
             break;
+        case COMMAND_DELETE_WORD:
+            deleteTask(commandArgs);
+            break;
         default:
             throw new UserInputException(INVALID_TASK_TYPE);
         }
@@ -110,8 +113,7 @@ public class Duke {
         }
         showToUser("Got it. I've added this task:",
                 TASK_LIST.get(TASK_LIST.size()-1).toString(),
-                "Now you have " + (taskCount + 1) + (taskCount + 1 == 0 ? " task" : " tasks") + " in the list.");
-        taskCount += 1;
+                "Now you have " + (TASK_LIST.size()) + (TASK_LIST.size() == 1 ? " task" : " tasks") + " in the list.");
     }
 
     private static void markAsDone(String taskNumber) {
@@ -127,10 +129,17 @@ public class Duke {
         showToUser("OK, I've marked this task as not done yet:");
         showToUser(taskToBeUnmarked.toString());
     }
+    private static void deleteTask(String taskNumber){
+        Task taskToBeRemoved = TASK_LIST.get(Integer.parseInt(taskNumber) - 1);
+        showToUser("Noted. I've removed this task:");
+        showToUser(taskToBeRemoved.toString());
+        TASK_LIST.remove(Integer.parseInt(taskNumber)-1);
+        showToUser("Now you have " + (TASK_LIST.size()) + (TASK_LIST.size() == 1 ? " task" : " tasks") + " in the list.");
 
+    }
     private static void listTask() {
         showToUser("Here are the tasks in your list:");
-        for (int i = 0; i < taskCount; i++) {
+        for (int i = 0; i < TASK_LIST.size(); i++) {
             showToUser((i + 1) + ". " + TASK_LIST.get(i).toString());
         }
     }
