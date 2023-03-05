@@ -8,7 +8,7 @@ public class Ui {
     public static final String LINE = "    ____________________________________________________________";
 
     /**
-     * For greeting
+     * For greeting and display each time the program run
      */
     public static void greeting() {
 
