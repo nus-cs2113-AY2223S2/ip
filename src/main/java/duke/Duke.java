@@ -1,6 +1,7 @@
 package duke;
 import duke.exceptions.*;
 
+import java.io.File;
 import java.util.Scanner;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -25,15 +26,17 @@ public class Duke {
      *
      * @param filePath the location of the storage file.
      */
-    public Duke(String filePath){
+    public Duke(String filePath) throws IOException, StorageFileException {
         ui = new Ui();
         storage = new Storage(filePath);
-        try {
-            taskList = new TaskList(storage.loadFile());
-            numOfTask = taskList.getNumOfTask();
-        } catch (FileNotFoundException e) {
+        File f = new File(filePath);
+        if(f.createNewFile()){
             ui.showCreatingFileMessage();
             storage.createFile(filePath);
+            taskList = new TaskList();
+        }else{
+            taskList = new TaskList(storage.loadFile());
+            numOfTask = taskList.getNumOfTask();
         }
         ui.showWelcomeMessage(taskList);
     }
@@ -147,7 +150,13 @@ public class Duke {
         }
     }
     public static void main(String[] args){
-        new Duke(filePath).run();
+        try {
+            new Duke(filePath).run();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (StorageFileException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
 

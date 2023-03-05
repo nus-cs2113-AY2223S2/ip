@@ -4,6 +4,7 @@ import duke.Deadline;
 import duke.Event;
 import duke.ToDo;
 import duke.exceptions.EventException;
+import duke.exceptions.StorageFileException;
 import duke.exceptions.ToDoException;
 import duke.Task;
 
@@ -42,13 +43,13 @@ public class Storage {
      *
      * @throws FileNotFoundException if the file cannot be located or does not exist.
      */
-    public ArrayList<Task> loadFile () throws FileNotFoundException {
+    public ArrayList<Task> loadFile () throws StorageFileException {
         numOfTask = 0;
         Scanner sc = null;
         try {
             sc = new Scanner(path);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            return null;
         }
         while (sc.hasNext()) {
             String task = sc.nextLine();
@@ -83,7 +84,6 @@ public class Storage {
                     }
                 default:
             }
-            System.out.println(task);
         }
         return tasksList;
     }
@@ -97,10 +97,8 @@ public class Storage {
     public void createFile(String filePath){
         try{
             File f = new File(filePath);
-            if(f.createNewFile()){
+            if(f.createNewFile()) {
                 System.out.println("Your file has been created: " + f.getName());
-            } else {
-                System.out.println("Your file already exists");
             }
         } catch(IOException e) {
             System.out.println("Error Occurred");

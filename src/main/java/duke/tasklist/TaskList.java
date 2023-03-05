@@ -23,6 +23,11 @@ public class TaskList {
         numOfTask = tasks.size();
     }
 
+    public TaskList(){
+        tasks = new ArrayList<>();
+        numOfTask = tasks.size();
+    }
+
     /**
      * Prints out the tasks in the task list provided by the user.
      */
