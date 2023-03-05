@@ -37,7 +37,7 @@ Terminates the current program and saves the user's current task list.
 - All commands are case-sensitive, eg. 'list' is not the same as 'List'. Enter all commands as lower-case letters.
 
 
-### `todo` - adds tasks of type 'todo'.
+### `todo` - Adds tasks of type 'todo'.
 
 Explanation: A todo is a task that contains a description with no time-related attribute associated with it.
 
@@ -55,7 +55,7 @@ Now you have 7 task(s) in the list.
 ______________________________
 ```
 
-### `deadline` - adds tasks of type 'deadline'.
+### `deadline` - Adds tasks of type 'deadline'.
 
 Explanation: A deadline is a task that contains a description as well as a deadline for that particular task.
 
@@ -73,7 +73,7 @@ Now you have 8 task(s) in the list.
 ______________________________
 ```
 
-### `event` - adds tasks of type 'event'.
+### `event` - Adds tasks of type 'event'.
 
 Explanation: A event is a task that contains a description as well as a start and end time for that particular task.
 
@@ -91,7 +91,7 @@ Now you have 9 task(s) in the list.
 ______________________________
 ```
 
-### `mark` - marks a task in your task-list as complete.
+### `mark` - Marks a task in your task-list as complete.
 
 Explanation: Marking a task indicates that a task has been completed by the user.
 
@@ -107,7 +107,7 @@ ______________________________
 ______________________________
 ```
 
-### `unmark` - marks a task in your task-list as incomplete.
+### `unmark` - Marks a task in your task-list as incomplete.
 
 Explanation: Unmarking a task indicates that a task has not been completed by the user.
 
@@ -123,22 +123,7 @@ ______________________________
 ______________________________
 ```
 
-### `delete` - deletes a task from the user's task-list.
-
-Example of usage:
-`delete TASK_NUMBER`
-
-Expected outcome:
-```
-delete 4
-______________________________
-Noted. I've removed this task: 
-[E][ ] project meeting (from: Monday 2pm to 4pm)
-Now you have 3 tasks in the list.
-______________________________
-```
-
-### `delete` - deletes a task from the user's task-list.
+### `delete` - Deletes a task from the user's task-list.
 
 Example of usage:
 `delete TASK_NUMBER`
@@ -206,7 +191,7 @@ ______________________________
 Your data is saved each time you terminate the program. There is no need to save manually. :D
 
 ## Data Saving format
-Your data is saved within a txt file called duke.txt. If this file is not present, it will be created once the current instance of Duke terminates. The data is saved in the following format:
+Your data is saved within a txt file called duke.txt. If this file is not present, it will be created once the current instance of Jarvis terminates. The data is saved in the following format:
   
 For Todos - [TODO_TASK_TYPE]:[COMPLETION]:[DESCRIPTION]
   
