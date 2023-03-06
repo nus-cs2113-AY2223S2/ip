@@ -4,10 +4,10 @@
 <!-- TOC -->
 * [User Guide](#user-guide)
     * [Features](#features)
-        * [Task Type 1: `Todos`](#task-type-1--todos)
-        * [Task Type 2: `Events`](#task-type-2--events)
-        * [Task Type 3: `Deadlines`](#task-type-3--deadlines)
-        * [Find Tasks By Description](#find-tasks-by-description)
+        * [Task Type 1: `Todo`](#task-type-1--todos)
+        * [Task Type 2: `Event`](#task-type-2--events)
+        * [Task Type 3: `Deadline`](#task-type-3--deadlines)
+        * [Find Tasks By Keyword](#find-tasks-by-description)
         * [Task Completion Status](#task-completion-status)
         * [Task Deletion](#task-deletion)
         * [Task Data Storage](#task-data-storage)
@@ -20,7 +20,7 @@
         * [`unmark` - Marks a Task as not done](#unmark---marks-a-task-as-not-done)
         * [`delete` - Deletes a Task](#delete---deletes-a-task)
         * [`find` - Find Task by Keyword](#find---find-task-by-keyword)
-        * [`bye` - Turns Rica Off](#bye---shut-down-program)
+        * [`bye` - Terminate the program](#bye---shut-down-program)
 <!-- TOC -->
 
 ## Features
