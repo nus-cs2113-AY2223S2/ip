@@ -69,7 +69,7 @@ public class TaskList {
      */
     public static void toDoCommand(String command , ArrayList<Task> taskNameList) throws DukeException {
         Todo toDo = new Todo(command);
-        toDo.setTaskType("T");
+        //toDo.setTaskType("T");
         Task task = new Task(command);
         String[] tokens = command.split("\\s+", 2);
         if (tokens.length < 2) {
@@ -92,7 +92,7 @@ public class TaskList {
      */
     public static void eventCommand(String command , ArrayList<Task> taskNameList) {
         Event event = new Event(command);
-        event.setTaskType("E");
+        //event.setTaskType("E");
         Task task = new Task(command);
         System.out.println(LINE);
         taskNameList.add(event);
@@ -110,7 +110,7 @@ public class TaskList {
      */
     public static void deadlineCommand(String command , ArrayList<Task> taskNameList) {
         Deadline deadLine = new Deadline(command);
-        deadLine.setTaskType("D");
+        //deadLine.setTaskType("D");
         Task task = new Task(command);
         System.out.println(LINE);
         taskNameList.add(deadLine);
@@ -126,9 +126,9 @@ public class TaskList {
      * @param command user input that contains the user-specific keyword "delete"
      */
     public static void deleteCommand(String command, ArrayList<Task> taskNameList){
-        int indexTask = Integer.parseInt(command);
+        String[] tokens = command.split("\\s+");
+        int indexTask = Integer.parseInt(tokens[1]);
         Task task = new Task(command);
-
         System.out.println(LINE);
         System.out.print("     Noted. I've removed this task:"
                 + System.lineSeparator()
@@ -153,10 +153,12 @@ public class TaskList {
         }
         int numberOfFoundTasks = matchedTask.size();
         int number0fTask = 1;
-        System.out.println("     There are " + numberOfFoundTasks + " matching tasks in your list");
+        System.out.println("     There are " + numberOfFoundTasks
+                            + " matching tasks in your list");
         for (Task foundTask : matchedTask) {
             if (foundTask != null) {
-                System.out.print("     " +number0fTask + "." + foundTask.getState().trim() + System.lineSeparator());
+                System.out.print("     " +number0fTask + "." + foundTask.getState().trim()
+                                + System.lineSeparator());
             }
             number0fTask++;
         }

@@ -6,6 +6,9 @@ public class Event extends Task{
     protected String taskType;
     protected String taskName;
 
+    boolean isComplete;
+    String status;
+
     public Event(String input) {
         super(input);
         this.input = input;
@@ -13,6 +16,10 @@ public class Event extends Task{
         this.taskName = input;
     }
 
+    public void statusIcon(boolean isComplete){
+        this.isComplete = isComplete;
+        this.status = (this.isComplete ? "X" : " ");
+    }
     /**
      * format the task
      * @return return the respective task format based on the input
@@ -25,7 +32,7 @@ public class Event extends Task{
         if(description.contains("|")){
             String[] inputCommands = description.split("\\|");
             String[] event = inputCommands[3].split("-");
-            return "      [E]" + "[" + getStatusIcon() + "]" + " "
+            return "      [E]" + "[" + this.status + "]" + " "
                     + inputCommands[2].trim() +
                     " (from: " + event[0].trim() + " to: "
                     + event[1].trim() + ")" + System.lineSeparator();

@@ -2,11 +2,13 @@ package duke.instructions;
 
 public class Deadline extends Task{
     String input;
+    boolean isComplete;
+    String status;
     protected String taskType;
     public Deadline(String input) {
         super(input);
         this.input = input;
-
+        this.taskType = "D";
     }
 
 
@@ -15,7 +17,11 @@ public class Deadline extends Task{
     }
     @Override
     public String getTaskType(){
-        return this.taskType;
+        return "D";
+    }
+    public void statusIcon(boolean isComplete){
+        this.isComplete = isComplete;
+        this.status = (this.isComplete ? "X" : " ");
     }
 
     /**
@@ -26,7 +32,7 @@ public class Deadline extends Task{
     public String getState(){
         if(input.contains("|")){
             String[] inputCommands = input.split("\\|");
-            return "      [D]" + "[" + getStatusIcon() + "]" + " "
+            return "      [D]" + "[" + this.status + "]" + " "
                     + inputCommands[2].trim() + " (by: " + inputCommands[3].trim() + ")"
                     + System.lineSeparator();
         }else {

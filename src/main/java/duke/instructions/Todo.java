@@ -3,11 +3,18 @@ package duke.instructions;
 public class Todo extends Task{
 
     protected String taskType;
+    boolean isComplete;
+    String status;
     public Todo(String description) {
         super(description);
+        this.taskType = "T";
     }
 
 
+    public void statusIcon(boolean isComplete){
+        this.isComplete = isComplete;
+        this.status = (this.isComplete ? "X" : " ");
+    }
 
     @Override
     public String getState(){

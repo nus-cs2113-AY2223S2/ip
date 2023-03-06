@@ -11,7 +11,7 @@ import java.util.Scanner;
  */
 public class Storage {
     protected static String filePath;
-    private static final ArrayList<Task> previousTask = new ArrayList<>();
+    private static final ArrayList<Task> taskNameList = new ArrayList<>();
 
     public Storage(String filePath) {
         this.filePath = filePath;
@@ -84,18 +84,26 @@ public class Storage {
                 String command = fileRead.nextLine();
                 String[] inputCommands = command.split("\\|");
                 String fileType = inputCommands[0].trim();
+                boolean isCompleted = true;
+                if (inputCommands[1].trim().equals("Not Done")) {
+                    isCompleted = false;
+                }
+
                 switch (fileType) {
                 case "D":
                     Deadline newDeadline = new Deadline(command);
-                    previousTask.add(newDeadline);
+                    taskNameList.add(newDeadline);
+                    newDeadline.statusIcon(isCompleted);
                     break;
                 case "T":
                     Todo newTodo = new Todo(command);
-                    previousTask.add(newTodo);
+                    taskNameList.add(newTodo);
+                    newTodo.statusIcon(isCompleted);
                     break;
                 case "E":
                     Event newEvent = new Event(command);
-                    previousTask.add(newEvent);
+                    taskNameList.add(newEvent);
+                    newEvent.statusIcon(isCompleted);
                     break;
                 default:
                     throw new FileNotFoundException();
@@ -103,22 +111,15 @@ public class Storage {
 
                 }
             System.out.println("    Hear is the previous task: " + System.lineSeparator() + LINE);
-            for (int indexOfInstruction = 0; indexOfInstruction < previousTask.size(); indexOfInstruction++) {
+            for (int indexOfInstruction = 0; indexOfInstruction < taskNameList.size(); indexOfInstruction++) {
                 System.out.print("     " + (indexOfInstruction + 1) + "."
-                        + previousTask.get(indexOfInstruction).getState().trim() + System.lineSeparator());
+                        + taskNameList.get(indexOfInstruction).getState().trim() + System.lineSeparator());
             }
         }catch(ArrayIndexOutOfBoundsException e){
             System.out.println("Tasklist.txt file cannot be accessed!");
         }
 
     }
-
-            /*public static void loadTaskFromFile(String filePath, ArrayList<Task> taskNameList) throws FileNotFoundException {
-        try{
-            readFile(filePath, taskNameList);
-        }catch(java.io.FileNotFoundException e) {
-            System.out.println("Error loading tasks from the file ");
-        }*/
 
     }
 

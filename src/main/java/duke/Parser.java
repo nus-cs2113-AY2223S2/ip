@@ -31,7 +31,7 @@ public class Parser {
         case "mark":
             TaskList.markCommand(command, taskNameInput);
             break;
-        case "ummark":
+        case "unmark":
             TaskList.unMarkCommand(command, taskNameInput);
             break;
         case "todo":
@@ -65,9 +65,11 @@ public class Parser {
         Scanner userInput = new Scanner(System.in);
         while (true) {
             String taskName = userInput.nextLine();
-
             if (taskName.equalsIgnoreCase("bye")) {
-                Storage.writeTaskToFile(filePath, taskNameList);
+                if(taskNameList.size() < 1){
+                    System.out.println("     You do not enter any task and program will be terminated!!!");
+                }else{
+                Storage.writeTaskToFile(filePath, taskNameList);}
                 return false;
             }
             try {

@@ -2,8 +2,6 @@ package duke;
 
 import duke.instructions.*;
 import java.util.ArrayList;
-import java.util.Scanner;
-
 public class Duke {
 
     private static final ArrayList<Task> taskNameList = new ArrayList<>();
@@ -19,18 +17,22 @@ public class Duke {
         }
     }
 
+    /**
+     * The starting and ending of the program
+     * This methods will keep checking if "bye" is entered by the user
+     *
+     */
     public static void run() {
 
         Ui.greeting();
         boolean isRunning = true;
-
         while (isRunning) {
             isRunning = Parser.checkInput(taskNameList, filePath);
-
         }
         Parser.sayBye();
 
     }
+
 
     public static void main(String[] args) {
         new Duke(filePath).run();
