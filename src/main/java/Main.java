@@ -39,9 +39,11 @@ public class Main {
                     Duke.tasks.addDeadline(phrase);
                 } else if (command.equals("delete")) {
                     Duke.tasks.delete(Integer.parseInt(phrase));
-
                 } else if (command.equals("find")) {
                     Duke.tasks.find(phrase);
+                } else if (command.equals("overdue")) {
+                    Duke.tasks.listOverdue();
+                    ;
                 } else {
                     System.out.println("Invalid command");
                 }
