@@ -6,6 +6,24 @@ Vivy is a Command Line Interface (CLI) program that is based off the Duke bot. I
 
 ## Features
 
+### Adding tasks: `add`
+
+Input according to the following formats for recording down the different types of tasks.
+
+Format for tasks:
+```
+   Deadlines: <description> /by <deadline>
+   	      (eg. Eat bread /by Thursday)
+	      
+      Events: <description> /from <start date/time> /to <end date/time>
+      	      (eg. Meeting /from March 3 8pm /to 9pm)
+	      
+	Todo: <description>	
+	      (eg. Water the plants)
+```
+
+<br />
+
 ### Viewing list of tasks: `list`
 Displays all the current tasks in your list in the terminal.
 
