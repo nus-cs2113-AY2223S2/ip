@@ -8,7 +8,7 @@ public class CommandDelete extends Commands{
     /**
      * Executes the command and deletes the specific entry of the tasklist.
      *
-     * @param tasklist   The current list of Gilbert.tasks that have been inputted.
+     * @param tasklist   The current list of tasks that have been inputted.
      * @param position   The index of the task to be deleted.
      */
 
@@ -19,6 +19,6 @@ public class CommandDelete extends Commands{
         tasklist.deleteTask(index);
         System.out.println("Noted. I've removed this task:");
         System.out.println(task.getDesc());
-        System.out.println("Now you have " + tasklist.sizeTaskList() + " Gilbert.tasks in your list.\n" + Messages.SPACE);
+        System.out.println("Now you have " + tasklist.sizeTaskList() + " tasks in your list.\n" + Messages.SPACE);
     }
 }

@@ -9,7 +9,7 @@ public class CommandMark extends Commands{
      * Executes the command and marks the specific task as done according to the
      * index provided.
      *
-     * @param tasklist   The current list of Gilbert.tasks that have been inputted.
+     * @param tasklist   The current list of tasks that have been inputted.
      * @param position   The index of the task that has been done.
      */
 

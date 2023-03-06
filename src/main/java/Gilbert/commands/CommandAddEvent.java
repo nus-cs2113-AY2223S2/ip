@@ -12,7 +12,7 @@ public class CommandAddEvent extends Commands{
      * Executes the command and inserts an event into the tasklist. A message will be
      * printed to confirm the addition of the task.
      *
-     * @param taskList      The current list of Gilbert.tasks that have been inputted.
+     * @param taskList      The current list of tasks that have been inputted.
      * @param description   The description of the task.
      */
 

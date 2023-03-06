@@ -26,6 +26,7 @@ public class Files {
         String dir = System.getProperty("user.dir");
         Path filePath = Paths.get(dir, "data", "gilbert.txt");
         File file = new File(filePath.toString());
+        file.getParentFile().mkdirs();
         FileWriter fw = new FileWriter(file);
         int done;
         for (int i = 0; i < taskList.sizeTaskList(); i++) {

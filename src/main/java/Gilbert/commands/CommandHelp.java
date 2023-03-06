@@ -7,7 +7,7 @@ public class CommandHelp extends Commands{
     /**
      * Executes the command and prints out the help message.
      *
-     * @param taskList      The current list of Gilbert.tasks that have been inputted.
+     * @param taskList      The current list of tasks that have been inputted.
      * @param description   The description of the task.
      */
     @Override

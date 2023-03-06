@@ -11,7 +11,6 @@ import java.io.IOException;
 
 public class Gilbert {
     public static TaskList taskList;
-    public static String FILEPATH = "data/gilbert.txt";
     public static String[] input;
 
     public static void run(){
@@ -48,7 +47,7 @@ public class Gilbert {
         try {
             Files.loadFile(taskList);
         } catch (FileNotFoundException | IndexOutOfBoundsException e) {
-            System.out.println("Oops, no existing files found!" + e.getMessage());
+            System.out.println("Oops, no existing files found!");
         }
         Gilbert.run();
     }

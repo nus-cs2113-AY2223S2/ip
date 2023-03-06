@@ -6,11 +6,11 @@ import Gilbert.messages.Messages;
 
 public class CommandFind extends Commands{
     /**
-     * Executes the command and finds all Gilbert.tasks that contains the keyword.
-     * Prints out all the Gilbert.tasks found.
+     * Executes the command and finds all tasks that contains the keyword.
+     * Prints out all the tasks found.
      *
-     * @param taskList  The current list of Gilbert.tasks that have been inputted.
-     * @param keyword   The keyword to find the Gilbert.tasks in the tasklist.
+     * @param taskList  The current list of tasks that have been inputted.
+     * @param keyword   The keyword to find the tasks in the tasklist.
      */
 
     @Override

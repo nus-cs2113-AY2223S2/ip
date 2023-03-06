@@ -7,9 +7,9 @@ import Gilbert.messages.Messages;
 
 public class CommandList extends Commands{
     /**
-     * Executes the command and prints the list of Gilbert.tasks currently in the tasklist.
+     * Executes the command and prints the list of tasks currently in the tasklist.
      *
-     * @param tasklist      The current list of Gilbert.tasks that have been inputted.
+     * @param tasklist      The current list of tasks that have been inputted.
      * @param description   The description of the task.
      */
 

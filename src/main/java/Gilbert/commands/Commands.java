@@ -8,7 +8,7 @@ public abstract class Commands {
     /**
      * Executes the command and prints the result. Subclasses will override this method.
      *
-     * @param taskList      The current list of Gilbert.tasks that have been inputted.
+     * @param taskList      The current list of tasks that have been inputted.
      * @param description   The description of the task.
      */
 
