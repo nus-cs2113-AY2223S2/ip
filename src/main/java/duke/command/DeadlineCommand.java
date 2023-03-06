@@ -3,7 +3,9 @@ package duke.command;
 import duke.task.Deadline;
 import duke.ui.Ui;
 
-/** Adds a deadline task */
+/**
+ * Adds a deadline task
+ */
 public class DeadlineCommand extends AddCommand {
 
     public static final String MISSING_KEYWORD_MESSAGE =

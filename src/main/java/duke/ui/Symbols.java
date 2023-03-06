@@ -1,6 +1,8 @@
 package duke.ui;
 
-/** Symbols used for printing and data encoding */
+/**
+ * Symbols used for printing and data encoding
+ */
 public class Symbols {
 
     public static final String TODO = "T";

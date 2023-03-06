@@ -2,7 +2,9 @@ package duke.task;
 
 import duke.ui.Symbols;
 
-/** Represents a task, contains task name and a status on completion */
+/**
+ * Represents a task, contains task name and a status on completion
+ */
 public abstract class Task {
 
     public String taskName;
@@ -33,16 +35,22 @@ public abstract class Task {
      */
     public abstract String getFullTaskDetail();
 
-    /** Marks a task to be done */
+    /**
+     * Marks a task to be done
+     */
     public void markAsDone() {
         this.isDone = true;
     }
 
-    /** Marks a task to be not done */
+    /**
+     * Marks a task to be not done
+     */
     public void markAsNotDone() {
         this.isDone = false;
     }
 
-    /** Generates the task information to be stored */
+    /**
+     * Generates the task information to be stored
+     */
     public abstract String getEncodedData();
 }

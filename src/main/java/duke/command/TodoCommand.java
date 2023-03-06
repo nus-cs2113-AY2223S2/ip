@@ -2,7 +2,9 @@ package duke.command;
 
 import duke.task.Todo;
 
-/** Adds a todo task */
+/**
+ * Adds a todo task
+ */
 public class TodoCommand extends AddCommand {
 
     public static final String INVALID_COMMAND_MESSAGE = " Invalid input! Valid input format: \"todo <task name>\"";

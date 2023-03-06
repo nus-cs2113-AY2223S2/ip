@@ -2,7 +2,9 @@ package duke.command;
 
 import duke.ui.Ui;
 
-/** Shows all tasks and their information in the task list */
+/**
+ * Shows all tasks and their information in the task list
+ */
 public class ListCommand extends Command {
 
     public static final String COMMAND_WORD = "list";

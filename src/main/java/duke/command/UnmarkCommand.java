@@ -2,7 +2,9 @@ package duke.command;
 
 import duke.ui.Ui;
 
-/** Unmarks a task as referenced by a task number */
+/**
+ * Unmarks a task as referenced by a task number
+ */
 public class UnmarkCommand extends Command {
 
     public static final String COMMAND_WORD = "unmark";

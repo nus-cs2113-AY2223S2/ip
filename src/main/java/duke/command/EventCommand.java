@@ -3,7 +3,9 @@ package duke.command;
 import duke.task.Event;
 import duke.ui.Ui;
 
-/** Adds an event task */
+/**
+ * Adds an event task
+ */
 public class EventCommand extends AddCommand {
     public static final String INVALID_FORMAT_MESSAGE =
             " Invalid input! Valid input format: \"event <task name> /from <date> /to <date>\"";

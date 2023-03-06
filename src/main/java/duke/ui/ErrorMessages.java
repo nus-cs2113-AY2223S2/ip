@@ -1,6 +1,8 @@
 package duke.ui;
 
-/** Error messages for the error types */
+/**
+ * Error messages for the error types
+ */
 public enum ErrorMessages {
 
     OVER_TASK_COUNT_MESSAGE(" Invalid task number provided, please give a number <= %d"),

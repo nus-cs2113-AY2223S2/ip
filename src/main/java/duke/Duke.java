@@ -16,7 +16,7 @@ public class Duke {
     private TaskList taskList;
 
     /**
-     * Set up the required objects, loads up the data from the storage file
+     * Sets up the required objects, loads up the data from the storage file
      *
      * @param filePath a string representing the file path of data stored at
      */
@@ -34,14 +34,18 @@ public class Duke {
         }
     }
 
-    /** Runs the program until termination */
+    /**
+     * Runs the program until termination
+     */
     public void run() {
         ui.greetingMessage();
         runCommand();
         ExitCommand.exit(this.taskList, this.ui, this.storage);
     }
 
-    /** Reads the user command and executes it, until the exit command is received */
+    /**
+     * Reads the user command and executes it, until the exit command is received
+     */
     public void runCommand() {
         Command command;
         String input = ui.getUserCommand();

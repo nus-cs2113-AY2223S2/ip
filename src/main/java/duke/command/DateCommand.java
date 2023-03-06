@@ -6,7 +6,9 @@ import duke.ui.Ui;
 
 import java.time.LocalDate;
 
-/** Finds tasks in task list that occurs on a given date */
+/**
+ * Finds tasks in task list that occurs on a given date
+ */
 public class DateCommand extends Command {
 
     public static final String COMMAND_WORD = "date";

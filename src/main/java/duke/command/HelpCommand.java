@@ -2,7 +2,9 @@ package duke.command;
 
 import duke.ui.Ui;
 
-/** sShows help instructions */
+/**
+ * sShows help instructions
+ */
 public class HelpCommand extends Command {
 
     public static final String COMMAND_WORD = "help";

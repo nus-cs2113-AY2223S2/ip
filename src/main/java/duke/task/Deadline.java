@@ -5,7 +5,9 @@ import duke.ui.Symbols;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-/** Task with a deadline */
+/**
+ * Task with a deadline
+ */
 public class Deadline extends Task {
 
     public String deadline;

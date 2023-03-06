@@ -2,7 +2,9 @@ package duke.command;
 
 import duke.ui.Ui;
 
-/** Deletes a task as referenced by a task number */
+/**
+ * Deletes a task as referenced by a task number
+ */
 public class DeleteCommand extends Command {
 
     public static final String COMMAND_WORD = "delete";

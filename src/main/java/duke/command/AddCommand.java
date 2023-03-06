@@ -2,7 +2,9 @@ package duke.command;
 
 import duke.ui.Ui;
 
-/** Represents a command that adds task */
+/**
+ * Represents a command that adds task
+ */
 public abstract class AddCommand extends Command {
 
     public static final String COMMAND_TODO = "todo";
@@ -34,7 +36,7 @@ public abstract class AddCommand extends Command {
     }
 
     /**
-     * Generates the string to be shown to user when a task is added
+     * Returns the string to be shown to user when a task is added
      *
      * @return string to be shown to user
      */

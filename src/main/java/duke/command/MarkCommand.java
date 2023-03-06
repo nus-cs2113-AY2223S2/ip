@@ -2,7 +2,9 @@ package duke.command;
 
 import duke.ui.Ui;
 
-/** Marks a task as referenced by a task number */
+/**
+ * Marks a task as referenced by a task number
+ */
 public class MarkCommand extends Command {
 
     public static final String COMMAND_WORD = "mark";

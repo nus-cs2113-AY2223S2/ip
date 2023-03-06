@@ -20,7 +20,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-/** Deals with loading tasks from file and saving tasks in file */
+/**
+ * Deals with loading tasks from file and saving tasks in file
+ */
 public class Storage {
 
     public static final String DIRECTORY = "data";
@@ -83,7 +85,7 @@ public class Storage {
     /**
      * Decodes the data from the file to be saved into Duke
      *
-     * @param task the line input from the data file containing the information of a task
+     * @param task     the line input from the data file containing the information of a task
      * @param taskList the task list to be used when Duke is running
      */
     public void decodeTaskData(String task, ArrayList<Task> taskList) {

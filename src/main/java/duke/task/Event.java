@@ -5,7 +5,9 @@ import duke.ui.Symbols;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-/** Task with a start date and/or time and an end date and/or time */
+/**
+ * Task with a start date and/or time and an end date and/or time
+ */
 public class Event extends Task {
 
     public String stringStartDate;

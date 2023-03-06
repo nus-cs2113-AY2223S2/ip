@@ -5,7 +5,9 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
-/** Contains methods and variables used for the date and time */
+/**
+ * Contains methods and variables used for the date and time
+ */
 public class DateTime {
 
     public static DateTimeFormatter inputDateFormat = DateTimeFormatter.ofPattern("uuuu/MM/dd");

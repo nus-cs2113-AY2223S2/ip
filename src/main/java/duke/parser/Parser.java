@@ -7,7 +7,9 @@ import duke.task.DateTime;
 
 import java.time.LocalDate;
 
-/** Parses user input  */
+/**
+ * Parses user input
+ */
 public class Parser {
 
     /**
@@ -49,7 +51,7 @@ public class Parser {
      * Checks and prepares the parameters required to initiate a new mark/unmark/delete command and creates the
      * relevant command
      *
-     * @param input an array of the user input, separated by " "
+     * @param input   an array of the user input, separated by " "
      * @param command command given by user: mark/unmark/delete
      * @return the command based on the input provided by user
      * @throws IndexOutOfBoundsException when task number provided by user > total task count
@@ -133,7 +135,7 @@ public class Parser {
      * Checks whether the command provided by user is valid for mark, unmark and delete
      *
      * @param userInput an array of the user input, separated by " "
-     * @param command command word provided by user: mark/unmark/delete
+     * @param command   command word provided by user: mark/unmark/delete
      * @return string representing the task number
      * @throws DukeException when command provided by user is invalid
      */
@@ -159,11 +161,11 @@ public class Parser {
     }
 
     /**
-    * Checks and prepares the parameters required to initiate a date command and creates the relevant command
-    *
+     * Checks and prepares the parameters required to initiate a date command and creates the relevant command
+     *
      * @param input input given by the user
      * @return the command based on the input provided by user
-    */
+     */
     private Command prepareDateCommand(String input) {
         try {
             input = input.replaceFirst(DateCommand.COMMAND_WORD, "");

@@ -6,17 +6,23 @@ import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.Scanner;
 
-/** deals with interactions with the user */
+/**
+ * deals with interactions with the user
+ */
 public class Ui {
 
     public static final String SEGMENT_LINE = "_".repeat(80);
 
-    /** platform independent line separator */
+    /**
+     * platform independent line separator
+     */
     public static final String NEW_LINE = System.lineSeparator();
 
     private static final String START_MESSAGE = " Hello! I'm Duke" + NEW_LINE + " What can I do for you?";
 
-    /** a separator to be used after every full output */
+    /**
+     * a separator to be used after every full output
+     */
     public static void endLine() {
         System.out.println(SEGMENT_LINE + NEW_LINE);
     }
@@ -46,19 +52,25 @@ public class Ui {
         return input;
     }
 
-    /** Generates and prints the output to be shown when the program faces an error on start up */
+    /**
+     * Generates and prints the output to be shown when the program faces an error on start up
+     */
     public void showStartingError() {
         String output = String.join(NEW_LINE, SEGMENT_LINE, ErrorMessages.ERROR_IN_SETTING_UP.MESSAGE);
         showToUser(output);
     }
 
-    /** Generates and prints the greeting message on start up */
+    /**
+     * Generates and prints the greeting message on start up
+     */
     public void greetingMessage() {
         String output = String.join(NEW_LINE, SEGMENT_LINE, START_MESSAGE);
         showToUser(output);
     }
 
-    /** Generates and prints the greeting message on start up */
+    /**
+     * Generates and prints the greeting message on start up
+     */
     public void byeMessage() {
         String output = String.join(NEW_LINE, SEGMENT_LINE, ExitCommand.BYE_MESSAGE);
         showToUser(output);

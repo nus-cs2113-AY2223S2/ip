@@ -11,7 +11,9 @@ import duke.command.InvalidCommand;
 import duke.ui.ErrorMessages;
 import duke.ui.Ui;
 
-/** Feedback to user the relevant error message and throws error */
+/**
+ * Feedback to user the relevant error message and throws error
+ */
 public class Error {
 
     /**

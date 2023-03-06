@@ -3,7 +3,9 @@ package duke.command;
 import duke.task.TaskList;
 import duke.ui.Ui;
 
-/** Finds tasks in task list that contains keyword[s] in the task name */
+/**
+ * Finds tasks in task list that contains keyword[s] in the task name
+ */
 public class FindCommand extends Command {
 
     public static final String COMMAND_WORD = "find";

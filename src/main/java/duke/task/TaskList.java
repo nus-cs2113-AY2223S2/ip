@@ -3,7 +3,9 @@ package duke.task;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-/** Represents the task list. Contains the date of the tasks */
+/**
+ * Represents the task list. Contains the date of the tasks
+ */
 public class TaskList {
 
     private final ArrayList<Task> taskList;

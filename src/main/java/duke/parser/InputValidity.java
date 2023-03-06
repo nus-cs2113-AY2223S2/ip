@@ -8,7 +8,9 @@ import duke.error.DukeException;
 import duke.error.ErrorTypes;
 import duke.error.Error;
 
-/** Checks input validity */
+/**
+ * Checks input validity
+ */
 public class InputValidity {
 
     private static final int MINIMUM_TODO_LENGTH = 2;
@@ -43,7 +45,7 @@ public class InputValidity {
      *
      * @param input input given by the user
      * @throws DukeException when the input provided by user is of incorrect format or does not have
-     *         sufficient parameters
+     *                       sufficient parameters
      */
     protected static void checkValidDeadline(String input) throws DukeException {
         String[] arrayInput = input.trim().split(" ");
@@ -62,7 +64,7 @@ public class InputValidity {
      *
      * @param input input given by the user
      * @throws DukeException when the input provided by user is of incorrect format or does not have
-     *         sufficient parameters
+     *                       sufficient parameters
      */
     protected static void checkValidEvent(String input) throws DukeException {
         String[] arrayInput = input.split(" ");
@@ -102,11 +104,11 @@ public class InputValidity {
     /**
      * Checks whether the input provided by user for mark/unmark/delete is valid
      *
-     * @param input an array of the user input, separated by " "
+     * @param input   an array of the user input, separated by " "
      * @param command command word provided by user: mark/unmark/delete
      * @throws DukeException when insufficient parameters are provided or when wrong parameter format is given
      */
-     protected static void checkValid(String[] input, String command) throws DukeException {
+    protected static void checkValid(String[] input, String command) throws DukeException {
         boolean isTwoWordInput = (input.length == VALID_LENGTH_TWO);
         if (!isTwoWordInput || !isStringOfInteger(input[1])) {
             switch (command) {
