@@ -4,8 +4,11 @@ This is Arsdorint chatbot, a member of Arsdorint Team, and an adaptation applica
 
 ## User Guide
 
-1. To download the application, click on this link.
-2. The chatbot contains the following feature
+1. To download the application, click [here](https://github.com/arsdorintbp2003/ip/releases/tag/Level-9).
+2. Copy the file path after your download. (ie: C:\Users\YourPC\GitHub\ip_jar)
+3. Open your terminal, if the current path is not where you keep the file (ie: C:\Users\YourPC), just type `cd` + the remaining path (ie: 'cd GitHub\ip_jar`) to access the file path.
+4. Initializing the application by typing `java -jar ip.jar`, and enjoy using the chatbot. 
+5. The chatbot contains the following feature
  + List
  + Todo
  + Deadline
