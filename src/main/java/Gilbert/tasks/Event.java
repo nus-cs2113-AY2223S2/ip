@@ -1,20 +1,24 @@
-package tasks;
+package Gilbert.tasks;
 public class Event extends Task {
     protected String desc;
 
     public Event(String description){
         super(description);
-        String[] arr = description.split(" ", 2);
-        this.desc = arr[1];
+        this.desc = description;
     }
 
     @Override
     public String toString(){
-        return String.format("[E]" + super.isDone() + this.desc);
+        return String.format("[E]" + super.getDone() + this.desc);
     }
 
     @Override
     public String getDesc(){
         return desc;
+    }
+
+    @Override
+    public String getType(){
+        return "E";
     }
 }
