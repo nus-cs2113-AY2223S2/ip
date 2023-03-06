@@ -13,7 +13,7 @@ public class CommandUnmark extends Commands{
 
     @Override
     public void doCommand(TaskList tasklist, String position){
-        int index = Integer.parseInt(position);
+        int index = Integer.parseInt(position) - 1;
         tasklist.getTask(index).undo();
         System.out.println();
         System.out.println(Messages.UNDONE);
