@@ -1,29 +1,15 @@
-# User Guide
+# The Duke Project
 
-## Features 
+This is my version of the Duke project, done as part of the CS2113 module in NUS AY2022/2023.
 
-### Feature-ABC
+## Brief Guide
+Below is a brief guide as to how to download and/or modify the Duke project for your own use.
 
-Description of the feature.
+The Duke project is optimised to run in a Command Line environment.
 
-### Feature-XYZ
+Download the latest JAR file under releases.
+Move the JAR file to a location of your choice.
+Run the Duke program via the command line on your computer.
+Further details on how to use the programme will be shown once you run the program in the command line.
 
-Description of the feature.
-
-## Usage
-
-### `Keyword` - Describe action
-
-Describe the action and its outcome.
-
-Example of usage: 
-
-`keyword (optional arguments)`
-
-Expected outcome:
-
-Description of the outcome.
-
-```
-expected output
-```
+Thank you!
