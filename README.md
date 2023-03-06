@@ -26,6 +26,7 @@ Prerequisites: JDK 11, update Intellij to the most recent version.
    ```
 
 ## Command List
+This is the list of commands:
 1. todo (insert task description)
 2. deadline (insert task description) /by (insert deadline)
 3. event (insert task description) /from (insert start) /to (insert end)
