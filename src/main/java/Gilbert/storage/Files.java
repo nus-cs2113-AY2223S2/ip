@@ -6,6 +6,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Scanner;
 
 public class Files {
@@ -14,34 +16,34 @@ public class Files {
      * Saves the current tasklist by writing its contents onto the text file in the
      * specified directory.
      *
-     * @param filePath          The file path containing the save file.
      * @param taskList          The list of all the current Gilbert.tasks.
      * @throws IOException      Exception in the event of I/O error.
      */
-    public static void writeToFile(String filePath, TaskList taskList) throws IOException {
+    public static void writeToFile(TaskList taskList) throws IOException {
         String data = "";
         String type;
         String desc;
-        File f = new File(filePath);
-        f.getParentFile().mkdirs();
-        FileWriter fw = new FileWriter(filePath);
+        String dir = System.getProperty("user.dir");
+        Path filePath = Paths.get(dir, "data", "gilbert.txt");
+        File file = new File(filePath.toString());
+        FileWriter fw = new FileWriter(file);
         int done;
         for (int i = 0; i < taskList.sizeTaskList(); i++) {
             type = taskList.getTask(i).getType();
             desc = taskList.getTask(i).getDesc();
-            switch(type) {
-                case "D":
-                    Deadline deadline = (Deadline)taskList.getTask(i);
-                    done = deadline.isDone() ? 1 :0;
-                    break;
-                case "T":
-                    Todo todo = (Todo)taskList.getTask(i);
+            switch (type) {
+                case "D" -> {
+                    Deadline deadline = (Deadline) taskList.getTask(i);
+                    done = deadline.isDone() ? 1 : 0;
+                }
+                case "T" -> {
+                    Todo todo = (Todo) taskList.getTask(i);
                     done = todo.isDone() ? 1 : 0;
-                    break;
-                default:
-                    Event event = (Event)taskList.getTask(i);
+                }
+                default -> {
+                    Event event = (Event) taskList.getTask(i);
                     done = event.isDone() ? 1 : 0;
-                    break;
+                }
             }
             data += type + " " + done + " " + desc + System.lineSeparator();
         }
@@ -52,13 +54,14 @@ public class Files {
     /**
      * Loads the save file in the specified directory to the tasklist.
      *
-     * @param filePath                  The file path containing the save file.
      * @param taskList                  The list of all the current Gilbert.tasks.
      * @throws FileNotFoundException    Exception in the event that the file is not found.
      */
-    public static void loadFile(String filePath, TaskList taskList) throws FileNotFoundException {
-        File f = new File(filePath); // create a File for the given file path
-        Scanner s = new Scanner(f); // create a Scanner using the File as the source
+    public static void loadFile(TaskList taskList) throws FileNotFoundException {
+        String dir = System.getProperty("user.dir");
+        Path filePath = Paths.get(dir, "data", "gilbert.txt");
+        File f = new File(filePath.toString());
+        Scanner s = new Scanner(f);
         Task task = new Task("");
         while (s.hasNext()) {
             String[] data = s.nextLine().split(" ", 3);

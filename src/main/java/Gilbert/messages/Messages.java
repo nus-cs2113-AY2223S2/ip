@@ -15,7 +15,7 @@ public final class Messages {
     public final static String EMPTY = "It seems you have not entered any task! Please add the task behind\n" + "the task type.\n" + SPACE;
     public final static String EMPTYLIST = "There are no Gilbert.tasks in your list!\n" + SPACE;
     public final static String ERROR = "It seems like you have entered an invalid command!\n" +
-            "Please type 'help' to list the available Gilbert.commands!\n" + SPACE;
+            "Please type 'help' to list the available Gilbert commands!\n" + SPACE;
     public final static String OUTOFBOUNDS = "You have entered an index that doesn't exist! Please try again.\n" + SPACE;
     public final static String FIND = "Here are some of the Gilbert.tasks that matches your keyword:";
     public final static String NOTFOUND = "There are no matching entries found!\n" + SPACE;

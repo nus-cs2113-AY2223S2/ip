@@ -26,7 +26,7 @@ public class Gilbert {
                 parse.executeCommand(taskList, input);
                 active = Parser.isExit();
                 try {
-                    Files.writeToFile(FILEPATH, taskList);
+                    Files.writeToFile(taskList);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -46,7 +46,7 @@ public class Gilbert {
     public static void main(String[] args) {
         taskList = new TaskList();
         try {
-            Files.loadFile(FILEPATH, taskList);
+            Files.loadFile(taskList);
         } catch (FileNotFoundException | IndexOutOfBoundsException e) {
             System.out.println("Oops, no existing files found!" + e.getMessage());
         }
