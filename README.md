@@ -1,111 +1,24 @@
-# Nano User Guide
+# Duke project template
 
-Nano is the chatbot for individual project for CS2113, AY22/23 Semester 2.
+This is a project template for a greenfield Java project. It's named after the Java mascot _Duke_. Given below are instructions on how to use it.
 
-Nano is named after the nano machine from the fantasy wuxia novel Nano Machine!
+## Setting up in Intellij
 
-## Table of Contents
+Prerequisites: JDK 11, update Intellij to the most recent version.
 
-- [Nano User Guide](#nano-user-guide)
-   - [Features](#features)
-      - [Task Creation](#task-creation)
-      - [Task Management](#task-management)
-  - [Commands](#commands)
-    - [add - Add new task](#add---add-new-task)
-    - [list - Display your Task List](#list---display-your-task-list)
-    - [mark - Tag task as done](#mark---tag-task-as-done)
-    - [unmark - Tag task as undone](#unmark---tag-task-as-undone)
-    - [delete - Delete a Task](#delete---delete-a-task)
-    - [find - Query for a task](#find---look-for-a-task)
-    - [exit - Nano goes to sleep](#exit---nano-goes-to-sleep)
-
-## Features
-
-Nano has a variety of features for you to manage your tasks efficiently via CLI.
-
-### Task Creation
-
-Keep track of your tasks in a list.
-
-Nano can manage up to three types of tasks:
-1. Todo - regular todo tasks
-2. Deadline - tasks that with a deadline
-3. Event - tasks that have a start and end time
-
-### Task Management
-
-Nano can help you mark, unmark, list, find, and save your tasks easily!
-
-- Nano marks your tasks to indicated that you have completed it.
-- Nano can list out all your current tasks and its details.
-- Nano allows you to look for specific tasks using a keyword.
-- Nano can save your task list.
-
-## Commands
-
-### add - Add new task
-
-Add a new task(Todo, Deadline, Event). Nano will automatically detect the type of task for you.
-
-Syntax:
-
-``/add <task_name>``
-
-``/add <task_name> by/<due_date>``
-
-``/add <task_name> from/<start_time> to/<end_time>``
-
-### list - Display your task list
-
-Nano will show you your list of tasks.  
-The list contains all the task details as well
-
-Syntax:
-
-``/list``
-
-### mark - Tag task as done
-Nano marks a task in the task list as done
-
-Syntax:  
-``/mark <task_name>``
-
-
-### unmark - Tag task as undone
-
-Nano marks a task in the task list as not done.
-
-Syntax:  
-``/unmark <task_name>``
-
-
-### delete - Delete a Task
-
-Nano deletes a task from your task list.
-
-Syntax:  
-``delete <task_name>``
-
-###  find - Look for a task
-
-Nano will look for the tasks containing a keyword and display them to you.
-
-Syntax:
-
-``/find <keyword>``
-
-### help - Displays all commands
-
-Nano reminds you of all his features and their syntax
-
-Syntax:
-``/help``
-
-### exit - Nano goes to sleep
-
-Nano enters into sleeping mode.
-
-Syntax:
-
-``/exit``
-
+1. Open Intellij (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project first)
+1. Open the project into Intellij as follows:
+   1. Click `Open`.
+   1. Select the project directory, and click `OK`.
+   1. If there are any further prompts, accept the defaults.
+1. Configure the project to use **JDK 11** (not other versions) as explained in [here](https://www.jetbrains.com/help/idea/sdk.html#set-up-jdk).<br>
+   In the same dialog, set the **Project language level** field to the `SDK default` option.
+3. After that, locate the `src/main/java/Duke.java` file, right-click it, and choose `Run Duke.main()` (if the code editor is showing compile errors, try restarting the IDE). If the setup is correct, you should see something like the below as the output:
+   ```
+   Hello from
+    ____        _        
+   |  _ \ _   _| | _____ 
+   | | | | | | | |/ / _ \
+   | |_| | |_| |   <  __/
+   |____/ \__,_|_|\_\___|
+   ```
