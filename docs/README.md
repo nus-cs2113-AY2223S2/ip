@@ -45,7 +45,7 @@ The task list data is stored in `duke.txt` file. The data is updated everytime a
 
 ### `find` - Find tasks
 * Find tasks from a specific keyword entered by a user. If there is no match task, it will not list anything out.
-* Format: `find [task number]`
+* Format: `find [keyword]`
 * Example of usage: `find laundry`
 
 ### `mark` - Mark a task
