@@ -2,6 +2,9 @@
 ## Description
 Duke is a command line chatbot which keeps track of your todos, events, and deadlines
 
+## Date Format
+Dates are only accepted in the yyyy-mm-dd format (ex: 2019-10-15 = October 15th 2019)
+
 ## Accepted commands
 ### `list`
 Lists current tasks
