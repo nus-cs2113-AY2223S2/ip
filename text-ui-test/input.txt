@@ -1,0 +1,10 @@
+eat bread
+lunch appointment /from Jan 7 12pm /to 2pm
+assignment submission /by Thursday
+list
+mark 1
+mark 3
+list
+unmark 3
+list
+bye
