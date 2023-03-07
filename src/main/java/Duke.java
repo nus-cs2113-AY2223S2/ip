@@ -3,6 +3,8 @@ import alltasks.*;
 import java.util.Scanner;
 import java.util.ArrayList;
 
+// if there is no directory named data, create the directory (folder) , inside that directory, i create a file called tasklist (textfile) or something, after that store the task lists the user generates into the file
+//next time i open, i search if the folder and file exists, if it exists, i read from the file and write to current file i created
 public class Duke {
     public static void main(String arguments[]) {
         ArrayList<Task> list_Items = new ArrayList<>(); // store the tasks (C++ vector)
@@ -10,11 +12,13 @@ public class Duke {
         int counter = 0; // counts the number of tasks in the list
         int index = 0; // this is used for index when mark / unmark
         System.out.println("Hi there! My name is Coffee");
-        System.out.println("How can I help you today?");
+        System.out.println("How can I help you today? :)");
 
         Task task_Array[];
         task_Array = new Task[110];
         boolean isRunning = true;
+        Storage storage = new Storage(list_Items);
+        list_Items.addAll(storage.get_Tasks_From_File());
 
         while (isRunning) {
             Scanner command = new Scanner(System.in);
@@ -48,7 +52,7 @@ public class Duke {
                     counter = counter + 1;
                     System.out.println("Got it. I've added this task:");
                     System.out.println("  " + todo_Word); // e.g. borrow book
-                    System.out.println("Now you have " + counter + " tasks in the list.");
+                    System.out.println("Now you have " + list_Items.size() + " tasks in the list.");
                     //task_Array[counter] = new Task(input_Command);
                     //list_Items.add(counter, new Task(input_Command));
                     //System.out.println(list_Items.get(counter - 1)); // counter = 0
@@ -58,10 +62,28 @@ public class Duke {
                 }
                 break;
 
+            case "delete":
+                System.out.println("Noted. I've removed this task:");
+                Task task = list_Items.remove(Integer.parseInt(first_Word_Array[1]) - 1);
+                System.out.println(task);
+                System.out.println("Now you have " + list_Items.size() + " tasks in the list.");
+                break;
+
+            case "find":
+                System.out.println("Here are the matching tasks in your list:");
+                for (int i = 0; i < list_Items.size(); i++) {
+                    if (list_Items.get(i).getDescription().contains(first_Word_Array[1])) {
+                        System.out.print(i + 1);
+                        System.out.print(". ");
+                        System.out.println(list_Items.get(i));
+                    }
+                }
+                break;
+
             case "deadline":
                 String [] get_Weekday;
                 get_Weekday = first_Word_Array[1].split("/by", 2);
-                Deadline deadline_Word = new Deadline(get_Weekday[0]);
+                Deadline deadline_Word = new Deadline(get_Weekday[0], get_Weekday[1]);
                 list_Items.add(counter, deadline_Word);
                 //task_Array[counter] = deadline_Word;
                 counter = counter + 1;
@@ -80,12 +102,12 @@ public class Duke {
                 String[] meeting_To;
                 meeting_From = get_Meeting[1].split(" ", 2);
                 meeting_To = get_Meeting[2].split(" ", 2);
-                Event meeting_Type = new Event(get_Meeting[0]);
+                Event meeting_Type = new Event(get_Meeting[0], meeting_From[1], meeting_To[1]);
                 list_Items.add(counter, meeting_Type);
                 //task_Array[counter] = meeting_Type;
                 counter = counter + 1;
                 System.out.println("Got it. I've added this task:");
-                System.out.println("  " + meeting_Type + "(from: " + meeting_From[1] + "to: " + meeting_To[1] + ")");
+                System.out.println("  " + meeting_Type);
                 System.out.println("Now you have " + counter + " tasks in the list.");
                 //task_Array[counter] = new Task(input_Command);
                 list_Items.add(counter, new Task(input_Command));
@@ -114,7 +136,7 @@ public class Duke {
 
             case "list":
                 System.out.println("Here are the tasks in your list:");
-                for (int i = 0; i < counter; i = i + 1) {
+                for (int i = 0; i < list_Items.size(); i = i + 1) {
                     Task item = list_Items.get(i);
                     System.out.println((i + 1) + ". " + item);
                 }
@@ -132,6 +154,7 @@ public class Duke {
                     System.out.println("OOPS!!! I'm sorry, but I don't know what that means :-(");
                 }
             }
+            storage.write_Tasks_To_File();
         }
     }
 }

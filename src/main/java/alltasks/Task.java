@@ -9,8 +9,19 @@ public class Task {
         this.isDone = false;
     }
 
+    // getter
     public String getStatusIcon() {
         return (isDone ? "X" : " "); // methods mark done task with X
+    }
+
+    //getter
+    public String getInfo() {
+        return "";
+    }
+
+    //getter
+    public String getDescription() {
+        return description;
     }
 
     public void markAsDone() {
