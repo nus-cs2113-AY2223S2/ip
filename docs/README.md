@@ -1,5 +1,9 @@
 # User Guide
 
+## How to launch
+1. Download the jar file provided on Github
+2. Run the jar file using the absolute path (eg C:..\ip_jar\ip.jar)
+
 ## Features
 
 ### Feature - Add Tasks (ToDo, Deadline and Event)

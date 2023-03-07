@@ -53,4 +53,8 @@ public class Ui {
     public void showEmptyListMessage() {
         System.out.println(" Oops! It looks like your list is empty!!");
     }
+
+    public void addedMessage(Task task) {
+        System.out.println(task.addedMessage());
+    }
 }
