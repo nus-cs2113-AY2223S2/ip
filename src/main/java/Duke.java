@@ -7,7 +7,7 @@ import java.util.ArrayList;
 //next time i open, i search if the folder and file exists, if it exists, i read from the file and write to current file i created
 public class Duke {
     public static void main(String arguments[]) {
-        ArrayList<Task> list_Items = new ArrayList<>(); // store the tasks (C++ vector)
+        ArrayList<Task> list_Items = new ArrayList<>(); // store the tasks (C++ vector), A-Collections extension
 
         int counter = 0; // counts the number of tasks in the list
         int index = 0; // this is used for index when mark / unmark
