@@ -1,6 +1,6 @@
-# User Guide
+# Duke: Your Personal Assistant Chatbot
 
-#### [© 2023 Nicholas Chung.](https://chungnicholas.com) 
+Duke is your personal assistant chat bot to help you manage your tasks!
 
 # Content page
 
