@@ -20,7 +20,7 @@ NakiriAyame filters and returns your Tasks by any keyword in O(1)! (Trust me, I 
 
 ### Ascii Art of Nakiri Ayame!
 
-![Yammers](../assets/yammers.png)
+![Picture of Ayame](https://github.com/BenjaminPoh/ip/blob/master/assets/yammers.png?raw=true)
 
 If you find it, that is.
 
