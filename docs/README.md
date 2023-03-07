@@ -127,7 +127,7 @@ Examples:
 
 ### Starting a Timer: `timer`
 
-Starts a 25 minute Pomodoro timer, hit enter to start a break timer
+Starts a 25 minute Pomodoro timer, hit enter to start a break timer. (PLEASE NOTE THAT THERE IS A TYPO IN THE HELP MENU. FOLLOW THIS USER GUIDE INSTEAD)
 
 Format: `timer`
 
