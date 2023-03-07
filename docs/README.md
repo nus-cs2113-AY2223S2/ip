@@ -6,28 +6,27 @@ Table of Contents
 
 1. [Quick start](#quick-start)
 2. [Features](#features)
-    1. [Viewing help: `help`](#viewing-help-help)
-    2. [Listing all tasks: `list`](#listing-all-tasks-list)
-    3. [Exiting: `bye`](#exiting-bye)
-    4. [Find task by keyword: `find`](#find-task-by-keyword-find)
-    5. [Add a ToDo: `todo`](#add-a-todo-todo)
-    6. [Add an Event: `event`](#add-an-event-event)
-    7. [Add a Deadline: `deadline`](#add-a-deadline-deadline)
-    8. [Mark a task as done: `mark`](#mark-a-task-as-done-mark)
-    9. [Unmark a task as done: `unmark`](#unmark-a-task-as-done-unmark)
-    10. [Delete a task: `delete`](#delete-a-task-delete)
-3. [Understanding Dates and Times](#understanding-dates-and-times)
-4. [Saving the Data](#saving-the-data)
-5. [Editing the data file](#editing-the-data-file)
-6. [FAQ](#faq)
-7. [Command summary](#command-summary)
+    1. [Viewing help: `help`](#viewing-help)
+    2. [Listing all tasks: `list`](#listing-all-tasks)
+    3. [Exiting: `bye`](#exiting)
+    4. [Find task by keyword: `find`](#find-task-by-keyword)
+    5. [Add a ToDo: `todo`](#add-a-todo)
+    6. [Add an Event: `event`](#add-an-event)
+    7. [Add a Deadline: `deadline`](#add-a-deadline)
+    8. [Mark a task as done: `mark`](#mark-a-task-as-done)
+    9. [Unmark a task as done: `unmark`](#unmark-a-task-as-done)
+    10. [Delete a task: `delete`](#delete-a-task)
+3. [Saving the Data](#saving-the-data)
+4. [Editing the data file](#editing-the-data-file)
+5. [FAQ](#faq)
+6. [Command summary](#command-summary)
 
 ## Quick start
 
 1. Ensure you have Java 11 or above installed on your computer.
 2. Download the latest duke.jar from here.
 3. Copy the file to the folder you want to use as the *home folder* for your todo list.
-4. Open the command line in that folder and run the command `java -jar duke.jar`.
+4. Open the command line in that folder and run the command `java -jar ip.jar`.
 5. When you first run the application, a greeting will be displayed.
 ```
 Save file loaded!
@@ -49,7 +48,7 @@ What can I do for you?
     e.g. in `event NAME /at DATE`, `NAME` and `DATE` are parameters which can be used as `event Christmas party /at 2022-12-25`.
 > - Extraneous parameters for commands that do not take in parameters will be ignored.
 
-### Viewing help: `help`
+### Viewing help
 
 Displays the list of commands available.
 
@@ -70,7 +69,7 @@ help
 10. bye
 ```
 
-### Listing all tasks: `list`
+### Listing all tasks
 
 Lists out the tasks in the task list. The letter in the first pair of [] refers to what type of task it is - T for a todo task, D for a deadline task and E for an event task. The letter in the second pair of [] refers to whether the task is done or not - \<space\> for a task that is not done and X for a task that is done. See [mark](#mark-a-task-as-done-mark).
 
@@ -85,7 +84,7 @@ Here are the tasks in your list:
 3.[E][ ] project meeting (from: Mon 2 to: 4pm)
 ```
 
-### Exiting: `bye`
+### Exiting
 
 Exits the application gracefully.
 
@@ -97,7 +96,7 @@ bye
 See ya!
 ```
 
-### Find task by keyword: `find`
+### Find task by keyword
 
 Finds all tasks with names containing a given keyword.
 
@@ -110,7 +109,7 @@ Here are the tasks in your list:
 1.[E][ ] project meeting (from: Mon 2 to: 4pm)
 ```
 
-### Add a ToDo: `todo`
+### Add a ToDo
 
 Creates a ToDo.
 
@@ -125,7 +124,7 @@ Now you have 1 task(s) in the list.
 Task list saved!
 ```
 
-### Add an Event: `event`
+### Add an Event
 
 Use this command to keep track of events you need to attend. If a date or date and time is specified in a clear format, then Duke will be able to understand it and display it in a more helpful form. See more at [understanding dates and times](#understanding-dates-and-times).
 
@@ -145,7 +144,7 @@ Now you have 2 task(s) in the list.
 Task list saved!
 ```
 
-### Add a Deadline: `deadline`
+### Add a Deadline
 
 Use this command to keep track of deadlines you need to meet. If a date or date and time is specified in a clear format, then Duke will be able to understand it and display it in a more helpful form. See more at [understanding dates and times](#understanding-dates-and-times).
 
@@ -160,7 +159,7 @@ Now you have 1 task(s) in the list.
 Task list saved!
 ```
 
-### Mark a task as done: `mark`
+### Mark a task as done
 
 Marks a task in your list as completed.
 
@@ -181,7 +180,7 @@ Nice! I've marked this task as done:
 Task list saved!
 ```
 
-### Unmark a task as done: `unmark`
+### Unmark a task as done
 
 Marks a task in your list as incomplete.
 
@@ -202,7 +201,7 @@ OK, I've marked this task as not done yet:
 Task list saved!
 ```
 
-### Delete a task: `delete`
+### Delete a task
 
 Deletes a task from your list.
 
@@ -222,10 +221,6 @@ Noted. I've removed this task:
 Now you have 2 task(s) in the list.
 Task list saved!
 ```
-
-## Understanding Dates and Times
-
-Specifying dates and times in a standard format lets Duke understand them better. Some understandable dates are 2022-12-25, 2022/12/25, 25/12/2022, 25 December 2022 and 25 dec 2022. If a year is not specified, e.g. 25 dec, then it defaults to the current year. Some understandable times are 23:59, 12:00, 2:30am and 4:15pm.
 
 ## Saving the Data
 
