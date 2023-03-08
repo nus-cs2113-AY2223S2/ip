@@ -55,7 +55,7 @@ public class Duke {
                 break;
 
             case "find":
-                System.out.println("Here are the matching tasks in your list:");
+                System.out.println("Here are the matching keywords in your list:");
                 for (int i = 0; i < list_Items.size(); i++) {
                     if (list_Items.get(i).getDescription().contains(first_Word_Array[1])) {
                         System.out.print(i + 1);
