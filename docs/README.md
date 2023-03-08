@@ -17,7 +17,6 @@ To get started with Coffee Bot:
 5. Run the command `java -jar {filename}.jar` in the command prompt.
 6. To exit Coffee Bot, simply key in the command `bye`.
 
-
 ## Functions of Coffee Bot 
  Coffee Bot offers the following features for you to keep track of your daily tasks, events and deadlines:
 
@@ -52,8 +51,6 @@ To get started with Coffee Bot:
 ### 8) Find:
 #### `find {keyword}` - Find a task in tasks list through searching for a keyword
 ###### e.g. `find coffee`
-
-
 
 ## Thank You for using Coffee Bot! ☺️
 
