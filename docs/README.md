@@ -21,7 +21,7 @@ To get started with Coffee Bot:
  Coffee Bot offers the following features for you to keep track of your daily tasks, events and deadlines:
 
 ### 1) ToDos: 
-#### `todo {task}` - Add tasks without due dates to tasks list
+#### `todo {task}` - Add tasks without due deadlines to tasks list
 ###### e.g. `todo buy coffee powder`
 
 ### 2) Deadlines: 
@@ -53,4 +53,3 @@ To get started with Coffee Bot:
 ###### e.g. `find coffee`
 
 ## Thank You for using Coffee Bot! ☺️
-

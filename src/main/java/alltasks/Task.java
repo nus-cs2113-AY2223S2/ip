@@ -1,5 +1,11 @@
 package alltasks;
 
+/**
+ * This Task class represents all tasks input by users such as
+ * todo, deadline and event tasks in a list.
+ * Coffee Bot keeps track of these tasks in a list.
+ */
+
 public class Task {
     protected String description; // instance variable
     protected boolean isDone;

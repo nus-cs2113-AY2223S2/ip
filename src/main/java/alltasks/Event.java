@@ -1,5 +1,9 @@
 package alltasks;
 
+/**
+ * This Event class represents tasks that starts and ends at a specific date and time.
+ * Coffee Bot keeps track of the event tasks.
+ */
 public class Event extends Task{
 
     private String from;

@@ -1,5 +1,9 @@
 package alltasks;
 
+/**
+ * This Deadline class represents tasks with a specific deadline.
+ * Coffee Bot keeps track of the deadline tasks.
+ */
 public class Deadline extends Task {
 
     private String by;
