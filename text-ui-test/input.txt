@@ -1,0 +1,25 @@
+todo
+todo eat breakfast
+deadline
+deadline CS2113 iP
+deadline CS2113 iP /by
+deadline CS2113 iP /by this Thursday
+event
+event go drinking
+event go drinking /from
+event go drinking /from /to
+event go drinking /from Fri 5pm /to
+event go drinking /from Fri 5pm /to Fri 8pm
+list
+mark
+mark 1
+mark 2
+mark 10
+mark hello
+unmark 1
+anyhow 
+list hello
+delete 10
+delete asd
+delete 1
+bye
