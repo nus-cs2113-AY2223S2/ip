@@ -3,87 +3,86 @@
 
 package alltasks;
 
-import java.nio.file.*;
+import java.nio.file.Path;
+import java.nio.file.Files;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Storage {
-    private ArrayList<Task> list_Tasks;
-    private Path task_Path;
+    private ArrayList<Task> listTasks;
+    private Path taskPath;
 
-    public Storage(ArrayList<Task> list_Tasks_arg) {
-        this.list_Tasks = list_Tasks_arg;
-        String config_Home_String;
+    public Storage(ArrayList<Task> listTasksArgs) {
+        this.listTasks = listTasksArgs;
+        String configHomeString;
         // Get the "XDG_CONFIG_HOME" based on the OS of user, based on windows or macs
         String os = System.getProperty("os.name").toLowerCase();
         if (os.contains("win")) {
             // this is for windows
-            config_Home_String = System.getenv("LOCALAPPDATA");
+            configHomeString = System.getenv("LOCALAPPDATA");
         } else {
             // this is for MACOS
-            config_Home_String = System.getenv("HOME");
+            configHomeString = System.getenv("HOME");
         }
-        Path coffee_Home = Path.of(config_Home_String).resolve("coffee");
+        Path coffeeHome = Path.of(configHomeString).resolve("coffee");
         try {
-            if (Files.notExists(coffee_Home)) {
-                Files.createDirectory(coffee_Home);
+            if (Files.notExists(coffeeHome)) {
+                Files.createDirectory(coffeeHome);
             }
-            Path tasks_Home = coffee_Home.resolve("coffeeTasks.txt");
-            if (Files.notExists(tasks_Home)) {
-                Files.createFile(tasks_Home);
+            Path tasksHome = coffeeHome.resolve("coffeeTasks.txt");
+            if (Files.notExists(tasksHome)) {
+                Files.createFile(tasksHome);
             }
-            this.task_Path = tasks_Home;
-        } catch (IOException io_exception) {
-            io_exception.printStackTrace();
+            this.taskPath = tasksHome;
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
         }
     }
 
-    public void write_Tasks_To_File() {
-        StringBuilder build_String = new StringBuilder();
-        for (Task task : this.list_Tasks) {
-            build_String.append(task.getInfo() + "\n");
+    public void writeTasksToFile() {
+        StringBuilder buildString = new StringBuilder();
+        for (Task task : this.listTasks) {
+            buildString.append(task.getInfo() + "\n");
         }
         try {
-            Files.writeString(this.task_Path, build_String.toString());
-        } catch (IOException io_Exceptions) {
-            io_Exceptions.printStackTrace();
+            Files.writeString(this.taskPath, buildString.toString());
+        } catch (IOException ioExceptions) {
+            ioExceptions.printStackTrace();
         }
     }
 
     public ArrayList<Task> get_Tasks_From_File() {
-        ArrayList<Task> retrieve_Task = new ArrayList<>();
+        ArrayList<Task> retrieveTask = new ArrayList<>();
         try {
-            List<String> tasks_Lists = Files.readAllLines(this.task_Path);
-            for (String task_String : tasks_Lists) {
-                if (task_String.isEmpty()) {
+            List<String> tasksLists = Files.readAllLines(this.taskPath);
+            for (String taskString : tasksLists) {
+                if (taskString.isEmpty()) {
                     continue;
                 }
-                Task to_Add_Item = new Todo(""); // mark task as done if needed
+                Task toAddItem = new ToDo(""); // mark task as done if needed
 
-                String[] tokens = task_String.split("\\|");
+                String[] tokens = taskString.split("\\|");
                 switch (tokens[0]) {
-
                 case "Todo":
-                    to_Add_Item = new Todo(tokens[2]);
+                    toAddItem = new ToDo(tokens[2]);
                     break;
-
                 case "Deadline":
-                    to_Add_Item = new Deadline(tokens[2], tokens[3]);
+                    toAddItem = new Deadline(tokens[2], tokens[3]);
                     break;
-
                 case "Event":
-                    to_Add_Item = new Event(tokens[2], tokens[3], tokens[4]);
+                    toAddItem = new Event(tokens[2], tokens[3], tokens[4]);
+                default:
                 }
                 if (tokens[1].equals("true")) {
-                    to_Add_Item.markAsDone();
+                    toAddItem.markAsDone();
                 }
-                retrieve_Task.add(to_Add_Item);
+                retrieveTask.add(toAddItem);
             }
         } catch (IOException exceptions) {
             exceptions.printStackTrace();
         }
-        return retrieve_Task;
+        return retrieveTask;
     }
 }
 //@@ Student Oh Yi Xiu Wilson

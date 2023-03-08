@@ -4,14 +4,14 @@ package alltasks;
  * This Todo class represents tasks without due deadlines that are added by users to Coffee Bot.
  * Coffee Bot keeps track of the todo tasks.
  */
-public class Todo extends Task{
+public class ToDo extends Task{
 
     /**
      * Creates a Todo class from the input command.
      *
      * @param descriptive description of input command.
      */
-    public Todo(String descriptive) {
+    public ToDo(String descriptive) {
         super(descriptive);
     }
 
