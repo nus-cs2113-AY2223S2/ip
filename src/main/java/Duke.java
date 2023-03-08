@@ -3,39 +3,31 @@ import alltasks.*;
 import java.util.Scanner;
 import java.util.ArrayList;
 
-// if there is no directory named data, create the directory (folder) , inside that directory, i create a file called tasklist (textfile) or something, after that store the task lists the user generates into the file
-//next time i open, i search if the folder and file exists, if it exists, i read from the file and write to current file i created
+/**
+ * This class represents Coffee Bot that helps users to keep track of their personal schedules.
+ * Coffee Bot takes in commands by users to keep track of Todos, Deadlines and events tasks.
+ */
 public class Duke {
     public static void main(String arguments[]) {
         ArrayList<Task> list_Items = new ArrayList<>(); // store the tasks (C++ vector), A-Collections extension
-
         int counter = 0; // counts the number of tasks in the list
         int index = 0; // this is used for index when mark / unmark
         System.out.println("Hi there! My name is Coffee");
         System.out.println("How can I help you today? :)");
-
         Task task_Array[];
         task_Array = new Task[110];
         boolean isRunning = true;
         Storage storage = new Storage(list_Items);
         list_Items.addAll(storage.get_Tasks_From_File());
-
         while (isRunning) {
             Scanner command = new Scanner(System.in);
             String input_Command = command.nextLine();
-            // e.g. todo borrow book
-            // e.g. delete 3
-            // e.g. mark 1
             String[] first_Word_Array;
             first_Word_Array = input_Command.split(" ", 2);
-            // first_Word_Array[0, 1] is now ["todo", "borrow book"]
-            // first_Word_Array[0, 1] is now ["delete", "3"]
-            // first_Word_Array[0, 1] is now ["mark", "1"]
-            String first_Word = first_Word_Array[0]; // e.g. todo or delete
+            String first_Word = first_Word_Array[0];
             String[] tokens;
 
             switch (first_Word) {
-
             case "todo": // e.g. todo borrow book
                 try {
                     if (first_Word_Array.length == 1) { 
@@ -154,7 +146,10 @@ public class Duke {
                     System.out.println("OOPS!!! I'm sorry, but I don't know what that means :-(");
                 }
             }
+            //Solution below adapted and reused from Student Oh Yi Xiu Wilson
+            // with modifications made by Wilson Lee Jun Wei
             storage.write_Tasks_To_File();
+            //@@ Student Oh Yi Xiu Wilson
         }
     }
 }
