@@ -1,10 +1,21 @@
+import java.io.IOException;
+import java.util.Scanner;
+
+import static messages.operationalMessages.MESSAGE_OPENING;
+
 public class Duke {
-    public static void main(String[] args) {
-        String logo = " ____        _        \n"
-                + "|  _ \\ _   _| | _____ \n"
-                + "| | | | | | | |/ / _ \\\n"
-                + "| |_| | |_| |   <  __/\n"
-                + "|____/ \\__,_|_|\\_\\___|\n";
-        System.out.println("Hello from\n" + logo);
+
+    public static void main(String[] args) throws IOException {
+
+        Storage storage = new Storage();
+        Ui ui = new Ui();
+
+        storage.loadFromFile(TaskList.items);
+
+        System.out.println(MESSAGE_OPENING);
+        Scanner response = new Scanner(System.in);
+        String line = "";
+
+        ui.readInCommand(TaskList.items, response, line);
     }
 }
