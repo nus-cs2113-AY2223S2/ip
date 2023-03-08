@@ -1,3 +1,6 @@
+//Solution below adapted and reused from Student Oh Yi Xiu Wilson
+// with modifications made by Wilson Lee Jun Wei
+
 package alltasks;
 
 import java.nio.file.*;
@@ -5,8 +8,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-//Solution below adapted and reused from Student Oh Yi Xiu Wilson
-// with modifications made by Wilson Lee Jun Wei
 public class Storage {
     private ArrayList<Task> list_Tasks;
     private Path task_Path;
@@ -74,7 +75,6 @@ public class Storage {
                 case "Event":
                     to_Add_Item = new Event(tokens[2], tokens[3], tokens[4]);
                 }
-                // change true to 1
                 if (tokens[1].equals("true")) {
                     to_Add_Item.markAsDone();
                 }
