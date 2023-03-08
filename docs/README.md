@@ -50,7 +50,7 @@ Expected outcome:
 Acknowledgment of task addition and display of new task.
 
 ```
-覚えましたよ～ (event recorded) interview at McDonalds (from: 4pm to: 6pm)
+覚えましたよ～ (event recorded) interview at McDonalds (by: week 6)
 ```
 
 ### `event` - Add an event task
