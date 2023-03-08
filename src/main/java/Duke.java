@@ -16,13 +16,13 @@ public class Duke {
         System.out.println("How can I help you today? :)");
         Task task_Array[];
         task_Array = new Task[110];
-        boolean isRunning = true;
+        boolean isRun = true;
         //Solution below adapted and reused from Student Oh Yi Xiu Wilson
         // with modifications made by Wilson Lee Jun Wei
         Storage storage = new Storage(list_Items);
         list_Items.addAll(storage.get_Tasks_From_File());
         //@@ Student Oh Yi Xiu Wilson
-        while (isRunning) {
+        while (isRun) {
             Scanner command = new Scanner(System.in);
             String input_Command = command.nextLine();
             String[] first_Word_Array;
@@ -43,7 +43,7 @@ public class Duke {
                     System.out.println("  " + todo_Word);
                     System.out.println("Now you have " + list_Items.size() + " tasks in the list.");
                     } catch (todoMissingException exception){
-                     System.out.println("OOPS!!! The description of a todo cannot be empty.");
+                     System.out.println("OH NO!!!! The description of a todo cannot be empty.");
                 }
                 break;
 
@@ -119,14 +119,14 @@ public class Duke {
 
             case "bye":
                 System.out.println("I look forward to seeing you again! Goodbye!");
-                isRunning = false;
+                isRun = false;
                 return;
 
             default:
                 try {
                     throw new wrongCommandException();
                 } catch (wrongCommandException exception) {
-                    System.out.println("OOPS!!! I'm sorry, but I don't know what that means :-(");
+                    System.out.println("OH NO!!! My deepest apologies, but I don't understand what that means :(");
                 }
             }
             //Solution below adapted and reused from Student Oh Yi Xiu Wilson
