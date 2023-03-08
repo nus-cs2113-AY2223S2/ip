@@ -18,6 +18,10 @@ public class Task {
         isDone = false;
         System.out.println("OK, I've marked this task as not done yet:\n" + this);
     }
+
+    public boolean findMatch(String partialName) {
+        return description.contains(partialName);
+    }
     protected String getDescription() {
         return description;
     }

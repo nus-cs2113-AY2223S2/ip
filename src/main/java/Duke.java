@@ -83,6 +83,16 @@ public class Duke {
                 System.out.println("Task number to be deleted is not within the list");
             }
             printDivider();
+        } else if (input.startsWith("find")) {
+            printDivider();
+            try {
+                findTask(input);
+            } catch (IllegalFormatException e) {
+                System.out.println("The keyword of the task cannot be empty.");
+            } catch (InvalidInputException e) {
+                System.out.println("No such task found in the list.");
+            }
+            printDivider();
         } else {
             throw new CommandNotFoundException();
         }
@@ -154,6 +164,24 @@ public class Duke {
         System.out.println("Noted. I've removed this task:\n" + tasks.get(deleteIndex - 1));
         tasks.remove(tasks.get(deleteIndex - 1));
         System.out.println("Now you have " + tasks.size() + " tasks in the list.");
+    }
+
+    protected static void findTask(String input) throws IllegalFormatException, InvalidInputException{
+        String keyword = input.substring(4).trim();
+        if (keyword.equals("")) {
+            throw new IllegalFormatException();
+        }
+        System.out.println("Here are the matching tasks in your list:");
+        int count = 1;
+        for (Task task : tasks) {
+            if (task.findMatch(keyword)) {
+                System.out.println(count + "." + task);
+                count++;
+            }
+        }
+        if (count == 1) {
+            throw new InvalidInputException();
+        }
     }
 
     public static void main(String[] args) {
