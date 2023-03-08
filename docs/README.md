@@ -2,8 +2,8 @@
 
 ## Introduction:
 Hello! Welcome to the Coffee Bot User Guide! :) 
-This user guide is intended to help you to navigate Coffee Bot and to
-understand its various functionalities to keep track of your personal deadlines, events and todo tasks.
+This Coffee Bot user guide is to help you to navigate Coffee Bot and to
+understand its various functionalities to help you to keep track of your personal schedules.
 This is a project by author Wilson Lee Jun Wei 😉
 
 If there are any further queries, please feel free to reach out to Wilson @ wilsonleejunwei@u.nus.edu
