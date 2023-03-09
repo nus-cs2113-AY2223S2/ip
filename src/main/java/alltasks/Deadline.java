@@ -5,7 +5,6 @@ package alltasks;
  * Coffee Bot keeps track of the deadline tasks.
  */
 public class Deadline extends Task {
-
     private String by;
 
     /**
@@ -20,7 +19,8 @@ public class Deadline extends Task {
     }
 
     @Override
-    public String getInfo() {return String.format("%s|%s|%s|%s", "Deadline", this.isDone ? 1 : 0, this.description, this.by);
+    public String getInfo() {
+        return String.format("%s|%s|%s|%s", "Deadline", this.isDone ? 1 : 0, this.description, this.by);
     }
 
     /**

@@ -5,7 +5,6 @@ package alltasks;
  * Coffee Bot keeps track of the event tasks.
  */
 public class Event extends Task{
-
     private String from;
     private String to;
 
@@ -21,6 +20,7 @@ public class Event extends Task{
         this.from = from;
         this.to = to;
     }
+
     /**
      * Returns the status of completion of the task item
      * and the description of the input command.
@@ -30,6 +30,7 @@ public class Event extends Task{
      * @return from start of an event indicated in the input command.
      * @return to end of an event indicated in the input command.
      */
+
     @Override
     public String toString() {
         return "[E]" + "[" + getStatusIcon() + "]" + " " + description + "(from: " + this.from + ", to: " + this.to + ")" ;

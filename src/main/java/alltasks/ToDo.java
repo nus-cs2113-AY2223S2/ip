@@ -5,7 +5,6 @@ package alltasks;
  * Coffee Bot keeps track of the todo tasks.
  */
 public class ToDo extends Task{
-
     /**
      * Creates a Todo class from the input command.
      *
