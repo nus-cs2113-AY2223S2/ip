@@ -13,16 +13,11 @@ import java.util.ArrayList;
  * Coffee Bot takes in commands by users to keep track of Todos, Deadlines and events tasks.
  */
 public class Duke {
-    // testing the merge-pr branch
-    // testing the merge pull request
-    // comments
     public static void main(String[] arguments) {
         ArrayList<Task> listItems = new ArrayList<>();
         int index = 0;
         System.out.println("Hi there! My name is Coffee");
         System.out.println("How can I help you today? :)");
-        Task[] taskArray;
-        taskArray = new Task[110];
         boolean isRun = true;
         //Solution below adapted and reused from Student Oh Yi Xiu Wilson
         // with modifications made by Wilson Lee Jun Wei
@@ -36,7 +31,6 @@ public class Duke {
             firstWordArray = inputCommand.split(" ", 2);
             String firstWord = firstWordArray[0];
             String[] tokens;
-
             switch (firstWord) {
             case "todo": // e.g. todo borrow book
                 try {
