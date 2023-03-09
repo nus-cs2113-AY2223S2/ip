@@ -13,7 +13,6 @@ import java.util.ArrayList;
  * Coffee Bot takes in commands by users to keep track of Todos, Deadlines and events tasks.
  */
 public class Duke {
-    // testing the merge-pr branch
     public static void main(String[] arguments) {
         ArrayList<Task> listItems = new ArrayList<>();
         int index = 0;
