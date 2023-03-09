@@ -28,6 +28,11 @@ public class Task {
         return (isDone ? "X" : " ");
     }
 
+    /**
+     * Returns the task into the format of type|mark/unmark|description
+     *
+     * @return The converted task into the format as a String
+     */
     public String getInfo() {
         return "";
     }
@@ -55,13 +60,6 @@ public class Task {
         this.isDone = false;
     }
 
-    /**
-     * Returns the status of completion of the task item
-     * and the description of the input command.
-     *
-     * @return getStatusIcon() status of completion of task item.
-     * @return description description of the input command.
-     */
     @Override
     public String toString() {
         return "[" + getStatusIcon() + "]" + " " + description;

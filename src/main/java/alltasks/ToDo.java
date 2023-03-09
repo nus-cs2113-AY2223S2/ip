@@ -26,13 +26,9 @@ public class ToDo extends Task{
     public String toString() {
         return "[T]" + "[" + getStatusIcon() + "]" + " " + description;
     }
-    /**
-     * Returns
-     *
-     * @return
-     */
+
     @Override
     public String getInfo() {
-        return String.format("%s|%s|%s", "Todo", this.isDone, this.description);
+        return String.format("%s|%s|%s", "Todo", this.isDone ? 1 : 0, this.description);
     }
 }

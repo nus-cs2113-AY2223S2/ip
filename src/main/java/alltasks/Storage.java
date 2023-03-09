@@ -23,7 +23,7 @@ public class Storage {
             configHomeString = System.getenv("LOCALAPPDATA");
         } else {
             // this is for MACOS
-            configHomeString = System.getenv("HOME");
+            configHomeString = System.getenv("HOME") + "/.config";
         }
         Path coffeeHome = Path.of(configHomeString).resolve("coffee");
         try {
@@ -74,7 +74,7 @@ public class Storage {
                     toAddItem = new Event(tokens[2], tokens[3], tokens[4]);
                 default:
                 }
-                if (tokens[1].equals("true")) {
+                if (tokens[1].equals("1")) {
                     toAddItem.markAsDone();
                 }
                 retrieveTask.add(toAddItem);

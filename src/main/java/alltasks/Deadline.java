@@ -19,14 +19,8 @@ public class Deadline extends Task {
         this.by = by;
     }
 
-    /**
-     * Returns
-     *
-     * @return
-     */
     @Override
-    public String getInfo() {
-        return String.format("%s|%s|%s|%s", "Deadline", this.isDone, this.description, this.by);
+    public String getInfo() {return String.format("%s|%s|%s|%s", "Deadline", this.isDone ? 1 : 0, this.description, this.by);
     }
 
     /**

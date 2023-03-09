@@ -15,7 +15,6 @@ import java.util.ArrayList;
 public class Duke {
     public static void main(String[] arguments) {
         ArrayList<Task> listItems = new ArrayList<>();
-        int counter = 0;
         int index = 0;
         System.out.println("Hi there! My name is Coffee");
         System.out.println("How can I help you today? :)");
@@ -42,8 +41,7 @@ public class Duke {
                         throw new todoMissingException();
                     }
                     ToDo todoWord = new ToDo(firstWordArray[1]);
-                    listItems.add(counter, todoWord);
-                    counter = counter + 1;
+                    listItems.add(todoWord);
                     System.out.println("Got it. I've added this task:");
                     System.out.println("  " + todoWord);
                     System.out.println("Now you have " + listItems.size() + " tasks in the list.");
@@ -71,12 +69,11 @@ public class Duke {
                 String[] getWeekday;
                 getWeekday = firstWordArray[1].split("/by", 2);
                 Deadline deadlineWord = new Deadline(getWeekday[0], getWeekday[1]);
-                listItems.add(counter, deadlineWord);
-                counter = counter + 1;
+                listItems.add(deadlineWord);
                 System.out.println("Got it. I've added this task:");
                 System.out.println("  " + deadlineWord + " (by:" + getWeekday[1] + ")");
-                System.out.println("Now you have " + counter + " tasks in the list.");
-                listItems.add(counter, new Task(inputCommand));
+                System.out.println("Now you have " + listItems.size() + " tasks in the list.");
+                listItems.add(new Task(inputCommand));
                 break;
             case "event":
                 String[] getMeeting;
@@ -86,12 +83,11 @@ public class Duke {
                 meetingFrom = getMeeting[1].split(" ", 2);
                 meetingTo = getMeeting[2].split(" ", 2);
                 Event meetingType = new Event(getMeeting[0], meetingFrom[1], meetingTo[1]);
-                listItems.add(counter, meetingType);
-                counter = counter + 1;
+                listItems.add(meetingType);
                 System.out.println("Got it. I've added this task:");
                 System.out.println("  " + meetingType);
-                System.out.println("Now you have " + counter + " tasks in the list.");
-                listItems.add(counter, new Task(inputCommand));
+                System.out.println("Now you have " + listItems.size()+ " tasks in the list.");
+                listItems.add(new Task(inputCommand));
                 break;
             case "mark":
                 tokens = inputCommand.split(" ");
