@@ -2,6 +2,7 @@ import allexceptions.deadlineMissingException;
 import allexceptions.todoMissingException;
 import allexceptions.wrongCommandException;
 import allexceptions.eventMissingException;
+import allexceptions.findMissingException;
 import alltasks.Deadline;
 import alltasks.Event;
 import alltasks.Task;
@@ -20,13 +21,12 @@ public class Duke {
         int index = 0;
         System.out.println("Hi there! My name is Coffee");
         System.out.println("How can I help you today? :)");
-        boolean isRun = true;
         //Solution below adapted and reused from Student Oh Yi Xiu Wilson
         // with modifications made by Wilson Lee Jun Wei
         Storage storage = new Storage(listItems);
         listItems.addAll(storage.get_Tasks_From_File());
         //@@ Student Oh Yi Xiu Wilson
-        while (isRun) {
+        while (true) {
             Scanner command = new Scanner(System.in);
             String inputCommand = command.nextLine();
             String[] firstWordArray;
@@ -55,13 +55,20 @@ public class Duke {
                 System.out.println("Now you have " + listItems.size() + " tasks in the list.");
                 break;
             case "find":
-                System.out.println("Here are the matching keyword(s) in your list:");
-                for (int i = 0; i < listItems.size(); i++) {
-                    if (listItems.get(i).getDescription().contains(firstWordArray[1])) {
-                        System.out.print(i + 1);
-                        System.out.print(". ");
-                        System.out.println(listItems.get(i));
+                try {
+                    if (firstWordArray.length == 1) {
+                        throw new findMissingException();
                     }
+                    System.out.println("Here are the matching keyword(s) in your list:");
+                    for (int i = 0; i < listItems.size(); i++) {
+                        if (listItems.get(i).getDescription().contains(firstWordArray[1])) {
+                            System.out.print(i + 1);
+                            System.out.print(". ");
+                            System.out.println(listItems.get(i));
+                        }
+                    }
+                } catch (findMissingException findException){
+                    System.out.println("OH NO!!!! The description of a find cannot be empty.");
                 }
                 break;
             case "deadline":
@@ -123,7 +130,6 @@ public class Duke {
                 break;
             case "bye":
                 System.out.println("I look forward to seeing you again! Goodbye!");
-                isRun = false;
                 return;
             default:
                 try {
