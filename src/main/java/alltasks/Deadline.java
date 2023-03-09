@@ -29,10 +29,9 @@ public class Deadline extends Task {
      *
      * @return getStatusIcon() status of completion of task item.
      * @return description description of the input command.
-     * @return by deadline indicated in the input command.
      */
     @Override
     public String toString() {
-        return "[D]" + "[" + getStatusIcon() + "]" + " " + description + " by: " + this.by;
+        return "[D]" + "[" + getStatusIcon() + "]" + " " + description;
     }
 }

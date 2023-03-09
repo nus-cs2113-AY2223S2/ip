@@ -1,5 +1,7 @@
+import allexceptions.deadlineMissingException;
 import allexceptions.todoMissingException;
 import allexceptions.wrongCommandException;
+import allexceptions.eventMissingException;
 import alltasks.Deadline;
 import alltasks.Event;
 import alltasks.Task;
@@ -42,7 +44,7 @@ public class Duke {
                     System.out.println("Got it. I've added this task:");
                     System.out.println("  " + todoWord);
                     System.out.println("Now you have " + listItems.size() + " tasks in the list.");
-                    } catch (todoMissingException exception){
+                } catch (todoMissingException exception){
                      System.out.println("OH NO!!!! The description of a todo cannot be empty.");
                 }
                 break;
@@ -53,7 +55,7 @@ public class Duke {
                 System.out.println("Now you have " + listItems.size() + " tasks in the list.");
                 break;
             case "find":
-                System.out.println("Here are the matching keywords in your list:");
+                System.out.println("Here are the matching keyword(s) in your list:");
                 for (int i = 0; i < listItems.size(); i++) {
                     if (listItems.get(i).getDescription().contains(firstWordArray[1])) {
                         System.out.print(i + 1);
@@ -63,28 +65,40 @@ public class Duke {
                 }
                 break;
             case "deadline":
-                String[] getWeekday;
-                getWeekday = firstWordArray[1].split("/by", 2);
-                Deadline deadlineWord = new Deadline(getWeekday[0], getWeekday[1]);
-                listItems.add(deadlineWord);
-                System.out.println("Got it. I've added this task:");
-                System.out.println("  " + deadlineWord + " (by:" + getWeekday[1] + ")");
-                System.out.println("Now you have " + listItems.size() + " tasks in the list.");
-                listItems.add(new Task(inputCommand));
+                try {
+                    if (firstWordArray.length == 1) {
+                        throw new deadlineMissingException();
+                    }
+                    String[] getWeekday;
+                    getWeekday = firstWordArray[1].split("/by", 2);
+                    Deadline deadlineWord = new Deadline(getWeekday[0], getWeekday[1]);
+                    listItems.add(deadlineWord);
+                    System.out.println("Got it. I've added this task:");
+                    System.out.println("  " + deadlineWord + "(by:" + getWeekday[1] + ")");
+                    System.out.println("Now you have " + listItems.size() + " tasks in the list.");
+                } catch (deadlineMissingException deadlineException) {
+                    System.out.println("OH NO!!!! The description of a deadline cannot be empty.");
+                }
                 break;
             case "event":
-                String[] getMeeting;
-                getMeeting = firstWordArray[1].split("/", 3);
-                String[] meetingFrom;
-                String[] meetingTo;
-                meetingFrom = getMeeting[1].split(" ", 2);
-                meetingTo = getMeeting[2].split(" ", 2);
-                Event meetingType = new Event(getMeeting[0], meetingFrom[1], meetingTo[1]);
-                listItems.add(meetingType);
-                System.out.println("Got it. I've added this task:");
-                System.out.println("  " + meetingType);
-                System.out.println("Now you have " + listItems.size()+ " tasks in the list.");
-                listItems.add(new Task(inputCommand));
+                try {
+                    if (firstWordArray.length == 1) {
+                        throw new eventMissingException();
+                    }
+                    String[] getMeeting;
+                    getMeeting = firstWordArray[1].split("/", 3);
+                    String[] meetingFrom;
+                    String[] meetingTo;
+                    meetingFrom = getMeeting[1].split(" ", 2);
+                    meetingTo = getMeeting[2].split(" ", 2);
+                    Event meetingType = new Event(getMeeting[0], meetingFrom[1], meetingTo[1]);
+                    listItems.add(meetingType);
+                    System.out.println("Got it. I've added this task:");
+                    System.out.println("  " + meetingType);
+                    System.out.println("Now you have " + listItems.size() + " tasks in the list.");
+                } catch (eventMissingException eventException) {
+                    System.out.println("OH NO!!!! The description of an event cannot be empty.");
+                }
                 break;
             case "mark":
                 tokens = inputCommand.split(" ");
