@@ -1,6 +1,5 @@
 package DukeManager.Ui;
 
-import DukeManager.Commands.CmdResult;
 import DukeManager.common.Messages;
 import DukeManager.data.Tasks.Task;
 
@@ -55,7 +54,7 @@ public class TextUi {
 	 * Echos the command back to the user.
 	 * @return command (full line) entered by the user
 	 */
-	public String getUserCommand() {
+	public String readCmd() {
 		out.print("\t  Enter command: ");
 		String fullInputLine = in.nextLine();
 
@@ -64,16 +63,12 @@ public class TextUi {
 			fullInputLine = in.nextLine();
 		}
 
-		showToUser("[Command entered:" + fullInputLine + "]");
+		showToUser("Command entered:" + fullInputLine);
 		return fullInputLine;
 	}
 
-	public void showWelcomeMessage(String version) {
-		showToUser(
-				LINE_PARTITION,
-				GREET,
-				version,
-				LINE_PARTITION);
+	public void showWelcomeMessage() {
+		showToUser(GREET);
 	}
 
 	public void showFarewellMessage() {
@@ -82,22 +77,18 @@ public class TextUi {
 
 	/** Shows message(s) to the user */
 	public void showToUser(String... message) {
+		out.print(LINE_PARTITION);
 		for (String m : message) {
-			out.println(m);
+			out.println("\t  " + m);
 		}
+		out.print(LINE_PARTITION);
 	}
 
 	public void showNoSaveFileError() {
-		showToUser("\t  Welcome, new user. How may I help you?");
+		showToUser("Welcome, new user. How may I help you?");
 	}
 	public void showUserReturn() {
-		showToUser("\t  Saved list loaded. Welcome back!");
+		showToUser("Saved list loaded. Welcome back!");
 	}
-	public void showResultToUser(CmdResult result) {
-		final List<Task> resultTasks = result.getRelevantTasks();
-		if (resultTasks != null) {
-			showTaskListView(resultTasks);
-		}
-		showToUser(result.feedbackToUser, LINE_PARTITION);
-	}
+
 }

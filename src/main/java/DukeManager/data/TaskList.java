@@ -12,17 +12,10 @@ import DukeManager.data.Tasks.Task;
 public class TaskList {
 	private static List<Task> allTasks = new ArrayList<>();
 
-	/** The list of person shown to the user most recently.  */
-	private List<Task> lastShownList = Collections.emptyList();
-
 	public TaskList(ArrayList<Task> taskArrayList) {
 		allTasks = taskArrayList;
 	}
 	public TaskList() {}
-
-	public List<Task> immutableListView() {
-		return Collections.unmodifiableList(allTasks);
-	}
 
 
 	/**
@@ -71,18 +64,15 @@ public class TaskList {
 		task.setDone(isDone);
 	}
 
-	/**
-	 * Updates the {@link #lastShownList} if the result contains a list of Tasks.
-	 */
-	public void setLastShownList(List<Task> listInResult) {
-		if (listInResult != null) {
-			lastShownList = listInResult;
-		}
-	}
+//	/**
+//	 * Updates the {@link #allTasks} if the result contains a list of Tasks.
+//	 */
+//	public static void setLastShownList(TaskList listInResult) {
+//		if (listInResult != null) {
+//			allTasks = (List<Task>) listInResult;
+//		}
+//	}
 
-	public List<Task> getLastShownList() {
-		return lastShownList;
-	}
 
 	/**
 	 * Returns an unmodifiable java List view with elements cast as immutable {@link Task}s.
@@ -94,12 +84,13 @@ public class TaskList {
 	}
 
 
-	@Override
-	public boolean equals(Object other) {
-		return other == this // short circuit if same object
-				|| (other instanceof TaskList // instanceof handles nulls
-				&& this.lastShownList.equals(((TaskList) other).lastShownList));
+    public int size() {
+		return allTasks.size();
+    }
+	public Task getTask(int index) {
+		return allTasks.get(index);
 	}
+
 	/**
 	 * Signals that an operation would have violated the 'no duplicates' property of the list.
 	 */

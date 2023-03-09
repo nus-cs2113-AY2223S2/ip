@@ -3,6 +3,7 @@ import DukeManager.Commands.Cmd;
 import DukeManager.Parser.Parser;
 import DukeManager.Storage.Storage;
 import DukeManager.Ui.TextUi;
+import DukeManager.data.DukeErrors.BlankListException;
 import DukeManager.data.TaskList;
 
 import java.io.FileNotFoundException;
@@ -256,28 +257,26 @@ public class Duke {
 		storage = new Storage(filePath);
 		try {
 			tasks = new TaskList(storage.load());
-		} catch (FileNotFoundException e) {
+			ui.showUserReturn();
+		} catch (FileNotFoundException | TaskList.DuplicateTaskException e) {
 			ui.showNoSaveFileError();
 			tasks = new TaskList();
-		} finally {
-			ui.showUserReturn();
 		}
 	}
 
 	public void run() {
-		ui.showWelcome();
+		ui.showWelcomeMessage();
 		boolean isExit = false;
 		while (!isExit) {
 			try {
-				String fullCommand = ui.readCommand();
+				String fullCommand = ui.readCmd();
 				Cmd c = Parser.parse(fullCommand);
-				c.execute(tasks, ui, storage);
-				isExit = c.isExit();
-			} catch (DukeException e) {
-				ui.showError(e.getMessage());
+				c.execute(tasks, ui);
+				Storage.save(tasks);
+			} catch (BlankListException e) {
+				ui.showToUser(e.getMessage());
 			}
 		}
-		ui.showFarewellMessage();
 	}
 
 	public static void main(String[] args) {

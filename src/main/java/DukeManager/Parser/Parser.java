@@ -23,9 +23,7 @@ public class Parser {
 		if (words.length == 0) {
 			return new IncorrectCmd(String.format(MSG_CMD_FORMAT_ERROR, HelpCmd.MSG_USAGE));
 		}
-
 		final String cmdWord = words[0];
-		final String args = words[1];
 
 		switch (cmdWord) {
 		case "help":
@@ -33,17 +31,17 @@ public class Parser {
 		case "list":
 			return new ListCmd();
 		case "mark":
-			return prepMarkCmd(args, true);
+			return prepMarkCmd(words[1], true);
 		case "unmark":
-			return prepMarkCmd(args, false);
+			return prepMarkCmd(words[1], false);
 		case "todo":
-			return prepAddTodo(args);
+			return prepAddTodo(words[1]);
 		case "deadline":
-			return prepAddDeadline(args);
+			return prepAddDeadline(words[1]);
 		case "event":
-			return prepAddEvent(args);
+			return prepAddEvent(words[1]);
 		case "delete":
-			return prepDeleteCmd(args);
+			return prepDeleteCmd(words[1]);
 		case "bye":
 			return new ExitCmd();
 		default:
@@ -57,7 +55,7 @@ public class Parser {
 	 * @param args full command args string
 	 * @return the prepared command
 	 */
-	private Cmd prepAddTodo(String args) {
+	public static Cmd prepAddTodo(String args) {
 		if (args == null) {
 			return new IncorrectCmd(String.format(MSG_CMD_FORMAT_ERROR, AddCmd.MSG_USAGE_TODO));
 		}
@@ -74,7 +72,7 @@ public class Parser {
 	 * @param args full command args string
 	 * @return the prepared command
 	 */
-	private Cmd prepAddDeadline(String args) {
+	public static Cmd prepAddDeadline(String args) {
 		String[] parts = args.split("/by");
 		// Validate arg string format
 		if (parts.length != 2) {
@@ -96,7 +94,7 @@ public class Parser {
 	 * @param args full command args string
 	 * @return the prepared command
 	 */
-	private Cmd prepAddEvent(String args) {
+	public static Cmd prepAddEvent(String args) {
 		String[] parts1 = args.split("/from");
 		// Validate arg string format
 		if (parts1.length != 2) {
@@ -126,15 +124,15 @@ public class Parser {
 	 * @param args full command args string
 	 * @return the prepared command
 	 */
-	private Cmd prepDeleteCmd(String args) {
+	private static Cmd prepDeleteCmd(String args) {
 		try {
 			final int targetIndex = parseArgsAsDisplayedIndex(args);
 			return new DeleteCmd(targetIndex);
 		} catch (ParseException pe) {
 			return new IncorrectCmd(String.format(MSG_CMD_FORMAT_ERROR,DeleteCmd.MSG_USAGE));
-		} catch (NumberFormatException nfe) {
-			return new IncorrectCmd(MSG_INVALID_TASK_DISPLAYED_INDEX);
-		}
+		} //catch (NumberFormatException nfe) {
+			//return new IncorrectCmd(MSG_INVALID_TASK_DISPLAYED_INDEX);
+		//}
 	}
 
 	/**
@@ -143,7 +141,7 @@ public class Parser {
 	 * @param args full command args string
 	 * @return the prepared command
 	 */
-	private Cmd prepMarkCmd(String args, boolean isDone) {
+	private static Cmd prepMarkCmd(String args, boolean isDone) {
 		try {
 			final int targetIndex = parseArgsAsDisplayedIndex(args);
 			return new MarkCmd(targetIndex, isDone);
@@ -163,13 +161,12 @@ public class Parser {
 	 * @throws ParseException if no region of the args string could be found for the index
 	 * @throws NumberFormatException the args string region is not a valid number
 	 */
-	private int parseArgsAsDisplayedIndex(String args) throws ParseException, NumberFormatException {
+	private static int parseArgsAsDisplayedIndex(String args) throws ParseException, NumberFormatException {
 		if (args.isEmpty()) {
 			throw new ParseException("Could not find index number to parse");
 		}
-		return Integer.parseInt(args.split(" ")[0]);
+		return Integer.parseInt(args);
 	}
-
 
 	/**
 	 * Signals that the user input could not be parsed.

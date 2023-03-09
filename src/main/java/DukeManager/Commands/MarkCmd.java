@@ -1,10 +1,11 @@
 package DukeManager.Commands;
 
+import DukeManager.Storage.Storage;
+import DukeManager.Ui.TextUi;
 import DukeManager.data.TaskList;
 import DukeManager.data.Tasks.Task;
 
 import static DukeManager.common.Messages.MSG_INVALID_TASK_DISPLAYED_INDEX;
-import static DukeManager.common.Messages.MSG_TASK_NOT_IN_TASKLIST;
 
 public class MarkCmd extends Cmd {
 	public static final String MSG_USAGE =
@@ -24,17 +25,18 @@ public class MarkCmd extends Cmd {
 
 
 	@Override
-	public CmdResult execute() {
+	public void execute(TaskList tasks, TextUi ui) {
 		try {
+			this.taskList = tasks;
 			final Task target = getTargetTask();
 			TaskList.markTask(target, isDone);
 			if (isDone) {
-				return new CmdResult(String.format(MSG_MARK_TASK_SUCCESS, target));
+				ui.showToUser(String.format(MSG_MARK_TASK_SUCCESS, target));
 			} else {
-				return new CmdResult(String.format(MSG_UNMARK_TASK_SUCCESS, target));
+				ui.showToUser(String.format(MSG_UNMARK_TASK_SUCCESS, target));
 			}
 		} catch (IndexOutOfBoundsException ie) {
-			return new CmdResult(MSG_INVALID_TASK_DISPLAYED_INDEX);
+			ui.showToUser(MSG_INVALID_TASK_DISPLAYED_INDEX);
 		}
 	}
 }

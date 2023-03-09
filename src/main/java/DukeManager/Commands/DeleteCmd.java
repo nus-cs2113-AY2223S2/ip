@@ -1,5 +1,7 @@
 package DukeManager.Commands;
 
+import DukeManager.Storage.Storage;
+import DukeManager.Ui.TextUi;
 import DukeManager.data.TaskList;
 import DukeManager.data.Tasks.Task;
 
@@ -21,16 +23,16 @@ public class DeleteCmd extends Cmd {
 
 
 	@Override
-	public CmdResult execute() {
+	public void execute(TaskList tasks, TextUi ui) {
+		this.taskList = tasks;
 		try {
-			final Task target = getTargetTask();
-			TaskList.removeTask(target);
-			return new CmdResult(String.format(MESSAGE_DELETE_TASK_SUCCESS, target));
-
-		} catch (IndexOutOfBoundsException ie) {
-			return new CmdResult(MSG_INVALID_TASK_DISPLAYED_INDEX);
+			Task target = getTargetTask();
+			taskList.removeTask(target);
+			ui.showToUser(String.format(MESSAGE_DELETE_TASK_SUCCESS, target));
+		//}// catch (IndexOutOfBoundsException ie) {
+			//ui.showToUser(MSG_INVALID_TASK_DISPLAYED_INDEX);
 		} catch (TaskList.TaskNotFoundException pnfe) {
-			return new CmdResult(MSG_TASK_NOT_IN_TASKLIST);
+			ui.showToUser(MSG_TASK_NOT_IN_TASKLIST);
 		}
 	}
 }
