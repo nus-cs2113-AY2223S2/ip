@@ -26,6 +26,10 @@ public class Todo extends Task{
                 + System.lineSeparator();
     }
 
+    /**
+     * get the task type
+     * @return the  type of task
+     */
     @Override
     public String getTaskType() {
         return taskType;
