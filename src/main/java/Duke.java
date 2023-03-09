@@ -14,6 +14,8 @@ import java.util.ArrayList;
  */
 public class Duke {
     // testing the merge-pr branch
+    // testing the merge pull request
+    // comments
     public static void main(String[] arguments) {
         ArrayList<Task> listItems = new ArrayList<>();
         int index = 0;
