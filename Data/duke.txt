@@ -1,0 +1,4 @@
+A|0|meeting
+T|1|homework
+T|0|attend a lab meeting
+D|0|write a report after the meeting|2023-03-05
