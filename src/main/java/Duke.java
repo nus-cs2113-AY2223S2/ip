@@ -13,13 +13,23 @@ public class Duke {
 
     protected static ArrayList<Task>tasks = new ArrayList<>();
 
+    /**
+     * Represents a boolean that will switch to false upon the "bye" command.
+     * The loop for command input will continue so long as it is not terminated by this boolean function.
+     */
     protected static boolean proceedToNextCommand = true;
-
     protected static void printDivider() {
         String DIVIDER = "____________________________________________________";
         System.out.println(DIVIDER);
     }
 
+    /**
+     * This function will determine the command that was given by the user input and execute the
+     * commands accordingly to its specified usage.
+     *
+     * @param input Input string that is provided by user in the CLI.
+     * @throws CommandNotFoundException if command is not found as specified.
+     */
     protected static void executeCommand(String input) throws CommandNotFoundException {
         if (input.equals("bye")) {
             printExit();
@@ -98,22 +108,40 @@ public class Duke {
         }
     }
 
+    /**
+     * Represents the function that will print the exit message.
+     */
     protected static void printExit() {
         printDivider();
         System.out.println("Bye. Hope to see you again soon!");
         printDivider();
     }
 
+    /**
+     * Represents the function that will mark the task as done as according to the task class.
+     * Task to be marked has to be given by the user in an integer that is within the size of the list of tasks.
+     *
+     * @param input Input string that is provided by the user.
+     */
     protected static void markTask(String input)  {
         int taskNumber = Integer.parseInt(input.substring(4).trim()) - 1;
         tasks.get(taskNumber).markDone();
     }
 
+    /**
+     * Represents the function that will mark the task as not done according to the task class.
+     * Task to be unmarked has to be given by the user in an integer that is within the size of the list of tasks
+     *
+     * @param input Input string that is provided by the user.
+     */
     protected static void unmarkTask(String input)  {
         int taskNumber = Integer.parseInt(input.substring(6).trim()) - 1;
         tasks.get(taskNumber).umarkDone();
     }
 
+    /**
+     * Represents the function that will print the tasks within the list.
+     */
     protected static void printList() {
         printDivider();
         System.out.println("Here are the tasks in your list:");
@@ -125,24 +153,47 @@ public class Duke {
         printDivider();
     }
 
+    /**
+     * Represents the function that will create as new to do as according to the task class.
+     * It will also inform users that the task has been successfully added.
+     *
+     * @param input Input string that is provided by the user.
+     */
     protected static void createTodo(String input) {
         tasks.add(new Todo(input.substring(4).trim()));
         System.out.println("Got it. I've added this tasks:\n" + tasks.get(tasks.size() - 1));
         System.out.println("Now you have " + tasks.size() + " tasks in the list.");
     }
 
+    /**
+     * Represents the function that will create the task of type deadline.
+     * It requires the user to input both the description and date of the deadline.
+     * It will also inform users that the deadline task has been successfully added.
+     *
+     * @param input Input string that is provided by the user.
+     * @throws InvalidInputException if either the deadline date or description is not found.
+     */
     protected static void createDeadline(String input) throws InvalidInputException {
         int byIndex = input.indexOf("/by");
         String description = input.substring(8, byIndex).trim();
-        String deadline = input.substring(byIndex + 3).trim();
-        if (description.length() < 1 | deadline.length() < 1) {
+        String date = input.substring(byIndex + 3).trim();
+        if (description.length() < 1 | date.length() < 1) {
             throw new InvalidInputException();
         }
-        tasks.add(new Deadline(description, deadline));
+        tasks.add(new Deadline(description, date));
         System.out.println("Got it. I've added this tasks:\n" + tasks.get(tasks.size() - 1));
         System.out.println("Now you have " + tasks.size() + " tasks in the list.");
     }
 
+    /**
+     * Represents the function that will create the task of type event.
+     * It requires the user to input the description, event start date and event end date.
+     * It will also inform users that the event task has been successfully added.
+     *
+     * @param input Input string that is provided by the user.
+     * @throws IllegalFormatException if the order of from has been placed after the to
+     * @throws InvalidInputException if either the expected description or event start or event end date is not found.
+     */
     protected static void createEvent(String input) throws IllegalFormatException, InvalidInputException {
         int fromIndex = input.indexOf("/from");
         int toIndex = input.indexOf("/to");
@@ -159,6 +210,13 @@ public class Duke {
         System.out.println("Now you have " + tasks.size() + " tasks in the list.");
     }
 
+    /**
+     * Represents the function that will remove the task as specified within the list.
+     * It requires the user to input the task number that is within the size of the list of task.
+     * It will also inform users that the task has been successfully removed.
+     *
+     * @param input Input string that is provided by the user.
+     */
     protected static void deleteTask(String input) {
         int deleteIndex = Integer.parseInt(input.substring(6).trim());
         System.out.println("Noted. I've removed this task:\n" + tasks.get(deleteIndex - 1));
@@ -166,6 +224,14 @@ public class Duke {
         System.out.println("Now you have " + tasks.size() + " tasks in the list.");
     }
 
+    /**
+     * Represents the function that will help the user search the task that contains the specific keyword
+     * It will print out the filtered list of task that only contains that specific keyword.
+     *
+     * @param input Input string that is provided by the user.
+     * @throws IllegalFormatException if the task that has to been searched has not been specified by the user.
+     * @throws InvalidInputException if there is not task left within the list.
+     */
     protected static void findTask(String input) throws IllegalFormatException, InvalidInputException{
         String keyword = input.substring(4).trim();
         if (keyword.equals("")) {
