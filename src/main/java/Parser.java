@@ -2,6 +2,7 @@
 // with modifications made by Wilson Lee Jun Wei
 
 import allexceptions.deadlineMissingException;
+import allexceptions.deleteMissingException;
 import allexceptions.todoMissingException;
 import allexceptions.wrongCommandException;
 import allexceptions.eventMissingException;
@@ -47,10 +48,17 @@ public class Parser {
             }
             break;
         case "delete":
-            outputMessage.append("Noted. I've removed this task:\n");
-            Task task = listItems.deleteTask(Integer.parseInt(firstWordArray[1]) - 1);
-            outputMessage.append(task + "\n");
-            outputMessage.append("Now you have " + listItems.size() + " tasks in the list.");
+            try {
+                if (firstWordArray.length == 1) {
+                    throw new deleteMissingException();
+                }
+                outputMessage.append("Noted. I've removed this task:\n");
+                Task task = listItems.deleteTask(Integer.parseInt(firstWordArray[1]) - 1);
+                outputMessage.append(task + "\n");
+                outputMessage.append("Now you have " + listItems.size() + " tasks in the list.");
+            } catch (deleteMissingException deleteException){
+                System.out.print("OH NO!!!! The description of a delete cannot be empty.");
+             }
             break;
         case "find":
             try {
@@ -95,7 +103,7 @@ public class Parser {
                 outputMessage.append("  " + eventDetails + "\n");
                 outputMessage.append("Now you have " + listItems.size() + " tasks in the list.");
             } catch (eventMissingException eventException) {
-                System.out.println("OH NO!!!! The description of an event cannot be empty.");
+                System.out.print("OH NO!!!! The description of an event cannot be empty.");
             }
             break;
         case "mark":
@@ -115,8 +123,6 @@ public class Parser {
         case "list":
             outputMessage.append(this.listItems.listTasks());
             break;
-        case "bye":
-            outputMessage.append("I look forward to seeing you again! Goodbye!");
         default:
             try {
                 throw new wrongCommandException();

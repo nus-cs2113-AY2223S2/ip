@@ -1,4 +1,4 @@
-//Solution below adapted and reused from Student Oh Yi Xiu Wilson
+// Solution below adapted and reused from Student Oh Yi Xiu Wilson
 // with modifications made by Wilson Lee Jun Wei
 
 import alltasks.Task;
@@ -25,7 +25,7 @@ public class TaskList {
     }
 
     public String findTasks(String wordFind) {
-            StringBuilder builtString = new StringBuilder("Here are the matching keyword(s) in your list:\n");
+            StringBuilder builtString = new StringBuilder("Here are the matching task(s) in your list:\n");
             for (int i = 0; i < this.taskArrayList.size(); i++) {
                 if (this.taskArrayList.get(i).getDescription().contains(wordFind)) {
                     builtString.append(i + 1);

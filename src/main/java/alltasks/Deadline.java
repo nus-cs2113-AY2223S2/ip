@@ -11,7 +11,7 @@ public class Deadline extends Task {
      * Creates a Deadline class from the input command.
      *
      * @param descriptor description of input command.
-     * @param by         deadline indicated in the input command.
+     * @param by deadline indicated in the input command.
      */
     public Deadline(String descriptor, String by) {
         super(descriptor);

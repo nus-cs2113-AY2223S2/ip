@@ -16,6 +16,7 @@ public class Duke {
             Scanner command = new Scanner(System.in);
             String inputCommand = command.nextLine();
             if (inputCommand.contains("bye")) {
+                System.out.print("I look forward to seeing you again! Goodbye!");
                 break;
             }
             String commandMessage = parserCommands.parseInput(inputCommand);
