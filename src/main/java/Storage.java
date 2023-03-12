@@ -65,19 +65,19 @@ public class Storage {
                 }
                 Task toAddItem = new ToDo(""); // mark task as done if needed
 
-                String[] tokens = taskString.split("\\|");
-                switch (tokens[0]) {
+                String[] tokensStringArray = taskString.split("\\|");
+                switch (tokensStringArray[0]) {
                 case "Todo":
-                    toAddItem = new ToDo(tokens[2]);
+                    toAddItem = new ToDo(tokensStringArray[2]);
                     break;
                 case "Deadline":
-                    toAddItem = new Deadline(tokens[2], tokens[3]);
+                    toAddItem = new Deadline(tokensStringArray[2], tokensStringArray[3]);
                     break;
                 case "Event":
-                    toAddItem = new Event(tokens[2], tokens[3], tokens[4]);
+                    toAddItem = new Event(tokensStringArray[2], tokensStringArray[3], tokensStringArray[4]);
                 default:
                 }
-                if (tokens[1].equals("1")) {
+                if (tokensStringArray[1].equals("1")) {
                     toAddItem.markAsDone();
                 }
                 retrieveTask.add(toAddItem);

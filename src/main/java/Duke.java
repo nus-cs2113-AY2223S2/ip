@@ -1,8 +1,5 @@
 import java.util.Scanner;
 
-//Solution below adapted and reused from Student Oh Yi Xiu Wilson
-// with modifications made by Wilson Lee Jun Wei
-
 /**
  * This class represents Coffee Bot that helps users to keep track of their personal schedules.
  * Coffee Bot takes in commands by users to keep track of Todos, Deadlines and events tasks.
@@ -27,4 +24,3 @@ public class Duke {
         }
     }
 }
-//@@ Student Oh Yi Xiu Wilson
