@@ -1,4 +1,4 @@
-//Solution below adapted and reused from Student Oh Yi Xiu Wilson (Only for A-More OOP)
+//Solution below adapted and reused from Student Oh Yi Xiu Wilson
 // with modifications made by Wilson Lee Jun Wei
 
 /**
