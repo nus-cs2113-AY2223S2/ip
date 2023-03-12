@@ -18,10 +18,13 @@ public class Deadline extends Task {
         this.by = by;
     }
 
+    //Solution below adapted and reused from Student Oh Yi Xiu Wilson
+    // with modifications made by Wilson Lee Jun Wei
     @Override
     public String getInfo() {
         return String.format("%s|%s|%s|%s", "Deadline", this.isDone ? 1 : 0, this.description, this.by);
     }
+    //@@ Student Oh Yi Xiu Wilson
 
     /**
      * Returns the status of completion of the task item,

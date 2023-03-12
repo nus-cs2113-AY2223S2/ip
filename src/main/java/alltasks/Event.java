@@ -36,8 +36,11 @@ public class Event extends Task{
         return "[E]" + "[" + getStatusIcon() + "]" + " " + description + "(from: " + this.from + "to: " + this.to + ")" ;
     }
 
+    //Solution below adapted and reused from Student Oh Yi Xiu Wilson
+    // with modifications made by Wilson Lee Jun Wei
     @Override
     public String getInfo() {
         return String.format("%s|%s|%s|%s|%s", "Event", this.isDone ? 1 : 0, this.description, this.from, this.to);
     }
+    //@@ Student Oh Yi Xiu Wilson
 }

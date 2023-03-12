@@ -25,9 +25,11 @@ public class ToDo extends Task{
     public String toString() {
         return "[T]" + "[" + getStatusIcon() + "]" + " " + description;
     }
-
+    //Solution below adapted and reused from Student Oh Yi Xiu Wilson
+    // with modifications made by Wilson Lee Jun Wei
     @Override
     public String getInfo() {
         return String.format("%s|%s|%s", "Todo", this.isDone ? 1 : 0, this.description);
     }
+    //@@ Student Oh Yi Xiu Wilson
 }
