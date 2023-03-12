@@ -1,6 +1,10 @@
 //Solution below adapted and reused from Student Oh Yi Xiu Wilson
 // with modifications made by Wilson Lee Jun Wei
-package alltasks;
+
+import alltasks.Deadline;
+import alltasks.Event;
+import alltasks.Task;
+import alltasks.ToDo;
 
 import java.nio.file.Path;
 import java.nio.file.Files;
@@ -9,15 +13,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Storage {
-    private ArrayList<Task> listTasks;
+    private TaskList listTasks;
     private Path taskPath;
 
-    public Storage(ArrayList<Task> listTasksArgs) {
+    public Storage(TaskList listTasksArgs) {
         this.listTasks = listTasksArgs;
         String configHomeString;
         // Get the "XDG_CONFIG_HOME" based on the OS of user, based on windows or macs
-        String os = System.getProperty("os.name").toLowerCase();
-        if (os.contains("win")) {
+        String operatingSystem = System.getProperty("os.name").toLowerCase();
+        if (operatingSystem.contains("win")) {
             // this is for windows
             configHomeString = System.getenv("LOCALAPPDATA");
         } else {
@@ -41,7 +45,7 @@ public class Storage {
 
     public void writeTasksToFile() {
         StringBuilder buildString = new StringBuilder();
-        for (Task task : this.listTasks) {
+        for (Task task : this.listTasks.getTasks()) {
             buildString.append(task.getInfo() + "\n");
         }
         try {
@@ -51,7 +55,7 @@ public class Storage {
         }
     }
 
-    public ArrayList<Task> get_Tasks_From_File() {
+    public ArrayList<Task> getTasksFromFile() {
         ArrayList<Task> retrieveTask = new ArrayList<>();
         try {
             List<String> tasksLists = Files.readAllLines(this.taskPath);
