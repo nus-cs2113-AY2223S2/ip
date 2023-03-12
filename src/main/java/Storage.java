@@ -1,11 +1,11 @@
+//@@author Oh Yi Xiu Wilson-reused
 //Solution below adapted and reused from Student Oh Yi Xiu Wilson
-// with modifications made by Wilson Lee Jun Wei
+// with minor modifications by Wilson Lee Jun Wei
 
 import alltasks.Deadline;
 import alltasks.Event;
 import alltasks.Task;
 import alltasks.ToDo;
-
 import java.nio.file.Path;
 import java.nio.file.Files;
 import java.io.IOException;
@@ -13,13 +13,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Storage {
-    private TaskList listTasks;
     private Path taskPath;
+    private TaskList listTasks;
 
     public Storage(TaskList listTasksArgs) {
         this.listTasks = listTasksArgs;
         String configHomeString;
-        // Get the "XDG_CONFIG_HOME" based on the OS of user, based on windows or macs
+
         String operatingSystem = System.getProperty("os.name").toLowerCase();
         if (operatingSystem.contains("win")) {
             // this is for windows
