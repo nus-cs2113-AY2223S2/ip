@@ -7,6 +7,12 @@ public class Deadline extends Task {
         super(description);
         this.by = by;
     }
+
+    /**
+     * Printing the Task that includes whether it is done
+     *
+     * @return Returns a string that describes the object
+     */
     @Override
     public String toString() {
         return "[D]" + super.toString() + "(by: " + by + ")";

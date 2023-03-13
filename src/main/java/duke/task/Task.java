@@ -5,7 +5,7 @@ public class Task {
     protected boolean isDone;
 
     /**
-     * Represents the function that will create the new task according to the user input
+     * Represents the function that will create a Task object according to the user input
      * and mark the task as not done initially when being created.
      *
      * @param description Description of the command that was given by the user.
@@ -47,6 +47,11 @@ public class Task {
         return description;
     }
 
+    /**
+     * Represents the function that will mark the Task as done
+     *
+     * @return Returns a string that reflects if the task is done.
+     */
     protected String status(){
         if(isDone) {
             return "X";
@@ -56,6 +61,11 @@ public class Task {
         }
     }
 
+    /**
+     * Printing the Task that includes whether it is done
+     *
+     * @return Returns a string that describes the object
+     */
     @Override
     public String toString() {
         return "[" + status() + "] " + getDescription();
