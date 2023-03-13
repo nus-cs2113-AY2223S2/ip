@@ -61,7 +61,7 @@ public class Duke {
             printDivider();
             try {
                 createTodo(input);
-            } catch (IndexOutOfBoundsException e) {
+            } catch (InvalidInputException e) {
                 System.out.println("The description of a todo cannot be empty.");
             }
             printDivider();
@@ -159,8 +159,12 @@ public class Duke {
      *
      * @param input Input string that is provided by the user.
      */
-    protected static void createTodo(String input) {
-        tasks.add(new Todo(input.substring(4).trim()));
+    protected static void createTodo(String input) throws InvalidInputException {
+        String description = input.substring(4).trim();
+        if (description.length() < 1) {
+            throw new InvalidInputException();
+        }
+        tasks.add(new Todo(description));
         System.out.println("Got it. I've added this tasks:\n" + tasks.get(tasks.size() - 1));
         System.out.println("Now you have " + tasks.size() + " tasks in the list.");
     }
