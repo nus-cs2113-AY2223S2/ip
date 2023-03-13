@@ -112,7 +112,8 @@ public class PrintCommands {
 
     public static void printHelp() {
         printLine();
-        System.out.println("Will Implement Soon!");
+        System.out.println("\tHelp Page :");
+        System.out.println("\tGo to https://github.com/Ansenn/ip/tree/master/docs for a complete User Guid on CLoM.");
         printLine();
     }
 
