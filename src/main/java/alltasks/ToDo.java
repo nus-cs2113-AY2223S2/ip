@@ -29,7 +29,7 @@ public class ToDo extends Task{
     //Solution below adapted from Student Oh Yi Xiu Wilson
     @Override
     public String getInfo() {
-        return String.format("%s|%s|%s", "Todo", this.isDone ? 1 : 0, this.description);
+        return String.format("%s|%s|%s", "T", this.isDone ? 1 : 0, this.description);
     }
     //End of adapted solution from Student Oh Yi Xiu Wilson
 }
