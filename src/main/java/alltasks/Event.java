@@ -33,7 +33,7 @@ public class Event extends Task {
 
     @Override
     public String toString() {
-        return "[E]" + "[" + getStatusIcon() + "] " + description + " (from: " + this.fromStart + "to: " + this.toEnd + ")" ;
+        return "[E]" + "[" + getStatusIcon() + "] " + description + "(from: " + this.fromStart + "to: " + this.toEnd + ")" ;
     }
 
     //Solution below adapted from Student Oh Yi Xiu Wilson
