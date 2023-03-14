@@ -1,6 +1,3 @@
-//Solution below adapted and reused from Student Oh Yi Xiu Wilson
-// with modifications made by Wilson Lee Jun Wei
-
 /**
  * This class represents Coffee Bot that greets and interact with users upon
  * starting up the coffee bot.
@@ -12,4 +9,3 @@ public class Ui {
         System.out.println(greeting);
     }
 }
-//@@ Student Oh Yi Xiu Wilson

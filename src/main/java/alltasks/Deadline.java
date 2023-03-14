@@ -5,26 +5,25 @@ package alltasks;
  * Coffee Bot keeps track of the deadline tasks.
  */
 public class Deadline extends Task {
-    private String by;
+    private String byDeadline;
 
     /**
-     * Creates a Deadline class from the input command.
+     * Creates a Deadline instance from the input command.
      *
      * @param descriptor description of input command.
-     * @param by deadline indicated in the input command.
+     * @param byDeadline deadline indicated in the input command.
      */
-    public Deadline(String descriptor, String by) {
+    public Deadline(String descriptor, String byDeadline) {
         super(descriptor);
-        this.by = by;
+        this.byDeadline = byDeadline;
     }
 
-    //Solution below adapted and reused from Student Oh Yi Xiu Wilson
-    // with modifications made by Wilson Lee Jun Wei
+    //Solution below adapted from Student Oh Yi Xiu Wilson
     @Override
     public String getInfo() {
-        return String.format("%s|%s|%s|%s", "Deadline", this.isDone ? 1 : 0, this.description, this.by);
+        return String.format("%s|%s|%s|%s", "Deadline", this.isDone ? 1 : 0, this.description, this.byDeadline);
     }
-    //@@ Student Oh Yi Xiu Wilson
+    //End of adapted solution from Student Oh Yi Xiu Wilson
 
     /**
      * Returns the status of completion of the task item,
@@ -35,6 +34,6 @@ public class Deadline extends Task {
      */
     @Override
     public String toString() {
-        return "[D]" + "[" + getStatusIcon() + "]" + " " + description + "(by:" + this.by + ")";
+        return "[D]" + "[" + getStatusIcon() + "] " + description + "(by:" + this.byDeadline + ")";
     }
 }

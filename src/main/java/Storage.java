@@ -1,6 +1,4 @@
-//@@author Oh Yi Xiu Wilson-reused
-//Solution below adapted and reused from Student Oh Yi Xiu Wilson
-// with minor modifications by Wilson Lee Jun Wei
+//Solution below adapted from Student Oh Yi Xiu Wilson (for Storage.java)
 
 import alltasks.Deadline;
 import alltasks.Event;
@@ -88,8 +86,7 @@ public class Storage {
         return retrieveTask;
     }
 }
-//@@ Student Oh Yi Xiu Wilson
-
+//End of adapted solution from Student Oh Yi Xiu Wilson
 
 
 

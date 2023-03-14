@@ -6,7 +6,7 @@ package alltasks;
  */
 public class ToDo extends Task{
     /**
-     * Creates a Todo class from the input command.
+     * Creates a Todo object from the input command.
      *
      * @param descriptive description of input command.
      */
@@ -23,13 +23,13 @@ public class ToDo extends Task{
      */
     @Override
     public String toString() {
-        return "[T]" + "[" + getStatusIcon() + "]" + " " + description;
+        return "[T]" + "[" + getStatusIcon() + "] " + description;
     }
-    //Solution below adapted and reused from Student Oh Yi Xiu Wilson
-    // with modifications made by Wilson Lee Jun Wei
+
+    //Solution below adapted from Student Oh Yi Xiu Wilson
     @Override
     public String getInfo() {
         return String.format("%s|%s|%s", "Todo", this.isDone ? 1 : 0, this.description);
     }
-    //@@ Student Oh Yi Xiu Wilson
+    //End of adapted solution from Student Oh Yi Xiu Wilson
 }

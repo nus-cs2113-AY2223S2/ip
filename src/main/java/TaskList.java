@@ -1,6 +1,3 @@
-//Solution below adapted and reused from Student Oh Yi Xiu Wilson
-// with modifications made by Wilson Lee Jun Wei
-
 import alltasks.Task;
 import java.util.ArrayList;
 
@@ -62,4 +59,3 @@ public class TaskList {
         return this.taskArrayList;
     }
 }
-//@@ Student Oh Yi Xiu Wilson
