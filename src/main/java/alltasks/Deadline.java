@@ -21,7 +21,7 @@ public class Deadline extends Task {
     //Solution below adapted from Student Oh Yi Xiu Wilson
     @Override
     public String getInfo() {
-        return String.format("%s|%s|%s|%s", "D", this.isDone ? 1 : 0, this.description, this.byDeadline);
+        return String.format("%s|%s|%s|%s", "Deadline", this.isDone ? 1 : 0, this.description, this.byDeadline);
     }
     //End of adapted solution from Student Oh Yi Xiu Wilson
 

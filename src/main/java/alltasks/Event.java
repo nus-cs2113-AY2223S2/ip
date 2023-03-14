@@ -39,7 +39,7 @@ public class Event extends Task {
     //Solution below adapted from Student Oh Yi Xiu Wilson
     @Override
     public String getInfo() {
-        return String.format("%s|%s|%s|%s|%s", "E", this.isDone ? 1 : 0, this.description, this.fromStart, this.toEnd);
+        return String.format("%s|%s|%s|%s|%s", "Event", this.isDone ? 1 : 0, this.description, this.fromStart, this.toEnd);
     }
     //End of adapted solution from Student Oh Yi Xiu Wilson
 }
