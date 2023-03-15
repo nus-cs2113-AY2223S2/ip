@@ -12,179 +12,17 @@ import java.lang.String;
 
 public class Duke {
 
-    //function for writing content in command line to Duke.txt, if the command was valid AND altered the list
-    private static void writeToFile(String filePath, String textToAdd) throws IOException {
-        FileWriter fw = new FileWriter(filePath, true);
-        fw.write(textToAdd + "\n");
-        fw.close();
-    }
-
-    //function for reading all previous command lines stored in Duke.txt to restore list to its previous state upon
-    //reopening Duke.
-    public static void readFileContents(ArrayList<String> filecontents, String filePath, int i, ArrayList<LocalDateTime> dates_and_times, DateTimeFormatter formatter, ArrayList<String> tasks, ArrayList<String> done, ArrayList<String> type) throws FileNotFoundException, DukeException {
-        File f = new File(filePath);
-        Scanner s = new Scanner(f);
-        String line;
-        while (s.hasNext()) {
-            line = s.nextLine();
-            if (line.startsWith("todo")) {
-                todo(dates_and_times, formatter, line, tasks, done, type);
-                i++;
-            } else if (line.startsWith("deadline")) {
-                deadline(dates_and_times, formatter, line, tasks, done, type);
-                i++;
-            } else if (line.startsWith("event")) {
-                event(dates_and_times, formatter, line, tasks, done, type);
-                i++;
-            } else if (line.startsWith("delete")) {
-                delete(dates_and_times, i, line, tasks, done, type);
-            } else if (line.startsWith("mark")) {
-                mark(i, line, done);
-            } else if (line.startsWith("unmark")) {
-                unmark(i, line, done);
-            }
-        }
-    }
-
-    //alters date from whatever input format to YYYY-MM-DD so it can be stored as LocalDate/LocalDateTime
-    public static String Date(String datestr) {
-        String datestr2 = datestr;
-        if (datestr.indexOf('-') != 4) {
-            int month = Integer.parseInt(datestr.substring(3, 5));
-            if (month > 12) {
-                datestr2 = datestr.substring(6) + "-" + datestr.substring(0, 3) + datestr.substring(3, 5);
-            } else {
-                datestr2 = datestr.substring(6) + "-" + datestr.substring(3, 6) + datestr.substring(0, 2);
-            }
-        }
-        return datestr2;
-    }
-
-    //alters time from whatever input format to 24 hour format so it cna be stored as LocalDate/LocalDateTime
-    public static String Time(String timestr) {
-        String timestr2 = timestr;
-        if (timestr.endsWith("PM") && timestr.charAt(0) == '0') {
-            int hour = Character.getNumericValue(timestr.charAt(1));
-            hour = hour + 12;
-            timestr2 = hour + timestr.substring(2, 5);
-        } else if (timestr.endsWith("AM") && timestr.startsWith("12")) {
-            timestr2 = "00:00";
-        } else {
-            timestr2 = timestr.substring(0, 5);
-        }
-        return timestr2;
-    }
-
-    //combines Date and Time so they can be stored together as LocalDateTime
-    public static String DT(String str) {
-        String datestr;
-        String timestr;
-        String datetimestr;
-        if (str.length() == 10) {
-            datestr = Date(str);
-            timestr = "00:00";
-            datetimestr = datestr + "T" + timestr;
-        } else if (str.length() <= 8) {
-            datestr = (LocalDate.now()).toString();
-            timestr = Time(str);
-            datetimestr = datestr + "T" + timestr;
-        } else {
-            datestr = str.substring(0, 10);
-            datestr = Date(datestr);
-            timestr = str.substring(11);
-            timestr = Time(timestr);
-            datetimestr = datestr + "T" + timestr;
-        }
-        return datetimestr;
-    }
-
-    //adds date and time to arraylist dates_and_times
-    public static void DateTime(ArrayList<LocalDateTime> dates_and_times, String str, DateTimeFormatter formatter) {
-        String datetimestr = DT(str);
-        LocalDateTime datetime = LocalDateTime.parse(datetimestr, formatter);
-        dates_and_times.add(datetime);
-    }
-
-    //marks ith task in list as done
-    public static void mark(int i, String line, ArrayList<String> done) throws DukeException {
-        int number = Integer.parseInt(line.substring(5));
-        if (number > i || number < 1) {
-            throw new DukeException();
-        }
-        done.remove(number - 1);
-        done.add(number - 1, "[X]");
-    }
-
-    //marks ith task in list as undone
-    public static void unmark(int i, String line, ArrayList<String> done) throws DukeException {
-        int number = Integer.parseInt(line.substring(7));
-        if (number > i || number < 1) {
-            throw new DukeException();
-        }
-        done.remove(number - 1);
-        done.add(number - 1, "[ ]");
-    }
-
-    //deletes ith task in list
-    public static void delete(ArrayList<LocalDateTime> dates_and_times, int i, String line, ArrayList<String> tasks, ArrayList<String> done, ArrayList<String> type) throws DukeException {
-        int number = Integer.parseInt(line.substring(7));
-        if (number > i || number < 1) {
-            throw new DukeException();
-        }
-        tasks.remove(number - 1);
-        done.remove(number - 1);
-        type.remove(number - 1);
-        dates_and_times.remove(2 * (number - 1));
-        dates_and_times.remove(2 * (number - 1));
-    }
-
-    //adds todo task to list
-    public static void todo(ArrayList<LocalDateTime> dates_and_times, DateTimeFormatter formatter, String line, ArrayList<String> tasks, ArrayList<String> done, ArrayList<String> type) throws DukeException {
-        String description = line.substring(4);
-        if (description.isBlank()) {
-            throw new DukeException();
-        }
-        tasks.add(description);
-        type.add("[T]");
-        done.add("[ ]");
-        DateTime(dates_and_times, "2015-10-23T03:34", formatter);
-        DateTime(dates_and_times, "2015-10-23T03:34", formatter);
-    }
-
-    //adds deadline task to list
-    public static void deadline(ArrayList<LocalDateTime> dates_and_times, DateTimeFormatter formatter, String line, ArrayList<String> tasks, ArrayList<String> done, ArrayList<String> type) throws DukeException {
-        int slash = line.indexOf("/");
-        String description = line.substring(8, slash - 1);
-        if (description.isBlank()) {
-            throw new DukeException();
-        }
-        String by = line.substring(slash + 4);
-        DateTime(dates_and_times, by, formatter);
-        tasks.add(description);
-        type.add("[D]");
-        done.add("[ ]");
-        DateTime(dates_and_times, "2015-10-23T03:34", formatter);
-    }
-
-    //adds event task to list
-    public static void event(ArrayList<LocalDateTime> dates_and_times, DateTimeFormatter formatter, String line, ArrayList<String> tasks, ArrayList<String> done, ArrayList<String> type) throws DukeException {
-        int slash1 = line.indexOf("/");
-        int slash2 = line.indexOf("/", slash1 + 1);
-        String description = line.substring(5, slash1 - 1);
-        if (description.isBlank()) {
-            throw new DukeException();
-        }
-        String from = line.substring(slash1 + 6, slash2 - 1);
-        String to = line.substring(slash2 + 4);
-        DateTime(dates_and_times, from, formatter);
-        DateTime(dates_and_times, to, formatter);
-        tasks.add(description);
-        type.add("[E]");
-        done.add("[ ]");
-    }
-
-    //returns Duke response to user input
-    public String getResponse(String input, ArrayList<String> filecontents, String filePath, ArrayList<String> type, ArrayList<String> done, ArrayList<String> tasks, ArrayList<LocalDateTime> dates_and_times, DateTimeFormatter formatter, int i) {
+    /**
+     * generates a String response to the user input
+     * @param input user input
+     * @param filecontents all previous command lines stored in an arraylist to be written to text file
+     * @param filePath text file to be written to (Duke.txt)
+     * @param tasks arraylist of tasks
+     * @param formatter for formatting LocalDateTime values to "yyyy-MM-dd'T'HH:mm"
+     * @param i current index in tasks for Mark, where necessary
+     * @return output response from Duke
+     */
+    public String getResponse(String input, ArrayList<String> filecontents, String filePath, ArrayList<Task> tasks, DateTimeFormatter formatter, int i) {
         String output = "";
         if (input.startsWith("bye")) {
             String toFile = "";
@@ -192,7 +30,7 @@ public class Duke {
                 toFile = toFile + filecontent + "\n";
             }
             try {
-                writeToFile(filePath, toFile);
+                Storage.writeToFile(filePath, toFile);
                 output = "Bye. Hope to see you again soon!";
             } catch (IOException e) {
                 output = "Something went wrong: " + e.getMessage();
@@ -201,19 +39,20 @@ public class Duke {
         if (input.startsWith("list")) {
             output = "Here are the tasks in your list:\n";
             for (int j = 0; j < i; j++) {
+                Task task = tasks.get(j);
                 try {
-                    output = output + (j + 1) + "." + type.get(j) + done.get(j) + tasks.get(j);
-                    if ((type.get(j)).equals("[T]")) {
+                    output = output + (j + 1) + "." + task.getType() + task.getDone() + task.getDescription();
+                    if ((task.getType()).equals("[T]")) {
                         output = output + "\n";
                     }
-                    if ((type.get(j)).equals("[D]")) {
+                    if ((task.getType()).equals("[D]")) {
                         output = output + " (by: " +
-                                    DateTimeFormatter.ofPattern("MMM d yyyy HH:mm a").format(dates_and_times.get(2 * j)) + ")\n";
+                                    DateTimeFormatter.ofPattern("MMM d yyyy HH:mm a").format(task.getDateTime1()) + ")\n";
                     }
-                    if ((type.get(j)).equals("[E]")) {
+                    if ((task.getType()).equals("[E]")) {
                         output = output + " (from " +
-                                DateTimeFormatter.ofPattern("MMM d yyyy HH:mm a").format(dates_and_times.get(2 * j)) + " to: ";
-                        output = output + DateTimeFormatter.ofPattern("MMM d yyyy HH:mm a").format(dates_and_times.get(2 * j + 1)) + ")\n";
+                                DateTimeFormatter.ofPattern("MMM d yyyy HH:mm a").format(task.getDateTime1()) + " to: ";
+                        output = output + DateTimeFormatter.ofPattern("MMM d yyyy HH:mm a").format(task.getDateTime2()) + ")\n";
                     }
                 } catch (IndexOutOfBoundsException e) {
                     j++;
@@ -221,22 +60,23 @@ public class Duke {
             }
         } else if (input.startsWith("mark")) {
             try {
-                mark(i, input, done);
+                Mark.mark(i, input, tasks);
                 int number = Integer.parseInt(input.substring(5));
+                Task task = tasks.get(number - 1);
                 output = "Nice! I've marked this task as done:\n";
-                output = output + "  " + type.get(number - 1) + "[X]" + tasks.get(number - 1) + " ";
-                if ((type.get(number - 1)).equals("[T]")) {
+                output = output + "  " + task.getType() + "[X]" + task.getDescription() + " ";
+                if ((task.getType()).equals("[T]")) {
                     output = output + "\n";
                 }
-                if ((type.get(number - 1)).equals("[D]")) {
-                    output = output + "(by: " + DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm a").format(dates_and_times.get(2 * (number - 1))) + ")\n";
+                if ((task.getType()).equals("[D]")) {
+                    output = output + "(by: " + DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm a").format(task.getDateTime1()) + ")\n";
                 }
-                if ((type.get(number - 1)).equals("[E]")) {
-                    output = output + "(from " + DateTimeFormatter.ofPattern("MMM d yyyy HH:mm a").format(dates_and_times.get(2 * (number - 1))) + " to: ";
-                    output = output + DateTimeFormatter.ofPattern("MMM d yyyy HH:mm a").format(dates_and_times.get(2 * (number - 1) + 1)) + ")\n";
+                if ((task.getType()).equals("[E]")) {
+                    output = output + "(from " + DateTimeFormatter.ofPattern("MMM d yyyy HH:mm a").format(task.getDateTime1()) + " to: ";
+                    output = output + DateTimeFormatter.ofPattern("MMM d yyyy HH:mm a").format(task.getDateTime2()) + ")\n";
                 }
                 try {
-                    writeToFile(filePath, input);
+                    Storage.writeToFile(filePath, input);
                 } catch (IOException e) {
                     output = "Something went wrong " + e.getMessage() + "\n";
                 }
@@ -248,22 +88,23 @@ public class Duke {
             }
         } else if (input.startsWith("unmark")) {
             try {
-                unmark(i, input, done);
+                Mark.unmark(i, input, tasks);
                 int number = Integer.parseInt(input.substring(7));
+                Task task = tasks.get(number - 1);
                 output = "Ok, I've marked this task as not done yet:\n";
-                output = output + "  " + type.get(number - 1) + "[ ]" + tasks.get(number - 1) + " ";
-                if ((type.get(number - 1)).equals("[T]")) {
+                output = output + "  " + task.getType() + "[ ]" + task.getDescription() + " ";
+                if ((task.getType()).equals("[T]")) {
                     output = output + "\n";
                 }
-                if ((type.get(number - 1)).equals("[D]")) {
-                    output = output + "(by: " + DateTimeFormatter.ofPattern("MMM d yyyy HH:mm a").format(dates_and_times.get(2 * (number - 1))) + ")\n";
+                if ((task.getType()).equals("[D]")) {
+                    output = output + "(by: " + DateTimeFormatter.ofPattern("MMM d yyyy HH:mm a").format(task.getDateTime1()) + ")\n";
                 }
-                if ((type.get(number - 1)).equals("[E]")) {
-                    output = output + "(from " + DateTimeFormatter.ofPattern("MMM d yyyy HH:mm a").format(dates_and_times.get(2 * (number - 1))) + " to: ";
-                    output = output + DateTimeFormatter.ofPattern("MMM d yyyy HH:mm a").format(dates_and_times.get(2 * (number - 1) + 1)) + ")\n";
+                if ((task.getType()).equals("[E]")) {
+                    output = output + "(from " + DateTimeFormatter.ofPattern("MMM d yyyy HH:mm a").format(task.getDateTime1()) + " to: ";
+                    output = output + DateTimeFormatter.ofPattern("MMM d yyyy HH:mm a").format(task.getDateTime2()) + ")\n";
                 }
                 try {
-                    writeToFile(filePath, input);
+                    Storage.writeToFile(filePath, input);
                 } catch (IOException e) {
                     output = "Something went wrong: " + e.getMessage();
                 }
@@ -275,12 +116,13 @@ public class Duke {
             }
         } else if (input.startsWith("todo")) {
             try {
-                todo(dates_and_times, formatter, input, tasks, done, type);
+                List.todo(tasks, formatter, input);
+                Task task = tasks.get(i);
                 output = "Got it. I've added this task:\n";
-                output = output + "  " + type.get(i) + "[ ]" + tasks.get(i) + "\n";
+                output = output + "  " + task.getType() + "[ ]" + task.getDescription() + "\n";
                 output = output + "Now you have " + (i + 1) + " tasks in the list.\n";
                 try {
-                    writeToFile(filePath, input);
+                    Storage.writeToFile(filePath, input);
                 } catch (IOException e) {
                     output = "Something went wrong: " + e.getMessage();
                 }
@@ -289,13 +131,14 @@ public class Duke {
             }
         } else if (input.startsWith("deadline")) {
             try {
-                deadline(dates_and_times, formatter, input, tasks, done, type);
+                List.deadline(tasks, formatter, input);
+                Task task = tasks.get(i);
                 output = "Got it. I've added this task:\n";
-                output = output + "  " + type.get(i) + "[ ]" + tasks.get(i) + " (by: ";
-                output = output + DateTimeFormatter.ofPattern("MMM d yyyy HH:mm a").format(dates_and_times.get(2 * i)) + ")\n";
+                output = output + "  " + task.getType() + "[ ]" + task.getDescription() + " (by: ";
+                output = output + DateTimeFormatter.ofPattern("MMM d yyyy HH:mm a").format(task.getDateTime1()) + ")\n";
                 output = output + "Now you have " + (i + 1) + " tasks in the list.\n";
                 try {
-                    writeToFile(filePath, input);
+                    Storage.writeToFile(filePath, input);
                 } catch (IOException e) {
                     output = "Something went wrong: " + e.getMessage();
                 }
@@ -312,14 +155,15 @@ public class Duke {
             }
         } else if (input.startsWith("event")) {
             try {
-                event(dates_and_times, formatter, input, tasks, done, type);
+                List.event(tasks, formatter, input);
+                Task task = tasks.get(i);
                 output = "Got it. I've added this task:\n";
-                output = output + "  " + type.get(i) + "[ ]" + tasks.get(i) + " (from: ";
-                output = output + DateTimeFormatter.ofPattern("MMM d yyyy HH:mm a").format(dates_and_times.get(2 * i)) + " to: ";
-                output = output + DateTimeFormatter.ofPattern("MMM d yyyy HH:mm a").format(dates_and_times.get(2 * i + 1)) + ")\n";
+                output = output + "  " + task.getType() + "[ ]" + task.getDescription() + " (from: ";
+                output = output + DateTimeFormatter.ofPattern("MMM d yyyy HH:mm a").format(task.getDateTime1()) + " to: ";
+                output = output + DateTimeFormatter.ofPattern("MMM d yyyy HH:mm a").format(task.getDateTime2()) + ")\n";
                 output = output + "Now you have " + (i + 1) + " tasks in the list.\n";
                 try {
-                    writeToFile(filePath, input);
+                    Storage.writeToFile(filePath, input);
                 } catch (IOException e) {
                     output = "Something went wrong: " + e.getMessage();
                 }
@@ -338,13 +182,14 @@ public class Duke {
             }
         } else if (input.startsWith("delete")) {
             try {
-                delete(dates_and_times, i, input, tasks, done, type);
+                List.delete(tasks, i, input);
                 int number = Integer.parseInt(input.substring(7));
+                Task task = tasks.get(number - 1);
                 output = "Noted. I've removed this task:\n";
-                output = output + "  " + type.get(number - 1) + done.get(number - 1) + tasks.get(number - 1) + "\n";
+                output = output + "  " + task.getType() + task.getDone() + task.getDescription() + "\n";
                 output = output + "Now you have " + (i - 1) + " tasks in the list.\n";
                 try {
-                    writeToFile(filePath, input);
+                    Storage.writeToFile(filePath, input);
                 } catch (IOException e) {
                     output = "Something went wrong: " + e.getMessage();
                 }
@@ -363,21 +208,22 @@ public class Duke {
                 output = "Here are the matching tasks in your list:\n";
                 int listnumber = 1;
                 for (int j = 0; j < tasks.size(); j++) {
-                    String task = tasks.get(j);
-                    if (task.contains(find)) {
+                    Task task = tasks.get(j);
+                    String description = task.getDescription();
+                    if (description.contains(find)) {
                         try {
-                            System.out.print(listnumber + "." + type.get(j) + done.get(j) + tasks.get(j));
-                            if ((type.get(j)).equals("[T]")) {
+                            output = output + listnumber + "." + task.getType() + task.getDone() + task.getDescription();
+                            if ((task.getType()).equals("[T]")) {
                                 output = output + "\n";
                             }
-                            if ((type.get(j)).equals("[D]")) {
+                            if ((task.getType()).equals("[D]")) {
                                 output = output + " (by: " +
-                                        DateTimeFormatter.ofPattern("MMM d yyyy HH:mm a").format(dates_and_times.get(2 * j)) + ")\n";
+                                        DateTimeFormatter.ofPattern("MMM d yyyy HH:mm a").format(task.getDateTime1()) + ")\n";
                             }
-                            if ((type.get(j)).equals("[E]")) {
+                            if ((task.getType()).equals("[E]")) {
                                 output = output + " (from " +
-                                        DateTimeFormatter.ofPattern("MMM d yyyy HH:mm a").format(dates_and_times.get(2 * j)) + " to: ";
-                                output = output +DateTimeFormatter.ofPattern("MMM d yyyy HH:mm a").format(dates_and_times.get(2 * j + 1)) + ")\n";
+                                        DateTimeFormatter.ofPattern("MMM d yyyy HH:mm a").format(task.getDateTime1()) + " to: ";
+                                output = output +DateTimeFormatter.ofPattern("MMM d yyyy HH:mm a").format(task.getDateTime2()) + ")\n";
                             }
                             listnumber++;
                         } catch (IndexOutOfBoundsException e) {
@@ -392,34 +238,30 @@ public class Duke {
             } else {
                 String description = input.substring(6);
                 try {
-                    String datetimestr = DT(description);
-                    LocalDateTime datetime = LocalDateTime.parse(datetimestr, formatter);
+                    LocalDateTime datetime = DateTime.toLocalDateTime(description, formatter);
                     output = "Tasks during this time period:\n";
-                    int b = 1;
-                    for (int j = 0; j < tasks.size(); j++) {
-                        LocalDateTime dt = dates_and_times.get(j * 2);
-                        if (dt.equals(datetime)) {
-                            try {
-                                output = output + b + "." + type.get(j) + done.get(j) + tasks.get(j);
-                                if ((type.get(j)).equals("[T]")) {
-                                    output = output + "\n";
-                                }
-                                if ((type.get(j)).equals("[D]")) {
-                                    output = output + " (by: " +
-                                            DateTimeFormatter.ofPattern("MMM d yyyy HH:mm a").format(dates_and_times.get(2 * j)) + ")\n";
-                                }
-                                if ((type.get(j)).equals("[E]")) {
-                                    output = output + " (from " +
-                                            DateTimeFormatter.ofPattern("MMM d yyyy HH:mm a").format(dates_and_times.get(2 * j)) + " to: ";
-                                    output = output + DateTimeFormatter.ofPattern("MMM d yyyy HH:mm a").format(dates_and_times.get(2 * j + 1)) + ")\n";
-                                }
-                                b++;
-                            } catch (IndexOutOfBoundsException e) {
-                                j++;
+                    int it = 1;
+                    for (Task task : tasks) {
+                        LocalDateTime dt1 = task.getDateTime1();
+                        LocalDateTime dt2 = task.getDateTime2();
+                        if (dt1.equals(datetime) || dt2.equals(datetime)) {
+                            output = output + it + "." + task.getType() + task.getDone() + task.getDescription();
+                            if ((task.getType()).equals("[T]")) {
+                                output = output + "\n";
                             }
+                            if ((task.getType()).equals("[D]")) {
+                                output = output + " (by: " +
+                                        DateTimeFormatter.ofPattern("MMM d yyyy HH:mm a").format(task.getDateTime1()) + ")\n";
+                            }
+                            if ((task.getType()).equals("[E]")) {
+                                output = output + " (from " +
+                                        DateTimeFormatter.ofPattern("MMM d yyyy HH:mm a").format(task.getDateTime1()) + " to: ";
+                                output = output + DateTimeFormatter.ofPattern("MMM d yyyy HH:mm a").format(task.getDateTime2()) + ")\n";
+                            }
+                            it++;
                         }
                     }
-                } catch (DateTimeParseException | NumberFormatException e) {
+                } catch (StringIndexOutOfBoundsException | DateTimeParseException | NumberFormatException e) {
                     output = "Oops! You've entered an invalid date/time.\n";
                     output = output + "Date format-> YYYY-MM-DD or DD-MM-YYYY or MM-DD-YYYY\n";
                     output = output + "Time format-> 18:00 or 06:00 PM\n";
@@ -438,3 +280,4 @@ public class Duke {
     }
 
 }
+

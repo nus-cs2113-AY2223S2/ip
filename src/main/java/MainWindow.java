@@ -6,7 +6,6 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import java.io.FileNotFoundException;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
@@ -26,10 +25,7 @@ public class MainWindow extends AnchorPane {
 
     private Duke duke;
     String filePath = "Duke.txt";
-    ArrayList<String> tasks = new ArrayList<>();
-    ArrayList<String> done = new ArrayList<>();
-    ArrayList<String> type = new ArrayList<>();
-    ArrayList<LocalDateTime> dates_and_times = new ArrayList<>();
+    ArrayList<Task> tasks = new ArrayList<>();
     ArrayList<String> filecontents = new ArrayList<>();
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
     int i = 0;
@@ -54,12 +50,11 @@ public class MainWindow extends AnchorPane {
     private void handleUserInput() {
         String input = userInput.getText();
         i = tasks.size();
-        String response = duke.getResponse(input, filecontents, filePath, type, done, tasks, dates_and_times, formatter, i);
+        String response = duke.getResponse(input, filecontents, filePath, tasks, formatter, i);
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, userImage),
                 DialogBox.getDukeDialog(response, dukeImage)
         );
-
         if (input.startsWith("bye")) {
             System.exit(0);
         }
@@ -71,17 +66,17 @@ public class MainWindow extends AnchorPane {
      * i.e. greeting the user and  readFileContents
      */
     public void windowOpened() {
-        String text = " ____        _        \n"
-                + "|  _ \\ _   _| | _____ \n"
-                + "| | | | | | | |/ / _ \\\n"
-                + "| |_| | |_| |   <  __/\n"
+        String text = " ____          _        \n"
+                + "|  _ \\  _  _| |   _____ \n"
+                + "| | | |  | | | |/ / _ \\\n"
+                + "| |_| |  |_| |   <  __/\n"
                 + "|____/ \\__,_|_|\\_\\___|\n";
         text = "Hello from\n" + text + "What can I do for you?\n";
         dialogContainer.getChildren().addAll(
                 DialogBox.getDukeDialog(text, dukeImage)
         );
         try {
-            Duke.readFileContents(filecontents, filePath, i, dates_and_times, formatter, tasks, done, type);
+            Storage.readFileContents(filePath, i, tasks, formatter);
             i = tasks.size();
         } catch (FileNotFoundException | DukeException d) {
             i = 0;
