@@ -7,14 +7,21 @@ import duke.instructions.Todo;
 
 import java.util.ArrayList;
 
+/*
+    contains the methods for different instructions
+ */
+
 public class TaskList {
 
-    private static final ArrayList<Task> taskNameList = new ArrayList<>();
     public static final String LINE = "    ____________________________________________________________";
     public static final String EMPTY_DESCRIPTION = "     ☹ OOPS!!! The description cannot be empty.";
 
 
-    public static void listCommand(String command) {
+    /**
+     * Print a list of tasks that have been entered
+     * @param command user input that contains the user-specific keyword "list"
+     */
+    public static void listCommand(String command, ArrayList<Task> taskNameList) {
         Task task = new Task(command);
         System.out.println(LINE);
         System.out.print(task.guideline());
@@ -26,7 +33,12 @@ public class TaskList {
 
     }
 
-    public static void markCommand(String[] command) {
+    /**
+     * Print the task that have been marked
+     * @param command user input that contains the user-specific keyword "mark"
+     */
+
+    public static void markCommand(String[] command, ArrayList<Task> taskNameList) {
         int indexTask = Integer.parseInt(command[1]);
         System.out.println(LINE);
         taskNameList.get(indexTask - 1).mark();
@@ -36,7 +48,11 @@ public class TaskList {
         System.out.println(LINE);
     }
 
-    public static void unMarkCommand(String[] command) {
+    /**
+     * Print the task that have been unmarked
+     * @param command user input that contains the user-specific keyword "unmark"
+     */
+    public static void unMarkCommand(String[] command , ArrayList<Task> taskNameList) {
         int indexOfTask = Integer.parseInt(command[1]);
         System.out.println(LINE);
         taskNameList.get(indexOfTask - 1).unMark();
@@ -47,11 +63,15 @@ public class TaskList {
 
     }
 
-    public static void toDoCommand(String input) throws DukeException {
-        Todo toDo = new Todo(input);
-        toDo.setTaskType("T");
-        Task task = new Task(input);
-        String[] tokens = input.split("\\s+", 2);
+    /**
+     * Print the task that need to be done by user
+     * @param command user input that contains the user-specific keyword "todo"
+     */
+    public static void toDoCommand(String command , ArrayList<Task> taskNameList) throws DukeException {
+        Todo toDo = new Todo(command);
+        //toDo.setTaskType("T");
+        Task task = new Task(command);
+        String[] tokens = command.split("\\s+", 2);
         if (tokens.length < 2) {
             throw new DukeException(EMPTY_DESCRIPTION);
         }
@@ -65,10 +85,16 @@ public class TaskList {
 
     }
 
-    public static void eventCommand(String input) {
-        Event event = new Event(input);
-        event.setTaskType("E");
-        Task task = new Task(input);
+
+    /**
+     * Print the event that have been entered
+     * @param command user input that contains the user-specific keyword "mark"
+     */
+    public static void eventCommand(String command , ArrayList<Task> taskNameList) {
+        Event event = new Event(command);
+        //event.setTaskType("E");
+        Task task = new Task(command);
+        System.out.println(LINE);
         taskNameList.add(event);
         String outputForEvent = event.guideline()
                 + event.getState()
@@ -78,9 +104,13 @@ public class TaskList {
 
     }
 
-    public static void deadlineCommand(String command) {
+    /**
+     * Print the deadline that for the task they have entered
+     * @param command user input that contains the user-specific keyword "deadline"
+     */
+    public static void deadlineCommand(String command , ArrayList<Task> taskNameList) {
         Deadline deadLine = new Deadline(command);
-        deadLine.setTaskType("D");
+        //deadLine.setTaskType("D");
         Task task = new Task(command);
         System.out.println(LINE);
         taskNameList.add(deadLine);
@@ -90,8 +120,14 @@ public class TaskList {
         System.out.println(outputForDeadline);
         System.out.println(LINE);
     }
-    public static void deleteCommand(String command){
-        int indexTask = Integer.parseInt(command);
+
+    /**
+     * Print the task that have been deleted
+     * @param command user input that contains the user-specific keyword "delete"
+     */
+    public static void deleteCommand(String command, ArrayList<Task> taskNameList){
+        String[] tokens = command.split("\\s+");
+        int indexTask = Integer.parseInt(tokens[1]);
         Task task = new Task(command);
         System.out.println(LINE);
         System.out.print("     Noted. I've removed this task:"
@@ -101,7 +137,11 @@ public class TaskList {
         System.out.println(task.numberOfTask(taskNameList.size()));
         System.out.println(LINE);
     }
-    public static void findCommand(String command){
+    /**
+     * Print the task that can be found in the tasks list
+     * @param command user input that contains the user-specific keyword "find
+     */
+    public static void findCommand(String command,  ArrayList<Task> taskNameList){
         String keyword = command.substring(5);
 
         ArrayList<Task> matchedTask = new ArrayList<>();
@@ -113,10 +153,12 @@ public class TaskList {
         }
         int numberOfFoundTasks = matchedTask.size();
         int number0fTask = 1;
-        System.out.println("     There are " + numberOfFoundTasks + " matching tasks in your list");
+        System.out.println("     There are " + numberOfFoundTasks
+                            + " matching tasks in your list");
         for (Task foundTask : matchedTask) {
             if (foundTask != null) {
-                System.out.print("     " +number0fTask + "." + foundTask.getState().trim() + System.lineSeparator());
+                System.out.print("     " +number0fTask + "." + foundTask.getState().trim()
+                                + System.lineSeparator());
             }
             number0fTask++;
         }
