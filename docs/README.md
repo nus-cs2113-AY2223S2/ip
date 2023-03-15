@@ -10,13 +10,16 @@
  
 4. In the `data` folder, create an empty .txt file called `duke.txt`.
 
-4. Open the command terminal and navigate to the directory of that same folder which you save your .jar file at
+*NOTE: Steps 3 & 4 are for executing the .jar file for the 1st time, can skip for re-execution of program once the folder and .jar file is already present on your device.
 
-5. Use the following command to run the programme: java -jar duke.jar
+5. Open the command terminal and navigate to the directory of that same folder which you save your .jar file at
 
-6. If successful, you will see the following welcome message on the command terminal:
+6. Use the following command to run the programme: java -jar duke.jar
+
+7. If successful, you will see the following welcome message on the command terminal:
 
 ![image](https://user-images.githubusercontent.com/88625158/221926439-622d791d-6307-4c67-8d92-b87488ceb8e5.png)
+
 
 
 ## Features of Duke Program
