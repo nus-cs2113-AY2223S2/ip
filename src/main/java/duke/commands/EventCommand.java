@@ -3,7 +3,7 @@ package duke.commands;
 import duke.tasks.Event;
 import duke.outputs.Messages;
 import duke.file.TaskList;
-import duke.ui.*;
+import duke.ui.UI;
 
 /**
  * Command when adding a new event task to tasklist

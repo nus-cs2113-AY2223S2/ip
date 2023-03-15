@@ -1,9 +1,8 @@
 package duke.commands;
 
-import duke.tasks.Task;
 import duke.outputs.Messages;
 import duke.file.TaskList;
-import duke.ui.*;
+import duke.ui.UI;
 
 /**
  * Command to execute to delete a specified task in task list

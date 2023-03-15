@@ -1,8 +1,9 @@
 package duke.commands;
+
 import duke.outputs.Messages;
 import duke.tasks.Task;
 import duke.file.TaskList;
-import duke.ui.*;
+import duke.ui.UI;
 
 /**
  * Command to unmark a task specified by user in tasklist

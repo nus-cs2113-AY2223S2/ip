@@ -3,7 +3,7 @@ package duke.commands;
 import duke.tasks.Deadline;
 import duke.outputs.Messages;
 import duke.file.TaskList;
-import duke.ui.*;
+import duke.ui.UI;
 
 /**
  * Command to execute when adding new deadline object to task list

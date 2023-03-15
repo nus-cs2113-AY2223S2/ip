@@ -1,7 +1,7 @@
 package duke.commands;
 
 import duke.file.TaskList;
-import duke.ui.*;
+import duke.ui.UI;
 
 /**
  * Abstract class to manage all commands
