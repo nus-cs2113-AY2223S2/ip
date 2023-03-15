@@ -58,6 +58,7 @@ public enum Command {
     /**
      * Get the string list for arguments needed by the main command
      * e.g. to, from for
+     *
      * @return String list for the subcommands
      */
     public String[] getSubcommandNames() {
