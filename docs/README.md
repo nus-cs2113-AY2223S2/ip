@@ -44,7 +44,7 @@ Duke is your personal assistant chat bot to help you manage your tasks!
    1. Please do not modify or delete it to prevent losing your saved data.
 1. To exit the program, use the command ``bye``. This will ensure all tasks are saved to storage for retrieval on the next run.
 
-[_Back To Top_](#user-guide)
+[_Back To Top_](#duke--your-personal-assistant-chatbot)
 
 <hr>
 
@@ -65,7 +65,7 @@ Duke is your personal assistant chat bot to help you manage your tasks!
 | delete   | ``delete <index>``                       | ``delete 2``                                        |
 | find     | ``find <keyword>``                       | ``find meeting``                                    |
 
-[_Back To Top_](#user-guide)
+[_Back To Top_](#duke--your-personal-assistant-chatbot)
 
 <hr>
 
@@ -133,7 +133,7 @@ Expected outcome:
      Now you have 3 tasks in the list.
     ____________________________________________________________
 ```
-[_Back To Top_](#user-guide)
+[_Back To Top_](#duke--your-personal-assistant-chatbot)
 
 <hr>
 
@@ -179,7 +179,7 @@ Expected outcome:
        [ ] read book
     ____________________________________________________________
 ```
-[_Back To Top_](#user-guide)
+[_Back To Top_](#duke--your-personal-assistant-chatbot)
 
 <hr>
 
@@ -214,7 +214,7 @@ Expected outcome:
 > * [D][&nbsp; ] implies task is a deadline and is not done
 > * [E][&nbsp; ] implies task is an event and is not done
 
-[_Back To Top_](#user-guide)
+[_Back To Top_](#duke--your-personal-assistant-chatbot)
 
 <hr>
 
@@ -236,7 +236,7 @@ Expected outcome:
      Now you have 2 tasks in the list.
     ____________________________________________________________
 ```
-[_Back To Top_](#user-guide)
+[_Back To Top_](#duke--your-personal-assistant-chatbot)
 
 <hr>
 
@@ -257,7 +257,7 @@ Expected outcome:
      2.[E][ ] project meeting (from: August 10th 2pm to: 4pm)
     ____________________________________________________________
 ```
-[_Back To Top_](#user-guide)
+[_Back To Top_](#duke--your-personal-assistant-chatbot)
 
 <hr>
 
@@ -278,7 +278,7 @@ Expected outcome:
      Bye. Hope to see you again soon!
     ____________________________________________________________
 ```
-[_Back To Top_](#user-guide)
+[_Back To Top_](#duke--your-personal-assistant-chatbot)
 
 <hr>
 
