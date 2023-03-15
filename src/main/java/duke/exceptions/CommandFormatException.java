@@ -5,11 +5,11 @@ package duke.exceptions;
  * The code is inspired by https://github.com/se-edu/addressbook-level2
  */
 public class CommandFormatException extends DukeException {
-	public final String COMMAND_FORMAT_ERROR =
-			"No...please key in proper command...type 'help' to show command list...";
+    public final String COMMAND_FORMAT_ERROR =
+            "No...please key in proper command...type 'help' to show command list...";
 
-	@Override
-	public String getMessage() {
-		return COMMAND_FORMAT_ERROR;
-	}
+    @Override
+    public String getMessage() {
+        return COMMAND_FORMAT_ERROR;
+    }
 }

@@ -5,10 +5,10 @@ package duke.exceptions;
  * The code is inspired by https://github.com/se-edu/addressbook-level2
  */
 public class TaskDoneException extends DukeException {
-	public final String TASK_DONE = "This task has been done!";
+    public final String TASK_DONE = "This task has been done!";
 
-	@Override
-	public String getMessage() {
-		return TASK_DONE;
-	}
+    @Override
+    public String getMessage() {
+        return TASK_DONE;
+    }
 }

@@ -9,19 +9,19 @@ import duke.ui.Ui;
  */
 
 public class HelpCommand extends Command {
-	public HelpCommand(String userInput) {
-		super(userInput);
-	}
+    public HelpCommand(String userInput) {
+        super(userInput);
+    }
 
-	/**
-	 * Print help message
-	 *
-	 * @param taskList a TaskList object
-	 * @param ui       a Ui object
-	 * @throws DukeException if there is any error
-	 */
-	@Override
-	public void execute(TaskList taskList, Ui ui) throws DukeException {
-		ui.printHelp();
-	}
+    /**
+     * Print help message
+     *
+     * @param taskList a TaskList object
+     * @param ui       a Ui object
+     * @throws DukeException if there is any error
+     */
+    @Override
+    public void execute(TaskList taskList, Ui ui) throws DukeException {
+        ui.printHelp();
+    }
 }

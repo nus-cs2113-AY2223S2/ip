@@ -6,10 +6,10 @@ package duke.exceptions;
  */
 
 public class TaskException extends DukeException {
-	public final String EMPTY_LIST = "Sorry...Your task list is empty...";
+    public final String EMPTY_LIST = "Sorry...Your task list is empty...";
 
-	@Override
-	public String getMessage() {
-		return EMPTY_LIST;
-	}
+    @Override
+    public String getMessage() {
+        return EMPTY_LIST;
+    }
 }

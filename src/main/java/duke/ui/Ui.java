@@ -36,7 +36,8 @@ public class Ui {
 			+ "    mark {task index number} --mark the task as done" + "\n"
 			+ "    unmark {task index number} --mark the task as undone" + "\n"
 			+ "    delete {task index number} --delete the task" + "\n"
-			+ "    list --to show the current task list";
+			+ "    list --to show the current task list"
+			+ "    exit --to exit the application";
 
 	/**
 	 * Constructor
