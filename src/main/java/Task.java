@@ -11,8 +11,12 @@ public class Task {
         return (isDone ? "[X]" : "[ ]"); // mark done task with X
     }
 
-    public void markAsDone() {
+    public void markDone() {
         this.isDone = true;
+    }
+
+    public void unmarkDone() {
+        this.isDone = false;
     }
 
     public String toString() {
