@@ -68,13 +68,28 @@ public class Duke {
                     break;
 
                 case "mark":
-                    String taskNumberToMark = userInput[1];
-                    markSelectedTask(taskList, taskNumberToMark);
+                    int taskNumberToMark = Integer.parseInt(userInput[1]);
+                    if (taskNumberToMark > taskList.size()) {
+                        printOneLine();
+                        println("    Oops, that task does not seem to exist.");
+                        println("    Enter [list] to see what tasks you have");
+                        printOneLine();
+                    } else {
+                        markSelectedTask(taskList, taskNumberToMark);
+                    }
                     break;
 
                 case "unmark":
-                    String taskNumberToUnmark = userInput[1];
-                    unmarkSelectedTask(taskList, taskNumberToUnmark);
+                    int taskNumberToUnmark = Integer.parseInt(userInput[1]);
+                    if (taskNumberToUnmark > taskList.size()) {
+                        printOneLine();
+                        println("    Oops, that task does not seem to exist.");
+                        println("    Enter [list] to see what tasks you have");
+                        printOneLine();
+                    } else {
+                        unmarkSelectedTask(taskList, taskNumberToUnmark);
+                    }
+
                     break;
 
                 case "delete":

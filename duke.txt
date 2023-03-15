@@ -1,0 +1,3 @@
+T|X|read book
+D| |Coding assignment|Apr 25 2023
+E|X|Engineering Principles lecture|Tuesday 2pm Tuesday 4pm

@@ -23,6 +23,7 @@ import static duke.print.Print.*;
 public class Commands {
     /**
      * Method to find tasks in the task list that contain a particular keyword.
+     *
      * @param taskList The list to find tasks that contain the keyword.
      * @param keyword  The keyword to search for.
      */
@@ -39,6 +40,7 @@ public class Commands {
 
     /**
      * Method to delete one task from the tasks list.
+     *
      * @param taskList   The list to delete one task from.
      * @param taskNumber The task to delete
      */
@@ -106,14 +108,11 @@ public class Commands {
     /**
      * Sets a specified task as not done
      *
-     * @param taskList   The list of tasks that contains the task that needs to be marked as not done
-     * @param taskNumber The number of the task to mark as not done
+     * @param taskList           The list of tasks that contains the task that needs to be marked as not done
+     * @param taskNumberToUnmark The number of the task to mark as not done
      */
-    public static void unmarkSelectedTask(ArrayList<Task> taskList, String taskNumber) {
-
-        int taskNumberToUnmark = Integer.parseInt(taskNumber);
+    public static void unmarkSelectedTask(ArrayList<Task> taskList, int taskNumberToUnmark) {
         taskNumberToUnmark -= 1;
-
         Task selectedTask = taskList.get(taskNumberToUnmark);
         selectedTask.markNotDone();
 
@@ -127,12 +126,10 @@ public class Commands {
      * Sets a specified task as done
      *
      * @param taskList   The list of tasks that contains the task that needs to be marked as done
-     * @param taskNumber The number of the task to mark as done
+     * @param taskNumberToMark The number of the task to mark as done
      */
-    public static void markSelectedTask(ArrayList<Task> taskList, String taskNumber) {
-        int taskNumberToMark = Integer.parseInt(taskNumber);
+    public static void markSelectedTask(ArrayList<Task> taskList, int taskNumberToMark) {
         taskNumberToMark -= 1;
-
         Task selectedTask = taskList.get(taskNumberToMark);
         selectedTask.markDone();
 
