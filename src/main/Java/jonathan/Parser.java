@@ -85,6 +85,8 @@ public class Parser {
         } catch (StringIndexOutOfBoundsException e) {
             command = new WrongFormatCommand();
 
+        } catch (IndexOutOfBoundsException e) {
+            command = new WrongFormatCommand();
         }
 
         return command;

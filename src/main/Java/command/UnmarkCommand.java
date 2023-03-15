@@ -28,9 +28,13 @@ public class UnmarkCommand extends Command {
      */
     @Override
     public TaskList execute(TaskList tasks, Ui ui, Storage storage) {
-        Task task = tasks.get(taskNum - 1);
-        task.setDone(false);
-        ui.showUnmarked(task);
+        try {
+            Task task = tasks.get(taskNum - 1);
+            task.setDone(false);
+            ui.showUnmarked(task);
+        } catch (IndexOutOfBoundsException e) {
+            ui.showError("please enter the right index (in the range of the tasks)");
+        }
         return tasks;
     }
 }

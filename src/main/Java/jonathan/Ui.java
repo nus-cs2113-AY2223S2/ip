@@ -41,10 +41,13 @@ public class Ui {
     }
 
     public void showAllTasks(TaskList tasks) {
-        System.out.println("    Here are the tasks in your list:");
-
-        for (int i = 0; i < tasks.size(); i++) {
-            System.out.println("    " + (i+1) + ". "  + tasks.get(i));
+        if (tasks.size() > 0) {
+            System.out.println("    Here are the tasks in your list:");
+            for (int i = 0; i < tasks.size(); i++) {
+                System.out.println("    " + (i+1) + ". "  + tasks.get(i));
+            }
+        } else {
+            System.out.println("    You don't have any tasks!");
         }
     }
 
@@ -59,18 +62,24 @@ public class Ui {
     }
 
     public void showMatchedTask(TaskList tasks) {
-        System.out.println("    Here are the matching tasks in your list:");
+        if (tasks.size() > 0) {
+            System.out.println("    Here are the matching tasks in your list:");
 
-        for (int i = 0; i < tasks.size(); i++) {
-            System.out.println("    " + (i+1) + ". "  + tasks.get(i));
+            for (int i = 0; i < tasks.size(); i++) {
+                System.out.println("    " + (i+1) + ". "  + tasks.get(i));
+            }
+        } else {
+            System.out.println("    No mathcing tasks for those keyword");
         }
+
     }
 
     public void showWrongFormat() {
         System.out.println("    Please type with he following format:\n");
         System.out.println("    - todo <description>");
         System.out.println("    - deadline <description> /by <time>");
-        System.out.println("    - event <descripton> /from <time> /to <time>\n");
+        System.out.println("    - event <descripton> /from <time> /to <time>");
+        System.out.println("    - delete <index>\n");
         System.out.println("    note: without the angle bracket");
     }
 
