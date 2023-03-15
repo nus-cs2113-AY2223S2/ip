@@ -53,6 +53,8 @@ public class Storage {
     private static final String EXCEPTION_MAKE_FILE_FAIL = "Failed to create new file!";
     private static final String EXCEPTION_WRITE_DATA_FAIL = "Failed to write data!";
     private static final String EXCEPTION_BAD_TASK_LEN = "Invalid task token length!";
+    private static final String EXCEPTION_MISSING_TOKEN = "Missing a task token!";
+    private static final String EXCEPTION_UNKNOWN_LOAD_ERROR = "Unknown error encountered while loading data!";
     private static final String MESSAGE_TASK_FAIL_LOAD = "There are tasks I couldn't load ><\"";
     private static final String MESSAGE_TASK_REINPUT = "You MUST manually input these tasks again:";
     private static final String MESSAGE_BAD_TASK = "\nBad task: ";
@@ -143,14 +145,76 @@ public class Storage {
         int count = ONE_INDEX_START;
         for (String error : errors) {
             ui.printMessage(count + MESSAGE_COLON_SEPARATOR + error);
-            ++count;
+            count += 1;
         }
 
     }
 
-    private String buildErrorMessage(String errorMessage, String corruptedTaskString) {
-        errorMessage += MESSAGE_BAD_TASK + corruptedTaskString;
-        return errorMessage;
+    private Todo buildTodo(String[] taskComponents) {
+        String taskDescription = taskComponents[TASK_DESCRIPTION_INDEX];
+        return new Todo(taskDescription);
+    }
+
+    private Deadline buildDeadline(String[] taskComponents) throws StorageLoadException {
+        String taskDescription = taskComponents[TASK_DESCRIPTION_INDEX];
+        String taskStart;
+        try {
+            taskStart = taskComponents[TASK_DUE_DATE_INDEX];
+        } catch (IndexOutOfBoundsException exception) {
+            throw new StorageLoadException(EXCEPTION_MISSING_TOKEN);
+        }
+        return new Deadline(taskDescription, taskStart);
+    }
+
+    private Event buildEvent(String[] taskComponents) throws StorageLoadException {
+        String taskDescription = taskComponents[TASK_DESCRIPTION_INDEX];
+        String taskStart;
+        String taskEnd;
+        try {
+            taskStart = taskComponents[TASK_START_DATE_INDEX];
+            taskEnd = taskComponents[TASK_END_DATE_INDEX];
+        } catch (IndexOutOfBoundsException exception) {
+            throw new StorageLoadException(EXCEPTION_MISSING_TOKEN);
+        }
+        return new Event(taskDescription, taskStart, taskEnd);
+    }
+
+    private void markNewTask(Task newTask, boolean isTaskDone) {
+        if (isTaskDone) {
+            newTask.markAsDone();
+        } else {
+            newTask.markAsUndone();
+        }
+    }
+
+    private Task detokenizeTaskString(String taskString) throws StorageLoadException {
+        String[] taskComponents = taskString.split(DELIMITER);
+        // Sanity check - taskComponents should minimally have 3 arguments
+        // Its task label, done status and description
+        if (taskComponents.length < MIN_TASK_ARG_LENGTH) {
+            throw new StorageLoadException(EXCEPTION_BAD_TASK_LEN);
+        }
+        // New task fields
+        Task newTask;
+        String taskType = taskComponents[TASK_TYPE_INDEX];
+        boolean isTaskDone = taskComponents[TASK_DONE_INDEX].equals(TASK_DONE_TOKEN);
+
+        switch (taskType) {
+        case TASK_TODO_TOKEN:
+            newTask = buildTodo(taskComponents);
+            break;
+        case TASK_DEADLINE_TOKEN:
+            newTask = buildDeadline(taskComponents);
+            break;
+        case TASK_EVENT_TOKEN:
+            newTask = buildEvent(taskComponents);
+            break;
+        default:
+            throw new StorageLoadException(EXCEPTION_UNKNOWN_LOAD_ERROR);
+        }
+        // If isTaskDone is corrupted, it will default to false
+        markNewTask(newTask, isTaskDone);
+        return newTask;
     }
 
     /**
@@ -176,65 +240,13 @@ public class Storage {
         // Holds the error messages for each bad task for printing
         ArrayList<String> badTaskStrings = new ArrayList<>();
         for (String taskString : tasks) {
-            String[] taskComponents = taskString.split(DELIMITER);
-
-            // Sanity check - taskComponents should minimally have 3 arguments
-            // Its task label, done status and description
-            if (taskComponents.length < MIN_TASK_ARG_LENGTH) {
-                String errorMessage = buildErrorMessage(EXCEPTION_BAD_TASK_LEN, taskString);
-                badTaskStrings.add(errorMessage);
-                continue;
+            try {
+                Task detokenizedTask = detokenizeTaskString(taskString);
+                taskArrayList.add(detokenizedTask);
+            } catch (StorageLoadException exception) {
+                badTaskStrings.add(exception.getMessage());
             }
-
-            // New task fields
-            Task newTask;
-            String taskType = taskComponents[TASK_TYPE_INDEX];
-            String taskDescription = taskComponents[TASK_DESCRIPTION_INDEX];
-            String taskStart;
-            String taskEnd;
-            boolean isTaskDone = taskComponents[TASK_DONE_INDEX].equals(TASK_DONE_TOKEN);
-
-            switch (taskType) {
-            case TASK_TODO_TOKEN:
-                newTask = new Todo(taskDescription);
-                break;
-            case TASK_DEADLINE_TOKEN:
-                try {
-                    taskStart = taskComponents[TASK_DUE_DATE_INDEX];
-                } catch (IndexOutOfBoundsException exception) {
-                    String errorMessage = buildErrorMessage(EXCEPTION_BAD_TASK_LEN, taskString);
-                    badTaskStrings.add(errorMessage);
-                    continue;
-                }
-                newTask = new Deadline(taskDescription, taskStart);
-                break;
-            case TASK_EVENT_TOKEN:
-                try {
-                    taskStart = taskComponents[TASK_START_DATE_INDEX];
-                    taskEnd = taskComponents[TASK_END_DATE_INDEX];
-                } catch (IndexOutOfBoundsException exception) {
-                    String errorMessage = buildErrorMessage(EXCEPTION_BAD_TASK_LEN, taskString);
-                    badTaskStrings.add(errorMessage);
-                    continue;
-                }
-                newTask = new Event(taskDescription, taskStart, taskEnd);
-                break;
-            default:
-                String errorMessage = buildErrorMessage(EXCEPTION_BAD_TASK_LEN, taskString);
-                badTaskStrings.add(errorMessage);
-                continue;
-            }
-
-            // If isTaskDone is corrupted, it will default to false
-            if (isTaskDone) {
-                newTask.markAsDone();
-            } else {
-                newTask.markAsUndone();
-            }
-
-            taskArrayList.add(newTask);
         }
-
         printErrorMessages(badTaskStrings);
         return taskArrayList;
     }
