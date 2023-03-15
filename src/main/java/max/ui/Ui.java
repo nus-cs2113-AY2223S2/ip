@@ -11,14 +11,8 @@ package max.ui;
  * 5. Wrapping messages with brackets
  */
 public class Ui {
-    private static final String LOGO = " /$$      /$$  /$$$$$$  /$$   /$$\n"
-                                           + "| $$$    /$$$ /$$__  $$| $$  / $$\n"
-                                           + "| $$$$  /$$$$| $$  \\ $$|  $$/ $$/       /^ ^\\\n"
-                                           + "| $$ $$/$$ $$| $$$$$$$$ \\  $$$$/       / 0 0 \\\n"
-                                           + "| $$  $$$| $$| $$__  $$  >$$  $$       V\\ Y /V\n"
-                                           + "| $$\\  $ | $$| $$  | $$ /$$/\\  $$       / - \\\n"
-                                           + "| $$ \\/  | $$| $$  | $$| $$  \\ $$      /    |\n"
-                                           + "|__/     |__/|__/  |__/|__/  |__/     V__)  ||";
+    private final String LOGO = buildLogo();
+
     private static final String BORDER = "────────────────────────────────────────────────────────────";
     private static final String CMD_PROMPT = "~$ ";
     private static final String MESSAGE_GREET = "Hello! I'm Max, your PAWsonal productivity assistant";
@@ -35,6 +29,19 @@ public class Ui {
      */
     public Ui() {
 
+    }
+
+    private static String buildLogo() {
+        String logoString = "";
+        logoString = logoString.concat(" /$$      /$$  /$$$$$$  /$$   /$$\n");
+        logoString = logoString.concat("| $$$    /$$$ /$$__  $$| $$  / $$\n");
+        logoString = logoString.concat("| $$$$  /$$$$| $$  \\ $$|  $$/ $$/       /^ ^\\\n");
+        logoString = logoString.concat("| $$ $$/$$ $$| $$$$$$$$ \\  $$$$/       / 0 0 \\\n");
+        logoString = logoString.concat("| $$  $$$| $$| $$__  $$  >$$  $$       V\\ Y /V\n");
+        logoString = logoString.concat("| $$\\  $ | $$| $$  | $$ /$$/\\  $$       / - \\\n");
+        logoString = logoString.concat("| $$ \\/  | $$| $$  | $$| $$  \\ $$      /    |\n");
+        logoString = logoString.concat("|__/     |__/|__/  |__/|__/  |__/     V__)  ||");
+        return logoString;
     }
 
     /**
