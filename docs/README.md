@@ -6,7 +6,7 @@
 
 2. Download the latest copy of the duke.jar file [here](https://github.com/ghzr0/ip/releases)
 
-3. Move the .jar file to the folder where you want to run the program
+3. Move the .jar file to the folder where you want to run the program and create a data .txt file in the same fodler.
 
 4. Open the command terminal and navigate to the directory of that same folder which you save your .jar file at
 
