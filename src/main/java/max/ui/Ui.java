@@ -11,15 +11,14 @@ package max.ui;
  * 5. Wrapping messages with brackets
  */
 public class Ui {
-    private static final String LOGO = "" +
-            " /$$      /$$  /$$$$$$  /$$   /$$\n" +
-            "| $$$    /$$$ /$$__  $$| $$  / $$\n" +
-            "| $$$$  /$$$$| $$  \\ $$|  $$/ $$/       /^ ^\\\n" +
-            "| $$ $$/$$ $$| $$$$$$$$ \\  $$$$/       / 0 0 \\\n" +
-            "| $$  $$$| $$| $$__  $$  >$$  $$       V\\ Y /V\n" +
-            "| $$\\  $ | $$| $$  | $$ /$$/\\  $$       / - \\\n" +
-            "| $$ \\/  | $$| $$  | $$| $$  \\ $$      /    |\n" +
-            "|__/     |__/|__/  |__/|__/  |__/     V__)  ||";
+    private static final String LOGO = " /$$      /$$  /$$$$$$  /$$   /$$\n"
+                                           + "| $$$    /$$$ /$$__  $$| $$  / $$\n"
+                                           + "| $$$$  /$$$$| $$  \\ $$|  $$/ $$/       /^ ^\\\n"
+                                           + "| $$ $$/$$ $$| $$$$$$$$ \\  $$$$/       / 0 0 \\\n"
+                                           + "| $$  $$$| $$| $$__  $$  >$$  $$       V\\ Y /V\n"
+                                           + "| $$\\  $ | $$| $$  | $$ /$$/\\  $$       / - \\\n"
+                                           + "| $$ \\/  | $$| $$  | $$| $$  \\ $$      /    |\n"
+                                           + "|__/     |__/|__/  |__/|__/  |__/     V__)  ||";
     private static final String BORDER = "────────────────────────────────────────────────────────────";
     private static final String CMD_PROMPT = "~$ ";
     private static final String MESSAGE_GREET = "Hello! I'm Max, your PAWsonal productivity assistant";
