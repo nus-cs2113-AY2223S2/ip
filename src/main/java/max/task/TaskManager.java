@@ -21,6 +21,7 @@ public class TaskManager {
     // String literals definitions
     private static final String ERROR_MISSING_NO = "I'm a dog, but even I know that you didn't enter a number.";
     private static final String ERROR_BAD_TASK_NUM = "Invalid task number!";
+    private static final String ERROR_EMPTY_DESCRIPTION = "I'm a dog, but even I know you didn't enter anything.";
     private static final String TASK_TODO = "todo";
     private static final String TASK_DEADLINE = "deadline";
     private static final String TASK_EVENT = "event";
@@ -39,41 +40,101 @@ public class TaskManager {
     private static final String MESSAGE_EMPTY_QUERY = "I'm gonna bite you. Your query is empty!";
     private static final String MESSAGE_LIST_EMPTY = "There's nothing in your list. I'm gonna bite you.";
     private static final String EXCEPTION_ADD_TASK_FAILED = "Throw me a bone here, I couldn't create a task!";
+    private static final String DOT_SPACE = ". ";
+    private static final int ONE_OFFSET = 1;
 
+    private String validateDescription(String description) throws TaskException {
+        String formattedDescription = description.trim();
+        if (formattedDescription.length() == 0) {
+            throw new TaskException(ERROR_EMPTY_DESCRIPTION);
+        }
+        return formattedDescription;
+    }
+
+    /**
+     * Creates a new to-do task
+     *
+     * @param commandMap argumentPayload map of the user input
+     * @return a to-do task
+     */
+    private Task createTodo(HashMap<String, String> commandMap) throws TaskException {
+        String description = commandMap.get(TASK_TODO);
+        description = validateDescription(description);
+
+        return new Todo(description);
+    }
+
+    /**
+     * Creates a new Deadline task
+     *
+     * @param commandMap argumentPayload map of the user input
+     * @return a deadline task
+     */
+    private Task createDeadline(HashMap<String, String> commandMap) throws TaskException {
+        String description = commandMap.get(TASK_DEADLINE);
+        description = validateDescription(description);
+
+        String deadline = commandMap.get(TASK_DEADLINE_BY);
+        deadline = dateParser.formatInputString(deadline);
+        return new Deadline(description, deadline);
+    }
+
+    /**
+     * Creates a new Event task
+     *
+     * @param commandMap argumentPayload map of the user input
+     * @return an Event task
+     */
+    private Task createEvent(HashMap<String, String> commandMap) throws TaskException {
+        String description = commandMap.get(TASK_EVENT);
+        description = validateDescription(description);
+
+        String from = commandMap.get(TASK_EVENT_FROM);
+        String to = commandMap.get(TASK_EVENT_TO);
+        // Format dates
+        dateParser.validateToFromDates(to, from);
+        from = dateParser.formatInputString(from);
+        to = dateParser.formatInputString(to);
+        return new Event(description, from, to);
+    }
+
+    private void printTaskAddedMessage(Task newTask) {
+        ui.printMessage(MESSAGE_ADD_TASK);
+        ui.printMessage(newTask.getDescription());
+        ui.printMessage(MESSAGE_CURR_TASK + tasks.size() + MESSAGE_CURR_TASK_LEFT);
+    }
+
+    /**
+     * Create a task, which may be To-do, deadline or events
+     *
+     * @param commandMap argumentPayload map of the user input
+     * @param command    the type of task to create
+     * @throws TaskException for bad user inputs
+     */
     public void createTask(HashMap<String, String> commandMap, Command command) throws TaskException {
         // Assertion: commandMap has the correct subcommands & length
         Task newTask = null;
         if (command.equals(Command.TASK_TODO)) {
             // To-do task
-            String description = commandMap.get(TASK_TODO);
-            newTask = new Todo(description);
+            newTask = createTodo(commandMap);
         } else if (command.equals(Command.TASK_DEADLINE)) {
             // Deadline task
-            String description = commandMap.get(TASK_DEADLINE);
-            String deadline = commandMap.get(TASK_DEADLINE_BY);
-            deadline = dateParser.formatInputString(deadline);
-            newTask = new Deadline(description, deadline);
+            newTask = createDeadline(commandMap);
         } else if (command.equals(Command.TASK_EVENT)) {
             // Event task
-            String description = commandMap.get(TASK_EVENT);
-            String from = commandMap.get(TASK_EVENT_FROM);
-            String to = commandMap.get(TASK_EVENT_TO);
-            // Format dates
-            dateParser.validateToFromDates(to, from);
-            from = dateParser.formatInputString(from);
-            to = dateParser.formatInputString(to);
-            newTask = new Event(description, from, to);
+            newTask = createEvent(commandMap);
         }
         if (newTask == null) {
             // Safety check in case the assertion fails
             throw new TaskException(EXCEPTION_ADD_TASK_FAILED);
         }
         tasks.add(newTask);
-        ui.printMessage(MESSAGE_ADD_TASK);
-        ui.printMessage(newTask.getDescription());
-        ui.printMessage(MESSAGE_CURR_TASK + tasks.size() + MESSAGE_CURR_TASK_LEFT);
+        printTaskAddedMessage(newTask);
     }
 
+    /**
+     * Prints the task list of all tasks MAX is keeping track of
+     */
     public void printTasklist() {
         if (tasks.size() == 0) {
             ui.printMessage(MESSAGE_LIST_EMPTY);
@@ -83,17 +144,23 @@ public class TaskManager {
         for (int i = 0; i < tasks.size(); ++i) {
             // Print number, box, description in that order
             Task curr = tasks.get(i);
-            ui.printMessage(i + 1 + ". " + curr.getDescription());
+            int currentTask = i + ONE_OFFSET;
+            ui.printMessage(currentTask + DOT_SPACE + curr.getDescription());
         }
     }
 
-    // Takes in a string representing the 1-indexed task number
-    // Checks for string validity and range validity
-    // Returns the 0-indexed task number value
+    /**
+     * Takes in a string representing the 1-indexed task number <br>
+     * Checks for string validity and range validity <br>
+     *
+     * @param taskNumString string representation of the
+     * @return zero-indexed integer representing the index of the task
+     * @throws TaskException for out of range numbers and non-number inputs
+     */
     private int convertTaskNumberString(String taskNumString) throws TaskException {
         int taskNum;
         try {
-            taskNum = Integer.parseInt(taskNumString) - 1; // Convert to 0-idx
+            taskNum = Integer.parseInt(taskNumString) - ONE_OFFSET;
         } catch (NumberFormatException exception) {
             throw new TaskException(ERROR_MISSING_NO);
         }
@@ -103,6 +170,12 @@ public class TaskManager {
         return taskNum;
     }
 
+    /**
+     * Mark the task to be done or not done
+     *
+     * @param taskNumString string representing the task number to be marked
+     * @param isDone        if true, the task will be marked as done, else not done
+     */
     public void markTask(String taskNumString, boolean isDone) {
         int taskNum;
         try {
@@ -123,6 +196,11 @@ public class TaskManager {
         ui.printMessage(tasks.get(taskNum).getDescription());
     }
 
+    /**
+     * Remove a task from the task list
+     *
+     * @param taskNumString string representing the task number to be deleted
+     */
     public void deleteTask(String taskNumString) {
         int taskNum;
         try {
@@ -138,28 +216,48 @@ public class TaskManager {
         ui.printMessage(MESSAGE_CURR_TASK + tasks.size() + MESSAGE_CURR_TASK_LEFT);
     }
 
+    /**
+     * Loads all tasks from the /data folder
+     */
     public void loadData() {
         Storage dataHandler = new Storage();
         this.tasks = dataHandler.loadTasksFromDisk();
     }
 
+    /**
+     * Saves all current tasks to the /data folder
+     */
     public void saveData() {
         Storage dataHandler = new Storage();
         dataHandler.saveTasksToDisk(tasks);
     }
 
+    /**
+     * Resets the task list to have no tasks
+     */
     public void resetTaskList() {
         tasks.clear();
     }
 
-    public void findTasks(HashMap<String, String> commandPayload) {
-        // Naiively search for tasks that have exact matches with the query string
-        String query;
-        if (commandPayload.containsKey("find")) {
-            query = commandPayload.get("find");
-        } else {
-            query = commandPayload.get("fetch");
+    private void printFoundTasks(ArrayList<Task> matchedTasks) {
+        ui.printMessage(MESSAGE_MAX_HAS_FOUND);
+        for (int i = 0; i < matchedTasks.size(); ++i) {
+            Task curr = matchedTasks.get(i);
+            int currentTask = i + ONE_OFFSET;
+            ui.printMessage(currentTask + DOT_SPACE + curr.getDescription());
         }
+    }
+
+    /**
+     * Find tasks that may be related to the
+     *
+     * @param commandPayload  argumentPayload map of the user input
+     * @param findArgumentKey the key value "find" or "fetch" that contains the query argument
+     */
+    public void findTasks(HashMap<String, String> commandPayload, String findArgumentKey) {
+        // Naiively search for tasks that have exact matches with the query string
+        String query = commandPayload.get(findArgumentKey);
+
         if (query.trim().length() == 0) {
             ui.printMessage(MESSAGE_EMPTY_QUERY);
             return;
@@ -176,13 +274,8 @@ public class TaskManager {
         if (matchedTasks.size() == 0) {
             ui.printMessage(MESSAGE_MAX_CANNOT_FIND);
         } else {
-            ui.printMessage(MESSAGE_MAX_HAS_FOUND);
-            for (int i = 0; i < matchedTasks.size(); ++i) {
-                Task curr = matchedTasks.get(i);
-                ui.printMessage(i + 1 + ". " + curr.getDescription());
-            }
+            printFoundTasks(matchedTasks);
         }
-
     }
 
     public TaskManager() {
