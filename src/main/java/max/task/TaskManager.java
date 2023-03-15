@@ -15,8 +15,8 @@ import java.util.HashMap;
  */
 public class TaskManager {
     private ArrayList<Task> tasks;
-    private Ui ui;
-    private DateParser dateParser;
+    private final Ui ui;
+    private final DateParser dateParser;
 
     // String literals definitions
     private static final String ERROR_MISSING_NO = "I'm a dog, but even I know that you didn't enter a number.";

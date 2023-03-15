@@ -9,7 +9,7 @@ import max.ui.Ui;
  */
 public class Todo extends Task {
     private static final String TASK_LABEL = "T";
-    private Ui ui;
+    private final Ui ui;
 
     /**
      * Create an Todo object, a subclass of Task.
