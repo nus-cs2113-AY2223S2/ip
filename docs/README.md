@@ -21,7 +21,6 @@ Is a CLI Task Managing Application
 - There 3 types of Tasks you can add
 #### Todo
 - Simply a task with its description
-- See demonstration below.
 >`todo [description of todo task]`
 >
 > eg.
@@ -29,7 +28,6 @@ Is a CLI Task Managing Application
 > `todo CS2113 quiz`
 #### Deadline
 -  A Todo with a deadline timing to complete by
-- See demonstration below.
 >`deadline [description of deadline task] / [datetime to complete by]`
 >
 > eg.
