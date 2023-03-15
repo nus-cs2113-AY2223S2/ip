@@ -5,7 +5,6 @@ import java.util.ArrayList;
  * This class represents CoffeeBot performing actions in relation to the tasks
  * in the tasks list, based on users' inputs.
  */
-
 public class TaskList {
     private static ArrayList<Task> taskArrayList;
 

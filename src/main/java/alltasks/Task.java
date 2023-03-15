@@ -10,7 +10,7 @@ public class Task {
     protected boolean isDone;
 
     /**
-     * Creates a Task object from the input command given.
+     * Creates a Task instance from the input command given.
      *
      * @param description description of input command.
      */

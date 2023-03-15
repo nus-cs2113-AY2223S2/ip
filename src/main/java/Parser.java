@@ -14,7 +14,6 @@ import alltasks.ToDo;
  * This class represents Coffee Bot that accepts users' input commands and process the input commands
  * for further actions required by Coffee Bot
  */
-
 public class Parser {
     private TaskList listItems;
 

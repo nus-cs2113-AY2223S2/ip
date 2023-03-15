@@ -6,7 +6,7 @@ package alltasks;
  */
 public class ToDo extends Task{
     /**
-     * Creates a Todo object from the input command.
+     * Creates a Todo instance from the input command.
      *
      * @param descriptive description of input command.
      */

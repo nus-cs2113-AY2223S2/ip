@@ -9,7 +9,7 @@ public class Event extends Task {
     private String toEnd;
 
     /**
-     * Creates an Event object from the input command.
+     * Creates an Event instance from the input command.
      *
      * @param descriptive description of input command.
      * @param fromStart start of an event indicated in the input command.
