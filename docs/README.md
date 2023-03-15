@@ -33,6 +33,7 @@ Find all the tasks according to the keywords in the command.
 
 ## Usage
 
+---
 ### `todo`
 Add to do to the task list.
 
@@ -52,7 +53,7 @@ Expected outcome:
 Got it. I've added this task: 
 [T][ ] read books
 ```
-
+---
 ### `deadline`
 Add deadline to the task list.
 
@@ -72,7 +73,7 @@ Expected outcome:
 Got it. I've added this task: 
 [D][ ] read books Feb 28th
 ```
-
+---
 ### `event`
 
 Add event to the task list
@@ -93,6 +94,7 @@ Expected outcome:
 Got it. I've added this task: 
 [E][ ] read books from: Feb 2nd to: Feb 28th
 ```
+---
 ### `mark`
 
 Mark the task as done
@@ -113,7 +115,7 @@ Excepted outcome:
 Nice! I've marked this task as done:)
 [T][√] read books
 ```
-
+---
 ### `unmark`
 
 Mark the task as undone
@@ -134,7 +136,7 @@ Excepted outcome:
 Nice! I've unmarked this task as done:P
 [T][] read books
 ```
-
+---
 ### `delete`
 
 Delete the task and show the total number of tasks
@@ -155,6 +157,7 @@ Got it. I've removed this task:
 [T][ ] read books
  There are 4 tasks in your list.
 ```
+---
 ### `find`
 
 Find the tasks according to keywords
@@ -176,6 +179,7 @@ Here are the matching tasks in your list:
 2. [D][ ] read books Feb 28th
 3. [E][ ] read books from: Feb 2nd to: Feb 28th
 ```
+---
 ### `list`
 
 List all the tasks
@@ -191,4 +195,14 @@ Expected outcome:
 3. [T][ ] buy flowers
 4. [D][ ] read books Feb 28th
 5. [E][ ] read books from: Feb 2nd to: Feb 28th
+```
+---------------
+
+### `exit`
+
+Exit the application
+
+Example:
+```
+Bye. Hope to see you again soon! I will be missing you:("
 ```
