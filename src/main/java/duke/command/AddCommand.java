@@ -57,7 +57,7 @@ public class AddCommand extends Command {
             String thisInput = userInput.replace("event ", "");
             if (!thisInput.contains("/from") || !thisInput.contains("/to")) {
                 throw new CommandFormatException();
-            } else if (userInput.indexOf("/from") >= userInput.indexOf("/to")){
+            } else if (userInput.indexOf("/from") >= userInput.indexOf("/to")) {
                 throw new CommandFormatException();
             } else {
                 String[] messages = thisInput.split(" /from ");

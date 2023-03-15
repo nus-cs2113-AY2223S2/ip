@@ -31,7 +31,6 @@ public class DeleteCommand extends Command {
      */
     public void execute(TaskList taskList, Ui ui) throws CommandFormatException,
             TaskOutOfBoundsException, TaskException {
-
         String[] messages = userInput.split(" ");
         if (messages.length < 2) {
             throw new CommandFormatException();
@@ -51,7 +50,6 @@ public class DeleteCommand extends Command {
         ui.printDeletingLine();
         taskList.findTask(taskIndex).showTask();
         taskList.deleteTask(taskIndex);
-
     }
 }
 

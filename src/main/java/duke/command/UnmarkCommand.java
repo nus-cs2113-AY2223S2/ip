@@ -31,8 +31,8 @@ public class UnmarkCommand extends Command {
      * @throws CommandFormatException   if the command is in incorrect format
      */
     @Override
-    public void execute(TaskList taskList, Ui ui) throws TaskOutOfBoundsException,
-            TaskUndoneException, TaskException, CommandFormatException {
+    public void execute(TaskList taskList, Ui ui) throws
+            TaskOutOfBoundsException, TaskUndoneException, TaskException, CommandFormatException {
         String[] messages = userInput.trim().replace("unmark ", "").split(" ");
         if (messages.length < 1) {
             throw new CommandFormatException();
