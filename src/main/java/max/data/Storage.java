@@ -189,12 +189,11 @@ public class Storage {
 
     private Task detokenizeTaskString(String taskString) throws StorageLoadException {
         String[] taskComponents = taskString.split(DELIMITER);
-        // Sanity check - taskComponents should minimally have 3 arguments
-        // Its task label, done status and description
+        // Sanity check - taskComponents should minimally have length 3 - task label, done status and description
         if (taskComponents.length < MIN_TASK_ARG_LENGTH) {
             throw new StorageLoadException(EXCEPTION_BAD_TASK_LEN);
         }
-        // New task fields
+
         Task newTask;
         String taskType = taskComponents[TASK_TYPE_INDEX];
         boolean isTaskDone = taskComponents[TASK_DONE_INDEX].equals(TASK_DONE_TOKEN);
@@ -212,7 +211,6 @@ public class Storage {
         default:
             throw new StorageLoadException(EXCEPTION_UNKNOWN_LOAD_ERROR);
         }
-        // If isTaskDone is corrupted, it will default to false
         markNewTask(newTask, isTaskDone);
         return newTask;
     }
