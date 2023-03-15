@@ -6,15 +6,20 @@
 
 2. Download the latest copy of the duke.jar file [here](https://github.com/ghzr0/ip/releases)
 
-3. Move the .jar file to the folder where you want to run the program
+3. Move the .jar file to the folder where you want to run the program;  and create an empty folder called `data`.
+ 
+4. In the `data` folder, create an empty .txt file called `duke.txt`.
 
-4. Open the command terminal and navigate to the directory of that same folder which you save your .jar file at
+*NOTE: Steps 3 & 4 are for executing the .jar file for the 1st time, can skip for re-execution of program once the folder and .jar file is already present on your device.
 
-5. Use the following command to run the programme: java -jar duke.jar
+5. Open the command terminal and navigate to the directory of that same folder which you save your .jar file at
 
-6. If successful, you will see the following welcome message on the command terminal:
+6. Use the following command to run the programme: java -jar duke.jar
+
+7. If successful, you will see the following welcome message on the command terminal:
 
 ![image](https://user-images.githubusercontent.com/88625158/221926439-622d791d-6307-4c67-8d92-b87488ceb8e5.png)
+
 
 
 ## Features of Duke Program
@@ -145,7 +150,7 @@ The first task of the tasklist is unmarked, indicated by the empty whitespace in
 
 ### `find` - Finds all relevant tasks in the tasklist which contain the keyword(s) specified by the user
 
-Mark the status of a specified task as done, and updates a status icon indicating it being marked.
+Finds the tasks containing the keyword specified by the user in the tasklist, and outputs them.
 
 Example of usage: 
 
