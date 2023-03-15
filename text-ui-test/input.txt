@@ -1,0 +1,32 @@
+list
+debug
+todo Foobar
+deadline badArgument
+deadline badArgument -by foobar
+deadline deadline1 --by 2020-10-10 2359
+deadline deadline2 --by 2022-19-01 0000
+event badArgument
+event missingArg --from 2020-10-10 2359
+event missingArg1 --by 2020-10-10 2359
+event event1 --from 2020-10-10 2359 --to 2020-11-10 0000
+event event2 --to 2020-11-10 0900 --from 2020-11-10 0001
+list
+mark -1
+mark 0
+mark 1
+mark 2
+mark 100
+list
+unmark -1
+unmark 1
+unmark 100
+list
+todo seven--eleven
+todo handle seven errors
+find seven
+fetch seven
+find dead
+fetch dead
+find foobar
+fetch foobar
+exit
