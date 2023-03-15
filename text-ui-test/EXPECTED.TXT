@@ -14,7 +14,7 @@ There's nothing in your list. I'm gonna bite you.
 ────────────────────────────────────────────────────────────
 ~$ ────────────────────────────────────────────────────────────
 --- BORK BORK ---- THIS IS IMPORTANT! ---- BORK BORK ---
-MAX is now in debug mode. No data will be saved or loaded from disk.
+MAX is now in debug mode. No data will be saved/loaded.
 To exit debug mode, restart MAX.
 ────────────────────────────────────────────────────────────
 ~$ ────────────────────────────────────────────────────────────
