@@ -21,18 +21,91 @@ Is a CLI Task Managing Application
 - There 3 types of Tasks you can add
 #### Todo
 - Simply a task with its description
+- See demonstration below.
+>`todo [description of todo task]`
+>
+> eg.
+> 
+> `todo CS2113 quiz`
 #### Deadline
 -  A Todo with a deadline timing to complete by
+- See demonstration below.
+>`deadline [description of deadline task] / [datetime to complete by]`
+>
+> eg.
+> 
+> `deadline CS2113 quiz /Monday 3pm`
 #### Event
 -  A Task with a start and end time
-
+>`event [description of event task] /[start datetime] /[end datetime]`
+>
+> eg.
+>
+> `event CS2113 FINALS /Monday 3pm /Monday 5pm`
 
 ### Delete Task
 - Simply delete any task you want out of your task list
+>`delete [task no.]`
+> 
+> eg.
+> 
+> `delete 2`
+> 
+> Results in:
+> 
+> `Noted. I've removed this task:`
+> 
+> `[D][ ] CS2113 quiz  (by: Monday 3pm)`
 
 ## Additional Features
 - Mark task
+>`mark [task no.]`
+>
+> eg.
+> 
+> `mark 3`
+> 
+> Results in:
+> 
+>`Nice! I've marked this task as done:`
+> 
+>`[D][X] CS2113 quiz (by: 3pm)` 
 - Unmark task
+>`unmark [task no.]`
+>
+> eg.
+>
+> `unmark 3`
+>
+> Results in:
+>
+>`OK, I've marked this task as not done yet:`
+>
+>`[D][ ] CS2113 quiz (by: 3pm)`
 - List tasks
+>`list`
+>
+> Results in:
+> 
+> `Here are the tasks in your list:`
+> 
+> `1.[T][ ] CS2113 quiz`
+> 
+> `2.[D][ ] CS2113 quiz  (by: Monday 3pm)`
+> 
+> `3.[E][ ] CS2113 FINALS  (from: Monday 3pm  to: Monday 5pm)`
 - Find tasks by keyword
+>`find [keyword]`
+> 
+> eg.
+> 
+> `find quiz`
+> 
+> Results in:
+> 
+> `Here are the tasks in your list:`
+> 
+> `1.[T][ ] CS2113 quiz`
+> 
+> `2.[D][ ] CS2113 quiz  (by: Monday 3pm)`
 
