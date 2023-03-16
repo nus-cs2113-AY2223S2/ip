@@ -21,6 +21,6 @@ public class Deadline extends Task {
     @Override
     public String getTask() {
         return taskTypeIcon() + isDoneIcon() + " " + getDescription()
-                + System.lineSeparator() + "    Deadline:" + getDueDate();
+                + System.lineSeparator() + "    Deadline: " + getDueDate();
     }
 }

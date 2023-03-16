@@ -1,5 +1,4 @@
 import tasktypes.Task;
-
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -20,14 +19,10 @@ public class Ui {
     public static final String EVENT_START_PROMPT = "When does this event start?";
     public static final String EVENT_END_PROMPT = "When does this event end?";
     public static final String ITEM_DESCRIPTION_PROMPT = "What are you referring to?";
-    public static final int NOT_FOUND_IN_STRING = -99;
-
-    /**
-     * prints the exit message when shutdown is desired
-     */
-    public static void exitMessage() {
-        System.out.println(EXIT_MESSAGE);
-    }
+    public static final int EVENT_STARTMARKER_LENGTH = 5;
+    public static final int EVENT_ENDMARKER_LENGTH = 3;
+    public static final int INVALID_INDEX = -99;
+    public static final String END_SAVE_PROMPT = "Wait, do you want to save the current list?\n Type yes if so";
 
     /**
      * prints a welcome message on startup.
@@ -55,6 +50,7 @@ public class Ui {
         }
         if (description.contains("/")) {
             description = description.split("/",2)[0];
+            description = description.trim();
         }
         return description;
     }
@@ -63,10 +59,11 @@ public class Ui {
      * gets the item number for the user supplied command to act on
      * @param userInput command input from the user
      * @return returns number of the item in the tasklist (1-based)
+     * @throws DukeException if user's input is not valid or out of bounds
      */
-    public static int getItemNumber(String userInput) {
+    public static int getItemNumber(String userInput) throws DukeException {
         Scanner in = new Scanner(System.in);
-        int itemNumber;
+        int itemNumber = INVALID_INDEX;
         try {
             itemNumber = Integer.parseInt(userInput.split(" ", 2)[1]);
         } catch (ArrayIndexOutOfBoundsException e) {
@@ -74,12 +71,11 @@ public class Ui {
             System.out.println(ITEM_NUMBER_PROMPT);
             try {
                 itemNumber = in.nextInt();
-            } catch (InputMismatchException i){
-                System.out.println(REJECTED_NON_NUMBER_INPUT);
-                itemNumber = getItemNumber(userInput);
+            } catch (InputMismatchException i) {
+                throw new DukeException(REJECTED_NON_NUMBER_INPUT);
             }
         } catch (NumberFormatException n) {
-            itemNumber = getItemNumber(userInput);
+            throw new DukeException(REJECTED_NON_NUMBER_INPUT);
         }
         return itemNumber;
     }
@@ -88,9 +84,14 @@ public class Ui {
      * gets the item index for the user supplied command to act on
      * @param userInput command input from the user
      * @return returns index of the item in the tasklist (0-based)
+     * @throws DukeException if user's input is not valid or out of bounds
      */
-    public static int getItemIndex(String userInput) {
-        return getItemNumber(userInput) - 1;
+    public static int getItemIndex(String userInput) throws DukeException{
+        int itemIndex = INVALID_INDEX;
+        while (itemIndex <= 0) {
+            itemIndex = getItemNumber(userInput);
+        }
+        return itemIndex - 1;
     }
 
     /**
@@ -103,7 +104,7 @@ public class Ui {
         Scanner in = new Scanner(System.in);
         String dueDate;
         if (userInput.contains(DEADLINE_USERINPUT_PREFIX)) {
-            dueDate = userInput.substring(userInput.indexOf(DEADLINE_USERINPUT_PREFIX));
+            dueDate = userInput.substring(userInput.indexOf(DEADLINE_USERINPUT_PREFIX)).trim();
         } else {
             System.out.println(DUEDATE_PROMPT);
             dueDate = in.nextLine().trim();
@@ -120,7 +121,7 @@ public class Ui {
         if (userInput.contains(STARTDATE_USERINPUT_PREFIX)) {
             return userInput.indexOf(STARTDATE_USERINPUT_PREFIX);
         } else {
-            return NOT_FOUND_IN_STRING;
+            return INVALID_INDEX;
         }
     }
 
@@ -133,7 +134,7 @@ public class Ui {
         if (userInput.contains(ENDDATE_USERINPUT_PREFIX)) {
             return userInput.indexOf(ENDDATE_USERINPUT_PREFIX);
         } else {
-            return NOT_FOUND_IN_STRING;
+            return INVALID_INDEX;
         }
     }
     /**
@@ -146,14 +147,14 @@ public class Ui {
         Scanner in = new Scanner (System.in);
         int startMarkerIndex = getStartMarkerIndex(userInput);
         int endMarkerIndex = getEndMarkerIndex(userInput);
-        if (startMarkerIndex == NOT_FOUND_IN_STRING) {
+        if (startMarkerIndex == INVALID_INDEX) {
             System.out.println(EVENT_START_PROMPT);
             return in.nextLine().trim();
         } else {
-            if (endMarkerIndex == NOT_FOUND_IN_STRING) {
-                return userInput.substring(startMarkerIndex + 1);
+            if (endMarkerIndex == INVALID_INDEX) {
+                return userInput.substring(startMarkerIndex + EVENT_STARTMARKER_LENGTH).trim();
             } else {
-                return userInput.substring(startMarkerIndex + 1,endMarkerIndex);
+                return userInput.substring(startMarkerIndex + EVENT_STARTMARKER_LENGTH,endMarkerIndex).trim();
             }
         }
     }
@@ -168,14 +169,14 @@ public class Ui {
         Scanner in = new Scanner (System.in);
         int startMarkerIndex = getStartMarkerIndex(userInput);
         int endMarkerIndex = getEndMarkerIndex(userInput);
-        if (endMarkerIndex == NOT_FOUND_IN_STRING) {
+        if (endMarkerIndex == INVALID_INDEX) {
             System.out.println(EVENT_END_PROMPT);
             return in.nextLine().trim();
         } else {
             if (startMarkerIndex > endMarkerIndex) {
-                return userInput.substring(endMarkerIndex + 1,startMarkerIndex);
+                return userInput.substring(endMarkerIndex + EVENT_ENDMARKER_LENGTH,startMarkerIndex).trim();
             } else {
-                return userInput.substring(endMarkerIndex + 1);
+                return userInput.substring(endMarkerIndex + EVENT_ENDMARKER_LENGTH).trim();
             }
         }
     }
@@ -209,5 +210,20 @@ public class Ui {
         if (!footer.isBlank()) {
             System.out.println(footer);
         }
+    }
+    /**
+     * Checks with the user if the data should be saved before shutdown of the program
+     * prints the exit message afterwards
+     */
+    public static void endSavePrompt() {
+        Scanner in = new Scanner(System.in);
+        if (!TaskList.getList().isEmpty()) {
+            System.out.println(END_SAVE_PROMPT);
+            String saveDecision = in.nextLine().trim().toLowerCase();
+            if (saveDecision.equals("yes")) {
+                Storage.writeToTaskList();
+            }
+        }
+        System.out.println(EXIT_MESSAGE);
     }
 }

@@ -15,7 +15,7 @@ public class Duke {
             case EXIT_CMD:
             case BYE_CMD:
                 isExit = true;
-                Ui.exitMessage();
+                Ui.endSavePrompt();
                 break;
             default:
                 Parser.ParseCommand(inputCommand,userInput);
