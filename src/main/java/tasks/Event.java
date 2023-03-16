@@ -2,7 +2,7 @@ package tasks;
 
 import java.time.LocalDateTime;
 
-public class Event extends Task{
+public class Event extends Task {
     private String from;
     private String to;
     private String type = "E";

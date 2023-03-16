@@ -1,7 +1,8 @@
 package tasks;
 
-public class Todo extends Task{
+public class Todo extends Task {
     private String type = "T";
+
     public Todo(String taskName) {
         super(taskName);
     }

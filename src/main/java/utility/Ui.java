@@ -14,8 +14,29 @@ public class Ui {
     // Horizontal Rule to act as a divider
     private static final String HORIZONTAL_RULE = "________________________________________________________________________________";
 
+    /**
+     * Prints horizontal rule
+     */
     public static void printHorizontalRule() {
         System.out.println(HORIZONTAL_RULE);
+    }
+
+    /**
+     * Prints start up text
+     */
+    public static void startUp() {
+        System.out.println(LOGO);
+        printHorizontalRule();
+        System.out.println("Hello! I'm Duke.");
+    }
+
+    /**
+     * Prints shut down text
+     */
+    public static void shutDown() {
+        printHorizontalRule();
+        System.out.println("Shutting Down! Hope to see you again soon!");
+        printHorizontalRule();
     }
 
     /**
@@ -29,59 +50,12 @@ public class Ui {
         printHorizontalRule();
     }
 
-    public static void startUp() {
-        System.out.println(LOGO);
-        printHorizontalRule();
-        System.out.println("Hello! I'm Duke.");
-    }
-
+    /**
+     * Prompts user for input
+     */
     public static void promptInput() {
         printHorizontalRule();
         System.out.println("What can I do for you?");
-        printHorizontalRule();
-    }
-
-    public static void invalidCommand(String userInput) {
-        printHorizontalRule();
-        System.out.println(userInput + " is an invalid command. Please try again!");
-        printHorizontalRule();
-    }
-
-    public static void dateTimeError() {
-        printHorizontalRule();
-        System.out.println("Wrong date and time format used! The required format is YYYY-MM-DD HH:MM");
-        printHorizontalRule();
-    }
-
-    public static void eventError(String userInput) {
-        printHorizontalRule();
-        System.out.println("Wrong usage of event. Format is: event DESCRIPTION /from YYYY-MM-DD HH:MM /to YYYY-MM-DD HH:MM");
-        System.out.println("You entered: " + userInput);
-        printHorizontalRule();
-    }
-
-    public static void deadlineError(String userInput) {
-        printHorizontalRule();
-        System.out.println("Wrong usage of deadline. Format is: deadline DESCRIPTION /by YYYY-MM-DD HH:MM");
-        System.out.println("You entered: " + userInput);
-        printHorizontalRule();
-    }
-
-    public static void todoError(String userInput) {
-        printHorizontalRule();
-        System.out.println("Invalid command for todo. Cannot have a blank description!");
-        printHorizontalRule();
-    }
-
-    public static void invalidIndex() {
-        printHorizontalRule();
-        System.out.println("Please provide a valid index!");
-        printHorizontalRule();
-    }
-
-    public static void requiresNumber() {
-        printHorizontalRule();
-        System.out.println("Please give an integer!");
         printHorizontalRule();
     }
 
@@ -107,13 +81,6 @@ public class Ui {
         printHorizontalRule();
     }
 
-    public static void findError(String userInput) {
-        printHorizontalRule();
-        System.out.println("Wrong usage of find. Format is: find DESCRIPTION");
-        System.out.println("You entered: " + userInput);
-        printHorizontalRule();
-    }
-
     public static void findHeader(String description) {
         printHorizontalRule();
         System.out.println("Here are all tasks matching " + description);
@@ -128,15 +95,67 @@ public class Ui {
         System.out.println((counter) + ". " + task);
     }
 
-    public static void shutDown() {
+    /*** ERROR MESSAGES ***/
+    // COMMON ERRORS
+    public static void invalidCommand(String userInput) {
         printHorizontalRule();
-        System.out.println("Shutting Down! Hope to see you again soon!");
+        System.out.println(userInput + " is an invalid command. Please try again!");
         printHorizontalRule();
     }
 
     public static void cannotBeNull() {
         printHorizontalRule();
         System.out.println("Input cannot be empty!");
+        printHorizontalRule();
+    }
+
+    public static void dateTimeError() {
+        printHorizontalRule();
+        System.out.println("Wrong date and time format used! The required format is YYYY-MM-DD HH:MM");
+        printHorizontalRule();
+    }
+
+    public static void invalidIndex() {
+        printHorizontalRule();
+        System.out.println("Please provide a valid index!");
+        printHorizontalRule();
+    }
+
+    public static void requiresNumber() {
+        printHorizontalRule();
+        System.out.println("Please give an integer!");
+        printHorizontalRule();
+    }
+
+
+    // TO DO ERROR
+    public static void todoError(String userInput) {
+        printHorizontalRule();
+        System.out.println("Invalid command for todo. Cannot have a blank description!");
+        printHorizontalRule();
+    }
+
+    // DEADLINE ERROR
+    public static void deadlineError(String userInput) {
+        printHorizontalRule();
+        System.out.println("Wrong usage of deadline. Format is: deadline DESCRIPTION /by YYYY-MM-DD HH:MM");
+        System.out.println("You entered: " + userInput);
+        printHorizontalRule();
+    }
+
+    // EVENT ERROR
+    public static void eventError(String userInput) {
+        printHorizontalRule();
+        System.out.println("Wrong usage of event. Format is: event DESCRIPTION /from YYYY-MM-DD HH:MM /to YYYY-MM-DD HH:MM");
+        System.out.println("You entered: " + userInput);
+        printHorizontalRule();
+    }
+
+    // FIND ERROR
+    public static void findError(String userInput) {
+        printHorizontalRule();
+        System.out.println("Wrong usage of find. Format is: find DESCRIPTION");
+        System.out.println("You entered: " + userInput);
         printHorizontalRule();
     }
 }

@@ -14,7 +14,9 @@ public class Task {
         return taskName;
     }
 
-    public String getType() { return type; }
+    public String getType() {
+        return type;
+    }
 
     public Character getStatus() {
         if (isComplete) {
@@ -32,7 +34,7 @@ public class Task {
     }
 
     public boolean contains(String description) {
-        if (getTask().toLowerCase().contains(description.toLowerCase())){
+        if (getTask().toLowerCase().contains(description.toLowerCase())) {
             return true;
         }
         return false;

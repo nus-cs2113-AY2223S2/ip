@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class deadline {
-    public static void executeDeadline (String userInput, ArrayList<Task> tasks) {
+    public static void executeDeadline(String userInput, ArrayList<Task> tasks) {
         // Removes the command word
         String withoutCommand = Parser.removeCommandWord(userInput);
 

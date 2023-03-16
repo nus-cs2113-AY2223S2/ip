@@ -15,7 +15,7 @@ public class Parser {
         return input.split(" /by ", 2)[0];
     }
 
-    public static String getCommand (String userInput) {
+    public static String getCommand(String userInput) {
         return userInput.split(" ", 2)[0].toLowerCase();
     }
 
