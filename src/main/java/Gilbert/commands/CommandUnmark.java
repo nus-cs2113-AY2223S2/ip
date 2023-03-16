@@ -13,10 +13,14 @@ public class CommandUnmark extends Commands{
 
     @Override
     public void doCommand(TaskList tasklist, String position){
-        int index = Integer.parseInt(position) - 1;
-        tasklist.getTask(index).undo();
-        System.out.println();
-        System.out.println(Messages.UNDONE);
-        System.out.println(tasklist.getTask(index).toString() + '\n' + Messages.SPACE);
+        try {
+            int index = Integer.parseInt(position) - 1;
+            tasklist.getTask(index).undo();
+            System.out.println();
+            System.out.println(Messages.UNDONE);
+            System.out.println(tasklist.getTask(index).toString() + '\n' + Messages.SPACE);
+        } catch (NumberFormatException e) {
+            System.out.println(Messages.INDEX);
+        }
     }
 }

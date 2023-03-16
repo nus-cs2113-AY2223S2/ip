@@ -1,6 +1,7 @@
 package Gilbert;
 
 import Gilbert.exceptions.GilbertException;
+import Gilbert.messages.Messages;
 import Gilbert.tasks.*;
 import Gilbert.parser.*;
 import Gilbert.ui.UI;
@@ -47,7 +48,7 @@ public class Gilbert {
         try {
             Files.loadFile(taskList);
         } catch (FileNotFoundException | IndexOutOfBoundsException e) {
-            System.out.println("Oops, no existing files found!");
+            System.out.println(Messages.FILE);
         }
         Gilbert.run();
     }

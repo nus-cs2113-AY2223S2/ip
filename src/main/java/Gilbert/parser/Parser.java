@@ -52,44 +52,48 @@ public class Parser {
         }
         try {
             switch (commandType) {
-                case "todo" -> {
+                case "todo":
                     Commands addTodo = new CommandAddTodo();
                     addTodo.doCommand(taskList, description);
-                }
-                case "deadline" -> {
+                    break;
+                case "deadline":
                     Commands addDeadline = new CommandAddDeadline();
                     addDeadline.doCommand(taskList, description);
-                }
-                case "event" -> {
+                    break;
+                case "event" :
                     Commands addEvent = new CommandAddEvent();
                     addEvent.doCommand(taskList, description);
-                }
-                case "list" -> {
+                    break;
+                case "list" :
                     Commands listOut = new CommandList();
                     listOut.doCommand(taskList, description);
-                }
-                case "mark" -> {
+                    break;
+                case "mark":
                     Commands markDone = new CommandMark();
                     markDone.doCommand(taskList, description);
-                }
-                case "unmark" -> {
+                    break;
+                case "unmark":
                     Commands markUndone = new CommandUnmark();
                     markUndone.doCommand(taskList, description);
-                }
-                case "delete" -> {
+                    break;
+                case "delete":
                     Commands deleteTask = new CommandDelete();
                     deleteTask.doCommand(taskList, description);
-                }
-                case "help" -> {
+                    break;
+                case "help":
                     Commands helpCommand = new CommandHelp();
                     helpCommand.doCommand(taskList, description);
-                }
-                case "find" -> {
+                    break;
+                case "find":
                     Commands findTask = new CommandFind();
                     findTask.doCommand(taskList, description);
-                }
-                case "bye" -> runStatus = false;
-                default -> System.out.println(Messages.ERROR);
+                    break;
+                case "bye":
+                    runStatus = false;
+                    break;
+                default:
+                    System.out.println(Messages.ERROR);
+                    break;
             }
         } catch (IndexOutOfBoundsException e) {
             System.out.println(Messages.OUTOFBOUNDS);

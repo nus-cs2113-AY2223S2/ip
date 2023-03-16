@@ -62,6 +62,15 @@ public class Task {
     }
 
     /**
+     * Get method that is to be overridden by subclasses.
+     *
+     * @return The save format for deadline.
+     */
+    public String getFormat() {
+        return "";
+    }
+
+    /**
      * Printing format for all Gilbert.tasks. To be overridden by subclasses.
      *
      */

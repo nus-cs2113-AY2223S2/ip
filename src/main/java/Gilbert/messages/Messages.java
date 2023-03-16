@@ -19,6 +19,8 @@ public final class Messages {
     public final static String OUTOFBOUNDS = "You have entered an index that doesn't exist! Please try again.\n" + SPACE;
     public final static String FIND = "Here are some of the tasks that matches your keyword:";
     public final static String NOTFOUND = "There are no matching entries found!\n" + SPACE;
+    public final static String INDEX = "Please input a proper index behind the command!\n" + SPACE;
+    public final static String FILE = "Oops, no existing files found! A new save file has been created!";
     public final static String HELP = "Below are some of the commands that you can use, please type them out\n" +
             "in the same order (ignore the <> brackets):\n" +
             "\n" +

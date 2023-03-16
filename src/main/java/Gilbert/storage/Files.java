@@ -33,18 +33,19 @@ public class Files {
             type = taskList.getTask(i).getType();
             desc = taskList.getTask(i).getDesc();
             switch (type) {
-                case "D" -> {
+                case "D":
                     Deadline deadline = (Deadline) taskList.getTask(i);
+                    desc = deadline.getFormat();
                     done = deadline.isDone() ? 1 : 0;
-                }
-                case "T" -> {
+                    break;
+                case "T":
                     Todo todo = (Todo) taskList.getTask(i);
                     done = todo.isDone() ? 1 : 0;
-                }
-                default -> {
+                    break;
+                default:
                     Event event = (Event) taskList.getTask(i);
                     done = event.isDone() ? 1 : 0;
-                }
+                    break;
             }
             data += type + " " + done + " " + desc + System.lineSeparator();
         }
@@ -67,11 +68,16 @@ public class Files {
         while (s.hasNext()) {
             String[] data = s.nextLine().split(" ", 3);
             switch (data[0]) {
-                case "D" -> task = new Deadline(data[2]);
-                case "T" -> task = new Todo(data[2]);
-                case "E" -> task = new Event(data[2]);
-                default -> {
-                }
+                case "D":
+                    task = new Deadline(data[2]);
+                    break;
+                case "T":
+                    task = new Todo(data[2]);
+                    break;
+                case "E":
+                    task = new Event(data[2]);
+                    break;
+                default:
             }
             if (data[1].equals("1")){
                 task.markAsDone();
