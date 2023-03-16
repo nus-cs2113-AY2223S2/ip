@@ -40,6 +40,16 @@ public class Task {
         return getDescription();
     }
 
+    public String showTaskLine() {
+        String taskStatus;
+        if (isCompleted) {
+            taskStatus = "[T][√] ";
+        } else {
+            taskStatus = "[T][ ] ";
+        }
+        return taskStatus + showTask();
+    }
+
     /**
      * This method returns a formatted String that represents the status of a task.
      * If the task is completed, the status is set to "1", otherwise it is set to "0".
@@ -47,14 +57,14 @@ public class Task {
      *
      * @return completeTaskLine a formatted String that represents the status of the task.
      */
-    public String writeTask() {
+    public String writeTaskLine() {
         String taskStatus;
-        if (isCompleted == false) {
+        if (isCompleted) {
             taskStatus = "0";
         } else {
             taskStatus = "1";
         }
-        String completeTaskLine = "T | " + taskStatus + " | " + getDescription() + "\n";
+        String completeTaskLine = "T | " + taskStatus + " | " + showTask() + "\n";
         return completeTaskLine;
     }
 }

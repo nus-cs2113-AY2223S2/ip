@@ -24,7 +24,7 @@ public class TaskList {
      * @return message the message line
      */
     public String showTaskMessage(int taskIndex) {
-        String message = tasks.get(taskIndex).showTask();
+        String message = tasks.get(taskIndex).showTaskLine();
         return message;
     }
 
@@ -52,7 +52,7 @@ public class TaskList {
      */
     public void printList() {
         for (int i = 1; i <= tasks.size(); i += 1) {
-            System.out.println(i + ". " + tasks.get(i - 1).showTask());
+            System.out.println(i + ". " + tasks.get(i - 1).showTaskLine());
         }
     }
 
@@ -121,7 +121,7 @@ public class TaskList {
      * @param taskIndex the task index number
      */
     public void deleteTask(int taskIndex) {
-        String message = tasks.get(taskIndex - 1).showTask();
+        String message = tasks.get(taskIndex - 1).showTaskLine();
         tasks.remove(taskIndex - 1);
         System.out.println(message + "\n " + showTaskNumber());
     }
@@ -136,9 +136,9 @@ public class TaskList {
     }
 
     /**
-     * Mark the task as undone according to task index
+     * Unmark the task according to task index
      *
-     * @param taskIndex the task index number
+     * @param taskIndex
      */
     public void markAsUndone(int taskIndex) {
         tasks.get(taskIndex - 1).isCompleted = false;
@@ -153,7 +153,7 @@ public class TaskList {
     public String writeTaskList() {
         String tasksToBeAdded = "";
         for (Task task : tasks) {
-            tasksToBeAdded = tasksToBeAdded + task.writeTask();
+            tasksToBeAdded = tasksToBeAdded + task.writeTaskLine();
         }
         return tasksToBeAdded;
     }

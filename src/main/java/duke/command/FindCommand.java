@@ -46,7 +46,7 @@ public class FindCommand extends Command {
         int serialNo = 1;
         for (Task task : targetList) {
             System.out.print(serialNo + ". ");
-            System.out.println(task.showTask());
+            System.out.println(task.showTaskLine());
             serialNo += 1;
         }
     }

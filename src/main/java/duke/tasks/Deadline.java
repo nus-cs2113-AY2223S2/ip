@@ -19,7 +19,7 @@ public class Deadline extends Task {
     }
 
     /**
-     * Get the deadline
+     * Return a string of deadline
      *
      * @return by the deadline
      */
@@ -33,14 +33,14 @@ public class Deadline extends Task {
      *
      * @return taskLine a complete task line to be displayed
      */
-    public String showTask() {
+    public String showTaskLine() {
         String taskStatus;
-        if (isCompleted == true) {
+        if (isCompleted) {
             taskStatus = "[D][√] ";
         } else {
             taskStatus = "[D][ ] ";
         }
-        return taskStatus + getDescription() + " " + getBy();
+        return taskStatus + showTask() + " " + getBy();
     }
 
     /**
@@ -56,7 +56,7 @@ public class Deadline extends Task {
         } else {
             taskStatus = "1";
         }
-        String completeTaskLine = "D | " + taskStatus + " | " + getDescription() + " | " + getBy() + "\n";
+        String completeTaskLine = "D | " + taskStatus + " | " + showTask() + " | " + getBy() + "\n";
         return completeTaskLine;
     }
 }

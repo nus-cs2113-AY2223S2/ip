@@ -44,15 +44,16 @@ public class Event extends Task {
      *
      * @return taskLine a complete task line to be displayed
      */
-    public String showTask() {
+    public String showTaskLine() {
         String taskStatus;
-        if (isCompleted == true) {
+        if (isCompleted) {
             taskStatus = "[E][√] ";
         } else {
             taskStatus = "[E][ ] ";
         }
-        String time = "from: " + getStartTime() + " to: " + getEndTime();
-        String taskLine = taskStatus + getDescription() + " " + time;
+
+        String taskLine = taskStatus + showTask() + " "
+                + "from: " + getStartTime() + " to: " + getEndTime();
         return taskLine;
     }
 
@@ -61,14 +62,14 @@ public class Event extends Task {
      *
      * @return completeTaskLine a complete message line to be written in the file
      */
-    public String writeTask() {
+    public String writeTaskLine() {
         String taskStatus;
-        if (isCompleted == false) {
+        if (isCompleted) {
             taskStatus = "0";
         } else {
             taskStatus = "1";
         }
-        String completeTaskLine = "E | " + taskStatus + " | " + getDescription() + " | " +
+        String completeTaskLine = "E | " + taskStatus + " | " + showTask() + " | " +
                 getStartTime() + " | " + getEndTime() + "\n";
         return completeTaskLine;
     }

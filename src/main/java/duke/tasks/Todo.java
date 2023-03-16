@@ -9,32 +9,17 @@ public class Todo extends Task {
     }
 
     /**
-     * To show the task status and its description
-     *
-     * @return a string of task status and its description
-     */
-    public String showTask() {
-        String taskStatus;
-        if (isCompleted) {
-            taskStatus = "[T][√] ";
-        } else {
-            taskStatus = "[T][ ] ";
-        }
-        return taskStatus + getDescription();
-    }
-
-    /**
      * Format the task into " T | task status | description"
      *
      * @return completeTaskLine a complete message line to be written in the file
      */
-    public String writeTask() {
+    public String writeTaskLine() {
         String taskStatus;
         if (isCompleted) {
             taskStatus = "0";
         } else {
             taskStatus = "1";
         }
-        return "T | " + taskStatus + " | " + getDescription() + "\n";
+        return "T | " + taskStatus + " | " + showTask() + "\n";
     }
 }
