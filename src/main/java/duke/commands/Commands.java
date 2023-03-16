@@ -6,8 +6,6 @@ import duke.taskTypes.Deadline;
 import duke.taskTypes.Event;
 import duke.taskTypes.Todo;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import static duke.print.Print.*;
@@ -95,10 +93,7 @@ public class Commands {
         String taskName = taskDetails[0];
         String taskDueDate = taskDetails[1];
 
-        LocalDate formattedDueDate = LocalDate.parse(taskDueDate);
-
-        Deadline new_deadline
-                = new Deadline(taskName, formattedDueDate.format(DateTimeFormatter.ofPattern("MMM d yyyy")));
+        Deadline new_deadline = new Deadline(taskName, taskDueDate);
 
         taskList.add(new_deadline);
 
@@ -125,7 +120,7 @@ public class Commands {
     /**
      * Sets a specified task as done
      *
-     * @param taskList   The list of tasks that contains the task that needs to be marked as done
+     * @param taskList         The list of tasks that contains the task that needs to be marked as done
      * @param taskNumberToMark The number of the task to mark as done
      */
     public static void markSelectedTask(ArrayList<Task> taskList, int taskNumberToMark) {
