@@ -1,0 +1,7 @@
+hello
+todo read book
+list
+deadline project /by Feb 11th
+event basketball /from 2pm /to 4pm
+help
+exit
