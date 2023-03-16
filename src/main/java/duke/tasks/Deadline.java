@@ -40,7 +40,7 @@ public class Deadline extends Task {
         } else {
             taskStatus = "[D][ ] ";
         }
-        return taskStatus + showTask() + " " + getBy();
+        return taskStatus + showTask() + " due: " + getBy();
     }
 
     /**
@@ -49,9 +49,9 @@ public class Deadline extends Task {
      *
      * @return completeTaskLine a complete message line to be written in the file
      */
-    public String writeTask() {
+    public String writeTaskLine() {
         String taskStatus;
-        if (isCompleted == false) {
+        if (!isCompleted) {
             taskStatus = "0";
         } else {
             taskStatus = "1";

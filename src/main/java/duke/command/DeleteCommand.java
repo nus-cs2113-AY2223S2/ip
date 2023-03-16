@@ -48,7 +48,7 @@ public class DeleteCommand extends Command {
             throw new TaskException();
         }
         ui.printDeletingLine();
-        taskList.findTask(taskIndex).showTask();
+        taskList.findTask(taskIndex).showTaskLine();
         taskList.deleteTask(taskIndex);
     }
 }

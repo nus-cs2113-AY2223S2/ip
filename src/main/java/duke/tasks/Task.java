@@ -59,7 +59,7 @@ public class Task {
      */
     public String writeTaskLine() {
         String taskStatus;
-        if (isCompleted) {
+        if (!isCompleted) {
             taskStatus = "0";
         } else {
             taskStatus = "1";

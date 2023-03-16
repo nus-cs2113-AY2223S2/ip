@@ -26,7 +26,7 @@ public class FindCommand extends Command {
      * @param taskList a TaskList object
      * @param ui       a Ui object
      * @throws CommandFormatException if the command format is wrong
-     * @throws TaskMatchException     if there is no mask matching the keyword
+     * @throws TaskMatchException     if there is no task matching the keyword
      */
     @Override
     public void execute(TaskList taskList, Ui ui) throws CommandFormatException, TaskMatchException {
