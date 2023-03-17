@@ -1,6 +1,11 @@
-package Duke;
+package Duke.command;
 
 import static Duke.Strings.LINE_SEPARATOR;
+
+import Duke.DukeException;
+import Duke.DukeStorage;
+import Duke.DukeUi;
+import Duke.task.DukeTaskList;
 
 /**
  * DukeMarkCommand is the class that represents a mark command.

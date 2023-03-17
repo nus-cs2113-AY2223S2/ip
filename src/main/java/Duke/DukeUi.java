@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
+import Duke.task.DukeTask;
+import Duke.task.DukeTaskList;
+
 import static Duke.Strings.EXIT_MESSAGE_0;
 import static Duke.Strings.EXIT_MESSAGE_1;
 import static Duke.Strings.EXIT_MESSAGE_DEFAULT;

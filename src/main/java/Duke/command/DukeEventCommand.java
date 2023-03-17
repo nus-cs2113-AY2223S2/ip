@@ -1,10 +1,16 @@
-package Duke;
+package Duke.command;
 
 import static Duke.Strings.LINE_SEPARATOR;
 
 import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import Duke.DukeException;
+import Duke.DukeStorage;
+import Duke.DukeUi;
+import Duke.task.DukeEvent;
+import Duke.task.DukeTaskList;
 
 /**
  * DukeEventCommand is the class that deals with the add event command.

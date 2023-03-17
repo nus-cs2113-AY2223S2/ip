@@ -1,4 +1,4 @@
-package Duke;
+package Duke.task;
 
 /**
  * Superclass of tasks objects created by Duke

@@ -1,4 +1,8 @@
-package Duke;
+package Duke.command;
+
+import Duke.DukeStorage;
+import Duke.DukeUi;
+import Duke.task.DukeTaskList;
 
 /**
  * DukeCommand is the abstract class that represents a command.

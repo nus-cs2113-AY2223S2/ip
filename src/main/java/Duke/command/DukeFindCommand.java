@@ -1,4 +1,9 @@
-package Duke;
+package Duke.command;
+
+import Duke.DukeException;
+import Duke.DukeStorage;
+import Duke.DukeUi;
+import Duke.task.DukeTaskList;
 
 /**
  * DukeFindCommand is the class that deals with the find command.

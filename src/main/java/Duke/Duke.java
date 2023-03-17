@@ -1,4 +1,7 @@
-package Duke; // TODO: add more packages
+package Duke;
+
+import Duke.command.DukeCommand;
+import Duke.task.DukeTaskList;
 
 public class Duke {
 

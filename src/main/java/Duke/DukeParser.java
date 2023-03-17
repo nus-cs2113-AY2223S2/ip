@@ -1,5 +1,16 @@
 package Duke;
 
+import Duke.command.DukeCommand;
+import Duke.command.DukeDeadlineCommand;
+import Duke.command.DukeDeleteCommand;
+import Duke.command.DukeEventCommand;
+import Duke.command.DukeExitCommand;
+import Duke.command.DukeFindCommand;
+import Duke.command.DukeListCommand;
+import Duke.command.DukeMarkCommand;
+import Duke.command.DukeToDoCommand;
+import Duke.command.DukeUnmarkCommand;
+
 public class DukeParser {
 
     public static DukeCommand parse(String fullCommand) throws DukeException {

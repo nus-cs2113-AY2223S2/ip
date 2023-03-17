@@ -1,6 +1,9 @@
-package Duke;
+package Duke.task;
 
 import java.util.ArrayList;
+
+import Duke.DukeException;
+import Duke.DukeUi;
 
 /**
  * DukeTaskList is the class that deals with the list of tasks.

@@ -1,6 +1,12 @@
-package Duke;
+package Duke.command;
 
 import static Duke.Strings.LINE_SEPARATOR;
+
+import Duke.DukeException;
+import Duke.DukeStorage;
+import Duke.DukeUi;
+import Duke.task.DukeTaskList;
+import Duke.task.DukeToDo;
 
 /**
  * DukeDeadlineCommand is the class that deals with the add deadline command.

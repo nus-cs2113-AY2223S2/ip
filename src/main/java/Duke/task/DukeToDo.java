@@ -1,4 +1,4 @@
-package Duke;
+package Duke.task;
 
 /**
  * DukeToDo class extending DukeTask

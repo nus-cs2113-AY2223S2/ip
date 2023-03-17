@@ -1,4 +1,9 @@
-package Duke;
+package Duke.command;
+
+import Duke.DukeException;
+import Duke.DukeStorage;
+import Duke.DukeUi;
+import Duke.task.DukeTaskList;
 
 public class DukeDeleteCommand extends DukeCommand {
 

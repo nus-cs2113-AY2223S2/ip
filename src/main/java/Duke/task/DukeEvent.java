@@ -1,4 +1,4 @@
-package Duke;
+package Duke.task;
 
 /**
  * DukeEvent class extending DukeTask
