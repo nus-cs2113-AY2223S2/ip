@@ -32,7 +32,11 @@ public class UI {
 
         while (!(command.equals("Bye") || command.equals("bye"))) {
             if (command.equals("list")) {
-                TaskList.list_Input(tasks);
+                try {
+                    TaskList.list_Input(tasks);
+                } catch (DukeException d) {
+                    System.out.println("Your list is empty!");
+                }
             } else if (command.equals("unmark")) {
                 try {
                     TaskList.unmark_Input(tasks, TaskDescOrTaskNo);
@@ -40,6 +44,10 @@ public class UI {
                     System.out.println("☹ OOPS!!! Which task do you want to unmark?");
                 } catch (IOException i) {
                     System.out.println("An error occurred with txt file");
+                } catch (IndexOutOfBoundsException i) {
+                    System.out.println("This is not within the number of tasks you have. Type list to see how many.");
+                } catch (NumberFormatException n) {
+                    System.out.println("This is not a number.");
                 }
             } else if (command.equals("mark")) {
                 try {
@@ -48,6 +56,10 @@ public class UI {
                     System.out.println("☹ OOPS!!! Which task do you want to mark?");
                 } catch (IOException i) {
                     System.out.println("An error occurred with txt file");
+                } catch (IndexOutOfBoundsException i) {
+                    System.out.println("This is not within the number of tasks you have. Type list to see how many.");
+                } catch (NumberFormatException n) {
+                    System.out.println("This is not a number.");
                 }
             } else if (command.equals("delete")) {
                 try {
@@ -56,6 +68,10 @@ public class UI {
                     System.out.println("☹ OOPS!!! Which task do you want to delete?");
                 } catch (IOException i) {
                     System.out.println("An error occurred with txt file");
+                } catch (IndexOutOfBoundsException i) {
+                    System.out.println("This is not within the number of tasks you have. Type list to see how many.");
+                } catch (NumberFormatException n) {
+                    System.out.println("This is not a number.");
                 }
             } else if (command.equals("todo")) {
                 try {
@@ -72,6 +88,8 @@ public class UI {
                     System.out.println("☹ OOPS!!! The description of a deadline cannot be empty.");
                 } catch (IOException i) {
                     System.out.println("An error occurred with txt file");
+                } catch (ArrayIndexOutOfBoundsException a) {
+                    System.out.println("What is the task you are trying to tell me?");
                 }
             } else if (command.equals("event")) {
                 try {
@@ -80,6 +98,8 @@ public class UI {
                     System.out.println("☹ OOPS!!! The description of an event cannot be empty.");
                 } catch (IOException i) {
                     System.out.println("An error occurred with txt file");
+                } catch (ArrayIndexOutOfBoundsException a) {
+                    System.out.println("Please ensure all fields are present and are correct! See User Guide for eg.");
                 }
             } else if (command.equals("find")) {
                 try {

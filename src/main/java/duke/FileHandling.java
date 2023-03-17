@@ -49,14 +49,6 @@ public class FileHandling {
 
     }
 
-//    /**
-//     * Reads the datafile stored locally if it exists.
-//     *
-//     * @param path The path to the datafile.
-//     * @throws FileNotFoundException Throws an exception if the datafile does not exist in the <code>path</code>
-//     * specified.
-//     */
-
     /**
      * Reads the contents from the tasklist.txt file if it exsits
      * Stores them into the tasks arraylist

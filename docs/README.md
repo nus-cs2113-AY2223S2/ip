@@ -16,8 +16,8 @@ Is a CLI Task Managing Application
 4. Open a command terminal, ```cd``` into the folder you put the `jar` file in, and use the ```java -jar INDIVIDUAL.PROJECT.jar``` command to run the application.
 
 
-## Main Features
-### Add Task
+# Main Features:
+## 1. Add Task
 - There 3 types of Tasks you can add
 #### Todo
 - Simply a task with its description
@@ -41,7 +41,7 @@ Is a CLI Task Managing Application
 >
 > `event CS2113 FINALS /Monday 3pm /Monday 5pm`
 
-### Delete Task
+## 2. Delete Task
 - Simply delete any task you want out of your task list
 >`delete [task no.]`
 > 
@@ -54,6 +54,17 @@ Is a CLI Task Managing Application
 > `Noted. I've removed this task:`
 > 
 > `[D][ ] CS2113 quiz  (by: Monday 3pm)`
+
+
+## 3. Exit Program
+- Exit from the program by saying bye to Duke
+>`bye`
+>
+>
+> Results in:
+>
+> `Bye. Hope to see you again!`
+
 
 ## Additional Features
 - Mark task
