@@ -57,10 +57,10 @@ public class TaskList {
     }
 
     /**
-     * Find tasks which have description containing the keywords
+     * Returns a Task object according to the index
      *
-     * @param taskIndex Search term to find within tasks' description
-     * @return a String representing the list of items that contain the search term
+     * @param taskIndex the index number of the task
+     * @return a Task
      */
     public Task findTask(int taskIndex) {
         return tasks.get(taskIndex - 1);
@@ -106,7 +106,7 @@ public class TaskList {
      *
      * @param description task description
      * @param from        the event starting time
-     * @param to          the event end tim
+     * @param to          the event end time
      * @param isCompleted status of the task
      */
     public void addEvent(String description, String from, String to, boolean isCompleted) {
@@ -138,7 +138,7 @@ public class TaskList {
     /**
      * Unmark the task according to task index
      *
-     * @param taskIndex
+     * @param taskIndex the task index number
      */
     public void markAsUndone(int taskIndex) {
         tasks.get(taskIndex - 1).isCompleted = false;
