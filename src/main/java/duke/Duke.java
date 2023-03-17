@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.time.format.DateTimeParseException;
 
 public class Duke {
-    public void main(String[] args) {
+    public static void main(String[] args) {
         // tasks for storing tasks + taskCounter to track next empty cell
         ArrayList<Task> tasks = new ArrayList<>();
 
