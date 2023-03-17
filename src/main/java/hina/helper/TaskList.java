@@ -125,20 +125,33 @@ public class TaskList {
         }
     }
     public static void deleteTask(int taskIndex) {
-        System.out.println("Got it! This task will be removed:");
-        System.out.println(taskList.get(taskIndex - 1).toString());
-        taskList.remove(taskIndex - 1);
-        getTaskCount();
+        try {
+            Task toDelete = taskList.get(taskIndex - 1);
+            System.out.println("Got it! This task will be removed:");
+            System.out.println(toDelete);
+            taskList.remove(taskIndex - 1);
+            getTaskCount();
+        } catch (IndexOutOfBoundsException e) {
+            Ui.invalidNumberMessage();
+        }
     }
     public static void markTask(int taskIndex) {
-        taskList.get(taskIndex - 1).setDone(true);
-        System.out.println("Roger that! This task is marked as done: ");
-        System.out.println(taskList.get(taskIndex - 1).toString());
+        try {
+            taskList.get(taskIndex - 1).setDone(true);
+            System.out.println("Roger that! This task is marked as done: ");
+            System.out.println(taskList.get(taskIndex - 1).toString());
+        } catch (IndexOutOfBoundsException e) {
+            Ui.invalidNumberMessage();
+        }
     }
     public static void unmarkTask(int taskIndex) {
-        taskList.get(taskIndex - 1).setDone(false);
-        System.out.println("Roger that! This task is marked as not done: ");
-        System.out.println(taskList.get(taskIndex - 1).toString());
+        try {
+            taskList.get(taskIndex - 1).setDone(false);
+            System.out.println("Roger that! This task is marked as not done: ");
+            System.out.println(taskList.get(taskIndex - 1).toString());
+        } catch (IndexOutOfBoundsException e) {
+            Ui.invalidNumberMessage();
+        }
     }
 
     /**

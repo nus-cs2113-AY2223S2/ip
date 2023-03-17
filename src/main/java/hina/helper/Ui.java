@@ -56,4 +56,7 @@ public class Ui {
     public static void fileCreateError() {
         System.out.println("T.T Ahh! Something went wrong, could not create file!");
     }
+    public static void invalidNumberMessage() {
+        System.out.println("That's not a valid number!");
+    }
 }

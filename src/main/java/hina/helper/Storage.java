@@ -42,14 +42,14 @@ public class Storage {
             switch (taskDetails[0]) {
             case "T":
                 Task savedTask = new Task(taskDetails[2]);
-                savedTask.setDone(!taskDetails[1].equals("0"));
+                savedTask.setDone(!taskDetails[1].contains("0"));
                 savedList.add(savedTask);
                 break;
             case "D":
                 try {
                     Deadline savedDeadline = new Deadline(taskDetails[2],
                             LocalDateTime.parse(taskDetails[3], TaskList.formatter));
-                    savedDeadline.setDone(!taskDetails[1].equals("0"));
+                    savedDeadline.setDone(!taskDetails[1].contains("0"));
                     savedList.add(savedDeadline);
                 } catch (DateTimeParseException e) {
                     System.out.println(e.getMessage());
@@ -58,7 +58,7 @@ public class Storage {
             case "E":
                 Event savedEvent = new Event(taskDetails[2], LocalDateTime.parse(taskDetails[3], TaskList.formatter),
                         LocalDateTime.parse(taskDetails[4], TaskList.formatter));
-                savedEvent.setDone(!taskDetails[1].equals("0"));
+                savedEvent.setDone(!taskDetails[1].contains("0"));
                 savedList.add(savedEvent);
                 break;
             }

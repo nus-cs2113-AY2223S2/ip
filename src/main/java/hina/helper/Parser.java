@@ -26,11 +26,25 @@ public class Parser {
         } else if (line.equalsIgnoreCase("list")) {
             TaskList.listTasks();
         } else if (line.split(" ")[0].equalsIgnoreCase("mark")) {
-            int taskIndex = Integer.parseInt(line.split(" ")[1]);
-            TaskList.markTask(taskIndex);
+            try {
+                int taskIndex = Integer.parseInt(line.split(" ")[1]);
+                TaskList.markTask(taskIndex);
+            } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+                Ui.invalidNumberMessage();
+            }
+            try {
+                Storage.writeToFile();
+            } catch (IOException ioexception) {
+                Ui.couldNotSaveMessage();
+            }
         } else if (line.split(" ")[0].equalsIgnoreCase("unmark")) {
             int taskIndex = Integer.parseInt(line.split(" ")[1]);
             TaskList.unmarkTask(taskIndex);
+            try {
+                Storage.writeToFile();
+            } catch (IOException ioexception) {
+                Ui.couldNotSaveMessage();
+            }
         } else if (line.split(" ")[0].equalsIgnoreCase("todo")) {
             TaskList.addTask(line.substring(5));
             try {
@@ -53,8 +67,12 @@ public class Parser {
                 Ui.couldNotSaveMessage();
             }
         } else if (line.split(" ")[0].equalsIgnoreCase("delete")) {
-            int taskIndex = Integer.parseInt(line.split(" ")[1]);
-            TaskList.deleteTask(taskIndex);
+            try {
+                int taskIndex = Integer.parseInt(line.split(" ")[1]);
+                TaskList.deleteTask(taskIndex);
+            } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+                Ui.invalidNumberMessage();
+            }
             try {
                 Storage.writeToFile();
             } catch (IOException ioexception) {
