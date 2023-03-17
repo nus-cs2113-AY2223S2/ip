@@ -62,6 +62,9 @@ public class CommandHandler {
         if (Duke.taskList.getStoredTasks().get(taskIndex) instanceof Event) {
             System.out.println("/start, end: " + Duke.taskList.getStoredTasks().get(taskIndex).getInfo());
         }
+        else {
+            System.out.println();
+        }
     }
     /**
      * un-marks task in taskList.

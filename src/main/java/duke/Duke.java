@@ -83,7 +83,7 @@ public class Duke {
             try {
                 throw new IllegalDukeArgumentException();
             } catch (IllegalDukeArgumentException e) {
-                System.out.println("Oh no!");;
+                System.out.println("Please enter a valid command.");
             }
         }
     }
