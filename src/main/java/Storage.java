@@ -113,12 +113,16 @@ public class Storage {
         String prevContent = "";
         BufferedReader reader = new BufferedReader(new FileReader(dukeInputs));
         prevContent = writingDuplicateArrayList(prevContent, reader);
+        try {
+            String newContent = rewriteContent(storedValues, numToMark, " | 0 | ", " | 1 | ", prevContent);
+            FileWriter writer = new FileWriter(dukeInputs);
+            writer.write(newContent);
+            reader.close();
+            writer.close();
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("Input will not be updated.");
+        }
 
-        String newContent = rewriteContent(storedValues, numToMark, " | 0 | ", " | 1 | ", prevContent);
-        FileWriter writer = new FileWriter(dukeInputs);
-        writer.write(newContent);
-        reader.close();
-        writer.close();
     }
 
     /***
@@ -134,12 +138,16 @@ public class Storage {
         String prevContent = "";
         BufferedReader reader = new BufferedReader(new FileReader(dukeInputs));
         prevContent = writingDuplicateArrayList(prevContent, reader);
+        try {
+            String newContent = rewriteContent(storedValues, numToMark, " | 1 | ", " | 0 | ", prevContent);
+            FileWriter writer = new FileWriter(dukeInputs);
+            writer.write(newContent);
+            reader.close();
+            writer.close();
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("Input will not be updated in file.");
+        }
 
-        String newContent = rewriteContent(storedValues, numToMark, " | 1 | ", " | 0 | ", prevContent);
-        FileWriter writer = new FileWriter(dukeInputs);
-        writer.write(newContent);
-        reader.close();
-        writer.close();
     }
 
     /***
@@ -169,7 +177,7 @@ public class Storage {
      * @param prevContent The duplicated list.
      * @return Returns the new content to be written.
      */
-    private static String rewriteContent(ArrayList<Task> storedValues, int numToMark, String before, String after, String prevContent) {
+    private static String rewriteContent(ArrayList<Task> storedValues, int numToMark, String before, String after, String prevContent) throws IndexOutOfBoundsException{
         char type = storedValues.get(numToMark - 1).getClass().toString().substring(6).charAt(0);
         String toReplace = (type + before + storedValues.get(numToMark - 1).description);
         String toReplaceWith = (type + after + storedValues.get(numToMark - 1).description);

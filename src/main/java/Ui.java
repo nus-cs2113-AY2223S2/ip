@@ -140,11 +140,16 @@ public class Ui {
      * @param numToMark The task that the user is looking to mark.
      */
     static void informUserTaskMarked(ArrayList<Task> storedValues, int numToMark) {
-        storedValues.get(numToMark -1).markAsDone();
-        TaskList.formattingLine();
-        System.out.println("Nice! I've marked this task as done: \n"
-                + storedValues.get(numToMark -1).toString() + "\n");
-        TaskList.formattingLine();
+        try {
+            storedValues.get(numToMark -1).markAsDone();
+            TaskList.formattingLine();
+            System.out.println("Nice! I've marked this task as done: \n"
+                    + storedValues.get(numToMark -1).toString() + "\n");
+            TaskList.formattingLine();
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("Input index is out of bounds!");
+        }
+
     }
 
     /***
@@ -154,11 +159,15 @@ public class Ui {
      * @param numToMark The task that the user is looking to unmark.
      */
     static void informUserTaskUnmarked(ArrayList<Task> storedValues, int numToMark) {
-        storedValues.get(numToMark - 1).unmarkAsDone();
-        TaskList.formattingLine();
-        System.out.println("OK, I've marked this task as not done yet: \n" +
-                storedValues.get(numToMark - 1).toString() + "\n");
-        TaskList.formattingLine();
+        try {
+            storedValues.get(numToMark - 1).unmarkAsDone();
+            TaskList.formattingLine();
+            System.out.println("OK, I've marked this task as not done yet: \n" +
+                    storedValues.get(numToMark - 1).toString() + "\n");
+            TaskList.formattingLine();
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("Input index is out of bounds!");
+        }
     }
     /***
      * Given the word to search for, this function checks if there are any tasks within the tasklist that
