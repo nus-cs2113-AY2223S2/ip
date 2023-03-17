@@ -37,7 +37,7 @@ public class TaskList {
         if (task == " ") {
             throw new DukeException();
         }
-        String taskAsArray[] = task.split("/");
+        String[] taskAsArray = task.split("/");
         Event obj = new Event(taskAsArray[0], taskAsArray[1], taskAsArray[2]);
         tasks.add(obj); //.toString is automatically called;
         System.out.println("Got it. I've added this task:");
@@ -57,7 +57,7 @@ public class TaskList {
         if (task == " ") {
             throw new DukeException();
         }
-        String taskAsArray[] = task.split("/");
+        String[] taskAsArray = task.split("/");
         Deadline obj = new Deadline(taskAsArray[0], taskAsArray[1]);
         tasks.add(obj);
         System.out.println(obj); //.toString is automatically called;
