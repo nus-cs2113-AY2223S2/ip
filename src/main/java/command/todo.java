@@ -9,6 +9,11 @@ import validation.TaskValidation;
 import java.util.ArrayList;
 
 public class todo {
+    /**
+     * Creates new to do based on user's input
+     * @param userInput To do details
+     * @param tasks Array list of tasks
+     */
     public static void executeTodo(String userInput, ArrayList<Task> tasks) {
         // Removes command word to get the description
         String description = Parser.removeCommandWord(userInput);

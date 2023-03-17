@@ -42,7 +42,9 @@ public class Ui {
 
     /**
      * Prints an acknowledgement, based on the type of task.
-     * Also prints the description of the task and the current number of tasks
+     * @param taskType Type of task, T/D/E
+     * @param description Description of the task
+     * @param size Current size of task list
      */
     public static void printAcknowledgement(String taskType, String description, String size) {
         printHorizontalRule();
@@ -60,18 +62,31 @@ public class Ui {
         printHorizontalRule();
     }
 
+    /**
+     * Prints an acknowledgement on marking or unmarking tasks
+     * @param taskName Name of task modified
+     * @param status Either complete or incomplete
+     */
     public static void markTask(String taskName, String status) {
         printHorizontalRule();
         System.out.println("Marking task \"" + taskName + "\" as " + status + "!");
         printHorizontalRule();
     }
 
+    /**
+     * Prints an acknowledgement of deleted task
+     * @param taskName Name of task deleted
+     */
     public static void deleteTask(String taskName) {
         printHorizontalRule();
         System.out.println("Deleting task: \"" + taskName + "\"");
         printHorizontalRule();
     }
 
+    /**
+     * Prints list of tasks
+     * @param tasks Array list of all tasks
+     */
     public static void printTasks(ArrayList<Task> tasks) {
         printHorizontalRule();
         for (int i = 0; i < tasks.size(); i++) {
@@ -82,15 +97,28 @@ public class Ui {
         printHorizontalRule();
     }
 
+    /**
+     * Prints start of find function's results
+     * @param description The task the user is searching for
+     */
     public static void findHeader(String description) {
         printHorizontalRule();
         System.out.println("Here are all tasks matching " + description);
         System.out.println("The index given here is not reflective of the task's actual index.\nHere are all tasks which contain " + description + " in your list:");
     }
 
+    /**
+     * Prints horizontal rule
+     */
     public static void findEnd() {
         printHorizontalRule();
     }
+
+    /**
+     * Prints matching task
+     * @param counter Current number of matching tasks
+     * @param task Name of task
+     */
 
     public static void findMatching(int counter, Task task) {
         System.out.println((counter) + ". " + task);
@@ -98,37 +126,57 @@ public class Ui {
 
     /*** ERROR MESSAGES ***/
     // COMMON ERRORS
+
+    /**
+     * Prints error message on invalid command
+     * @param userInput User's input
+     */
     public static void invalidCommand(String userInput) {
         printHorizontalRule();
         System.out.println(userInput + " is an invalid command. Please try again!");
         printHorizontalRule();
     }
 
+    /**
+     * Prints error message that input cannot be null
+     */
     public static void cannotBeNull() {
         printHorizontalRule();
         System.out.println("Input cannot be empty!");
         printHorizontalRule();
     }
 
+    /**
+     * Prints error if date and time given is invalid
+     */
     public static void dateTimeError() {
         printHorizontalRule();
         System.out.println("Wrong date and time format used! The required format is YYYY-MM-DD HH:MM");
         printHorizontalRule();
     }
 
+    /**
+     * Prints error if index is invalid
+     */
     public static void invalidIndex() {
         printHorizontalRule();
         System.out.println("Please provide a valid index!");
         printHorizontalRule();
     }
 
+    /**
+     * Prints error is non-integers are given
+     */
     public static void requiresNumber() {
         printHorizontalRule();
         System.out.println("Please give an integer!");
         printHorizontalRule();
     }
 
-
+    /**
+     * Prints error if given wrong to do format
+     * @param userInput User's input
+     */
     // TO DO ERROR
     public static void todoError(String userInput) {
         printHorizontalRule();
@@ -136,6 +184,10 @@ public class Ui {
         printHorizontalRule();
     }
 
+    /**
+     * Prints error if invalid deadline format
+     * @param userInput User's input
+     */
     // DEADLINE ERROR
     public static void deadlineError(String userInput) {
         printHorizontalRule();
@@ -144,6 +196,10 @@ public class Ui {
         printHorizontalRule();
     }
 
+    /**
+     * Prints error if invalid event format
+     * @param userInput User's input
+     */
     // EVENT ERROR
     public static void eventError(String userInput) {
         printHorizontalRule();
@@ -152,6 +208,10 @@ public class Ui {
         printHorizontalRule();
     }
 
+    /**
+     * Prints error if invalid find format
+     * @param userInput User's input
+     */
     // FIND ERROR
     public static void findError(String userInput) {
         printHorizontalRule();

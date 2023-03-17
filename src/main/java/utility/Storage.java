@@ -13,6 +13,11 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Storage {
+    /**
+     * Processes the file which stores previously input tasks
+     * @param tasks Array to store tasks
+     * @throws IndexOutOfBoundsException
+     */
     public static void startFileProcessing(ArrayList<Task> tasks) throws IndexOutOfBoundsException {
         try {
             File saveFile = new File("duke.txt");
@@ -77,9 +82,8 @@ public class Storage {
     }
 
     /**
-     * Saves tasks upon being given the command 'bye'
-     * For each task in the arraylist, it saves the task in the format of
-     * type / completion status / task description
+     * Saves tasks upon being given command
+     * @param tasks Array list of tasks to process
      */
     public static void endFileProcessing(ArrayList<Task> tasks) {
         try {

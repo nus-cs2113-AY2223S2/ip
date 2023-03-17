@@ -2,39 +2,54 @@ package utility;
 
 public class Parser {
     /**
-     * Removes the command word for creating tasks, ie. to do, deadline or event
+     * Extracts the command word given by the user
+     * @param userInput String given by user
+     * @return Command word
+     */
+    public static String getCommand(String userInput) {
+        return userInput.split(" ", 2)[0].toLowerCase();
+    }
+
+    /**
+     * Removes the command word for further extraction of key words.
+     * @param userInput String given by user
+     * @return User's input without the command word
      */
     public static String removeCommandWord(String userInput) {
         return userInput.split(" ", 2)[1];
     }
 
     /**
-     * Extracts the description given by the user for deadline tasks
+     * Obtains description for deadline
+     * @param input User's input without the command word
+     * @return Description for deadline task
      */
     public static String getDescriptionForDeadline(String input) {
         return input.split(" /by ", 2)[0];
     }
 
-    public static String getCommand(String userInput) {
-        return userInput.split(" ", 2)[0].toLowerCase();
-    }
-
     /**
-     * Extracts the deadline for deadline tasks
+     * Obtains the time for deadline
+     * @param input Remaining input to be extracted
+     * @return Time for deadline
      */
     public static String getDeadline(String input) {
         return input.split(" /by ", 2)[1];
     }
 
     /**
-     * Extracts the description given by the user for event tasks
+     * Obtains the description given by the user for event tasks
+     * @param input User's input without the command word
+     * @return Description for event
      */
     public static String getDescriptionForEvent(String input) {
         return input.split(" /from ", 2)[0];
     }
 
     /**
-     * Extracts the start and end timing for event tasks
+     * Obtains the start and end timing for event tasks
+     * @param input Remaining input to be extracted
+     * @return Array of time for event
      */
     public static String[] getTimings(String input) {
 

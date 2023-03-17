@@ -8,6 +8,11 @@ import tasks.Task;
 import java.util.ArrayList;
 
 public class find {
+    /**
+     * Finds task based on user's input
+     * @param userInput Description of task to be searched for
+     * @param tasks Array list of tasks
+     */
     public static void executeFind(String userInput, ArrayList<Task> tasks) {
         // Gets the description
         String description = Parser.removeCommandWord(userInput);

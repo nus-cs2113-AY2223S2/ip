@@ -10,6 +10,11 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class event {
+    /**
+     * Creates event based on user's input
+     * @param userInput Event details
+     * @param tasks Array list of tasks
+     */
     public static void executeEvent(String userInput, ArrayList<Task> tasks) {
         // Removes command word
         String withoutCommand = Parser.removeCommandWord(userInput);
