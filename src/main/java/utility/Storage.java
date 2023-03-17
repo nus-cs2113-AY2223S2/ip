@@ -83,7 +83,6 @@ public class Storage {
      */
     public static void endFileProcessing(ArrayList<Task> tasks) {
         try {
-            System.out.println("Saving current tasks...");
             FileWriter saveFile = new FileWriter("duke.txt");
 
             for (int i = 0; i < tasks.size(); ++i) {

@@ -35,6 +35,7 @@ public class Ui {
      */
     public static void shutDown() {
         printHorizontalRule();
+        System.out.println("Saving current tasks...");
         System.out.println("Shutting Down! Hope to see you again soon!");
         printHorizontalRule();
     }
