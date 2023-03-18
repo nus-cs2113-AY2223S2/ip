@@ -53,7 +53,10 @@ public class Duke {
                     break;
                 case "delete":
                     TaskList.deleteTask(lists, input, index);
-                    index--;
+                    int deleteIndex=Integer.parseInt(input[1]);
+                    if(deleteIndex>=1 && deleteIndex<=index){
+                        index--;
+                    }
                     Storage.writeToFile(lists, index);
                     break;
                 case "find":
