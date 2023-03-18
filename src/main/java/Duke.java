@@ -1,6 +1,9 @@
 import duke.Deadline;
 import duke.Event;
 import duke.Todo;
+import duke.Ui;
+import duke.Storage;
+
 import java.util.ArrayList;
 import java.io.*;
 import java.util.Scanner;
@@ -10,12 +13,10 @@ public class Duke {
 
     public static void main(String[] args) throws FileNotFoundException {
 
-        printGreetingMessage();
+        Ui ui = new Ui();
+        Storage storage = new Storage();
 
-        String workingDirectory = System.getProperty("user.dir");
-        String filename = "list.txt";
-        String absoluteFilePath = "";
-        absoluteFilePath = workingDirectory + File.separator + filename;
+        ui.showGreetingMessage();
 
         //Read in input from user
         String inputString;
@@ -29,7 +30,8 @@ public class Duke {
         boolean exit = false;
 
         //Initialize list with saved data
-        counter = initializeList(tasks, counter, absoluteFilePath);
+        String absoluteFilePath = storage.findFilePath();
+        counter = storage.initializeList(tasks, counter, absoluteFilePath);
 
         while (!exit) {
             String taskType;
@@ -39,7 +41,7 @@ public class Duke {
 
             //Parsing user input
             int descriptionPosition = inputString.indexOf(" ");
-            if(descriptionPosition == -1) {
+            if (descriptionPosition == -1) {
                 taskType = inputString;
             } else {
                 int endPosition = inputString.length();
@@ -54,7 +56,7 @@ public class Duke {
                 break;
 
             case "list":
-                System.out.println("    _________________________________________");
+                ui.showLine();
                 printListContents(tasks, tasks.size());
                 break;
 
@@ -103,9 +105,9 @@ public class Duke {
 
             case "delete":
                 taskNumber = getTaskNumber(task) - 1;
-                System.out.println("    _________________________________________");
+                ui.showLine();
                 tasks.get(taskNumber).printInList();
-                System.out.println("    _________________________________________");
+                ui.showLine();
                 System.out.println("    ");
                 tasks.remove(tasks.get(taskNumber));
                 counter--;
@@ -128,49 +130,24 @@ public class Duke {
         }
 
         //When user types "bye"
-        exitMessage();
-
-        //Save list data into text file on disk
-        PrintWriter fw = new PrintWriter(absoluteFilePath);
-        for (int i = 0; i < counter; i++) {
-            String classType = String.valueOf(tasks.get(i).getClass());
-            writeToFile(tasks, fw, i, classType);
-        }
-        fw.close();
-    }
-
-    /**
-     * Prints exit message when application is closed.
-     */
-    private static void exitMessage() {
-        System.out.println("    Bye. Hope to see you again soon!");
-        System.out.println("    _________________________________________");
-        System.out.println("     ");
+        ui.showExitMessage();
+        storage.writeToFile(tasks, absoluteFilePath, counter);
     }
 
     /**
      * Marks a task as done.
      *
-     * @param tasks list of tasks already added.
-     * @param fw file to be modified.
-     * @param i increment for loop.
+     * @param tasks     list of tasks already added.
+     * @param fw        file to be modified.
+     * @param i         increment for loop.
      * @param classType type of task.
      */
-    private static void writeToFile(ArrayList<Todo> tasks, PrintWriter fw, int i, String classType) {
-        if(classType.equalsIgnoreCase("Class Duke.Todo")) {
-            fw.println("todo " + tasks.get(i).getDescription());
-        } else if (classType.equalsIgnoreCase("Class Duke.Event")) {
-            fw.println("event " + tasks.get(i).getDescription() + "/" + tasks.get(i).getBy() + "|"
-                    + tasks.get(i).getEnd());
-        } else if (classType.equalsIgnoreCase("Class Duke.Deadline")) {
-            fw.println("deadline " + tasks.get(i).getDescription() + "/" + tasks.get(i).getBy());
-        }
-    }
+
 
     /**
      * Marks a task as done.
      *
-     * @param tasks list of tasks already added.
+     * @param tasks      list of tasks already added.
      * @param taskNumber number assigned to task in the list.
      */
     private static void markAsDone(ArrayList<Todo> tasks, int taskNumber) {
@@ -179,100 +156,15 @@ public class Duke {
 
 
     /**
-     * Prints greeting message when application is launched.
-     */
-    private static void printGreetingMessage() {
-        String logo = " ____        _        \n"
-                + "|  _ \\ _   _| | _____ \n"
-                + "| | | | | | | |/ / _ \\\n"
-                + "| |_| | |_| |   <  __/\n"
-                + "|____/ \\__,_|_|\\_\\___|\n";
-
-        System.out.println("    Hello from\n" + logo);
-        System.out.println("    _________________________________________");
-
-        System.out.println("    Hello! I'm Duke");
-        System.out.println("    What can I do for you?");
-        System.out.println("    _________________________________________");
-        System.out.println("     ");
-    }
-
-    /**
      * Returns counter after initializing list with items that were saved to disk previously.
      * If no such saved file exists, a new file will be created on disk to save list items
      * upon exiting the program.
      *
-     * @param tasks list of tasks already added.
+     * @param tasks   list of tasks already added.
      * @param counter number of tasks in the list.
      * @return counter number of tasks in the list.
      * @throws FileNotFoundException If .txt file is not found at specified file path.
      */
-    private static int initializeList(ArrayList<Todo> tasks, int counter, String absoluteFilePath) throws FileNotFoundException {
-        String inputString;
-        String task = null;
-        String taskType;
-
-        try {
-
-            File myFile = new File(absoluteFilePath);
-            if (myFile.createNewFile()) {
-                System.out.println("New List backup is created! List items will be saved to " +
-                        "disk after you exit the program!");
-            } else {
-                System.out.println("List backup already exists and has been initialized.");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
-        Scanner scanner = new Scanner(new File(absoluteFilePath));
-        Scanner in = new Scanner(System.in);
-
-        while (scanner.hasNextLine()) {
-            inputString = scanner.nextLine();
-            int descriptionPosition = inputString.indexOf(" ");
-            if(descriptionPosition == -1) {
-                taskType = inputString;
-            } else {
-                int endPosition = inputString.length();
-                taskType = inputString.substring(0, descriptionPosition);
-                task = inputString.substring(descriptionPosition + 1, endPosition);
-            }
-
-            switch (taskType) {
-            case "todo":
-                tasks.add(new Todo(task));
-                tasks.get(counter).print();
-                counter++;
-                break;
-
-            case "deadline":
-                int deadlinePosition = task.indexOf("/");
-                int endOfLine = task.length();
-                String taskName = task.substring(0, deadlinePosition);
-                String deadline = task.substring(deadlinePosition + 1, endOfLine);
-                tasks.add(new Deadline(taskName, deadline));
-                tasks.get(counter).print();
-                counter++;
-                break;
-
-            case "event":
-                int deadlineStartPosition = task.indexOf("/");
-                int deadlineEndPosition = task.indexOf("|");
-                endOfLine = task.length();
-                taskName = task.substring(0, deadlineStartPosition);
-                String deadlineStart = task.substring(deadlineStartPosition + 1, deadlineEndPosition);
-                String deadlineEnd = task.substring(deadlineEndPosition + 1, endOfLine);
-                tasks.add(new Event(taskName, deadlineStart, deadlineEnd));
-                tasks.get(counter).print();
-                counter++;
-                break;
-            }
-        }
-        scanner.close();
-        return counter;
-    }
 
     /**
      * Returns user input as a string.
@@ -290,7 +182,7 @@ public class Duke {
     /**
      * Prints acknowledgement message when task is marked as not done.
      *
-     * @param tasks list of tasks already added.
+     * @param tasks      list of tasks already added.
      * @param taskNumber number assigned to task in the list.
      */
     private static void printUnmarkedAcknowledgement(ArrayList<Todo> tasks, int taskNumber) {
@@ -302,7 +194,7 @@ public class Duke {
     /**
      * Prints acknowledgement message when task is marked as done.
      *
-     * @param tasks list of tasks already added.
+     * @param tasks      list of tasks already added.
      * @param taskNumber number assigned to task in the list.
      */
     private static void printMarkedAcknowledgement(ArrayList<Todo> tasks, int taskNumber) {
@@ -323,7 +215,7 @@ public class Duke {
     /**
      * Prints list contents.
      *
-     * @param tasks list of tasks already added.
+     * @param tasks   list of tasks already added.
      * @param counter number of tasks in the list.
      */
     private static void printListContents(ArrayList<Todo> tasks, int counter) {
