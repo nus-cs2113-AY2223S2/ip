@@ -5,6 +5,9 @@
 ### Add tasks
 
 You can add 3 types of tasks, todo, deadline and event, into your task list.
+1. Todo - Basic task with
+2. Deadline - Tasks that need to be done by certain date
+3. Event - Tasks that have certain period of time
 
 ### Mark as done
 
@@ -196,7 +199,27 @@ Expected outcome:
 4. [D][ ] read books Feb 28th
 5. [E][ ] read books from: Feb 2nd to: Feb 28th
 ```
----------------
+---
+
+### `help`
+
+List all the command format
+
+Example:
+
+```
+    todo {description} --add todo
+    deadline {description} /by {deadline} --add deadline
+    event {description} /from {startTime} /to {endTime}  --add event
+    mark {task index number} --mark the task as done
+    unmark {task index number} --mark the task as undone
+    delete {task index number} --delete the task
+    find {keywords}  --find the task according to keywords
+    list --show the current task list
+    exit --exit the application
+```
+
+---
 
 ### `exit`
 
@@ -206,3 +229,4 @@ Example:
 ```
 Bye. Hope to see you again soon! I will be missing you:("
 ```
+----
