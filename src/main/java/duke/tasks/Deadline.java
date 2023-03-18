@@ -1,41 +1,35 @@
 /**
- * Contains methods to build up a complete Task
- *
- * @param description A string that details the description of the task
- * @param isDone boolean variable that identifies whether the task is completed
- * @param deadline A string that identifies the Task as a Deadline task
- * @param date A string that represents the deadline date
+ * Deadline class that contains type, status, dueDate, and thingToDo that describe the task
  */
 
-package duke.tasks;
+package duke.Tasks;
 
-import duke.Task;
+import duke.Tasks.Task;
 
 public class Deadline extends Task {
 
-    protected String deadline;
+    protected String dueDate;
+    protected String thingToDo;
 
-    protected String date;
-    public Deadline(String description, boolean isDone, String deadline, String date) {
-        super(description, isDone);
-        this.deadline = deadline;
-        this.date = date;
+    public Deadline(String type, String status, String description) {
+        super(type, status, description);
+        int index = description.indexOf("/");
+        dueDate = description.substring(index + 1);
+        thingToDo = description.substring(0, index - 1);
     }
 
-    public String getDeadline() {
-        return deadline;
+    public String getDueDate() {
+        return dueDate;
     }
 
-    public void setDeadline(String deadline) {
-        this.deadline = deadline;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
+    /**
+     * Returns a string displaying the Deadline task details
+     *
+     * @return printFormat in the form of [D] [ ] task (by dueDate)
+     */
+    @Override
+    public String getPrintFormat() {
+        return type + " " + status + " " + thingToDo + " (" + dueDate + ")";
     }
 
 

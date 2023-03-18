@@ -1,108 +1,94 @@
 /**
- * Reads and writes list of Tasks to and from a text file called Duke.
- * If Duke text file does not exist, storageList remains an empty ArrayList
- *
- * @param fileList an ArrayList used to store lines of strings read from Duke
- * @param storageList an ArrayList that is filled up with Tasks
+ * Class that handles the reading and writing of duke.txt file
+ * The file contains the TaskList
  */
-
 package duke;
-
-import duke.tasks.Deadline;
-import duke.tasks.Event;
-import duke.tasks.ToDo;
-
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.ArrayList;
-import java.util.Scanner;
+import duke.Tasks.*;
 
 public class Storage {
 
-    public static void store(ArrayList<String> fileList, TaskList storageList, int taskIndex) {
+    /**
+     * Creates duke.txt file if it does not exist
+     * Reads from duke.txt and stores its lines in a ArrayList
+     * @return lines which is the ArrayList
+     */
+    protected static ArrayList<String> readFile() {
+        File file = new File("duke.txt");
+        ArrayList<String> lines = new ArrayList<>();
         try {
-            File file = new File("duke.txt");
-            if (file.exists()) {
-                Scanner fileScanner = new Scanner(new File("duke.txt"));
-                while (fileScanner.hasNextLine()) {
-                    fileList.add(fileScanner.nextLine());
-                }
-                for (int i = 0; i < fileList.size(); i++) {
-                    taskIndex++;
-                    String listedTask = fileList.get(i).substring(3, 6); //listedTask == [T] or [D] or [E]
-                    String listDone = fileList.get(i).substring(7, 10); //listDone == [ ] or [X]
-                    switch (listedTask) {
-                    case "[T]":
-                        String listedDescription = fileList.get(i).substring(11);
-                        Task listTask;
-                        if (listDone.equals("[ ]")) {
-                            listTask = new ToDo(listedDescription, false, "[T]");
-                        } else {
-                            listTask = new ToDo(listedDescription, true, "[T]");
-                        }
-                        storageList.addTask(listTask);
-                        break;
-                    case "[D]":
-                        int index1 = fileList.get(i).indexOf("(");
-                        String listedDescription1 = fileList.get(i).substring(11, index1 - 1);
-                        String listedDate = fileList.get(i).substring(index1 + 1, fileList.get(i).length() - 1);
-                        Task listTask1;
-                        if (listDone.equals("[ ]")) {
-                            listTask1 = new Deadline(listedDescription1, false, "[D]", listedDate);
-                        } else {
-                            listTask1 = new Deadline(listedDescription1, true, "[D]", listedDate);
-                        }
-                        storageList.addTask(listTask1);
-                        break;
-                    case "[E]":
-                        int index2 = fileList.get(i).indexOf("(");
-                        String listedDescription2 = fileList.get(i).substring(11, index2 - 1);
-                        String listedDate1 = fileList.get(i).substring(index2 + 1, fileList.get(i).length() - 1);
-                        Task listTask2;
-                        if (listDone.equals("[ ]")) {
-                            listTask2 = new Event(listedDescription2, false, "[E]", listedDate1);
-                        } else {
-                            listTask2 = new Event(listedDescription2, true, "[E]", listedDate1);
-                        }
-                        storageList.addTask(listTask2);
-                        break;
-                    }
-                }
+            if (!file.exists()) {
+                file.createNewFile();
             }
-        } catch (
-                IOException e) {
-            throw new RuntimeException(e);
-        }
-
-    }
-
-    public static void fileWrite (TaskList taskList, int taskIndex) {
-        try {
-            File file = new File("duke.txt");
-            if (file.exists()) {
-                file.delete();
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                lines.add(line);
             }
-            file.createNewFile();
-            PrintWriter printWriter = new PrintWriter(file);
-            if (taskIndex == 0) {
-                printWriter.println("Empty, list is.");
-            } else {
-                for (int j = 0; j < taskIndex; ++j) {
-                    if (taskList.getTaskArray().get(j) instanceof ToDo) {
-                        printWriter.println(j + ". " + ((ToDo) taskList.getTaskArray().get(j)).getToDo() + " " + taskList.getTaskArray().get(j).getDoneStatus() + " " + taskList.getTaskArray().get(j).getDescription());
-                    }
-                    if (taskList.getTaskArray().get(j) instanceof Deadline) {
-                        printWriter.println(j + ". " + ((Deadline) taskList.getTaskArray().get(j)).getDeadline() + " " + taskList.getTaskArray().get(j).getDoneStatus() + " " + taskList.getTaskArray().get(j).getDescription() + " (" + ((Deadline) taskList.getTaskArray().get(j)).getDate() + ")");
-                    }
-                    if (taskList.getTaskArray().get(j) instanceof Event) {
-                        printWriter.println(j + ". " + ((Event) taskList.getTaskArray().get(j)).getEvent() + " " + taskList.getTaskArray().get(j).getDoneStatus() + " " + taskList.getTaskArray().get(j).getDescription() + " (" + ((Event) taskList.getTaskArray().get(j)).getStartAndEnd() + ")");
-                    }
-                }
-            }
-            printWriter.close();
+            reader.close();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println("Error reading file");
+        }
+        return lines;
+    }
+
+    /**
+     * Change the String description into the same format that is expected of user input
+     * @param description with file read formatting
+     * @return description with user input formatting
+     */
+    protected static String formatFileRead(String description) {
+        String toDoDeadline = description.substring(0, description.indexOf("(") - 1);
+        String dueDate = description.substring(description.indexOf("(") + 1, description.indexOf(")"));
+        description = toDoDeadline + " /" + dueDate;
+        return description;
+    }
+    public static void fillTaskList(TaskList taskList) {
+        ArrayList<String> linesToStore = readFile();
+        int numberOfLines = linesToStore.size();
+        for (String currentLine : linesToStore) {
+            String typeOfTask = currentLine.substring(3, 6);
+            String statusOfTask = currentLine.substring(7, 10);
+            String description = currentLine.substring(11);
+            switch (typeOfTask) {
+            case "[T]":
+                ToDo todo = new ToDo(typeOfTask, statusOfTask, description);
+                taskList.adder(todo);
+                break;
+            case "[D]":
+                description = formatFileRead(description);
+                Deadline deadline = new Deadline(typeOfTask, statusOfTask, description);
+                taskList.adder(deadline);
+                break;
+            case "[E]":
+                description = formatFileRead(description);
+                Event event = new Event(typeOfTask, statusOfTask, description);
+                taskList.adder(event);
+                break;
+            default:
+                break;
+            }
         }
     }
+
+    /**
+     * Writes the TaskList to the text file
+     * @param taskList which contains ArrayList of Task
+     */
+    public static void writeToFile(TaskList taskList) {
+        File fileToDelete = new File("duke.txt");
+        fileToDelete.delete();
+        File fileToCreate = new File("duke.txt");
+        try {
+            FileWriter writer = new FileWriter(fileToCreate);
+            for (int i = 0; i < taskList.getList().size(); i++) {
+                writer.write((i + 1) + ". " + taskList.getTask(i).getPrintFormat() + "\n");
+            }
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

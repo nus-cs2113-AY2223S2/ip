@@ -1,41 +1,31 @@
 /**
- * Contains methods to build up a complete Task
- *
- * @param description A string that details the description of the task
- * @param isDone boolean variable that identifies whether the task is completed
- * @param event A string that identifies the Task as an event task
- * @param startAndEnd A string that represents the duration of the event
+ * Event class that contains type, status, timeFrame and thingToDo that describe the task
  */
 
-package duke.tasks;
+package duke.Tasks;
 
-import duke.Task;
+import duke.Tasks.Task;
 
 public class Event extends Task {
-
-    protected String event;
-    protected String startAndEnd;
-
-    public Event(String description, boolean isDone, String event, String startAndEnd) {
-        super(description, isDone);
-        this.event = event;
-        this.startAndEnd = startAndEnd;
+    protected String timeFrame;
+    protected String thingToDo;
+    public Event(String type, String status, String description) {
+        super(type, status, description);
+        int index = description.indexOf("/");
+        timeFrame = description.substring(index + 1);
+        thingToDo = description.substring(0, index - 1);
     }
 
-    public String getEvent() {
-        return event;
+    public String getTimeFrame() {
+        return timeFrame;
     }
 
-    public void setEvent(String event) {
-        this.event = event;
+    /**
+     * Returns a string displaying the Event task details
+     * @return printFormat in the form of [E] [ ] task (time frame)
+     */
+    @Override
+    public String getPrintFormat() {
+        return type + " " + status + " " + thingToDo + " (" + timeFrame + ")";
     }
-
-    public String getStartAndEnd() {
-        return startAndEnd;
-    }
-
-    public void setStartAndEnd(String startAndEnd) {
-        this.startAndEnd = startAndEnd;
-    }
-
 }

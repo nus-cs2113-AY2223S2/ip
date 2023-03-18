@@ -1,35 +1,42 @@
-/**
- * Splits user input into two parts, firstWord and remainingWord
- * Returns String array wordList that contains the two parts
- *
- * @param command A string input from the user
- */
-
 package duke;
 
+/**
+ * Takes in userInput and breaks it down
+ * Splits it into two parts, firstWord and remainingWord
+ */
 public class Parser {
 
-    public String command;
+    protected String userInput;
+    protected String firstWord;
+    protected String remainingWords;
 
-    public Parser(String command) {
-        this.command = command;
+    public Parser(String userInput) {
+        this.userInput = userInput;
     }
 
-    public static String[] parser(String command) {
-        String firstWord;
-        String remainingWords;
-        String[] wordList = new String[2];
-        if (command.contains(" ")) {
-            int firstSpaceIndex = command.indexOf(" ");
-            firstWord = command.substring(0, firstSpaceIndex);
-            remainingWords = command.substring(firstSpaceIndex + 1, command.length());
-            wordList[0] = firstWord;
-            wordList[1] = remainingWords;
+    /**
+     * This method is used to call the first word from the input
+     * @param  userInput String obtained from user
+     * @return firstWord
+     */
+    public String getFirstWord(String userInput) {
+        if (userInput.contains(" ")) {
+            return userInput.substring(0,userInput.indexOf(" "));
         } else {
-            firstWord = command;
-            wordList[0] = firstWord;
+            return userInput;
         }
-        return wordList;
     }
 
+    /**
+     * This method is used to call all the words after the first from input
+     * @param userInput String obtained from user
+     * @return remainingWords
+     */
+    public String getRemainingWords(String userInput) {
+        if (userInput.contains(" ")) {
+            return userInput.substring(userInput.indexOf(" ") + 1);
+        } else {
+            return null;
+        }
+    }
 }

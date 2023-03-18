@@ -1,81 +1,54 @@
+/**
+ * UI class that handles output. Prints out text based on method called.
+ */
 package duke;
-
-import duke.tasks.Deadline;
-import duke.tasks.Event;
-import duke.tasks.ToDo;
-
-import java.util.ArrayList;
+import duke.Tasks.*;
 
 public class UI {
-    protected String ui;
 
-    public UI(String ui) {
-        this.ui = ui;
+    public void printWelcome() {
+        System.out.println("Good day, Duke I am. Asistance, you need?");
     }
 
-    public static void taskPrinter(ArrayList<Task> taskArray, int index) {
-        if (taskArray.get(index) instanceof ToDo) {
-            System.out.println(index + ". " + ((ToDo) taskArray.get(index)).getToDo() + " " + taskArray.get(index).getDoneStatus()
-                    + " " + taskArray.get(index).getDescription());
-        }
-        if (taskArray.get(index) instanceof Deadline) {
-            System.out.println(index + ". " + ((Deadline) taskArray.get(index)).getDeadline() + " " + taskArray.get(index).getDoneStatus()
-                    + " " + taskArray.get(index).getDescription() + " (" + ((Deadline) taskArray.get(index)).getDate() + ")");
-        }
-        if (taskArray.get(index) instanceof Event) {
-            System.out.println(index + ". " + ((Event) taskArray.get(index)).getEvent() + " " + taskArray.get(index).getDoneStatus()
-                    + " " + taskArray.get(index).getDescription() + " (" + ((Event) taskArray.get(index)).getStartAndEnd() + ")");
-        }
+    public void printBye() {
+        System.out.println("See you soon, I hope.");
     }
 
-    public static void listPrinter(ArrayList<Task> taskArray, int taskIndex) {
-        for (int j = 0; j < taskIndex; ++j) {
-            taskPrinter(taskArray, j);
-        }
+    public void printInputError() {
+        System.out.println("Input format is wrong, I say.");
+    }
+    public void printAdded(TaskList taskList, int index) {
+        System.out.println(taskList.getTask(index).getPrintFormat() + " - Added I have.");
     }
 
-    public static void printer(String ui, ArrayList<Task> taskArray, int taskIndex) {
-        switch (ui) {
-        case "welcome":
-            System.out.println("Good day. YodaBot, I am.");
-            System.out.println("Assistance, you need?");
-            break;
-        case "bye":
-            System.out.println("See you soon, I hope. Goodbye.");
-            break;
-        case "empty":
-            System.out.println("Empty, list is.");
-            break;
-        case "list":
-            System.out.println("As shown, list is:");
-            listPrinter(taskArray, taskIndex);
-            break;
-        case "marked":
-            System.out.println("Marked it, I have:");
-            taskPrinter(taskArray, taskIndex);
-            break;
-        case "unmarked":
-            System.out.println("Unmarked it, I have:");
-            taskPrinter(taskArray, taskIndex);
-            break;
-        case "notInList":
-            System.out.println("In list, it is not.");
-            break;
-        case "addTask":
-            System.out.println("Added, I have:");
-            taskPrinter(taskArray, taskIndex);
-            break;
-        case "delete":
-            System.out.println("Deleted, I have");
-            break;
-        case "wrongTodo":
-            System.out.println("Error: To do what, I ask?");
-            break;
-        case "generalError":
-            System.out.println("Understand, I do not.");
-            break;
-        default:
-            break;
+    public void printTaskWithIndex(TaskList taskList, int index) {
+        System.out.println((index + 1) + ". " + taskList.getTask(index).getPrintFormat());
+    }
+    public void printNotInList() {
+        System.out.println("It is not in list.");
+    }
+    public void printNoList() {
+        System.out.println("List is empty, I say.");
+    }
+
+    /**
+     * prints all the Tasks in the List according to index.
+     * @param taskList that contains the ArrayList<Task>
+     */
+    public void printEntireList(TaskList taskList) {
+        System.out.println("As shown, list is:");
+        for (int i = 0; i < taskList.getList().size(); i++) {
+            System.out.println((i + 1) + ". " + taskList.getTask(i).getPrintFormat());
         }
     }
+    public void printMarked(TaskList taskList, int index) {
+        System.out.println(taskList.getTask(index).getPrintFormat() + " - Marked it, I have.");
+    }
+    public void printUnmarked(TaskList taskList, int index) {
+        System.out.println(taskList.getTask(index).getPrintFormat() + " - Unmarked it, I have.");
+    }
+    public void printDeleted() {
+        System.out.println("Deleted, I have.");
+    }
+
 }
