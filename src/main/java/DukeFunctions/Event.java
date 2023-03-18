@@ -27,9 +27,10 @@ public class Event extends Todo {
             String deliverable = parts[0].trim();
             from = (parts.length > 1) ? parts[1].trim() : "";
             to = (parts.length > 2) ? parts[2].trim() : "";
+            this.deliverable = deliverable;
+            this.type = "E";
         }
-        this.deliverable = deliverable;
-        this.type = "E";
+
 
     }
 

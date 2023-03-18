@@ -9,7 +9,7 @@ import Exceptions.MissingInputException;
  * Inherits from the {@link Todo} class.
  */
 public class Deadline extends Todo {
-    protected String by;
+    private String by;
     String deliverable;
 
     /**
@@ -26,12 +26,13 @@ public class Deadline extends Todo {
         if (parts.length > 1) {
             String deliverable = parts[0];
             this.by = parts[1].trim();
+            this.deliverable = deliverable;
+            this.type = "D";
         } else {
             throw new DukeError("Missing inputs. Syntax for deadline: deadline <description> /by <time> ");
         }
         //this.by = (parts.length > 1) ? parts[1].trim() : throw new MissingInputException();
-        this.deliverable = deliverable;
-        this.type = "D";
+
 
     }
 
