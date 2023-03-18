@@ -1,9 +1,13 @@
 import duke.exception.CommandNotFoundException;
 import duke.exception.DukeException;
 
+import java.io.IOException;
+
 public class Parser {
     protected TaskList tasklist = new TaskList();
     protected UI ui = new UI();
+
+    protected Data data = new Data("data/duke.txt", "data");
 
     /**
      * Interprets the command that was given by the user input and execute the commands accordingly to its specified usage.
@@ -16,7 +20,7 @@ public class Parser {
         if (userInput.equals("bye")) {
             ui.printByeMessage();
             return false;
-        } else if (userInput.equals("list")) {
+        } else if (userInput.equals("list")) {  
             tasklist.showList();
         } else if (userInput.startsWith("todo")) {
             tasklist.createTodo(userInput);

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class TaskList {
 
-    protected ArrayList<Task> tasks = new ArrayList<>();
+    public static ArrayList<Task> tasks = new ArrayList<>();
 
     protected UI ui = new UI();
 
@@ -75,7 +75,7 @@ public class TaskList {
         } else {
             String description = userInput.substring(4).trim();
             Todo todoTask = new Todo(description);
-            tasks.add(todoTask );
+            tasks.add(todoTask);
             ui.printTaskAdded(todoTask, tasks.size());
         }
     }
@@ -170,5 +170,50 @@ public class TaskList {
             }
             ui.printTaskFound(taskList, taskList.tasks.size());
         }
+    }
+
+    /**
+     * Creates a Todo task based on the file being read in duke.txt
+     *
+     * @param taskStatus Input string of either "0" or "1" to determine if the task is done.
+     * @param taskDescription Input string that describes the task.
+     */
+    public void readTodoTask(String taskStatus, String taskDescription) {
+        Todo existingTask = new Todo(taskDescription);
+        if (taskStatus.equals("1")) {
+            existingTask.markDone();
+        }
+        tasks.add(existingTask);
+    }
+
+    /**
+     * Creates a Deadline task based on the file being read in duke.txt
+     *
+     * @param taskStatus Input string of either "0" or "1" to determine if the task is done.
+     * @param taskDescription Input string that describes the task.
+     * @param byDate Input string that contains the date of the deadline task.
+     */
+    public void readDeadlineTask(String taskStatus, String taskDescription, String byDate) {
+        Deadline existingTask = new Deadline(taskDescription, byDate);
+        if (taskStatus.equals("1")) {
+            existingTask.markDone();
+        }
+        tasks.add(existingTask);
+    }
+
+    /**
+     * Create an Event task based on the file being read in duke.txt
+     *
+     * @param taskStatus Input string of either "0" or "1" to determine if the task is done.
+     * @param taskDescription Input string that describes the task.
+     * @param fromDate Input string that contains the start date of the Event task.
+     * @param toDate Input string that contains the end date of the Event task.
+     */
+    public void readEventTask(String taskStatus, String taskDescription, String fromDate, String toDate) {
+        Event existingTask = new Event(taskDescription, fromDate, toDate);
+        if (taskStatus.equals("1")) {
+            existingTask.markDone();
+        }
+        tasks.add(existingTask);
     }
 }

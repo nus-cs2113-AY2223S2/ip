@@ -15,4 +15,9 @@ public class Event extends Task {
     public String toString() {
         return "[E]" + super.toString() + "(from: " + from + " to: " + to + ")";
     }
+
+    @Override
+    public String saveToFile() {
+        return "E | " + this.getStatus() + " | " + description + " | " + from + "-" + to + "\n";
+    }
 }

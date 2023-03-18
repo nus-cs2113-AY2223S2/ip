@@ -17,6 +17,7 @@ public class Task {
         isDone = false;
     }
 
+
     /**
      * Determine if the keyword is found within the task.
      *
@@ -31,13 +32,26 @@ public class Task {
         return description;
     }
 
-    protected String status(){
+    public String status(){
         if(isDone) {
             return "X";
         }
         else {
             return " ";
         }
+    }
+
+    public String getStatus(){
+        if(isDone) {
+            return "1";
+        }
+        else {
+            return "O";
+        }
+    }
+
+    public String saveToFile() {
+        return "";
     }
 
     /**
@@ -49,4 +63,5 @@ public class Task {
     public String toString() {
         return "[" + status() + "] " + getDescription();
     }
+
 }
