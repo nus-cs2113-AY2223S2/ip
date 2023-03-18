@@ -1,5 +1,8 @@
 package Duke.Tasks;
 
+/**
+ * Deadline inherits Task with a deadline time added.
+ */
 public class Deadline extends Task {
     protected String by;
 

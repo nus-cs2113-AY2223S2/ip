@@ -1,5 +1,9 @@
 package Duke.Tasks;
 
+/**
+ * Represents a task consisting of the task description and whether the task is done.
+ * Deadline, Todo, and Event all inherit this class.
+ */
 public class Task {
     protected String description;
     public boolean isDone;

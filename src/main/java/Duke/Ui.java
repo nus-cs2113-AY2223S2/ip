@@ -1,13 +1,17 @@
 package Duke;
+
 import Duke.Tasks.Task;
 
 import java.util.Scanner;
+
 /**
  * Showing all kinds of print messages to users.
+ * Including print welcome messages, goodbye messages, error messages, list information and help list.
  */
 public class Ui {
     public static Scanner in = new Scanner(System.in);
-    public static void printHelp(){
+
+    public static void printHelp() {
         System.out.println("--------------------------------");
         System.out.println("Enter \"todo task_name\" to add a task.");
         System.out.println("Enter \"event task_name /from start_time /to end_time\" to add an event.");
@@ -20,30 +24,36 @@ public class Ui {
         System.out.println("Enter \"bye\" to terminate this program.");
 
     }
-    public static void printList(Task[] lists,int index){
+
+    public static void printList(Task[] lists, int index) {
         System.out.println("list:");
         for (int i = 0; i < index; i++) {
             System.out.println("\t" + (i + 1) + "." + lists[i].toString());
         }
     }
-    public static void printError(){
+
+    public static void printError() {
         System.out.println("Sorry, I don't get your message.");
     }
-    public static String initializeLine(){
-        in=new Scanner(System.in);
+
+    public static String initializeLine() {
+        in = new Scanner(System.in);
         return in.nextLine();
     }
-    public static String nextLine(){
+
+    public static String nextLine() {
         return in.nextLine();
     }
-    public static void welcomeMessage(){
+
+    public static void welcomeMessage() {
         System.out.println("--------------------------------");
         System.out.println("Hello! I'm Duke.Duke");
         System.out.println("What can I do for you?");
         System.out.println("Enter \"help\" if you want to see the command.");
         System.out.println("--------------------------------");
     }
-    public static void goodbyeMessage(){
+
+    public static void goodbyeMessage() {
         System.out.println("--------------------------------");
         System.out.println("Bye. Hope to see you again soon!");
         System.out.println("--------------------------------");
