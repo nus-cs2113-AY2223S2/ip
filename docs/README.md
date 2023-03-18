@@ -16,7 +16,7 @@
 
 ## Quick Start
 1. Ensure you have Java ```11``` installed in your Computer.
-2. Download the latest ```ip.jar``` from [here](https://github.com/dsicol/ip/releases/tag/A-Release).
+2. Download the latest ```ip.jar``` from [here](https://github.com/dsicol/ip/releases/tag/A-FinalRelease).
 3. Copy the file to the folder you want to use as the home folder for your Inu.
 4. Follow the file path in your OS command prompt, and run Inu with ```java -jar ip.jar```
 5. Type the command in the input box and press Enter to execute it.
