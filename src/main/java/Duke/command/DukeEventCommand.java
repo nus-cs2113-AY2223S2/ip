@@ -1,6 +1,6 @@
 package Duke.command;
 
-import static Duke.Strings.LINE_SEPARATOR;
+import static Duke.string.Strings.LINE_SEPARATOR;
 
 import java.util.regex.MatchResult;
 import java.util.regex.Matcher;

@@ -42,12 +42,30 @@ public abstract class DukeTask {
     }
     
     /**
+     * Sets the status of the task
+     * 
+     * @param isDone Boolean true if task is done, false if task is not done
+     */
+    public void setIsDone(Boolean isDone) {
+        this.isDone = isDone;
+    }
+
+    /**
      * Returns the status of the task
      * 
      * @return String "X" if task is done, " " if task is not done
      */
     public String getStatus() {
         return (isDone) ? "X" : " ";
+    }
+    
+    /**
+     * Returns the status of the task
+     * 
+     * @return Boolean true if task is done, false if task is not done
+     */
+    public Boolean getIsDone() {
+        return isDone;
     }
 
     /**
@@ -58,7 +76,7 @@ public abstract class DukeTask {
     public String getName() {
         return name;
     }
-
+    
     @Override
     public String toString() {
         return "[" + getStatus() + "] " + getName();

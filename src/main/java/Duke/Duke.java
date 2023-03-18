@@ -12,14 +12,12 @@ public class Duke {
     public Duke(String filePath) {
         ui = new DukeUi();
         storage = new DukeStorage(filePath);
-        tasks = new DukeTaskList();
-        // TODO: load tasks from file
-        // try {
-        //     tasks = new DukeTaskList(storage.load());
-        // } catch (DukeException e) {
-        //     ui.showLoadingError();
-        //     tasks = new DukeTaskList();
-        // }
+        try {
+            tasks = new DukeTaskList(storage.load(ui));
+        } catch (DukeException e) {
+            ui.showLoadingError();
+            tasks = new DukeTaskList();
+        }
     }
 
     public void run() {
@@ -40,7 +38,7 @@ public class Duke {
         }
     }
     public static void main(String[] args) {
-        new Duke("data/tasks.txt").run(); // TODO: create jar file
+        new Duke("taskData.txt").run(); // TODO: create jar file
         // TODO: update User Guide and release
     }
 }

@@ -1,4 +1,4 @@
-package Duke;
+package Duke.string;
 
 public class Strings {
     public static final String LINE_SEPARATOR = System.lineSeparator();
@@ -15,4 +15,5 @@ public class Strings {
     public static final String EXIT_MESSAGE_0 = "Bye. Hope to see you again soon!" + LINE_SEPARATOR;
     public static final String EXIT_MESSAGE_1 = "Argh. I don't feel so good..." + LINE_SEPARATOR;
     public static final String EXIT_MESSAGE_DEFAULT = "Nooo. Free me..." + LINE_SEPARATOR;
+    public static final String STORAGE_NEXT = "&&nextDetail&&";
 }

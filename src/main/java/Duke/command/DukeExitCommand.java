@@ -13,8 +13,7 @@ public class DukeExitCommand extends DukeCommand {
     @Override
     public void execute(DukeTaskList tasks, DukeUi ui, DukeStorage storage) {
         ui.showExit();
-        // TODO: save tasks to file
-        // storage.save(tasks);
+        storage.save(tasks);
     }
 
 }

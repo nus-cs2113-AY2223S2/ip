@@ -1,20 +1,22 @@
 package Duke;
 
+import static Duke.string.Strings.EXIT_MESSAGE_0;
+import static Duke.string.Strings.EXIT_MESSAGE_1;
+import static Duke.string.Strings.EXIT_MESSAGE_DEFAULT;
+import static Duke.string.Strings.GREETING;
+import static Duke.string.Strings.LINE;
+import static Duke.string.Strings.LINE_SEPARATOR;
+import static Duke.string.Strings.LOADING_ERROR_MESSAGE;
+import static Duke.string.Strings.LOGO;
+
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
 import Duke.task.DukeTask;
 import Duke.task.DukeTaskList;
-
-import static Duke.Strings.EXIT_MESSAGE_0;
-import static Duke.Strings.EXIT_MESSAGE_1;
-import static Duke.Strings.EXIT_MESSAGE_DEFAULT;
-import static Duke.Strings.GREETING;
-import static Duke.Strings.LOADING_ERROR_MESSAGE;
-import static Duke.Strings.LINE;
-import static Duke.Strings.LINE_SEPARATOR;
-import static Duke.Strings.LOGO;
 
 /**
  * DukeUi is the class that deals with interactions with the user.
@@ -43,12 +45,33 @@ public class DukeUi {
     }
 
     /**
-     * Reads the user input.
+     * Reads the user input, from System.in.
      * 
      * @return the user input
      */
     public String readCommand() {
         return in.nextLine();
+    }
+
+    /**
+     * Reads from a file.
+     * 
+     * @param textFile the path of the file to be read
+     * @return the saved tasks
+     * @throws DukeException
+     */
+    public String readFromFile(File textFile) throws DukeException {
+        try {
+            in = new Scanner(textFile);
+        } catch (FileNotFoundException e) {
+            throw new DukeException("File not found.");
+        }
+        String fileString = "";
+        while (in.hasNextLine()) {
+            fileString += in.nextLine() + LINE_SEPARATOR;
+        }
+        in = new Scanner(System.in);
+        return fileString;
     }
 
     /**
