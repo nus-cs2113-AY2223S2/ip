@@ -25,6 +25,10 @@ public class Deadline extends Todo {
 
         if (parts.length > 1) {
             String deliverable = parts[0];
+            if (deliverable.length() == 0) {
+                throw new DukeError("Missing inputs. The description of a deadline task cannot be empty.");
+            }
+
             this.by = parts[1].trim();
             this.deliverable = deliverable;
             this.type = "D";

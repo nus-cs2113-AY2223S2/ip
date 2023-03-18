@@ -25,6 +25,9 @@ public class Event extends Todo {
             throw new DukeError("Missing inputs. Syntax for event: event <description> /from <time> /to <time>");
         } else {
             String deliverable = parts[0].trim();
+            if (deliverable.length() == 0) {
+                throw new DukeError("Missing inputs. The description of an event task cannot be empty.");
+            }
             from = (parts.length > 1) ? parts[1].trim() : "";
             to = (parts.length > 2) ? parts[2].trim() : "";
             this.deliverable = deliverable;
