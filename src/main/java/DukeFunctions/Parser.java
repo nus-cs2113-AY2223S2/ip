@@ -42,21 +42,29 @@ public class Parser { //takes in a string input and executes the command within 
                     }
                     break;
                 case "mark":
-                    int markTarget = Integer.parseInt(words[1]) - 1;
-                    if (markTarget >= 0 && markTarget < tasks.size()) {
-                        tasks.get(markTarget).mark();
-                        ui.markAck(tasks.get(markTarget));
-                    } else {
-                        ui.taskDoesNotexist();
+                    try {
+                        int markTarget = Integer.parseInt(words[1]) - 1;
+                        if (markTarget >= 0 && markTarget < tasks.size()) {
+                            tasks.get(markTarget).mark();
+                            ui.markAck(tasks.get(markTarget));
+                        } else {
+                            ui.taskDoesNotexist();
+                        }
+                    } catch (NumberFormatException e) {
+                        throw new DukeError("You need to give me a task number to mark!");
                     }
                     break;
                 case "unmark":
-                    int target = Integer.parseInt(words[1]) - 1;
-                    if (target >= 0 && target < tasks.size()) {
-                        tasks.get(target).unMark();
-                        ui.unmarkAck(tasks.get(target));
-                    } else {
-                        ui.taskDoesNotexist();
+                    try {
+                        int target = Integer.parseInt(words[1]) - 1;
+                        if (target >= 0 && target < tasks.size()) {
+                            tasks.get(target).unMark();
+                            ui.unmarkAck(tasks.get(target));
+                        } else {
+                            ui.taskDoesNotexist();
+                        }
+                    } catch (NumberFormatException e) {
+                        throw new DukeError("You need to give me a task number to unmark!");
                     }
 
                     break;
@@ -89,13 +97,17 @@ public class Parser { //takes in a string input and executes the command within 
                     // }
                     break;
                 case "delete":
-                    int deleteTarget = Integer.parseInt(words[1]) - 1;
-                    if (deleteTarget >= 0 && deleteTarget < tasks.size()) {
-                        ui.ackDelete(tasks.get(deleteTarget));
-                        tasks.remove(deleteTarget);
+                    try {
+                        int deleteTarget = Integer.parseInt(words[1]) - 1;
+                        if (deleteTarget >= 0 && deleteTarget < tasks.size()) {
+                            ui.ackDelete(tasks.get(deleteTarget));
+                            tasks.remove(deleteTarget);
 
-                    } else {
-                        ui.doesNotExist();
+                        } else {
+                            ui.doesNotExist();
+                        }
+                    } catch (NumberFormatException e) {
+                        throw new DukeError("You need to give me a task number to delete!");
                     }
                     break;
                 case "find":
