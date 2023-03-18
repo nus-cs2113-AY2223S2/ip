@@ -1,5 +1,7 @@
 package duke;
 
+import java.util.ArrayList;
+
 public class Ui {
 
     public void showLine() {
@@ -25,6 +27,33 @@ public class Ui {
         System.out.println("    Bye. Hope to see you again soon!");
         showLine();
         System.out.println("     ");
+        System.exit(0);
+    }
+
+    public void printListContents(ArrayList<Todo> tasks, int counter) {
+        for (int i = 0; i < counter; ++i) {
+            if (tasks.get(i).isDone) {
+                System.out.print("    " + (i + 1) + ".");
+                tasks.get(i).printInList();
+            } else {
+                System.out.print("    " + (i + 1) + ".");
+                tasks.get(i).printInList();
+            }
+        }
+        showLine();
+        System.out.println("     ");
+    }
+
+    public void printUnmarkedAcknowledgement(ArrayList<Todo> tasks, int taskNumber) {
+        System.out.println("    _________________________________________");
+        System.out.println("    " + taskNumber + "." + "[ ] " + tasks.get(taskNumber - 1).getDescription());
+        System.out.println("    _________________________________________");
+    }
+
+    public void printMarkedAcknowledgement(ArrayList<Todo> tasks, int taskNumber) {
+        System.out.println("    _________________________________________");
+        System.out.println("    " + taskNumber + "." + "[X] " + tasks.get(taskNumber - 1).getDescription());
+        System.out.println("    _________________________________________");
     }
 }
 

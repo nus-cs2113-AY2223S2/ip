@@ -12,7 +12,6 @@ public class Storage {
         String inputString;
 
         try {
-
             File myFile = new File(absoluteFilePath);
             if (myFile.createNewFile()) {
                 System.out.println("New List backup is created! List items will be saved to disk after you exit the program!");
@@ -22,13 +21,13 @@ public class Storage {
         } catch (IOException e) {
             throw new DukeException("File cannot be created");
         }
+
         Scanner scanner;
         try {
             scanner = new Scanner(new File(absoluteFilePath));
         } catch (FileNotFoundException e) {
             throw new DukeException("No List");
         }
-        Scanner in = new Scanner(System.in);
 
         while (scanner.hasNextLine()) {
             inputString = scanner.nextLine();
@@ -97,8 +96,7 @@ public class Storage {
             if (classType.equalsIgnoreCase("Class Duke.Todo")) {
                 fw.println("todo " + tasks.get(i).getDescription());
             } else if (classType.equalsIgnoreCase("Class Duke.Event")) {
-                fw.println("event " + tasks.get(i).getDescription() + "/" + tasks.get(i).getBy() + "|"
-                        + tasks.get(i).getEnd());
+                fw.println("event " + tasks.get(i).getDescription() + "/" + tasks.get(i).getBy() + "|" + tasks.get(i).getEnd());
             } else if (classType.equalsIgnoreCase("Class Duke.Deadline")) {
                 fw.println("deadline " + tasks.get(i).getDescription() + "/" + tasks.get(i).getBy());
             }
