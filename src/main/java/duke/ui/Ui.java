@@ -37,8 +37,8 @@ public class Ui {
             + "    unmark {task index number} --mark the task as undone" + "\n"
             + "    delete {task index number} --delete the task" + "\n"
             + "    find {keywords}  --find the task according to keywords" + "\n"
-            + "    list --to show the current task list" + "\n"
-            + "    exit --to exit the application";
+            + "    list --show the current task list" + "\n"
+            + "    exit --exit the application";
 
     /**
      * Constructor
