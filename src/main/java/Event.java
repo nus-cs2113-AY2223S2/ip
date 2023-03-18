@@ -1,37 +1,50 @@
 import java.time.LocalDateTime;
 import java.util.Scanner;
 
-public class Event extends Task{
+public class Event extends Task {
     public String description;
-    public LocalDateTime dateFrom;
-    public LocalDateTime dateTo;
+    public LocalDateTime dateFrom = null;
+    public LocalDateTime dateTo = null;
     Scanner in = new Scanner(System.in);
     String input;
 
+    // This is the constructor for Event class
+    // It takes in the 3 user input, description of event, start datetime of event &
+    // end datetime of event.
+    // then stores inside an array and parses it into the respective variables
+    // then adds the variables into the respective arraylists, Tasks, Marked, Items,
+    // DateTimeFrom, DateTimeTo
+    // before printing a message to show the most recent task
     public Event() throws InvalidInputException {
         String[] strArray = new String[3];
-        //prompt user for input
-        System.out.println("enter description: ");
+        Ui.printEnterDescription();
         strArray[0] = in.nextLine();
-        System.out.println("enter from datetime: " + ("eg: '2012-05-02T06:30' is equivalent  May 02 2023 6.30am"));
-        strArray[1] = in.nextLine();
-        System.out.println("enter to datetime: " + ("eg: '2012-05-02T06:30' is equivalent  May 02 2023 6.30am"));
-        strArray[2] = in.nextLine();
-
         this.description = strArray[0].trim();
-        try {
-
-            this.dateFrom = LocalDateTime.parse(strArray[1].trim());
-            this.dateTo = LocalDateTime.parse(strArray[2].trim());
-        } catch (Exception e) {
-            System.out.println("Invalid date format");
-            return;
+        while (dateFrom == null) {
+            Ui.printEventFrom();
+            strArray[1] = in.nextLine();
+            try {
+                this.dateFrom = LocalDateTime.parse(strArray[1].trim());
+            } catch (Exception e) {
+                Ui.printInvalidDate();
+            }
         }
-        items.add(description);
-        marked.add(false);
-        tasks.add(TaskType.EVENT);
-        dateTimeFrom.add(dateFrom);
-        dateTimeTo.add(dateTo);
-        print(); // from Task class
+        while (dateTo == null) {
+            Ui.printEventTo();
+            strArray[2] = in.nextLine();
+            try {
+                this.dateTo = LocalDateTime.parse(strArray[2].trim());
+            } catch (Exception e) {
+                Ui.printInvalidDate();
+            }
+        }
+        setAddDescArray(description);
+        setAddMarkArray(false);
+        setAddTypeArray(TaskType.EVENT);
+        setAddDateFromArray(dateFrom);
+        setAddDateToArray(dateTo);
+        print();
+
     }
+
 }

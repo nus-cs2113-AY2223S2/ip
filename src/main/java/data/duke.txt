@@ -1,5 +1,0 @@
-DEADLINE | 0 | finish cs2113 | null | 2023-03-03T06:00
-TODO | 0 | be gay | null | null
-TODO | 0 | yes | null | null
-TODO | 0 | please | null | null
-EVENT | 0 | breakfast | 2023-03-03T08:30 | 2023-03-03T09:15

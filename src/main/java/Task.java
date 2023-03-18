@@ -1,157 +1,225 @@
 import java.util.ArrayList;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 public class Task {
     public static enum TaskType {
         TODO, DEADLINE, EVENT
     }
-    public static ArrayList<String> items = new ArrayList<String>();
-    public static ArrayList<Boolean> marked = new ArrayList<Boolean>();
-    public static ArrayList<TaskType> tasks = new ArrayList<TaskType>();
-    public static ArrayList<LocalDateTime> dateTimeFrom = new ArrayList<LocalDateTime>();
-    public static ArrayList<LocalDateTime> dateTimeTo = new ArrayList<LocalDateTime>();
 
-    
+    private static ArrayList<String> items = new ArrayList<String>();
+    private static ArrayList<Boolean> marked = new ArrayList<Boolean>();
+    private static ArrayList<TaskType> tasks = new ArrayList<TaskType>();
+    private static ArrayList<LocalDateTime> dateTimeFrom = new ArrayList<LocalDateTime>();
+    private static ArrayList<LocalDateTime> dateTimeTo = new ArrayList<LocalDateTime>();
+
     public Task() {
-
     }
 
-    private String formatDateOut(int i) { //helper function to format date output string for printing
-        String dateFrom = Task.dateTimeFrom.get(i) == null ? "" : Task.dateTimeFrom.get(i).format(DateTimeFormatter.ofPattern("MMM dd yyyy HH:mm"));
-        String dateTo = Task.dateTimeTo.get(i) == null ? "" : Task.dateTimeTo.get(i).format(DateTimeFormatter.ofPattern("MMM dd yyyy HH:mm"));
+    // setters
 
-        String dateOut = ""; // output of string decided by the presence and absence of dateFrom and dateTo
-        if (dateFrom.equals("") && dateTo.equals("")) {
-            dateOut = "";
-        } else if (dateFrom.equals("") && !dateTo.equals("")) {
-            dateOut = " (by: " + dateTo + ")";
-        } else if (!dateFrom.equals("") && !dateTo.equals("")) {
-            dateOut = " (from: " + dateFrom + " to: " + dateTo + ")";
-        } 
-       
-        return dateOut;
-    }
-    // setters 
-    public void setDone(String input) { //set task as done
-        String[] strArray = input.split(" ");
-        int num = Integer.parseInt(strArray[1]);
-        if (num > items.size()) { //sanity check
-            System.out.println("There is no task " + num + "!");
-            return;
+    // this is a setter to set the marked status of a task to true
+    // to indicate that it is done
+    // then performs a sanity check to ensure that the index is within the range
+    // before setting the marked status to true
+    public void setDone(int num) {
+        if (num > items.size() || num < 1) {
+            Ui.printInvalidIndex(num);
+        } else {
+
+            marked.set(num - 1, true);
+            String dateOut = Parser.formatDateOut(num - 1);
+            Ui.printMarkDone(num, dateOut);
         }
-        marked.set(num-1, true);
-        String dateOut = formatDateOut(num-1);
-        System.out.println("Nice! I've marked this  as done:\n" + "[" + tasks.get(num-1).toString().charAt(0) + "]" + "[X] " + items.get(num-1) + dateOut + "\n");
-    }
-    public void setNotDone(String input) { //set task as not done
-        String[] strArray = input.split(" ");
-        int num = Integer.parseInt(strArray[1]);
-        if (num > items.size()) { //sanity check
-            System.out.println("There is no task " + num + "!");
-            return;
-        }
-        marked.set(num-1, false);
-        String dateOut = formatDateOut(num-1);
-        System.out.println("Ok, I've marked this task as not done yet:\n" + "[" + tasks.get(num-1).toString().charAt(0) + "]" + "[ ] " + items.get(num-1) + dateOut + "\n");
-    }
-    
-    //getters
-    public void getItems() { //get all items
-        if (items.size() == 0) { //sanity check
-            System.out.println("No tasks yet!");
-            return;
-        }
-        System.out.println("Here are the tasks in your list:\n");
-        for (int i = 0; i < items.size(); i++) {
-            String dateOut = formatDateOut(i);
-            System.out.println((i+1) + ". " + "[" + tasks.get(i).toString().charAt(0) + "]" +"[" + (marked.get(i) ? "X" : " ") + "] " + items.get(i) + dateOut);
-        }
-        System.out.print("\n");
+        Ui.printseparator();
     }
 
-    public void getDue(String input) { //show items due before  & after a certain date time
+    // this is a setter to set the marked status of a task to false
+    // to indicate that it is not done
+    // then performs a sanity check to ensure that the index is within the range
+    // before setting the marked status to false
+    public void setNotDone(int num) {
+        if (num > items.size() || num < 1) {
+            Ui.printInvalidIndex(num);
+        } else {
+
+            marked.set(num - 1, false);
+            String dateOut = Parser.formatDateOut(num - 1);
+            Ui.printMarkNotDone(num, dateOut);
+        }
+        Ui.printseparator();
+    }
+
+    // this is a setter to delete a task from the list
+    // it performs a sanity check to ensure that the index is within the range
+    // before deleting the task and its corresponding details
+    // from each of the ArrayLists
+    public void delete(int num) {
+        if (num > items.size() || num < 1) {
+            Ui.printInvalidIndex(num);
+        } else {
+            String dateOut = Parser.formatDateOut(num - 1);
+            Ui.printDelete(num, dateOut);
+            items.remove(num - 1);
+            marked.remove(num - 1);
+            tasks.remove(num - 1);
+            dateTimeFrom.remove(num - 1);
+            dateTimeTo.remove(num - 1);
+        }
+        Ui.printseparator();
+    }
+
+    // this is a setter to add datetime to datetimefrom arraylist
+    public static void setAddDateFromArray(LocalDateTime input) {
+        dateTimeFrom.add(input);
+    }
+
+    // this is a setter to add datetime to datetimeto arraylist
+    public static void setAddDateToArray(LocalDateTime input) {
+        dateTimeTo.add(input);
+    }
+
+    // this is a setter to add tasktype to tasks arraylist
+    public static void setAddTypeArray(TaskType input) {
+        tasks.add(input);
+    }
+
+    // this is a setter to add boolean(done/not done) to marked arraylist
+    public static void setAddMarkArray(Boolean input) {
+        marked.add(input);
+    }
+
+    // this is a setter to add description to items arraylist
+    public static void setAddDescArray(String input) {
+        items.add(input);
+    }
+
+    // getters
+    // this is a getter to get the items in the list
+    // it performs a sanity check to ensure that the list is not empty
+    // before printing the items in the list
+    public void getItems() {
+        if (items.size() == 0) { // sanity check
+            Ui.printNoTask();
+        } else {
+
+            for (int i = 0; i < items.size(); i++) {
+                String dateOut = Parser.formatDateOut(i);
+                Ui.printItem(i + 1, dateOut, i);
+            }
+        }
+        Ui.printseparator();
+    }
+
+    // this is a getter to get the description of a task
+    public static String getDesc(int num) {
+        return items.get(num);
+    }
+
+    // this is a getter to get the marked status of a task
+    public static Boolean getMark(int num) {
+        return marked.get(num);
+    }
+
+    // this is a getter to get the task type of a task
+    public static TaskType getType(int num) {
+        return tasks.get(num);
+    }
+
+    // this is a getter to get the start datetime of a task
+    public static LocalDateTime getDateTimeFrom(int num) {
+        return dateTimeFrom.get(num);
+    }
+
+    // this is a getter to get the end/deadline datetime of a task
+    public static LocalDateTime getDateTimeTo(int num) {
+        return dateTimeTo.get(num);
+    }
+
+    // this is a getter to get the size of the list
+    public static int getSize() {
+        return items.size();
+    }
+
+    // normal functions
+
+    // this is a function to display task due before and after a certain date
+    // it performs a sanity check to ensure that the list is not empty
+    // then it loops through the list 2 times,
+    // the first time it prints the items that are due before the date input by the
+    // user
+    // the second time it prints the items that are due after the date input by the
+    // user
+    public void getDue(LocalDateTime dateTime) {
         if (items.size() == 0) {
-            System.out.println("There are no tasks yet!");
+            Ui.printNoTask();
             return;
         }
-        LocalDateTime dateTime = LocalDateTime.parse(input.substring(3).trim()); // remove "due " from input and convert to LocalDateTime
-        System.out.println("Due Before "  + dateTime.format(DateTimeFormatter.ofPattern("MMM dd yyy HH:mm")) + ":");
+        Ui.printDueBeforeText(dateTime);
         int count = 1;
         for (int i = 0; i < items.size(); i++) {
-            if (dateTimeTo.get(i) == null) { //sanity check
+            if (getDateTimeTo(i) == null) {
                 continue;
             }
-            String dateOut = formatDateOut(i);
-            if (dateTime.equals(dateTimeTo.get(i)) || dateTime.isAfter(dateTimeTo.get(i))) {
-                System.out.println(Integer.toString(count) + ". " + "[" + tasks.get(i).toString().charAt(0) + "]" +"[" + (marked.get(i) ? "X" : "") + "] " + items.get(i) + dateOut);
+            String dateOut = Parser.formatDateOut(i);
+            if (dateTime.equals(getDateTimeTo(i)) || dateTime.isAfter(getDateTimeTo(i))) {
+                Ui.printItem(count, dateOut, i);
                 count++;
             }
         }
         if (count == 1) {
-            System.out.println("No tasks due before " + dateTime.format(DateTimeFormatter.ofPattern("MMM dd yyy HH:mm")));
+            Ui.printNoDueBefore(dateTime);
         }
+        Ui.printseparator();
         count = 1;
-        System.out.println("\n" + "Due After " + dateTime.format(DateTimeFormatter.ofPattern("MMM dd yyy HH:mm")) + ":");
-        for (int i = 0; i < items.size(); i++) { //sanity check
-            if (dateTimeTo.get(i) == null) {
+        Ui.printDueAfterText(dateTime);
+        for (int i = 0; i < items.size(); i++) {
+            if (getDateTimeTo(i) == null) {
                 continue;
             }
-            String dateOut = formatDateOut(i);
-            if (dateTime.isBefore(dateTimeTo.get(i))) {
-                System.out.println(Integer.toString(count) + ". " + "[" + tasks.get(i).toString().charAt(0) + "]" +"[" + (marked.get(i) ? "X" : "") + "] " + items.get(i) + dateOut);
+            String dateOut = Parser.formatDateOut(i);
+            if (dateTime.isBefore(getDateTimeTo(i))) {
+                Ui.printItem(count, dateOut, i);
                 count++;
-            } 
+            }
         }
         if (count == 1) {
-            System.out.println("No tasks due after " + dateTime.format(DateTimeFormatter.ofPattern("MMM dd yyy HH:mm")));
+            Ui.printNoDueAfter(dateTime);
         }
-        System.out.print("\n");
+        Ui.printseparator();
     }
 
-    public void find(String input) { // find items containing a certain string
-        if (items.size() == 0) { //sanity check
-            System.out.println("There are no tasks yet!");
-            return;
+    // this is a function to find tasks in the list by input string from user
+    // it performs a sanity check to ensure that the list is not empty
+    // then it loops through the list to find the items that contain the string
+    // input by the user
+    public void find(String input) {
+        if (items.size() == 0) {
+            Ui.printNoTask();
+        } else {
+
+            int count = 1;
+            for (int i = 0; i < items.size(); i++) {
+                String dateOut = Parser.formatDateOut(i);
+                if (items.get(i).contains(input)) {
+                    Ui.printItem(count, dateOut, i);
+                    count++;
+                }
+            }
+            if (count == 1) {
+                Ui.printNotFound();
+            }
         }
-        input = input.substring(4).trim(); //remove "find " from input
-        int count = 1;
-        for (int i = 0; i < items.size(); i++) {
-            String dateOut = formatDateOut(i);
-            if (items.get(i).contains(input)) {
-                System.out.println(Integer.toString(count) + ". " + "[" + tasks.get(i).toString().charAt(0) + "]" +"[" + (marked.get(i) ? "X" : "") + "] " + items.get(i) + dateOut);
-                count++;
-            } 
-        }
-        if (count == 1) {
-            System.out.println("No tasks found!");
-        }
+        Ui.printseparator();
 
     }
 
-    public void delete(String input){ // delete item and its entries in each arraylist
-        String[] strArray = input.split(" ");
-        int num = Integer.parseInt(strArray[1]);
-        if (num > items.size()) {
-            System.out.println("There is no task " + num + "!");
-            return;
-        }
-        System.out.println("Noted. I've removed this task:\n" + "[" + tasks.get(num-1).toString().charAt(0) + "]" + "[" + (marked.get(num-1) ? "X" : "") + "] " + items.get(num-1));
-        items.remove(num-1);
-        System.out.println("Now you have " + items.size() + " tasks in the list." + "\n");
-        marked.remove(num-1);
-        tasks.remove(num-1);
-        dateTimeFrom.remove(num-1);
-        dateTimeTo.remove(num-1);
-    }
-
-    public void print() { // print out item added after add command
-
+    // this is a function to print the most recently added task
+    public void print() {
         int size = items.size() - 1;
-        String type = "[" + tasks.get(size).toString().charAt(0) + "]";       
-        String checkbox = Task.marked.get(size) ? "[X] " : "[ ] ";
         String item = Task.items.get(size);
-        String dateOut = formatDateOut(size); 
-        System.out.println("Got it. I've added this task: \n" + type + checkbox + item + dateOut + "\n" + "Now you have " + items.size() + " tasks in the list." + "\n");
+        String dateOut = Parser.formatDateOut(size);
+        Ui.printAddTask(size, dateOut, item);
+        Ui.printseparator();
     }
+
 }

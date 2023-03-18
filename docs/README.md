@@ -13,11 +13,14 @@ Duke Dogstorm now offers to help you track your task in exchange for hiding a ni
 
 There are 3 types of task that can be created, a TODO, a DEADLINE and an EVENT.
 
-Todos - task that u need to do, but maybe there is no rush to do it.(eg. Luffy wants to become the pirate king)
+Todos - task that u need to do, but maybe there is no rush to do it.  
+(eg. Luffy wants to become the pirate king)
 
-Deadline - task that u need to submit, so tells you by when you need to do it. (eg. Gecko moria needs to finish his fight before 3rd March 2023, 7.30am)
+Deadline - task that u need to submit, so tells you by when you need to do it.
+(eg. Gecko moria needs to finish his fight before 3rd March 2023, 7.30am)
 
-Event - task that is done over a certain duration, from a certain date and time to another date and time. (Straw Hat Crew needs to take train to enies lobby from 3rd March 2023 5pm to 3rd March 2023 7pm)
+Event - task that is done over a certain duration, from a certain date and time to another date and time.
+(Straw Hat Crew needs to take train to enies lobby from 3rd March 2023 5pm to 3rd March 2023 7pm)
 
 ### List
 
@@ -55,15 +58,19 @@ say goodbye to duke and close the program.
 
 ### Todo
 
-#### `todo <task>` - adds a todo
+#### `todo` - adds a todo
+
+#### `<description of task>` - adds the description of task
 
 Example of usage:
 
-`todo become pirate king`
+`todo`
+enter description:
+`become the pirate king`
 
 Expected outcome:
 
-The todo would be store in a temporary list.
+The todo would be stored in a temporary list.
 
 Duke will confirm that you have added the task, and show you the task that you added, and the amount of tasks on the list.
 
@@ -101,7 +108,7 @@ Now you have 2 tasks in the list.
 
 ### Event
 
-#### `event` - adds a deadline
+#### `event` - adds a event
 
 #### `<description of task>` - adds the description of task
 

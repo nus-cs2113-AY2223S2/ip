@@ -1,35 +1,40 @@
 import java.time.LocalDateTime;
 import java.util.Scanner;
 
-
 public class Deadline extends Task {
     public String description;
-    public  LocalDateTime date;
+    public LocalDateTime date = null;
     Scanner in = new Scanner(System.in);
     String input;
 
-
-    public Deadline() throws InvalidInputException{
+    // This is the constructor for Deadline class
+    // It takes in the 2 user input, description of deadline & datetime of deadline.
+    // then stores inside an array and parses it into the respective variables
+    // then adds the variables into the respective arraylists, Tasks, Marked, Items,
+    // DateTimeFrom, DateTimeTo
+    // with null values for dateTimeFrom because deadline has no start date/time
+    // associated with it
+    // before printing a message to show the most recent task
+    public Deadline() throws InvalidInputException {
         String[] strArray = new String[2];
-        //prompt user for input
-        System.out.println("enter description: ");
+        Ui.printEnterDescription();
         strArray[0] = in.nextLine();
-        System.out.println("enter deadline: " + ("eg: '2012-05-02T06:30' is equivalent  May 02 2023 6.30am"));
-        strArray[1] = in.nextLine();
-        
         this.description = strArray[0].trim();
-        try {
-            this.date = LocalDateTime.parse(strArray[1].trim());
-        } catch (Exception e) {
-            System.out.println("Invalid date format");
-            return;
+        while (this.date == null) {
+            Ui.printDeadlineDue();
+            strArray[1] = in.nextLine();
+            try {
+                this.date = LocalDateTime.parse(strArray[1].trim());
+            } catch (Exception e) {
+                Ui.printInvalidDate();
+            }
         }
-        items.add(description);
-        marked.add(false);
-        tasks.add(TaskType.DEADLINE);
-        dateTimeFrom.add(null);
-        dateTimeTo.add(date);
-        print(); //from Task class
+        setAddDescArray(description);
+        setAddMarkArray(false);
+        setAddTypeArray(TaskType.DEADLINE);
+        setAddDateFromArray(null);
+        setAddDateToArray(date);
+        print();
     }
 
 }
