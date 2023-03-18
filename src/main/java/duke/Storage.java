@@ -1,15 +1,12 @@
 package duke;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Storage {
 
-    public int initializeList(ArrayList<Todo> tasks, int counter, String absoluteFilePath) throws FileNotFoundException {
+    public int initializeList(ArrayList<Todo> tasks, int counter, String absoluteFilePath) throws DukeException {
         String taskType;
         String task = null;
         String inputString;
@@ -18,15 +15,19 @@ public class Storage {
 
             File myFile = new File(absoluteFilePath);
             if (myFile.createNewFile()) {
-                System.out.println("New List backup is created! List items will be saved to " + "disk after you exit the program!");
+                System.out.println("New List backup is created! List items will be saved to disk after you exit the program!");
             } else {
                 System.out.println("List backup already exists and has been initialized.");
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new DukeException("File cannot be created");
         }
-
-        Scanner scanner = new Scanner(new File(absoluteFilePath));
+        Scanner scanner;
+        try {
+            scanner = new Scanner(new File(absoluteFilePath));
+        } catch (FileNotFoundException e) {
+            throw new DukeException("No List");
+        }
         Scanner in = new Scanner(System.in);
 
         while (scanner.hasNextLine()) {
@@ -82,8 +83,15 @@ public class Storage {
         return absoluteFilePath;
     }
 
-    public void writeToFile(ArrayList<Todo> tasks, String absoluteFilePath, int counter) throws FileNotFoundException {
-        PrintWriter fw = new PrintWriter(absoluteFilePath);
+    public void writeToFile(ArrayList<Todo> tasks, String absoluteFilePath, int counter) throws DukeException {
+        PrintStream fw = null;
+        try {
+            fw = new PrintStream(absoluteFilePath);
+        } catch (FileNotFoundException e) {
+            throw new DukeException("File not found");
+        }
+
+
         for (int i = 0; i < counter; i++) {
             String classType = String.valueOf(tasks.get(i).getClass());
             if (classType.equalsIgnoreCase("Class Duke.Todo")) {

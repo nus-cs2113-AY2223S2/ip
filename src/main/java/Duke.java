@@ -1,8 +1,4 @@
-import duke.Deadline;
-import duke.Event;
-import duke.Todo;
-import duke.Ui;
-import duke.Storage;
+import duke.*;
 
 import java.util.ArrayList;
 import java.io.*;
@@ -11,7 +7,7 @@ import java.util.Scanner;
 
 public class Duke {
 
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) throws DukeException {
 
         Ui ui = new Ui();
         Storage storage = new Storage();
