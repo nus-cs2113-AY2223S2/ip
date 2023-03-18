@@ -14,7 +14,8 @@ public class Storage {
         try {
             File myFile = new File(absoluteFilePath);
             if (myFile.createNewFile()) {
-                System.out.println("New List backup is created! List items will be saved to disk after you exit the program!");
+                System.out.println("New List backup is created! List items will be saved to disk after you exit " +
+                                    "the program!");
             } else {
                 System.out.println("List backup already exists and has been initialized.");
             }

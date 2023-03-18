@@ -30,6 +30,10 @@ public class Ui {
         System.exit(0);
     }
 
+    public void showError(String error) {
+        System.out.println("    " + error);
+    }
+
     public void printListContents(ArrayList<Todo> tasks, int counter) {
         for (int i = 0; i < counter; ++i) {
             if (tasks.get(i).isDone) {
