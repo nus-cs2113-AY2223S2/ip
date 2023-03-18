@@ -39,8 +39,7 @@ public class Messages {
             + "\n" + " Format: " + "\n"
             + " delete <task number> " + "\n" + "\n"
             + "the task number must be a valid number displayed from the task list!";
-    public static final String MESSAGE_PROMPT_EMPTY_TASK_LIST = " Woof Woof! Your task list is empty! ^.^";
-
+    public static final String MESSAGE_PROMPT_EMPTY_TASK_LIST = " Woof Woof! No tasks found! ^.^";
     public static final String MESSAGE_DELETE_TASK = " Woof! I've deleted this task for you:";
     public static final String MESSAGE_PROMPT_VALID_DATE = " Sorry! Please provide a valid date and time in "
             + "<DD/MM/YYYY>";
