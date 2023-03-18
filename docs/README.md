@@ -4,7 +4,7 @@ Duke is an application for managing task list via a **Command Line Interface (CL
 + [Quick Start](#quick-start)
 + [Features](#features)
   + [Create a ToDo task: `todo`](#create-a-todo-task--todo)
-  + [Create a Deadline task: `deadline`](#create-an-deadline-task--deadline)
+  + [Create a Deadline task: `deadline`](#create-a-deadline-task--deadline)
   + [Create an Event task: `event`](#create-an-event-task--event)
   + [Mark a task as done: `mark`](#mark-a-task-as-done--mark)
   + [Mark a task as not done: `unmark`](#mark-a-task-as-not-done--unmark)
@@ -36,7 +36,7 @@ Got it. I've added this tasks:
 Now you have 1 tasks in the list.
 ____________________________________________________
 ```
-#### Create an Deadline Task: `deadline`
+#### Create a Deadline Task: `deadline`
 Adds a deadline task into the list that includes the date of the deadline.
 
 Format: `deadline TASK_NAME /by DATE`
