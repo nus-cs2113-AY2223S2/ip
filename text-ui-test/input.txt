@@ -1,0 +1,13 @@
+deadline taskNumberOne #by Friday 11pm
+event taskNumberTwo #from 11 July #to 23 Aug
+list
+todo taskNumberThree
+todo taskNumberFour
+mark 3
+list
+mark 1
+list
+randomCommand
+mark 100
+event
+bye
