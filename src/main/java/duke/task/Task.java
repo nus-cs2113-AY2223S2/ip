@@ -17,7 +17,6 @@ public class Task {
         isDone = false;
     }
 
-
     /**
      * Determine if the keyword is found within the task.
      *

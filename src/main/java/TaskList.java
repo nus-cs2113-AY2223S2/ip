@@ -162,13 +162,13 @@ public class TaskList {
             throw new MissingInputException();
         } else {
             String keyword = userInput.substring(4).trim();
-            TaskList taskList = new TaskList();
+            ArrayList<Task> matchingTasks = new ArrayList<>();
             for (Task task : tasks) {
                 if (task.findMatch(keyword)) {
-                    taskList.tasks.add(task);
+                    matchingTasks.add(task);
                 }
             }
-            ui.printTaskFound(taskList, taskList.tasks.size());
+            ui.printTaskFound(matchingTasks, matchingTasks.size());
         }
     }
 

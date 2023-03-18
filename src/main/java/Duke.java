@@ -4,7 +4,6 @@ import duke.exception.IllegalFormatException;
 import duke.exception.InvalidInputException;
 import duke.exception.MissingInputException;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 

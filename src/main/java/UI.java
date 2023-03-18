@@ -71,14 +71,14 @@ public class UI {
      * Checks if there is any task in the list before printing the list of tasks
      * or a message that tells the user that there is no task containing that keyword.
      *
-     * @param taskList List of tasks that has been stored if it contains the keyword
+     * @param matchingTasks List of tasks that has been stored if it contains the keyword
      * @param size Size of the task list.
      */
-    public void printTaskFound(TaskList taskList, int size) {
+    public void printTaskFound(ArrayList<Task> matchingTasks, int size) {
         if (size > 0) {
             System.out.println("Here are the matching tasks in your list:");
             for (int count = 0; count < size; count++) {
-                System.out.println(count + "." + taskList.tasks.get(count));
+                System.out.println(count + 1 + "." + matchingTasks.get(count));
             }
         } else {
             System.out.println("There are no task in the list containing the keyword.");
