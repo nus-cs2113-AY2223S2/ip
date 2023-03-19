@@ -13,5 +13,17 @@ src/main/resources/docs/
 *.iml
 bin/
 
+# Java bytecode
+*.class
+
+# Rica's Local data storage
+/data/
+
+# Checkstyle plugin config
+/config/
+
+# jar metadata
+/**/META-INF/
+
 /text-ui-test/ACTUAL.TXT
 text-ui-test/EXPECTED-UNIX.TXT
