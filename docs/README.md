@@ -12,11 +12,11 @@ You're free to specify your dates as a date, or as a string describing the condi
 
 ### Persistent Data
 
-Your Tasks are stored in a text file after every action, so your data (unlike Ayame herself) is never lost!
+Your Tasks are stored in a text file after every action, so your data is never lost!
 
 ### Filter easily!
 
-NakiriAyame filters and returns your Tasks by any keyword in O(1)! (Trust me, I got A+ in CS2040C)
+NakiriAyame filters and returns your Tasks by any keyword!
 
 ### Ascii Art of Nakiri Ayame!
 
