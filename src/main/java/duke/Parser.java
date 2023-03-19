@@ -71,7 +71,7 @@ public class Parser {
 
                 case "todo":
                     if (task == null) {
-                        System.out.println("Invalid command, please try again!");
+                        System.out.println("    Invalid command, please try again!");
                         break;
                     } else {
                         tasks.add(new Todo(task));
@@ -83,7 +83,7 @@ public class Parser {
 
                 case "deadline":
                     if (task == null) {
-                        System.out.println("Invalid command, please try again!");
+                        System.out.println("    Invalid command, please try again!");
                         break;
                     } else {
                         int deadlinePosition = task.indexOf("/");
@@ -99,7 +99,7 @@ public class Parser {
 
                 case "event":
                     if (task == null) {
-                        System.out.println("Invalid command, please try again!");
+                        System.out.println("    Invalid command, please try again!");
                         break;
                     } else {
                         int deadlineStartPosition = task.indexOf("/");
@@ -130,16 +130,18 @@ public class Parser {
                         String taskDescription = tasks.get(i).getDescription();
                         if (taskDescription.contains(task)) {
                             ui.printListContents(tasks, i + 1);
+                        } else {
+                            System.out.println("    Task not found, please try again!");
                         }
                     }
                     break;
 
                 default:
-                    System.out.println("Invalid command, please try again!");
+                    System.out.println("    Invalid command, please try again!");
                     break;
                 }
-            } catch (IndexOutOfBoundsException | NullPointerException | InputMismatchException e) {
-                System.out.println("Invalid command, please try again!");
+            } catch (IndexOutOfBoundsException | NullPointerException | NumberFormatException e) {
+                System.out.println("    Invalid command, please try again!");
             }
         }
     }
