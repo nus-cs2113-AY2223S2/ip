@@ -31,7 +31,7 @@ public class Parser {
     /**
      * Parses the input string so that program features can be executed.
      *
-     * @param tasks List of tasks.
+     * @param tasks   List of tasks.
      * @param counter A variable to keep track of the number of tasks being added.
      * @throws DukeException If input is accessing an index that is more than size of the list or 0.
      */
@@ -137,14 +137,16 @@ public class Parser {
                     break;
 
                 case "find":
+                    int tracker = 0;
                     for (int i = 0; i < tasks.size(); i++) {
                         String taskDescription = tasks.get(i).getDescription();
                         if (taskDescription.contains(task)) {
                             ui.printListContents(tasks, i + 1);
-                        } else {
-                            System.out.println("    Task not found, please try again!");
+                            tracker++;
                         }
                     }
+                    if (tracker == 0)
+                        System.out.println("    Task not found, please try again!");
                     break;
 
                 default:
