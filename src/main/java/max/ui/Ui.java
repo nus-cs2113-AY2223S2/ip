@@ -11,8 +11,6 @@ package max.ui;
  * 5. Wrapping messages with brackets
  */
 public class Ui {
-    private final String LOGO = buildLogo();
-
     private static final String BORDER = "────────────────────────────────────────────────────────────";
     private static final String CMD_PROMPT = "~$ ";
     private static final String MESSAGE_GREET = "Hello! I'm Max, your PAWsonal productivity assistant";
@@ -31,7 +29,7 @@ public class Ui {
 
     }
 
-    private static String buildLogo() {
+    private static String getLogo() {
         String logoString = "";
         logoString = logoString.concat(" /$$      /$$  /$$$$$$  /$$   /$$\n");
         logoString = logoString.concat("| $$$    /$$$ /$$__  $$| $$  / $$\n");
@@ -81,7 +79,8 @@ public class Ui {
      * Prints the standard welcome message by MAX
      */
     public void greet() {
-        printMessage(LOGO);
+        String logo = getLogo();
+        printMessage(logo);
         printMessage(MESSAGE_GREET);
         printMessage(MESSAGE_GREET_1);
         printBorder();
@@ -99,15 +98,6 @@ public class Ui {
      */
     public void notifyError() {
         printMessage(MESSAGE_ERROR);
-    }
-
-    /**
-     * Convenience method to get a newline
-     *
-     * @return newline character
-     */
-    public String getNewline() {
-        return NEWLINE;
     }
 
     /**
