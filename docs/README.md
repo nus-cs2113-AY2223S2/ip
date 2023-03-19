@@ -48,6 +48,7 @@ How to use Duke and What features are available:
 2. `mark` command: <a name = "markIt"></a><br />
    --> adds an "X" to indicate that a task is completed<br />
    --> format: mark [index of item to mark]
+
       ```
       >>mark 1
       Item has been marked
@@ -58,6 +59,7 @@ How to use Duke and What features are available:
 3. `unmark` Command: <a name = "unmark"></a><br />
    --> unmarks an item in the todolist by removing the "X"<br />
    --> format: umark [index of item to unmark]
+
       ```
       >>unmark 1
       Item has been unmarked
@@ -111,6 +113,7 @@ How to use Duke and What features are available:
 8. `find` Command <a name = "find"></a><br />
    --> searches for todo items that contain the search key term<br />
    --> format: find [search term]
+
       ```
       >>find buy
       -------TODO-LIST------
