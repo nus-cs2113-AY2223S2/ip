@@ -38,7 +38,7 @@ public class Storage {
     private static final int EMPTY_FILE_TASK_LENGTH = 1;
 
     // Delimiter constants
-    private static final String TASK_NEWLINE_TOKEN = "\n";
+    private static final String TASK_NEWLINE_TOKEN = System.lineSeparator();
     private static final String TASK_DONE_TOKEN = "1";
     private static final String TASK_UNDONE_TOKEN = "0";
     private static final String TASK_TODO_TOKEN = "T";
