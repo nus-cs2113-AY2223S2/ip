@@ -1,6 +1,6 @@
 # User Guide
 
-Duke is a command-line (CLI) chatbot application that helps you keep track of your tasks.
+Nova is a command-line (CLI) chatbot application that helps you keep track of your tasks.
 
 ## Features 
 
@@ -43,7 +43,7 @@ Example of usage:
 
 Expected outcome:
 
-Duke will acknowledge and display the updated list
+Nova will acknowledge and display the updated list
 
 ```
 Here are all of your 3 tasks: 
@@ -63,7 +63,7 @@ Example of usage:
 
 Expected outcome:
 
-Duke will acknowledge the added task and display the updated number of tasks
+Nova will acknowledge the added task and display the updated number of tasks
 
 ```
 I have added this task: 
@@ -82,7 +82,7 @@ e.g. {deadline eat /by 14 July 2023 6pm}
 
 Expected outcome:
 
-Duke will acknowledge the added task and display the updated number of tasks
+Nova will acknowledge the added task and display the updated number of tasks
 
 ```
 I have added this task: 
@@ -101,7 +101,7 @@ e.g. {event sleep /from 1 June /to 2 June}
 
 Expected outcome:
 
-Duke will acknowledge the added task and display the updated number of tasks
+Nova will acknowledge the added task and display the updated number of tasks
 
 ```
 I have added this task: 
@@ -119,7 +119,7 @@ Example of usage:
 
 Expected outcome:
 
-Duke will acknowledge and display the marked task
+Nova will acknowledge and display the marked task
 
 ```
 Nice! This task is completed
@@ -136,7 +136,7 @@ Example of usage:
 
 Expected outcome:
 
-Duke will acknowledge and display the unmarked task
+Nova will acknowledge and display the unmarked task
 
 ```
 Alright, this task has yet to be complete
@@ -153,7 +153,7 @@ Example of usage:
 
 Expected outcome:
 
-Duke will acknowledge, delete the unmarked task and display the updated number of tasks
+Nova will acknowledge, delete the unmarked task and display the updated number of tasks
 
 ```
 Noted. I have deleted this task
@@ -172,7 +172,7 @@ Example of usage:
 
 Expected outcome:
 
-Duke will acknowledge, search for the related tasks and display accordingly 
+Nova will acknowledge, search for the related tasks and display accordingly 
 
 ```
 Here are the matching tasks in your list: 
@@ -190,7 +190,7 @@ Example of usage:
 
 Expected outcome:
 
-Duke will greet you farewell 
+Nova will greet you farewell 
 
 ```
 Goodbye. Hope to see u again :) 
