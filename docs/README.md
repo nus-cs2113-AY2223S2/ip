@@ -1,4 +1,4 @@
-## Duke User Guide
+# DukeMain.Duke project template
 
    ```
    Hello from
@@ -8,6 +8,7 @@
    | |_| | |_| |   <  __/
    |____/ \__,_|_|\_\___|
    ```
+## Duke User Guide
 
 # Features
 
@@ -29,7 +30,7 @@
 How to use Duke and What features are available:
 
 # List
-1. `list` command: <a name = "itemList"></a>
+1. `list` command: <a name = "itemList"></a><br />
    --> renders a list of all the items in the Todo List
 
       ```
@@ -44,10 +45,9 @@ How to use Duke and What features are available:
       ```
 
 # Mark
-2. `mark` command: <a name = "markIt"></a>
-   --> adds an "X" to indicate that a task is completed
-   --> format: mark <index of item to mark>
-   
+2. `mark` command: <a name = "markIt"></a><br />
+   --> adds an "X" to indicate that a task is completed<br />
+   --> format: mark [index of item to mark]
       ```
       >>mark 1
       Item has been marked
@@ -55,10 +55,9 @@ How to use Duke and What features are available:
       ```
 
 # unmark
-3. `unmark` Command: <a name = "unmark"></a>
-   --> unmarks an item in the todolist by removing the "X"
-   --> format: umark <index of item to unmark>
-   
+3. `unmark` Command: <a name = "unmark"></a><br />
+   --> unmarks an item in the todolist by removing the "X"<br />
+   --> format: umark [index of item to unmark]
       ```
       >>unmark 1
       Item has been unmarked
@@ -66,9 +65,9 @@ How to use Duke and What features are available:
       ```
 
 # todo
-4. `todo` command: <a name = "todo"></a>
-   --> adds a todo item
-   --> format: todo <task_description>
+4. `todo` command: <a name = "todo"></a><br />
+   --> adds a todo item<br />
+   --> format: todo [task_description]
 
       ```
       >>todo eat breakfast
@@ -76,11 +75,10 @@ How to use Duke and What features are available:
       Added: [T][ ] eat breakfast
       now you have: 4 tasks in this list.
       ```
-      
 # deadline
-5. `deadline` command <a name = "deadline"></a>
-   --> adds a Deadline item
-   --> format: deadline <task_description> /by <date in YYYY-MM-DD format>
+5. `deadline` command <a name = "deadline"></a><br />
+   --> adds a Deadline item<br />
+   --> format: deadline [task_description] /by [date ONLY in YYYY-MM-DD format]
 
       ```
       >>deadline return book /by 2019-12-01
@@ -90,9 +88,9 @@ How to use Duke and What features are available:
       ```
 
 # event
-6. `event` command: <a name = "event"></a>
-   --> adds an Event item
-   --> format: event <task_description> /from <start_date> /to <end_date>
+6. `event` command: <a name = "event"></a><br />
+   --> adds an Event item<br />
+   --> format: event [task_description] /from [start_date] /to [end_date]
 
       ```
       >>event project meeting /from Mon 2pm /to 4pm
@@ -102,19 +100,17 @@ How to use Duke and What features are available:
       ```
 
 # delete
-7. `delete` Command: <a name = "delete"></a>
-   --> deletes item from the todo list
-   --> format: delete <index of item to delete>
-   
+7. `delete` Command: <a name = "delete"></a><br />
+   --> deletes item from the todo list<br />
+   --> format: delete [index of item to delete]
       ```
       >>delete 2
       i have deleted the task: buy book
       ```
-      
 # find
-8. `find` Command <a name = "find"></a>
-   --> searches for todo items that contain the search key term
-   
+8. `find` Command <a name = "find"></a><br />
+   --> searches for todo items that contain the search key term<br />
+   --> format: find [search term]
       ```
       >>find buy
       -------TODO-LIST------
@@ -125,7 +121,7 @@ How to use Duke and What features are available:
       ```
    
 # bye
-9. `bye` Command: <a name = "bye"></a>
+9. `bye` Command: <a name = "bye"></a><br />
    --> exits the program
 
    ```

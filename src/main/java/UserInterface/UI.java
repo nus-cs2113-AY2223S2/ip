@@ -22,7 +22,7 @@ public class UI {
     }
 
     /**
-     * prints every item that is still on the todo list
+     * prints every item that is in the todo list
      * @param todoItems - an arraylist of type Todos that contains all the events, deadlines and todos.
      */
     public static void ListItems(ArrayList<Todos> todoItems) {
@@ -71,15 +71,15 @@ public class UI {
     public static void addEvent(String UserInput, ArrayList<Todos> todoItems) {
         System.out.println("Got it, ive done the Following");
         System.out.println("Added: " + UserInput);
-        System.out.println("now you have: " + todoItems.size() + " tasks in this list.");
         Event Item = new Event(UserInput, false, "E");
         todoItems.add(Item);
+        System.out.println("now you have: " + todoItems.size() + " tasks in this list.");
     }
 
     /**
      * method that deletes the user requested item from the todo list
      * @param todoItems - the arraylist that will contain the item to be deleted
-     * @param UserInput - a String that contains the info on which item to delet
+     * @param UserInput - a String that contains the info on which item to delete
      */
     public static void DeleteItem(ArrayList<Todos> todoItems, String UserInput) {
         System.out.println("i have deleted the task:" + todoItems.get(Integer.parseInt(UserInput.substring(7))-1).item);
@@ -97,7 +97,6 @@ public class UI {
         UserInput = UserInput.substring(UserInput.indexOf(" ") + 1, UserInput.indexOf('/') - 1) + " (by: " + date + ")";
         System.out.println("Got it, ive done the Following");
         System.out.println("Added: " + UserInput);
-        System.out.println("now you have: " + todoItems.size() + " tasks in this list.");
     }
 
     /**
@@ -127,9 +126,9 @@ public class UI {
     }
 
     /**
-     * takes in the input String from the user via teh CLI using javas Scanner
+     * takes in the input String from the user via the CLI using java's Scanner
      *
-     * @return returns the input from teh user as a String
+     * @return returns the input from the user as a String
      */
     public static String GetInput() {
         Scanner ReadingUserInput = new Scanner(System.in);

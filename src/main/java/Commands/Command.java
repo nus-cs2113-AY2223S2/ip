@@ -19,7 +19,7 @@ public class Command {
     }
 
     /**
-     * executes a command(mark, unmark, delete, list etc) based on user instrcution
+     * executes a command(mark, unmark, delete, list etc) based on user instruction
      *
      * @param UserInput - string that contains the user instructions
      * @param todoItems - an array that stores all the Todos Object
@@ -53,6 +53,7 @@ public class Command {
                 Deadline Item = new Deadline(UserInput.replace("/", ""), false, "D", dueBy);
                 todoItems.add(Item);
                 DukeFile.WriteToFile(todoItems);
+                System.out.println("now you have: " + todoItems.size() + " tasks in this list.");
                 break;
             }
             case "todo": {

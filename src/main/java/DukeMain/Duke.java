@@ -2,19 +2,10 @@ package DukeMain;
 
 import Commands.Command;
 import ErrorHandling.ErrorHandler;
-
 import FileIO.DukeFile;
-
-import Parser.parseEventString;
-import TaskItems.Deadline;
-import TaskItems.Event;
 import TaskItems.Todos;
-
 import UserInterface.UI;
-
-import java.io.File;
 import java.io.IOException;
-import java.util.Scanner;
 import java.util.ArrayList;
 
 public class Duke {
@@ -28,7 +19,7 @@ public class Duke {
         ArrayList<Todos> todoItems = DukeFile.CreateFile();
 
         while (!UserInput.equalsIgnoreCase("bye")) {
-            if (!ErrorHandler.isInputValid(UserInput)) {
+            if (!ErrorHandler.isInputValid(UserInput, todoItems.size())) {
                 UserInput = UI.GetInput();
                 continue;
             }
