@@ -30,10 +30,6 @@ public class Ui {
         System.exit(0);
     }
 
-    public void showError(String error) {
-        System.out.println("    " + error);
-    }
-
     public void printListContents(ArrayList<Todo> tasks, int counter) {
         for (int i = 0; i < counter; ++i) {
             if (tasks.get(i).isDone) {
@@ -58,6 +54,10 @@ public class Ui {
         System.out.println("    _________________________________________");
         System.out.println("    " + taskNumber + "." + "[X] " + tasks.get(taskNumber - 1).getDescription());
         System.out.println("    _________________________________________");
+    }
+
+    public void printAddedAcknowledgment(int counter) {
+        System.out.println("    Now you have " + counter + " tasks in your list!");
     }
 }
 

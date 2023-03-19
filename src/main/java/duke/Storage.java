@@ -97,7 +97,8 @@ public class Storage {
             if (classType.equalsIgnoreCase("Class Duke.Todo")) {
                 fw.println("todo " + tasks.get(i).getDescription());
             } else if (classType.equalsIgnoreCase("Class Duke.Event")) {
-                fw.println("event " + tasks.get(i).getDescription() + "/" + tasks.get(i).getBy() + "|" + tasks.get(i).getEnd());
+                fw.println("event " + tasks.get(i).getDescription() + "/" + tasks.get(i).getBy() + "|" +
+                            tasks.get(i).getEnd());
             } else if (classType.equalsIgnoreCase("Class Duke.Deadline")) {
                 fw.println("deadline " + tasks.get(i).getDescription() + "/" + tasks.get(i).getBy());
             }

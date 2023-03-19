@@ -1,6 +1,7 @@
 package duke;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Parser {
@@ -21,15 +22,6 @@ public class Parser {
 
     public void markAsDone(ArrayList<Todo> tasks, int taskNumber) {
         tasks.get(taskNumber - 1).setDone(true);
-    }
-
-    public void execute(ArrayList<Todo> tasks, int counter) throws DukeException {
-        try {
-            parse(tasks, counter);
-        } catch (DukeException e) {
-            System.out.println("Please try again");
-            parse(tasks, counter);
-        }
     }
 
     public void parse(ArrayList<Todo> tasks, int counter) throws DukeException {
@@ -78,35 +70,50 @@ public class Parser {
                     break;
 
                 case "todo":
-                    tasks.add(new Todo(task));
-                    tasks.get(counter).print();
-                    counter++;
-                    System.out.println("    Now you have " + counter + " tasks in your list!");
-                    break;
+                    if (task == null) {
+                        System.out.println("Invalid command, please try again!");
+                        break;
+                    } else {
+                        tasks.add(new Todo(task));
+                        tasks.get(counter).print();
+                        counter++;
+                        ui.printAddedAcknowledgment(counter);
+                        break;
+                    }
 
                 case "deadline":
-                    int deadlinePosition = task.indexOf("/");
-                    int endOfLine = task.length();
-                    String taskName = task.substring(0, deadlinePosition);
-                    String deadline = task.substring(deadlinePosition + 1, endOfLine);
-                    tasks.add(new Deadline(taskName, deadline));
-                    tasks.get(counter).print();
-                    counter++;
-                    System.out.println("    Now you have " + counter + " tasks in your list!");
-                    break;
+                    if (task == null) {
+                        System.out.println("Invalid command, please try again!");
+                        break;
+                    } else {
+                        int deadlinePosition = task.indexOf("/");
+                        int endOfLine = task.length();
+                        String taskName = task.substring(0, deadlinePosition);
+                        String deadline = task.substring(deadlinePosition + 1, endOfLine);
+                        tasks.add(new Deadline(taskName, deadline));
+                        tasks.get(counter).print();
+                        counter++;
+                        ui.printAddedAcknowledgment(counter);
+                        break;
+                    }
 
                 case "event":
-                    int deadlineStartPosition = task.indexOf("/");
-                    int deadlineEndPosition = task.indexOf("|");
-                    endOfLine = task.length();
-                    taskName = task.substring(0, deadlineStartPosition);
-                    String deadlineStart = task.substring(deadlineStartPosition + 1, deadlineEndPosition);
-                    String deadlineEnd = task.substring(deadlineEndPosition + 1, endOfLine);
-                    tasks.add(new Event(taskName, deadlineStart, deadlineEnd));
-                    tasks.get(counter).print();
-                    counter++;
-                    System.out.println("    Now you have " + counter + " tasks in your list!");
-                    break;
+                    if (task == null) {
+                        System.out.println("Invalid command, please try again!");
+                        break;
+                    } else {
+                        int deadlineStartPosition = task.indexOf("/");
+                        int deadlineEndPosition = task.indexOf("|");
+                        int endOfLine = task.length();
+                        String taskName = task.substring(0, deadlineStartPosition);
+                        String deadlineStart = task.substring(deadlineStartPosition + 1, deadlineEndPosition);
+                        String deadlineEnd = task.substring(deadlineEndPosition + 1, endOfLine);
+                        tasks.add(new Event(taskName, deadlineStart, deadlineEnd));
+                        tasks.get(counter).print();
+                        counter++;
+                        ui.printAddedAcknowledgment(counter);
+                        break;
+                    }
 
                 case "delete":
                     taskNumber = getTaskNumber(task) - 1;
@@ -119,21 +126,20 @@ public class Parser {
                     break;
 
                 case "find":
-                    String keyword = task;
                     for (int i = 0; i < tasks.size(); i++) {
                         String taskDescription = tasks.get(i).getDescription();
                         if (taskDescription.contains(task)) {
-                            System.out.print("    " + (tasks.indexOf(tasks.get(i)) + 1) + ".");
-                            tasks.get(i).printInList();
+                            ui.printListContents(tasks, i + 1);
                         }
                     }
+                    break;
 
                 default:
                     System.out.println("Invalid command, please try again!");
                     break;
                 }
-            } catch (IndexOutOfBoundsException | NullPointerException e) {
-                System.out.println("try again");
+            } catch (IndexOutOfBoundsException | NullPointerException | InputMismatchException e) {
+                System.out.println("Invalid command, please try again!");
             }
         }
     }
