@@ -18,6 +18,7 @@ MAX is your *paw*-sonal productivity to help you *MAX*-imize your productivity!
 ## Table of Contents
 
 - [MAX User Guide](#max-user-guide)
+- 
   - [Features](#features)
     - [Task Creation](#task-creation)
     - [Task Management](#task-management)
