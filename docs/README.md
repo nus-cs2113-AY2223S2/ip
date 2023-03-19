@@ -18,22 +18,30 @@ MAX is your *paw*-sonal productivity to help you *MAX*-imize your productivity!
 ## Table of Contents
 
 - [MAX User Guide](#max-user-guide)
-- 
-  - [Features](#features)
-    - [Task Creation](#task-creation)
-    - [Task Management](#task-management)
-    - [Persistent State](#persistent-state)
-  - [Usage](#usage)
-    - [`todo` - Add a TODO task](#todo---add-a-todo-task)
-    - [`deadline` - Add a Deadline Task](#deadline---add-a-deadline-task)
-    - [`event` - Add an Event Task](#event---add-an-event-task)
-    - [`list` - Get your Task List](#list---get-your-task-list)
-    - [`mark` - Tag task as done](#mark---tag-task-as-done)
-    - [`unmark` - Tag task as undone](#unmark---tag-task-as-undone)
-    - [`delete` - Remove a Task](#delete---remove-a-task)
-    - [`fetch` or `find` - Query for a task](#fetch-or-find---query-for-a-task)
-    - [`debug` - Activate debug mode](#debug---activate-debug-mode)
-    - [`exit` - Exit MAX](#exit---exit-max)
+    - [Starting Max](#starting-max)
+    - [Features](#features)
+        - [Task Creation](#task-creation)
+        - [Task Management](#task-management)
+        - [Persistent State](#persistent-state)
+    - [Usage](#usage)
+        - [`todo` - Add a TODO task](#todo---add-a-todo-task)
+        - [`deadline` - Add a Deadline Task](#deadline---add-a-deadline-task)
+        - [`event` - Add an Event Task](#event---add-an-event-task)
+        - [`list` - Get your Task List](#list---get-your-task-list)
+        - [`mark` - Tag task as done](#mark---tag-task-as-done)
+        - [`unmark` - Tag task as undone](#unmark---tag-task-as-undone)
+        - [`delete` - Remove a Task](#delete---remove-a-task)
+        - [`fetch` or `find` - Query for a task](#fetch-or-find---query-for-a-task)
+        - [`debug` - Activate debug mode](#debug---activate-debug-mode)
+        - [`exit` - Exit MAX](#exit---exit-max)
+
+## Starting Max
+
+To start `Max` Using the `jar` file, go to the containing folder for Max. Then, on your terminal of choice, run:
+
+```
+-$ java -jar ip.jar
+```
 
 ## Features
 
