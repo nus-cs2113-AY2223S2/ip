@@ -1,11 +1,28 @@
 package duke;
 
-import java.io.*;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * <code>Storage</code> deals with data management of list data on disk.
+ */
 public class Storage {
 
+    /**
+     * Creates a new .txt file to store list data. If such a file already exits, then data from the file is parsed and
+     * loaded back into the list for the user to interact with.
+     *
+     * @param tasks List of tasks.
+     * @param counter A variable to keep track of the number of tasks being added.
+     * @param absoluteFilePath The file path of the working directory
+     * @return Counter to keep track of the number of files being added
+     * @throws DukeException If file path cannot be detected
+     */
     public int initializeList(ArrayList<Todo> tasks, int counter, String absoluteFilePath) throws DukeException {
         String taskType;
         String task = null;
@@ -27,7 +44,7 @@ public class Storage {
         try {
             scanner = new Scanner(new File(absoluteFilePath));
         } catch (FileNotFoundException e) {
-            throw new DukeException("No List");
+            throw new DukeException("Disk error");
         }
 
         while (scanner.hasNextLine()) {
@@ -75,6 +92,11 @@ public class Storage {
         return counter;
     }
 
+    /**
+     * Finds file path of existing .txt file
+     *
+     * @return File path of .txt file
+     */
     public String findFilePath() {
         String workingDirectory = System.getProperty("user.dir");
         String filename = "list.txt";
@@ -83,6 +105,14 @@ public class Storage {
         return absoluteFilePath;
     }
 
+    /**
+     * Writes the list data to .txt file on disk
+     *
+     * @param tasks List of tasks.
+     * @param absoluteFilePath The file path of the working directory
+     * @param counter A variable to keep track of the number of tasks being added.
+     * @throws DukeException If .txt file cannot be found
+     */
     public void writeToFile(ArrayList<Todo> tasks, String absoluteFilePath, int counter) throws DukeException {
         PrintStream fw = null;
         try {

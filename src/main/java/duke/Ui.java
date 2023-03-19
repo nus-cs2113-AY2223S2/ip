@@ -2,6 +2,9 @@ package duke;
 
 import java.util.ArrayList;
 
+/**
+ * <code>Ui</code> deals with interactions with the user by printing messages to display to the user
+ */
 public class Ui {
 
     public void showLine() {

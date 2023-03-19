@@ -1,13 +1,16 @@
 package duke;
 
 import java.util.ArrayList;
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
+/**
+ * Parses user input and executes program features
+ */
 public class Parser {
     Ui ui = new Ui();
     Storage storage = new Storage();
 
+    //Detects user input from scanner and returns it as a string
     public String getInputString() {
         String inputString;
         Scanner in;
@@ -20,10 +23,18 @@ public class Parser {
         return Integer.parseInt(task);
     }
 
+    //Marks tasks in the list as done
     public void markAsDone(ArrayList<Todo> tasks, int taskNumber) {
         tasks.get(taskNumber - 1).setDone(true);
     }
 
+    /**
+     * Parses the input string so that program features can be executed.
+     *
+     * @param tasks List of tasks.
+     * @param counter A variable to keep track of the number of tasks being added.
+     * @throws DukeException If input is accessing an index that is more than size of the list or 0.
+     */
     public void parse(ArrayList<Todo> tasks, int counter) throws DukeException {
         boolean exit = false;
 
