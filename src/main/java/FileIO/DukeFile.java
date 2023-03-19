@@ -27,7 +27,7 @@ public class DukeFile {
     /**
      * takes each line from the Data.txt file and parses them into their relevant classes and appends to teh ArrayList
      * @param fileName - the name of the file which stores the Data
-     * @return an ArrayLIst of type Todods that contains all the events, deadlines and events
+     * @return an ArrayLIst of type Todos that contains all the events, deadlines and events
      * @throws IOException
      */
     public static ArrayList<Todos> loadListFromFile(String fileName) throws IOException {
@@ -45,7 +45,7 @@ public class DukeFile {
     }
 
     /**
-     * creates a new file to store the ArrayList items so they can be reloaded when program runs again.
+     * creates a new file to store the ArrayList items so that they can be reloaded when program runs again.
      * @return an arraylist of type todos that contains the events, deadlines and todos.
      * @throws IOException
      */
