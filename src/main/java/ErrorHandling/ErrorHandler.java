@@ -28,7 +28,7 @@ public class ErrorHandler {
             if(hasValidNum(input, "delete")) {
                 itemToDel = Integer.parseInt(input.split(" ")[1]);
             }
-            if (itemToDel > todoLen || itemToDel < 0) {
+            if (itemToDel > todoLen || itemToDel < 1) {
                 System.out.println("Item to delete doesn't exist");
                 return false;
             }
@@ -38,7 +38,7 @@ public class ErrorHandler {
             if(hasValidNum(input, "Mark")) {
                 itemToMark = Integer.parseInt(input.split(" ")[1]);
             }
-            if (itemToMark > todoLen || itemToMark <= 0) {
+            if (itemToMark > todoLen || itemToMark < 1) {
                 System.out.println("Item to Mark doesn't exist");
                 return false;
             }
@@ -48,7 +48,7 @@ public class ErrorHandler {
             if(hasValidNum(input, "Mark")) {
                 itemToUnMark = Integer.parseInt(input.split(" ")[1]);
             }
-            if (itemToUnMark > todoLen || itemToUnMark < 0) {
+            if (itemToUnMark > todoLen || itemToUnMark < 1) {
                 System.out.println("Item to unmark doesn't exist");
                 return false;
             }
