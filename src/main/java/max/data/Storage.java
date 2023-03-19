@@ -60,7 +60,7 @@ public class Storage {
     private static final String MESSAGE_BAD_TASK = "\nBad task: ";
     private static final String MESSAGE_COLON_SEPARATOR = ": ";
     private static Ui ui;
-    Path maxDataDirectory;
+    private Path maxDataDirectory;
 
     /**
      * Constructs a Storage class instance to help with saving/loading of data
