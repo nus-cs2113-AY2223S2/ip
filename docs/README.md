@@ -104,3 +104,34 @@ After listing (see list), your list should have:
 0. [T] [X] task0
 1. [D] [ ] task1 (by: tomorrow)
 ```
+
+### `Keyword` - unmark
+
+Marks task as complete based on index on list. 
+
+Example of usage: 
+
+unmark 0
+
+After listing (see list), your list should have:
+
+```
+0. [T] [ ] task0
+1. [D] [ ] task1 (by: tomorrow)
+```
+
+### `Keyword` - find
+
+Finds task based on keyword typed in.
+
+Example of usage: 
+
+find task
+
+After listing (see list), your list should have:
+
+```
+Here are the following Tasks that have names containing your keyword:
+0. [T] [X] task0
+1. [D] [ ] task1 (by: tomorrow)
+```
