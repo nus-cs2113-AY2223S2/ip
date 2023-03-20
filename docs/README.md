@@ -33,7 +33,9 @@ Copy the file to a folder where you want to run it from.
 
 Using the terminal, navigate to the path of ip.jar.
 
+
 Run java -jar ip.jar duke.Duke ,and it should work
+
 ### Feature-Save your tasks
 
 It will help you list down all your task, deadline, events and todo into a txt document.
@@ -46,7 +48,9 @@ It will display all of your task in your list
 =======
 ### Feature - Help write down your tasks
 
+
 You can write down all your dealines,events,todo ,and it will be automatically saved in a txt document.
+
 
 
 
@@ -86,7 +90,8 @@ Expected outcome:
 ```
 
 Got it. I've added this task:
-[D][X] Submit movie review by: 12 feb
+
+[D][X] Submit movie review (by: 12 feb)
 Now you have 1 tasks in the list.
 
 ```
@@ -96,7 +101,7 @@ Adds an Event to the task list.
 
 Example of usage:
 
-`event project meeting /at 2pm-4pm`
+`event project meeting /from Mon 2pm /to 4pm`
 
 Expected outcome:
 
@@ -105,7 +110,7 @@ Expected outcome:
 ```
 
 Got it. I've added this task:
-[E][X] project meeting at 2pm-4pm
+[E][X] project meeting (from: Mon 2pm to: 4pm)
 Now you have 1 tasks in the list.
 
 ```
@@ -115,7 +120,7 @@ Adds a todo to the task list.
 
 Example of usage:
 
-`todo read book`
+`event read book`
 
 Expected outcome:
 
@@ -142,9 +147,8 @@ Expected outcome:
 
 ```
 
-Noted. I've removed this task
+Deleting.....Done!!
 [T][X] read book
-Now you have 4 tasks in the list.
 
 ```
 ### `mark`
@@ -161,8 +165,27 @@ Expected outcome:
 
 ```
 
-Noted marking the task now!!
+Nice! I've marked this task as done:
 [T][V] read book
+
+```
+### `unmark`
+
+Unmark a task from your task list
+
+Example of usage:
+
+`unmark 1`
+
+Expected outcome:
+
+
+
+```
+
+Never-mind!! Unmarking
+[T][X] read book
+
 
 ```
 ### `find`
@@ -182,7 +205,9 @@ Expected outcome:
 Here are the matching tasks in your list:
 1.[T][X] read book
 
+
 ```
+
 ### `bye`
 
 end the duke chatbot
