@@ -1,8 +1,8 @@
-//package Duke.java;
+package duke.tasks;
 
 public class Deadline extends Task {
 
-    protected String by;
+    private final String by;
 
     public Deadline(String description, String by) {
         super(description);
@@ -10,8 +10,8 @@ public class Deadline extends Task {
     }
 
     @Override
-    public String toString() {
+    public String getTask() {
 
-        return "[D]" + super.toString() + " (by: " + by + ")";
+        return String.format("[D]" + super.getTask() + " by: " + by);
     }
 }

@@ -1,4 +1,4 @@
-//package Duke.java;
+package duke.tasks;//package Duke.java;
 
 public class Task {
     protected String description;
@@ -24,7 +24,7 @@ public class Task {
         this.isDone = false;
     }
 
-    public String toString() {
+    public String getTask() {
 
         return String.format("[%s] %s", getStatusIcon(), description);
     }

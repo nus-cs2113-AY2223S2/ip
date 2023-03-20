@@ -1,4 +1,4 @@
-//package Duke.java;
+package duke.tasks;//package Duke.java;
 
 public class Todo extends Task {
     public Todo(String description) {
@@ -7,7 +7,7 @@ public class Todo extends Task {
     }
 
     @Override
-    public String toString() {
-        return String.format("[T]" + super.toString());
+    public String getTask() {
+        return String.format("[T]" + super.getTask());
     }
 }
