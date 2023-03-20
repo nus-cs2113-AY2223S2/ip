@@ -1,9 +1,4 @@
-package duke;
-
-import duke.task.Deadline;
-import duke.task.Event;
-import duke.task.Task;
-import duke.task.Todo;
+package elzi;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -14,10 +9,15 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Scanner;
 
+import elzi.task.Deadline;
+import elzi.task.Event;
+import elzi.task.Task;
+import elzi.task.Todo;
+
+
 /**
  * @author : Steven A. O. Waskito
- * @mailto : e0851459@u.nus.edu
- * @created : 3 February 2023
+ * Class Storage handles saving and loading of file from harddisk
  **/
 public class Storage {
     public final Path FILE_PATH;
@@ -26,7 +26,12 @@ public class Storage {
         FILE_PATH = Paths.get("data/storage.txt");
     }
 
-    public void saveFile(TaskList taskList) throws DukeException {
+    /**
+     * Saves the program taskList to FILE_PATH in the harddisk
+     * @param taskList ArrayList that stores tasks
+     * @throws ElziException if IO Error occurred
+     */
+    public void saveFile(TaskList taskList) throws ElziException {
         try {
             FileWriter fileWriter = new FileWriter(FILE_PATH.toString());
             String textToWrite = "";
@@ -40,18 +45,28 @@ public class Storage {
             fileWriter.write(textToWrite);
             fileWriter.close();
         } catch (IOException e) {
-            throw new DukeException("IO ERROR");
+            throw new ElziException("IO ERROR");
         }
 
     }
-    // Credits
-    // https://stackoverflow.com/questions/2833853/create-whole-path-automatically-when-writing-to-a-new-file
+
+    /**
+     * Create a new file in FILE_PATH directory
+     *    Credits
+     *    https://stackoverflow.com/questions/2833853/create-whole-path-automatically-when-writing-to-a-new-file
+     * @throws IOException if IO Error occurred
+     */
     public void createFile() throws IOException {
         Files.createDirectories(FILE_PATH.getParent());
         Files.createFile(FILE_PATH);
     }
 
-    public TaskList readFile() throws DukeException {
+    /**
+     * Read the file in FILE_PATH directory
+     * @return taskList the file taskList read
+     * @throws IOException if file reading error occurred (incorrect format, file creation error)
+     */
+    public TaskList readFile() throws ElziException {
         TaskList taskList = new TaskList(200);
 
         try {
@@ -77,7 +92,7 @@ public class Storage {
                     task = new Event(description, inputs[3], inputs[4]);
                     break;
                 default:
-                    throw new DukeException("Invalid file reading");
+                    throw new ElziException("Invalid file reading");
                 }
                 if (mark.equals("1")) {
                     task.setAsDone();
@@ -91,7 +106,7 @@ public class Storage {
             try {
                 createFile();
             } catch (IOException f) {
-                throw new DukeException("FILE CREATION ERROR");
+                throw new ElziException("FILE CREATION ERROR");
             }
         }
         return taskList;
