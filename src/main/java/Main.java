@@ -20,8 +20,12 @@ public class Main {
             if (commandPhrase.length < 2) {
                 if (command.equals("bye")) {
                     break;
+                } else if (command.equals("clear")) {
+                    Duke.tasks.clearTaskList();
                 } else if (command.equals("list")) {
                     Duke.tasks.list();
+                } else if (command.equals("overdue")) {
+                    Duke.tasks.listOverdue();
                 } else {
                     System.out.println("Invalid command");
                 }
@@ -41,14 +45,11 @@ public class Main {
                     Duke.tasks.delete(Integer.parseInt(phrase));
                 } else if (command.equals("find")) {
                     Duke.tasks.find(phrase);
-                } else if (command.equals("overdue")) {
-                    Duke.tasks.listOverdue();
-                    ;
                 } else {
                     System.out.println("Invalid command");
                 }
             }
-            Storage.saveToFile();
+            Duke.storage.saveToFile(Duke.tasks);
             UI.horizontalLine();
         }
         userInput.close();

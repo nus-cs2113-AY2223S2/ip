@@ -9,6 +9,7 @@ import java.time.format.FormatStyle;
  */
 public class Deadline extends Task {
     public LocalDate due;
+    public String dueText;
     public String[] info;
     public String deadlineName;
     public boolean isOverdue;
@@ -17,18 +18,44 @@ public class Deadline extends Task {
         super(description);
         this.info = this.description.split("/by", 2);
         this.deadlineName = info[0];
-        this.due = LocalDate.parse(info[1]);
-        this.isOverdue = due.isAfter(LocalDate.now());
+        this.due = isValid((info[1]).trim());
+        if (this.due == null) {
+            this.dueText = (info[1]).trim();
+            System.out.println("Due date is not in yyyy-MM-dd format, will be saved as text");
+        } else if (this.due.isBefore(LocalDate.now())) {
+            this.isOverdue = true;
+        }
+
+    }
+
+    private LocalDate isValid(String date) {
+        try {
+            return LocalDate.parse(date);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @Override
     public String fileFormat() {
-        return (String.format("D|%b|%s by %s", super.isDone, this.deadlineName,
-                due.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM))));
+        DateTimeFormatter yyyyMMdd = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        if (this.due != null) {
+            return (String.format("D|%b|%s /by %s\n", super.isDone, this.deadlineName,
+                    due.format(yyyyMMdd)));
+        } else {
+            return (String.format("D|%b|%s /by %s\n", super.isDone, this.deadlineName, this.dueText));
+        }
     }
 
     @Override
     public String toString() {
-        return ("[D][" + super.getStatusIcon() + "] " + this.deadlineName) + " (by:  " + this.due + ")";
+        DateTimeFormatter yyyyMMdd = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        if (this.due != null) {
+            return ("[D][" + super.getStatusIcon() + "] " + this.deadlineName) +
+                    " (by: " + this.due.format(yyyyMMdd) + ")";
+        } else {
+            return ("[D][" + super.getStatusIcon() + "] " + this.deadlineName) +
+                    " (by: " + this.dueText + ")";
+        }
     }
 }

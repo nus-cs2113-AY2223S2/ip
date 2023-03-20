@@ -6,13 +6,13 @@ import java.io.IOException;
 
 /*
  * TaskList is the class of Duke which contains the list of tasks and methods to makes changes to the list
- * It contains only the ArrayList taskList
+ * It contains only the ArrayList tasks
  */
 public class TaskList {
-    private static List<Task> taskList = new ArrayList<Task>();
+    private List<Task> tasks = new ArrayList<Task>();
 
     /*
-     * Writes file data from file scanned from file to taskList object
+     * Writes file data from file scanned from file to tasks object
      * Uses <code>Scanner</code> to read contents from file, splits content into
      * String[]
      * 
@@ -20,104 +20,73 @@ public class TaskList {
      * 
      * @throws IOException if file data is not formatted as specified
      */
-    public void Tasklist(File file) {
-        String data;
-        try {
-            if (!file.createNewFile()) {
-                Scanner fileData = new Scanner(file);
-                while (fileData.hasNext()) {
-                    data = fileData.nextLine();
-                    String[] inputArgs = data.split("|");
-                    addFileData(inputArgs);
-                }
-                fileData.close();
-            }
-        } catch (IOException e) {
-            System.out.print("\nError getting file data");
-        }
-        System.out.println("These are the tasks from your file:\n");
+    public void Tasklist() {
+        this.tasks = new ArrayList<Task>();
     }
 
     /*
      * Formats file data retrieved by Tasklist, parses String[] and adds them to
-     * taskList as Todo, Event or Deadline subclasses
+     * tasks as Todo, Event or Deadline subclasses
      */
-    private static void addFileData(String[] inputArgs) {
-        Task newTask;
-        String command = inputArgs[0];
-        boolean taskStatus = Boolean.parseBoolean(inputArgs[1]);
-        switch (command) {
-            case "T":
-                newTask = new Todo(inputArgs[2]);
-                break;
-            case "D":
-                newTask = new Deadline(inputArgs[2]);
-                break;
-            case "E":
-                newTask = new Event(inputArgs[2]);
-                break;
-            default:
-                throw new IllegalStateException("File contents are invalid");
-        }
-        if (taskStatus) {
-            newTask.markAsDone();
-        }
-        taskList.add(newTask);
+
+    public List<Task> returnTaskList() {
+        return tasks;
     }
 
-    public static List<Task> returnTaskList() {
-        return taskList;
+    public void clearTaskList() {
+        tasks.clear();
+        System.out.println("Task list cleared!");
     }
 
     public void addEvent(String taskName) {
         Event t = new Event(taskName);
-        taskList.add(t);
+        tasks.add(t);
         System.out.printf(
                 "Got it. I've added this task:\n" +
                         t.toString() +
-                        String.format("\nNow you have %d tasks in the list.\n", taskList.size()));
+                        String.format("\nNow you have %d tasks in the list.\n", tasks.size()));
     }
 
     public void addTodo(String taskName) {
         Todo t = new Todo(taskName);
-        taskList.add(t);
+        tasks.add(t);
         System.out.printf(
                 "Got it. I've added this task:\n" +
                         t.toString() +
-                        String.format("\nNow you have %d tasks in the list.\n", taskList.size()));
+                        String.format("\nNow you have %d tasks in the list.\n", tasks.size()));
     }
 
     public void addDeadline(String taskName) {
         Deadline t = new Deadline(taskName);
-        taskList.add(t);
+        tasks.add(t);
         System.out.printf(
                 "Got it. I've added this task:\n" +
                         t.toString() +
-                        String.format("\nNow you have %d tasks in the list.\n", taskList.size()));
+                        String.format("\nNow you have %d tasks in the list.\n", tasks.size()));
     }
 
     public void changeTaskState(boolean doneState, Integer index) {
-        if (index > taskList.size()) {
+        if (index > tasks.size() || index < 1) {
             System.out.println("Please input valid task number!");
         } else {
             index--;
             if (doneState) {
-                taskList.get(index).markAsDone();
+                tasks.get(index).markAsDone();
             } else {
-                taskList.get(index).markAsUndone();
+                tasks.get(index).markAsUndone();
             }
         }
     }
 
     public void delete(int index) {
-        if (index > taskList.size()) {
+        if (index > tasks.size() || index < 1) {
             System.out.println("Please input valid task number!");
         } else {
             index--;
             System.out.printf("Noted. I've removed this task:" +
-                    taskList.get(index).toString());
-            taskList.remove(index);
-            System.out.println(String.format("\nNow you have %d tasks in the list.\n", taskList.size()));
+                    tasks.get(index).toString());
+            tasks.remove(index);
+            System.out.println(String.format("\nNow you have %d tasks in the list.\n", tasks.size()));
         }
     }
 
@@ -125,12 +94,12 @@ public class TaskList {
      * Main list method, lists all contents of tasklist
      */
     public void list() {
-        if (taskList.size() == 0) {
+        if (tasks.size() == 0) {
             System.out.println("Task list is empty.");
         } else {
             System.out.println("Here are the tasks in your list:");
             Integer i = 0;
-            for (Task task : taskList) {
+            for (Task task : tasks) {
                 System.out.printf(String.format("%d.%s\n", i + 1, task.toString()));
                 i++;
             }
@@ -141,13 +110,13 @@ public class TaskList {
      * Lists overdue deadline subclass objects in tasklist
      */
     public void listOverdue() {
-        if (taskList.size() == 0) {
+        if (tasks.size() == 0) {
             System.out.println("Task list is empty.");
         } else {
             System.out.println("Here are the overdue deadlines in your list:");
             Integer i = 0;
-            for (Task task : taskList) {
-                if (task instanceof Deadline & ((Deadline) task).isOverdue) {
+            for (Task task : tasks) {
+                if (task instanceof Deadline && ((Deadline) task).isOverdue) {
                     System.out.printf(String.format("%d.%s\n", i + 1, task.toString()));
                     i++;
                 }
@@ -161,12 +130,12 @@ public class TaskList {
      * @param keyword to be searched for
      */
     public void find(String keyword) {
-        if (taskList.size() == 0) {
+        if (tasks.size() == 0) {
             System.out.println("Task list is empty.");
         } else {
             System.out.println("Here are the matching tasks in your list:");
             Integer i = 0;
-            for (Task task : taskList) {
+            for (Task task : tasks) {
                 if (task.description.contains(keyword)) {
                     System.out.printf(String.format("%d.%s\n", i + 1, task.toString()));
                     i++;

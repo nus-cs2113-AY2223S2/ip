@@ -4,17 +4,17 @@
  */
 public class Duke {
 
-    private static String fileName = "duke.txt";
-    private Storage storage;
+    private String fileName = "duke.txt";
+    public Storage storage;
     private UI ui;
     public TaskList tasks;
 
     public Duke() {
         ui = new UI();
-        ui.greet();
         storage = new Storage(fileName);
-        tasks = new TaskList();
-        tasks.Tasklist(storage.load());
+        this.tasks = new TaskList();
+        storage.load(tasks);
+        ui.greet(tasks);
     }
 
     // public void addTask(String taskName){

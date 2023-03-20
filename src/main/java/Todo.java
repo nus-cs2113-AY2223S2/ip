@@ -14,6 +14,6 @@ public class Todo extends Task {
 
     @Override
     public String fileFormat() {
-        return (String.format("T|%b|%s", super.isDone, this.description));
+        return (String.format("T|%b|%s\n", super.isDone, this.description));
     }
 }

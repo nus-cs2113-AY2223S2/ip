@@ -16,7 +16,7 @@ public class Event extends Task {
 
     @Override
     public String fileFormat() {
-        return (String.format("E|%b|%s /from %s /to %s", super.isDone, this.eventName, this.startTime, this.endTime));
+        return (String.format("E|%b|%s /from %s /to %s\n", super.isDone, this.eventName, this.startTime, this.endTime));
     }
 
     @Override
