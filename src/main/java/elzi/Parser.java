@@ -15,7 +15,7 @@ import elzi.task.Todo;
 /**
  * @author : Steven A. O. Waskito
  * Class Parser parses the command input
- * Returns command to Duke.java
+ * Returns command to Elzi.java
  **/
 public class Parser {
     /**

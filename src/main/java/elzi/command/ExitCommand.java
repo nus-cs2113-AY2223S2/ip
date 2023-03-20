@@ -12,7 +12,7 @@ public class ExitCommand extends Command {
     }
 
     /**
-     * Exits the program by returning true to Duke
+     * Exits the program by returning true to Elzi
      * @param taskList taskList ArrayList that stores tasks
      */
     @Override
