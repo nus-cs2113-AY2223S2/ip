@@ -6,6 +6,8 @@ import java.util.ArrayList;
 
 /* Represent the TaskList, and some functions to deal with messages */
 public class TaskList {
+    public ArrayList<Task> data;
+
     public TaskList() {
     }
     public static final int MAX_NUM_OF_TASKS = 100;

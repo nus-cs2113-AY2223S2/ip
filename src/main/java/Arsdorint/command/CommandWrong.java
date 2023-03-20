@@ -16,6 +16,12 @@ public class CommandWrong extends Command {
     public String top = "=( OOPS!!! I'm sorry, but I don't know what that means :-(\n" + MESSAGE_DIVIDER;
     public String bottom = "Error: Lack / Wrong description format of the command";
 
+    /**
+     * Execution in case the command is not in the command list
+     *
+     * @return printing the COMMAND_WRONG message
+     *
+     */
     @Override
     public CommandRes execute() {
         return new CommandRes(this.top, null, this.bottom);

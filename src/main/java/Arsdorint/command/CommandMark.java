@@ -21,6 +21,12 @@ public class CommandMark extends Command {
     public static final String MESSAGE_TOP = "\nGot it. I've marked this task as done:\n" + "\t";
     public int[] idx;
 
+    /**
+     * Execution of the "mark" command
+     *
+     * @return printing the task to be marked with an "X" in its box
+     *
+     */
     @Override
     public CommandRes execute() {
         for (int i = 0; i < idx.length; i++) {

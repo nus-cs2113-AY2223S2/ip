@@ -20,6 +20,9 @@ public class Deadline extends Task {
         }
     }
 
+    /**
+     * Initiate with status
+     */
     public Deadline(boolean status, String description, String date) {
         this(description, date);
         this.isDone = status;
@@ -35,11 +38,19 @@ public class Deadline extends Task {
         return (this.taskType + this.getStatus() + " " + this.description + "\t(" + printDate("d MMM yyy") + ")");
     }
 
+    /**
+     * A boolean function to check if the date input is null or not
+     *
+     * @return true if the date is null
+     */
     @Override
     public boolean isDateNull() {
         return (this.date == null ? true : false);
     }
 
+    /**
+     * Print the date in right format (DDDD-MM-YY)
+     */
     public String printDate(String pattern) {
         return (this.date == null) ? this.dateString : this.date.format(DateTimeFormatter.ofPattern(pattern));
     }

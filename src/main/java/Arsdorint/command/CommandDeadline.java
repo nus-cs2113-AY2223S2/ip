@@ -20,6 +20,12 @@ public class CommandDeadline extends Command {
     public String date;
     public ArrayList<Task> task = new ArrayList<Task>();
 
+    /**
+     * Execution of the "deadline" command
+     *
+     * @return printing the deadline's added status to the user
+     *
+     */
     @Override
     public CommandRes execute() {
         Task added = new Deadline(description, date);

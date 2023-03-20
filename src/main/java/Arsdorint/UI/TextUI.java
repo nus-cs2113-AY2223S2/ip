@@ -9,9 +9,23 @@ import java.util.Scanner;
 import static Arsdorint.Arsdorint.logo;
 import static Arsdorint.MessageList.*;
 
+/**
+ * Represent the class taking in user input and display command output
+ */
 public class TextUI {
     public final Scanner input;
     public final PrintStream output;
+    /**
+     * Offset 0 index to 1
+     */
+    public static final int INDEX_OFFSET = 1;
+    /**
+     * Format of indexed list item
+     */
+    private static final String INDEX_LIST_ITEM_FORMAT = "\t%1$d. %2$s";
+    /**
+     * User Prompt
+     */
     public static final String UI_PROMPT = ">>> ";
 
     public TextUI() {
@@ -62,6 +76,10 @@ public class TextUI {
         output.println(MessageList.MESSAGE_DIVIDER);
     }
 
+    /**
+     * Show the message when the user type "exit" command
+     *
+     */
     public void showExitMessage() {
         showToUser(MESSAGE_DIVIDER, EXIT_MESSAGE, MESSAGE_DIVIDER);
     }
@@ -71,6 +89,11 @@ public class TextUI {
         this.showToUser(MessageList.COMMAND_LIST_MESSAGE);
         output.println(MessageList.MESSAGE_DIVIDER);
     }
+
+    /**
+     * Show the welcome message from Arsdorint Team and the command list instruction to the user
+     *
+     */
     public void showHelloMessage() {
         System.out.println("Hello from\n" + logo);
         showToUser(MESSAGE_DIVIDER, HELLO_MESSAGE, COMMAND_LIST_MESSAGE, QUESTION, MESSAGE_DIVIDER);

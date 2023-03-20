@@ -16,6 +16,13 @@ public class CommandFind extends Command {
     public static final String SYNTAX = "Find syntax\n\t>>>find <keyword>";
     public String key;
 
+    /**
+     * Execution of the "find" command
+     *
+     * @return printing the task that match the user's search, or print "no tasks" command in case there are no tasks
+     * match what user search
+     *
+     */
     @Override
     public CommandRes execute() {
         ArrayList<Task> task = new ArrayList<>(TaskList.list.stream().filter(i -> i.description

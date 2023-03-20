@@ -20,6 +20,10 @@ public class Event extends Task {
         this.taskName = TYPE_EVENT;
     }
 
+
+    /**
+     * Initiate with status
+     */
     public Event(boolean status, String description, String date) {
         this(description, date);
         this.isDone = status;
@@ -36,6 +40,11 @@ public class Event extends Task {
         return (this.taskType + this.getStatus() + " " + this.description + "\t(" + printDate("d MMM yyy") + ")");
     }
 
+    /**
+     * A boolean function to check if the date input is null or not
+     *
+     * @return true if the date is null
+     */
     @Override
     public boolean isDateNull() {
         return (this.date == null ? true : false);
