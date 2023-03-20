@@ -12,6 +12,6 @@ public class IncorrectCmd extends Cmd {
 
 	@Override
 	public void execute(TaskList tasks, TextUi ui) {
-		ui.showToUser((feedbackToUser));
+		ui.showToUser(feedbackToUser);
 	}
 }

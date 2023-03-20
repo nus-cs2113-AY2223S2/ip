@@ -64,16 +64,6 @@ public class TaskList {
 		task.setDone(isDone);
 	}
 
-//	/**
-//	 * Updates the {@link #allTasks} if the result contains a list of Tasks.
-//	 */
-//	public static void setLastShownList(TaskList listInResult) {
-//		if (listInResult != null) {
-//			allTasks = (List<Task>) listInResult;
-//		}
-//	}
-
-
 	/**
 	 * Returns an unmodifiable java List view with elements cast as immutable {@link Task}s.
 	 * For use with other methods/libraries.
@@ -82,7 +72,6 @@ public class TaskList {
 	public List<Task> getAllTasks() {
 		return Collections.unmodifiableList(allTasks);
 	}
-
 
     public int size() {
 		return allTasks.size();

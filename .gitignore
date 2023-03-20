@@ -16,3 +16,5 @@ bin/
 /text-ui-test/ACTUAL.TXT
 text-ui-test/EXPECTED-UNIX.TXT
 taskList.txt
+tasks.txt
+src/main/java/META-INF/MANIFEST.MF

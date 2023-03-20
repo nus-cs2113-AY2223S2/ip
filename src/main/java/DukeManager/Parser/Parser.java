@@ -42,6 +42,8 @@ public class Parser {
 			return prepAddEvent(words[1]);
 		case "delete":
 			return prepDeleteCmd(words[1]);
+		case "find":
+			return prepFindCmd(words[1]);
 		case "bye":
 			return new ExitCmd();
 		default:
@@ -133,6 +135,22 @@ public class Parser {
 		} //catch (NumberFormatException nfe) {
 			//return new IncorrectCmd(MSG_INVALID_TASK_DISPLAYED_INDEX);
 		//}
+	}
+
+
+	/**
+	 * Parses arguments in the context of the find task command
+	 *
+	 * @param args full command args string
+	 * @return the prepared command
+	 */
+	private static Cmd prepFindCmd(String args) {
+		try {
+			final String keyword = args.trim();
+			return new FindCmd(keyword);
+		} catch (NumberFormatException nfe) {
+			return new IncorrectCmd(MSG_INVALID_TASK_DISPLAYED_INDEX);
+		}
 	}
 
 	/**
