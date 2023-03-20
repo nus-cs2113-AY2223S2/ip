@@ -1,6 +1,6 @@
-T | 0 | midterm
-D | 0 | midterm | by tommorrow
-D | 0 | midterm | 2023-3-4
-D | 0 | midterm | 2023-03-04
-E | 0 | Open House | at Sunday
-E | 0 | NUS football match | 2023-03-05
+T | false |      midterm     | null
+D | false |      midterm      | null
+D | false |      midterm      | null
+D | false |      midterm      | null
+E | false |      Open House      | null
+E | false |      NUS football match      | null

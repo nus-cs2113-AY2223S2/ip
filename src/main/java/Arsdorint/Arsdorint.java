@@ -1,7 +1,7 @@
 package Arsdorint;
 import Arsdorint.UI.TextUI;
 import Arsdorint.command.*;
-import Arsdorint.data.Storage;
+import Arsdorint.data.StorageClass;
 import Arsdorint.data.TaskList;
 import Arsdorint.parser.TaskParser;
 
@@ -19,7 +19,7 @@ public class Arsdorint {
             + "/_/     \\_\\ |_|   /____/   \\_____|  \\___/  |_|     |_| |_| |_|   |_|\n";
 
     private TextUI UI;
-    private Storage storage;
+    private StorageClass storage;
     private TaskList taskList;
 
     /**
@@ -46,17 +46,17 @@ public class Arsdorint {
 
 
     /**
-     * Setup the required objects, print hello message
+     * Set up the required objects, print hello message
      */
     private void start() {
         this.UI = new TextUI();
         UI.showHelloMessage();
-        this.storage = new Storage();
+        this.storage = new StorageClass();
         try {
             this.taskList = storage.load();
             UI.showToUser(MESSAGE_NEW_FILE);
-        } catch (StorageException err) {
-            UI.showToUser(err.getMessage());
+        } catch (StorageClass.StorageException e) {
+            UI.showToUser(e.getMessage());
             this.taskList = new TaskList();
         }
     }
@@ -81,13 +81,15 @@ public class Arsdorint {
     private void save() {
         try {
             storage.save(taskList);
-        } catch (StorageException e) {
+        } catch (StorageClass.StorageException e) {
             UI.showToUser(e.getMessage());
         }
     }
 
     /**
      * Execute the command
+     *
+     * @param command the input command that the user typed in
      */
     private CommandRes executeCommand(Command command) {
         try {

@@ -14,7 +14,6 @@ public class CommandDate extends Command {
     }
     public static final String COMMAND_NAME = "delete";
     public static final String SYNTAX = "Syntax for date\n\t>>>date <yyyy-mm-dd>";
-    public static final String TOP_MESSAGE = "Tasks occurs on this date";
     public LocalDate date;
 
     /**
@@ -28,8 +27,12 @@ public class CommandDate extends Command {
         ArrayList<Task> task = new ArrayList<>(TaskList.list.stream().filter(i -> !i.isDateNull()).filter
                 (i -> i.getDate().equals(this.date)).collect(Collectors.toList()));
         long count = task.stream().count();
-        String messageTop = count + " tasks happen on this date";
-        return new CommandRes(TOP_MESSAGE, task, "");
+        String messageTop = count + " " + TaskList.printTasksOrTask((int) count)
+                + printOccursOrOccur((int) count) + " on this date";
+        return new CommandRes(messageTop, task, "");
+    }
+    private String printOccursOrOccur(int count) {
+        return (count == 1) ? "occurs" : "occur";
     }
 }
 

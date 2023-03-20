@@ -3,7 +3,10 @@ package Arsdorint.command;
 import Arsdorint.MessageList;
 import Arsdorint.task.Task;
 
+import javax.crypto.spec.OAEPParameterSpec;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.IntStream;
 
 /**
@@ -12,7 +15,7 @@ import java.util.stream.IntStream;
 public class CommandRes {
     public String messageTop = "";
     public String messageBottom = "";
-    public ArrayList<Task> task = null;
+    public List<? extends Task> task;
 
     /**
      * Initialization without task
@@ -48,5 +51,9 @@ public class CommandRes {
         } else {
             return task.stream().map(Task::toString).toArray(String[]::new);
         }
+    }
+
+    public Optional<List<? extends Task>> getTask() {
+        return Optional.ofNullable(task);
     }
 }

@@ -8,6 +8,9 @@ public class Todo extends Task {
         this.taskType = "[T]";
     }
 
+    /**
+     * Initiate with status
+     */
     public Todo(boolean status, String description) {
         this(description);
         this.isDone = status;

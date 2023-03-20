@@ -1,20 +1,15 @@
 package Arsdorint.parser;
 
-import Arsdorint.MessageList;
 import Arsdorint.command.*;
 import Arsdorint.data.TaskList;
 import Arsdorint.task.Deadline;
 import Arsdorint.task.Event;
-import Arsdorint.task.Task;
 import Arsdorint.task.Todo;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
-import static Arsdorint.Arsdorint.*;
 import static Arsdorint.MessageList.*;
-import static Arsdorint.MessageList.MESSAGE_DIVIDER;
-import static Arsdorint.data.Storage.save;
 
 /**
  * A class that handle the parsing of command
@@ -105,7 +100,6 @@ public class TaskParser {
             String[] parsed = command.split(" ");
             if (parsed.length < 1) {
                 throw new ArsdorintException();
-                //System.out.println("Nice! I've marked this task as done: \n");
             } return new CommandMark(strToIntArr(parsed));
         } catch (NumberFormatException | IndexOutOfBoundsException | ArsdorintException err) {
             return new CommandWrong(CommandMark.SYNTAX);
@@ -117,7 +111,6 @@ public class TaskParser {
             String[] parsed = command.split(" ");
             if (parsed.length < 1) {
                 throw new ArsdorintException();
-            //System.out.println("OK, I've marked this task as not done yet: \n");
             } return new CommandUnmark(strToIntArr(parsed));
         } catch (NumberFormatException | IndexOutOfBoundsException | ArsdorintException err) {
             return new CommandWrong(CommandUnmark.SYNTAX);

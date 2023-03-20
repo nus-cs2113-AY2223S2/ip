@@ -22,9 +22,9 @@ public class MessageList {
     public static final String MESSAGE_NO_FILE = "There is no existing file";
     public static final String MESSAGE_WRONG_FILE = "The storage files entry is invalid. Please save to overwrite";
     public static final String MESSAGE_DIVIDER =
-            "________________________________________________________________________________";
+            "____________________________________________________________________________________________________";
     public static final String MESSAGE_DIVIDER_LIST =
-            "______________________________________LIST______________________________________";
+            "________________________________________________LIST________________________________________________";
     public static final String MESSAGE_DELETE = "Noted. I've removed this task:";
     public static final String MESSAGE_UNKNOWN = "unknown message";
 
