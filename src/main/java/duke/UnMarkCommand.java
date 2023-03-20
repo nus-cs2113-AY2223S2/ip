@@ -6,13 +6,13 @@ public class UnMarkCommand extends Command {
 
     private TaskList arrayLL;
     private Ui ui;
-    private Storage stor;
+    private Storage store;
 
     Task task;
 
-    public UnMarkCommand(Ui ui, Storage stor, TaskList arrayLL) {
+    public UnMarkCommand(Ui ui, Storage store, TaskList arrayLL) {
         this.ui = ui;
-        this.stor = stor;
+        this.store = store;
         this.arrayLL = arrayLL;
     }
     /**
@@ -32,7 +32,7 @@ public class UnMarkCommand extends Command {
             //        taskUnmarked.getStatusIcon() + "]" + " " + taskUnmarked.description + "\n");
             System.out.println("____________________________________________________________\n");
             //editToFile(f.getAbsolutePath(), tasks);
-
+            store.Storedata(taskUnmarked);
 
         } else {
             System.out.println(":(( Sorry please drink some coffee and enter valid unmark command");

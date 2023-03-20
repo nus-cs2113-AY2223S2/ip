@@ -16,6 +16,10 @@ public class AddCommand extends Command {
     }
 
     void complete(String line) throws IOException{
+        if (type == 4){
+            AppendList list = new AppendList(line);
+            arrayLL.addTask(list);
+        }
         if (type == 0){
             if (!line.equals("deadline") && line.contains("/")){
                 int index = line.indexOf(" ");
@@ -52,6 +56,7 @@ public class AddCommand extends Command {
                 System.out.println("____________________________________________________________\n");
             }
         }
+
         if (type == 1){
             if (!line.equals("event") && line.contains("/")){
                 int index = line.indexOf(" ");

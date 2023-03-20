@@ -34,6 +34,7 @@ public class MarkCommand extends Command {
             //        taskMarked.getStatusIcon() + "]" + " " + taskMarked.description + "\n");
             System.out.println("____________________________________________________________\n");
             //editToFile(f.getAbsolutePath(), tasks);
+            store.Storedata(taskMarked);
 
         }else{
             System.out.println(":(( Sorry please drink some coffee and enter valid mark command");

@@ -20,5 +20,6 @@ public class TaskList {
         System.out.println(arrayL.get(in-1).toString());
         arrayL.remove(in - 1);
     }
+
 }
 

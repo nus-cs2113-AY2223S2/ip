@@ -39,14 +39,14 @@ public class Duke {
             System.out.println("Please enter items you want to add to the list, if you want to quit enter bye");
             System.out.println("");
             System.out.print("Enter Your command: ");
+            duke.parser.checkText("",0);
             line = sc.nextLine();
             System.out.println("");
             if (line.equals("bye") || line.equals("Bye")) {
                 System.out.println("Exiting chatbot! Hope to see you again");
                 break;
             }
-
-            duke.parser.checkText(line);
+            duke.parser.checkText(line, 1);
         }
     }
 }

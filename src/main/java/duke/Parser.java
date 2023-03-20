@@ -1,6 +1,8 @@
 package duke;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Parser {
     private AddCommand add;
@@ -21,11 +23,23 @@ public class Parser {
 
     /**
      * This redirects the code depending on the input by the user
-     * @param line Depending on the line input by the user and checks what function it wants to be carried out
+     *
+     * @param line  Depending on the line input by the user and checks what function it wants to be carried out
+     * @param count
      * @throws IOException so that the requirements are meant by user input and there is no error
      */
 
-    public void checkText(String line) throws IOException {
+    public void checkText(String line, int count) throws IOException {
+
+        if (count == 0){
+            List<String> arraytemp = new ArrayList<String>();
+            arraytemp = store.getdata();
+            for (int i = 0; i < arraytemp.size(); i++){
+                type = 4;
+                this.add = new AddCommand(ui, store, arrayLL, type);
+                add.complete(arraytemp.get(i));
+            }
+        }
 
         if (line.equals("list")) {
             store.Retrievedata();
@@ -62,4 +76,5 @@ public class Parser {
             add.complete(line);
         }
     }
+
 }

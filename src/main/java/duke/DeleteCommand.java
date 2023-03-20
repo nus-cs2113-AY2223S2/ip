@@ -30,6 +30,7 @@ public class DeleteCommand extends Command {
             //System.out.println("You have " + arrayLL.size() + " number of tasks in you list.");
             System.out.println("____________________________________________________________\n");
             //editToFile(f.getAbsolutePath(), tasks);
+            //store.Storedata(arrayLL);
         }
     }
 }
