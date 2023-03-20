@@ -4,6 +4,7 @@ import Exceptions.DukeException;
 import Tasks.Deadline;
 import Tasks.Event;
 import Tasks.Task;
+
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -14,10 +15,12 @@ import java.util.ArrayList;
 public class Storage {
     ArrayList<Task> list;
     Path path;
+
     public Storage(Path path) {
         this.list = new ArrayList<Task>();
         this.path = path;
     }
+
     public ArrayList<Task> getList() {
         return this.list;
     }
@@ -50,7 +53,7 @@ public class Storage {
         return list;
     }
 
-    private static Task createTaskFromString(String string){
+    private static Task createTaskFromString(String string) {
         String[] attributes = string.split("\\|");
         if (attributes.length < 1) {
             System.out.println("Wrong format for task");
@@ -61,7 +64,7 @@ public class Storage {
         String boolString;
         String deadline;
         String start;
-        switch(taskType) {
+        switch (taskType) {
             case ("class Tasks.Task"):
                 taskName = attributes[1];
                 boolString = attributes[2];
@@ -115,7 +118,7 @@ public class Storage {
         } catch (IOException e) {
             throw new DukeException("Unable to delete and then recreate file with given filepath");
         }
-        for (Task task: list) {
+        for (Task task : list) {
             String taskType = String.valueOf(task.getClass());
             ArrayList<String> attributesToStore = new ArrayList<String>();
             String taskInLineForm = "";

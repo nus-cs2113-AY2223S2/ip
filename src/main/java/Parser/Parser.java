@@ -7,6 +7,7 @@ import Tasks.Deadline;
 import Tasks.Event;
 import Tasks.Task;
 import UI.UserInterface;
+
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,12 +16,13 @@ import java.util.Scanner;
 public class Parser {
     public Parser() {
     }
+
     /**
      * The method that parses through user input. It will find the different valid commands that the code is able to run
      * and then find the one that the user input matches. If the user input matches none of the commands, then the method
      * outputs "Command does not exist."
      */
-    public static void readCommand(UserInterface ui, TaskList tasks,  Storage storage, Path path) throws DukeException {
+    public static void readCommand(UserInterface ui, TaskList tasks, Storage storage, Path path) throws DukeException {
         ArrayList<Task> list = tasks.getList();
         Scanner inputScanner = ui.getScanner();
         while (true) {
@@ -30,7 +32,9 @@ public class Parser {
                 dukeCommandList(list);
             } else if (nextLine.split(" ", 0)[0].equals("mark")) {
                 dukeCommandMark(nextLine, list);
-            } else if (nextLine.split(" ", 0)[0].equals("find")) {
+            } else if (nextLine.split(" ", 0)[0].equals("unmark")) {
+                dukeCommandUnmark(nextLine, list);
+            }else if (nextLine.split(" ", 0)[0].equals("find")) {
                 dukeCommandFind(nextLine, list);
             } else if (nextLine.split(" ", 0)[0].equals("deadline")) {
                 dukeCommandDeadline(nextLine, list);
@@ -61,7 +65,7 @@ public class Parser {
         }
         String key = inputArray[1];
         ArrayList<Task> containsSubstring = new ArrayList<Task>();
-        for (Task task: list) {
+        for (Task task : list) {
             String taskName = task.getTaskName();
             if (taskName.contains(key)) {
                 containsSubstring.add(task);
@@ -81,7 +85,6 @@ public class Parser {
     }
 
 
-
     /**
      * Deletes the task by iterating through all tasks in the ArrayList.
      */
@@ -95,7 +98,7 @@ public class Parser {
         try {
             index = Integer.parseInt(indexString);
         } catch (NumberFormatException e) {
-            throw new DukeException("The index " + indexString +  " cannot be interpreted as an int.");
+            throw new DukeException("The index " + indexString + " cannot be interpreted as an int.");
         }
         try {
             list.remove(index);
@@ -108,8 +111,8 @@ public class Parser {
     /**
      * Lists tasks by iterating through the ArrayList. Uses helper functions to print out Tasks, Deadlines, and Events.
      */
-    private static void dukeCommandList (List<Task> list) {
-        for (int i = 0; i < list.size(); i++ ) {
+    private static void dukeCommandList(List<Task> list) {
+        for (int i = 0; i < list.size(); i++) {
             Task task = list.get(i);
             if (task instanceof Event) {
                 printEvent((Event) task, i);
@@ -131,6 +134,7 @@ public class Parser {
                     " (from: " + event.getStart() + " to: " + event.getDeadline() + ")");
         }
     }
+
     private static void printDeadline(Deadline deadline, int index) {
         if (deadline.isDone()) {
             System.out.println(index + ". [D][X] " + deadline.getTaskName() +
@@ -161,10 +165,10 @@ public class Parser {
         try {
             index = Integer.parseInt(inputArray[1]);
         } catch (NumberFormatException e) {
-            throw new DukeException("The index " + inputArray[1] +  " cannot be interpreted as an int.");
+            throw new DukeException("The index " + inputArray[1] + " cannot be interpreted as an int.");
         }
-        if (index > list.size() - 1) {
-            return;
+        if (index > list.size() - 1 || index < 0) {
+            throw new DukeException("The index " + inputArray[1] + " is too big or too small!");
         }
         Task task = list.get(index);
         if (!task.isDone()) {
@@ -173,6 +177,32 @@ public class Parser {
             return;
         }
         System.out.println("Task already marked as complete!");
+    }
+
+    /**
+     * Unmarks a task as done based on index. To check index, list out all tasks.
+     */
+    private static void dukeCommandUnmark(String nextLine, List<Task> list) throws DukeException {
+        String[] inputArray = nextLine.split(" ", 0);
+        if (inputArray.length != 2) {
+            throw new DukeException("Try to only put a number after 'unmark'");
+        }
+        int index;
+        try {
+            index = Integer.parseInt(inputArray[1]);
+        } catch (NumberFormatException e) {
+            throw new DukeException("The index " + inputArray[1] + " cannot be interpreted as an int.");
+        }
+        if (index > list.size() - 1 || index < 0) {
+            throw new DukeException("The index " + inputArray[1] + " is too big or too small!");
+        }
+        Task task = list.get(index);
+        if (task.isDone()) {
+            task.undoTask();
+            System.out.println("Task unmarked!");
+            return;
+        }
+        System.out.println("Task already not marked as complete!");
     }
 
     /**

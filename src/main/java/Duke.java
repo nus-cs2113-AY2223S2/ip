@@ -4,14 +4,16 @@ import Storage.Storage;
 import TaskList.TaskList;
 import Tasks.Task;
 import UI.UserInterface;
+
 import java.nio.file.Path;
 import java.util.ArrayList;
 
 public class Duke {
     private TaskList tasks;
-    private Storage storage;
-    private UserInterface ui;
-    private Path filepath;
+    private final Storage storage;
+    private final UserInterface ui;
+    private final Path filepath;
+
     /**
      * The main function of Duke. The path is defined here. Therefore, if one wants to store multiple checklists, they
      * just need to edit the file path here.
@@ -49,7 +51,7 @@ public class Duke {
      */
     public static void main(String[] args) throws Exception {
         String home = System.getProperty("user.dir");
-        java.nio.file.Path path = java.nio.file.Paths.get(home,"savefile");
+        java.nio.file.Path path = java.nio.file.Paths.get(home, "savefile");
         new Duke(path).run();
     }
 
@@ -61,7 +63,7 @@ public class Duke {
                 + "| |_| | |_| |   <  __/\n"
                 + "|____/ \\__,_|_|\\_\\___|\n";
         System.out.println("Hello from\n" + logo);
-        UserInterface ui =  new UserInterface();
+        UserInterface ui = new UserInterface();
         System.out.println("Hello! I'm Duke\n" + "What can I do for you?");
         return ui;
     }

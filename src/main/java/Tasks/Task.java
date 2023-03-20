@@ -4,7 +4,7 @@ public class Task {
 
     private final String taskName;
     private boolean isDone;
-    private int index;
+    private final int index;
 
     public Task(String taskName, int index) {
         this(taskName, false, index);
@@ -19,9 +19,11 @@ public class Task {
     public boolean isDone() {
         return this.isDone;
     }
+
     public String getTaskName() {
         return this.taskName;
     }
+
     public int getIndex() {
         return this.index;
     }
