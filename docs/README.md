@@ -135,3 +135,13 @@ Here are the following Tasks that have names containing your keyword:
 0. [T] [X] task0
 1. [D] [ ] task1 (by: tomorrow)
 ```
+
+### `Keyword` - bye
+
+Exits program, saves tasklist.
+
+Example of usage: 
+
+bye
+
+Bye. Hope to see you again soon!
