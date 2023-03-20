@@ -1,6 +1,6 @@
 # User Guide
 
-## Features 
+## Features
 
 Duke is a chatbot app to assist you in task management via a Command Line Interface.
 
@@ -33,7 +33,9 @@ Copy the file to a folder where you want to run it from.
 
 Using the terminal, navigate to the path of ip.jar.
 
-Run java -jar ip.jar ,and it should work
+
+Run java -jar ip.jar duke.Duke ,and it should work
+
 ### Feature-Save your tasks
 
 It will help you list down all your task, deadline, events and todo into a txt document.
@@ -46,7 +48,9 @@ It will display all of your task in your list
 =======
 ### Feature - Help write down your tasks
 
-You can write down all your dealines,events,todo ,and it will be automatically saved in a txt document. 
+
+You can write down all your dealines,events,todo ,and it will be automatically saved in a txt document.
+
 
 
 
@@ -56,7 +60,7 @@ You can write down all your dealines,events,todo ,and it will be automatically s
 
 
 
-Example of usage: 
+Example of usage:
 
 `list`
 
@@ -86,6 +90,7 @@ Expected outcome:
 ```
 
 Got it. I've added this task:
+
 [D][X] Submit movie review (by: 12 feb)
 Now you have 1 tasks in the list.
 
@@ -202,6 +207,7 @@ Here are the matching tasks in your list:
 
 
 ```
+
 ### `bye`
 
 end the duke chatbot
@@ -220,5 +226,3 @@ Bye. Hope to see you again soon!
 
 
 ```
-
-
