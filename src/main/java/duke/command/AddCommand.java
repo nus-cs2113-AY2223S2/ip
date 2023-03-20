@@ -1,6 +1,7 @@
 package duke.command;
 
 import duke.TaskList;
+import duke.Ui;
 import duke.task.Task;
 
 /**
@@ -17,6 +18,8 @@ public class AddCommand extends Command{
     @Override
     public boolean execute(TaskList taskList) {
         taskList.addTask(task);
+        Ui.printAddTask(task);
+        Ui.printTaskLeft(taskList);
         return false;
     }
 }

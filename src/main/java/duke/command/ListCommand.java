@@ -1,6 +1,7 @@
 package duke.command;
 
 import duke.TaskList;
+import duke.Ui;
 
 /**
  * @author : Steven A. O. Waskito
@@ -12,8 +13,7 @@ public class ListCommand extends Command{
     }
 
     public boolean execute(TaskList taskList) {
-        String list = taskList.listMessages();
-        System.out.println(list);
+        Ui.printList(taskList);
         return false;
     }
 }

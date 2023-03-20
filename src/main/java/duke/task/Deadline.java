@@ -12,13 +12,19 @@ public class Deadline extends Task{
         this.by = by;
     }
     public String getStatus() {
-        return ("D [" + (isDone? "u\2718" : " ") + "]");
+        return ("[D][" + (isDone? "X" : " ") + "]");
     }
     public String getBy() {
         return ("by: " + by);
     }
     @Override
     public String toString() {
-        return this.getStatus() + " " + description + " " + getBy();
+        return this.getStatus() + " " + description + " (" + getBy() + ")";
+    }
+    @Override
+    public String encode() {
+        return ("D_" + (isDone ?"1_":"0_")
+                + description + "_"
+                + by);
     }
 }

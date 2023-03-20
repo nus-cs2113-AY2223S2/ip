@@ -25,4 +25,8 @@ public class Task {
         }
         return false;
     }
+
+    public String encode(){
+        return "";
+    }
 }

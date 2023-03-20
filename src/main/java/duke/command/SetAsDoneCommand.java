@@ -2,6 +2,7 @@ package duke.command;
 
 import duke.DukeException;
 import duke.TaskList;
+import duke.Ui;
 import duke.task.Task;
 
 /**
@@ -21,9 +22,12 @@ public class SetAsDoneCommand extends Command {
     public boolean execute(TaskList taskList) throws DukeException {
         if (isDone) {
             taskList.setTaskAsDone(index);
+            Ui.printSetAsDone(taskList.getIndex(index));
         } else {
             taskList.setTaskAsNotDone(index);
+            Ui.printSetAsNotDone(taskList.getIndex(index));
         }
+        Ui.printList(taskList);
         return false;
     }
 }

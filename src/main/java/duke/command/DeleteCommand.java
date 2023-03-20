@@ -2,6 +2,7 @@ package duke.command;
 
 import duke.DukeException;
 import duke.TaskList;
+import duke.Ui;
 
 /**
  * @author : Steven A. O. Waskito
@@ -16,7 +17,9 @@ public class DeleteCommand extends Command {
     }
 
     public boolean execute(TaskList taskList) throws DukeException {
+        Ui.printDeleteTask(taskList.getIndex(toDeleteIndex));
         taskList.removeTask(toDeleteIndex);
+        Ui.printTaskLeft(taskList);
         return false;
     }
 }

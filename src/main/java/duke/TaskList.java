@@ -12,6 +12,9 @@ import java.util.ArrayList;
 public class TaskList {
     protected ArrayList<Task> taskList;
 
+    public TaskList(TaskList taskList) {
+        this.taskList = (ArrayList<Task>) taskList.taskList.clone();
+    }
     public TaskList(int capacity) {
         taskList = new ArrayList<>(capacity+10);
     }
@@ -22,8 +25,11 @@ public class TaskList {
     public int getSize() {
         return taskList.size();
     }
-    public Task getIndex(int index) {
-        return taskList.get(index);
+    public Task getIndex(int index) throws DukeException {
+        if (index >= 0 && index < taskList.size()) {
+            return taskList.get(index);
+        }
+        throw new DukeException("Please enter a valid index!");
     }
 
     public void addTask (Task task) {
@@ -34,7 +40,7 @@ public class TaskList {
             taskList.remove(index);
         }
         else {
-            throw new DukeException("Please enter a valid index!")
+            throw new DukeException("Please enter a valid index!");
         }
     }
 
@@ -44,7 +50,7 @@ public class TaskList {
             task.setAsDone();
         }
         else {
-            throw new DukeException("Please enter a valid index!")
+            throw new DukeException("Please enter a valid index!");
         }
     }
     public void setTaskAsNotDone(int index) throws DukeException {
@@ -53,7 +59,7 @@ public class TaskList {
             task.setAsNotDone();
         }
         else {
-            throw new DukeException("Please enter a valid index!")
+            throw new DukeException("Please enter a valid index!");
         }
     }
 
@@ -86,5 +92,6 @@ public class TaskList {
                 searchResult.addTask(task);
             }
         }
+        return searchResult;
     }
 }

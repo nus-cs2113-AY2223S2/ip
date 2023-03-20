@@ -1,4 +1,4 @@
-# Duke Task User Guide
+# Elzi Your Personal Pet Dog User Guide
 
 Assisting you to keep track of your tasks through our CLI command
 
@@ -7,8 +7,8 @@ Assisting you to keep track of your tasks through our CLI command
 2. Download `ip.jar`.
 3. Navigate to the path of `ip.jar`, right click, open in terminal
 4. Run `java -jar ip.jar`
-5. You should see  ` Hello! I'm Elzi, your dog!
-   What can I do for my master?` greeeting you
+5. You should see  ` Hello! I'm Elzi, your personal pet dog!
+   What is my task, master?` greeeting you
 ## Features
 
 ### Adding Todo task: `todo`
@@ -62,9 +62,9 @@ Lists all of the tasks.
 Expected output:
 ```
 Your current tasks are as follows:
-1.[T][ ] Do My Reading
-2.[D][ ] Do homework (by: tomorrow)
-3.[E][ ] Beach Day (from: Sat 9am  to: Sat 3pm)
+1. [T][ ] Do My Reading
+2. [D][ ] Do homework (by: tomorrow)
+3. [E][ ] Beach Day (from: Sat 9am  to: Sat 3pm)
 ```
 ### Marking a task as done: `mark`
 Marks the specified task as done.
@@ -77,10 +77,12 @@ Example:
 Expected output:
 ```
 I have marked this task as done
+[T][X] Do My Reading
+-------------------------------------------------
 Your current tasks are as follows:
-1.[T][X] Do My Reading
-2.[D][ ] Do homework (by: tomorrow)
-3.[E][ ] Beach Day (from: Sat 9am  to: Sat 3pm)
+1. [T][X] Do My Reading
+2. [D][ ] Do homework (by: tomorrow)
+3. [E][ ] Beach Day (from: Sat 9am  to: Sat 3pm)
 ```
 ### Unmarke a task as not done: `unmark`
 Unmarks the specified task.
@@ -94,10 +96,12 @@ Example:
 Expected output:
 ```
 I have unmarked this task
+[T][ ] Do My Reading
+-------------------------------------------------
 Your current tasks are as follows:
-1.[T][ ] Do My Reading
-2.[D][ ] Do homework (by: tomorrow)
-3.[E][ ] Beach Day (from: Sat 9am  to: Sat 3pm)
+1. [T][ ] Do My Reading
+2. [D][ ] Do homework (by: tomorrow)
+3. [E][ ] Beach Day (from: Sat 9am  to: Sat 3pm)
 ```
 ### Deleting a task: `delete`
 Deletes the task.
@@ -110,9 +114,11 @@ Example:
 Expected output:
 ```
 I have removed this item in index 3
+      [E][ ] Beach Day (from: Sat 9am  to: Sat 3pm)
+-------------------------------------------------
 Your current tasks are as follows: 
-1.[T][X] Do My Reading
-2.[D][ ] Do homework (by: tomorrow)
+1. [T][X] Do My Reading
+2. [D][ ] Do homework (by: tomorrow)
 ```
 
 ### Finding a task: `find`
@@ -125,7 +131,7 @@ Example:
 
 Expected output:
 ```
-1.[T][X] Do My Reading
+1. [T][X] Do My Reading
 ```
 
 ### Exit the program: `bye`

@@ -7,10 +7,15 @@ public class Todo extends Task{
         super(description);
     }
     public String getStatus() {
-        return ("T [" + (isDone? "u\2718" : " ") + "]");
+        return ("[T][" + (isDone? "X" : " ") + "]");
     }
     @Override
     public String toString() {
         return this.getStatus() + " " + description;
+    }
+    @Override
+    public String encode() {
+        return ("T_" + (isDone ?"1_":"0_")
+                + description);
     }
 }

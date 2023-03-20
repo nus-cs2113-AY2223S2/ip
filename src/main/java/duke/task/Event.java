@@ -16,7 +16,7 @@ public class Event extends Task{
     }
 
     public String getStatus() {
-        return ("E [" + (isDone? "u\2718" : " ") + "]");
+        return ("[E][" + (isDone? "X" : " ") + "]");
     }
     public String getFrom() {
         return ("from: " + from);
@@ -26,6 +26,13 @@ public class Event extends Task{
     }
     @Override
     public String toString() {
-        return this.getStatus() + " " + description + " " + getFrom() + " " + getTo();
+        return this.getStatus() + " " + description + " (" + getFrom() + " " + getTo() + ")";
+    }
+    @Override
+    public String encode() {
+        return ("E_" + (isDone ?"1_":"0_")
+                + description + "_"
+                + from + "_"
+                + to);
     }
 }
