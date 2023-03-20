@@ -11,6 +11,7 @@ public class Deadline extends Task{
         }
         this.by = by;
     }
+
     public String getStatus() {
         return ("[D][" + (isDone? "X" : " ") + "]");
     }
@@ -26,5 +27,9 @@ public class Deadline extends Task{
         return ("D_" + (isDone ?"1_":"0_")
                 + description + "_"
                 + by);
+    }
+    @Override
+    public String getType() {
+        return "D";
     }
 }

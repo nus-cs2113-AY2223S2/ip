@@ -9,11 +9,13 @@ import duke.Ui;
  * @created : 3 February 2023
  **/
 public class ListCommand extends Command{
-    public ListCommand() {
+    private String type;
+    public ListCommand(String type) {
+        this.type = type;
     }
 
     public boolean execute(TaskList taskList) {
-        Ui.printList(taskList);
+        Ui.printList(taskList, type);
         return false;
     }
 }

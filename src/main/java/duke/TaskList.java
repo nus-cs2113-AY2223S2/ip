@@ -63,21 +63,19 @@ public class TaskList {
         }
     }
 
-    public String listMessages() {
+    public String listMessages(String type) {
         String messages = "";
-
+        int counter = 1;
         if (taskList.size() != 0) {
             for (int index = 0; index < taskList.size(); index += 1) {
                 Task task = taskList.get(index);
-                if (index != taskList.size() - 1) {
-                    messages = messages.concat((index + 1) + ". " + task.toString() + "\n");
-                }
-                else {
-                    messages = messages.concat((index + 1) + ". " + task.toString());
+                if (task.getType().equals(type) || type.equals("N")) {
+                    messages = messages.concat((counter) + ". " + task.toString() + "\n");
+                    counter += 1;
                 }
             }
         }
-        else {
+        if (counter == 1 || taskList.size() == 0) {
             messages = "No items in list!";
         }
         return messages;

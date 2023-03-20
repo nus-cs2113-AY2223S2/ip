@@ -22,7 +22,7 @@ public class FindCommand extends Command {
     @Override
     public boolean execute(TaskList taskList) throws DukeException {
         TaskList searchList = taskList.search(keyword);
-        Ui.printList(searchList);
+        Ui.printList(searchList, "N");
         return false;
     }
 }

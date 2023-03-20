@@ -9,7 +9,11 @@ import duke.task.Todo;
 public class Parser {
     public static Command parse(String command) throws DukeException {
 
-        if (command.startsWith("todo")) {
+        if (command.startsWith("help")) {
+            Ui.printHelp();
+            return null;
+        }
+        else if (command.startsWith("todo")) {
             Task todoCommand = parseTodo(command);
             return new AddCommand(todoCommand);
         }
@@ -25,7 +29,12 @@ public class Parser {
             int index;
             if (command.split("mark ").length > 1)
             {
-                index = Integer.parseInt(command.split("mark ")[1]);
+                String commandIndex = command.split("mark ")[1];
+                try {
+                    index = Integer.parseInt(commandIndex);
+                } catch (NumberFormatException e) {
+                    throw new DukeException("Index is not an integer!");
+                }
             }
             else {
                 throw new DukeException("index can't be empty");
@@ -36,7 +45,12 @@ public class Parser {
             int index;
             if (command.split("unmark ").length > 1)
             {
-                index = Integer.parseInt(command.split("unmark ")[1]);
+                String commandIndex = command.split("unmark ")[1];
+                try {
+                    index = Integer.parseInt(commandIndex);
+                } catch (NumberFormatException e) {
+                    throw new DukeException("Index is not an integer!");
+                }
             }
             else {
                 throw new DukeException("index can't be empty");
@@ -55,7 +69,16 @@ public class Parser {
             return new DeleteCommand(index - 1);
         }
         else if (command.startsWith("list")) {
-            return new ListCommand();
+            if (command.startsWith("list_todo")) {
+                return new ListCommand("T");
+            }
+            else if (command.startsWith("list_deadline")) {
+                return new ListCommand("D");
+            }
+            else if (command.startsWith("list_event")) {
+                return new ListCommand("E");
+            }
+            return new ListCommand("N");
         }
         else if (command.startsWith("find")) {
             String keyword = "";

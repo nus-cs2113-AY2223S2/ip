@@ -27,7 +27,7 @@ public class SetAsDoneCommand extends Command {
             taskList.setTaskAsNotDone(index);
             Ui.printSetAsNotDone(taskList.getIndex(index));
         }
-        Ui.printList(taskList);
+        Ui.printList(taskList, "N");
         return false;
     }
 }

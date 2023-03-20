@@ -38,6 +38,7 @@ public class Duke extends Throwable{
             Ui.printLine();
             try {
                 Command command = Parser.parse(inputCommand);
+                if (command == null) continue;
                 isBye = command.execute(taskList);
                 storage.saveFile(taskList);
             } catch (DukeException e) {

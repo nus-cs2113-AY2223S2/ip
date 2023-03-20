@@ -35,4 +35,8 @@ public class Event extends Task{
                 + from + "_"
                 + to);
     }
+    @Override
+    public String getType() {
+        return "E";
+    }
 }

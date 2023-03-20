@@ -13,6 +13,9 @@ public class Task {
         this.description = description;
         isDone = false;
     }
+    public String getType() {
+        return "";
+    }
     public void setAsDone() {
         this.isDone = true;
     }

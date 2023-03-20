@@ -7,9 +7,32 @@ Assisting you to keep track of your tasks through our CLI command
 2. Download `ip.jar`.
 3. Navigate to the path of `ip.jar`, right click, open in terminal
 4. Run `java -jar ip.jar`
-5. You should see  ` Hello! I'm Elzi, your personal pet dog!
-   What is my task, master?` greeeting you
+5. You should see  ` Hello! I'm Elzi, your personal pet dog!` greeeting you
 ## Features
+
+### Help: `help`
+List all the features of the program
+
+Example:
+`help`
+
+Expected Output:
+```
+My features are as follows:
+*BASIC*
+1. todo [DESCRIPTION]
+2. deadline [DESCRIPTION] /by [DEADLINE]
+3. event [DESCRIPTION] /from [START] /to [END]
+4. list
+5. mark [INDEX]
+6. unmark [INDEX]
+7. find [KEYWORD]
+*** ADVANCED : These are additional features! ***
+8. list_todo
+9. list_deadline
+10. list_event
+12. help
+```
 
 ### Adding Todo task: `todo`
 Adds Todo to the task list.
@@ -59,12 +82,48 @@ Now you have 3 tasks in the list.
 ### Listing all tasks: `list`
 Lists all of the tasks.
 
+Example:
+`list`
+
 Expected output:
 ```
 Your current tasks are as follows:
 1. [T][ ] Do My Reading
 2. [D][ ] Do homework (by: tomorrow)
 3. [E][ ] Beach Day (from: Sat 9am  to: Sat 3pm)
+```
+### Listing todo tasks: `list_todo`
+Lists todo tasks.
+
+Example:
+`list_todo`
+
+Expected output:
+```
+Your current todo tasks are as follows:
+1. [T][ ] Do My Reading
+```
+### Listing deadline tasks: `list_deadline`
+Lists deadline tasks.
+
+Example:
+`list_deadline`
+
+Expected output:
+```
+Your current deadlines are as follows:
+1. [D][ ] Do homework (by: tomorrow)
+```
+### Listing event tasks: `list_event`
+Lists event tasks.
+
+Example:
+`list_event`
+
+Expected output:
+```
+Your current events are as follows:
+1. [E][ ] Beach Day (from: Sat 9am to: Sat 3pm)
 ```
 ### Marking a task as done: `mark`
 Marks the specified task as done.
@@ -84,7 +143,7 @@ Your current tasks are as follows:
 2. [D][ ] Do homework (by: tomorrow)
 3. [E][ ] Beach Day (from: Sat 9am  to: Sat 3pm)
 ```
-### Unmarke a task as not done: `unmark`
+### Unmark a task as not done: `unmark`
 Unmarks the specified task.
 Marks it as undone
 
@@ -116,9 +175,7 @@ Expected output:
 I have removed this item in index 3
       [E][ ] Beach Day (from: Sat 9am  to: Sat 3pm)
 -------------------------------------------------
-Your current tasks are as follows: 
-1. [T][X] Do My Reading
-2. [D][ ] Do homework (by: tomorrow)
+Now you have 2 task in the list
 ```
 
 ### Finding a task: `find`
@@ -131,7 +188,7 @@ Example:
 
 Expected output:
 ```
-1. [T][X] Do My Reading
+1. [T][ ] Do My Reading
 ```
 
 ### Exit the program: `bye`
@@ -139,6 +196,7 @@ Exits the program.
 
 Expected output:
 ```
+Good bye! See you soon!
 ___________________________******___________________________
 ```
 
