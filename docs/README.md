@@ -5,9 +5,9 @@
 ### Add tasks
 
 You can add 3 types of tasks, todo, deadline and event, into your task list.
-1. Todo - Basic task with
-2. Deadline - Tasks that need to be done by certain date
-3. Event - Tasks that have certain period of time
+1. Todo - Basic tasks
+2. Deadline - Special tasks that need to be done by certain date
+3. Event - Special tasks that need to be done within a certain period of time
 
 ### Mark as done
 
@@ -17,7 +17,7 @@ If you have finished the task, you can mark the task as done.
 
 ### Mark as undone
 
-This feature is to let to mark the task as undone.
+This feature is to allow you to mark the task as undone.
 
 If you have not finished the task, you can mark the task as undone.
 
@@ -28,7 +28,6 @@ This feature is to list all the tasks in the task list.
 ### Delete the tasks
 
 This feature is to delete the specific task according to its index number.
-Once you have entered the command, the task will be removed from the list.
 
 ### Find the tasks
 
@@ -136,7 +135,7 @@ unmark 1
 Excepted outcome:
 
 ```
-Nice! I've unmarked this task as done:P
+Okay! I've unmarked this task:P 
 [T][] read books
 ```
 ---
@@ -191,7 +190,7 @@ Example:
 
 `list`
 
-Expected outcome:
+Expected outcome: 
 ```
 1. [T][ ] read books
 2. [T][ ] wash clothes
@@ -229,4 +228,3 @@ Example:
 ```
 Bye. Hope to see you again soon! I will be missing you:("
 ```
-----
