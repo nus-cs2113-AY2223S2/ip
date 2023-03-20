@@ -21,6 +21,12 @@ public class CommandDelete extends Command {
     public static final String MESSAGE_TOP = "\nGot it. I've deleted this task:\n" + "\t";
     public int[] idx;
 
+    /**
+     * Execution of the "delete" command
+     *
+     * @return @return printing the task's deleted status to the user
+     *
+     */
     @Override
     public CommandRes execute() {
         ArrayList<Task> task = new ArrayList<Task>(IntStream.range(0, TaskList.list.size()).filter

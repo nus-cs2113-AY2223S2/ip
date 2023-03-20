@@ -20,6 +20,12 @@ public class CommandToDo extends Command {
 
     public ArrayList<Task> task = new ArrayList<Task>();
 
+    /**
+     * Execution of the "todo" command
+     *
+     * @return printing the task to be including in the list
+     *
+     */
     @Override
     public CommandRes execute() {
         Task added = new Todo(description);

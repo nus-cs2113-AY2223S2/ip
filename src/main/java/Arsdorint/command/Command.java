@@ -1,5 +1,7 @@
 package Arsdorint.command;
 
+import Arsdorint.data.TaskList;
+
 /**
  * The parent class Command
  */
@@ -25,5 +27,8 @@ public class Command {
             }
         }
         return false;
+    }
+
+    public void setTaskList(TaskList taskList) {
     }
 }

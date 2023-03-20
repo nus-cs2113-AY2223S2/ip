@@ -20,6 +20,12 @@ public class CommandEvent extends Command {
     public String date;
     public ArrayList<Task> task = new ArrayList<Task>();
 
+    /**
+     * Execution of the event command
+     *
+     * @return printing the event's added status to the user
+     *
+     */
     @Override
     public CommandRes execute() {
         Task added = new Event(description, date);

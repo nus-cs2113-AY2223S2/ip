@@ -19,6 +19,12 @@ public class CommandUnmark extends Command {
     public static final String MESSAGE_TOP = "\nGot it. I've marked this task as not done yet:\n" + "\t";
     public int[] idx;
 
+    /**
+     * Execution of the "unmark" command
+     *
+     * @return printing the task to be unmarked with an empty of "X" in its box
+     *
+     */
     @Override
     public CommandRes execute() {
         for (int i = 0; i < idx.length; i++) {

@@ -6,20 +6,39 @@ import Arsdorint.task.Task;
 import java.util.ArrayList;
 import java.util.stream.IntStream;
 
+/**
+ * Represent the result of the command
+ */
 public class CommandRes {
     public String messageTop = "";
     public String messageBottom = "";
     public ArrayList<Task> task = null;
 
+    /**
+     * Initialization without task
+     *
+     * @param strTop the first string to be shown
+     */
     public CommandRes(String strTop) {
         this.messageTop = strTop;
     }
+
+    /**
+     * Initialization with task
+     *
+     * @param strTop the first string to be shown
+     * @param task the list of all tasks
+     * @param strBottom the last string to be shown
+     */
     public CommandRes(String strTop, ArrayList task, String strBottom) {
         this.messageTop = strTop;
         this.messageBottom = strBottom;
         this.task = task;
     }
 
+    /**
+     * Print the task
+     */
     public String[] printTask() {
         if (task == null) {
             return new String[]{};

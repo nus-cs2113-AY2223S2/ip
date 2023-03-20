@@ -5,6 +5,8 @@ import Arsdorint.data.Storage;
 import Arsdorint.data.TaskList;
 import Arsdorint.parser.TaskParser;
 
+import static Arsdorint.MessageList.MESSAGE_NEW_FILE;
+
 /**
  * Start of Arsdorint application
  * Initializes the application and interact with the users
@@ -49,9 +51,15 @@ public class Arsdorint {
     private void start() {
         this.UI = new TextUI();
         UI.showHelloMessage();
-        UI.showToUser(Storage.load());
+        this.storage = new Storage();
+        try {
+            this.taskList = storage.load();
+            UI.showToUser(MESSAGE_NEW_FILE);
+        } catch (StorageException err) {
+            UI.showToUser(err.getMessage());
+            this.taskList = new TaskList();
+        }
     }
-
 
     /**
      * Read user command and execute until exit command is detected
@@ -63,14 +71,32 @@ public class Arsdorint {
             command = new TaskParser(taskList).parsedCommand(userCommandText);
             CommandRes res = executeCommand(command);
             UI.showResToUser(res);
-            Storage.save();
+            save();
         } while (!CommandExit.isExit(command));
+    }
+
+    /**
+     * Save and catch error
+     */
+    private void save() {
+        try {
+            storage.save(taskList);
+        } catch (StorageException e) {
+            UI.showToUser(e.getMessage());
+        }
     }
 
     /**
      * Execute the command
      */
     private CommandRes executeCommand(Command command) {
-        return command.execute();
+        try {
+            command.setTaskList(taskList);
+            return command.execute();
+        } catch (Exception err) {
+            UI.showToUser(err.getMessage());
+            throw new RuntimeException(err);
+        }
     }
 }
+

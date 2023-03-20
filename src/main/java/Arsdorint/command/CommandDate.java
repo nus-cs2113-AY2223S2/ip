@@ -17,6 +17,12 @@ public class CommandDate extends Command {
     public static final String TOP_MESSAGE = "Tasks occurs on this date";
     public LocalDate date;
 
+    /**
+     * Execution of the "date" command
+     *
+     * @return printing the list of command happens on that date
+     *
+     */
     @Override
     public CommandRes execute() {
         ArrayList<Task> task = new ArrayList<>(TaskList.list.stream().filter(i -> !i.isDateNull()).filter
