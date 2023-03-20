@@ -1,12 +1,8 @@
 package Duke;
 
+import java.io.*;
 import java.util.Scanner;  // Import the Scanner class
 import java.util.ArrayList;
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter; // for saving
-import java.io.IOException;
 
 
 /*
@@ -217,7 +213,14 @@ public class Duke {
     public static void main(String[] args) throws IOException {
         hiDuke();  //Print Logo
         //loadList();
-        ArrayList<Task> tasks = loadList();
+        ArrayList<Task> tasks;
+        File f = new File(System.getProperty("user.dir") + "/duke.txt");
+        if(f.exists() && !f.isDirectory()) {
+            tasks = loadList();
+        }
+        else{
+            tasks = new ArrayList<Task>();
+        }
         int curPos = tasks.size();
         Scanner scan = new Scanner(System.in);
         String input = scan.nextLine();
