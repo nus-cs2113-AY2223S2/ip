@@ -144,4 +144,6 @@ Example of usage:
 
 bye
 
+```
 Bye. Hope to see you again soon!
+```
