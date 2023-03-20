@@ -49,7 +49,7 @@ public class Duke {
      * The main function of Duke. The path is defined here. Therefore, if one wants to store multiple checklists, they
      * just need to edit the file path here.
      */
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         String home = System.getProperty("user.dir");
         java.nio.file.Path path = java.nio.file.Paths.get(home, "savefile");
         new Duke(path).run();

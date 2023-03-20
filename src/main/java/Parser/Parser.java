@@ -21,6 +21,11 @@ public class Parser {
      * The method that parses through user input. It will find the different valid commands that the code is able to run
      * and then find the one that the user input matches. If the user input matches none of the commands, then the method
      * outputs "Command does not exist."
+     * @param ui The UserInterface class when Duke is loaded
+     * @param tasks TaskList that stores all tasks
+     * @param storage Storage class that takes care of persistance
+     * @param path The path of the repository
+     * @throws DukeException Generic exception when things go wrong. See the exception print statement for more information.
      */
     public static void readCommand(UserInterface ui, TaskList tasks, Storage storage, Path path) throws DukeException {
         ArrayList<Task> list = tasks.getList();
@@ -57,7 +62,10 @@ public class Parser {
 
     /**
      * Finds all keyword-matching task names by iterating through the ArrayList and copying over all tasks that have match.
-     */
+     * @param nextLine The current input of the user
+     * @param list The list of all tasks (has not been saved into file)
+     * @throws DukeException Generic exception when things go wrong. See the exception print statement for more information.
+     **/
     private static void dukeCommandFind(String nextLine, ArrayList<Task> list) throws DukeException {
         String[] inputArray = nextLine.split(" ", 0);
         if (inputArray.length != 2) {
@@ -87,6 +95,9 @@ public class Parser {
 
     /**
      * Deletes the task by iterating through all tasks in the ArrayList.
+     * @param nextLine The current input of the user
+     * @param list The list of all tasks (has not been saved into file)
+     * @throws DukeException Generic exception when things go wrong. See the exception print statement for more information.
      */
     private static void dukeCommandDelete(String nextLine, List<Task> list) throws DukeException {
         String[] inputArray = nextLine.split(" ", 0);
@@ -110,7 +121,8 @@ public class Parser {
 
     /**
      * Lists tasks by iterating through the ArrayList. Uses helper functions to print out Tasks, Deadlines, and Events.
-     */
+     * @param list The list of all tasks (has not been saved into file)
+     **/
     private static void dukeCommandList(List<Task> list) {
         for (int i = 0; i < list.size(); i++) {
             Task task = list.get(i);
@@ -155,6 +167,9 @@ public class Parser {
 
     /**
      * Marks a task as done based on index. To check index, list out all tasks.
+     * @param nextLine The current input of the user
+     * @param list The list of all tasks (has not been saved into file)
+     * @throws DukeException Generic exception when things go wrong. See the exception print statement for more information.
      */
     private static void dukeCommandMark(String nextLine, List<Task> list) throws DukeException {
         String[] inputArray = nextLine.split(" ", 0);
@@ -181,6 +196,9 @@ public class Parser {
 
     /**
      * Unmarks a task as done based on index. To check index, list out all tasks.
+     * @param nextLine The current input of the user
+     * @param list The list of all tasks (has not been saved into file)
+     * @throws DukeException Generic exception when things go wrong. See the exception print statement for more information.
      */
     private static void dukeCommandUnmark(String nextLine, List<Task> list) throws DukeException {
         String[] inputArray = nextLine.split(" ", 0);
@@ -207,6 +225,9 @@ public class Parser {
 
     /**
      * Creates an event. Requires CLI input to be 'event [event name] /[start] /[end]
+     * @param nextLine The current input of the user
+     * @param list The list of all tasks (has not been saved into file)
+     * @throws DukeException Generic exception when things go wrong. See the exception print statement for more information.
      */
     private static void dukeCommandEvent(String nextLine, List<Task> list) throws DukeException {
         String lineWithoutCommand;
@@ -229,6 +250,9 @@ public class Parser {
 
     /**
      * Creates an deadline. Requires CLI input to be 'deadline [deadline name] /[deadline]
+     * @param nextLine The current input of the user
+     * @param list The list of all tasks (has not been saved into file)
+     * @throws DukeException Generic exception when things go wrong. See the exception print statement for more information.
      */
     private static void dukeCommandDeadline(String nextLine, List<Task> list) throws DukeException {
 //        System.out.println(nextLine);
@@ -251,6 +275,9 @@ public class Parser {
 
     /**
      * Creates an task. Requires CLI input to be 'task [task name]'
+     * @param nextLine The current input of the user
+     * @param list The list of all tasks (has not been saved into file)
+     * @throws DukeException Generic exception when things go wrong. See the exception print statement for more information.
      */
     private static void dukeCommandToDo(String nextLine, List<Task> list) throws DukeException {
         String lineWithoutCommand;

@@ -28,6 +28,8 @@ public class Storage {
     /**
      * Reads the file from the path from Duke class. If path cannot be read, creates a new file in that path and creates
      * a new file with an empty list.
+     * @param filePath The file path of the repository
+     * @throws DukeException Generic exception when things go wrong. See the exception print statement for more information.
      */
     public ArrayList<Task> readFromFile(Path filePath) throws DukeException {
         //Frome https://www.sghill.net/2014/how-do-i-make-cross-platform-file-paths-in-java/
@@ -91,6 +93,9 @@ public class Storage {
 
     /**
      * Saves list of tasks to the file path given. If fails, nothing is saved.
+     * @param list The in-memory list of the tasks (yet to be saved in file)
+     * @param path The file path of the repository
+     * @throws DukeException Generic exception when things go wrong. See the exception print statement for more information.
      */
     public void save(ArrayList<Task> list, Path path) throws DukeException {
         if (list.isEmpty()) {
