@@ -106,4 +106,54 @@ public class TaskData {
         return tasks;
     }
 
+    /**
+     * Returns updated tasks from file "/duke.txt"
+     * tasks is unchanged if there is no such file already existing and creates a file
+     *
+     * @param tasks all the tasks added
+     * @param file the file storing the tasks
+     * @return tasks
+     */
+    public static ArrayList<Task> loadData(ArrayList<Task> tasks, TaskData file) {
+        try {
+            file.readData(tasks);
+        } catch (FileNotFoundException e) {
+            System.out.println("file not found!");
+        }
+        return tasks;
+    }
+
+    /**
+     * Appends a task to the file and returns the updated tasks
+     *
+     * @param tasks all the tasks added
+     * @param taskToAdd the task to append to the text file
+     * @param file the txt file storing the tasks
+     * @return tasks
+     */
+    public static ArrayList<Task> addTaskToFile(ArrayList<Task> tasks, Task taskToAdd, TaskData file) {
+        try {
+            tasks = file.writeToFile(tasks, taskToAdd.toString());
+        } catch (IOException e) {
+            System.out.println("IOException!");
+        }
+        return tasks;
+    }
+
+    /**
+     * updates the file entirely to the current tasks
+     *
+     * @param tasks all the tasks added
+     * @param file the txt file storing the tasks
+     * @return tasks
+     */
+    public static ArrayList<Task> updateFile(ArrayList<Task> tasks, TaskData file) {
+        try {
+            tasks = file.updateFile(tasks);
+        } catch (IOException e) {
+            System.out.println("IOException!");
+        }
+        return tasks;
+    }
+
 }
