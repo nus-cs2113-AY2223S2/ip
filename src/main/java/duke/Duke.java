@@ -1,6 +1,8 @@
 // Java program to read data of various types using Scanner class.
 package duke;
 
+import duke.command.Command;
+
 /**
  * @author : Steven A. O. Waskito
  * @mailto : e0851459@u.nus.edu
@@ -9,18 +11,18 @@ package duke;
  * This is the main Java driver and has most of the important methods
  *
  **/
-public class Duke {
+public class Duke extends Throwable{
     private final Storage storage;
-    private final Tasks tasks;
+    private final TaskList taskList;
 
     public Duke(String filePath) {
         storage = new Storage(filePath);
 
         try {
-            tasks = new Tasks(storage.readFile());
+            taskList = new Tasks(storage.readFile());
         } catch (DukeException e) {
             Ui.printErrorMessage(e.getErrorMessage());
-            tasks = new Tasks();
+            taskList = new Tasks();
         }
     }
     public void run() {
@@ -33,8 +35,8 @@ public class Duke {
             Ui.printLine();
             try {
                 Command command = parser.parseCommand(inputCommand);
-                isBye = command.execute();
-                storage.saveFile(tasks);
+                isBye = command.execute(taskList);
+                storage.saveFile(taskList);
             } catch (DukeException e) {
                 Ui.printErrorMessage(e.getErrorMessage());
             }

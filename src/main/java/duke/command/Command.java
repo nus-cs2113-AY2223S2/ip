@@ -1,6 +1,10 @@
 package duke.command;
 
+import duke.DukeException;
+import duke.TaskList;
+
 public abstract class Command {
-    public abstract boolean isExit();
-    public abstract void execute (Storage storage);
+    public boolean execute (TaskList taskList) throws DukeException {
+        throw new DukeException("Unknown Command");
+    }
 }
