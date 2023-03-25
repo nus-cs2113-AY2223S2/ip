@@ -1,0 +1,9 @@
+todo more
+todo even
+
+todo hello
+
+deadline iuai /by 02:00
+
+todo stuff
+event hugg /from 02:00 /to 07-08-2023
