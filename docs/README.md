@@ -73,7 +73,7 @@ deadline TASK_DESCRIPTION /DEADLINE
 
 **Compulsory:** 
 - `TASK_DESCRIPTION` corresponds to the description of the task
-- `\ `before the `DEADLINE`
+- `/`before the `DEADLINE`
 
 Example of usage:
 ```
@@ -104,7 +104,7 @@ event TASK_DESCRIPTION \START \END
 
 **Compulsory:**
 - `TASK_DESCRIPTION` corresponds to the description of the task
-- `\ `before the `START` and `END`
+- `/`before the `START` and `END`
 
 Example of usage:
 ```
