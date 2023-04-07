@@ -6,7 +6,7 @@
 
 `java --version`
 
-- Download the `.jar` file from here: https://github.com/nikkiDEEE/ip/releases
+- Download the `.jar` file from [here](https://github.com/nikkiDEEE/ip/releases).
 - To run `ThomasShelby`, open the terminal and change the current directory to same one as the jar file.
 - Run the following command in the terminal:
 
