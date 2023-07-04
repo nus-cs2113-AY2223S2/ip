@@ -1,7 +1,7 @@
 # User Guide
 
 Duke is a useful tool to keep track of a variety of tasks, helping you to plan your day and boost your productivity.  
-It leverages optimised CLI performance to bring to you all the best features of any task manager in a small but powerful package!
+It leverages optimised CLI performance to bring to you all the best features of any task manager in a small but powerful package!!s
 
 ## Features 
 
