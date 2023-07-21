@@ -1,7 +1,23 @@
-Hello from
- ____        _        
-|  _ \ _   _| | _____ 
-| | | | | | | |/ / _ \
-| |_| | |_| |   <  __/
-|____/ \__,_|_|\_\___|
-
+_______________________________________________________________
+Hello! I'm Duke
+What can I do for you?
+_______________________________________________________________
+Got it. I've added this to Duke.task:
+    [T][ ] Matthew Liu Zhen Jie: Answer CS2113 tutorial questions
+_______________________________________________________________
+Got it. I've added this to Duke.task:
+    [D][ ]  weekly cs2113 quiz  (by: Monday 9pm)
+_______________________________________________________________
+1.[T][ ] Matthew Liu Zhen Jie: Answer CS2113 tutorial questions
+2.[D][ ]  weekly cs2113 quiz  (by: Monday 9pm)
+_______________________________________________________________
+Got it. I've added this to Duke.task:
+    [E][ ] cs2113 lecture  (From: Friday 4 to: 6pm)
+_______________________________________________________________
+Nice! I've marked this Duke.task as done:
+[T][X] Matthew Liu Zhen Jie: Answer CS2113 tutorial questions
+_______________________________________________________________
+1.[T][X] Matthew Liu Zhen Jie: Answer CS2113 tutorial questions
+2.[D][ ]  weekly cs2113 quiz  (by: Monday 9pm)
+3.[E][ ] cs2113 lecture  (From: Friday 4 to: 6pm)
+_______________________________________________________________

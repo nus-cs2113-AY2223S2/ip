@@ -1,0 +1,12 @@
+todo Matthew Liu Zhen Jie: Answer CS2113 tutorial questions
+deadline weekly cs2113 quiz /by Monday 9pm
+list
+event cs2113 lecture /from Friday 4 /to 6pm
+mark 1
+list
+deadline
+todo
+event movie night
+event movie night /from tonight 7pm
+event movie night /from tonight 7pm /to 8pm
+list
