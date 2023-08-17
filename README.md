@@ -18,7 +18,8 @@ This is Arsdorint chatbot, a member of Arsdorint Team, and an adaptation applica
 
 ## Feature - List
 - This function will list all the tasks inputed by the user.
-- Example: 
+- Example:
+```
 >>> list
 Here are the tasks in your list:
 
@@ -27,11 +28,12 @@ ____________________________LIST____________________________
 1.[T][ ] midterm
 	Now you have 1 task in the list.
 ____________________________________________________________
-
+```
 
 ## Feature - Todo
 - This function will add a task that the user want to do, with a tickbox to mark if the task is done yet or not.
 - Example:
+```
 >>> todo midterm
 ____________________________________________________________
 
@@ -40,11 +42,12 @@ Got it. I've added this task:
 [T][ ] midterm
 	Now you have 1 task in the list.
 ____________________________________________________________
-
+```
 
 ## Feature - Deadline
 - This function will add a deadline that the user need to complete, with a tickbox to mark if the deadline is finished or not.
 - Example:
+```
 >>> deadline midterm /by tommorrow
 ____________________________________________________________
 
@@ -53,8 +56,9 @@ Got it. I've added this task:
 [D][ ] midterm	(by tommorrow)
 	Now you have 2 tasks in the list.
 ____________________________________________________________
-
+```
 or 
+```
 >>> deadline midterm /2023-03-04
 ____________________________________________________________
 
@@ -63,10 +67,11 @@ Got it. I've added this task:
 [D][ ] midterm	(4 Mar 2023)
 	Now you have 4 tasks in the list.
 ____________________________________________________________
-
+```
 ## Feature - Event
 - This function will add an event that the user need to attend, with a tickbox to mark if the user have attended or not.
 - Example:
+```
 >>> event Open House /on Sunday
 ____________________________________________________________
 
@@ -75,8 +80,9 @@ Got it. I've added this task:
 [E][ ] Open House	(on Sunday)
 	Now you have 5 tasks in the list.
 ____________________________________________________________
-
+```
 or
+```
 >>> event NUS football match /2023-03-05
 ____________________________________________________________
 
@@ -85,7 +91,7 @@ Got it. I've added this task:
 [E][ ] NUS football match	(5 Mar 2023)
 	Now you have 6 tasks in the list.
 ____________________________________________________________
-
+```
 ## Feature - Mark
 - This function will mark a task as done by tick a "X" into the tickbox.
 - Example:
