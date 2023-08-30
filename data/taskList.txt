@@ -1,0 +1,3 @@
+false | dhomework      by      today
+true | thomework
+false | tcompile
